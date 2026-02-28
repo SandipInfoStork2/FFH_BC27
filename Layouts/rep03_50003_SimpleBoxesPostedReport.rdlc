@@ -1,0 +1,1241 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner" xmlns="http://schemas.microsoft.com/sqlserver/reporting/2010/01/reportdefinition">
+  <AutoRefresh>0</AutoRefresh>
+  <DataSources>
+    <DataSource Name="DataSource">
+      <ConnectionProperties>
+        <DataProvider>SQL</DataProvider>
+        <ConnectString />
+      </ConnectionProperties>
+      <rd:SecurityType>None</rd:SecurityType>
+      <rd:DataSourceID>d9ea670b-364c-43ef-935b-0237ea5b328b</rd:DataSourceID>
+    </DataSource>
+  </DataSources>
+  <ReportSections>
+    <ReportSection>
+      <Body>
+        <ReportItems>
+          <Textbox Name="LineNo_PurchaseLineAddon">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>=First(Fields!LineNo_PurchaseLineAddon.Value, "DataSet_Result")</Value>
+                    <Style>
+                      <FontSize>8pt</FontSize>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style>
+                  <TextAlign>Left</TextAlign>
+                </Style>
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>LineNo_PurchaseLineAddon</rd:DefaultName>
+            <Top>0.02778in</Top>
+            <Left>0.00001cm</Left>
+            <Height>0.2325in</Height>
+            <Width>1.0625in</Width>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
+          <Textbox Name="Type_PurchaseLineAddon">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>=First(Fields!Type_PurchaseLineAddon.Value, "DataSet_Result")</Value>
+                    <Style>
+                      <FontSize>8pt</FontSize>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Type_PurchaseLineAddon</rd:DefaultName>
+            <Top>0.02778in</Top>
+            <Left>1.13195in</Left>
+            <Height>0.2325in</Height>
+            <Width>1.0625in</Width>
+            <ZIndex>1</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
+          <Textbox Name="No_PurchaseLineAddon">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>=First(Fields!No_PurchaseLineAddon.Value, "DataSet_Result")</Value>
+                    <Style>
+                      <FontSize>8pt</FontSize>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>No_PurchaseLineAddon</rd:DefaultName>
+            <Top>0.02778in</Top>
+            <Left>2.25in</Left>
+            <Height>0.2325in</Height>
+            <Width>1.0625in</Width>
+            <ZIndex>2</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
+          <Textbox Name="Description_PurchaseLineAddon">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>=First(Fields!Description_PurchaseLineAddon.Value, "DataSet_Result")</Value>
+                    <Style>
+                      <FontSize>8pt</FontSize>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Description_PurchaseLineAddon</rd:DefaultName>
+            <Top>0.02778in</Top>
+            <Left>3.36806in</Left>
+            <Height>0.2325in</Height>
+            <Width>2.03125in</Width>
+            <ZIndex>3</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
+          <Textbox Name="VariantCode_PurchaseLineAddon">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>=First(Fields!VariantCode_PurchaseLineAddon.Value, "DataSet_Result")</Value>
+                    <Style>
+                      <FontSize>8pt</FontSize>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>VariantCode_PurchaseLineAddon</rd:DefaultName>
+            <Top>0.02778in</Top>
+            <Left>5.46875in</Left>
+            <Height>0.2325in</Height>
+            <Width>1.0625in</Width>
+            <ZIndex>4</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
+          <Textbox Name="Quantity_PurchaseLineAddon">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>=First(Fields!Quantity_PurchaseLineAddon.Value, "DataSet_Result")</Value>
+                    <Style>
+                      <FontSize>8pt</FontSize>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style>
+                  <TextAlign>Right</TextAlign>
+                </Style>
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Quantity_PurchaseLineAddon</rd:DefaultName>
+            <Top>0.02778in</Top>
+            <Left>6.6007in</Left>
+            <Height>0.2325in</Height>
+            <Width>1.0625in</Width>
+            <ZIndex>5</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
+        </ReportItems>
+        <Height>0.34042in</Height>
+        <Style />
+      </Body>
+      <Width>7.6632in</Width>
+      <Page>
+        <PageHeader>
+          <Height>2.10069in</Height>
+          <PrintOnFirstPage>true</PrintOnFirstPage>
+          <PrintOnLastPage>true</PrintOnLastPage>
+          <ReportItems>
+            <Textbox Name="PaytoVendorNo_PurchaseHeaderAddon">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>=First(Fields!PaytoVendorNo_PurchaseHeaderAddon.Value, "DataSet_Result")</Value>
+                      <Style>
+                        <FontSize>8pt</FontSize>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style />
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>PaytoVendorNo_PurchaseHeaderAddon</rd:DefaultName>
+              <Top>0.63542in</Top>
+              <Left>1.13194in</Left>
+              <Height>0.21861in</Height>
+              <Width>2.44792in</Width>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <PaddingTop>2pt</PaddingTop>
+                <PaddingBottom>2pt</PaddingBottom>
+              </Style>
+            </Textbox>
+            <Textbox Name="PaytoName_PurchaseHeaderAddon">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>=First(Fields!PaytoName_PurchaseHeaderAddon.Value, "DataSet_Result")</Value>
+                      <Style>
+                        <FontSize>8pt</FontSize>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style />
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>PaytoName_PurchaseHeaderAddon</rd:DefaultName>
+              <Top>0.85403in</Top>
+              <Left>1.13194in</Left>
+              <Height>0.21861in</Height>
+              <Width>2.44792in</Width>
+              <ZIndex>1</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <PaddingTop>2pt</PaddingTop>
+                <PaddingBottom>2pt</PaddingBottom>
+              </Style>
+            </Textbox>
+            <Textbox Name="PaytoAddress_PurchaseHeaderAddon">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>=First(Fields!PaytoAddress_PurchaseHeaderAddon.Value, "DataSet_Result")</Value>
+                      <Style>
+                        <FontSize>8pt</FontSize>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style />
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>PaytoAddress_PurchaseHeaderAddon</rd:DefaultName>
+              <Top>1.08653in</Top>
+              <Left>1.13195in</Left>
+              <Height>0.21861in</Height>
+              <Width>2.44792in</Width>
+              <ZIndex>2</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <PaddingTop>2pt</PaddingTop>
+                <PaddingBottom>2pt</PaddingBottom>
+              </Style>
+            </Textbox>
+            <Textbox Name="Textbox1">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>Postedoxes Order Report</Value>
+                      <Style>
+                        <FontSize>14pt</FontSize>
+                        <FontWeight>Bold</FontWeight>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Center</TextAlign>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>Textbox1</rd:DefaultName>
+              <Left>0.00001cm</Left>
+              <Height>0.34375in</Height>
+              <Width>7.66319in</Width>
+              <ZIndex>3</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <PaddingTop>2pt</PaddingTop>
+                <PaddingBottom>2pt</PaddingBottom>
+              </Style>
+            </Textbox>
+            <Textbox Name="Textbox2">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>Code :</Value>
+                      <Style>
+                        <FontSize>8pt</FontSize>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style />
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>Textbox2</rd:DefaultName>
+              <Top>0.63542in</Top>
+              <Left>0.00001cm</Left>
+              <Height>0.21861in</Height>
+              <Width>1.0625in</Width>
+              <ZIndex>4</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <PaddingTop>2pt</PaddingTop>
+                <PaddingBottom>2pt</PaddingBottom>
+              </Style>
+            </Textbox>
+            <Textbox Name="Textbox3">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>Name :</Value>
+                      <Style>
+                        <FontSize>8pt</FontSize>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style />
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>Textbox2</rd:DefaultName>
+              <Top>0.85403in</Top>
+              <Left>0.00001cm</Left>
+              <Height>0.21861in</Height>
+              <Width>1.0625in</Width>
+              <ZIndex>5</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <PaddingTop>2pt</PaddingTop>
+                <PaddingBottom>2pt</PaddingBottom>
+              </Style>
+            </Textbox>
+            <Textbox Name="Textbox4">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>Address :</Value>
+                      <Style>
+                        <FontSize>8pt</FontSize>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style />
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>Textbox2</rd:DefaultName>
+              <Top>1.08653in</Top>
+              <Left>0.00002cm</Left>
+              <Height>0.21861in</Height>
+              <Width>1.0625in</Width>
+              <ZIndex>6</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <PaddingTop>2pt</PaddingTop>
+                <PaddingBottom>2pt</PaddingBottom>
+              </Style>
+            </Textbox>
+            <Textbox Name="PaytoCity_PurchaseHeaderAddon">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>=First(Fields!PaytoCity_PurchaseHeaderAddon.Value, "DataSet_Result")</Value>
+                      <Style>
+                        <FontSize>8pt</FontSize>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style />
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>PaytoCity_PurchaseHeaderAddon</rd:DefaultName>
+              <Top>1.31902in</Top>
+              <Left>1.13194in</Left>
+              <Height>0.21861in</Height>
+              <Width>1.06251in</Width>
+              <ZIndex>7</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <PaddingTop>2pt</PaddingTop>
+                <PaddingBottom>2pt</PaddingBottom>
+              </Style>
+            </Textbox>
+            <Textbox Name="PaytoPostCode_PurchaseHeaderAddon">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>=First(Fields!PaytoPostCode_PurchaseHeaderAddon.Value, "DataSet_Result")</Value>
+                      <Style>
+                        <FontSize>8pt</FontSize>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style />
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>PaytoPostCode_PurchaseHeaderAddon</rd:DefaultName>
+              <Top>1.31903in</Top>
+              <Left>2.19445in</Left>
+              <Height>0.21861in</Height>
+              <Width>1.38542in</Width>
+              <ZIndex>8</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <PaddingTop>2pt</PaddingTop>
+                <PaddingBottom>2pt</PaddingBottom>
+              </Style>
+            </Textbox>
+            <Textbox Name="PaytoCounty_PurchaseHeaderAddon">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>=First(Fields!PaytoCounty_PurchaseHeaderAddon.Value, "DataSet_Result")</Value>
+                      <Style>
+                        <FontSize>8pt</FontSize>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style />
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>PaytoCounty_PurchaseHeaderAddon</rd:DefaultName>
+              <Top>1.53763in</Top>
+              <Left>1.13195in</Left>
+              <Height>0.21861in</Height>
+              <Width>2.44792in</Width>
+              <ZIndex>9</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <PaddingTop>2pt</PaddingTop>
+                <PaddingBottom>2pt</PaddingBottom>
+              </Style>
+            </Textbox>
+            <Textbox Name="No_PurchaseHeaderAddon">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>=First(Fields!No_PurchaseHeaderAddon.Value, "DataSet_Result")</Value>
+                      <Style>
+                        <FontSize>8pt</FontSize>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Right</TextAlign>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>No_PurchaseHeaderAddon</rd:DefaultName>
+              <Top>0.63542in</Top>
+              <Left>6.40277in</Left>
+              <Height>0.21861in</Height>
+              <Width>1.26042in</Width>
+              <ZIndex>10</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <PaddingTop>2pt</PaddingTop>
+                <PaddingBottom>2pt</PaddingBottom>
+              </Style>
+            </Textbox>
+            <Textbox Name="Textbox5">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>Document :</Value>
+                      <Style>
+                        <FontSize>8pt</FontSize>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style />
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>Textbox2</rd:DefaultName>
+              <Top>0.63542in</Top>
+              <Left>13.38792cm</Left>
+              <Height>0.21861in</Height>
+              <Width>1.0625in</Width>
+              <ZIndex>11</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <PaddingTop>2pt</PaddingTop>
+                <PaddingBottom>2pt</PaddingBottom>
+              </Style>
+            </Textbox>
+            <Textbox Name="Textbox6">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>Posting Date :</Value>
+                      <Style>
+                        <FontSize>8pt</FontSize>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style />
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>Textbox2</rd:DefaultName>
+              <Top>0.86792in</Top>
+              <Left>13.38792cm</Left>
+              <Height>0.21861in</Height>
+              <Width>1.0625in</Width>
+              <ZIndex>12</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <PaddingTop>2pt</PaddingTop>
+                <PaddingBottom>2pt</PaddingBottom>
+              </Style>
+            </Textbox>
+            <Textbox Name="Textbox7">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>Page :</Value>
+                      <Style>
+                        <FontSize>8pt</FontSize>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style />
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>Textbox2</rd:DefaultName>
+              <Top>1.53763in</Top>
+              <Left>13.38792cm</Left>
+              <Height>0.21861in</Height>
+              <Width>1.0625in</Width>
+              <ZIndex>13</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <PaddingTop>2pt</PaddingTop>
+                <PaddingBottom>2pt</PaddingBottom>
+              </Style>
+            </Textbox>
+            <Textbox Name="No_PurchaseHeaderAddon3">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>=Globals!PageNumber</Value>
+                      <Style>
+                        <FontSize>8pt</FontSize>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Right</TextAlign>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>No_PurchaseHeaderAddon</rd:DefaultName>
+              <Top>1.53763in</Top>
+              <Left>6.40277in</Left>
+              <Height>0.2325in</Height>
+              <Width>1.26043in</Width>
+              <ZIndex>14</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <PaddingTop>2pt</PaddingTop>
+                <PaddingBottom>2pt</PaddingBottom>
+              </Style>
+            </Textbox>
+            <Textbox Name="Textbox8">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>Line No</Value>
+                      <Style>
+                        <FontSize>8pt</FontSize>
+                        <FontWeight>Bold</FontWeight>
+                        <TextDecoration>Underline</TextDecoration>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style />
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>Textbox2</rd:DefaultName>
+              <Top>1.8682in</Top>
+              <Height>0.21861in</Height>
+              <Width>1.0625in</Width>
+              <ZIndex>15</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <PaddingTop>2pt</PaddingTop>
+                <PaddingBottom>2pt</PaddingBottom>
+              </Style>
+            </Textbox>
+            <Textbox Name="Textbox9">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>Type</Value>
+                      <Style>
+                        <FontSize>8pt</FontSize>
+                        <FontWeight>Bold</FontWeight>
+                        <TextDecoration>Underline</TextDecoration>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style />
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>Textbox2</rd:DefaultName>
+              <Top>1.8682in</Top>
+              <Left>2.83986cm</Left>
+              <Height>0.21861in</Height>
+              <Width>1.0625in</Width>
+              <ZIndex>16</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <PaddingTop>2pt</PaddingTop>
+                <PaddingBottom>2pt</PaddingBottom>
+              </Style>
+            </Textbox>
+            <Textbox Name="Textbox10">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>No</Value>
+                      <Style>
+                        <FontSize>8pt</FontSize>
+                        <FontWeight>Bold</FontWeight>
+                        <TextDecoration>Underline</TextDecoration>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style />
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>Textbox2</rd:DefaultName>
+              <Top>1.88208in</Top>
+              <Left>5.715cm</Left>
+              <Height>0.21861in</Height>
+              <Width>1.0625in</Width>
+              <ZIndex>17</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <PaddingTop>2pt</PaddingTop>
+                <PaddingBottom>2pt</PaddingBottom>
+              </Style>
+            </Textbox>
+            <Textbox Name="Textbox11">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>Description</Value>
+                      <Style>
+                        <FontSize>8pt</FontSize>
+                        <FontWeight>Bold</FontWeight>
+                        <TextDecoration>Underline</TextDecoration>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style />
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>Textbox2</rd:DefaultName>
+              <Top>1.8682in</Top>
+              <Left>8.55486cm</Left>
+              <Height>0.21861in</Height>
+              <Width>2.03125in</Width>
+              <ZIndex>18</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <PaddingTop>2pt</PaddingTop>
+                <PaddingBottom>2pt</PaddingBottom>
+              </Style>
+            </Textbox>
+            <Textbox Name="Textbox13">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>Variant</Value>
+                      <Style>
+                        <FontSize>8pt</FontSize>
+                        <FontWeight>Bold</FontWeight>
+                        <TextDecoration>Underline</TextDecoration>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style />
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>Textbox2</rd:DefaultName>
+              <Top>1.88208in</Top>
+              <Left>13.89062cm</Left>
+              <Height>0.21861in</Height>
+              <Width>1.0625in</Width>
+              <ZIndex>19</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <PaddingTop>2pt</PaddingTop>
+                <PaddingBottom>2pt</PaddingBottom>
+              </Style>
+            </Textbox>
+            <Textbox Name="Textbox14">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>QTY</Value>
+                      <Style>
+                        <FontSize>8pt</FontSize>
+                        <FontWeight>Bold</FontWeight>
+                        <TextDecoration>Underline</TextDecoration>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Right</TextAlign>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>Textbox2</rd:DefaultName>
+              <Top>1.88208in</Top>
+              <Left>16.76576cm</Left>
+              <Height>0.21861in</Height>
+              <Width>1.0625in</Width>
+              <ZIndex>20</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <PaddingTop>2pt</PaddingTop>
+                <PaddingBottom>2pt</PaddingBottom>
+              </Style>
+            </Textbox>
+            <Textbox Name="PostingDate_PurchaseHeaderAddon">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>=First(Fields!PostingDate_PurchaseHeaderAddon.Value, "DataSet_Result")</Value>
+                      <Style>
+                        <FontSize>8pt</FontSize>
+                        <Format>d</Format>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Right</TextAlign>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>PostingDate_PurchaseHeaderAddon</rd:DefaultName>
+              <Top>0.86792in</Top>
+              <Left>6.40277in</Left>
+              <Height>0.21861in</Height>
+              <Width>1.26043in</Width>
+              <ZIndex>21</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <PaddingTop>2pt</PaddingTop>
+                <PaddingBottom>2pt</PaddingBottom>
+              </Style>
+            </Textbox>
+          </ReportItems>
+          <Style>
+            <Border>
+              <Style>None</Style>
+            </Border>
+          </Style>
+        </PageHeader>
+        <PageFooter>
+          <Height>0.11458in</Height>
+          <PrintOnFirstPage>true</PrintOnFirstPage>
+          <PrintOnLastPage>true</PrintOnLastPage>
+          <Style>
+            <Border>
+              <Style>None</Style>
+            </Border>
+          </Style>
+        </PageFooter>
+        <Style />
+      </Page>
+    </ReportSection>
+  </ReportSections>
+  <Code>Public Function BlankZero(ByVal Value As Decimal)
+    if Value = 0 then
+        Return ""
+    end if
+    Return Value
+End Function
+
+Public Function BlankPos(ByVal Value As Decimal)
+    if Value &gt; 0 then
+        Return ""
+    end if
+    Return Value
+End Function
+
+Public Function BlankZeroAndPos(ByVal Value As Decimal)
+    if Value &gt;= 0 then
+        Return ""
+    end if
+    Return Value
+End Function
+
+Public Function BlankNeg(ByVal Value As Decimal)
+    if Value &lt; 0 then
+        Return ""
+    end if
+    Return Value
+End Function
+
+Public Function BlankNegAndZero(ByVal Value As Decimal)
+    if Value &lt;= 0 then
+        Return ""
+    end if
+    Return Value
+End Function
+</Code>
+  <Language>=User!Language</Language>
+  <ConsumeContainerWhitespace>true</ConsumeContainerWhitespace>
+  <rd:ReportUnitType>Inch</rd:ReportUnitType>
+  <rd:ReportID>0eeb6585-38ae-40f1-885b-8d50088d51b4</rd:ReportID>
+  <DataSets>
+    <DataSet Name="DataSet_Result">
+      <Fields>
+        <Field Name="BuyfromVendorNo_PurchaseHeaderAddon">
+          <DataField>BuyfromVendorNo_PurchaseHeaderAddon</DataField>
+        </Field>
+        <Field Name="No_PurchaseHeaderAddon">
+          <DataField>No_PurchaseHeaderAddon</DataField>
+        </Field>
+        <Field Name="PaytoVendorNo_PurchaseHeaderAddon">
+          <DataField>PaytoVendorNo_PurchaseHeaderAddon</DataField>
+        </Field>
+        <Field Name="PaytoName_PurchaseHeaderAddon">
+          <DataField>PaytoName_PurchaseHeaderAddon</DataField>
+        </Field>
+        <Field Name="PaytoName2_PurchaseHeaderAddon">
+          <DataField>PaytoName2_PurchaseHeaderAddon</DataField>
+        </Field>
+        <Field Name="PaytoAddress_PurchaseHeaderAddon">
+          <DataField>PaytoAddress_PurchaseHeaderAddon</DataField>
+        </Field>
+        <Field Name="PaytoAddress2_PurchaseHeaderAddon">
+          <DataField>PaytoAddress2_PurchaseHeaderAddon</DataField>
+        </Field>
+        <Field Name="PaytoCity_PurchaseHeaderAddon">
+          <DataField>PaytoCity_PurchaseHeaderAddon</DataField>
+        </Field>
+        <Field Name="PaytoContact_PurchaseHeaderAddon">
+          <DataField>PaytoContact_PurchaseHeaderAddon</DataField>
+        </Field>
+        <Field Name="YourReference_PurchaseHeaderAddon">
+          <DataField>YourReference_PurchaseHeaderAddon</DataField>
+        </Field>
+        <Field Name="ShiptoCode_PurchaseHeaderAddon">
+          <DataField>ShiptoCode_PurchaseHeaderAddon</DataField>
+        </Field>
+        <Field Name="ShiptoName_PurchaseHeaderAddon">
+          <DataField>ShiptoName_PurchaseHeaderAddon</DataField>
+        </Field>
+        <Field Name="ShiptoName2_PurchaseHeaderAddon">
+          <DataField>ShiptoName2_PurchaseHeaderAddon</DataField>
+        </Field>
+        <Field Name="ShiptoAddress_PurchaseHeaderAddon">
+          <DataField>ShiptoAddress_PurchaseHeaderAddon</DataField>
+        </Field>
+        <Field Name="ShiptoAddress2_PurchaseHeaderAddon">
+          <DataField>ShiptoAddress2_PurchaseHeaderAddon</DataField>
+        </Field>
+        <Field Name="ShiptoCity_PurchaseHeaderAddon">
+          <DataField>ShiptoCity_PurchaseHeaderAddon</DataField>
+        </Field>
+        <Field Name="ShiptoContact_PurchaseHeaderAddon">
+          <DataField>ShiptoContact_PurchaseHeaderAddon</DataField>
+        </Field>
+        <Field Name="OrderDate_PurchaseHeaderAddon">
+          <DataField>OrderDate_PurchaseHeaderAddon</DataField>
+        </Field>
+        <Field Name="PostingDate_PurchaseHeaderAddon">
+          <DataField>PostingDate_PurchaseHeaderAddon</DataField>
+        </Field>
+        <Field Name="ExpectedReceiptDate_PurchaseHeaderAddon">
+          <DataField>ExpectedReceiptDate_PurchaseHeaderAddon</DataField>
+        </Field>
+        <Field Name="PostingDescription_PurchaseHeaderAddon">
+          <DataField>PostingDescription_PurchaseHeaderAddon</DataField>
+        </Field>
+        <Field Name="PaymentTermsCode_PurchaseHeaderAddon">
+          <DataField>PaymentTermsCode_PurchaseHeaderAddon</DataField>
+        </Field>
+        <Field Name="DueDate_PurchaseHeaderAddon">
+          <DataField>DueDate_PurchaseHeaderAddon</DataField>
+        </Field>
+        <Field Name="ShipmentMethodCode_PurchaseHeaderAddon">
+          <DataField>ShipmentMethodCode_PurchaseHeaderAddon</DataField>
+        </Field>
+        <Field Name="LocationCode_PurchaseHeaderAddon">
+          <DataField>LocationCode_PurchaseHeaderAddon</DataField>
+        </Field>
+        <Field Name="ShortcutDimension1Code_PurchaseHeaderAddon">
+          <DataField>ShortcutDimension1Code_PurchaseHeaderAddon</DataField>
+        </Field>
+        <Field Name="ShortcutDimension2Code_PurchaseHeaderAddon">
+          <DataField>ShortcutDimension2Code_PurchaseHeaderAddon</DataField>
+        </Field>
+        <Field Name="VendorPostingGroup_PurchaseHeaderAddon">
+          <DataField>VendorPostingGroup_PurchaseHeaderAddon</DataField>
+        </Field>
+        <Field Name="PurchaserCode_PurchaseHeaderAddon">
+          <DataField>PurchaserCode_PurchaseHeaderAddon</DataField>
+        </Field>
+        <Field Name="OrderClass_PurchaseHeaderAddon">
+          <DataField>OrderClass_PurchaseHeaderAddon</DataField>
+        </Field>
+        <Field Name="Comment_PurchaseHeaderAddon">
+          <DataField>Comment_PurchaseHeaderAddon</DataField>
+        </Field>
+        <Field Name="NoPrinted_PurchaseHeaderAddon">
+          <DataField>NoPrinted_PurchaseHeaderAddon</DataField>
+        </Field>
+        <Field Name="OnHold_PurchaseHeaderAddon">
+          <DataField>OnHold_PurchaseHeaderAddon</DataField>
+        </Field>
+        <Field Name="SelltoCustomerNo_PurchaseHeaderAddon">
+          <DataField>SelltoCustomerNo_PurchaseHeaderAddon</DataField>
+        </Field>
+        <Field Name="ReasonCode_PurchaseHeaderAddon">
+          <DataField>ReasonCode_PurchaseHeaderAddon</DataField>
+        </Field>
+        <Field Name="GenBusPostingGroup_PurchaseHeaderAddon">
+          <DataField>GenBusPostingGroup_PurchaseHeaderAddon</DataField>
+        </Field>
+        <Field Name="BuyfromVendorName_PurchaseHeaderAddon">
+          <DataField>BuyfromVendorName_PurchaseHeaderAddon</DataField>
+        </Field>
+        <Field Name="BuyfromVendorName2_PurchaseHeaderAddon">
+          <DataField>BuyfromVendorName2_PurchaseHeaderAddon</DataField>
+        </Field>
+        <Field Name="BuyfromAddress_PurchaseHeaderAddon">
+          <DataField>BuyfromAddress_PurchaseHeaderAddon</DataField>
+        </Field>
+        <Field Name="BuyfromAddress2_PurchaseHeaderAddon">
+          <DataField>BuyfromAddress2_PurchaseHeaderAddon</DataField>
+        </Field>
+        <Field Name="BuyfromCity_PurchaseHeaderAddon">
+          <DataField>BuyfromCity_PurchaseHeaderAddon</DataField>
+        </Field>
+        <Field Name="BuyfromContact_PurchaseHeaderAddon">
+          <DataField>BuyfromContact_PurchaseHeaderAddon</DataField>
+        </Field>
+        <Field Name="PaytoPostCode_PurchaseHeaderAddon">
+          <DataField>PaytoPostCode_PurchaseHeaderAddon</DataField>
+        </Field>
+        <Field Name="PaytoCounty_PurchaseHeaderAddon">
+          <DataField>PaytoCounty_PurchaseHeaderAddon</DataField>
+        </Field>
+        <Field Name="PaytoCountryRegionCode_PurchaseHeaderAddon">
+          <DataField>PaytoCountryRegionCode_PurchaseHeaderAddon</DataField>
+        </Field>
+        <Field Name="BuyfromPostCode_PurchaseHeaderAddon">
+          <DataField>BuyfromPostCode_PurchaseHeaderAddon</DataField>
+        </Field>
+        <Field Name="BuyfromCounty_PurchaseHeaderAddon">
+          <DataField>BuyfromCounty_PurchaseHeaderAddon</DataField>
+        </Field>
+        <Field Name="BuyfromCountryRegionCode_PurchaseHeaderAddon">
+          <DataField>BuyfromCountryRegionCode_PurchaseHeaderAddon</DataField>
+        </Field>
+        <Field Name="ShiptoPostCode_PurchaseHeaderAddon">
+          <DataField>ShiptoPostCode_PurchaseHeaderAddon</DataField>
+        </Field>
+        <Field Name="ShiptoCounty_PurchaseHeaderAddon">
+          <DataField>ShiptoCounty_PurchaseHeaderAddon</DataField>
+        </Field>
+        <Field Name="ShiptoCountryRegionCode_PurchaseHeaderAddon">
+          <DataField>ShiptoCountryRegionCode_PurchaseHeaderAddon</DataField>
+        </Field>
+        <Field Name="BalAccountType_PurchaseHeaderAddon">
+          <DataField>BalAccountType_PurchaseHeaderAddon</DataField>
+        </Field>
+        <Field Name="DocumentDate_PurchaseHeaderAddon">
+          <DataField>DocumentDate_PurchaseHeaderAddon</DataField>
+        </Field>
+        <Field Name="Area_PurchaseHeaderAddon">
+          <DataField>Area_PurchaseHeaderAddon</DataField>
+        </Field>
+        <Field Name="TransactionSpecification_PurchaseHeaderAddon">
+          <DataField>TransactionSpecification_PurchaseHeaderAddon</DataField>
+        </Field>
+        <Field Name="PaymentMethodCode_PurchaseHeaderAddon">
+          <DataField>PaymentMethodCode_PurchaseHeaderAddon</DataField>
+        </Field>
+        <Field Name="PaytoContactNo_PurchaseHeaderAddon">
+          <DataField>PaytoContactNo_PurchaseHeaderAddon</DataField>
+        </Field>
+        <Field Name="ResponsibilityCenter_PurchaseHeaderAddon">
+          <DataField>ResponsibilityCenter_PurchaseHeaderAddon</DataField>
+        </Field>
+        <Field Name="PostingfromWhseRef_PurchaseHeaderAddon">
+          <DataField>PostingfromWhseRef_PurchaseHeaderAddon</DataField>
+        </Field>
+        <Field Name="LocationFilter_PurchaseHeaderAddon">
+          <DataField>LocationFilter_PurchaseHeaderAddon</DataField>
+        </Field>
+        <Field Name="RequestedReceiptDate_PurchaseHeaderAddon">
+          <DataField>RequestedReceiptDate_PurchaseHeaderAddon</DataField>
+        </Field>
+        <Field Name="PromisedReceiptDate_PurchaseHeaderAddon">
+          <DataField>PromisedReceiptDate_PurchaseHeaderAddon</DataField>
+        </Field>
+        <Field Name="DateFilter_PurchaseHeaderAddon">
+          <DataField>DateFilter_PurchaseHeaderAddon</DataField>
+        </Field>
+        <Field Name="VendorAuthorizationNo_PurchaseHeaderAddon">
+          <DataField>VendorAuthorizationNo_PurchaseHeaderAddon</DataField>
+        </Field>
+        <Field Name="Ship_PurchaseHeaderAddon">
+          <DataField>Ship_PurchaseHeaderAddon</DataField>
+        </Field>
+        <Field Name="LineNo_PurchaseLineAddon">
+          <DataField>LineNo_PurchaseLineAddon</DataField>
+        </Field>
+        <Field Name="Type_PurchaseLineAddon">
+          <DataField>Type_PurchaseLineAddon</DataField>
+        </Field>
+        <Field Name="No_PurchaseLineAddon">
+          <DataField>No_PurchaseLineAddon</DataField>
+        </Field>
+        <Field Name="LocationCode_PurchaseLineAddon">
+          <DataField>LocationCode_PurchaseLineAddon</DataField>
+        </Field>
+        <Field Name="Description_PurchaseLineAddon">
+          <DataField>Description_PurchaseLineAddon</DataField>
+        </Field>
+        <Field Name="UnitofMeasure_PurchaseLineAddon">
+          <DataField>UnitofMeasure_PurchaseLineAddon</DataField>
+        </Field>
+        <Field Name="Quantity_PurchaseLineAddon">
+          <DataField>Quantity_PurchaseLineAddon</DataField>
+        </Field>
+        <Field Name="Quantity_PurchaseLineAddonFormat">
+          <DataField>Quantity_PurchaseLineAddonFormat</DataField>
+        </Field>
+        <Field Name="VariantCode_PurchaseLineAddon">
+          <DataField>VariantCode_PurchaseLineAddon</DataField>
+        </Field>
+      </Fields>
+      <Query>
+        <DataSourceName>DataSource</DataSourceName>
+        <CommandText />
+      </Query>
+    </DataSet>
+  </DataSets>
+</Report>

@@ -1,0 +1,586 @@
+﻿1.0.0.7
+VC 08/03/22 copy Sales Price fields to Purchase Price
+
+VC 09/03/22 copy Sales Price fields to Sales Line Discounts
+
+VC 09/03/22 import 21 reports with picture resize
+
+1.0.0.12
+28/03/22 VC add permissions file
+
+1.0.0.18
+28/03/22 VC import Horeca orders use zip file to upload multiple documents 
+
+1.0.0.22
+30/03/22 VC add BCC and CC page in email accounts
+            event to exclude the bcc and cc in email work orders
+         create 2nd profile for Purchasing agent FFH KP and ACC users
+
+1.0.0.23
+30/03/22 VC correct logic cc to be empty for work order report
+
+1.0.0.24
+30/03/22 VC email scenario for work order
+
+1.0.0.25
+30/03/22 VC review lidl export edi. select files, zip an download txt files.
+
+1.0.0.26
+30/03/22 VC review Sales Shipment, Vendor Detailed Trial Balance
+
+1.0.0.32
+31/03/22 VC add delete triggers on posted document not to allow deletion 
+            Prod. Order - Mat. Requisition transfer customisations
+
+1.0.0.39 
+08/04/2022 ANP Fix posting date when create new purchase box to be todays date
+
+1.0.0.42 
+15/04/2022 when creating new item cancel from the template is not opening the item card.
+           write event codeunit 50006 EventsGeneral
+
+1.0.0.43 
+15/04/2022 Print Item Register Value when post and print Physical inventory journal
+
+1.0.0.44 
+15/04/2022 review boxes list
+
+1.0.0.45 
+28/04/2022 Requisition Worksheet review drilldown
+
+1.0.0.46 
+30/04/2022  Requisition review update description, lookup vendor no, add Vendor Name
+
+1.0.0.47 
+02/05/2022 add report 50009
+
+1.0.0.48 
+02/05/2022 move logic tableextension 50162 LotNoInformationExt extends "Lot No. Information"
+            to codeunit
+
+1.0.0.49
+11/05/2022 VC add Item Reference No.
+               Shipment 50070
+               Invoice 50026
+               Credit Memo 50027
+
+
+1.0.0.50
+11/05/2022 VC Proform invoice 50040 increase qty space
+
+1.0.0.53
+12/05/2022 VC Deltia apostolis 50007, add invoice no. textbox
+
+1.0.0.57
+18/05/2022 VC report 50090 Expected Quantity, Posted Qty   
+               table 5407 add Posted Qty 
+               "Prod. Order Components"  Posted Qty , Line No
+               Item ledger entries add Prod. Order Line No.
+
+1.0.0.60
+09/06/2022 VC review report 50040, 50026, 50027 ship-to address, TIC
+              customer card add TIC, EMail CC 
+              posted sales invoice update sell-to Email
+
+1.0.0.61
+11/07/2022 VC Posted Sales Invoices add Ship-to Code 
+              report 50026 add ship-to address on the header 
+
+1.0.0.63
+2022/08/01 VC add Customer Reference No. text 100
+
+1.0.0.64
+2022/08/05 VC report 50006 Show Vendor Item No. in Purchase Order printout
+
+1.0.0.65
+2022/08/05 VC work order design Ship-to address similar to header, report 50006 
+
+
+1.0.0.69
+2022/09/01 VK *Design the User Setup action button on User Setup (p 119)
+              *Create the User Setup Card (p 50028)
+              *Design the Name & Signature Fields on User Setup (t 91)
+              *Add the Signature on:
+               -Sales Invoice KP (r 50026)
+               -Sales Invoice KP1 (r 50032)               
+               -Sales Invoice KP2 (r 50033)
+               -Sales Invoice Disc KP (r 50034)
+               -Sales Invoice HORECA (r 50041)
+               -Sales Credit Memo KP (r 50027)
+               -Sales Credit Memo HORECA (r 50043)
+
+1.0.0.71
+2022/09/13 VK Transfer the source code from the designer to package
+            *Released Production Orders (p 9326) -ok
+            *Phys. Inventory Journal (p 392) -ok
+            *Purchase Return Order Subform (p 6641) -ok
+            *Posted Sales Invoices (p 143) -ok
+            *Production BOM Lines (p 99000788) -ok
+            *Purch. Invoice Subform (p 55) -ok
+            *Fixed Asset List (p 5601) -ok
+            *Purchasing Agent RC FFH ACC (p 50033) -ok
+            *General Ledger Entries (p 20) -ok
+            *Posted Purchase Invoices (p 146) -ok
+            *Sales Order Subform (p 46) -ok
+            *Vendor List (p 27) -ok
+            *Purchase Order Subform (p 54) -ok
+            *Item Journal (p 40) -ok
+            *FA Ledger Entries (p 5604) -ok
+
+1.0.0.72
+2022/09/26 VC Order Confirmation report 50025 add Item Reference No. 
+
+1.0.0.73
+2022/09/26 VC Customise Item Price List
+
+1.0.0.76
+2022/10/17 VC Location List add Last Posting Date and Ledger Entries Action 
+
+1.0.0.77
+2022/10/17 VC add BIO Certification Body
+              Report 50009 Sales - Shipment Lidl 
+                     50025 "Order Confirmation - KP"
+                     50026 Sales - Invoice - KP 
+                     50027 Sales - Credit Memo -KP 
+                     50028 Sales - Shipment - BCK - V.0 
+                     50032 Sales - Invoice - KP_1 
+                     50033 Sales - Invoice - KP2 
+                     50034 Sales - Invoice Disc- KP 
+                     50040 Proforma Invoice 
+                     50041 Sales - Invoice HORECA
+                     50042 Sales - Shipment HORECA
+                     50043 "Sales - Credit Memo HORECA"
+                     50044 "Sales - Return Receipt HORECA"
+                     50045 "Order Confirmation HORECA"
+                     50069 Purchase - Receipt FFH
+                     50070 Sales - Shipment FFH
+                     50091 Sales - Return Receipt FFH
+
+1.0.0.79
+2022/10/20 VC Design Item Statement By Location  
+
+1.0.0.81
+2022/10/21 VC Transfer Orders add Email Action 
+
+1.0.0.85
+2022/10/24 VC review "Boxes Statement By Location"
+
+1.0.0.87
+2022/10/24 1)	Vendors add Purchase Prices (Same as Sales Prices)
+            2)	Sales Price Report add option  add option sort by Item/Sort by Description 
+            3)	UOM rename caption to Sales UOM (Vendors add Purchase UOM)
+            4)	Location Card/List add Name 2 
+            5)	Transfers Add Delivery Date/Delivery Time 
+            6)	Transfer Order add in Body and in Printout  (RE Delivery Date/Time) 
+            7)	Remove 2 bin columns
+            8)	Add in Report Transfer from Code/ Transfer to Code
+            9)	Item Card add location code when Sales order line, read location from Item card
+
+1.0.0.88
+2022/10/26 VC review Transfer Order Layout  
+
+1.0.0.95
+2022/10/27 VK Design the Email CC field on Location (t 14) and add it on Location Card (p 5703)
+              On PrintTransferOrder function on Transfer Header (t 5740) add the Email CC of the locations
+
+1.0.0.101
+2022/11/10 Sales Order Import Wolt 
+
+1.0.0.106
+2022/11/14 add objects for Kitech Lot
+           table00_ExpirationCalculation.al
+           report 50099 "Expiring Items"
+           report 50098 "Transfer Expiring Items"
+           report 50097 "LOT Per Item"
+           report 50080 "Phys. Inventory List FFH"
+           report 50079 "Notify Expiring Items"
+
+1.0.0.107
+2022/11/21 
+Show COC when Lidl
+           Report 50009 Sales - Shipment Lidl 
+                  50025 "Order Confirmation - KP"
+                  50026 Sales - Invoice - KP 
+                  50027 Sales - Credit Memo -KP 
+                  50028 Sales - Shipment - BCK - V.0 
+                  50032 Sales - Invoice - KP_1 
+                  50033 Sales - Invoice - KP2 
+                  50034 Sales - Invoice Disc- KP 
+                  50040 Proforma Invoice 
+                  50041 Sales - Invoice HORECA
+                  50042 Sales - Shipment HORECA
+                  50043 "Sales - Credit Memo HORECA"
+                  50044 "Sales - Return Receipt HORECA"
+                  50045 "Order Confirmation HORECA"
+                  50069 Purchase - Receipt FFH
+                  50070 Sales - Shipment FFH
+                  50091 Sales - Return Receipt FFH
+
+1.0.0.108
+2022/11/21 Item Journal Test Report - copy report 702 to 50078
+           add Column Gen. Bus. Posting Group
+
+1.0.0.109
+2022/11/25 Review the decimal places of Quantity of Item Register - Quantity (r 50064)
+
+1.0.0.110
+2022/11/25 1) Costing Allow to use Copy Document with Blank Item. 
+           // [EventSubscriber(ObjectType::Codeunit, Codeunit::"Copy Document Mgt.", 'OnBeforeInsertToSalesLine', '', false, false)]
+           2) "Country/Region of Origin Code"; do not validate Table Relation
+           3) Sales Quotes "No. of New Lines", drilldown "Sales Quote Lidl Subform";
+           4) Sales Quotes add "No. of CostingLines", drilldown "S.Q. Lidl Costing Subform";
+           5) review logic when adding new line from Line source, Gross Profit was not calculated. Type Validation
+
+1.0.0.111
+2022/12/06 Import Sales Budget Qty based on Item Shelf No/ Package Qty 
+
+1.0.0.112
+2022/12/06 create role logistics 50038, Foundation, TAL logistics 
+
+1.0.0.113
+2022/12/09  "Sales Line" Check for Duplicate Items
+             Purchase Line Mandatory Location Code, Purchase Receipt Date
+             Sales Line Mandatory Location Code, Requested Delivery Date
+             My Items add locations
+             Production order cues add Location
+             Import Lidl Fill Requested Delivery Date
+
+1.0.0.114   check if warning in Production Order to not allow user to post   
+2022/12/16  
+
+1.0.0.156   
+2022/12/27 VC Lidl Costing Subform add field Manual kg/stk to know which records are updated manually
+
+Upgrade Test Item Reference Entries
+
+ 1.0.0.158  
+2022/12/28 VC review "Package Qty" to calculate Price per box
+
+ 1.0.0.159  
+2022/12/30 VC Lidl Lines sorting, select items pfv, arrange actions
+
+ 1.0.0.164  
+2023/01/03 VC Item ledger Entry Update closgin fields
+
+1.0.0.165  
+2023/01/03 VC Allow to type invalid Item Refernce in sales Quote
+
+1.0.0.174  
+2023/01/13 VC [EventSubscriber(ObjectType::table, Database::"Sales Shipment Line", 'OnAfterInitFromSalesLine', '', false, false)]
+              when more than 1 shipment in a day, zero Qty Requested.
+
+1.0.0.175  
+2023/01/18 VC Update Sales Shipment Line Qty Requested
+
+1.0.0.176  
+2023/01/19 VC Undo Sales Shipment Line undo Qty Requested
+              [EventSubscriber(ObjectType::Codeunit, Codeunit::"Undo Sales Shipment Line", 'OnBeforeNewSalesShptLineInsert', '', false, false)]
+
+              copy 8 qty box fields
+               [EventSubscriber(ObjectType::Codeunit, Codeunit::"Copy Document Mgt.", 'OnBeforeInsertToSalesLine', '', false, false)]
+
+1.0.0.178  
+2023/01/23 VC report 790 "Calculate Inventory"
+              request to bring stock take as of specific date       
+
+1.0.0.179  
+2023/02/16 VC add on Logistics role the old boxes implementation
+
+1.0.0.180  
+2023/02/16 VC Archive Lidl Order in a separate table
+
+1.0.0.189
+2023/02/24 VK On the Item Register Quantity (r 50064) add the Gen. Bus. Posting Group
+
+1.0.0.193
+2023/03/02 VC sales Order add option Import Horeca xlsx, instead of zip file  
+
+1.0.0.194
+2023/03/02 VC when importing lidl order confirmation, process the first line of an item.  
+
+1.0.0.195
+2023/03/08 VC item list design field Rounding Precision
+
+1.0.0.197 => the package will be uploaded on the evening
+2023/04/28 VK Add the Unit Cost on Stockkeeping Unit List (p 5701)
+           VC add Production BOM Lines fix division of Package Qty   
+
+1.0.0.198
+2023/05/23 rep56_50056_SalesOrderProduction.rdlc sort by Description 
+
+1.0.0.201
+2023/06/08 VK - Design on Sales Line (t 37) the Transfer-from Code & Transfer-to Code and add them on Sales Order Subform (p 46)
+              - Develop the Update procedure for Transfer-from Code and Transfer-to Code on Sales Header (t 36)
+              - Design on Sales Shipment Line (t 111) the Transfer-from Code & Transfer-to Code and add them on Posted Sales Shpt. Subform (p 131)
+              - Design on Purchase Line (t 39) the Transfer-from Code & Transfer-to Code and add them on Purchase Order Subform (p 54)
+              - Develop the Update procedure for Transfer-from Code and Transfer-to Code on Purchase Header (t 38)
+              - Design on Purch. Rcpt. Line (t 121) the Transfer-from Code & Transfer-to Code and add them on Posted Purchase Rcpt. Subform (p 137)
+              - Design the the Transfer-from Code & Transfer-to Code on Sales Shipment (r 50070)
+              - Design the the Transfer-from Code & Transfer-to Code on Purchase Receipt (r 50069)
+
+1.0.0.202
+2023/06/12 VK - Add the Location Code on Purchase Receipt (r 50069)
+
+1.0.0.203
+2023/06/28 VK - Design the Gen. Bus. Posting Group field on Item Ledger Entry (t 32) & add it on Item Ledger Entries (p 38)
+
+1.0.0.204
+2023/07/03 VC - add function UpdateDeletedSOLine
+
+50000 ExpirationCalculation
+table 50001 "General Categories"
+table 50002 "Delivery Schedule" not used
+table 50003 "Chain Of Custody Link"
+table 50004 "Item Grower Vendor"
+table 50005 Grower
+table 50006 "Purchase Header Addon"
+table 50007 "Purchase Line Addon"
+table 50008 "Purchase Header Addon Posted"
+table 50009 "Purchase Line Addon Posted"
+table 50010 "Lidl Order Archive"
+
+2023/07/10 VC comment table "Chain Of Custody Link"
+
+1.0.0.206
+2023/07/11 VC  add fields
+        1.	“GRASP Expiry Date” (Να υπάρχει επιλογή ημερομηνίας όπως στο υφιστάμενο GGN Expiry Date)
+        2.	“Status Biodiversity” (Να υπάρχει επιλογή ΝΑΙ/ΟΧΙ όπως στο υφιστάμενο Status GRASP)
+        3.	“Biodiversity Expiry Date” (Να υπάρχει επιλογή ημερομηνίας όπως στο υφιστάμενο GGN Expiry Date)
+        4.	“Status SPRING” (Να υπάρχει επιλογή ΝΑΙ/ΟΧΙ όπως στο υφιστάμενο Status GRASP)
+        5.	“SPRING Expiry Date” (Να υπάρχει επιλογή ημερομηνίας όπως στο υφιστάμενο GGN Expiry Date)
+
+
+1.0.0.207
+2023/07/13 VC Validate Qty Confirmed when import from excel
+
+1.0.0.208
+2023/07/13 VC Enhancement Order Qty with version history and Statistics
+2023/07/13 VC when cancelling a posted sales Invoice - Set reason code - Update invoice item ledger entries with reason code
+2023/07/14 VC add Max Version No.
+2023/07/20 VC Item Reference List add 2 fields "Item Description","Item Description 2 (GR)"
+
+1.0.0.211
+2023/07/26 VC review Work Order for Deleted Qty and Previous Qty 
+
+1.0.0.212
+2023/07/26 VC on Delete Sales Line with Reservetation, skip delete item tracking confirmation 
+
+1.0.0.217
+2023/07/31 VC add Logistics S&R export permission
+
+1.0.0.218
+2023/09/04 VC review after copy 
+        
+1.0.0.219
+2023/09/20 VC Sales Quote hide parts on the right side 
+
+1.0.0.220
+2023/09/20 VC Review Last 4 weeks format Document Date Range -1D
+
+1.0.0.221
+2023/09/29 VC Import Lidl Order Set Hide Validation Dialog for message Shipment Date %1 is before work date %2
+              Qty confirmed with the requested country  
+
+1.0.0.224
+2023/10/02 VC Report 50090 component routing add Field Shelf No.        
+
+1.0.0.224
+2023/10/10 ANP Change quantity formula when Update Worksheet on Rel. Production Order to exclude Scrap %
+
+1.0.0.226
+2023/10/10 VC Released production order Save Quantity per BOM
+
+1.0.0.227
+2023/10/25 VC Raw Material Usage (50077) add Finished Qty and UOM
+
+1.0.0.228
+2023/11/07 VC Unit Cost Editable
+
+1.0.0.229
+2023/11/22 VC add Packing Agent in Released Production Order
+
+1.0.0.230
+2023/11/27 Create Report to send failed job queues  
+
+1.0.0.231
+2023/11/27 Job Queue Entries, add Update User when talosco makes changes to reset AK user
+
+1.0.0.232
+2023/11/30 Item Card add Packing Agent, when creating a new Production Order, inherit Packing Agent from Item Card
+
+1.0.0.233
+2023/12/01 Lot information card add field Receiving Temperature Celcious  '60°'
+
+1.0.0.234
+2023/12/08 Job queue entries filter with Device User
+
+1.0.0.235
+2024/01/02 Customer Card add Total Qty
+           report 50026 add Total Qty   
+
+1.0.0.236
+2024/01/02 Create new Documents, add Sales Return Order Option
+           Standard Purchase Line add Option Purchase   
+
+1.0.0.237
+2024/01/08 VC skip MatrOrCapConsumpExists when output is zero, entry - correcting entry 10, -10 case. 
+              Cannot delete because entries exists. allow change status with zero output.   
+
+1.0.0.238
+2024/02/05 VC Item Tracing add Expiration Date 
+
+1.0.0.240
+2024/02/06 VC rep 50090 Prod. Order Comp. and Routing add option show Serial 
+
+1.0.0.241
+2024/02/06 VC include item expiration quantity report on the expired notification email
+
+1.0.0.243
+2024/02/07 VC allow to update shipping temperature, report 50070 show quality control if checked 
+
+1.0.0.244
+2024/02/08 VC when opening from Posted Sales Shipment Line, item tracking code, expiration date is not filled
+              in the Item Ledger Entry Table
+              report 50042 add Temperature
+
+1.0.0.247
+2024/04/11 VC Import Horeca 2 excel, Date Range Validation
+
+1.0.0.248
+2024/04/16 VC Design the Horeca Role
+        Create Horeca RC
+        Horeca Order List
+        Horeca Order Header
+        Horeca Order Line
+
+1.0.0.249
+2024/04/16 VC code permissionset 50002 "TAL_HORECA_EXT"
+
+1.0.0.251
+2024/04/17 VC Tool to import Recurring Sales Lines for HORECA
+
+1.0.0.252
+2024/04/17
+        Create standard Lines
+        on new autosuggest standard sales lines
+        HORECA new Order
+
+1.0.0.256
+2024/04/19 Horeca Order Changes
+
+1.0.0.257
+2024/04/19 VC review Horeca Order Changes, hide fields, modules calculation  
+
+1.0.0.258
+2024/04/24 VC use Bricks for Tablet and Phone 
+
+Scedule to auto release
+
+1.0.0.262
+2024/04/25 VC
+
+1.0.0.264
+2024/04/26 VC review security for Customer Lookup and Ship-to address
+
+1.0.0.265
+2024/04/30 VC hide Description2,
+                   Update Posting Date
+                   set Ext Doc No. Store Name     
+
+1.0.0.268
+2024/05/14 VC Enhance HORECA notification
+              email to stores that have not placed an order on their next Delivery Date
+              email to Admins  
+
+1.0.0.272
+2024/05/23 VC review role for Horeca, add history, print, prices 
+
+1.0.0.273
+2024/05/24 VC  add history Sales Invoice, Hide Posted Sales Shipments
+                delete, status
+                only one order per time 
+                update Passwords same as Ship-to code
+
+1.0.0.275
+2024/05/28 VC review Item Category fields 
+
+1.0.0.277
+2024/06/10 VC add excel ImportExcelGeneral
+
+1.0.0.278
+2024/06/10 VC Physical Inventory Journal, add 2 actions
+              Update Bin
+              Zeroise Physical Inventory
+
+1.0.0.279
+2024/06/28 VC Package Qty, 2 decimals
+
+1.0.0.283
+2024/07/04 VC Design fucntion to send emails to horeca managers
+
+1.0.0.284
+2024/07/16 VC review email message for HORECA Manager
+
+1.0.0.285
+2024/07/16 VC copy report 50070 posted sales shipment to report 50049 for Intercompany Customers. Show Location Code
+
+1.0.0.286
+2024/07/16 VC Design Purchase Orders not invoiced for ARAD-3 and ARAD-4
+
+1.0.0.287
+2024/09/12 VC add work order email body customer name, name is LOGISTICS
+
+1.0.0.288
+2024/11/19 VC  Production BOM Lines add user created/Modified by/Date
+
+1.0.0.289
+2024/12/02 VC add field TAL Exclude Item from Adjustme
+
+1.0.0.290
+2024/12/02 VC Logistics add Ship-to Address HORECA user.
+
+1.0.0.291
+2024/12/10 VC set default values for CY Categories 01/2025
+
+1.0.0.292
+2024/12/11 VC HORECA Package Item 
+              Production Order Import Excel      
+
+1.0.0.293
+2024/12/11 VC default packing agent location    
+
+1.0.0.294
+2024/12/11 VC Add Item Categories 10-20 
+
+1.0.0.295
+2024/12/12 VC REview Output Journal Mandatory when flushing method is manual 
+
+1.0.0.296
+2024/12/13 VC Released Production Orders, add action will all Components
+              Logic for CY Mandatory fields 
+ 
+1.0.0.297
+2024/12/17 VC Design on Layouts Country Fields
+
+1.0.0.298
+2024/12/18 VC Design Order Confirmation, Proforma Invoice 
+
+1.0.0.303
+2024/12/23 VC when product class is - then set value to default I
+
+1.0.0.305
+2024/12/30 VC items different UOM
+
+1.0.0.312
+2025/03/07 Report 50075 Box Statement
+
+1.0.0.319
+DPE 08/07/2025 Update PrintPaymentReceipt on Customer Ledger Entries (pagext128)
+               Update PrintVendorReceipt on Vendor Ledger Entries (pagext135)
+               Edit necessary procedures to print and email Vendor Receipt and Payment Receipt (cod06)
+
+1.0.0.321
+DPE 16/07/2025 Add Profit Center to Item Journal Batch and related pages              
+               (Introduces a new 'Profit Center' field to the Item Journal Batch table and exposes it on the Item Journal Batches page. 
+               Updates the Phys. Inventory Journal page to allow updating the Profit Center dimension for lines and sets it automatically on insert. 
+               Also makes 'Unit Cost' visibility conditional and adds tooltips for clarity.)

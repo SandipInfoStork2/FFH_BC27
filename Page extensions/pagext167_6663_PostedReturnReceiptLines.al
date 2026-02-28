@@ -1,0 +1,40 @@
+pageextension 50267 PostedReturnReceiptLinesExt extends "Posted Return Receipt Lines"
+{
+    layout
+    {
+        // Add changes to page layout here
+
+        addafter("Quantity Invoiced")
+        {
+            field("Req. Country"; Rec."Req. Country")
+            {
+                ApplicationArea = all;
+                Visible = true;
+            }
+            field("Country/Region of Origin Code"; Rec."Country/Region of Origin Code")
+            {
+                ApplicationArea = all;
+                Visible = true;
+            }
+
+
+            field("Product Class"; "Product Class")
+            {
+                ApplicationArea = all;
+            }
+            field("Category 9"; "Category 9")
+            {
+                ApplicationArea = all;
+            }
+        }
+
+    }
+
+    actions
+    {
+        // Add changes to page actions here
+    }
+
+    var
+        myInt: Integer;
+}
