@@ -981,7 +981,8 @@ report 50066 "P.O. Order FFH"
         trigger OnOpenPage()
         begin
             ArchiveDocument := PurchSetup."Archive Orders";
-            LogInteraction := SegManagement.FindInteractTmplCode(13) <> '';
+            // LogInteraction := SegManagement.FindInteractTmplCode(13) <> '';
+            LogInteraction := SegManagement.FindInteractionTemplateCode(13) <> '';
 
             LogInteractionEnable := LogInteraction;
         end;

@@ -939,7 +939,9 @@ report 50018 "Analysis Report-Landscape"
                             else begin
                                 NonZero := NonZero or (ColumnValuesDisplayed[i] <> 0);
                                 ColumnValuesAsText[i] :=
-                                  MatrixMgt.FormatValue(ColumnValuesDisplayed[i], "Rounding Factor", false);
+                                  MatrixMgt.FormatAmount(ColumnValuesDisplayed[i], "Rounding Factor", false);
+                                /* ColumnValuesAsText[i] :=
+                                  MatrixMgt.FormatValue(ColumnValuesDisplayed[i], "Rounding Factor", false); */
                             end;
                     end;
                 until (i >= MaxColumnsDisplayed) or (NEXT = 0);

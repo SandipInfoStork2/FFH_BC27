@@ -18,7 +18,8 @@ table 50005 Grower
             begin
                 if "No." <> xRec."No." then begin
                     PurchSetup.GET;
-                    NoSeriesMgt.TestManual(PurchSetup."Grower Nos.");
+                    NoSeries.TestManual(PurchSetup."Grower Nos.");
+                    //NoSeriesMgt.TestManual(PurchSetup."Grower Nos.");
                     "No. Series" := '';
                 end;
             end;
@@ -391,7 +392,8 @@ table 50005 Grower
     begin
         if "No." = '' then begin
             PurchSetup.GET;
-            NoSeriesMgt.InitSeries(PurchSetup."Grower Nos.", xRec."No. Series", 0D, "No.", "No. Series");
+            "No." := NoSeries.GetNextNo(PurchSetup."Grower Nos.", 0D);
+            //NoSeriesMgt.InitSeries(PurchSetup."Grower Nos.", xRec."No. Series", 0D, "No.", "No. Series");
         end;
 
         "Creation Date" := CURRENTDATETIME;
@@ -557,6 +559,6 @@ table 50005 Grower
 
     var
         PurchSetup: Record "Purchases & Payables Setup";
-        NoSeriesMgt: Codeunit NoSeriesManagement;
+        NoSeries: Codeunit "No. Series";
 }
 

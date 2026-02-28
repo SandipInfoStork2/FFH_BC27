@@ -1361,7 +1361,8 @@ report 50026 "Sales - Invoice - KP"
 
     procedure InitLogInteraction();
     begin
-        LogInteraction := SegManagement.FindInteractTmplCode(4) <> '';
+        //LogInteraction := SegManagement.FindInteractTmplCode(4) <> '';
+        LogInteraction := SegManagement.FindInteractionTemplateCode(4) <> '';
     end;
 
     procedure FindPostedShipmentDate(): Date;

@@ -442,7 +442,7 @@ page 50036 "S.Q. Lidl Negotiation Subform"
                     ApplicationArea = Basic, Suite;
                     Caption = 'Edit in Excel';
                     Image = Excel;
-                   
+
                     Visible = IsSaaSExcelAddinEnabled;
                     ToolTip = 'Send the data in the sub page to an Excel file for analysis or editing';
                     AccessByPermission = System "Allow Action Export To Excel" = X;
@@ -528,7 +528,7 @@ page 50036 "S.Q. Lidl Negotiation Subform"
         SetOpenPage();
 
         SetDimensionsVisibility();
-        SetItemReferenceVisibility();
+        //SetItemReferenceVisibility();
     end;
 
     var
@@ -811,12 +811,12 @@ page 50036 "S.Q. Lidl Negotiation Subform"
         OnAfterSetDimensionsVisibility();
     end;
 
-    local procedure SetItemReferenceVisibility()
+    /* local procedure SetItemReferenceVisibility()
     var
         ItemReferenceMgt: Codeunit "Item Reference Management";
     begin
         ItemReferenceVisible := ItemReferenceMgt.IsEnabled();
-    end;
+    end; */
 
     local procedure ValidateShortcutDimension(DimIndex: Integer)
     var

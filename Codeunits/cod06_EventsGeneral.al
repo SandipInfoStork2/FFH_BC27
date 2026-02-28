@@ -10,7 +10,6 @@ codeunit 50006 EventsGeneral
     [EventSubscriber(ObjectType::Table, database::"Return Receipt Line", 'OnAfterInitFromSalesLine', '', false, false)]
     local procedure OnAfterInitFromSalesLineRRH(ReturnRcptHeader: Record "Return Receipt Header"; SalesLine: Record "Sales Line"; var ReturnRcptLine: Record "Return Receipt Line")
     begin
-
         ReturnRcptLine."Net Weight" := SalesLine."Net Weight";
         ReturnRcptLine."Total Net Weight" := ReturnRcptLine."Quantity (Base)" * ReturnRcptLine."Net Weight";
 
@@ -18,15 +17,12 @@ codeunit 50006 EventsGeneral
         //ReturnRcptLine."Req. Country" := SalesLine."Req. Country";
         ReturnRcptLine."Product Class" := SalesLine."Product Class";
         ReturnRcptLine."Category 9" := SalesLine."Category 9";
-
-
     end;
 
 
     [EventSubscriber(ObjectType::Table, database::"Prod. Order Component", 'OnValidateItemNoOnAfterUpdateUOMFromItem', '', false, false)]
     local procedure OnValidateItemNoOnAfterUpdateUOMFromItem(var ProdOrderComponent: Record "Prod. Order Component"; xProdOrderComponent: Record "Prod. Order Component"; Item: Record Item)
     begin
-
         ProdOrderComponent."Item Category Code" := Item."Item Category Code"; //TAL0.1
     end;
 
@@ -289,7 +285,7 @@ codeunit 50006 EventsGeneral
         //TAL 1.0.0.319 <<
     end;
 
-    [EventSubscriber(ObjectType::page, page::"Customer Report Selections", 'OnMapTableUsageValueToPageValueOnCaseElse', '', false, false)]
+    /* [EventSubscriber(ObjectType::page, page::"Customer Report Selections", 'OnMapTableUsageValueToPageValueOnCaseElse', '', false, false)]
     local procedure OnMapTableUsageValueToPageValueOnCaseElse(CustomReportSelection: Record "Custom Report Selection"; var ReportUsage: Option)
     var
         Usage2: Option Quote,"Confirmation Order",Invoice,"Credit Memo","Customer Statement","Job Quote",Reminder,Shipment,"S.Ret.Rcpt.","Payment Receipt";
@@ -301,6 +297,22 @@ codeunit 50006 EventsGeneral
             //TAL 1.0.0.319 >>
             CustomReportSelection.Usage::"Payment Receipt":
                 ReportUsage := Usage2::"Payment Receipt";
+        //TAL 1.0.0.319 <<
+        end;
+    end; */
+
+    [EventSubscriber(ObjectType::page, page::"Customer Report Selections", 'OnAfterOnMapTableUsageValueToPageValue', '', false, false)]
+    local procedure OnMapTableUsageValueToPageValueOnCaseElse(CustomReportSelection: Record "Custom Report Selection"; var Usage2: Enum "Custom Report Selection Sales")
+    var
+    //Usage2: Option Quote,"Confirmation Order",Invoice,"Credit Memo","Customer Statement","Job Quote",Reminder,Shipment,"S.Ret.Rcpt.","Payment Receipt";
+    begin
+        case CustomReportSelection.Usage of
+            CustomReportSelection.Usage::"S.Ret.Rcpt.":
+                Usage2 := Usage2::"S.Ret.Rcpt.";
+
+            //TAL 1.0.0.319 >>
+            CustomReportSelection.Usage::"Payment Receipt":
+                Usage2 := Usage2::"Payment Receipt";
         //TAL 1.0.0.319 <<
         end;
     end;
@@ -594,8 +606,13 @@ codeunit 50006 EventsGeneral
         //-1502
     end;
 
-    [EventSubscriber(ObjectType::Report, Report::"Suggest Vendor Payments", 'OnBeforeUpdateGnlJnlLineDimensionsFromTempBuffer', '', false, false)]
+    /* [EventSubscriber(ObjectType::Report, Report::"Suggest Vendor Payments", 'OnBeforeUpdateGnlJnlLineDimensionsFromTempBuffer', '', false, false)]
     local procedure OnBeforeUpdateGnlJnlLineDimensionsFromTempBuffer(var GenJournalLine: Record "Gen. Journal Line"; TempPaymentBuffer: Record "Payment Buffer" temporary; SummarizePerVend: Boolean)
+    begin
+        GenJournalLine."Message to Recipient" := '';
+    end; */
+    [EventSubscriber(ObjectType::Report, Report::"Suggest Vendor Payments", 'OnBeforeUpdateGnlJnlLineDimensionsFromVendorPaymentBuffer', '', false, false)]
+    local procedure OnBeforeUpdateGnlJnlLineDimensionsFromTempBuffer(var GenJournalLine: Record "Gen. Journal Line"; TempVendorPaymentBuffer: Record "Vendor Payment Buffer" temporary; SummarizePerVend: Boolean)
     begin
         GenJournalLine."Message to Recipient" := '';
     end;

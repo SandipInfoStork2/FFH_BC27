@@ -2,7 +2,10 @@
 TAL0.1 2021/04/08 VC add field Item Tracking
 
 */
-pageextension 50167 NoSeriesListExt extends "No. Series List"
+
+//ObsoleteReason = 'This page is deprecated. Please use the page 456 "No. Series"';
+
+/* pageextension 50167 NoSeriesListExt extends "No. Series List"
 {
     layout
     {
@@ -24,4 +27,4 @@ pageextension 50167 NoSeriesListExt extends "No. Series List"
 
     var
         myInt: Integer;
-}
+} */

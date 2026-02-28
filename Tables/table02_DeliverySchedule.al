@@ -154,7 +154,8 @@ table 50002 "Delivery Schedule"
         if "Delivery No." = '' then begin
             rG_WarehouseSetup.GET;
             rG_WarehouseSetup.TESTFIELD("Delivery Nos.");
-            NoSeriesMgt.InitSeries(rG_WarehouseSetup."Delivery Nos.", xRec."No. Series", 0D, "Delivery No.", "No. Series");
+            "Delivery No." := NoSeries.GetNextNo(rG_WarehouseSetup."Delivery Nos.", 0D);
+            //NoSeriesMgt.InitSeries(rG_WarehouseSetup."Delivery Nos.", xRec."No. Series", 0D, "Delivery No.", "No. Series");
         end;
 
         "Creation Date" := CURRENTDATETIME;
@@ -174,6 +175,6 @@ table 50002 "Delivery Schedule"
 
     var
         rG_WarehouseSetup: Record "Warehouse Setup";
-        NoSeriesMgt: Codeunit NoSeriesManagement;
+        NoSeries: Codeunit "No. Series";
 }
 

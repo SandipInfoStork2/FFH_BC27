@@ -23,10 +23,10 @@ pageextension 50109 ItemListExt extends "Item List"
 
         addafter(Description)
         {
-            field("Description 2"; "Description 2")
+            /* field("Description 2"; "Description 2")
             {
                 ApplicationArea = All;
-            }
+            } */
             field("Extended Description"; "Extended Description")
             {
                 ApplicationArea = All;

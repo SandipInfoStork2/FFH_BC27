@@ -21,7 +21,8 @@ pageextension 50156 BankAccReconciliationLinesExt extends "Bank Acc. Reconciliat
     actions
     {
         // Add changes to page actions here
-        addafter(ApplyEntries)
+        //addafter(ApplyEntries)
+        addafter(ShowStatementLineDetails)
         {
             action("Check No Filter")
             {

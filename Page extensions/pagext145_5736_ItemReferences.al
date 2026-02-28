@@ -6,14 +6,14 @@ pageextension 50245 ItemReferencesExt extends "Item References"
 
         addbefore("Reference No.")
         {
-            field("Reference Type"; "Reference Type")
+            /* field("Reference Type"; "Reference Type")
             {
                 ApplicationArea = all;
             }
             field("Reference Type No."; "Reference Type No.")
             {
                 ApplicationArea = all;
-            }
+            } */
         }
 
         addafter("Unit of Measure")

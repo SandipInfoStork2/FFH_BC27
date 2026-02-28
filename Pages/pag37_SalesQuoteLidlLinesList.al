@@ -828,7 +828,7 @@ page 50037 "Sales Quote Lidl Lines"
         SetOpenPage();
 
         SetDimensionsVisibility();
-        SetItemReferenceVisibility();
+        //SetItemReferenceVisibility();
     end;
 
     var
@@ -1113,12 +1113,12 @@ page 50037 "Sales Quote Lidl Lines"
         OnAfterSetDimensionsVisibility();
     end;
 
-    local procedure SetItemReferenceVisibility()
+    /* local procedure SetItemReferenceVisibility()
     var
         ItemReferenceMgt: Codeunit "Item Reference Management";
     begin
         ItemReferenceVisible := ItemReferenceMgt.IsEnabled();
-    end;
+    end; */
 
     local procedure ValidateShortcutDimension(DimIndex: Integer)
     var

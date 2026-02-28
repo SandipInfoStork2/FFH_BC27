@@ -1127,7 +1127,8 @@ report 50033 "Sales - Invoice - KP2"
 
     procedure InitLogInteraction();
     begin
-        LogInteraction := SegManagement.FindInteractTmplCode(4) <> '';
+        // LogInteraction := SegManagement.FindInteractTmplCode(4) <> '';
+        LogInteraction := SegManagement.FindInteractionTemplateCode(4) <> '';
     end;
 
     procedure FindPostedShipmentDate(): Date;

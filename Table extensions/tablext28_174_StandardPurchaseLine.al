@@ -44,7 +44,7 @@ tableextension 50128 StandardPurchaseLine extends "Standard Purchase Line"
             var
                 TempSKU: Record "Stockkeeping Unit" temporary;
                 AsmHeader: Record "Assembly Header";
-                NoSeriesMgt: Codeunit NoSeriesManagement;
+            //NoSeriesMgt: Codeunit NoSeriesManagement;
             begin
             end;
         }

@@ -514,8 +514,10 @@ report 50072 "Suggest Vendor Payments FFH"
         BankAcc: Record "Bank Account";
         PayableVendLedgEntry: Record "Payable Vendor Ledger Entry" temporary;
         CompanyInformation: Record "Company Information";
-        TempPaymentBuffer: Record "Payment Buffer" temporary;
-        OldTempPaymentBuffer: Record "Payment Buffer" temporary;
+        /* TempPaymentBuffer: Record "Payment Buffer" temporary;
+        OldTempPaymentBuffer: Record "Payment Buffer" temporary; */
+        TempPaymentBuffer: Record "Vendor Payment Buffer" temporary;
+        OldTempPaymentBuffer: Record "Vendor Payment Buffer" temporary;
         SelectedDim: Record "Selected Dimension";
         VendorLedgEntryTemp: Record "Vendor Ledger Entry" temporary;
         TempErrorMessage: Record "Error Message" temporary;
@@ -918,6 +920,8 @@ report 50072 "Suggest Vendor Payments FFH"
         DimVal: Record "Dimension Value";
         NewDimensionID: Integer;
         DimSetIDArr: array[10] of Integer;
+        SourceList: List of [Dictionary of [Integer, Code[20]]];
+        SourceDict: Dictionary of [Integer, Code[20]];
     begin
         with GenJnlLine do begin
             NewDimensionID := "Dimension Set ID";
@@ -936,12 +940,53 @@ report 50072 "Suggest Vendor Payments FFH"
                 NewDimensionID := DimMgt.GetDimensionSetID(TempDimSetEntry);
                 "Dimension Set ID" := NewDimensionID;
             end;
-            CreateDim(
+            /* CreateDim(
               DimMgt.TypeToTableID1("Account Type".AsInteger()), "Account No.",
               DimMgt.TypeToTableID1("Bal. Account Type".AsInteger()), "Bal. Account No.",
               DATABASE::Job, "Job No.",
               DATABASE::"Salesperson/Purchaser", "Salespers./Purch. Code",
-              DATABASE::Campaign, "Campaign No.");
+              DATABASE::Campaign, "Campaign No."); */
+            //BC25 According >>
+
+            // Account
+            Clear(SourceDict);
+            SourceDict.Add(
+                DimMgt.TypeToTableID1("Account Type".AsInteger()),
+                "Account No.");
+            SourceList.Add(SourceDict);
+
+            // Bal. Account
+            if "Bal. Account No." <> '' then begin
+                Clear(SourceDict);
+                SourceDict.Add(
+                    DimMgt.TypeToTableID1("Bal. Account Type".AsInteger()),
+                    "Bal. Account No.");
+                SourceList.Add(SourceDict);
+            end;
+
+            // Job
+            if "Job No." <> '' then begin
+                Clear(SourceDict);
+                SourceDict.Add(DATABASE::Job, "Job No.");
+                SourceList.Add(SourceDict);
+            end;
+
+            // Salesperson
+            if "Salespers./Purch. Code" <> '' then begin
+                Clear(SourceDict);
+                SourceDict.Add(DATABASE::"Salesperson/Purchaser", "Salespers./Purch. Code");
+                SourceList.Add(SourceDict);
+            end;
+
+            // Campaign
+            if "Campaign No." <> '' then begin
+                Clear(SourceDict);
+                SourceDict.Add(DATABASE::Campaign, "Campaign No.");
+                SourceList.Add(SourceDict);
+            end;
+
+            CreateDim(SourceList);
+            //BC25 According <<
             if NewDimensionID <> "Dimension Set ID" then begin
                 DimSetIDArr[1] := "Dimension Set ID";
                 DimSetIDArr[2] := NewDimensionID;
@@ -1244,8 +1289,12 @@ report 50072 "Suggest Vendor Payments FFH"
     begin
     end;
 
-    [IntegrationEvent(false, false)]
+    /* [IntegrationEvent(false, false)]
     local procedure OnUpdateTempBufferFromVendorLedgerEntry(var TempPaymentBuffer: Record "Payment Buffer" temporary; VendorLedgerEntry: Record "Vendor Ledger Entry")
+    begin
+    end; */
+    [IntegrationEvent(false, false)]
+    local procedure OnUpdateTempBufferFromVendorLedgerEntry(var TempPaymentBuffer: Record "Vendor Payment Buffer" temporary; VendorLedgerEntry: Record "Vendor Ledger Entry")
     begin
     end;
 
@@ -1254,8 +1303,12 @@ report 50072 "Suggest Vendor Payments FFH"
     begin
     end;
 
-    [IntegrationEvent(false, false)]
+    /* [IntegrationEvent(false, false)]
     local procedure OnBeforeUpdateGnlJnlLineDimensionsFromTempBuffer(var GenJournalLine: Record "Gen. Journal Line"; TempPaymentBuffer: Record "Payment Buffer" temporary; SummarizePerVend: Boolean)
+    begin
+    end; */
+    [IntegrationEvent(false, false)]
+    local procedure OnBeforeUpdateGnlJnlLineDimensionsFromTempBuffer(var GenJournalLine: Record "Gen. Journal Line"; TempPaymentBuffer: Record "Vendor Payment Buffer" temporary; SummarizePerVend: Boolean)
     begin
     end;
 

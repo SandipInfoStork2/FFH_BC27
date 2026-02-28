@@ -448,7 +448,7 @@ page 50006 "Purchase Order Subform Addon P"
         UpdateAllowedVar: Boolean;
         Text000: Label 'Unable to execute this function while in view only mode.';
         PurchHeader: Record "Purchase Header Addon";
-        PurchPriceCalcMgt: Codeunit "Purch. Price Calc. Mgt.";
+        ///PurchPriceCalcMgt: Codeunit "Purch. Price Calc. Mgt.";
         Text001: Label 'You cannot use the Explode BOM function because a prepayment of the purchase order has been invoiced.';
         tPurchHeader: Record "Purchase Header Addon";
 

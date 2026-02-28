@@ -964,7 +964,8 @@ report 50070 "Sales - Shipment FFH"
     [Scope('Internal')]
     procedure InitLogInteraction()
     begin
-        LogInteraction := SegManagement.FindInteractTmplCode(5) <> '';
+        // LogInteraction := SegManagement.FindInteractTmplCode(5) <> '';
+        LogInteraction := SegManagement.FindInteractionTemplateCode(5) <> '';
     end;
 
     [Scope('Internal')]

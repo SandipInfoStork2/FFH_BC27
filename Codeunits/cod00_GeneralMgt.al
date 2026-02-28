@@ -1,40 +1,40 @@
 dotnet
 {
-    assembly(System)
-    {
-        Version = '4.0.0.0';
-        Culture = neutral;
-        PublicKeyToken = 'b77a5c561934e089';
+    // assembly(System)
+    // {
+    //     Version = '4.0.0.0';
+    //     Culture = neutral;
+    //     PublicKeyToken = 'b77a5c561934e089';
 
-        type(System.Text.RegularExpressions.Regex; MyRegEx) { }
-        type(System.Text.RegularExpressions.RegexOptions; MyRegExOptions) { }
+    //     type(System.Text.RegularExpressions.Regex; MyRegEx) { }
+    //     type(System.Text.RegularExpressions.RegexOptions; MyRegExOptions) { }
 
 
 
-        //RegEx: DotNet "'System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'.System.Text.RegularExpressions.Regex";
-        //RegExOptions: DotNet "'System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'.System.Text.RegularExpressions.RegexOptions";
-        //System.Environment.'mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'
+    //     //RegEx: DotNet "'System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'.System.Text.RegularExpressions.Regex";
+    //     //RegExOptions: DotNet "'System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'.System.Text.RegularExpressions.RegexOptions";
+    //     //System.Environment.'mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'
 
-    }
-    assembly(mscorlib)
-    {
-        type(System.ArgumentNullException; MyRegEx1) { }
-        type(System.ArgumentNullException; MyRegExOptions1) { }
+    // }
+    // assembly(mscorlib)
+    // {
+    //     type(System.ArgumentNullException; MyRegEx1) { }
+    //     type(System.ArgumentNullException; MyRegExOptions1) { }
 
-        type(System.IO.StreamWriter; streamWriter_DT) { }
+    //     type(System.IO.StreamWriter; streamWriter_DT) { }
 
-        type(System.Text.UnicodeEncoding; encoding_DT) { }
+    //     type(System.Text.UnicodeEncoding; encoding_DT) { }
 
-        type(System.IO.Directory; Folder_DT) { }
-        type("System.Collections.Generic.List`1"; Lst_DT) { }
-        type(System.Object; Obj_DT) { }
+    //     type(System.IO.Directory; Folder_DT) { }
+    //     type("System.Collections.Generic.List`1"; Lst_DT) { }
+    //     type(System.Object; Obj_DT) { }
 
-        type(System.Environment; MyENV) { }
+    //     type(System.Environment; MyENV) { }
 
-        //streamWriter: DotNet "'mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'.System.IO.StreamWriter";
-        //encoding: DotNet "'mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'.System.Text.UnicodeEncoding";
+    //     //streamWriter: DotNet "'mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'.System.IO.StreamWriter";
+    //     //encoding: DotNet "'mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'.System.Text.UnicodeEncoding";
 
-    }
+    // }
 
 
 
@@ -101,10 +101,10 @@ codeunit 50000 "General Mgt."
         TargetStream: OutStream;
         ExportFileName: Text[1024];
         rG_SRSetup: Record "Sales & Receivables Setup";
-        streamWriter: DotNet streamWriter_DT; //"'mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'.System.IO.StreamWriter";
-        encoding: DotNet encoding_DT; //"'mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'.System.Text.UnicodeEncoding";
+        // streamWriter: DotNet streamWriter_DT; //"'mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'.System.IO.StreamWriter";
+        // encoding: DotNet encoding_DT; //"'mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'.System.Text.UnicodeEncoding";
 
-        vG_Environment: DotNet MyENV;
+        // vG_Environment: DotNet MyENV;
 
         Text1000016: Label '<Precision,2:2><Sign><Integer><Decimals><Comma,.>';
         Text1000017: Label '<Precision,3:3><Sign><Integer><Decimals><Comma,.>';
@@ -156,7 +156,8 @@ codeunit 50000 "General Mgt."
         VATArrayColumn4: array[3] of Text;
         VATArrayColumn5: array[3] of Text;
         I: Integer;
-        rG_CrossReference: Record "Item Cross Reference";
+        //rG_CrossReference: Record "Item Cross Reference";
+        rG_CrossReference: Record "Item Reference";
         rG_ReasonCode: Record "Reason Code";
         sLineNo: Integer;
         rG_ValueEntry: Record "Value Entry";
@@ -229,7 +230,7 @@ codeunit 50000 "General Mgt."
         vL_DayTemp: Text;
         vL_WeekLot: Text;
         vL_DayWeekTemp: Text;
-        rL_CrossReference: Record "Item Cross Reference";
+        rL_CrossReference: Record "Item Reference";
         rL_ReservationEntry: Record "Reservation Entry";
         vL_ItemTrackingLotNo: Code[20];
         rL_LotNoInformation: Record "Lot No. Information";
@@ -489,10 +490,14 @@ codeunit 50000 "General Mgt."
                                     //get navision item No
                                     if rG_SRSetup."Enable Lidl Cross-Ref Search" then begin
                                         rL_CrossReference.RESET;
-                                        rL_CrossReference.SETRANGE("Cross-Reference Type", rL_CrossReference."Cross-Reference Type"::Customer);
+                                        /* rL_CrossReference.SETRANGE("Cross-Reference Type", rL_CrossReference."Cross-Reference Type"::Customer);
                                         rL_CrossReference.SETFILTER("Cross-Reference Type No.", pSalesOrder."Sell-to Customer No.");
                                         rL_CrossReference.SETFILTER("Cross-Reference No.", Colmn4_ItemNo);
-                                        rL_CrossReference.SETRANGE("Discontinue Bar Code", false);
+                                        rL_CrossReference.SETRANGE("Discontinue Bar Code", false); */
+                                        rL_CrossReference.SETRANGE("Reference Type", rL_CrossReference."Reference Type"::Customer);
+                                        rL_CrossReference.SETFILTER("Reference Type No.", pSalesOrder."Sell-to Customer No.");
+                                        rL_CrossReference.SETFILTER("Reference No.", Colmn4_ItemNo);
+                                        //rL_CrossReference.SETRANGE("Discontinue Bar Code", false); //field remove from table due to not used
                                         if rL_CrossReference.FINDSET then begin
                                             rL_Item.GET(rL_CrossReference."Item No.");
                                             rL_Item.TESTFIELD("Package Qty", Colmn11_PackageQty);
@@ -692,7 +697,7 @@ codeunit 50000 "General Mgt."
         Colmn9_CountryOrigin: Text;
         Colmn11_PackageQty: Decimal;
         Colmn31_QtyConfirmed: Decimal;
-        rL_CrossReference: Record "Item Cross Reference";
+        rL_CrossReference: Record "Item Reference";
         rL_Item: Record Item;
         SalesLine: Record "Sales Line";
     begin
@@ -799,10 +804,14 @@ codeunit 50000 "General Mgt."
                                     //get navision item No
                                     if rG_SRSetup."Enable Lidl Cross-Ref Search" then begin
                                         rL_CrossReference.RESET;
-                                        rL_CrossReference.SETRANGE("Cross-Reference Type", rL_CrossReference."Cross-Reference Type"::Customer);
+                                        /* rL_CrossReference.SETRANGE("Cross-Reference Type", rL_CrossReference."Cross-Reference Type"::Customer);
                                         rL_CrossReference.SETFILTER("Cross-Reference Type No.", pSalesOrder."Sell-to Customer No.");
                                         rL_CrossReference.SETFILTER("Cross-Reference No.", Colmn4_ItemNo);
-                                        rL_CrossReference.SETRANGE("Discontinue Bar Code", false);
+                                        rL_CrossReference.SETRANGE("Discontinue Bar Code", false); */
+                                        rL_CrossReference.SETRANGE("Reference Type", rL_CrossReference."Reference Type"::Customer);
+                                        rL_CrossReference.SETFILTER("Reference Type No.", pSalesOrder."Sell-to Customer No.");
+                                        rL_CrossReference.SETFILTER("Reference No.", Colmn4_ItemNo);
+                                        //rL_CrossReference.SETRANGE("Discontinue Bar Code", false); //Field remove from table due to not is use
                                         if rL_CrossReference.FINDSET then begin
                                             rL_Item.GET(rL_CrossReference."Item No.");
                                             rL_Item.TESTFIELD("Package Qty", Colmn11_PackageQty);
@@ -1242,13 +1251,65 @@ codeunit 50000 "General Mgt."
             end;
     end;
 
+    // local procedure CreateFile(pFileName: Text);
+    // begin
+    //     CLEAR(TargetFile);
+    //     CLEAR(TargetStream);
+    //     CLEAR(TargetText);
+
+    //     ExportFileName := rG_SRSetup."EDI Export Path Server" + pFileName;
+
+    //     if rG_SRSetup."EDI Create Server File" then begin
+    //         TargetFile.CREATE(ExportFileName);
+    //         TargetFile.TEXTMODE(false);
+    //         TargetFile.CREATEOUTSTREAM(TargetStream);
+    //     end;
+
+    //     CLEAR(vG_TempBlob);
+    //     vG_TempBlob.CreateOutStream(vG_OutS, TEXTENCODING::UTF8);
+
+    //     if (vG_UseDotNet = true) and (rG_SRSetup."EDI Create Server File") then begin
+    //         /*
+    //         0: //DOS-PC8
+    //           streamReader := streamReader.StreamReader(InStr, encoding.GetEncoding(850));
+    //         1: //ANSI
+    //           streamReader := streamReader.StreamReader(InStr, encoding.GetEncoding(1252));
+    //         2: //UTF8
+    //           streamReader := streamReader.StreamReader(InStr, encoding.UTF8);
+    //         */
+
+    //         case rG_SRSetup."EDI Encoding Export" of
+    //             rG_SRSetup."EDI Encoding Export"::ANSI:
+    //                 begin
+    //                     streamWriter := streamWriter.StreamWriter(TargetStream, encoding.GetEncoding(1252));
+    //                 end;
+    //             rG_SRSetup."EDI Encoding Export"::"DOS-PC8":
+    //                 begin
+    //                     streamWriter := streamWriter.StreamWriter(TargetStream, encoding.GetEncoding(850));
+    //                 end;
+    //             rG_SRSetup."EDI Encoding Export"::Unicode:
+    //                 begin
+    //                     streamWriter := streamWriter.StreamWriter(TargetStream, encoding.Unicode);
+    //                 end;
+    //             rG_SRSetup."EDI Encoding Export"::UTF8:
+    //                 begin
+    //                     streamWriter := streamWriter.StreamWriter(TargetStream, encoding.UTF8);
+    //                 end;
+    //         end;
+
+    //     end;
+
+    // end;
+
     local procedure CreateFile(pFileName: Text);
+    var
+        Encoding: TextEncoding;
     begin
         CLEAR(TargetFile);
         CLEAR(TargetStream);
         CLEAR(TargetText);
 
-        ExportFileName := rG_SRSetup."EDI Export Path Server" + pFileName;
+        /* ExportFileName := rG_SRSetup."EDI Export Path Server" + pFileName;
 
         if rG_SRSetup."EDI Create Server File" then begin
             TargetFile.CREATE(ExportFileName);
@@ -1260,36 +1321,39 @@ codeunit 50000 "General Mgt."
         vG_TempBlob.CreateOutStream(vG_OutS, TEXTENCODING::UTF8);
 
         if (vG_UseDotNet = true) and (rG_SRSetup."EDI Create Server File") then begin
-            /*
-            0: //DOS-PC8
-              streamReader := streamReader.StreamReader(InStr, encoding.GetEncoding(850));
-            1: //ANSI
-              streamReader := streamReader.StreamReader(InStr, encoding.GetEncoding(1252));
-            2: //UTF8
-              streamReader := streamReader.StreamReader(InStr, encoding.UTF8);
-            */
-
             case rG_SRSetup."EDI Encoding Export" of
                 rG_SRSetup."EDI Encoding Export"::ANSI:
-                    begin
-                        streamWriter := streamWriter.StreamWriter(TargetStream, encoding.GetEncoding(1252));
-                    end;
+                    Encoding := TextEncoding::Windows;
                 rG_SRSetup."EDI Encoding Export"::"DOS-PC8":
-                    begin
-                        streamWriter := streamWriter.StreamWriter(TargetStream, encoding.GetEncoding(850));
-                    end;
+                    Encoding := TextEncoding::MSDos;
                 rG_SRSetup."EDI Encoding Export"::Unicode:
-                    begin
-                        streamWriter := streamWriter.StreamWriter(TargetStream, encoding.Unicode);
-                    end;
+                    Encoding := TextEncoding::UTF16;
                 rG_SRSetup."EDI Encoding Export"::UTF8:
-                    begin
-                        streamWriter := streamWriter.StreamWriter(TargetStream, encoding.UTF8);
-                    end;
+                    Encoding := TextEncoding::UTF8;
+            end;
+        end; */
+
+        ExportFileName := rG_SRSetup."EDI Export Path Server" + pFileName;
+
+        if rG_SRSetup."EDI Create Server File" then begin
+            // Create file
+            TargetFile.Create(ExportFileName);
+
+            // Choose encoding from setup
+            case rG_SRSetup."EDI Encoding Export" of
+                rG_SRSetup."EDI Encoding Export"::ANSI:
+                    Encoding := TextEncoding::Windows;
+                rG_SRSetup."EDI Encoding Export"::"DOS-PC8":
+                    Encoding := TextEncoding::MSDos;
+                rG_SRSetup."EDI Encoding Export"::Unicode:
+                    Encoding := TextEncoding::UTF16;
+                rG_SRSetup."EDI Encoding Export"::UTF8:
+                    Encoding := TextEncoding::UTF8;
             end;
 
+            // Create stream with selected encoding
+            TargetFile.CreateOutStream(TargetStream);
         end;
-
     end;
 
     local procedure CloseFile();
@@ -1298,7 +1362,8 @@ codeunit 50000 "General Mgt."
         //TargetFile.SEEK(TargetFile.POS()-2);
 
         if vG_UseDotNet = true then begin
-            streamWriter.Close();
+            //streamWriter.Close();
+            TargetFile.CLOSE;
         end else begin
             if rG_SRSetup."EDI Create Server File" then begin
                 TargetText.WRITE(TargetStream); //encoding
@@ -1563,7 +1628,8 @@ codeunit 50000 "General Mgt."
         CurrentLine += WriteText('', 100, '<', '', true); //68  Σχόλια  [comments] //last line
 
         if vG_UseDotNet = true then begin
-            streamWriter.WriteLine(CurrentLine);
+            //streamWriter.WriteLine(CurrentLine);
+            TargetFile.Write(CurrentLine);
         end else begin
             TargetText.ADDTEXT(CurrentLine);  //NOD0.7
         end;
@@ -1606,9 +1672,11 @@ codeunit 50000 "General Mgt."
         //find the cross reference
         rG_CrossReference.RESET;
         rG_CrossReference.SETFILTER("Item No.", rG_SalesInvoiceLine."No.");
-        rG_CrossReference.SETRANGE("Cross-Reference Type", rG_CrossReference."Cross-Reference Type"::"Bar Code");
+        //rG_CrossReference.SETRANGE("Cross-Reference Type", rG_CrossReference."Cross-Reference Type"::"Bar Code");
+        rG_CrossReference.SETRANGE("Reference Type", rG_CrossReference."Reference Type"::"Bar Code");
         if rG_CrossReference.FINDSET then begin
-            CurrentLine += WriteText(rG_CrossReference."Cross-Reference No.", 14, '<', '', false); //4 ΕΑΝ τεμαχίου [EAN_cu]
+            //CurrentLine += WriteText(rG_CrossReference."Cross-Reference No.", 14, '<', '', false); //4 ΕΑΝ τεμαχίου [EAN_cu]
+            CurrentLine += WriteText(rG_CrossReference."Reference No.", 14, '<', '', false); //4 ΕΑΝ τεμαχίου [EAN_cu]
         end else begin
             CurrentLine += WriteText('', 14, '<', '', false); //4 ΕΑΝ τεμαχίου [EAN_cu]
         end;
@@ -1706,7 +1774,8 @@ codeunit 50000 "General Mgt."
         CurrentLine += WriteText(CommentLine, 50, '<', '', true); //41 Σχόλια [comments]
 
         if vG_UseDotNet = true then begin
-            streamWriter.WriteLine(CurrentLine);
+            //streamWriter.WriteLine(CurrentLine);
+            TargetFile.Write(CurrentLine);
         end else begin
             TargetText.ADDTEXT(CurrentLine);  //NOD0.7
         end;
@@ -1923,7 +1992,8 @@ codeunit 50000 "General Mgt."
         CurrentLine += WriteText('', 100, '<', '', true); //68  Σχόλια  [comments] //last line
 
         if vG_UseDotNet = true then begin
-            streamWriter.WriteLine(CurrentLine);
+            //streamWriter.WriteLine(CurrentLine);
+            TargetFile.Write(CurrentLine);
         end else begin
             TargetText.ADDTEXT(CurrentLine);  //NOD0.7
         end;
@@ -1954,9 +2024,11 @@ codeunit 50000 "General Mgt."
         //find the cross reference
         rG_CrossReference.RESET;
         rG_CrossReference.SETFILTER("Item No.", rG_SalesCrMemoLine."No.");
-        rG_CrossReference.SETRANGE("Cross-Reference Type", rG_CrossReference."Cross-Reference Type"::"Bar Code");
+        //rG_CrossReference.SETRANGE("Cross-Reference Type", rG_CrossReference."Cross-Reference Type"::"Bar Code");
+        rG_CrossReference.SETRANGE("Reference Type", rG_CrossReference."Reference Type"::"Bar Code");
         if rG_CrossReference.FINDSET then begin
-            CurrentLine += WriteText(rG_CrossReference."Cross-Reference No.", 14, '<', '', false); //4 ΕΑΝ τεμαχίου [EAN_cu]
+            CurrentLine += WriteText(rG_CrossReference."Reference No.", 14, '<', '', false); //4 ΕΑΝ τεμαχίου [EAN_cu]
+            //CurrentLine += WriteText(rG_CrossReference."Cross-Reference No.", 14, '<', '', false); //4 ΕΑΝ τεμαχίου [EAN_cu]
         end else begin
             CurrentLine += WriteText('', 14, '<', '', false); //4 ΕΑΝ τεμαχίου [EAN_cu]
         end;
@@ -2045,7 +2117,8 @@ codeunit 50000 "General Mgt."
         CurrentLine += WriteText(CommentLine, 50, '<', '', true); //41 Σχόλια [comments]
 
         if vG_UseDotNet = true then begin
-            streamWriter.WriteLine(CurrentLine);
+            //streamWriter.WriteLine(CurrentLine);
+            TargetFile.Write(CurrentLine);
         end else begin
             TargetText.ADDTEXT(CurrentLine);  //NOD0.7
         end;
@@ -2521,7 +2594,8 @@ codeunit 50000 "General Mgt."
         rL_Grower: Record Vendor;
         rL_ItemLedgerEntry: Record "Item Ledger Entry";
         rL_SalesShipmentLine: Record "Sales Shipment Line";
-        rL_ItemCrossReference: Record "Item Cross Reference";
+        //rL_ItemCrossReference: Record "Item Cross Reference";
+        rL_ItemCrossReference: Record "Item Reference";
         SheetNameTxt: Text;
     begin
 
@@ -2594,9 +2668,11 @@ codeunit 50000 "General Mgt."
                             rL_SalesLine.TESTFIELD("Shelf No.");
 
                             rL_ItemCrossReference.RESET;
-                            rL_ItemCrossReference.SETRANGE("Cross-Reference Type", rL_ItemCrossReference."Cross-Reference Type"::Customer);
+                            //rL_ItemCrossReference.SETRANGE("Cross-Reference Type", rL_ItemCrossReference."Cross-Reference Type"::Customer);
+                            rL_ItemCrossReference.SETRANGE("Reference Type", rL_ItemCrossReference."Reference Type"::Customer);
                             rL_ItemCrossReference.SETFILTER("Item No.", rL_SalesLine."No.");
-                            rL_ItemCrossReference.SETFILTER("Cross-Reference Type No.", rL_Customer."No.");
+                            //rL_ItemCrossReference.SETFILTER("Cross-Reference Type No.", rL_Customer."No.");
+                            rL_ItemCrossReference.SETFILTER("Reference Type No.", rL_Customer."No.");
                             if not rL_ItemCrossReference.FINDSET then begin
                                 ERROR('Item Cross Reference for Item No. ' + rL_SalesLine."No." + ' not found.');
                             end;
@@ -2604,9 +2680,11 @@ codeunit 50000 "General Mgt."
                             rL_LidlItem.RESET;
                             rL_LidlItem.SETRANGE("Table No.", DATABASE::Item);
                             rL_LidlItem.SETRANGE(Type, rL_GeneralCategories.Type::Category2);
-                            rL_LidlItem.SETFILTER(Code, rL_ItemCrossReference."Cross-Reference No.");
+                            rL_LidlItem.SETFILTER(Code, rL_ItemCrossReference."Reference No.");
+                            //rL_LidlItem.SETFILTER(Code, rL_ItemCrossReference."Cross-Reference No.");
                             if not rL_LidlItem.FINDSET then begin
-                                ERROR('Lidl Item not found ' + rL_ItemCrossReference."Cross-Reference No.");
+                                ERROR('Lidl Item not found ' + rL_ItemCrossReference."Reference No.");
+                                //ERROR('Lidl Item not found ' + rL_ItemCrossReference."Cross-Reference No.");
                             end;
 
 
@@ -2799,9 +2877,11 @@ codeunit 50000 "General Mgt."
                             rL_SalesShipmentLine.TESTFIELD("Shelf No.");
 
                             rL_ItemCrossReference.RESET;
-                            rL_ItemCrossReference.SETRANGE("Cross-Reference Type", rL_ItemCrossReference."Cross-Reference Type"::Customer);
+                            //rL_ItemCrossReference.SETRANGE("Cross-Reference Type", rL_ItemCrossReference."Cross-Reference Type"::Customer);
+                            rL_ItemCrossReference.SETRANGE("Reference Type", rL_ItemCrossReference."Reference Type"::Customer);
                             rL_ItemCrossReference.SETFILTER("Item No.", rL_ItemLedgerEntry."Item No.");
-                            rL_ItemCrossReference.SETFILTER("Cross-Reference Type No.", rL_Customer."No.");
+                            //rL_ItemCrossReference.SETFILTER("Cross-Reference Type No.", rL_Customer."No.");
+                            rL_ItemCrossReference.SETFILTER("Reference Type No.", rL_Customer."No.");
                             if not rL_ItemCrossReference.FINDSET then begin
                                 ERROR('Item Cross Reference for Item No. ' + rL_SalesLine."No." + ' not found.');
                             end;
@@ -2809,9 +2889,11 @@ codeunit 50000 "General Mgt."
                             rL_LidlItem.RESET;
                             rL_LidlItem.SETRANGE("Table No.", DATABASE::Item);
                             rL_LidlItem.SETRANGE(Type, rL_GeneralCategories.Type::Category2);
-                            rL_LidlItem.SETFILTER(Code, rL_ItemCrossReference."Cross-Reference No.");
+                            rL_LidlItem.SETFILTER(Code, rL_ItemCrossReference."Reference No.");
+                            //rL_LidlItem.SETFILTER(Code, rL_ItemCrossReference."Cross-Reference No.");
                             if not rL_LidlItem.FINDSET then begin
-                                ERROR('Lidl Item not found ' + rL_ItemCrossReference."Cross-Reference No.");
+                                ERROR('Lidl Item not found ' + rL_ItemCrossReference."Reference No.");
+                                //ERROR('Lidl Item not found ' + rL_ItemCrossReference."Cross-Reference No.");
                             end;
 
 
@@ -3471,7 +3553,8 @@ codeunit 50000 "General Mgt."
         ColumnNoMax: Integer;
         ExcelValue: array[4000, 30] of Text[250];
         vL_RowNo: Integer;
-        rL_ItemCrossReference: Record "Item Cross Reference";
+        //rL_ItemCrossReference: Record "Item Cross Reference";
+        rL_ItemCrossReference: Record "Item Reference";
         rL_Item: Record Item;
         Colmn1_Valid: Text;
         Colmn2_Valid: Text;
@@ -3546,15 +3629,21 @@ codeunit 50000 "General Mgt."
                 if rL_Item.FINDSET then begin
                     CLEAR(rL_ItemCrossReference);
                     rL_ItemCrossReference.SETFILTER("Item No.", rL_Item."No.");
-                    rL_ItemCrossReference.SETRANGE("Cross-Reference Type", rL_ItemCrossReference."Cross-Reference Type"::Customer);
+                    /* rL_ItemCrossReference.SETRANGE("Cross-Reference Type", rL_ItemCrossReference."Cross-Reference Type"::Customer);
                     rL_ItemCrossReference.SETFILTER("Cross-Reference Type No.", 'CUST00032');
-                    rL_ItemCrossReference.SETFILTER("Cross-Reference No.", rL_Item."Shelf No.");
+                    rL_ItemCrossReference.SETFILTER("Cross-Reference No.", rL_Item."Shelf No."); */
+                    rL_ItemCrossReference.SETRANGE("Reference Type", rL_ItemCrossReference."Reference Type"::Customer);
+                    rL_ItemCrossReference.SETFILTER("Reference Type No.", 'CUST00032');
+                    rL_ItemCrossReference.SETFILTER("Reference No.", rL_Item."Shelf No.");
                     if not rL_ItemCrossReference.FINDSET then begin
                         CLEAR(rL_ItemCrossReference);
                         rL_ItemCrossReference.VALIDATE("Item No.", rL_Item."No.");
-                        rL_ItemCrossReference.VALIDATE("Cross-Reference Type", rL_ItemCrossReference."Cross-Reference Type"::Customer);
+                        /* rL_ItemCrossReference.VALIDATE("Cross-Reference Type", rL_ItemCrossReference."Cross-Reference Type"::Customer);
                         rL_ItemCrossReference.VALIDATE("Cross-Reference Type No.", 'CUST00032');
-                        rL_ItemCrossReference.VALIDATE("Cross-Reference No.", rL_Item."Shelf No.");
+                        rL_ItemCrossReference.VALIDATE("Cross-Reference No.", rL_Item."Shelf No."); */
+                        rL_ItemCrossReference.VALIDATE("Reference Type", rL_ItemCrossReference."Reference Type"::Customer);
+                        rL_ItemCrossReference.VALIDATE("Reference Type No.", 'CUST00032');
+                        rL_ItemCrossReference.VALIDATE("Reference No.", rL_Item."Shelf No.");
                         rL_ItemCrossReference.VALIDATE(Description, Colmn2_Valid);
                         rL_ItemCrossReference.VALIDATE("Description 2", Colmn3_Valid);
                         rL_ItemCrossReference.INSERT(true);
@@ -3684,7 +3773,8 @@ codeunit 50000 "General Mgt."
     procedure ValidateCustomerCross();
     var
         rL_Item: Record Item;
-        rL_ItemCrossReference: Record "Item Cross Reference";
+        //rL_ItemCrossReference: Record "Item Cross Reference";
+        rL_ItemCrossReference: Record "Item Reference";
         vL_CustCode: Code[20];
         rL_GeneralCategories: Record "General Categories";
     begin
@@ -3711,13 +3801,17 @@ codeunit 50000 "General Mgt."
                     CLEAR(rL_ItemCrossReference);
                     rL_ItemCrossReference.RESET;
                     rL_ItemCrossReference.SETFILTER("Item No.", rL_Item."No.");
-                    rL_ItemCrossReference.SETRANGE("Cross-Reference Type", rL_ItemCrossReference."Cross-Reference Type"::Customer);
-                    rL_ItemCrossReference.SETFILTER("Cross-Reference Type No.", vL_CustCode);
+                    /* rL_ItemCrossReference.SETRANGE("Cross-Reference Type", rL_ItemCrossReference."Cross-Reference Type"::Customer);
+                    rL_ItemCrossReference.SETFILTER("Cross-Reference Type No.", vL_CustCode); */
+                    rL_ItemCrossReference.SETRANGE("Reference Type", rL_ItemCrossReference."Reference Type"::Customer);
+                    rL_ItemCrossReference.SETFILTER("Reference Type No.", vL_CustCode);
                     if not rL_ItemCrossReference.FINDSET then begin
                         CLEAR(rL_ItemCrossReference);
                         rL_ItemCrossReference.VALIDATE("Item No.", rL_Item."No.");
-                        rL_ItemCrossReference.VALIDATE("Cross-Reference Type", rL_ItemCrossReference."Cross-Reference Type"::Customer);
-                        rL_ItemCrossReference.VALIDATE("Cross-Reference Type No.", vL_CustCode);
+                        /* rL_ItemCrossReference.VALIDATE("Cross-Reference Type", rL_ItemCrossReference."Cross-Reference Type"::Customer);
+                        rL_ItemCrossReference.VALIDATE("Cross-Reference Type No.", vL_CustCode); */
+                        rL_ItemCrossReference.VALIDATE("Reference Type", rL_ItemCrossReference."Reference Type"::Customer);
+                        rL_ItemCrossReference.VALIDATE("Reference Type No.", vL_CustCode);
                         rL_ItemCrossReference.VALIDATE("Category 2", rL_Item."Shelf No.");
                         rL_ItemCrossReference.INSERT(true);
                     end else begin
@@ -5540,9 +5634,9 @@ codeunit 50000 "General Mgt."
 
     procedure ImportHorecaOrders(pVersion: Integer; pOneExcelFile: Boolean);
     var
-        Folder: DotNet Folder_DT;// "'mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'.System.IO.Directory" RUNONCLIENT;
-        Lst: DotNet Lst_DT; //Lst_DT;// "'mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'.System.Collections.Generic.List`1" RUNONCLIENT;
-        Obj: DotNet Obj_DT;// "'mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'.System.Object" RUNONCLIENT;
+        //Folder: DotNet Folder_DT;// "'mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'.System.IO.Directory" RUNONCLIENT;
+        //Lst: DotNet Lst_DT; //Lst_DT;// "'mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'.System.Collections.Generic.List`1" RUNONCLIENT;
+        //Obj: DotNet Obj_DT;// "'mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'.System.Object" RUNONCLIENT;
         i: Integer;
         vL_FileName: Text[250];
         vL_FileNameOnly: Text;
@@ -9923,9 +10017,12 @@ codeunit 50000 "General Mgt."
         // EXIT(SysEnv.GetEnvironmentVariable(property));
         //'COMPUTERNAME'
         vL_ComputerName := '';
-        vL_ComputerName := vG_Environment.GetEnvironmentVariable('COMPUTERNAME');
+        /* vL_ComputerName := vG_Environment.GetEnvironmentVariable('COMPUTERNAME');
         vL_ComputerName += '  - ' + vG_Environment.GetEnvironmentVariable('REMOTE_USER');
-        vL_ComputerName += '  - ' + vG_Environment.UserName;
+        vL_ComputerName += '  - ' + vG_Environment.UserName; */
+        vL_ComputerName := Format(SessionId());
+        vL_ComputerName += '  - ' + Format(Session.CurrentClientType());
+        vL_ComputerName += '  - ' + UserId();
 
 
         Message(vL_ComputerName);

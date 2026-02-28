@@ -14,7 +14,7 @@ pageextension 50233 EmailAccountsExt extends "Email Accounts"
             {
                 ApplicationArea = All;
                 Caption = 'Add Cc-Bcc';
-                RunObject = page "O365 Email CC and BCC Settings";
+                //RunObject = page "O365 Email CC and BCC Settings"; //Page removed from BC25
                 Image = ContactPerson;
                 PromotedCategory = Process;
                 PromotedOnly = true;

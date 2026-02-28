@@ -1419,7 +1419,8 @@ report 50054 "Sales - Quote Lidl"
 
     local procedure InitLogInteraction()
     begin
-        LogInteraction := SegManagement.FindInteractTmplCode(1) <> '';
+        // LogInteraction := SegManagement.FindInteractTmplCode(1) <> '';
+        LogInteraction := SegManagement.FindInteractionTemplateCode(1) <> '';
     end;
 
     local procedure DocumentCaption(): Text[250]

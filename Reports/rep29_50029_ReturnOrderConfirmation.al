@@ -999,7 +999,8 @@ report 50029 "Return Order Confirmation FFH"
 
     procedure InitLogInteraction()
     begin
-        LogInteraction := SegManagement.FindInteractTmplCode(18) <> '';
+        //LogInteraction := SegManagement.FindInteractTmplCode(18) <> '';
+        LogInteraction := SegManagement.FindInteractionTemplateCode(18) <> '';
     end;
 
     procedure InitializeRequest(ShowInternalInfoFrom: Boolean; LogInteractionFrom: Boolean)

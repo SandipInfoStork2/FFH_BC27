@@ -11,7 +11,7 @@ pageextension 50162 NoSeriesExt extends "No. Series"
 
         addafter("Date Order")
         {
-            field("Item Tracking"; "Item Tracking")
+            field("Item Tracking"; Rec."Item Tracking")
             {
                 ApplicationArea = All;
             }

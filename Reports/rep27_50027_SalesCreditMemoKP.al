@@ -943,7 +943,8 @@ report 50027 "Sales - Credit Memo -KP"
 
         trigger OnOpenPage();
         begin
-            LogInteraction := SegManagement.FindInteractTmplCode(6) <> '';
+            //LogInteraction := SegManagement.FindInteractTmplCode(6) <> '';
+            LogInteraction := SegManagement.FindInteractionTemplateCode(6) <> '';
             LogInteractionEnable := LogInteraction;
         end;
     }
@@ -1104,7 +1105,8 @@ report 50027 "Sales - Credit Memo -KP"
 
     procedure InitLogInteraction();
     begin
-        LogInteraction := SegManagement.FindInteractTmplCode(6) <> '';
+        //LogInteraction := SegManagement.FindInteractTmplCode(6) <> '';
+        LogInteraction := SegManagement.FindInteractionTemplateCode(6) <> '';
     end;
 
     procedure FindPostedShipmentDate(): Date;

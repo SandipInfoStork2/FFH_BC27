@@ -63,7 +63,7 @@ page 50034 "Sales Quote Lidl Subform"
                 {
                     ApplicationArea = Suite, ItemReferences;
                     ToolTip = 'Specifies the referenced item number.';
-                    Visible = ItemReferenceVisible;
+                    //Visible = ItemReferenceVisible;
                     Width = 5;
 
                     trigger OnLookup(var Text: Text): Boolean
@@ -87,7 +87,7 @@ page 50034 "Sales Quote Lidl Subform"
                 field(Checked; Checked)
                 {
                     ApplicationArea = all;
-                     Width = 1;
+                    Width = 1;
                 }
 
 
@@ -724,7 +724,7 @@ page 50034 "Sales Quote Lidl Subform"
         SetOpenPage();
 
         //SetDimensionsVisibility();
-        SetItemReferenceVisibility();
+        //SetItemReferenceVisibility();
 
     end;
 
@@ -762,8 +762,8 @@ page 50034 "Sales Quote Lidl Subform"
         IsBlankNumber: Boolean;
         IsCommentLine: Boolean;
         SuppressTotals: Boolean;
-        [InDataSet]
-        ItemReferenceVisible: Boolean;
+        //[InDataSet]
+        //ItemReferenceVisible: Boolean;
         UnitofMeasureCodeIsChangeable: Boolean;
         ItemChargeStyleExpression: Text;
         VATAmount: Decimal;
@@ -1010,12 +1010,12 @@ page 50034 "Sales Quote Lidl Subform"
         OnAfterSetDimensionsVisibility();
     end;
 
-    local procedure SetItemReferenceVisibility()
+    /* local procedure SetItemReferenceVisibility()
     var
         ItemReferenceMgt: Codeunit "Item Reference Management";
     begin
         ItemReferenceVisible := ItemReferenceMgt.IsEnabled();
-    end;
+    end; */
 
     local procedure ValidateShortcutDimension(DimIndex: Integer)
     var

@@ -273,20 +273,28 @@ tableextension 50162 LotNoInformationExt extends "Lot No. Information"
 
     trigger OnInsert()
     var
-        myInt: Integer;
-        rL_ItemCrossReference: Record "Item Cross Reference";
+        ItemReference: Record "Item Reference";
+        //rL_ItemCrossReference: Record "Item Cross Reference";
+        rL_ItemCrossReference: Record "Item Reference";
         rL_Customer: Record Customer;
     begin
         rL_Customer.RESET;
         rL_Customer.SETFILTER("Ship-to Warehouse Code", '<>%1', '');
         IF rL_Customer.FINDSET THEN BEGIN
             rL_ItemCrossReference.RESET;
-            rL_ItemCrossReference.SETFILTER("Item No.", "Item No.");
+            /* rL_ItemCrossReference.SETFILTER("Item No.", "Item No.");
             rL_ItemCrossReference.SETRANGE("Cross-Reference Type", rL_ItemCrossReference."Cross-Reference Type"::Customer);
             rL_ItemCrossReference.SETFILTER("Cross-Reference Type No.", rL_Customer."No.");
             rL_ItemCrossReference.SETRANGE("Discontinue Bar Code", FALSE);
             IF rL_ItemCrossReference.FINDLAST THEN BEGIN
                 VALIDATE("Category 4", rL_ItemCrossReference."Cross-Reference No.");
+            END; */
+            rL_ItemCrossReference.SETFILTER("Item No.", "Item No.");
+            rL_ItemCrossReference.SETRANGE("Reference Type", rL_ItemCrossReference."Reference Type"::Customer);
+            rL_ItemCrossReference.SETFILTER("Reference Type No.", rL_Customer."No.");
+            //rL_ItemCrossReference.SETRANGE("Discontinue Bar Code", FALSE); //field remove from table due to not used
+            IF rL_ItemCrossReference.FINDLAST THEN BEGIN
+                VALIDATE("Category 4", rL_ItemCrossReference."Reference No.");
             END;
         END;
 

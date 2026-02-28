@@ -1,3 +1,4 @@
+#pragma implicitwith disable
 page 50039 "SO Logistics Activities"
 {
     Caption = 'Sales Activities';
@@ -12,24 +13,24 @@ page 50039 "SO Logistics Activities"
             cuegroup("Location")
             {
                 Caption = 'Ship Today';
-                field("Aradipou - Main Orders"; "Aradipou - Main Orders")
+                field("Aradipou - Main Orders"; Rec."Aradipou - Main Orders")
                 {
                     ApplicationArea = Basic, Suite;
                     DrillDownPageID = "Sales Order List";
                 }
 
-                field("Fresh Cut Orders"; "Fresh Cut Orders")
+                field("Fresh Cut Orders"; Rec."Fresh Cut Orders")
                 {
                     ApplicationArea = Basic, Suite;
                     DrillDownPageID = "Sales Order List";
                 }
-                field("Kitchen Orders"; "Kitchen Orders")
+                field("Kitchen Orders"; Rec."Kitchen Orders")
                 {
                     ApplicationArea = Basic, Suite;
                     DrillDownPageID = "Sales Order List";
                 }
 
-                field("Potatoes Orders"; "Potatoes Orders")
+                field("Potatoes Orders"; Rec."Potatoes Orders")
                 {
                     ApplicationArea = Basic, Suite;
                     DrillDownPageID = "Sales Order List";
@@ -40,14 +41,14 @@ page 50039 "SO Logistics Activities"
             {
                 Caption = 'Pre Shipment Follow-up on Sales Orders';
 
-                field("Sales Orders - Open"; "Sales Orders - Open")
+                field("Sales Orders - Open"; Rec."Sales Orders - Open")
                 {
                     ApplicationArea = Basic, Suite;
                     DrillDownPageID = "Sales Order List";
                     ToolTip = 'Specifies the number of sales orders that are not fully posted.';
                 }
 
-                field("Upcoming Orders"; "Upcoming Orders")
+                field("Upcoming Orders"; Rec."Upcoming Orders")
                 {
                     ApplicationArea = Suite;
                     DrillDownPageID = "Sales Order List";
@@ -71,7 +72,7 @@ page 50039 "SO Logistics Activities"
             cuegroup("Post Shipment Follow-up")
             {
                 Caption = 'Post Shipment Follow-up';
-                field(OutstandingOrders; "Outstanding Sales Orders")
+                field(OutstandingOrders; Rec."Outstanding Sales Orders")
                 {
                     ApplicationArea = Basic, Suite;
                     Caption = 'Outstanding Sales Orders';
@@ -80,7 +81,7 @@ page 50039 "SO Logistics Activities"
 
                     trigger OnDrillDown()
                     begin
-                        ShowOrders(FieldNo("Outstanding Sales Orders"));
+                        Rec.ShowOrders(Rec.FieldNo("Outstanding Sales Orders"));
                     end;
                 }
             }
@@ -149,7 +150,7 @@ page 50039 "SO Logistics Activities"
             cuegroup("Sales Orders - Authorize for Payment")
             {
                 Caption = 'Sales Orders - Authorize for Payment';
-                field(NotInvoiced; "Sales Orders Not Invoiced")
+                field(NotInvoiced; Rec."Sales Orders Not Invoiced")
                 {
                     ApplicationArea = Suite;
                     Caption = 'Shipped, Not Invoiced';
@@ -161,7 +162,7 @@ page 50039 "SO Logistics Activities"
                     //    ShowOrders(FieldNo("Sales Orders Not Invoiced"));
                     //end;
                 }
-                field(PartiallyInvoiced; "S.O. Partially Invoiced")
+                field(PartiallyInvoiced; Rec."S.O. Partially Invoiced")
                 {
                     ApplicationArea = Suite;
                     Caption = 'Partially Invoiced';
@@ -177,7 +178,7 @@ page 50039 "SO Logistics Activities"
 
             cuegroup("Count")
             {
-                field("Count Sales Orders"; "Count Sales Orders")
+                field("Count Sales Orders"; Rec."Count Sales Orders")
                 {
                     Caption = 'Sales Orders';
                     ApplicationArea = all;
@@ -188,7 +189,7 @@ page 50039 "SO Logistics Activities"
             cuegroup(Invoices)
             {
                 Caption = 'Invoices';
-                field("Sales Invoices"; "Sales Invoices")
+                field("Sales Invoices"; Rec."Sales Invoices")
                 {
                     ApplicationArea = All;
                     DrillDownPageID = "Sales Invoice List";
@@ -198,13 +199,13 @@ page 50039 "SO Logistics Activities"
             cuegroup(Returns)
             {
                 Caption = 'Returns';
-                field("Sales Return Orders - Open"; "Sales Return Orders - Open")
+                field("Sales Return Orders - Open"; Rec."Sales Return Orders - Open")
                 {
                     ApplicationArea = SalesReturnOrder;
                     DrillDownPageID = "Sales Return Order List";
                     ToolTip = 'Specifies the number of sales return orders documents that are displayed in the Sales Cue on the Role Center. The documents are filtered by today''s date.';
                 }
-                field("Sales Credit Memos - Open"; "Sales Credit Memos - Open")
+                field("Sales Credit Memos - Open"; Rec."Sales Credit Memos - Open")
                 {
                     ApplicationArea = Basic, Suite;
                     DrillDownPageID = "Sales Credit Memos";
@@ -281,7 +282,7 @@ page 50039 "SO Logistics Activities"
     var
         RoleCenterNotificationMgt: Codeunit "Role Center Notification Mgt.";
     begin
-        RoleCenterNotificationMgt.HideEvaluationNotificationAfterStartingTrial;
+        //RoleCenterNotificationMgt.HideEvaluationNotificationAfterStartingTrial;
     end;
 
     trigger OnAfterGetRecord()
@@ -299,57 +300,58 @@ page 50039 "SO Logistics Activities"
         RoleCenterNotificationMgt: Codeunit "Role Center Notification Mgt.";
         ConfPersonalizationMgt: Codeunit "Conf./Personalization Mgt.";
     begin
-        Reset;
-        if not Get then begin
-            Init;
-            Insert;
+        Rec.Reset;
+        if not Rec.Get then begin
+            Rec.Init;
+            Rec.Insert;
         end;
 
-        SetRespCenterFilter;
-        SetRange("Date Filter", 0D, WorkDate - 1);
-        SetFilter("Date Filter2", '>=%1', WorkDate);
-        SetFilter("Date Filter3", '=%1', WorkDate);
-        SetRange("User ID Filter", UserId);
+        Rec.SetRespCenterFilter;
+        Rec.SetRange("Date Filter", 0D, WorkDate - 1);
+        Rec.SetFilter("Date Filter2", '>=%1', WorkDate);
+        Rec.SetFilter("Date Filter3", '=%1', WorkDate);
+        Rec.SetRange("User ID Filter", UserId);
 
         RoleCenterNotificationMgt.ShowNotifications;
         ConfPersonalizationMgt.RaiseOnOpenRoleCenterEvent;
 
-        if PageNotifier.IsAvailable then begin
+        /* if PageNotifier.IsAvailable then begin
             PageNotifier := PageNotifier.Create;
             PageNotifier.NotifyPageReady;
-        end;
+        end; */ //BC21
+        CheckIfSurveyEnabled();
     end;
 
     var
         CuesAndKpis: Codeunit "Cues And KPIs";
         UserTaskManagement: Codeunit "User Task Management";
-        [RunOnClient]
+        /* [RunOnClient]
         [WithEvents]
-        PageNotifier: DotNet PageNotifier;
+        PageNotifier: DotNet PageNotifier; */
         ShowDocumentsPendingDodExchService: Boolean;
         IsAddInReady: Boolean;
         IsPageReady: Boolean;
 
     local procedure CalculateCueFieldValues()
     begin
-        if FieldActive("Average Days Delayed") then
-            "Average Days Delayed" := CalculateAverageDaysDelayed;
+        if Rec.FieldActive("Average Days Delayed") then
+            Rec."Average Days Delayed" := Rec.CalculateAverageDaysDelayed;
 
-        if FieldActive("Ready to Ship") then
-            "Ready to Ship" := CountOrders(FieldNo("Ready to Ship"));
+        if Rec.FieldActive("Ready to Ship") then
+            Rec."Ready to Ship" := Rec.CountOrders(Rec.FieldNo("Ready to Ship"));
 
-        if FieldActive("Partially Shipped") then
-            "Partially Shipped" := CountOrders(FieldNo("Partially Shipped"));
+        if Rec.FieldActive("Partially Shipped") then
+            Rec."Partially Shipped" := Rec.CountOrders(Rec.FieldNo("Partially Shipped"));
 
-        if FieldActive(Delayed) then
-            Delayed := CountOrders(FieldNo(Delayed));
+        if Rec.FieldActive(Delayed) then
+            Rec.Delayed := Rec.CountOrders(Rec.FieldNo(Delayed));
     end;
 
-    trigger PageNotifier::PageReady()
+    /* trigger PageNotifier::PageReady()
     begin
         IsPageReady := true;
         CheckIfSurveyEnabled();
-    end;
+    end; */ //BC21
 
     local procedure CheckIfSurveyEnabled()
     var
@@ -370,3 +372,5 @@ page 50039 "SO Logistics Activities"
 
 }
 
+
+#pragma implicitwith restore

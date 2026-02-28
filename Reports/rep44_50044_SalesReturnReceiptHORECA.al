@@ -633,7 +633,8 @@ report 50044 "Sales - Return Receipt HORECA"
 
     procedure InitLogInteraction();
     begin
-        LogInteraction := SegManagement.FindInteractTmplCode(20) <> '';
+        // LogInteraction := SegManagement.FindInteractTmplCode(20) <> '';
+        LogInteraction := SegManagement.FindInteractionTemplateCode(20) <> '';
     end;
 
     local procedure FormatAddressFields(ReturnReceiptHeader: Record "Return Receipt Header");

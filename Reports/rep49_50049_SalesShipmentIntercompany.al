@@ -968,7 +968,8 @@ report 50049 "Sales - Shipment Intercompany"
     [Scope('Internal')]
     procedure InitLogInteraction()
     begin
-        LogInteraction := SegManagement.FindInteractTmplCode(5) <> '';
+        // LogInteraction := SegManagement.FindInteractTmplCode(5) <> '';
+        LogInteraction := SegManagement.FindInteractionTemplateCode(5) <> '';
     end;
 
     [Scope('Internal')]

@@ -174,7 +174,8 @@ table 50006 "Purchase Header Addon"
             begin
                 if "No." <> xRec."No." then begin
                     PurchSetup.GET;
-                    NoSeriesMgt.TestManual(GetNoSeriesCode);
+                    NoSeries.TestManual(GetNoSeriesCode());
+                    //NoSeriesMgt.TestManual(GetNoSeriesCode);
                     "No. Series" := '';
                 end;
             end;
@@ -286,11 +287,12 @@ table 50006 "Purchase Header Addon"
                         TESTFIELD("Currency Code", xRec."Currency Code");
                 end;
 
-                CreateDim(
-                  DATABASE::Vendor, "Pay-to Vendor No.",
-                  DATABASE::"Salesperson/Purchaser", "Purchaser Code",
-                  DATABASE::Campaign, "Campaign No.",
-                  DATABASE::"Responsibility Center", "Responsibility Center");
+                // CreateDim(
+                //   DATABASE::Vendor, "Pay-to Vendor No.",
+                //   DATABASE::"Salesperson/Purchaser", "Purchaser Code",
+                //   DATABASE::Campaign, "Campaign No.",
+                //   DATABASE::"Responsibility Center", "Responsibility Center");
+                CreateDimFromDefaultDim(Rec.FieldNo("Pay-to Vendor No."));
 
                 if (xRec."Buy-from Vendor No." = "Buy-from Vendor No.") and
                    (xRec."Pay-to Vendor No." <> "Pay-to Vendor No.")
@@ -757,11 +759,12 @@ table 50006 "Purchase Header Addon"
                 if not ApprovalEntry.ISEMPTY then
                     ERROR(Text042, FIELDCAPTION("Purchaser Code"));
 
-                CreateDim(
-                  DATABASE::"Salesperson/Purchaser", "Purchaser Code",
-                  DATABASE::Vendor, "Pay-to Vendor No.",
-                  DATABASE::Campaign, "Campaign No.",
-                  DATABASE::"Responsibility Center", "Responsibility Center");
+                // CreateDim(
+                //   DATABASE::"Salesperson/Purchaser", "Purchaser Code",
+                //   DATABASE::Vendor, "Pay-to Vendor No.",
+                //   DATABASE::Campaign, "Campaign No.",
+                //   DATABASE::"Responsibility Center", "Responsibility Center");
+                CreateDimFromDefaultDim(Rec.FieldNo("Purchaser Code"));
             end;
         }
         field(45; "Order Class"; Code[10])
@@ -1295,7 +1298,8 @@ table 50006 "Purchase Header Addon"
                     //  PurchHeader := Rec;
                     PurchSetup.GET;
                     TestNoSeries;
-                    if NoSeriesMgt.LookupSeries(GetPostingNoSeriesCode, "Posting No. Series") then
+                    //if NoSeriesMgt.LookupSeries(GetPostingNoSeriesCode, "Posting No. Series") then
+                    if NoSeries.LookupRelatedNoSeries(GetPostingNoSeriesCode(), PurchHeader."Posting No. Series") then
                         VALIDATE("Posting No. Series");
                     //  Rec := PurchHeader;
                 end;
@@ -1306,7 +1310,8 @@ table 50006 "Purchase Header Addon"
                 if "Posting No. Series" <> '' then begin
                     PurchSetup.GET;
                     TestNoSeries;
-                    NoSeriesMgt.TestSeries(GetPostingNoSeriesCode, "Posting No. Series");
+                    //NoSeriesMgt.TestSeries(GetPostingNoSeriesCode, "Posting No. Series");
+                    NoSeries.TestAreRelated(GetPostingNoSeriesCode(), "Posting No. Series");
                 end;
                 TESTFIELD("Posting No.", '');
             end;
@@ -1322,7 +1327,8 @@ table 50006 "Purchase Header Addon"
                     //  PurchHeader := Rec;
                     PurchSetup.GET;
                     PurchSetup.TESTFIELD("Posted Receipt Nos.");
-                    if NoSeriesMgt.LookupSeries(PurchSetup."Posted Receipt Nos.", "Receiving No. Series") then
+                    //if NoSeriesMgt.LookupSeries(PurchSetup."Posted Receipt Nos.", "Receiving No. Series") then
+                    if NoSeries.LookupRelatedNoSeries(PurchSetup."Posted Receipt Nos.", PurchHeader."Receiving No. Series") then
                         VALIDATE("Receiving No. Series");
                     //  Rec := PurchHeader;
                 end;
@@ -1333,7 +1339,8 @@ table 50006 "Purchase Header Addon"
                 if "Receiving No. Series" <> '' then begin
                     PurchSetup.GET;
                     PurchSetup.TESTFIELD("Posted Receipt Nos.");
-                    NoSeriesMgt.TestSeries(PurchSetup."Posted Receipt Nos.", "Receiving No. Series");
+                    //NoSeriesMgt.TestSeries(PurchSetup."Posted Receipt Nos.", "Receiving No. Series");
+                    NoSeries.TestAreRelated(PurchSetup."Posted Receipt Nos.", "Receiving No. Series");
                 end;
                 TESTFIELD("Receiving No.", '');
             end;
@@ -1543,7 +1550,8 @@ table 50006 "Purchase Header Addon"
                     //  PurchHeader := Rec;
                     PurchSetup.GET;
                     PurchSetup.TESTFIELD("Posted Prepmt. Inv. Nos.");
-                    if NoSeriesMgt.LookupSeries(PurchSetup."Posted Prepmt. Inv. Nos.", "Prepayment No. Series") then
+                    //if NoSeriesMgt.LookupSeries(PurchSetup."Posted Prepmt. Inv. Nos.", "Prepayment No. Series") then
+                    if NoSeries.LookupRelatedNoSeries(PurchSetup."Posted Prepmt. Inv. Nos.", PurchHeader."Prepayment No. Series") then
                         VALIDATE("Prepayment No. Series");
                     //  Rec := PurchHeader;
                 end;
@@ -1554,7 +1562,8 @@ table 50006 "Purchase Header Addon"
                 if "Prepayment No. Series" <> '' then begin
                     PurchSetup.GET;
                     PurchSetup.TESTFIELD("Posted Prepmt. Inv. Nos.");
-                    NoSeriesMgt.TestSeries(PurchSetup."Posted Prepmt. Inv. Nos.", "Prepayment No. Series");
+                    //NoSeriesMgt.TestSeries(PurchSetup."Posted Prepmt. Inv. Nos.", "Prepayment No. Series");
+                    NoSeries.TestAreRelated(PurchSetup."Posted Prepmt. Inv. Nos.", "Prepayment No. Series");
                 end;
                 TESTFIELD("Prepayment No. Series", '');
             end;
@@ -1579,7 +1588,8 @@ table 50006 "Purchase Header Addon"
                     //  PurchHeader := Rec;
                     PurchSetup.GET;
                     PurchSetup.TESTFIELD("Posted Prepmt. Cr. Memo Nos.");
-                    if NoSeriesMgt.LookupSeries(PurchSetup."Posted Prepmt. Cr. Memo Nos.", "Prepmt. Cr. Memo No. Series") then
+                    //if NoSeriesMgt.LookupSeries(PurchSetup."Posted Prepmt. Cr. Memo Nos.", "Prepmt. Cr. Memo No. Series") then
+                    if NoSeries.LookupRelatedNoSeries(PurchSetup."Posted Prepmt. Cr. Memo Nos.", PurchHeader."Prepmt. Cr. Memo No. Series") then
                         VALIDATE("Prepmt. Cr. Memo No. Series");
                     //  Rec := PurchHeader;
                 end;
@@ -1590,7 +1600,8 @@ table 50006 "Purchase Header Addon"
                 if "Prepmt. Cr. Memo No. Series" <> '' then begin
                     PurchSetup.GET;
                     PurchSetup.TESTFIELD("Posted Prepmt. Cr. Memo Nos.");
-                    NoSeriesMgt.TestSeries(PurchSetup."Posted Prepmt. Cr. Memo Nos.", "Prepmt. Cr. Memo No. Series");
+                    //NoSeriesMgt.TestSeries(PurchSetup."Posted Prepmt. Cr. Memo Nos.", "Prepmt. Cr. Memo No. Series");
+                    NoSeries.TestAreRelated(PurchSetup."Posted Prepmt. Cr. Memo Nos.", "Prepmt. Cr. Memo No. Series");
                 end;
                 TESTFIELD("Prepmt. Cr. Memo No. Series", '');
             end;
@@ -1709,11 +1720,12 @@ table 50006 "Purchase Header Addon"
 
             trigger OnValidate();
             begin
-                CreateDim(
-                  DATABASE::Campaign, "Campaign No.",
-                  DATABASE::Vendor, "Pay-to Vendor No.",
-                  DATABASE::"Salesperson/Purchaser", "Purchaser Code",
-                  DATABASE::"Responsibility Center", "Responsibility Center");
+                // CreateDim(
+                //   DATABASE::Campaign, "Campaign No.",
+                //   DATABASE::Vendor, "Pay-to Vendor No.",
+                //   DATABASE::"Salesperson/Purchaser", "Purchaser Code",
+                //   DATABASE::"Responsibility Center", "Responsibility Center");
+                CreateDimFromDefaultDim(Rec.FieldNo("Campaign No."));
             end;
         }
         field(5052; "Buy-from Contact No."; Code[20])
@@ -1942,11 +1954,12 @@ table 50006 "Purchase Header Addon"
 
                 UpdateShipToAddress;
 
-                CreateDim(
-                  DATABASE::"Responsibility Center", "Responsibility Center",
-                  DATABASE::Vendor, "Pay-to Vendor No.",
-                  DATABASE::"Salesperson/Purchaser", "Purchaser Code",
-                  DATABASE::Campaign, "Campaign No.");
+                // CreateDim(
+                //   DATABASE::"Responsibility Center", "Responsibility Center",
+                //   DATABASE::Vendor, "Pay-to Vendor No.",
+                //   DATABASE::"Salesperson/Purchaser", "Purchaser Code",
+                //   DATABASE::Campaign, "Campaign No.");
+                CreateDimFromDefaultDim(Rec.FieldNo("Responsibility Center"));
 
                 if xRec."Responsibility Center" <> "Responsibility Center" then begin
                     RecreatePurchLines(FIELDCAPTION("Responsibility Center"));
@@ -2048,7 +2061,8 @@ table 50006 "Purchase Header Addon"
                     //  PurchHeader := Rec;
                     PurchSetup.GET;
                     PurchSetup.TESTFIELD("Posted Return Shpt. Nos.");
-                    if NoSeriesMgt.LookupSeries(PurchSetup."Posted Return Shpt. Nos.", "Return Shipment No. Series") then
+                    //if NoSeriesMgt.LookupSeries(PurchSetup."Posted Return Shpt. Nos.", "Return Shipment No. Series") then
+                    if NoSeries.LookupRelatedNoSeries(PurchSetup."Posted Return Shpt. Nos.", PurchHeader."Return Shipment No. Series") then
                         VALIDATE("Return Shipment No. Series");
                     //  Rec := PurchHeader;
                 end;
@@ -2059,7 +2073,8 @@ table 50006 "Purchase Header Addon"
                 if "Return Shipment No. Series" <> '' then begin
                     PurchSetup.GET;
                     PurchSetup.TESTFIELD("Posted Return Shpt. Nos.");
-                    NoSeriesMgt.TestSeries(PurchSetup."Posted Return Shpt. Nos.", "Return Shipment No. Series");
+                    //NoSeriesMgt.TestSeries(PurchSetup."Posted Return Shpt. Nos.", "Return Shipment No. Series");
+                    NoSeries.TestAreRelated(PurchSetup."Posted Return Shpt. Nos.", "Return Shipment No. Series");
                 end;
                 TESTFIELD("Return Shipment No.", '');
             end;
@@ -2129,10 +2144,21 @@ table 50006 "Purchase Header Addon"
     end;
 
     trigger OnInsert();
+    var
+        PurchaseHeader2: Record "Purchase Header";
+        NoSeriesCode: Code[20];
     begin
         if "No." = '' then begin
             TestNoSeries;
-            NoSeriesMgt.InitSeries(GetNoSeriesCode, xRec."No. Series", "Posting Date", "No.", "No. Series");
+            //NoSeriesMgt.InitSeries(GetNoSeriesCode, xRec."No. Series", "Posting Date", "No.", "No. Series");
+            NoSeriesCode := GetNoSeriesCode();
+            "No. Series" := NoSeriesCode;
+            if NoSeries.AreRelated("No. Series", xRec."No. Series") then
+                "No. Series" := xRec."No. Series";
+            "No." := NoSeries.GetNextNo("No. Series", "Posting Date");
+            PurchaseHeader2.SetLoadFields("No.");
+            while PurchaseHeader2.Get("Document Type", "No.") do
+                "No." := NoSeries.GetNextNo("No. Series", "Posting Date");
         end;
 
         InitRecord;
@@ -2222,7 +2248,7 @@ table 50006 "Purchase Header Addon"
         Location: Record Location;
         WhseRequest: Record "Warehouse Request";
         InvtSetup: Record "Inventory Setup";
-        NoSeriesMgt: Codeunit NoSeriesManagement;
+        NoSeries: Codeunit "No. Series";
         TransferExtendedText: Codeunit "Transfer Extended Text";
         GenJnlApply: Codeunit "Gen. Jnl.-Apply";
         PurchPost: Codeunit "Purch.-Post";
@@ -2265,48 +2291,106 @@ table 50006 "Purchase Header Addon"
         ModifyVendorAddressNotificationMsg: Label 'The address you entered for %1 is different from the Vendor''s existing address.', Comment = '%1=Vendor name';
         DontShowAgainActionLbl: Label 'Don''t show again';
 
-    procedure InitRecord();
+    procedure InitPostingNoSeries()
+    var
+        PostingNoSeries: Code[20];
     begin
-        PurchSetup.GET;
+        GLSetup.GetRecordOnce();
+        if IsCreditDocType() then
+            PostingNoSeries := PurchSetup."Posted Credit Memo Nos."
+        else
+            PostingNoSeries := PurchSetup."Posted Invoice Nos.";
 
         case "Document Type" of
             "Document Type"::Quote, "Document Type"::Order:
                 begin
-                    NoSeriesMgt.SetDefaultSeries("Posting No. Series", PurchSetup."Posted Invoice Nos.");
-                    NoSeriesMgt.SetDefaultSeries("Receiving No. Series", PurchSetup."Posted Receipt Nos.");
+                    if NoSeries.IsAutomatic(PostingNoSeries) then
+                        "Posting No. Series" := PostingNoSeries;
+                    if NoSeries.IsAutomatic(PurchSetup."Posted Receipt Nos.") then
+                        "Receiving No. Series" := PurchSetup."Posted Receipt Nos.";
                     if "Document Type" = "Document Type"::Order then begin
-                        NoSeriesMgt.SetDefaultSeries("Prepayment No. Series", PurchSetup."Posted Prepmt. Inv. Nos.");
-                        NoSeriesMgt.SetDefaultSeries("Prepmt. Cr. Memo No. Series", PurchSetup."Posted Prepmt. Cr. Memo Nos.");
+                        if NoSeries.IsAutomatic(PurchSetup."Posted Prepmt. Inv. Nos.") then
+                            "Prepayment No. Series" := PurchSetup."Posted Prepmt. Inv. Nos.";
+                        if NoSeries.IsAutomatic(PurchSetup."Posted Prepmt. Cr. Memo Nos.") then
+                            "Prepmt. Cr. Memo No. Series" := PurchSetup."Posted Prepmt. Cr. Memo Nos.";
                     end;
                 end;
             "Document Type"::Invoice:
                 begin
-                    if ("No. Series" <> '') and
-                       (PurchSetup."Invoice Nos." = PurchSetup."Posted Invoice Nos.")
-                    then
+                    if ("No. Series" <> '') and (PurchSetup."Invoice Nos." = PostingNoSeries) then
                         "Posting No. Series" := "No. Series"
                     else
-                        NoSeriesMgt.SetDefaultSeries("Posting No. Series", PurchSetup."Posted Invoice Nos.");
+                        if NoSeries.IsAutomatic(PostingNoSeries) then
+                            "Posting No. Series" := PostingNoSeries;
                     if PurchSetup."Receipt on Invoice" then
-                        NoSeriesMgt.SetDefaultSeries("Receiving No. Series", PurchSetup."Posted Receipt Nos.");
+                        if NoSeries.IsAutomatic(PurchSetup."Posted Receipt Nos.") then
+                            "Receiving No. Series" := PurchSetup."Posted Receipt Nos.";
                 end;
             "Document Type"::"Return Order":
                 begin
-                    NoSeriesMgt.SetDefaultSeries("Posting No. Series", PurchSetup."Posted Credit Memo Nos.");
-                    NoSeriesMgt.SetDefaultSeries("Return Shipment No. Series", PurchSetup."Posted Return Shpt. Nos.");
+                    if NoSeries.IsAutomatic(PostingNoSeries) then
+                        "Posting No. Series" := PostingNoSeries;
+                    if NoSeries.IsAutomatic(PurchSetup."Posted Return Shpt. Nos.") then
+                        "Return Shipment No. Series" := PurchSetup."Posted Return Shpt. Nos.";
                 end;
             "Document Type"::"Credit Memo":
                 begin
-                    if ("No. Series" <> '') and
-                       (PurchSetup."Credit Memo Nos." = PurchSetup."Posted Credit Memo Nos.")
-                    then
+                    if ("No. Series" <> '') and (PurchSetup."Credit Memo Nos." = PostingNoSeries) then
                         "Posting No. Series" := "No. Series"
                     else
-                        NoSeriesMgt.SetDefaultSeries("Posting No. Series", PurchSetup."Posted Credit Memo Nos.");
+                        if NoSeries.IsAutomatic(PostingNoSeries) then
+                            "Posting No. Series" := PostingNoSeries;
                     if PurchSetup."Return Shipment on Credit Memo" then
-                        NoSeriesMgt.SetDefaultSeries("Return Shipment No. Series", PurchSetup."Posted Return Shpt. Nos.");
+                        if NoSeries.IsAutomatic(PurchSetup."Posted Return Shpt. Nos.") then
+                            "Return Shipment No. Series" := PurchSetup."Posted Return Shpt. Nos.";
                 end;
         end;
+    end;
+
+    procedure InitRecord();
+    begin
+        PurchSetup.GET;
+
+        // case "Document Type" of
+        //     "Document Type"::Quote, "Document Type"::Order:
+        //         begin
+        //             NoSeriesMgt.SetDefaultSeries("Posting No. Series", PurchSetup."Posted Invoice Nos.");
+        //             NoSeriesMgt.SetDefaultSeries("Receiving No. Series", PurchSetup."Posted Receipt Nos.");
+        //             if "Document Type" = "Document Type"::Order then begin
+        //                 NoSeriesMgt.SetDefaultSeries("Prepayment No. Series", PurchSetup."Posted Prepmt. Inv. Nos.");
+        //                 NoSeriesMgt.SetDefaultSeries("Prepmt. Cr. Memo No. Series", PurchSetup."Posted Prepmt. Cr. Memo Nos.");
+        //             end;
+        //         end;
+        //     "Document Type"::Invoice:
+        //         begin
+        //             if ("No. Series" <> '') and
+        //                (PurchSetup."Invoice Nos." = PurchSetup."Posted Invoice Nos.")
+        //             then
+        //                 "Posting No. Series" := "No. Series"
+        //             else
+        //                 NoSeriesMgt.SetDefaultSeries("Posting No. Series", PurchSetup."Posted Invoice Nos.");
+        //             if PurchSetup."Receipt on Invoice" then
+        //                 NoSeriesMgt.SetDefaultSeries("Receiving No. Series", PurchSetup."Posted Receipt Nos.");
+        //         end;
+        //     "Document Type"::"Return Order":
+        //         begin
+        //             NoSeriesMgt.SetDefaultSeries("Posting No. Series", PurchSetup."Posted Credit Memo Nos.");
+        //             NoSeriesMgt.SetDefaultSeries("Return Shipment No. Series", PurchSetup."Posted Return Shpt. Nos.");
+        //         end;
+        //     "Document Type"::"Credit Memo":
+        //         begin
+        //             if ("No. Series" <> '') and
+        //                (PurchSetup."Credit Memo Nos." = PurchSetup."Posted Credit Memo Nos.")
+        //             then
+        //                 "Posting No. Series" := "No. Series"
+        //             else
+        //                 NoSeriesMgt.SetDefaultSeries("Posting No. Series", PurchSetup."Posted Credit Memo Nos.");
+        //             if PurchSetup."Return Shipment on Credit Memo" then
+        //                 NoSeriesMgt.SetDefaultSeries("Return Shipment No. Series", PurchSetup."Posted Return Shpt. Nos.");
+        //         end;
+        // end;
+
+        InitPostingNoSeries;
 
         if "Document Type" in ["Document Type"::Order, "Document Type"::Invoice, "Document Type"::"Return Order"] then
             "Order Date" := WORKDATE;
@@ -2343,10 +2427,14 @@ table 50006 "Purchase Header Addon"
     begin
         PurchSetup.GET;
         TestNoSeries;
-        if NoSeriesMgt.SelectSeries(GetNoSeriesCode, OldPurchHeader."No. Series", "No. Series") then begin
-            PurchSetup.GET;
-            TestNoSeries;
-            NoSeriesMgt.SetSeries("No.");
+        // if NoSeriesMgt.SelectSeries(GetNoSeriesCode, OldPurchHeader."No. Series", "No. Series") then begin
+        //     PurchSetup.GET;
+        //     TestNoSeries;
+        //     NoSeriesMgt.SetSeries("No.");
+        //     exit(true);
+        // end;
+        if NoSeries.LookupRelatedNoSeries(GetNoSeriesCode(), OldPurchHeader."No. Series", "No. Series") then begin
+            "No." := NoSeries.GetNextNo("No. Series");
             exit(true);
         end;
     end;
@@ -2870,33 +2958,124 @@ table 50006 "Purchase Header Addon"
             ERROR('');
     end;
 
-    procedure CreateDim(Type1: Integer; No1: Code[20]; Type2: Integer; No2: Code[20]; Type3: Integer; No3: Code[20]; Type4: Integer; No4: Code[20]);
+    procedure CreateDimFromDefaultDim(FieldNo: Integer)
+    var
+        DefaultDimSource: List of [Dictionary of [Integer, Code[20]]];
+    begin
+        InitDefaultDimensionSources(DefaultDimSource, FieldNo);
+        CreateDim(DefaultDimSource);
+    end;
+
+    local procedure InitDefaultDimensionSources(var DefaultDimSource: List of [Dictionary of [Integer, Code[20]]]; FieldNo: Integer)
+    begin
+        DimMgt.AddDimSource(DefaultDimSource, Database::Vendor, Rec."Pay-to Vendor No.", FieldNo = Rec.FieldNo("Pay-to Vendor No."));
+        DimMgt.AddDimSource(DefaultDimSource, Database::"Salesperson/Purchaser", Rec."Purchaser Code", FieldNo = Rec.FieldNo("Purchaser Code"));
+        DimMgt.AddDimSource(DefaultDimSource, Database::Campaign, Rec."Campaign No.", FieldNo = Rec.FieldNo("Campaign No."));
+        DimMgt.AddDimSource(DefaultDimSource, Database::"Responsibility Center", Rec."Responsibility Center", FieldNo = Rec.FieldNo("Responsibility Center"));
+        DimMgt.AddDimSource(DefaultDimSource, Database::Location, Rec."Location Code", FieldNo = Rec.FieldNo("Location Code"));
+    end;
+
+    procedure CreateDim(DefaultDimSource: List of [Dictionary of [Integer, Code[20]]])
     var
         SourceCodeSetup: Record "Source Code Setup";
-        TableID: array[10] of Integer;
-        No: array[10] of Code[20];
         OldDimSetID: Integer;
+        IsHandled: Boolean;
     begin
-        SourceCodeSetup.GET;
-        TableID[1] := Type1;
-        No[1] := No1;
-        TableID[2] := Type2;
-        No[2] := No2;
-        TableID[3] := Type3;
-        No[3] := No3;
-        TableID[4] := Type4;
-        No[4] := No4;
+        IsHandled := false;
+        //OnBeforeCreateDim(Rec, IsHandled, DefaultDimSource, CurrFieldNo);
+        if IsHandled then
+            exit;
+
+        SourceCodeSetup.Get();
+
         "Shortcut Dimension 1 Code" := '';
         "Shortcut Dimension 2 Code" := '';
         OldDimSetID := "Dimension Set ID";
         "Dimension Set ID" :=
-          DimMgt.GetDefaultDimID(TableID, No, SourceCodeSetup.Purchases, "Shortcut Dimension 1 Code", "Shortcut Dimension 2 Code", 0, 0);
+          DimMgt.GetRecDefaultDimID(
+            Rec, CurrFieldNo, DefaultDimSource, SourceCodeSetup.Purchases, "Shortcut Dimension 1 Code", "Shortcut Dimension 2 Code", 0, 0);
 
-        if (OldDimSetID <> "Dimension Set ID") and PurchLinesExist then begin
-            MODIFY;
+        //OnCreateDimOnBeforeUpdateLines(Rec, xRec, CurrFieldNo, OldDimSetID, DefaultDimSource);
+
+        if (OldDimSetID <> "Dimension Set ID") and (OldDimSetID <> 0) and GuiAllowed then
+            if CouldDimensionsBeKept() then
+                if not ConfirmKeepExistingDimensions(OldDimSetID) then begin
+                    "Dimension Set ID" := OldDimSetID;
+                    DimMgt.UpdateGlobalDimFromDimSetID(Rec."Dimension Set ID", Rec."Shortcut Dimension 1 Code", Rec."Shortcut Dimension 2 Code");
+                end;
+
+        //OnCreateDimOnAfterConfirmKeepExisting(Rec, xRec, CurrFieldNo, OldDimSetID, DefaultDimSource);
+
+        if (OldDimSetID <> "Dimension Set ID") and PurchLinesExist() then begin
+            Modify();
             UpdateAllLineDim("Dimension Set ID", OldDimSetID);
         end;
     end;
+
+    local procedure ConfirmKeepExistingDimensions(OldDimSetID: Integer) Confirmed: Boolean
+    var
+        IsHandled: Boolean;
+        DoYouWantToKeepExistingDimensionsQst: Label 'This will change the dimension specified on the document. Do you want to recalculate/update dimensions?';
+    begin
+        IsHandled := false;
+        //OnBeforeConfirmKeepExistingDimensions(Rec, xRec, CurrFieldNo, OldDimSetID, Confirmed, IsHandled);
+        if IsHandled then
+            exit(Confirmed);
+
+        Confirmed := Confirm(DoYouWantToKeepExistingDimensionsQst);
+    end;
+
+    procedure CouldDimensionsBeKept() Result: Boolean;
+    var
+        IsHandled: Boolean;
+    begin
+        IsHandled := false;
+        if not IsHandled then begin
+            if (xRec."Buy-from Vendor No." <> '') and (xRec."Buy-from Vendor No." <> Rec."Buy-from Vendor No.") then
+                exit(false);
+            if (xRec."Pay-to Vendor No." <> '') and (xRec."Pay-to Vendor No." <> Rec."Pay-to Vendor No.") then
+                exit(false);
+            if (Rec."Location Code" = '') and (xRec."Location Code" <> '') and (CurrFieldNo = Rec.FieldNo("Location Code")) then
+                exit(true);
+            if (xRec."Location Code" <> Rec."Location Code") and ((CurrFieldNo = Rec.FieldNo("Location Code"))
+                or ((Rec."Sell-to Customer No." <> '') and (xRec."Sell-to Customer No." <> Rec."Sell-to Customer No."))) then
+                exit(true);
+            if (xRec."Purchaser Code" <> '') and (xRec."Purchaser Code" <> Rec."Purchaser Code") then
+                exit(true);
+            if (xRec."Responsibility Center" <> '') and (xRec."Responsibility Center" <> Rec."Responsibility Center") then
+                exit(true);
+            if (xRec."Sell-to Customer No." <> '') and (xRec."Sell-to Customer No." <> Rec."Sell-to Customer No.") then
+                exit(true);
+        end;
+    end;
+
+    // procedure CreateDim(DefaultDimSource: List of [Dictionary of [Integer, Code[20]]]);
+    // var
+    //     SourceCodeSetup: Record "Source Code Setup";
+    //     TableID: array[10] of Integer;
+    //     No: array[10] of Code[20];
+    //     OldDimSetID: Integer;
+    // begin
+    //     SourceCodeSetup.GET;
+    //     TableID[1] := Type1;
+    //     No[1] := No1;
+    //     TableID[2] := Type2;
+    //     No[2] := No2;
+    //     TableID[3] := Type3;
+    //     No[3] := No3;
+    //     TableID[4] := Type4;
+    //     No[4] := No4;
+    //     "Shortcut Dimension 1 Code" := '';
+    //     "Shortcut Dimension 2 Code" := '';
+    //     OldDimSetID := "Dimension Set ID";
+    //     "Dimension Set ID" :=
+    //       DimMgt.GetDefaultDimID(TableID, No, SourceCodeSetup.Purchases, "Shortcut Dimension 1 Code", "Shortcut Dimension 2 Code", 0, 0);
+
+    //     if (OldDimSetID <> "Dimension Set ID") and PurchLinesExist then begin
+    //         MODIFY;
+    //         UpdateAllLineDim("Dimension Set ID", OldDimSetID);
+    //     end;
+    // end;
 
     procedure ValidateShortcutDimCode(FieldNumber: Integer; var ShortcutDimCode: Code[20]);
     var

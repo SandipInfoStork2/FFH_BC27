@@ -770,7 +770,8 @@ report 50067 "Purchase - Credit Memo FFH"
 
         trigger OnOpenPage()
         begin
-            LogInteraction := SegManagement.FindInteractTmplCode(16) <> '';
+            // LogInteraction := SegManagement.FindInteractTmplCode(16) <> '';
+            LogInteraction := SegManagement.FindInteractionTemplateCode(16) <> '';
             LogInteractionEnable := LogInteraction;
         end;
     }
@@ -884,7 +885,8 @@ report 50067 "Purchase - Credit Memo FFH"
     [Scope('Internal')]
     procedure InitLogInteraction()
     begin
-        LogInteraction := SegManagement.FindInteractTmplCode(16) <> '';
+        // LogInteraction := SegManagement.FindInteractTmplCode(16) <> '';
+        LogInteraction := SegManagement.FindInteractionTemplateCode(16) <> '';
     end;
 
     local procedure DocumentCaption(): Text[250]

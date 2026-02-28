@@ -1167,7 +1167,8 @@ report 50041 "Sales - Invoice HORECA"
 
     procedure InitLogInteraction();
     begin
-        LogInteraction := SegManagement.FindInteractTmplCode(4) <> '';
+        // LogInteraction := SegManagement.FindInteractTmplCode(4) <> '';
+        LogInteraction := SegManagement.FindInteractionTemplateCode(4) <> '';
     end;
 
     procedure FindPostedShipmentDate(): Date;

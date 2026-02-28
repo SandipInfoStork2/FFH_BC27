@@ -878,7 +878,8 @@ report 50043 "Sales - Credit Memo HORECA"
 
         trigger OnOpenPage();
         begin
-            LogInteraction := SegManagement.FindInteractTmplCode(6) <> '';
+            // LogInteraction := SegManagement.FindInteractTmplCode(6) <> '';
+            LogInteraction := SegManagement.FindInteractionTemplateCode(6) <> '';
             LogInteractionEnable := LogInteraction;
         end;
     }
@@ -1027,7 +1028,8 @@ report 50043 "Sales - Credit Memo HORECA"
 
     procedure InitLogInteraction();
     begin
-        LogInteraction := SegManagement.FindInteractTmplCode(6) <> '';
+        // LogInteraction := SegManagement.FindInteractTmplCode(6) <> '';
+        LogInteraction := SegManagement.FindInteractionTemplateCode(6) <> '';
     end;
 
     procedure FindPostedShipmentDate(): Date;

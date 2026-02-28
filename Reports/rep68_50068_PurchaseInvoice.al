@@ -839,7 +839,8 @@ report 50068 "Purchase - Invoice FFH"
 
         trigger OnOpenPage()
         begin
-            LogInteraction := SegManagement.FindInteractTmplCode(14) <> '';
+            // LogInteraction := SegManagement.FindInteractTmplCode(14) <> '';
+            LogInteraction := SegManagement.FindInteractionTemplateCode(14) <> '';
             LogInteractionEnable := LogInteraction;
         end;
     }

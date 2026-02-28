@@ -1025,7 +1025,8 @@ report 50061 "Statement FFH"
         if (not PrintAllHavingEntry) and (not PrintAllHavingBal) then
             PrintAllHavingBal := true;
 
-        LogInteraction := SegManagement.FindInteractTmplCode(7) <> '';
+        // LogInteraction := SegManagement.FindInteractTmplCode(7) <> '';
+        LogInteraction := SegManagement.FindInteractionTemplateCode(7) <> '';
         LogInteractionEnable := LogInteraction;
 
         if Format(PeriodLength) = '' then

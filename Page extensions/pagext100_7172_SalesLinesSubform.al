@@ -1,10 +1,10 @@
 /*
 08/11/13 TAL0.1 PopulateAllFields Yes
-
+ObsoleteReason = 'Page is emty and not used.';
 */
-pageextension 50200 SalesLinesSubformExt extends "Sales Lines Subform"
+/* pageextension 50200 SalesLinesSubformExt extends "Sales Lines Subform"
 {
-    
+
     layout
     {
         // Add changes to page layout here
@@ -17,4 +17,4 @@ pageextension 50200 SalesLinesSubformExt extends "Sales Lines Subform"
 
     var
         myInt: Integer;
-}
+} */

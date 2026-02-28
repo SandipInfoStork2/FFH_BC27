@@ -186,8 +186,10 @@ page 50027 "Grower Turnover Lines"
     var
         Grower: Record Grower;
         ItemLedgEntry: Record "Item Ledger Entry";
-        PeriodFormMgt: Codeunit PeriodFormManagement;
-        PeriodType: Option Day,Week,Month,Quarter,Year,"Accounting Period";
+        /* PeriodFormMgt: Codeunit PeriodFormManagement;
+        PeriodType: Option Day,Week,Month,Quarter,Year,"Accounting Period"; */
+        PeriodType: Enum "Analysis Period Type";
+        PeriodFormMgt: Codeunit PeriodPageManagement;
         AmountType: Option "Net Change","Balance at Date";
         vG_CustomerNoFilter: Code[20];
 

@@ -903,7 +903,8 @@ report 50016 "Vendor Statement"
         if (not PrintAllHavingEntry) and (not PrintAllHavingBal) then
             PrintAllHavingBal := true;
 
-        LogInteraction := SegManagement.FindInteractTmplCode(7) <> '';
+        //LogInteraction := SegManagement.FindInteractTmplCode(7) <> '';
+        LogInteraction := SegManagement.FindInteractionTemplateCode(7) <> '';
         LogInteractionEnable := LogInteraction;
 
         if FORMAT(PeriodLength) = '' then

@@ -53,7 +53,7 @@ table 50007 "Purchase Line Addon"
             trigger OnValidate();
             var
                 ICPartner: Record "IC Partner";
-                ItemCrossReference: Record "Item Cross Reference";
+                //ItemCrossReference: Record "Item Cross Reference";
                 PrepmtMgt: Codeunit "Prepayment Mgt.";
             begin
                 //IF Type = Type::Item THEN
@@ -523,7 +523,7 @@ table 50007 "Purchase Line Addon"
             trigger OnLookup();
             var
                 ICGLAccount: Record "IC G/L Account";
-                ItemCrossReference: Record "Item Cross Reference";
+                //ItemCrossReference: Record "Item Cross Reference";
                 ItemVendorCatalog: Record "Item Vendor";
             begin
             end;
@@ -976,12 +976,6 @@ table 50007 "Purchase Line Addon"
         field(5705; "Cross-Reference No."; Code[20])
         {
             Caption = 'Cross-Reference No.';
-
-            trigger OnValidate();
-            var
-                ReturnedCrossRef: Record "Item Cross Reference";
-            begin
-            end;
         }
         field(5706; "Unit of Measure (Cross Ref.)"; Code[10])
         {
@@ -1409,7 +1403,7 @@ table 50007 "Purchase Line Addon"
         //NonstockItemMgt: Codeunit "Nonstock Item Management";
         WhseValidateSourceLine: Codeunit "Whse. Validate Source Line";
         LeadTimeMgt: Codeunit "Lead-Time Management";
-        PurchPriceCalcMgt: Codeunit "Purch. Price Calc. Mgt.";
+        //PurchPriceCalcMgt: Codeunit "Purch. Price Calc. Mgt.";
         CalendarMgmt: Codeunit "Calendar Management";
         CheckDateConflict: Codeunit "Reservation-Check Date Confl.";
         TrackingBlocked: Boolean;
@@ -1660,30 +1654,30 @@ table 50007 "Purchase Line Addon"
     begin
     end;
 
-    procedure UpdateVATOnLines(QtyType: Option General,Invoicing,Shipping; var PurchHeader: Record "Purchase Header"; var PurchLine: Record "Purchase Line"; var VATAmountLine: Record "VAT Amount Line");
-    var
-        TempVATAmountLineRemainder: Record "VAT Amount Line" temporary;
-        Currency: Record Currency;
-        NewAmount: Decimal;
-        NewAmountIncludingVAT: Decimal;
-        NewVATBaseAmount: Decimal;
-        VATAmount: Decimal;
-        VATDifference: Decimal;
-        InvDiscAmount: Decimal;
-        LineAmountToInvoice: Decimal;
-    begin
-    end;
+    // procedure UpdateVATOnLines(QtyType: Option General,Invoicing,Shipping; var PurchHeader: Record "Purchase Header"; var PurchLine: Record "Purchase Line"; var VATAmountLine: Record "VAT Amount Line");
+    // var
+    //     //TempVATAmountLineRemainder: Record "VAT Amount Line" temporary;
+    //     Currency: Record Currency;
+    //     NewAmount: Decimal;
+    //     NewAmountIncludingVAT: Decimal;
+    //     NewVATBaseAmount: Decimal;
+    //     VATAmount: Decimal;
+    //     VATDifference: Decimal;
+    //     InvDiscAmount: Decimal;
+    //     LineAmountToInvoice: Decimal;
+    // begin
+    // end;
 
-    procedure CalcVATAmountLines(QtyType: Option General,Invoicing,Shipping; var PurchHeader: Record "Purchase Header"; var PurchLine: Record "Purchase Line"; var VATAmountLine: Record "VAT Amount Line");
-    var
-        PrevVatAmountLine: Record "VAT Amount Line";
-        Currency: Record Currency;
-        SalesTaxCalculate: Codeunit "Sales Tax Calculate";
-        TotalVATAmount: Decimal;
-        QtyToHandle: Decimal;
-        RoundingLineInserted: Boolean;
-    begin
-    end;
+    // procedure CalcVATAmountLines(QtyType: Option General,Invoicing,Shipping; var PurchHeader: Record "Purchase Header"; var PurchLine: Record "Purchase Line"; var VATAmountLine: Record "VAT Amount Line");
+    // var
+    //     //PrevVatAmountLine: Record "VAT Amount Line";
+    //     Currency: Record Currency;
+    //     SalesTaxCalculate: Codeunit "Sales Tax Calculate";
+    //     TotalVATAmount: Decimal;
+    //     QtyToHandle: Decimal;
+    //     RoundingLineInserted: Boolean;
+    // begin
+    // end;
 
     procedure UpdateWithWarehouseReceive();
     begin
@@ -1744,7 +1738,7 @@ table 50007 "Purchase Line Addon"
 
     procedure CrossReferenceNoLookUp();
     var
-        ItemCrossReference: Record "Item Cross Reference";
+    //ItemCrossReference: Record "Item Cross Reference";
     begin
     end;
 

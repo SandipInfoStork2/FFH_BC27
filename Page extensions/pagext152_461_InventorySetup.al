@@ -3,7 +3,8 @@ pageextension 50252 InventorySetupExt extends "Inventory Setup"
     layout
     {
         // Add changes to page layout here
-        addafter("Use Item References")
+        //addafter("Use Item References")
+        addafter("Prevent Negative Inventory")
         {
             field("Allow Change Tracking Code"; "Allow Change Tracking Code")
             {

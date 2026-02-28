@@ -62,11 +62,11 @@ pageextension 50110 ItemLedgerEntriesExt extends "Item Ledger Entries"
         {
             Visible = true;
         }
-
-
+        modify("Source Type") { Editable = false; Visible = true; }
+        modify("Source No.") { Editable = false; Visible = true; }
         addafter("Job Task No.")
         {
-            field("Source Type"; "Source Type")
+            /* field("Source Type"; "Source Type")
             {
                 ApplicationArea = all;
                 Editable = false;
@@ -75,7 +75,7 @@ pageextension 50110 ItemLedgerEntriesExt extends "Item Ledger Entries"
             {
                 ApplicationArea = all;
                 Editable = false;
-            }
+            } */
             field("Receipt Doc. No."; "Receipt Doc. No.")
             {
                 ApplicationArea = all;

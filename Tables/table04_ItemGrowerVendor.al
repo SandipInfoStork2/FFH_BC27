@@ -102,7 +102,7 @@ table 50004 "Item Grower Vendor"
 
     var
         Vend: Record Vendor;
-        ItemCrossReference: Record "Item Cross Reference";
+        //ItemCrossReference: Record "Item Cross Reference";
         DistIntegration: Codeunit "Dist. Integration";
 
     local procedure DeleteItemCrossReference();

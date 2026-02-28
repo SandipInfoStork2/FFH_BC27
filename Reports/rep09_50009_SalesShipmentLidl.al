@@ -966,7 +966,7 @@ report 50009 "Sales - Shipment Lidl"
     //[Scope('Internal')]
     procedure InitLogInteraction()
     begin
-        LogInteraction := SegManagement.FindInteractTmplCode(5) <> '';
+        LogInteraction := SegManagement.FindInteractionTemplateCode(5) <> '';
     end;
 
     //[Scope('Internal')]

@@ -22,10 +22,10 @@ pageextension 50197 PostedReturnReceiptSubformExt extends "Posted Return Receipt
 
         addafter(Description)
         {
-            field("Description 2"; "Description 2")
+            /* field("Description 2"; "Description 2")
             {
                 ApplicationArea = All;
-            }
+            } */
             field("Packing Group Description"; rG_Item."Packing Group Description")
             {
                 ApplicationArea = All;

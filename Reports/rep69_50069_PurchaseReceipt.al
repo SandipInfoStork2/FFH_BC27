@@ -504,7 +504,8 @@ report 50069 "Purchase - Receipt FFH"
 
         trigger OnOpenPage()
         begin
-            LogInteraction := SegManagement.FindInteractTmplCode(15) <> '';
+            // LogInteraction := SegManagement.FindInteractTmplCode(15) <> '';
+            LogInteraction := SegManagement.FindInteractionTemplateCode(16) <> '';
             LogInteractionEnable := LogInteraction;
         end;
     }

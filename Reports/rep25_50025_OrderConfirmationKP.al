@@ -1307,8 +1307,8 @@ report 50025 "Order Confirmation - KP"
         trigger OnOpenPage();
         begin
             ArchiveDocument := SalesSetup."Archive Orders";
-            LogInteraction := SegManagement.FindInteractTmplCode(3) <> '';
-
+            //LogInteraction := SegManagement.FindInteractTmplCode(3) <> '';
+            LogInteraction := SegManagement.FindInteractionTemplateCode(3) <> '';
             LogInteractionEnable := LogInteraction;
         end;
     }

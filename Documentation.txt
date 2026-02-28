@@ -584,3 +584,6 @@ DPE 16/07/2025 Add Profit Center to Item Journal Batch and related pages
                (Introduces a new 'Profit Center' field to the Item Journal Batch table and exposes it on the Item Journal Batches page. 
                Updates the Phys. Inventory Journal page to allow updating the Profit Center dimension for lines and sets it automatically on insert. 
                Also makes 'Unit Cost' visibility conditional and adds tooltips for clarity.)
+
+1.0.0.334
+2026/02/28 V21 to V25 Upgrade

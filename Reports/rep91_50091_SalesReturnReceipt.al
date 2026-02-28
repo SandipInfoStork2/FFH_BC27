@@ -688,7 +688,8 @@ report 50091 "Sales - Return Receipt FFH"
 
     procedure InitLogInteraction()
     begin
-        LogInteraction := SegManagement.FindInteractTmplCode(20) <> '';
+        // LogInteraction := SegManagement.FindInteractTmplCode(20) <> '';
+        LogInteraction := SegManagement.FindInteractionTemplateCode(20) <> '';
     end;
 
     local procedure IsReportInPreviewMode(): Boolean

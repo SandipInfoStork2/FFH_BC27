@@ -17,12 +17,12 @@ pageextension 50108 ItemCardExt extends "Item Card"
         // Add changes to page layout here
         addafter(Description)
         {
-            field("Description 2"; "Description 2")
+            /* field("Description 2"; "Description 2")
             {
                 ApplicationArea = All;
                 CaptionML = ELL = 'Description 2 (GR)',
                                 ENU = 'Description 2 (GR)';
-            }
+            } */
             field("Extended Description"; "Extended Description")
             {
                 ApplicationArea = All;

@@ -1125,7 +1125,8 @@ report 50034 "Sales - Invoice Disc- KP"
 
     procedure InitLogInteraction();
     begin
-        LogInteraction := SegManagement.FindInteractTmplCode(4) <> '';
+        // LogInteraction := SegManagement.FindInteractTmplCode(4) <> '';
+        LogInteraction := SegManagement.FindInteractionTemplateCode(6) <> '';
     end;
 
     procedure FindPostedShipmentDate(): Date;

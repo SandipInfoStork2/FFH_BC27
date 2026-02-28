@@ -61,7 +61,7 @@ page 50035 "S.Q. Lidl Costing Subform"
                 {
                     ApplicationArea = Suite, ItemReferences;
                     ToolTip = 'Specifies the referenced item number.';
-                    Visible = ItemReferenceVisible;
+                    //Visible = ItemReferenceVisible;
                     Width = 5;
 
                     trigger OnLookup(var Text: Text): Boolean
@@ -602,7 +602,7 @@ page 50035 "S.Q. Lidl Costing Subform"
             {
                 ApplicationArea = Suite, ItemReferences;
                 Caption = 'Item Re&ferences';
-                Visible = ItemReferenceVisible;
+                //Visible = ItemReferenceVisible;
                 Image = Change;
                 //RunObject = Page "Item Reference Entries";
                 //RunPageLink = "Item No." = FIELD("No.");
@@ -761,7 +761,7 @@ page 50035 "S.Q. Lidl Costing Subform"
         SetOpenPage();
 
         //SetDimensionsVisibility();
-        SetItemReferenceVisibility();
+        //SetItemReferenceVisibility();
     end;
 
     var
@@ -798,8 +798,8 @@ page 50035 "S.Q. Lidl Costing Subform"
         IsBlankNumber: Boolean;
         IsCommentLine: Boolean;
         SuppressTotals: Boolean;
-        [InDataSet]
-        ItemReferenceVisible: Boolean;
+        // [InDataSet]
+        // ItemReferenceVisible: Boolean;
         UnitofMeasureCodeIsChangeable: Boolean;
         ItemChargeStyleExpression: Text;
         VATAmount: Decimal;
@@ -1049,12 +1049,12 @@ page 50035 "S.Q. Lidl Costing Subform"
         OnAfterSetDimensionsVisibility();
     end;
 
-    local procedure SetItemReferenceVisibility()
+    /* local procedure SetItemReferenceVisibility()
     var
         ItemReferenceMgt: Codeunit "Item Reference Management";
     begin
         ItemReferenceVisible := ItemReferenceMgt.IsEnabled();
-    end;
+    end; */
 
     local procedure ValidateShortcutDimension(DimIndex: Integer)
     var
