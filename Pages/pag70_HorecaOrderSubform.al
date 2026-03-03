@@ -7,13 +7,14 @@ page 50070 "Horeca Order Subform"
     MultipleNewLines = true;
     PageType = ListPart;
     SourceTable = "Sales Line";
-    SourceTableView = WHERE("Document Type" = FILTER(Order));
+    SourceTableView = where("Document Type" = filter(Order));
     InsertAllowed = false;
     DeleteAllowed = false;
+    ApplicationArea = All;
 
     layout
     {
-        area(content)
+        area(Content)
         {
             repeater(Control1)
             {
@@ -39,7 +40,7 @@ page 50070 "Horeca Order Subform"
                 field("No."; Rec."No.")
                 {
                     ApplicationArea = Basic, Suite;
-                    ShowMandatory = Type <> Type::" ";
+                    ShowMandatory = Rec.Type <> Rec.Type::" ";
                     ToolTip = 'Specifies what you are selling, such as a product or a fixed asset. You’ll see different lists of things to choose from depending on your choice in the Type field.';
                     Editable = false;
                     trigger OnValidate()
@@ -97,13 +98,13 @@ page 50070 "Horeca Order Subform"
                 }
                 */
 
-                field(Quantity; Quantity)
+                field(Quantity; Rec.Quantity)
                 {
                     ApplicationArea = Basic, Suite;
                     BlankZero = true;
-                    Editable = NOT IsCommentLine;
-                    Enabled = NOT IsCommentLine;
-                    ShowMandatory = (Type <> Type::" ") AND ("No." <> '');
+                    Editable = not IsCommentLine;
+                    Enabled = not IsCommentLine;
+                    ShowMandatory = (Rec.Type <> Rec.Type::" ") and (Rec."No." <> '');
                     ToolTip = 'Specifies how many units are being sold.';
 
                     AboutTitle = 'How much is being ordered';
@@ -123,18 +124,18 @@ page 50070 "Horeca Order Subform"
                         // if SalesSetup."Calc. Inv. Discount" and (Quantity = 0) then
                         //     CurrPage.Update(false);
 
-                        if (Quantity < 0) then begin
+                        if (Rec.Quantity < 0) then begin
                             Error(Text50001);
                         end;
 
-                        if rec."Unit of Measure Code" <> rec."Unit of Measure (Base)" then begin
-                            if rL_Item.Get("No.") then begin
-                                if (rL_Item."Package Qty" <> 0) and (rec.Quantity <> 0) then begin
-                                    Modulus := rec.Quantity mod rL_Item."Package Qty";
+                        if Rec."Unit of Measure Code" <> Rec."Unit of Measure (Base)" then begin
+                            if rL_Item.Get(Rec."No.") then begin
+                                if (rL_Item."Package Qty" <> 0) and (Rec.Quantity <> 0) then begin
+                                    Modulus := Rec.Quantity mod rL_Item."Package Qty";
 
                                     if Modulus <> 0 then begin
                                         if not rL_Item."Allow Modulus" then begin
-                                            Error(Text50000, FORMAT(rec.Quantity), FORMAT(rL_Item."Package Qty"));
+                                            Error(Text50000, Format(Rec.Quantity), Format(rL_Item."Package Qty"));
                                         end;
 
                                     end;
@@ -164,18 +165,20 @@ page 50070 "Horeca Order Subform"
                 }
                 */
 
-                field("Quantity (Base)"; "Quantity (Base)")
+                field("Quantity (Base)"; Rec."Quantity (Base)")
                 {
                     ApplicationArea = All;
                     Editable = false;
+                    ToolTip = 'Specifies the value of the Quantity (Base) field.';
                 }
 
 
 
-                field("Unit of Measure (Base)"; "Unit of Measure (Base)")
+                field("Unit of Measure (Base)"; Rec."Unit of Measure (Base)")
                 {
                     ApplicationArea = All;
                     Editable = false;
+                    ToolTip = 'Specifies the value of the Unit of Measure (Base) field.';
                 }
 
                 /*
@@ -337,7 +340,7 @@ page 50070 "Horeca Order Subform"
     var
         SalesHeader: Record "Sales Header";
     begin
-        SalesHeader.Get("Document Type", "Document No.");
+        SalesHeader.Get(Rec."Document Type", Rec."Document No.");
         SalesHeader.TestStatusOpen();
         SalesHeader.TestHORECAStatusOpen();
 
@@ -347,9 +350,9 @@ page 50070 "Horeca Order Subform"
     var
         myInt: Integer;
     begin
-        clear(Item);
+        Clear(Item);
 
-        if Item.GET("No.") then begin
+        if Item.GET(Rec."No.") then begin
             Item.CalcFields("Packing Group Description");
         end;
     end;
@@ -365,7 +368,7 @@ page 50070 "Horeca Order Subform"
 
     procedure UpdateEditableOnRow()
     begin
-        IsCommentLine := not HasTypeToFillMandatoryFields();
+        IsCommentLine := not Rec.HasTypeToFillMandatoryFields();
         IsBlankNumber := IsCommentLine;
         UnitofMeasureCodeIsChangeable := not IsCommentLine;
 

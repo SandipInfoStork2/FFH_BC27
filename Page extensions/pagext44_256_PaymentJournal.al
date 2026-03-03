@@ -18,14 +18,16 @@ pageextension 50144 PaymentJournalExt extends "Payment Journal"
             {
                 ApplicationArea = All;
                 Caption = 'No. Cheques to Print';
+                ToolTip = 'Specifies the value of the No. Cheques to Print field.';
             }
         }
 
         addafter(Description)
         {
-            field("Payee Name (GL Cheque)"; "Payee Name (GL Cheque)")
+            field("Payee Name (GL Cheque)"; Rec."Payee Name (GL Cheque)")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Payee Name field.';
             }
         }
 
@@ -40,6 +42,7 @@ pageextension 50144 PaymentJournalExt extends "Payment Journal"
                 {
                     ApplicationArea = All;
                     Editable = false;
+                    ToolTip = 'Specifies the value of the TotalCheques field.';
                 }
             }
         }
@@ -54,21 +57,22 @@ pageextension 50144 PaymentJournalExt extends "Payment Journal"
             {
                 ApplicationArea = All;
                 Caption = 'Update Descr. from Payee';
+                ToolTip = 'Executes the Update Descr. from Payee action.';
 
                 trigger OnAction();
                 begin
                     //TAL0.1
                     //CLEAR(rG_JournalLine);
-                    rG_JournalLine.RESET;
-                    rG_JournalLine.SETRANGE("Journal Template Name", "Journal Template Name");
-                    rG_JournalLine.SETRANGE("Journal Batch Name", "Journal Batch Name");
-                    if rG_JournalLine.FINDFIRST then begin
+                    rG_JournalLine.Reset;
+                    rG_JournalLine.SETRANGE("Journal Template Name", Rec."Journal Template Name");
+                    rG_JournalLine.SETRANGE("Journal Batch Name", Rec."Journal Batch Name");
+                    if rG_JournalLine.FindFirst then begin
                         repeat
                             rG_JournalLine.Description := rG_JournalLine."Payee Name (GL Cheque)";
-                            rG_JournalLine.MODIFY;
-                        until rG_JournalLine.NEXT = 0;
+                            rG_JournalLine.Modify;
+                        until rG_JournalLine.Next = 0;
                     end;
-                    MESSAGE('Completed');
+                    Message('Completed');
                     //TAL0.1
                 end;
             }
@@ -133,7 +137,7 @@ pageextension 50144 PaymentJournalExt extends "Payment Journal"
     begin
         //+TAl0.2
         ViewTotalCheques := true;
-        if rG_GeneralLedgerSetup.GET then;
+        if rG_GeneralLedgerSetup.Get then;
         //-TAl0.2
 
         //+TAl0.2
@@ -146,7 +150,7 @@ pageextension 50144 PaymentJournalExt extends "Payment Journal"
 
         //+TAl0.2
         LineNoCheques := 0;
-        if "Journal Template Name" = rG_GeneralLedgerSetup."Cheque Template Name" then begin
+        if Rec."Journal Template Name" = rG_GeneralLedgerSetup."Cheque Template Name" then begin
             ViewTotalCheques := true;
             LineNoCheques := UpdatePrintChequeNo(Rec);
         end else begin
@@ -179,78 +183,78 @@ pageextension 50144 PaymentJournalExt extends "Payment Journal"
         if ViewTotalCheques = false then
             exit;
 
-        rG_GeneralLedgerSetup.GET();
+        rG_GeneralLedgerSetup.Get();
         PageSplit := rG_GeneralLedgerSetup."Cheque Page Line No";
         if PageSplit = 0 then
-            ERROR(Text50000);
+            Error(Text50000);
 
         RowCounter := 0;
         PageCounter := 0;
 
-        GenJnlLine.RESET;
+        GenJnlLine.Reset;
         if pGenJournalLine."Journal Template Name" <> '' then begin
-            GenJnlLine.SETRANGE("Journal Template Name", pGenJournalLine."Journal Template Name");
+            GenJnlLine.SetRange("Journal Template Name", pGenJournalLine."Journal Template Name");
         end;
 
-        GenJnlLine.SETRANGE("Journal Batch Name", pGenJournalLine."Journal Batch Name");
-        GenJnlLine.SETRANGE("Check Printed", false);
-        GenJnlLine.SETRANGE("Line No.", pGenJournalLine."Line No.");
+        GenJnlLine.SetRange("Journal Batch Name", pGenJournalLine."Journal Batch Name");
+        GenJnlLine.SetRange("Check Printed", false);
+        GenJnlLine.SetRange("Line No.", pGenJournalLine."Line No.");
 
-        if GenJnlLine.FINDSET then begin
+        if GenJnlLine.FindSet then begin
             repeat
 
                 if GenJnlLine."Account Type" = pGenJournalLine."Account Type"::Vendor then begin
-                    if Vendor.GET(GenJnlLine."Account No.") then begin
+                    if Vendor.Get(GenJnlLine."Account No.") then begin
 
 
-                        VendLedgEntry.RESET;
-                        VendLedgEntry.SETCURRENTKEY("Vendor No.", Open, Positive);
-                        VendLedgEntry.SETRANGE("Vendor No.", GenJnlLine."Account No.");
-                        VendLedgEntry.SETRANGE(Open, true);
+                        VendLedgEntry.Reset;
+                        VendLedgEntry.SetCurrentKey("Vendor No.", Open, Positive);
+                        VendLedgEntry.SetRange("Vendor No.", GenJnlLine."Account No.");
+                        VendLedgEntry.SetRange(Open, true);
 
                         if GenJnlLine."Document No." = '' then begin
-                            VendLedgEntry.SETFILTER("Applies-to ID", '<>%1', '');
+                            VendLedgEntry.SetFilter("Applies-to ID", '<>%1', '');
                         end else begin
-                            VendLedgEntry.SETRANGE("Applies-to ID", GenJnlLine."Document No.");
+                            VendLedgEntry.SetRange("Applies-to ID", GenJnlLine."Document No.");
                         end;
 
-                        RowCounter := VendLedgEntry.COUNT;
+                        RowCounter := VendLedgEntry.Count;
                         if RowCounter <= (PageSplit - 1) then begin
                             PageCounter := 1;
                         end else begin
-                            PageCounter := 1 + ROUND(((RowCounter - (PageSplit - 1)) / PageSplit), 1, '>');
+                            PageCounter := 1 + Round(((RowCounter - (PageSplit - 1)) / PageSplit), 1, '>');
                         end;
 
 
                     end;
                 end else
                     if GenJnlLine."Account Type" = pGenJournalLine."Account Type"::Customer then begin
-                        if Customer.GET(GenJnlLine."Account No.") then begin
+                        if Customer.Get(GenJnlLine."Account No.") then begin
 
 
-                            CustLedgEntry.RESET;
-                            CustLedgEntry.SETCURRENTKEY("Customer No.", Open, Positive);
-                            CustLedgEntry.SETRANGE("Customer No.", GenJnlLine."Account No.");
-                            CustLedgEntry.SETRANGE(Open, true);
+                            CustLedgEntry.Reset;
+                            CustLedgEntry.SetCurrentKey("Customer No.", Open, Positive);
+                            CustLedgEntry.SetRange("Customer No.", GenJnlLine."Account No.");
+                            CustLedgEntry.SetRange(Open, true);
 
                             if GenJnlLine."Document No." = '' then begin
-                                CustLedgEntry.SETFILTER("Applies-to ID", '<>%1', '');
+                                CustLedgEntry.SetFilter("Applies-to ID", '<>%1', '');
                             end else begin
-                                CustLedgEntry.SETRANGE("Applies-to ID", GenJnlLine."Document No.");
+                                CustLedgEntry.SetRange("Applies-to ID", GenJnlLine."Document No.");
                             end;
 
-                            RowCounter := CustLedgEntry.COUNT;
+                            RowCounter := CustLedgEntry.Count;
                             if RowCounter <= (PageSplit - 1) then begin
                                 PageCounter := 1;
                             end else begin
-                                PageCounter := 1 + ROUND(((RowCounter - (PageSplit - 1)) / PageSplit), 1, '>');
+                                PageCounter := 1 + Round(((RowCounter - (PageSplit - 1)) / PageSplit), 1, '>');
                             end;
 
 
                         end;
                     end;
 
-            until GenJnlLine.NEXT = 0;
+            until GenJnlLine.Next = 0;
 
         end;
 
@@ -264,46 +268,46 @@ pageextension 50144 PaymentJournalExt extends "Payment Journal"
         if ViewTotalCheques = false then
             exit;
 
-        rG_GeneralLedgerSetup.GET();
+        rG_GeneralLedgerSetup.Get();
         PageSplit := rG_GeneralLedgerSetup."Cheque Page Line No";
         if PageSplit = 0 then
-            ERROR(Text50000);
+            Error(Text50000);
 
         TotalCheques := 0;
         RowCounter := 0;
         PageCounter := 0;
 
-        GenJnlLine.RESET;
-        if "Journal Template Name" <> '' then begin
-            GenJnlLine.SETRANGE("Journal Template Name", "Journal Template Name");
+        GenJnlLine.Reset;
+        if Rec."Journal Template Name" <> '' then begin
+            GenJnlLine.SETRANGE("Journal Template Name", Rec."Journal Template Name");
         end;
 
-        GenJnlLine.SETRANGE("Journal Batch Name", "Journal Batch Name");
-        GenJnlLine.SETRANGE("Check Printed", false);
+        GenJnlLine.SETRANGE("Journal Batch Name", Rec."Journal Batch Name");
+        GenJnlLine.SetRange("Check Printed", false);
 
-        if GenJnlLine.FINDSET then begin
+        if GenJnlLine.FindSet then begin
             repeat
 
                 if GenJnlLine."Account Type" = GenJnlLine."Account Type"::Vendor then begin
-                    if Vendor.GET(GenJnlLine."Account No.") then begin
+                    if Vendor.Get(GenJnlLine."Account No.") then begin
 
 
-                        VendLedgEntry.RESET;
-                        VendLedgEntry.SETCURRENTKEY("Vendor No.", Open, Positive);
-                        VendLedgEntry.SETRANGE("Vendor No.", GenJnlLine."Account No.");
-                        VendLedgEntry.SETRANGE(Open, true);
+                        VendLedgEntry.Reset;
+                        VendLedgEntry.SetCurrentKey("Vendor No.", Open, Positive);
+                        VendLedgEntry.SetRange("Vendor No.", GenJnlLine."Account No.");
+                        VendLedgEntry.SetRange(Open, true);
 
                         if GenJnlLine."Document No." = '' then begin
-                            VendLedgEntry.SETFILTER("Applies-to ID", '<>%1', '');
+                            VendLedgEntry.SetFilter("Applies-to ID", '<>%1', '');
                         end else begin
-                            VendLedgEntry.SETRANGE("Applies-to ID", GenJnlLine."Document No.");
+                            VendLedgEntry.SetRange("Applies-to ID", GenJnlLine."Document No.");
                         end;
 
-                        RowCounter := VendLedgEntry.COUNT;
+                        RowCounter := VendLedgEntry.Count;
                         if RowCounter <= (PageSplit - 1) then begin
                             PageCounter := 1;
                         end else begin
-                            PageCounter := 1 + ROUND(((RowCounter - (PageSplit - 1)) / PageSplit), 1, '>');  //NOD0.9 //NOD.10
+                            PageCounter := 1 + Round(((RowCounter - (PageSplit - 1)) / PageSplit), 1, '>');  //NOD0.9 //NOD.10
                         end;
 
 
@@ -316,25 +320,25 @@ pageextension 50144 PaymentJournalExt extends "Payment Journal"
                     end;
                 end else
                     if GenJnlLine."Account Type" = GenJnlLine."Account Type"::Customer then begin
-                        if Customer.GET(GenJnlLine."Account No.") then begin
+                        if Customer.Get(GenJnlLine."Account No.") then begin
 
 
-                            CustLedgEntry.RESET;
-                            CustLedgEntry.SETCURRENTKEY("Customer No.", Open, Positive);
-                            CustLedgEntry.SETRANGE("Customer No.", GenJnlLine."Account No.");
-                            CustLedgEntry.SETRANGE(Open, true);
+                            CustLedgEntry.Reset;
+                            CustLedgEntry.SetCurrentKey("Customer No.", Open, Positive);
+                            CustLedgEntry.SetRange("Customer No.", GenJnlLine."Account No.");
+                            CustLedgEntry.SetRange(Open, true);
 
                             if GenJnlLine."Document No." = '' then begin
-                                CustLedgEntry.SETFILTER("Applies-to ID", '<>%1', '');
+                                CustLedgEntry.SetFilter("Applies-to ID", '<>%1', '');
                             end else begin
-                                CustLedgEntry.SETRANGE("Applies-to ID", GenJnlLine."Document No.");
+                                CustLedgEntry.SetRange("Applies-to ID", GenJnlLine."Document No.");
                             end;
 
-                            RowCounter := CustLedgEntry.COUNT;
+                            RowCounter := CustLedgEntry.Count;
                             if RowCounter <= (PageSplit - 1) then begin
                                 PageCounter := 1;
                             end else begin
-                                PageCounter := 1 + ROUND(((RowCounter - (PageSplit - 1)) / PageSplit), 1, '>');
+                                PageCounter := 1 + Round(((RowCounter - (PageSplit - 1)) / PageSplit), 1, '>');
                             end;
 
 
@@ -348,7 +352,7 @@ pageextension 50144 PaymentJournalExt extends "Payment Journal"
                     end;
 
                 TotalCheques := TotalCheques + PageCounter;
-            until GenJnlLine.NEXT = 0;
+            until GenJnlLine.Next = 0;
 
         end;
     end;

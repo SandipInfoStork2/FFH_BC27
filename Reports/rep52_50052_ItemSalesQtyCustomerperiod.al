@@ -10,34 +10,35 @@ report 50052 "Item Sales Qty/Customer period"
     RDLCLayout = './Layouts/rep52_50052_ItemSalesQtyCustomerperiod.rdlc';
 
     PreviewMode = PrintLayout;
+    ApplicationArea = All;
 
     dataset
     {
         dataitem(Item; Item)
         {
             RequestFilterFields = "No.", "Global Dimension 1 Filter", "Item Category Code", "Statistics Group";
-            column(PeriodStartDate_1_; FORMAT(PeriodStartDate[1]))
+            column(PeriodStartDate_1_; Format(PeriodStartDate[1]))
             {
             }
-            column(PeriodEndDate; FORMAT(PeriodEndDate))
+            column(PeriodEndDate; Format(PeriodEndDate))
             {
             }
             column(PeriodLength; PeriodLength)
             {
             }
-            column(FORMAT_TODAY_0_4_; FORMAT(TODAY, 0, 4))
+            column(FORMAT_TODAY_0_4_; Format(Today, 0, 4))
             {
             }
-            column(USERID; USERID)
+            column(USERID; UserId)
             {
             }
-            column(CurrReport_PAGENO; CurrReport.PAGENO)
+            column(CurrReport_PAGENO; CurrReport.PageNo)
             {
             }
-            column(PeriodStartDate_1__Control1000000097; FORMAT(PeriodStartDate[1]))
+            column(PeriodStartDate_1__Control1000000097; Format(PeriodStartDate[1]))
             {
             }
-            column(PeriodTodate_1_; FORMAT(PeriodTodate[1]))
+            column(PeriodTodate_1_; Format(PeriodTodate[1]))
             {
 
             }
@@ -45,10 +46,10 @@ report 50052 "Item Sales Qty/Customer period"
             {
 
             }
-            column(PeriodStartDate_2_; FORMAT(PeriodStartDate[2]))
+            column(PeriodStartDate_2_; Format(PeriodStartDate[2]))
             {
             }
-            column(PeriodTodate_2_; FORMAT(PeriodTodate[2]))
+            column(PeriodTodate_2_; Format(PeriodTodate[2]))
             {
 
             }
@@ -56,10 +57,10 @@ report 50052 "Item Sales Qty/Customer period"
             {
 
             }
-            column(PeriodStartDate_3_; FORMAT(PeriodStartDate[3]))
+            column(PeriodStartDate_3_; Format(PeriodStartDate[3]))
             {
             }
-            column(PeriodTodate_3_; FORMAT(PeriodTodate[3]))
+            column(PeriodTodate_3_; Format(PeriodTodate[3]))
             {
 
             }
@@ -67,10 +68,10 @@ report 50052 "Item Sales Qty/Customer period"
             {
 
             }
-            column(PeriodStartDate_4_; FORMAT(PeriodStartDate[4]))
+            column(PeriodStartDate_4_; Format(PeriodStartDate[4]))
             {
             }
-            column(PeriodTodate_4_; FORMAT(PeriodTodate[4]))
+            column(PeriodTodate_4_; Format(PeriodTodate[4]))
             {
 
             }
@@ -78,10 +79,10 @@ report 50052 "Item Sales Qty/Customer period"
             {
 
             }
-            column(PeriodStartDate_5_; FORMAT(PeriodStartDate[5]))
+            column(PeriodStartDate_5_; Format(PeriodStartDate[5]))
             {
             }
-            column(PeriodTodate_5_; FORMAT(PeriodTodate[5]))
+            column(PeriodTodate_5_; Format(PeriodTodate[5]))
             {
 
             }
@@ -89,10 +90,10 @@ report 50052 "Item Sales Qty/Customer period"
             {
 
             }
-            column(PeriodStartDate_6_; FORMAT(PeriodStartDate[6]))
+            column(PeriodStartDate_6_; Format(PeriodStartDate[6]))
             {
             }
-            column(PeriodTodate_6_; FORMAT(PeriodTodate[6]))
+            column(PeriodTodate_6_; Format(PeriodTodate[6]))
             {
 
             }
@@ -100,10 +101,10 @@ report 50052 "Item Sales Qty/Customer period"
             {
 
             }
-            column(PeriodStartDate_7_; FORMAT(PeriodStartDate[7]))
+            column(PeriodStartDate_7_; Format(PeriodStartDate[7]))
             {
             }
-            column(PeriodTodate_7_; FORMAT(PeriodTodate[7]))
+            column(PeriodTodate_7_; Format(PeriodTodate[7]))
             {
 
             }
@@ -111,10 +112,10 @@ report 50052 "Item Sales Qty/Customer period"
             {
 
             }
-            column(PeriodStartDate_8_; FORMAT(PeriodStartDate[8]))
+            column(PeriodStartDate_8_; Format(PeriodStartDate[8]))
             {
             }
-            column(PeriodTodate_8_; FORMAT(PeriodTodate[8]))
+            column(PeriodTodate_8_; Format(PeriodTodate[8]))
             {
 
             }
@@ -122,10 +123,10 @@ report 50052 "Item Sales Qty/Customer period"
             {
 
             }
-            column(PeriodStartDate_9_; FORMAT(PeriodStartDate[9]))
+            column(PeriodStartDate_9_; Format(PeriodStartDate[9]))
             {
             }
-            column(PeriodTodate_9_; FORMAT(PeriodTodate[9]))
+            column(PeriodTodate_9_; Format(PeriodTodate[9]))
             {
 
             }
@@ -133,10 +134,10 @@ report 50052 "Item Sales Qty/Customer period"
             {
 
             }
-            column(PeriodStartDate_10_; FORMAT(PeriodStartDate[10]))
+            column(PeriodStartDate_10_; Format(PeriodStartDate[10]))
             {
             }
-            column(PeriodTodate_10_; FORMAT(PeriodTodate[10]))
+            column(PeriodTodate_10_; Format(PeriodTodate[10]))
             {
 
             }
@@ -144,10 +145,10 @@ report 50052 "Item Sales Qty/Customer period"
             {
 
             }
-            column(PeriodStartDate_11_; FORMAT(PeriodStartDate[11]))
+            column(PeriodStartDate_11_; Format(PeriodStartDate[11]))
             {
             }
-            column(PeriodTodate_11_; FORMAT(PeriodTodate[11]))
+            column(PeriodTodate_11_; Format(PeriodTodate[11]))
             {
 
             }
@@ -155,10 +156,10 @@ report 50052 "Item Sales Qty/Customer period"
             {
 
             }
-            column(PeriodStartDate_12_; FORMAT(PeriodStartDate[12]))
+            column(PeriodStartDate_12_; Format(PeriodStartDate[12]))
             {
             }
-            column(PeriodTodate_12_; FORMAT(PeriodTodate[12]))
+            column(PeriodTodate_12_; Format(PeriodTodate[12]))
             {
 
             }
@@ -245,13 +246,13 @@ report 50052 "Item Sales Qty/Customer period"
             column(PeriodCount; PeriodCount)
             {
             }
-            column(MenuOption; FORMAT(vG_MenuOption))
+            column(MenuOption; Format(vG_MenuOption))
             {
             }
             dataitem("Value Entry"; "Value Entry")
             {
-                DataItemLink = "Item No." = FIELD("No."), "Location Code" = FIELD("Location Filter"), "Variant Code" = FIELD("Variant Filter"), "Global Dimension 1 Code" = FIELD("Global Dimension 1 Filter"), "Global Dimension 2 Code" = FIELD("Global Dimension 2 Filter");
-                DataItemTableView = SORTING("Source Type", "Source No.", "Item No.", "Posting Date", "Entry Type", Adjustment) WHERE("Item Ledger Entry Type" = FILTER(Sale), "Source Type" = FILTER(Customer));
+                DataItemLink = "Item No." = field("No."), "Location Code" = field("Location Filter"), "Variant Code" = field("Variant Filter"), "Global Dimension 1 Code" = field("Global Dimension 1 Filter"), "Global Dimension 2 Code" = field("Global Dimension 2 Filter");
+                DataItemTableView = sorting("Source Type", "Source No.", "Item No.", "Posting Date", "Entry Type", Adjustment) where("Item Ledger Entry Type" = filter(Sale), "Source Type" = filter(Customer));
                 RequestFilterFields = "Source No.", "Source Posting Group";
                 column(Value_Entry__Value_Entry___Source_No__; "Value Entry"."Source No.")
                 {
@@ -396,8 +397,8 @@ report 50052 "Item Sales Qty/Customer period"
                     rL_Item: Record Item;
                 begin
 
-                    Cust.RESET;
-                    if Cust.GET("Value Entry"."Source No.") then;
+                    Cust.Reset;
+                    if Cust.Get("Value Entry"."Source No.") then;
 
                     if vG_OldCust <> Cust."No." then begin
                         vG_CustCount += 1;
@@ -411,18 +412,18 @@ report 50052 "Item Sales Qty/Customer period"
                         end;
 
                         for j := 1 to PeriodCount do begin
-                            ValueEntry.RESET;
-                            ValueEntry.SETCURRENTKEY("Source Type", "Source No.", "Item No.", "Posting Date", "Entry Type", Adjustment);
-                            ValueEntry.SETRANGE(ValueEntry."Item No.", Item."No.");
-                            ValueEntry.SETRANGE(ValueEntry."Source No.", "Value Entry"."Source No.");
-                            ValueEntry.SETRANGE(ValueEntry."Posting Date", PeriodStartDate[j], PeriodTodate[j]);
-                            ValueEntry.SETRANGE(ValueEntry."Item Ledger Entry Type", ValueEntry."Item Ledger Entry Type"::Sale);
-                            if Item.GETFILTER(Item."Global Dimension 1 Filter") <> '' then
-                                ValueEntry.SETRANGE(ValueEntry."Global Dimension 1 Code", Item.GETFILTER(Item."Global Dimension 1 Filter"));
-                            if ValueEntry.FINDFIRST then
+                            ValueEntry.Reset;
+                            ValueEntry.SetCurrentKey("Source Type", "Source No.", "Item No.", "Posting Date", "Entry Type", Adjustment);
+                            ValueEntry.SetRange(ValueEntry."Item No.", Item."No.");
+                            ValueEntry.SetRange(ValueEntry."Source No.", "Value Entry"."Source No.");
+                            ValueEntry.SetRange(ValueEntry."Posting Date", PeriodStartDate[j], PeriodTodate[j]);
+                            ValueEntry.SetRange(ValueEntry."Item Ledger Entry Type", ValueEntry."Item Ledger Entry Type"::Sale);
+                            if Item.GetFilter(Item."Global Dimension 1 Filter") <> '' then
+                                ValueEntry.SetRange(ValueEntry."Global Dimension 1 Code", Item.GetFilter(Item."Global Dimension 1 Filter"));
+                            if ValueEntry.FindFirst then
                                 repeat
                                     if vG_MenuOption = vG_MenuOption::"Net Weight" then begin
-                                        rL_Item.GET(ValueEntry1."Item No.");
+                                        rL_Item.Get(ValueEntry1."Item No.");
                                         vG_NetWeight := rL_Item."Net Weight" * ValueEntry."Invoiced Quantity";
                                         SalesQty[j] += vG_NetWeight;
                                     end else begin
@@ -430,8 +431,8 @@ report 50052 "Item Sales Qty/Customer period"
                                     end;
 
 
-                                until ValueEntry.NEXT = 0;
-                            SalesQty[j] := ABS(SalesQty[j]);
+                                until ValueEntry.Next = 0;
+                            SalesQty[j] := Abs(SalesQty[j]);
                             CustomerTotalSalesQty += SalesQty[j];
                             TotalItemSalesQty[j] += SalesQty[j];
                         end;
@@ -449,7 +450,7 @@ report 50052 "Item Sales Qty/Customer period"
                         //IF ShowNonzeroCustomers THEN
                         //  CurrReport.SHOWOUTPUT(CustomerTotalSalesQty <> 0 );
                         if (ShowNonzeroCustomers) and (CustomerTotalSalesQty = 0) then begin
-                            CurrReport.SKIP;
+                            CurrReport.Skip;
                         end;
 
                         if (PeriodCount <> 0) and (PeriodCount < 12) then begin
@@ -457,7 +458,7 @@ report 50052 "Item Sales Qty/Customer period"
                             CustomerTotalSalesQty := 0;
                         end;
                     end else begin
-                        CurrReport.SKIP;
+                        CurrReport.Skip;
                     end;
 
 
@@ -469,7 +470,7 @@ report 50052 "Item Sales Qty/Customer period"
 
                     vG_OldCust := '';
                     vG_CustCount := 0;
-                    "Value Entry".SETRANGE("Posting Date", PeriodStartDate[1], PeriodEndDate);
+                    "Value Entry".SetRange("Posting Date", PeriodStartDate[1], PeriodEndDate);
                 end;
             }
 
@@ -491,18 +492,18 @@ report 50052 "Item Sales Qty/Customer period"
 
                 ItemSalesQty := 0;
                 if ShowNonzeroItem then begin
-                    ValueEntry1.RESET;
-                    ValueEntry1.SETCURRENTKEY("Source Type", "Source No.", "Item No.", "Posting Date", "Entry Type", Adjustment);
-                    ValueEntry1.SETRANGE(ValueEntry1."Item No.", Item."No.");
-                    ValueEntry1.SETRANGE(ValueEntry1."Posting Date", PeriodStartDate[1], PeriodEndDate);
-                    ValueEntry1.SETRANGE(ValueEntry1."Item Ledger Entry Type", ValueEntry1."Item Ledger Entry Type"::Sale);
+                    ValueEntry1.Reset;
+                    ValueEntry1.SetCurrentKey("Source Type", "Source No.", "Item No.", "Posting Date", "Entry Type", Adjustment);
+                    ValueEntry1.SetRange(ValueEntry1."Item No.", Item."No.");
+                    ValueEntry1.SetRange(ValueEntry1."Posting Date", PeriodStartDate[1], PeriodEndDate);
+                    ValueEntry1.SetRange(ValueEntry1."Item Ledger Entry Type", ValueEntry1."Item Ledger Entry Type"::Sale);
                     if SourceNofilter <> '' then
-                        ValueEntry1.SETFILTER(ValueEntry1."Source No.", '%1', SourceNofilter);
-                    if ValueEntry1.FINDFIRST then
+                        ValueEntry1.SetFilter(ValueEntry1."Source No.", '%1', SourceNofilter);
+                    if ValueEntry1.FindFirst then
                         repeat
 
                             if vG_MenuOption = vG_MenuOption::"Net Weight" then begin
-                                rL_Item.GET(ValueEntry1."Item No.");
+                                rL_Item.Get(ValueEntry1."Item No.");
                                 vG_NetWeight := rL_Item."Net Weight" * ValueEntry1."Invoiced Quantity";
                                 ItemSalesQty += vG_NetWeight;
                             end else begin
@@ -510,10 +511,10 @@ report 50052 "Item Sales Qty/Customer period"
                             end;
 
 
-                        until ValueEntry1.NEXT = 0;
+                        until ValueEntry1.Next = 0;
 
                     if ItemSalesQty = 0 then
-                        CurrReport.SKIP;
+                        CurrReport.Skip;
                 end;
 
 
@@ -525,7 +526,7 @@ report 50052 "Item Sales Qty/Customer period"
                 TotalItemCustomerSalesQty := 0;
 
                 if NewPagePerItem then
-                    CurrReport.NEWPAGE;
+                    CurrReport.NewPage;
 
             end;
 
@@ -534,7 +535,7 @@ report 50052 "Item Sales Qty/Customer period"
                 PageGroupNo := 1;
                 //MESSAGE(FORMAT(PeriodCount));
                 ChangeTotalsPosition(PeriodCount); //TAL0.3
-                CustomerFilter := "Value Entry".GETFILTERS;
+                CustomerFilter := "Value Entry".GetFilters;
             end;
         }
     }
@@ -545,7 +546,7 @@ report 50052 "Item Sales Qty/Customer period"
 
         layout
         {
-            area(content)
+            area(Content)
             {
                 group(Options)
                 {
@@ -554,37 +555,44 @@ report 50052 "Item Sales Qty/Customer period"
                     {
                         ApplicationArea = All;
                         Caption = 'Starting Date';
+                        ToolTip = 'Specifies the value of the Starting Date field.';
                     }
                     field(PeriodEndDate; PeriodEndDate)
                     {
                         ApplicationArea = All;
                         Caption = 'Ending Date';
+                        ToolTip = 'Specifies the value of the Ending Date field.';
                     }
                     field(PeriodLength; PeriodLength)
                     {
                         ApplicationArea = All;
                         Caption = 'Period Length';
+                        ToolTip = 'Specifies the value of the Period Length field.';
                     }
                     field(NewPagePerItem; NewPagePerItem)
                     {
                         ApplicationArea = All;
                         Caption = 'New page per item';
+                        ToolTip = 'Specifies the value of the New page per item field.';
                     }
                     field(ShowNonzeroItem; ShowNonzeroItem)
                     {
                         ApplicationArea = All;
                         Caption = 'Show non zero items';
+                        ToolTip = 'Specifies the value of the Show non zero items field.';
                     }
                     field(ShowNonzeroCustomers; ShowNonzeroCustomers)
                     {
                         ApplicationArea = All;
                         Caption = 'Show non zero customers';
+                        ToolTip = 'Specifies the value of the Show non zero customers field.';
                     }
                     field(MenuOption; vG_MenuOption)
                     {
                         ApplicationArea = All;
                         CaptionML = ELL = 'Qty/Net Weight',
                                     ENU = 'Qty/Net Weight';
+                        ToolTip = 'Specifies the value of the vG_MenuOption field.';
                     }
                 }
             }
@@ -602,17 +610,17 @@ report 50052 "Item Sales Qty/Customer period"
     trigger OnPreReport();
     begin
         if PeriodStartDate[1] = 0D then
-            ERROR('Please enter period start date');
+            Error('Please enter period start date');
         if PeriodEndDate = 0D then
-            ERROR('Please enter period end date');
+            Error('Please enter period end date');
 
-        SourceNofilter := "Value Entry".GETFILTER("Value Entry"."Source No.");
+        SourceNofilter := "Value Entry".GetFilter("Value Entry"."Source No.");
 
 
 
         TempPeriodStartDate[1] := PeriodStartDate[1];
         for i := 1 to 12 do begin
-            TempPeriodStartDate[i + 1] := CALCDATE(PeriodLength, TempPeriodStartDate[i]);
+            TempPeriodStartDate[i + 1] := CalcDate(PeriodLength, TempPeriodStartDate[i]);
 
             if TempPeriodStartDate[i] > PeriodEndDate then
                 exit;
@@ -622,7 +630,7 @@ report 50052 "Item Sales Qty/Customer period"
             else
                 PeriodStartDate[i] := 0D;
 
-            PeriodTodate[i] := CALCDATE(PeriodLength, TempPeriodStartDate[i]) - 1;
+            PeriodTodate[i] := CalcDate(PeriodLength, TempPeriodStartDate[i]) - 1;
 
             if PeriodTodate[i] >= PeriodEndDate then
                 PeriodTodate[i] := PeriodEndDate;

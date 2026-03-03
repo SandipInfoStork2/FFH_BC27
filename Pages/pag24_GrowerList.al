@@ -4,100 +4,121 @@ page 50024 "Grower List"
     // TAL0.2 2021/04/08 VC add action Item Analysis
     // TAL0.3 2021/11/16 VC add field Country of Destination
 
-    CardPageID = "Grower Card";
+    CardPageId = "Grower Card";
     Editable = false;
     PageType = List;
     SourceTable = Grower;
+    ApplicationArea = All;
 
     layout
     {
-        area(content)
+        area(Content)
         {
             repeater(Group)
             {
-                field("No."; "No.")
+                field("No."; Rec."No.")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the No. field.';
                 }
-                field(Name; Name)
+                field(Name; Rec.Name)
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Name field.';
                 }
-                field(GGN; GGN)
+                field(GGN; Rec.GGN)
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the GGN field.';
                 }
-                field("Country of Destination"; "Country of Destination")
+                field("Country of Destination"; Rec."Country of Destination")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Country of Destination field.';
                 }
-                field(GLN; GLN)
+                field(GLN; Rec.GLN)
                 {
                     Visible = false;
-                    ApplicationArea = all;
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the GLN field.';
                 }
-                field("Grower Vendor No."; "Grower Vendor No.")
+                field("Grower Vendor No."; Rec."Grower Vendor No.")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Grower Vendor No. field.';
                 }
-                field("Grower Vendor Name"; "Grower Vendor Name")
+                field("Grower Vendor Name"; Rec."Grower Vendor Name")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Grower Vendor Name field.';
                 }
-                field("Grower Vendor GGN"; "Grower Vendor GGN")
+                field("Grower Vendor GGN"; Rec."Grower Vendor GGN")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Grower Vendor GGN field.';
                 }
-                field("Grower Vendor GLN"; "Grower Vendor GLN")
+                field("Grower Vendor GLN"; Rec."Grower Vendor GLN")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     Visible = false;
+                    ToolTip = 'Specifies the value of the Grower Vendor GLN field.';
                 }
-                field("Grower Certified"; "Grower Certified")
+                field("Grower Certified"; Rec."Grower Certified")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Grower Certified field.';
                 }
-                field("GGN Expiry Date"; "GGN Expiry Date")
+                field("GGN Expiry Date"; Rec."GGN Expiry Date")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the GGN Expiry Date field.';
                 }
-                field("Category 2"; "Category 2")
+                field("Category 2"; Rec."Category 2")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Category 2 field.';
                 }
 
-                field("Category 4"; "Category 4")
+                field("Category 4"; Rec."Category 4")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Category 4 field.';
                 }
-                field("No. of Products"; "No. of Products")
+                field("No. of Products"; Rec."No. of Products")
                 {
-                    ApplicationArea = all;
-                    DrillDownPageID = "Grower Item Catalog";
+                    ApplicationArea = All;
+                    DrillDownPageId = "Grower Item Catalog";
+                    ToolTip = 'Specifies the value of the No. of Products field.';
                 }
-                field(Comments; Comments)
+                field(Comments; Rec.Comments)
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Comments field.';
                 }
-                field("Category 1"; "Category 1")
+                field("Category 1"; Rec."Category 1")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Producer Group field.';
                 }
-                field("Producer Group Name"; "Producer Group Name")
+                field("Producer Group Name"; Rec."Producer Group Name")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Producer Group Name field.';
                 }
-                field(TC; TC)
+                field(TC; Rec.TC)
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the TC field.';
                 }
-                field("Phone No."; "Phone No.")
+                field("Phone No."; Rec."Phone No.")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Phone No. field.';
                 }
-                field("Mobile Phone No."; "Mobile Phone No.")
+                field("Mobile Phone No."; Rec."Mobile Phone No.")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Mobile Phone No. field.';
                 }
                 /*
                 field("Purchases (Qty.)"; GetPurchasesQty())
@@ -165,111 +186,125 @@ page 50024 "Grower List"
                 }
                 */
 
-                field("Category 3"; "Category 3")
-                {
-                    ApplicationArea = all;
-                }
-                field("GRASP Expiry Date"; "GRASP Expiry Date")
+                field("Category 3"; Rec."Category 3")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Category 3 field.';
+                }
+                field("GRASP Expiry Date"; Rec."GRASP Expiry Date")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the GRASP Expiry Date field.';
                 }
 
-                field("Status Biodiversity"; "Status Biodiversity")
+                field("Status Biodiversity"; Rec."Status Biodiversity")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Status Biodiversity field.';
                 }
 
-                field("Biodiversity Expiry Date"; "Biodiversity Expiry Date")
+                field("Biodiversity Expiry Date"; Rec."Biodiversity Expiry Date")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Biodiversity Expiry Date field.';
                 }
 
-                field("Status SPRING"; "Status SPRING")
+                field("Status SPRING"; Rec."Status SPRING")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Status SPRING field.';
                 }
-                field("SPRING Expiry Date"; "SPRING Expiry Date")
+                field("SPRING Expiry Date"; Rec."SPRING Expiry Date")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the SPRING Expiry Date field.';
                 }
 
-                field("Creation Date"; "Creation Date")
+                field("Creation Date"; Rec."Creation Date")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Creation Date field.';
                 }
-                field("Created By"; "Created By")
+                field("Created By"; Rec."Created By")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Created By field.';
                 }
-                field("Last Modified Date"; "Last Modified Date")
+                field("Last Modified Date"; Rec."Last Modified Date")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Last Modified Date field.';
                 }
-                field("Last Modified By"; "Last Modified By")
+                field("Last Modified By"; Rec."Last Modified By")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Last Modified By field.';
                 }
             }
         }
-        area(factboxes)
+        area(FactBoxes)
         {
             systempart(Control1000000022; Links)
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
             }
             systempart(Control1000000021; Notes)
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
             }
         }
     }
 
     actions
     {
-        area(reporting)
+        area(Reporting)
         {
             action("Grower Certification Validity")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 Image = "Report";
                 Promoted = true;
                 PromotedCategory = "Report";
                 PromotedOnly = true;
-                RunObject = Report "Grower Certification Validity";
+                RunObject = report "Grower Certification Validity";
+                ToolTip = 'Executes the Grower Certification Validity action.';
             }
             action("Update Grower Certified")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 Image = UpdateDescription;
                 Promoted = true;
                 PromotedCategory = Process;
                 PromotedIsBig = true;
                 PromotedOnly = true;
-                RunObject = Report "Update Grower Certified";
+                RunObject = report "Update Grower Certified";
+                ToolTip = 'Executes the Update Grower Certified action.';
             }
             action("Items Per Customer Sales")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 Image = "Report";
                 Promoted = true;
                 PromotedCategory = "Report";
                 PromotedIsBig = true;
                 PromotedOnly = true;
-                RunObject = Report "Items Per Customer Sales";
+                RunObject = report "Items Per Customer Sales";
+                ToolTip = 'Executes the Items Per Customer Sales action.';
             }
             action("Item Sales Qty/Customer period")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 Image = "Report";
                 Promoted = true;
                 PromotedCategory = "Report";
                 PromotedIsBig = true;
                 PromotedOnly = true;
-                RunObject = Report "Item Sales Qty/Customer period";
+                RunObject = report "Item Sales Qty/Customer period";
+                ToolTip = 'Executes the Item Sales Qty/Customer period action.';
             }
             action("Item Sales Det/Customer period")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 CaptionML = ELL = 'Item Sales Detailed/Customer period',
                             ENU = 'Item Sales Detailed/Customer period';
                 Image = "Report";
@@ -277,43 +312,47 @@ page 50024 "Grower List"
                 PromotedCategory = "Report";
                 PromotedIsBig = true;
                 PromotedOnly = true;
-                RunObject = Report "Item Sales Det/Customer period";
+                RunObject = report "Item Sales Det/Customer period";
+                ToolTip = 'Executes the Item Sales Det/Customer period action.';
             }
             action("Items Per Vendor Purchases")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 Image = "Report";
                 Promoted = true;
                 PromotedCategory = "Report";
                 PromotedIsBig = true;
                 PromotedOnly = true;
-                RunObject = Report "Items Per Vendor Purchases";
+                RunObject = report "Items Per Vendor Purchases";
+                ToolTip = 'Executes the Items Per Vendor Purchases action.';
             }
             action("Item Analysis")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 Image = AnalysisView;
                 Promoted = true;
                 PromotedCategory = "Report";
                 PromotedIsBig = true;
-                RunObject = Page "Item Analysis";
+                RunObject = page "Item Analysis";
+                ToolTip = 'Executes the Item Analysis action.';
             }
         }
-        area(navigation)
+        area(Navigation)
         {
             group(Grower)
             {
                 action("Page Vendor Gr. Item Catalog")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     Caption = 'Grower Items';
                     Image = Item;
                     Promoted = true;
                     PromotedCategory = Process;
                     PromotedOnly = true;
-                    RunObject = Page "Grower Item Catalog";
-                    RunPageLink = "Grower No." = FIELD("No.");
-                    RunPageView = SORTING("Grower No.");
+                    RunObject = page "Grower Item Catalog";
+                    RunPageLink = "Grower No." = field("No.");
+                    RunPageView = sorting("Grower No.");
+                    ToolTip = 'Executes the Grower Items action.';
                 }
             }
             group(Statistics)
@@ -322,29 +361,31 @@ page 50024 "Grower List"
                 Image = Statistics;
                 action("T&urnover")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     Caption = 'T&urnover';
                     Image = Turnover;
                     Promoted = true;
                     PromotedCategory = "Report";
                     PromotedIsBig = true;
                     PromotedOnly = true;
-                    RunObject = Page "Grower Turnover";
-                    RunPageLink = "No." = FIELD("No.");
+                    RunObject = page "Grower Turnover";
+                    RunPageLink = "No." = field("No.");
+                    ToolTip = 'Executes the T&urnover action.';
                 }
             }
         }
-        area(processing)
+        area(Processing)
         {
             action("Item Tracing")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 Image = ItemTracing;
                 Promoted = true;
                 PromotedCategory = Process;
                 PromotedIsBig = false;
                 PromotedOnly = true;
-                RunObject = Page "Item Tracing";
+                RunObject = page "Item Tracing";
+                ToolTip = 'Executes the Item Tracing action.';
             }
         }
     }
@@ -354,52 +395,52 @@ page 50024 "Grower List"
         vL_StartYear: Date;
     begin
 
-        vL_StartYear := DMY2DATE(1, 1, DATE2DMY(WORKDATE, 3));
+        vL_StartYear := DMY2Date(1, 1, Date2DMY(WorkDate, 3));
 
-        SETFILTER("Date Filter", '>=%1', vL_StartYear);
+        Rec.SETFILTER("Date Filter", '>=%1', vL_StartYear);
     end;
 
     local procedure ShowItemEntries(ShowSales: Boolean);
     begin
         //SetDateFilter;
-        ItemLedgEntry.RESET;
+        ItemLedgEntry.Reset;
         //ItemLedgEntry.SETCURRENTKEY("Item No.","Entry Type","Variant Code","Drop Shipment","Location Code","Posting Date");
-        ItemLedgEntry.SETCURRENTKEY("Entry Type", "Document Grower No.", "Posting Date");
-        ItemLedgEntry.SETRANGE(ItemLedgEntry."Lot Grower No.", "No.");
+        ItemLedgEntry.SetCurrentKey("Entry Type", "Document Grower No.", "Posting Date");
+        ItemLedgEntry.SETRANGE(ItemLedgEntry."Lot Grower No.", Rec."No.");
         //ItemLedgEntry.SETRANGE(ItemLedgEntry."Document Grower No.",Grower."No.");
-        ItemLedgEntry.SETFILTER("Posting Date", GETFILTER("Date Filter"));
+        ItemLedgEntry.SETFILTER("Posting Date", Rec.GETFILTER("Date Filter"));
 
 
 
 
         if ShowSales then begin
-            ItemLedgEntry.SETRANGE("Entry Type", ItemLedgEntry."Entry Type"::Sale);
-            if GETFILTER("Customer No. Filter") <> '' then begin
-                ItemLedgEntry.SETFILTER("Source No.", GETFILTER("Customer No. Filter"));
+            ItemLedgEntry.SetRange("Entry Type", ItemLedgEntry."Entry Type"::Sale);
+            if Rec.GETFILTER("Customer No. Filter") <> '' then begin
+                ItemLedgEntry.SETFILTER("Source No.", Rec.GETFILTER("Customer No. Filter"));
             end;
         end else begin
-            ItemLedgEntry.SETRANGE("Entry Type", ItemLedgEntry."Entry Type"::Purchase);
+            ItemLedgEntry.SetRange("Entry Type", ItemLedgEntry."Entry Type"::Purchase);
 
         end;
-        PAGE.RUN(0, ItemLedgEntry);
+        Page.Run(0, ItemLedgEntry);
     end;
 
     local procedure ShowPurchaseItemEntries(ShowSales: Boolean);
     begin
         //SetDateFilter;
-        ItemLedgEntry.RESET;
+        ItemLedgEntry.Reset;
         //ItemLedgEntry.SETCURRENTKEY("Item No.","Entry Type","Variant Code","Drop Shipment","Location Code","Posting Date");
-        ItemLedgEntry.SETCURRENTKEY("Entry Type", "Source Type", "Source No.", "Posting Date");
-        ItemLedgEntry.SETRANGE(ItemLedgEntry."Lot Grower No.", "No.");
+        ItemLedgEntry.SetCurrentKey("Entry Type", "Source Type", "Source No.", "Posting Date");
+        ItemLedgEntry.SETRANGE(ItemLedgEntry."Lot Grower No.", Rec."No.");
         //ItemLedgEntry.SETRANGE(ItemLedgEntry."Document Grower No.",Grower."No.");
-        ItemLedgEntry.SETRANGE("Source Type", ItemLedgEntry."Source Type"::Vendor);
+        ItemLedgEntry.SetRange("Source Type", ItemLedgEntry."Source Type"::Vendor);
         //ItemLedgEntry.SETFILTER("Source No.",Grower."Grower Vendor No.");
-        ItemLedgEntry.SETFILTER("Posting Date", GETFILTER("Date Filter"));
+        ItemLedgEntry.SETFILTER("Posting Date", Rec.GETFILTER("Date Filter"));
         if ShowSales then
-            ItemLedgEntry.SETRANGE("Entry Type", ItemLedgEntry."Entry Type"::Sale)
+            ItemLedgEntry.SetRange("Entry Type", ItemLedgEntry."Entry Type"::Sale)
         else
-            ItemLedgEntry.SETRANGE("Entry Type", ItemLedgEntry."Entry Type"::Purchase);
-        PAGE.RUN(0, ItemLedgEntry);
+            ItemLedgEntry.SetRange("Entry Type", ItemLedgEntry."Entry Type"::Purchase);
+        Page.Run(0, ItemLedgEntry);
     end;
 
     var

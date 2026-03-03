@@ -8,47 +8,50 @@ page 50031 "Order per Ship-to Loc Lines S"
     PageType = ListPart;
     RefreshOnActivate = false;
     SourceTable = Item;
-    SourceTableView = SORTING(Description);
+    SourceTableView = sorting(Description);
+    ApplicationArea = All;
 
     layout
     {
-        area(content)
+        area(Content)
         {
             repeater(Group)
             {
-                field("No."; "No.")
+                field("No."; Rec."No.")
                 {
                     ApplicationArea = All;
                     Editable = false;
+                    ToolTip = 'Specifies the number of the involved entry or record, according to the specified number series.';
 
                     trigger OnDrillDown();
                     var
                         rL_Item: Record Item;
                     begin
-                        rL_Item.GET("No.");
-                        PAGE.RUN(PAGE::"Item Card", rL_Item);
+                        rL_Item.GET(Rec."No.");
+                        Page.Run(Page::"Item Card", rL_Item);
                     end;
                 }
-                field(Description; Description)
+                field(Description; Rec.Description)
                 {
                     ApplicationArea = All;
                     Editable = false;
+                    ToolTip = 'Specifies a description of the item.';
                 }
-                field("Qty. on Sales Order"; "Qty. on Sales Order")
+                field("Qty. on Sales Order"; Rec."Qty. on Sales Order")
                 {
                     ApplicationArea = All;
                     Caption = 'Qty. on SO';
                     DecimalPlaces = 0 : 1;
                     Style = Strong;
-                    StyleExpr = TRUE;
+                    StyleExpr = true;
                     ToolTip = 'Qty. on Sales Order';
                 }
-                field("Base Unit of Measure"; "Base Unit of Measure")
+                field("Base Unit of Measure"; Rec."Base Unit of Measure")
                 {
                     ApplicationArea = All;
                     Caption = 'Buom';
                     Style = Strong;
-                    StyleExpr = TRUE;
+                    StyleExpr = true;
                     ToolTip = 'Base Unit of Measure';
                 }
                 field(vG_QtyPerBuom; vG_QtyPerBuom)
@@ -58,35 +61,39 @@ page 50031 "Order per Ship-to Loc Lines S"
                     DecimalPlaces = 0 : 1;
                     ToolTip = 'Qty Suom / Qty Buom  (Content of Buom)';
                 }
-                field("Qty. Out on Sales Order"; "Qty. Out on Sales Order")
+                field("Qty. Out on Sales Order"; Rec."Qty. Out on Sales Order")
                 {
                     ApplicationArea = All;
                     Caption = 'Qty/Suom';
                     ToolTip = 'Qty. Outstanding on Sales Order';
                 }
-                field("Sales Unit of Measure"; "Sales Unit of Measure")
+                field("Sales Unit of Measure"; Rec."Sales Unit of Measure")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the unit of measure code used when you sell the item.';
                 }
-                field("Production BOM No."; "Production BOM No.")
+                field("Production BOM No."; Rec."Production BOM No.")
                 {
                     ApplicationArea = All;
                     Editable = false;
+                    ToolTip = 'Specifies the production BOM that is used to manufacture this item.';
                 }
-                field("Routing No."; "Routing No.")
+                field("Routing No."; Rec."Routing No.")
                 {
                     ApplicationArea = All;
                     Editable = false;
+                    ToolTip = 'Specifies the production route that contains the operations needed to manufacture this item.';
                 }
                 field(Field1; MATRIX_CellDataBase[1])
                 {
                     ApplicationArea = All;
                     BlankZero = true;
-                    CaptionClass = '3,' + MATRIX_ColumnCaption[1] + FORMAT(NewLine) + FORMAT(NewLine2) + ' Base';
+                    CaptionClass = '3,' + MATRIX_ColumnCaption[1] + Format(NewLine) + Format(NewLine2) + ' Base';
                     DecimalPlaces = 0 : 0;
                     Style = Strong;
-                    StyleExpr = TRUE;
+                    StyleExpr = true;
                     Visible = Field1Visible;
+                    ToolTip = 'Specifies the value of the MATRIX_CellDataBase[1] field.';
 
                     trigger OnDrillDown();
                     begin
@@ -112,11 +119,12 @@ page 50031 "Order per Ship-to Loc Lines S"
                 {
                     ApplicationArea = All;
                     BlankZero = true;
-                    CaptionClass = '3,' + MATRIX_ColumnCaption[2] + FORMAT(NewLine) + FORMAT(NewLine2) + ' Base';
+                    CaptionClass = '3,' + MATRIX_ColumnCaption[2] + Format(NewLine) + Format(NewLine2) + ' Base';
                     DecimalPlaces = 0 : 0;
                     Style = Strong;
-                    StyleExpr = TRUE;
+                    StyleExpr = true;
                     Visible = Field2Visible;
+                    ToolTip = 'Specifies the value of the MATRIX_CellDataBase[2] field.';
 
                     trigger OnDrillDown();
                     begin
@@ -130,6 +138,7 @@ page 50031 "Order per Ship-to Loc Lines S"
                     CaptionClass = '3,' + MATRIX_ColumnCaption[2];
                     DecimalPlaces = 0 : 0;
                     Visible = Field2VisibleQty;
+                    ToolTip = 'Specifies the value of the MATRIX_CellDataQty[2] field.';
 
                     trigger OnDrillDown();
                     begin
@@ -140,11 +149,12 @@ page 50031 "Order per Ship-to Loc Lines S"
                 {
                     ApplicationArea = All;
                     BlankZero = true;
-                    CaptionClass = '3,' + MATRIX_ColumnCaption[3] + FORMAT(NewLine) + FORMAT(NewLine2) + ' Base';
+                    CaptionClass = '3,' + MATRIX_ColumnCaption[3] + Format(NewLine) + Format(NewLine2) + ' Base';
                     DecimalPlaces = 0 : 0;
                     Style = Strong;
-                    StyleExpr = TRUE;
+                    StyleExpr = true;
                     Visible = Field3Visible;
+                    ToolTip = 'Specifies the value of the MATRIX_CellDataBase[3] field.';
 
                     trigger OnDrillDown();
                     begin
@@ -158,6 +168,7 @@ page 50031 "Order per Ship-to Loc Lines S"
                     CaptionClass = '3,' + MATRIX_ColumnCaption[3];
                     DecimalPlaces = 0 : 0;
                     Visible = Field3VisibleQty;
+                    ToolTip = 'Specifies the value of the MATRIX_CellDataQty[3] field.';
 
                     trigger OnDrillDown();
                     begin
@@ -168,11 +179,12 @@ page 50031 "Order per Ship-to Loc Lines S"
                 {
                     ApplicationArea = All;
                     BlankZero = true;
-                    CaptionClass = '3,' + MATRIX_ColumnCaption[4] + FORMAT(NewLine) + FORMAT(NewLine2) + ' Base';
+                    CaptionClass = '3,' + MATRIX_ColumnCaption[4] + Format(NewLine) + Format(NewLine2) + ' Base';
                     DecimalPlaces = 0 : 0;
                     Style = Strong;
-                    StyleExpr = TRUE;
+                    StyleExpr = true;
                     Visible = Field4Visible;
+                    ToolTip = 'Specifies the value of the MATRIX_CellDataBase[4] field.';
 
                     trigger OnDrillDown();
                     begin
@@ -186,6 +198,7 @@ page 50031 "Order per Ship-to Loc Lines S"
                     CaptionClass = '3,' + MATRIX_ColumnCaption[4];
                     DecimalPlaces = 0 : 0;
                     Visible = Field4VisibleQty;
+                    ToolTip = 'Specifies the value of the MATRIX_CellDataQty[4] field.';
 
                     trigger OnDrillDown();
                     begin
@@ -196,11 +209,12 @@ page 50031 "Order per Ship-to Loc Lines S"
                 {
                     ApplicationArea = All;
                     BlankZero = true;
-                    CaptionClass = '3,' + MATRIX_ColumnCaption[5] + FORMAT(NewLine) + FORMAT(NewLine2) + ' Base';
+                    CaptionClass = '3,' + MATRIX_ColumnCaption[5] + Format(NewLine) + Format(NewLine2) + ' Base';
                     DecimalPlaces = 0 : 0;
                     Style = Strong;
-                    StyleExpr = TRUE;
+                    StyleExpr = true;
                     Visible = Field5Visible;
+                    ToolTip = 'Specifies the value of the MATRIX_CellDataBase[5] field.';
 
                     trigger OnDrillDown();
                     begin
@@ -214,6 +228,7 @@ page 50031 "Order per Ship-to Loc Lines S"
                     CaptionClass = '3,' + MATRIX_ColumnCaption[5];
                     DecimalPlaces = 0 : 0;
                     Visible = Field5VisibleQty;
+                    ToolTip = 'Specifies the value of the MATRIX_CellDataQty[5] field.';
 
                     trigger OnDrillDown();
                     begin
@@ -224,11 +239,12 @@ page 50031 "Order per Ship-to Loc Lines S"
                 {
                     ApplicationArea = All;
                     BlankZero = true;
-                    CaptionClass = '3,' + MATRIX_ColumnCaption[6] + FORMAT(NewLine) + FORMAT(NewLine2) + ' Base';
+                    CaptionClass = '3,' + MATRIX_ColumnCaption[6] + Format(NewLine) + Format(NewLine2) + ' Base';
                     DecimalPlaces = 0 : 0;
                     Style = Strong;
-                    StyleExpr = TRUE;
+                    StyleExpr = true;
                     Visible = Field6Visible;
+                    ToolTip = 'Specifies the value of the MATRIX_CellDataBase[6] field.';
 
                     trigger OnDrillDown();
                     begin
@@ -242,6 +258,7 @@ page 50031 "Order per Ship-to Loc Lines S"
                     CaptionClass = '3,' + MATRIX_ColumnCaption[6];
                     DecimalPlaces = 0 : 0;
                     Visible = Field6VisibleQty;
+                    ToolTip = 'Specifies the value of the MATRIX_CellDataQty[6] field.';
 
                     trigger OnDrillDown();
                     begin
@@ -252,11 +269,12 @@ page 50031 "Order per Ship-to Loc Lines S"
                 {
                     ApplicationArea = All;
                     BlankZero = true;
-                    CaptionClass = '3,' + MATRIX_ColumnCaption[7] + FORMAT(NewLine) + FORMAT(NewLine2) + ' Base';
+                    CaptionClass = '3,' + MATRIX_ColumnCaption[7] + Format(NewLine) + Format(NewLine2) + ' Base';
                     DecimalPlaces = 0 : 0;
                     Style = Strong;
-                    StyleExpr = TRUE;
+                    StyleExpr = true;
                     Visible = Field7Visible;
+                    ToolTip = 'Specifies the value of the MATRIX_CellDataBase[7] field.';
 
                     trigger OnDrillDown();
                     begin
@@ -270,6 +288,7 @@ page 50031 "Order per Ship-to Loc Lines S"
                     CaptionClass = '3,' + MATRIX_ColumnCaption[7];
                     DecimalPlaces = 0 : 0;
                     Visible = Field7VisibleQty;
+                    ToolTip = 'Specifies the value of the MATRIX_CellDataQty[7] field.';
 
                     trigger OnDrillDown();
                     begin
@@ -280,11 +299,12 @@ page 50031 "Order per Ship-to Loc Lines S"
                 {
                     ApplicationArea = All;
                     BlankZero = true;
-                    CaptionClass = '3,' + MATRIX_ColumnCaption[8] + FORMAT(NewLine) + FORMAT(NewLine2) + ' Base';
+                    CaptionClass = '3,' + MATRIX_ColumnCaption[8] + Format(NewLine) + Format(NewLine2) + ' Base';
                     DecimalPlaces = 0 : 0;
                     Style = Strong;
-                    StyleExpr = TRUE;
+                    StyleExpr = true;
                     Visible = Field8Visible;
+                    ToolTip = 'Specifies the value of the MATRIX_CellDataBase[8] field.';
 
                     trigger OnDrillDown();
                     begin
@@ -298,6 +318,7 @@ page 50031 "Order per Ship-to Loc Lines S"
                     CaptionClass = '3,' + MATRIX_ColumnCaption[8];
                     DecimalPlaces = 0 : 0;
                     Visible = Field8VisibleQty;
+                    ToolTip = 'Specifies the value of the MATRIX_CellDataQty[8] field.';
 
                     trigger OnDrillDown();
                     begin
@@ -308,11 +329,12 @@ page 50031 "Order per Ship-to Loc Lines S"
                 {
                     ApplicationArea = All;
                     BlankZero = true;
-                    CaptionClass = '3,' + MATRIX_ColumnCaption[9] + FORMAT(NewLine) + FORMAT(NewLine2) + ' Base';
+                    CaptionClass = '3,' + MATRIX_ColumnCaption[9] + Format(NewLine) + Format(NewLine2) + ' Base';
                     DecimalPlaces = 0 : 0;
                     Style = Strong;
-                    StyleExpr = TRUE;
+                    StyleExpr = true;
                     Visible = Field9Visible;
+                    ToolTip = 'Specifies the value of the MATRIX_CellDataBase[9] field.';
 
                     trigger OnDrillDown();
                     begin
@@ -326,6 +348,7 @@ page 50031 "Order per Ship-to Loc Lines S"
                     CaptionClass = '3,' + MATRIX_ColumnCaption[9];
                     DecimalPlaces = 0 : 0;
                     Visible = Field9VisibleQty;
+                    ToolTip = 'Specifies the value of the MATRIX_CellDataQty[9] field.';
 
                     trigger OnDrillDown();
                     begin
@@ -336,11 +359,12 @@ page 50031 "Order per Ship-to Loc Lines S"
                 {
                     ApplicationArea = All;
                     BlankZero = true;
-                    CaptionClass = '3,' + MATRIX_ColumnCaption[10] + FORMAT(NewLine) + FORMAT(NewLine2) + ' Base';
+                    CaptionClass = '3,' + MATRIX_ColumnCaption[10] + Format(NewLine) + Format(NewLine2) + ' Base';
                     DecimalPlaces = 0 : 0;
                     Style = Strong;
-                    StyleExpr = TRUE;
+                    StyleExpr = true;
                     Visible = Field10Visible;
+                    ToolTip = 'Specifies the value of the MATRIX_CellDataBase[10] field.';
 
                     trigger OnDrillDown();
                     begin
@@ -354,6 +378,7 @@ page 50031 "Order per Ship-to Loc Lines S"
                     CaptionClass = '3,' + MATRIX_ColumnCaption[10];
                     DecimalPlaces = 0 : 0;
                     Visible = Field10VisibleQty;
+                    ToolTip = 'Specifies the value of the MATRIX_CellDataQty[10] field.';
 
                     trigger OnDrillDown();
                     begin
@@ -364,11 +389,12 @@ page 50031 "Order per Ship-to Loc Lines S"
                 {
                     ApplicationArea = All;
                     BlankZero = true;
-                    CaptionClass = '3,' + MATRIX_ColumnCaption[11] + FORMAT(NewLine) + FORMAT(NewLine2) + ' Base';
+                    CaptionClass = '3,' + MATRIX_ColumnCaption[11] + Format(NewLine) + Format(NewLine2) + ' Base';
                     DecimalPlaces = 0 : 0;
                     Style = Strong;
-                    StyleExpr = TRUE;
+                    StyleExpr = true;
                     Visible = Field11Visible;
+                    ToolTip = 'Specifies the value of the MATRIX_CellDataBase[11] field.';
 
                     trigger OnDrillDown();
                     begin
@@ -382,6 +408,7 @@ page 50031 "Order per Ship-to Loc Lines S"
                     CaptionClass = '3,' + MATRIX_ColumnCaption[11];
                     DecimalPlaces = 0 : 0;
                     Visible = Field11VisibleQty;
+                    ToolTip = 'Specifies the value of the MATRIX_CellDataQty[11] field.';
 
                     trigger OnDrillDown();
                     begin
@@ -392,11 +419,12 @@ page 50031 "Order per Ship-to Loc Lines S"
                 {
                     ApplicationArea = All;
                     BlankZero = true;
-                    CaptionClass = '3,' + MATRIX_ColumnCaption[12] + FORMAT(NewLine) + FORMAT(NewLine2) + ' Base';
+                    CaptionClass = '3,' + MATRIX_ColumnCaption[12] + Format(NewLine) + Format(NewLine2) + ' Base';
                     DecimalPlaces = 0 : 0;
                     Style = Strong;
-                    StyleExpr = TRUE;
+                    StyleExpr = true;
                     Visible = Field12Visible;
+                    ToolTip = 'Specifies the value of the MATRIX_CellDataBase[12] field.';
 
                     trigger OnDrillDown();
                     begin
@@ -410,6 +438,7 @@ page 50031 "Order per Ship-to Loc Lines S"
                     CaptionClass = '3,' + MATRIX_ColumnCaption[12];
                     DecimalPlaces = 0 : 0;
                     Visible = Field12VisibleQty;
+                    ToolTip = 'Specifies the value of the MATRIX_CellDataQty[12] field.';
 
                     trigger OnDrillDown();
                     begin
@@ -420,11 +449,12 @@ page 50031 "Order per Ship-to Loc Lines S"
                 {
                     ApplicationArea = All;
                     BlankZero = true;
-                    CaptionClass = '3,' + MATRIX_ColumnCaption[13] + FORMAT(NewLine) + FORMAT(NewLine2) + ' Base';
+                    CaptionClass = '3,' + MATRIX_ColumnCaption[13] + Format(NewLine) + Format(NewLine2) + ' Base';
                     DecimalPlaces = 0 : 0;
                     Style = Strong;
-                    StyleExpr = TRUE;
+                    StyleExpr = true;
                     Visible = Field13Visible;
+                    ToolTip = 'Specifies the value of the MATRIX_CellDataBase[13] field.';
 
                     trigger OnDrillDown();
                     begin
@@ -438,6 +468,7 @@ page 50031 "Order per Ship-to Loc Lines S"
                     CaptionClass = '3,' + MATRIX_ColumnCaption[13];
                     DecimalPlaces = 0 : 0;
                     Visible = Field13VisibleQty;
+                    ToolTip = 'Specifies the value of the MATRIX_CellDataQty[13] field.';
 
                     trigger OnDrillDown();
                     begin
@@ -448,11 +479,12 @@ page 50031 "Order per Ship-to Loc Lines S"
                 {
                     ApplicationArea = All;
                     BlankZero = true;
-                    CaptionClass = '3,' + MATRIX_ColumnCaption[14] + FORMAT(NewLine) + FORMAT(NewLine2) + ' Base';
+                    CaptionClass = '3,' + MATRIX_ColumnCaption[14] + Format(NewLine) + Format(NewLine2) + ' Base';
                     DecimalPlaces = 0 : 0;
                     Style = Strong;
-                    StyleExpr = TRUE;
+                    StyleExpr = true;
                     Visible = Field14Visible;
+                    ToolTip = 'Specifies the value of the MATRIX_CellDataBase[14] field.';
 
                     trigger OnDrillDown();
                     begin
@@ -466,6 +498,7 @@ page 50031 "Order per Ship-to Loc Lines S"
                     CaptionClass = '3,' + MATRIX_ColumnCaption[14];
                     DecimalPlaces = 0 : 0;
                     Visible = Field14VisibleQty;
+                    ToolTip = 'Specifies the value of the MATRIX_CellDataQty[14] field.';
 
                     trigger OnDrillDown();
                     begin
@@ -476,11 +509,12 @@ page 50031 "Order per Ship-to Loc Lines S"
                 {
                     ApplicationArea = All;
                     BlankZero = true;
-                    CaptionClass = '3,' + MATRIX_ColumnCaption[15] + FORMAT(NewLine) + FORMAT(NewLine2) + ' Base';
+                    CaptionClass = '3,' + MATRIX_ColumnCaption[15] + Format(NewLine) + Format(NewLine2) + ' Base';
                     DecimalPlaces = 0 : 0;
                     Style = Strong;
-                    StyleExpr = TRUE;
+                    StyleExpr = true;
                     Visible = Field15Visible;
+                    ToolTip = 'Specifies the value of the MATRIX_CellDataBase[15] field.';
 
                     trigger OnDrillDown();
                     begin
@@ -494,6 +528,7 @@ page 50031 "Order per Ship-to Loc Lines S"
                     CaptionClass = '3,' + MATRIX_ColumnCaption[15];
                     DecimalPlaces = 0 : 0;
                     Visible = Field15VisibleQty;
+                    ToolTip = 'Specifies the value of the MATRIX_CellDataQty[15] field.';
 
                     trigger OnDrillDown();
                     begin
@@ -504,11 +539,12 @@ page 50031 "Order per Ship-to Loc Lines S"
                 {
                     ApplicationArea = All;
                     BlankZero = true;
-                    CaptionClass = '3,' + MATRIX_ColumnCaption[16] + FORMAT(NewLine) + FORMAT(NewLine2) + ' Base';
+                    CaptionClass = '3,' + MATRIX_ColumnCaption[16] + Format(NewLine) + Format(NewLine2) + ' Base';
                     DecimalPlaces = 0 : 0;
                     Style = Strong;
-                    StyleExpr = TRUE;
+                    StyleExpr = true;
                     Visible = Field16Visible;
+                    ToolTip = 'Specifies the value of the MATRIX_CellDataBase[16] field.';
 
                     trigger OnDrillDown();
                     begin
@@ -522,6 +558,7 @@ page 50031 "Order per Ship-to Loc Lines S"
                     CaptionClass = '3,' + MATRIX_ColumnCaption[16];
                     DecimalPlaces = 0 : 0;
                     Visible = Field16VisibleQty;
+                    ToolTip = 'Specifies the value of the MATRIX_CellDataQty[16] field.';
 
                     trigger OnDrillDown();
                     begin
@@ -532,11 +569,12 @@ page 50031 "Order per Ship-to Loc Lines S"
                 {
                     ApplicationArea = All;
                     BlankZero = true;
-                    CaptionClass = '3,' + MATRIX_ColumnCaption[17] + FORMAT(NewLine) + FORMAT(NewLine2) + ' Base';
+                    CaptionClass = '3,' + MATRIX_ColumnCaption[17] + Format(NewLine) + Format(NewLine2) + ' Base';
                     DecimalPlaces = 0 : 0;
                     Style = Strong;
-                    StyleExpr = TRUE;
+                    StyleExpr = true;
                     Visible = Field17Visible;
+                    ToolTip = 'Specifies the value of the MATRIX_CellDataBase[17] field.';
 
                     trigger OnDrillDown();
                     begin
@@ -550,6 +588,7 @@ page 50031 "Order per Ship-to Loc Lines S"
                     CaptionClass = '3,' + MATRIX_ColumnCaption[17];
                     DecimalPlaces = 0 : 0;
                     Visible = Field17VisibleQty;
+                    ToolTip = 'Specifies the value of the MATRIX_CellDataQty[17] field.';
 
                     trigger OnDrillDown();
                     begin
@@ -560,11 +599,12 @@ page 50031 "Order per Ship-to Loc Lines S"
                 {
                     ApplicationArea = All;
                     BlankZero = true;
-                    CaptionClass = '3,' + MATRIX_ColumnCaption[18] + FORMAT(NewLine) + FORMAT(NewLine2) + ' Base';
+                    CaptionClass = '3,' + MATRIX_ColumnCaption[18] + Format(NewLine) + Format(NewLine2) + ' Base';
                     DecimalPlaces = 0 : 0;
                     Style = Strong;
-                    StyleExpr = TRUE;
+                    StyleExpr = true;
                     Visible = Field18Visible;
+                    ToolTip = 'Specifies the value of the MATRIX_CellDataBase[18] field.';
 
                     trigger OnDrillDown();
                     begin
@@ -578,6 +618,7 @@ page 50031 "Order per Ship-to Loc Lines S"
                     CaptionClass = '3,' + MATRIX_ColumnCaption[18];
                     DecimalPlaces = 0 : 0;
                     Visible = Field18VisibleQty;
+                    ToolTip = 'Specifies the value of the MATRIX_CellDataQty[18] field.';
 
                     trigger OnDrillDown();
                     begin
@@ -588,11 +629,12 @@ page 50031 "Order per Ship-to Loc Lines S"
                 {
                     ApplicationArea = All;
                     BlankZero = true;
-                    CaptionClass = '3,' + MATRIX_ColumnCaption[19] + FORMAT(NewLine) + FORMAT(NewLine2) + ' Base';
+                    CaptionClass = '3,' + MATRIX_ColumnCaption[19] + Format(NewLine) + Format(NewLine2) + ' Base';
                     DecimalPlaces = 0 : 0;
                     Style = Strong;
-                    StyleExpr = TRUE;
+                    StyleExpr = true;
                     Visible = Field19Visible;
+                    ToolTip = 'Specifies the value of the MATRIX_CellDataBase[19] field.';
 
                     trigger OnDrillDown();
                     begin
@@ -606,6 +648,7 @@ page 50031 "Order per Ship-to Loc Lines S"
                     CaptionClass = '3,' + MATRIX_ColumnCaption[19];
                     DecimalPlaces = 0 : 0;
                     Visible = Field19VisibleQty;
+                    ToolTip = 'Specifies the value of the MATRIX_CellDataQty[19] field.';
 
                     trigger OnDrillDown();
                     begin
@@ -616,11 +659,12 @@ page 50031 "Order per Ship-to Loc Lines S"
                 {
                     ApplicationArea = All;
                     BlankZero = true;
-                    CaptionClass = '3,' + MATRIX_ColumnCaption[20] + FORMAT(NewLine) + FORMAT(NewLine2) + ' Base';
+                    CaptionClass = '3,' + MATRIX_ColumnCaption[20] + Format(NewLine) + Format(NewLine2) + ' Base';
                     DecimalPlaces = 0 : 0;
                     Style = Strong;
-                    StyleExpr = TRUE;
+                    StyleExpr = true;
                     Visible = Field20Visible;
+                    ToolTip = 'Specifies the value of the MATRIX_CellDataBase[20] field.';
 
                     trigger OnDrillDown();
                     begin
@@ -634,6 +678,7 @@ page 50031 "Order per Ship-to Loc Lines S"
                     CaptionClass = '3,' + MATRIX_ColumnCaption[20];
                     DecimalPlaces = 0 : 0;
                     Visible = Field20VisibleQty;
+                    ToolTip = 'Specifies the value of the MATRIX_CellDataQty[20] field.';
 
                     trigger OnDrillDown();
                     begin
@@ -647,6 +692,7 @@ page 50031 "Order per Ship-to Loc Lines S"
                     CaptionClass = '3,' + MATRIX_ColumnCaption[21];
                     DecimalPlaces = 0 : 0;
                     Visible = Field21VisibleQty;
+                    ToolTip = 'Specifies the value of the MATRIX_CellDataQty[21] field.';
 
                     trigger OnDrillDown();
                     begin
@@ -657,11 +703,12 @@ page 50031 "Order per Ship-to Loc Lines S"
                 {
                     ApplicationArea = All;
                     BlankZero = true;
-                    CaptionClass = '3,' + MATRIX_ColumnCaption[21] + FORMAT(NewLine) + FORMAT(NewLine2) + ' Base';
+                    CaptionClass = '3,' + MATRIX_ColumnCaption[21] + Format(NewLine) + Format(NewLine2) + ' Base';
                     DecimalPlaces = 0 : 0;
                     Style = Strong;
-                    StyleExpr = TRUE;
+                    StyleExpr = true;
                     Visible = Field21Visible;
+                    ToolTip = 'Specifies the value of the MATRIX_CellDataBase[21] field.';
 
                     trigger OnDrillDown();
                     begin
@@ -672,11 +719,12 @@ page 50031 "Order per Ship-to Loc Lines S"
                 {
                     ApplicationArea = All;
                     BlankZero = true;
-                    CaptionClass = '3,' + MATRIX_ColumnCaption[22] + FORMAT(NewLine) + FORMAT(NewLine2) + ' Base';
+                    CaptionClass = '3,' + MATRIX_ColumnCaption[22] + Format(NewLine) + Format(NewLine2) + ' Base';
                     DecimalPlaces = 0 : 0;
                     Style = Strong;
-                    StyleExpr = TRUE;
+                    StyleExpr = true;
                     Visible = Field22Visible;
+                    ToolTip = 'Specifies the value of the MATRIX_CellDataBase[22] field.';
 
                     trigger OnDrillDown();
                     begin
@@ -690,6 +738,7 @@ page 50031 "Order per Ship-to Loc Lines S"
                     CaptionClass = '3,' + MATRIX_ColumnCaption[22];
                     DecimalPlaces = 0 : 0;
                     Visible = Field22VisibleQty;
+                    ToolTip = 'Specifies the value of the MATRIX_CellDataQty[22] field.';
 
                     trigger OnDrillDown();
                     begin
@@ -700,11 +749,12 @@ page 50031 "Order per Ship-to Loc Lines S"
                 {
                     ApplicationArea = All;
                     BlankZero = true;
-                    CaptionClass = '3,' + MATRIX_ColumnCaption[23] + FORMAT(NewLine) + FORMAT(NewLine2) + ' Base';
+                    CaptionClass = '3,' + MATRIX_ColumnCaption[23] + Format(NewLine) + Format(NewLine2) + ' Base';
                     DecimalPlaces = 0 : 0;
                     Style = Strong;
-                    StyleExpr = TRUE;
+                    StyleExpr = true;
                     Visible = Field23Visible;
+                    ToolTip = 'Specifies the value of the MATRIX_CellDataBase[23] field.';
 
                     trigger OnDrillDown();
                     begin
@@ -718,6 +768,7 @@ page 50031 "Order per Ship-to Loc Lines S"
                     CaptionClass = '3,' + MATRIX_ColumnCaption[23];
                     DecimalPlaces = 0 : 0;
                     Visible = Field23VisibleQty;
+                    ToolTip = 'Specifies the value of the MATRIX_CellDataQty[23] field.';
 
                     trigger OnDrillDown();
                     begin
@@ -728,11 +779,12 @@ page 50031 "Order per Ship-to Loc Lines S"
                 {
                     ApplicationArea = All;
                     BlankZero = true;
-                    CaptionClass = '3,' + MATRIX_ColumnCaption[24] + FORMAT(NewLine) + FORMAT(NewLine2) + ' Base';
+                    CaptionClass = '3,' + MATRIX_ColumnCaption[24] + Format(NewLine) + Format(NewLine2) + ' Base';
                     DecimalPlaces = 0 : 0;
                     Style = Strong;
-                    StyleExpr = TRUE;
+                    StyleExpr = true;
                     Visible = Field24Visible;
+                    ToolTip = 'Specifies the value of the MATRIX_CellDataBase[24] field.';
 
                     trigger OnDrillDown();
                     begin
@@ -746,6 +798,7 @@ page 50031 "Order per Ship-to Loc Lines S"
                     CaptionClass = '3,' + MATRIX_ColumnCaption[24];
                     DecimalPlaces = 0 : 0;
                     Visible = Field24VisibleQty;
+                    ToolTip = 'Specifies the value of the MATRIX_CellDataQty[24] field.';
 
                     trigger OnDrillDown();
                     begin
@@ -756,11 +809,12 @@ page 50031 "Order per Ship-to Loc Lines S"
                 {
                     ApplicationArea = All;
                     BlankZero = true;
-                    CaptionClass = '3,' + MATRIX_ColumnCaption[25] + FORMAT(NewLine) + FORMAT(NewLine2) + ' Base';
+                    CaptionClass = '3,' + MATRIX_ColumnCaption[25] + Format(NewLine) + Format(NewLine2) + ' Base';
                     DecimalPlaces = 0 : 0;
                     Style = Strong;
-                    StyleExpr = TRUE;
+                    StyleExpr = true;
                     Visible = Field25Visible;
+                    ToolTip = 'Specifies the value of the MATRIX_CellDataBase[25] field.';
 
                     trigger OnDrillDown();
                     begin
@@ -774,6 +828,7 @@ page 50031 "Order per Ship-to Loc Lines S"
                     CaptionClass = '3,' + MATRIX_ColumnCaption[25];
                     DecimalPlaces = 0 : 0;
                     Visible = Field25VisibleQty;
+                    ToolTip = 'Specifies the value of the MATRIX_CellDataQty[25] field.';
 
                     trigger OnDrillDown();
                     begin
@@ -784,11 +839,12 @@ page 50031 "Order per Ship-to Loc Lines S"
                 {
                     ApplicationArea = All;
                     BlankZero = true;
-                    CaptionClass = '3,' + MATRIX_ColumnCaption[26] + FORMAT(NewLine) + FORMAT(NewLine2) + ' Base';
+                    CaptionClass = '3,' + MATRIX_ColumnCaption[26] + Format(NewLine) + Format(NewLine2) + ' Base';
                     DecimalPlaces = 0 : 0;
                     Style = Strong;
-                    StyleExpr = TRUE;
+                    StyleExpr = true;
                     Visible = Field26Visible;
+                    ToolTip = 'Specifies the value of the MATRIX_CellDataBase[26] field.';
 
                     trigger OnDrillDown();
                     begin
@@ -802,6 +858,7 @@ page 50031 "Order per Ship-to Loc Lines S"
                     CaptionClass = '3,' + MATRIX_ColumnCaption[26];
                     DecimalPlaces = 0 : 0;
                     Visible = Field26VisibleQty;
+                    ToolTip = 'Specifies the value of the MATRIX_CellDataQty[26] field.';
 
                     trigger OnDrillDown();
                     begin
@@ -812,11 +869,12 @@ page 50031 "Order per Ship-to Loc Lines S"
                 {
                     ApplicationArea = All;
                     BlankZero = true;
-                    CaptionClass = '3,' + MATRIX_ColumnCaption[27] + FORMAT(NewLine) + FORMAT(NewLine2) + ' Base';
+                    CaptionClass = '3,' + MATRIX_ColumnCaption[27] + Format(NewLine) + Format(NewLine2) + ' Base';
                     DecimalPlaces = 0 : 0;
                     Style = Strong;
-                    StyleExpr = TRUE;
+                    StyleExpr = true;
                     Visible = Field27Visible;
+                    ToolTip = 'Specifies the value of the MATRIX_CellDataBase[27] field.';
 
                     trigger OnDrillDown();
                     begin
@@ -830,6 +888,7 @@ page 50031 "Order per Ship-to Loc Lines S"
                     CaptionClass = '3,' + MATRIX_ColumnCaption[27];
                     DecimalPlaces = 0 : 0;
                     Visible = Field27VisibleQty;
+                    ToolTip = 'Specifies the value of the MATRIX_CellDataQty[27] field.';
 
                     trigger OnDrillDown();
                     begin
@@ -840,11 +899,12 @@ page 50031 "Order per Ship-to Loc Lines S"
                 {
                     ApplicationArea = All;
                     BlankZero = true;
-                    CaptionClass = '3,' + MATRIX_ColumnCaption[28] + FORMAT(NewLine) + FORMAT(NewLine2) + ' Base';
+                    CaptionClass = '3,' + MATRIX_ColumnCaption[28] + Format(NewLine) + Format(NewLine2) + ' Base';
                     DecimalPlaces = 0 : 0;
                     Style = Strong;
-                    StyleExpr = TRUE;
+                    StyleExpr = true;
                     Visible = Field28Visible;
+                    ToolTip = 'Specifies the value of the MATRIX_CellDataBase[28] field.';
 
                     trigger OnDrillDown();
                     begin
@@ -858,6 +918,7 @@ page 50031 "Order per Ship-to Loc Lines S"
                     CaptionClass = '3,' + MATRIX_ColumnCaption[28];
                     DecimalPlaces = 0 : 0;
                     Visible = Field28VisibleQty;
+                    ToolTip = 'Specifies the value of the MATRIX_CellDataQty[28] field.';
 
                     trigger OnDrillDown();
                     begin
@@ -868,11 +929,12 @@ page 50031 "Order per Ship-to Loc Lines S"
                 {
                     ApplicationArea = All;
                     BlankZero = true;
-                    CaptionClass = '3,' + MATRIX_ColumnCaption[29] + FORMAT(NewLine) + FORMAT(NewLine2) + ' Base';
+                    CaptionClass = '3,' + MATRIX_ColumnCaption[29] + Format(NewLine) + Format(NewLine2) + ' Base';
                     DecimalPlaces = 0 : 0;
                     Style = Strong;
-                    StyleExpr = TRUE;
+                    StyleExpr = true;
                     Visible = Field29Visible;
+                    ToolTip = 'Specifies the value of the MATRIX_CellDataBase[29] field.';
 
                     trigger OnDrillDown();
                     begin
@@ -886,6 +948,7 @@ page 50031 "Order per Ship-to Loc Lines S"
                     CaptionClass = '3,' + MATRIX_ColumnCaption[29];
                     DecimalPlaces = 0 : 0;
                     Visible = Field29VisibleQty;
+                    ToolTip = 'Specifies the value of the MATRIX_CellDataQty[29] field.';
 
                     trigger OnDrillDown();
                     begin
@@ -896,11 +959,12 @@ page 50031 "Order per Ship-to Loc Lines S"
                 {
                     ApplicationArea = All;
                     BlankZero = true;
-                    CaptionClass = '3,' + MATRIX_ColumnCaption[30] + FORMAT(NewLine) + FORMAT(NewLine2) + ' Base';
+                    CaptionClass = '3,' + MATRIX_ColumnCaption[30] + Format(NewLine) + Format(NewLine2) + ' Base';
                     DecimalPlaces = 0 : 0;
                     Style = Strong;
-                    StyleExpr = TRUE;
+                    StyleExpr = true;
                     Visible = Field30Visible;
+                    ToolTip = 'Specifies the value of the MATRIX_CellDataBase[30] field.';
 
                     trigger OnDrillDown();
                     begin
@@ -914,6 +978,7 @@ page 50031 "Order per Ship-to Loc Lines S"
                     CaptionClass = '3,' + MATRIX_ColumnCaption[30];
                     DecimalPlaces = 0 : 0;
                     Visible = Field30VisibleQty;
+                    ToolTip = 'Specifies the value of the MATRIX_CellDataQty[30] field.';
 
                     trigger OnDrillDown();
                     begin
@@ -924,11 +989,12 @@ page 50031 "Order per Ship-to Loc Lines S"
                 {
                     ApplicationArea = All;
                     BlankZero = true;
-                    CaptionClass = '3,' + MATRIX_ColumnCaption[31] + FORMAT(NewLine) + FORMAT(NewLine2) + ' Base';
+                    CaptionClass = '3,' + MATRIX_ColumnCaption[31] + Format(NewLine) + Format(NewLine2) + ' Base';
                     DecimalPlaces = 0 : 0;
                     Style = Strong;
-                    StyleExpr = TRUE;
+                    StyleExpr = true;
                     Visible = Field31Visible;
+                    ToolTip = 'Specifies the value of the MATRIX_CellDataBase[31] field.';
 
                     trigger OnDrillDown();
                     begin
@@ -942,6 +1008,7 @@ page 50031 "Order per Ship-to Loc Lines S"
                     CaptionClass = '3,' + MATRIX_ColumnCaption[31];
                     DecimalPlaces = 0 : 0;
                     Visible = Field31VisibleQty;
+                    ToolTip = 'Specifies the value of the MATRIX_CellDataQty[31] field.';
 
                     trigger OnDrillDown();
                     begin
@@ -952,11 +1019,12 @@ page 50031 "Order per Ship-to Loc Lines S"
                 {
                     ApplicationArea = All;
                     BlankZero = true;
-                    CaptionClass = '3,' + MATRIX_ColumnCaption[32] + FORMAT(NewLine) + FORMAT(NewLine2) + ' Base';
+                    CaptionClass = '3,' + MATRIX_ColumnCaption[32] + Format(NewLine) + Format(NewLine2) + ' Base';
                     DecimalPlaces = 0 : 0;
                     Style = Strong;
-                    StyleExpr = TRUE;
+                    StyleExpr = true;
                     Visible = Field32Visible;
+                    ToolTip = 'Specifies the value of the MATRIX_CellDataBase[32] field.';
 
                     trigger OnDrillDown();
                     begin
@@ -970,6 +1038,7 @@ page 50031 "Order per Ship-to Loc Lines S"
                     CaptionClass = '3,' + MATRIX_ColumnCaption[32];
                     DecimalPlaces = 0 : 0;
                     Visible = Field32VisibleQty;
+                    ToolTip = 'Specifies the value of the MATRIX_CellDataQty[32] field.';
 
                     trigger OnDrillDown();
                     begin
@@ -980,11 +1049,12 @@ page 50031 "Order per Ship-to Loc Lines S"
                 {
                     ApplicationArea = All;
                     BlankZero = true;
-                    CaptionClass = '3,' + MATRIX_ColumnCaption[33] + FORMAT(NewLine) + FORMAT(NewLine2) + ' Base';
+                    CaptionClass = '3,' + MATRIX_ColumnCaption[33] + Format(NewLine) + Format(NewLine2) + ' Base';
                     DecimalPlaces = 0 : 0;
                     Style = Strong;
-                    StyleExpr = TRUE;
+                    StyleExpr = true;
                     Visible = Field33Visible;
+                    ToolTip = 'Specifies the value of the MATRIX_CellDataBase[33] field.';
 
                     trigger OnDrillDown();
                     begin
@@ -998,6 +1068,7 @@ page 50031 "Order per Ship-to Loc Lines S"
                     CaptionClass = '3,' + MATRIX_ColumnCaption[33];
                     DecimalPlaces = 0 : 0;
                     Visible = Field33VisibleQty;
+                    ToolTip = 'Specifies the value of the MATRIX_CellDataQty[33] field.';
 
                     trigger OnDrillDown();
                     begin
@@ -1008,11 +1079,12 @@ page 50031 "Order per Ship-to Loc Lines S"
                 {
                     ApplicationArea = All;
                     BlankZero = true;
-                    CaptionClass = '3,' + MATRIX_ColumnCaption[34] + FORMAT(NewLine) + FORMAT(NewLine2) + ' Base';
+                    CaptionClass = '3,' + MATRIX_ColumnCaption[34] + Format(NewLine) + Format(NewLine2) + ' Base';
                     DecimalPlaces = 0 : 0;
                     Style = Strong;
-                    StyleExpr = TRUE;
+                    StyleExpr = true;
                     Visible = Field34Visible;
+                    ToolTip = 'Specifies the value of the MATRIX_CellDataBase[34] field.';
 
                     trigger OnDrillDown();
                     begin
@@ -1026,6 +1098,7 @@ page 50031 "Order per Ship-to Loc Lines S"
                     CaptionClass = '3,' + MATRIX_ColumnCaption[34];
                     DecimalPlaces = 0 : 0;
                     Visible = Field34VisibleQty;
+                    ToolTip = 'Specifies the value of the MATRIX_CellDataQty[34] field.';
 
                     trigger OnDrillDown();
                     begin
@@ -1036,11 +1109,12 @@ page 50031 "Order per Ship-to Loc Lines S"
                 {
                     ApplicationArea = All;
                     BlankZero = true;
-                    CaptionClass = '3,' + MATRIX_ColumnCaption[35] + FORMAT(NewLine) + FORMAT(NewLine2) + ' Base';
+                    CaptionClass = '3,' + MATRIX_ColumnCaption[35] + Format(NewLine) + Format(NewLine2) + ' Base';
                     DecimalPlaces = 0 : 0;
                     Style = Strong;
-                    StyleExpr = TRUE;
+                    StyleExpr = true;
                     Visible = Field35Visible;
+                    ToolTip = 'Specifies the value of the MATRIX_CellDataBase[35] field.';
 
                     trigger OnDrillDown();
                     begin
@@ -1054,6 +1128,7 @@ page 50031 "Order per Ship-to Loc Lines S"
                     CaptionClass = '3,' + MATRIX_ColumnCaption[35];
                     DecimalPlaces = 0 : 0;
                     Visible = Field35VisibleQty;
+                    ToolTip = 'Specifies the value of the MATRIX_CellDataQty[35] field.';
 
                     trigger OnDrillDown();
                     begin
@@ -1064,11 +1139,12 @@ page 50031 "Order per Ship-to Loc Lines S"
                 {
                     ApplicationArea = All;
                     BlankZero = true;
-                    CaptionClass = '3,' + MATRIX_ColumnCaption[36] + FORMAT(NewLine) + FORMAT(NewLine2) + ' Base';
+                    CaptionClass = '3,' + MATRIX_ColumnCaption[36] + Format(NewLine) + Format(NewLine2) + ' Base';
                     DecimalPlaces = 0 : 0;
                     Style = Strong;
-                    StyleExpr = TRUE;
+                    StyleExpr = true;
                     Visible = Field36Visible;
+                    ToolTip = 'Specifies the value of the MATRIX_CellDataBase[36] field.';
 
                     trigger OnDrillDown();
                     begin
@@ -1082,6 +1158,7 @@ page 50031 "Order per Ship-to Loc Lines S"
                     CaptionClass = '3,' + MATRIX_ColumnCaption[36];
                     DecimalPlaces = 0 : 0;
                     Visible = Field36VisibleQty;
+                    ToolTip = 'Specifies the value of the MATRIX_CellDataQty[36] field.';
 
                     trigger OnDrillDown();
                     begin
@@ -1092,11 +1169,12 @@ page 50031 "Order per Ship-to Loc Lines S"
                 {
                     ApplicationArea = All;
                     BlankZero = true;
-                    CaptionClass = '3,' + MATRIX_ColumnCaption[37] + FORMAT(NewLine) + FORMAT(NewLine2) + ' Base';
+                    CaptionClass = '3,' + MATRIX_ColumnCaption[37] + Format(NewLine) + Format(NewLine2) + ' Base';
                     DecimalPlaces = 0 : 0;
                     Style = Strong;
-                    StyleExpr = TRUE;
+                    StyleExpr = true;
                     Visible = Field37Visible;
+                    ToolTip = 'Specifies the value of the MATRIX_CellDataBase[37] field.';
 
                     trigger OnDrillDown();
                     begin
@@ -1110,6 +1188,7 @@ page 50031 "Order per Ship-to Loc Lines S"
                     CaptionClass = '3,' + MATRIX_ColumnCaption[37];
                     DecimalPlaces = 0 : 0;
                     Visible = Field37VisibleQty;
+                    ToolTip = 'Specifies the value of the MATRIX_CellDataQty[37] field.';
 
                     trigger OnDrillDown();
                     begin
@@ -1120,11 +1199,12 @@ page 50031 "Order per Ship-to Loc Lines S"
                 {
                     ApplicationArea = All;
                     BlankZero = true;
-                    CaptionClass = '3,' + MATRIX_ColumnCaption[38] + FORMAT(NewLine) + FORMAT(NewLine2) + ' Base';
+                    CaptionClass = '3,' + MATRIX_ColumnCaption[38] + Format(NewLine) + Format(NewLine2) + ' Base';
                     DecimalPlaces = 0 : 0;
                     Style = Strong;
-                    StyleExpr = TRUE;
+                    StyleExpr = true;
                     Visible = Field38Visible;
+                    ToolTip = 'Specifies the value of the MATRIX_CellDataBase[38] field.';
 
                     trigger OnDrillDown();
                     begin
@@ -1138,6 +1218,7 @@ page 50031 "Order per Ship-to Loc Lines S"
                     CaptionClass = '3,' + MATRIX_ColumnCaption[38];
                     DecimalPlaces = 0 : 0;
                     Visible = Field38VisibleQty;
+                    ToolTip = 'Specifies the value of the MATRIX_CellDataQty[38] field.';
 
                     trigger OnDrillDown();
                     begin
@@ -1148,11 +1229,12 @@ page 50031 "Order per Ship-to Loc Lines S"
                 {
                     ApplicationArea = All;
                     BlankZero = true;
-                    CaptionClass = '3,' + MATRIX_ColumnCaption[39] + FORMAT(NewLine) + FORMAT(NewLine2) + ' Base';
+                    CaptionClass = '3,' + MATRIX_ColumnCaption[39] + Format(NewLine) + Format(NewLine2) + ' Base';
                     DecimalPlaces = 0 : 0;
                     Style = Strong;
-                    StyleExpr = TRUE;
+                    StyleExpr = true;
                     Visible = Field39Visible;
+                    ToolTip = 'Specifies the value of the MATRIX_CellDataBase[39] field.';
 
                     trigger OnDrillDown();
                     begin
@@ -1166,6 +1248,7 @@ page 50031 "Order per Ship-to Loc Lines S"
                     CaptionClass = '3,' + MATRIX_ColumnCaption[39];
                     DecimalPlaces = 0 : 0;
                     Visible = Field39VisibleQty;
+                    ToolTip = 'Specifies the value of the MATRIX_CellDataQty[39] field.';
 
                     trigger OnDrillDown();
                     begin
@@ -1176,11 +1259,12 @@ page 50031 "Order per Ship-to Loc Lines S"
                 {
                     ApplicationArea = All;
                     BlankZero = true;
-                    CaptionClass = '3,' + MATRIX_ColumnCaption[40] + FORMAT(NewLine) + FORMAT(NewLine2) + ' Base';
+                    CaptionClass = '3,' + MATRIX_ColumnCaption[40] + Format(NewLine) + Format(NewLine2) + ' Base';
                     DecimalPlaces = 0 : 0;
                     Style = Strong;
-                    StyleExpr = TRUE;
+                    StyleExpr = true;
                     Visible = Field40Visible;
+                    ToolTip = 'Specifies the value of the MATRIX_CellDataBase[40] field.';
 
                     trigger OnDrillDown();
                     begin
@@ -1194,6 +1278,7 @@ page 50031 "Order per Ship-to Loc Lines S"
                     CaptionClass = '3,' + MATRIX_ColumnCaption[40];
                     DecimalPlaces = 0 : 0;
                     Visible = Field40VisibleQty;
+                    ToolTip = 'Specifies the value of the MATRIX_CellDataQty[40] field.';
 
                     trigger OnDrillDown();
                     begin
@@ -1204,11 +1289,12 @@ page 50031 "Order per Ship-to Loc Lines S"
                 {
                     ApplicationArea = All;
                     BlankZero = true;
-                    CaptionClass = '3,' + MATRIX_ColumnCaption[41] + FORMAT(NewLine) + FORMAT(NewLine2) + ' Base';
+                    CaptionClass = '3,' + MATRIX_ColumnCaption[41] + Format(NewLine) + Format(NewLine2) + ' Base';
                     DecimalPlaces = 0 : 0;
                     Style = Strong;
-                    StyleExpr = TRUE;
+                    StyleExpr = true;
                     Visible = Field41Visible;
+                    ToolTip = 'Specifies the value of the MATRIX_CellDataBase[41] field.';
 
                     trigger OnDrillDown();
                     begin
@@ -1222,6 +1308,7 @@ page 50031 "Order per Ship-to Loc Lines S"
                     CaptionClass = '3,' + MATRIX_ColumnCaption[41];
                     DecimalPlaces = 0 : 0;
                     Visible = Field41VisibleQty;
+                    ToolTip = 'Specifies the value of the MATRIX_CellDataQty[41] field.';
 
                     trigger OnDrillDown();
                     begin
@@ -1232,11 +1319,12 @@ page 50031 "Order per Ship-to Loc Lines S"
                 {
                     ApplicationArea = All;
                     BlankZero = true;
-                    CaptionClass = '3,' + MATRIX_ColumnCaption[42] + FORMAT(NewLine) + FORMAT(NewLine2) + ' Base';
+                    CaptionClass = '3,' + MATRIX_ColumnCaption[42] + Format(NewLine) + Format(NewLine2) + ' Base';
                     DecimalPlaces = 0 : 0;
                     Style = Strong;
-                    StyleExpr = TRUE;
+                    StyleExpr = true;
                     Visible = Field42Visible;
+                    ToolTip = 'Specifies the value of the MATRIX_CellDataBase[42] field.';
 
                     trigger OnDrillDown();
                     begin
@@ -1250,6 +1338,7 @@ page 50031 "Order per Ship-to Loc Lines S"
                     CaptionClass = '3,' + MATRIX_ColumnCaption[42];
                     DecimalPlaces = 0 : 0;
                     Visible = Field42VisibleQty;
+                    ToolTip = 'Specifies the value of the MATRIX_CellDataQty[42] field.';
 
                     trigger OnDrillDown();
                     begin
@@ -1260,11 +1349,12 @@ page 50031 "Order per Ship-to Loc Lines S"
                 {
                     ApplicationArea = All;
                     BlankZero = true;
-                    CaptionClass = '3,' + MATRIX_ColumnCaption[43] + FORMAT(NewLine) + FORMAT(NewLine2) + ' Base';
+                    CaptionClass = '3,' + MATRIX_ColumnCaption[43] + Format(NewLine) + Format(NewLine2) + ' Base';
                     DecimalPlaces = 0 : 0;
                     Style = Strong;
-                    StyleExpr = TRUE;
+                    StyleExpr = true;
                     Visible = Field43Visible;
+                    ToolTip = 'Specifies the value of the MATRIX_CellDataBase[43] field.';
 
                     trigger OnDrillDown();
                     begin
@@ -1278,6 +1368,7 @@ page 50031 "Order per Ship-to Loc Lines S"
                     CaptionClass = '3,' + MATRIX_ColumnCaption[43];
                     DecimalPlaces = 0 : 0;
                     Visible = Field43VisibleQty;
+                    ToolTip = 'Specifies the value of the MATRIX_CellDataQty[43] field.';
 
                     trigger OnDrillDown();
                     begin
@@ -1288,11 +1379,12 @@ page 50031 "Order per Ship-to Loc Lines S"
                 {
                     ApplicationArea = All;
                     BlankZero = true;
-                    CaptionClass = '3,' + MATRIX_ColumnCaption[44] + FORMAT(NewLine) + FORMAT(NewLine2) + ' Base';
+                    CaptionClass = '3,' + MATRIX_ColumnCaption[44] + Format(NewLine) + Format(NewLine2) + ' Base';
                     DecimalPlaces = 0 : 0;
                     Style = Strong;
-                    StyleExpr = TRUE;
+                    StyleExpr = true;
                     Visible = Field44Visible;
+                    ToolTip = 'Specifies the value of the MATRIX_CellDataBase[44] field.';
 
                     trigger OnDrillDown();
                     begin
@@ -1306,6 +1398,7 @@ page 50031 "Order per Ship-to Loc Lines S"
                     CaptionClass = '3,' + MATRIX_ColumnCaption[44];
                     DecimalPlaces = 0 : 0;
                     Visible = Field44VisibleQty;
+                    ToolTip = 'Specifies the value of the MATRIX_CellDataQty[44] field.';
 
                     trigger OnDrillDown();
                     begin
@@ -1316,11 +1409,12 @@ page 50031 "Order per Ship-to Loc Lines S"
                 {
                     ApplicationArea = All;
                     BlankZero = true;
-                    CaptionClass = '3,' + MATRIX_ColumnCaption[45] + FORMAT(NewLine) + FORMAT(NewLine2) + ' Base';
+                    CaptionClass = '3,' + MATRIX_ColumnCaption[45] + Format(NewLine) + Format(NewLine2) + ' Base';
                     DecimalPlaces = 0 : 0;
                     Style = Strong;
-                    StyleExpr = TRUE;
+                    StyleExpr = true;
                     Visible = Field45Visible;
+                    ToolTip = 'Specifies the value of the MATRIX_CellDataBase[45] field.';
 
                     trigger OnDrillDown();
                     begin
@@ -1334,6 +1428,7 @@ page 50031 "Order per Ship-to Loc Lines S"
                     CaptionClass = '3,' + MATRIX_ColumnCaption[45];
                     DecimalPlaces = 0 : 0;
                     Visible = Field45VisibleQty;
+                    ToolTip = 'Specifies the value of the MATRIX_CellDataQty[45] field.';
 
                     trigger OnDrillDown();
                     begin
@@ -1344,11 +1439,12 @@ page 50031 "Order per Ship-to Loc Lines S"
                 {
                     ApplicationArea = All;
                     BlankZero = true;
-                    CaptionClass = '3,' + MATRIX_ColumnCaption[46] + FORMAT(NewLine) + FORMAT(NewLine2) + ' Base';
+                    CaptionClass = '3,' + MATRIX_ColumnCaption[46] + Format(NewLine) + Format(NewLine2) + ' Base';
                     DecimalPlaces = 0 : 0;
                     Style = Strong;
-                    StyleExpr = TRUE;
+                    StyleExpr = true;
                     Visible = Field46Visible;
+                    ToolTip = 'Specifies the value of the MATRIX_CellDataBase[46] field.';
 
                     trigger OnDrillDown();
                     begin
@@ -1362,6 +1458,7 @@ page 50031 "Order per Ship-to Loc Lines S"
                     CaptionClass = '3,' + MATRIX_ColumnCaption[46];
                     DecimalPlaces = 0 : 0;
                     Visible = Field46VisibleQty;
+                    ToolTip = 'Specifies the value of the MATRIX_CellDataQty[46] field.';
 
                     trigger OnDrillDown();
                     begin
@@ -1372,11 +1469,12 @@ page 50031 "Order per Ship-to Loc Lines S"
                 {
                     ApplicationArea = All;
                     BlankZero = true;
-                    CaptionClass = '3,' + MATRIX_ColumnCaption[47] + FORMAT(NewLine) + FORMAT(NewLine2) + ' Base';
+                    CaptionClass = '3,' + MATRIX_ColumnCaption[47] + Format(NewLine) + Format(NewLine2) + ' Base';
                     DecimalPlaces = 0 : 0;
                     Style = Strong;
-                    StyleExpr = TRUE;
+                    StyleExpr = true;
                     Visible = Field47Visible;
+                    ToolTip = 'Specifies the value of the MATRIX_CellDataBase[47] field.';
 
                     trigger OnDrillDown();
                     begin
@@ -1390,6 +1488,7 @@ page 50031 "Order per Ship-to Loc Lines S"
                     CaptionClass = '3,' + MATRIX_ColumnCaption[47];
                     DecimalPlaces = 0 : 0;
                     Visible = Field47VisibleQty;
+                    ToolTip = 'Specifies the value of the MATRIX_CellDataQty[47] field.';
 
                     trigger OnDrillDown();
                     begin
@@ -1400,11 +1499,12 @@ page 50031 "Order per Ship-to Loc Lines S"
                 {
                     ApplicationArea = All;
                     BlankZero = true;
-                    CaptionClass = '3,' + MATRIX_ColumnCaption[48] + FORMAT(NewLine) + FORMAT(NewLine2) + ' Base';
+                    CaptionClass = '3,' + MATRIX_ColumnCaption[48] + Format(NewLine) + Format(NewLine2) + ' Base';
                     DecimalPlaces = 0 : 0;
                     Style = Strong;
-                    StyleExpr = TRUE;
+                    StyleExpr = true;
                     Visible = Field48Visible;
+                    ToolTip = 'Specifies the value of the MATRIX_CellDataBase[48] field.';
 
                     trigger OnDrillDown();
                     begin
@@ -1418,6 +1518,7 @@ page 50031 "Order per Ship-to Loc Lines S"
                     CaptionClass = '3,' + MATRIX_ColumnCaption[48];
                     DecimalPlaces = 0 : 0;
                     Visible = Field48VisibleQty;
+                    ToolTip = 'Specifies the value of the MATRIX_CellDataQty[48] field.';
 
                     trigger OnDrillDown();
                     begin
@@ -1428,11 +1529,12 @@ page 50031 "Order per Ship-to Loc Lines S"
                 {
                     ApplicationArea = All;
                     BlankZero = true;
-                    CaptionClass = '3,' + MATRIX_ColumnCaption[49] + FORMAT(NewLine) + FORMAT(NewLine2) + ' Base';
+                    CaptionClass = '3,' + MATRIX_ColumnCaption[49] + Format(NewLine) + Format(NewLine2) + ' Base';
                     DecimalPlaces = 0 : 0;
                     Style = Strong;
-                    StyleExpr = TRUE;
+                    StyleExpr = true;
                     Visible = Field49Visible;
+                    ToolTip = 'Specifies the value of the MATRIX_CellDataBase[49] field.';
 
                     trigger OnDrillDown();
                     begin
@@ -1446,6 +1548,7 @@ page 50031 "Order per Ship-to Loc Lines S"
                     CaptionClass = '3,' + MATRIX_ColumnCaption[49];
                     DecimalPlaces = 0 : 0;
                     Visible = Field49VisibleQty;
+                    ToolTip = 'Specifies the value of the MATRIX_CellDataQty[49] field.';
 
                     trigger OnDrillDown();
                     begin
@@ -1456,11 +1559,12 @@ page 50031 "Order per Ship-to Loc Lines S"
                 {
                     ApplicationArea = All;
                     BlankZero = true;
-                    CaptionClass = '3,' + MATRIX_ColumnCaption[50] + FORMAT(NewLine) + FORMAT(NewLine2) + ' Base';
+                    CaptionClass = '3,' + MATRIX_ColumnCaption[50] + Format(NewLine) + Format(NewLine2) + ' Base';
                     DecimalPlaces = 0 : 0;
                     Style = Strong;
-                    StyleExpr = TRUE;
+                    StyleExpr = true;
                     Visible = Field50Visible;
+                    ToolTip = 'Specifies the value of the MATRIX_CellDataBase[50] field.';
 
                     trigger OnDrillDown();
                     begin
@@ -1474,6 +1578,7 @@ page 50031 "Order per Ship-to Loc Lines S"
                     CaptionClass = '3,' + MATRIX_ColumnCaption[50];
                     DecimalPlaces = 0 : 0;
                     Visible = Field50VisibleQty;
+                    ToolTip = 'Specifies the value of the MATRIX_CellDataQty[50] field.';
 
                     trigger OnDrillDown();
                     begin
@@ -1484,11 +1589,12 @@ page 50031 "Order per Ship-to Loc Lines S"
                 {
                     ApplicationArea = All;
                     BlankZero = true;
-                    CaptionClass = '3,' + MATRIX_ColumnCaption[51] + FORMAT(NewLine) + FORMAT(NewLine2) + ' Base';
+                    CaptionClass = '3,' + MATRIX_ColumnCaption[51] + Format(NewLine) + Format(NewLine2) + ' Base';
                     DecimalPlaces = 0 : 0;
                     Style = Strong;
-                    StyleExpr = TRUE;
+                    StyleExpr = true;
                     Visible = Field51Visible;
+                    ToolTip = 'Specifies the value of the MATRIX_CellDataBase[51] field.';
 
                     trigger OnDrillDown();
                     begin
@@ -1502,6 +1608,7 @@ page 50031 "Order per Ship-to Loc Lines S"
                     CaptionClass = '3,' + MATRIX_ColumnCaption[51];
                     DecimalPlaces = 0 : 0;
                     Visible = Field51VisibleQty;
+                    ToolTip = 'Specifies the value of the MATRIX_CellDataQty[51] field.';
 
                     trigger OnDrillDown();
                     begin
@@ -1512,11 +1619,12 @@ page 50031 "Order per Ship-to Loc Lines S"
                 {
                     ApplicationArea = All;
                     BlankZero = true;
-                    CaptionClass = '3,' + MATRIX_ColumnCaption[52] + FORMAT(NewLine) + FORMAT(NewLine2) + ' Base';
+                    CaptionClass = '3,' + MATRIX_ColumnCaption[52] + Format(NewLine) + Format(NewLine2) + ' Base';
                     DecimalPlaces = 0 : 0;
                     Style = Strong;
-                    StyleExpr = TRUE;
+                    StyleExpr = true;
                     Visible = Field52Visible;
+                    ToolTip = 'Specifies the value of the MATRIX_CellDataBase[52] field.';
 
                     trigger OnDrillDown();
                     begin
@@ -1530,6 +1638,7 @@ page 50031 "Order per Ship-to Loc Lines S"
                     CaptionClass = '3,' + MATRIX_ColumnCaption[52];
                     DecimalPlaces = 0 : 0;
                     Visible = Field52VisibleQty;
+                    ToolTip = 'Specifies the value of the MATRIX_CellDataQty[52] field.';
 
                     trigger OnDrillDown();
                     begin
@@ -1542,31 +1651,32 @@ page 50031 "Order per Ship-to Loc Lines S"
 
     actions
     {
-        area(processing)
+        area(Processing)
         {
             action("Order Details")
             {
                 ApplicationArea = All;
                 Image = Line;
+                ToolTip = 'Executes the Order Details action.';
 
                 trigger OnAction();
                 var
                     rL_SalesLine: Record "Sales Line";
                 begin
 
-                    CLEAR(rL_SalesLine);
-                    rL_SalesLine.RESET;
-                    rL_SalesLine.SETRANGE(Type, rL_SalesLine.Type::Item);
-                    rL_SalesLine.SETFILTER("No.", "No.");
+                    Clear(rL_SalesLine);
+                    rL_SalesLine.Reset;
+                    rL_SalesLine.SetRange(Type, rL_SalesLine.Type::Item);
+                    rL_SalesLine.SETFILTER("No.", Rec."No.");
                     if DateFilter <> '' then begin
-                        rL_SalesLine.SETFILTER("Shipment Date", DateFilter);
+                        rL_SalesLine.SetFilter("Shipment Date", DateFilter);
                     end;
-                    if rL_SalesLine.FINDSET then begin
+                    if rL_SalesLine.FindSet then begin
 
                     end;
 
 
-                    PAGE.RUN(0, rL_SalesLine);
+                    Page.Run(0, rL_SalesLine);
                 end;
             }
             action("Production BOM")
@@ -1574,8 +1684,9 @@ page 50031 "Order per Ship-to Loc Lines S"
                 ApplicationArea = All;
                 Caption = 'Production BOM';
                 Image = BOM;
-                RunObject = Page "Production BOM";
-                RunPageLink = "No." = FIELD("Production BOM No.");
+                RunObject = page "Production BOM";
+                RunPageLink = "No." = field("Production BOM No.");
+                ToolTip = 'Executes the Production BOM action.';
             }
         }
     }
@@ -1608,9 +1719,9 @@ page 50031 "Order per Ship-to Loc Lines S"
         //SETFILTER("Global Dimension 2 Code",'F-CUTS');
 
         vG_QtyPerBuom := 0;
-        CALCFIELDS("Qty. Out on Sales Order", "Qty. on Sales Order");
-        if "Qty. Out on Sales Order" <> 0 then begin
-            vG_QtyPerBuom := "Qty. Out on Sales Order" / "Qty. on Sales Order";
+        Rec.CALCFIELDS("Qty. Out on Sales Order", "Qty. on Sales Order");
+        if Rec."Qty. Out on Sales Order" <> 0 then begin
+            vG_QtyPerBuom := Rec."Qty. Out on Sales Order" / Rec."Qty. on Sales Order";
         end;
     end;
 
@@ -1980,18 +2091,18 @@ page 50031 "Order per Ship-to Loc Lines S"
         vL_QtyBase := 0;
         vL_Qty := 0;
         //MATRIX_ColumnFilter[ColumnID] is the ship-to code
-        CLEAR(rL_SalesLine);
-        rL_SalesLine.RESET;
-        rL_SalesLine.SETRANGE(Type, rL_SalesLine.Type::Item);
-        rL_SalesLine.SETFILTER("No.", "No.");
-        rL_SalesLine.SETFILTER("Ship-to Code", MatrixRecords[ColumnID].Code);
+        Clear(rL_SalesLine);
+        rL_SalesLine.Reset;
+        rL_SalesLine.SetRange(Type, rL_SalesLine.Type::Item);
+        rL_SalesLine.SETFILTER("No.", Rec."No.");
+        rL_SalesLine.SetFilter("Ship-to Code", MatrixRecords[ColumnID].Code);
         if DateFilter <> '' then begin
             //rL_SalesLine.SETRANGE("Shipment Date",ShipmentDateFilter);
-            rL_SalesLine.SETFILTER("Shipment Date", DateFilter);
+            rL_SalesLine.SetFilter("Shipment Date", DateFilter);
             //SETFILTER("Date Filter",'%1',ShipmentDateFilter);
 
         end;
-        if rL_SalesLine.FINDSET then begin
+        if rL_SalesLine.FindSet then begin
 
 
             repeat
@@ -2003,7 +2114,7 @@ page 50031 "Order per Ship-to Loc Lines S"
             // END;
             //END;
 
-            until rL_SalesLine.NEXT = 0;
+            until rL_SalesLine.Next = 0;
 
             // StyleTxt[ColumnID] := rL_Campaign.SetStyle;
         end;
@@ -2022,8 +2133,8 @@ page 50031 "Order per Ship-to Loc Lines S"
 
 
 
-        COPYARRAY(MATRIX_ColumnCaption, NewMatrixColumns, 1);
-        COPYARRAY(MatrixRecords, NewMatrixRecords, 1);
+        CopyArray(MATRIX_ColumnCaption, NewMatrixColumns, 1);
+        CopyArray(MatrixRecords, NewMatrixRecords, 1);
         MATRIX_CurrentNoOfMatrixColumn := NewCurrentNoOfMatrixColumns;
         Show := NewShow;
         DateFilter := NewDateFilter;
@@ -2045,20 +2156,20 @@ page 50031 "Order per Ship-to Loc Lines S"
         rL_SalesLine: Record "Sales Line";
     begin
         //+TAL0.1
-        CLEAR(rL_SalesLine);
-        rL_SalesLine.RESET;
-        rL_SalesLine.SETRANGE(Type, rL_SalesLine.Type::Item);
-        rL_SalesLine.SETFILTER("No.", "No.");
-        rL_SalesLine.SETFILTER("Ship-to Code", MatrixRecords[ColumnID].Code);
+        Clear(rL_SalesLine);
+        rL_SalesLine.Reset;
+        rL_SalesLine.SetRange(Type, rL_SalesLine.Type::Item);
+        rL_SalesLine.SETFILTER("No.", Rec."No.");
+        rL_SalesLine.SetFilter("Ship-to Code", MatrixRecords[ColumnID].Code);
         if DateFilter <> '' then begin
-            rL_SalesLine.SETFILTER("Shipment Date", DateFilter);
+            rL_SalesLine.SetFilter("Shipment Date", DateFilter);
         end;
-        if rL_SalesLine.FINDSET then begin
+        if rL_SalesLine.FindSet then begin
             // StyleTxt[ColumnID] := rL_Campaign.SetStyle;
         end;
         //EVALUATE(StartingDate,MATRIX_ColumnFilter[ColumnID]);
 
-        PAGE.RUN(0, rL_SalesLine);
+        Page.Run(0, rL_SalesLine);
         //-TAL0.1
     end;
 
@@ -2181,7 +2292,7 @@ page 50031 "Order per Ship-to Loc Lines S"
 
     local procedure SetGlobalFilters();
     begin
-        SETFILTER("Date Filter", DateFilter);
+        Rec.SETFILTER("Date Filter", DateFilter);
 
         if DateFilter = '' then begin
             //MESSAGE(FORMAT(Rec.FILTERGROUP));
@@ -2191,22 +2302,22 @@ page 50031 "Order per Ship-to Loc Lines S"
             //Rec.FILTERGROUP(1);
             //Rec.SETFILTER("Global Dimension 2 Code",'');
             //Rec.SETFILTER(<field>,'')
-            RESET;
+            Rec.RESET;
             //CLEARMARKS;
         end;
 
-        SETFILTER("Qty. on Sales Order", '<>%1', 0);
-        SETFILTER("Global Dimension 2 Code", 'F-CUTS');
+        Rec.SETFILTER("Qty. on Sales Order", '<>%1', 0);
+        Rec.SETFILTER("Global Dimension 2 Code", 'F-CUTS');
     end;
 
     procedure ShowFilters();
     begin
-        MESSAGE(Rec.GETFILTERS);
+        Message(Rec.GetFilters);
     end;
 
     procedure ResetFilters();
     begin
-        RESET;
+        Rec.RESET;
     end;
 }
 

@@ -11,11 +11,13 @@ pageextension 50159 PhysInventoryJournalExt extends "Phys. Inventory Journal"
 
         addafter("Location Code")
         {
-            field("Location Name"; "Location Name")
+            field("Location Name"; Rec."Location Name")
             {
                 ApplicationArea = All;
                 Editable = false;
-                Visible = false;//TAL 1.0.0.71
+                Visible = false;
+                //TAL 1.0.0.71                ToolTip = 'Specifies the value of the Location Name field.';
+
             }
         }
 
@@ -26,9 +28,10 @@ pageextension 50159 PhysInventoryJournalExt extends "Phys. Inventory Journal"
 
         addafter("Reason Code")
         {
-            field("Item Category Code"; "Item Category Code")
+            field("Item Category Code"; Rec."Item Category Code")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Item Category Code field.';
             }
         }
         //TAL 1.0.0.71 >>
@@ -54,6 +57,7 @@ pageextension 50159 PhysInventoryJournalExt extends "Phys. Inventory Journal"
             field("Unit of Measure Code62477"; Rec."Unit of Measure Code")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies how each unit of the item or resource is measured, such as in pieces or hours. By default, the value in the Base Unit of Measure field on the item or resource card is inserted.';
             }
         }
         addafter("Item No.")
@@ -62,6 +66,7 @@ pageextension 50159 PhysInventoryJournalExt extends "Phys. Inventory Journal"
             {
                 ApplicationArea = All;
                 Width = 12;
+                ToolTip = 'Specifies the variant of the item on the line.';
             }
         }
         addafter("Shortcut Dimension 2 Code")
@@ -69,6 +74,7 @@ pageextension 50159 PhysInventoryJournalExt extends "Phys. Inventory Journal"
             field("Gen. Bus. Posting Group92798"; Rec."Gen. Bus. Posting Group")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the vendor''s or customer''s trade type to link transactions made for this business partner with the appropriate general ledger account according to the general posting setup.';
             }
         }
         //TAL 1.0.0.71 <<
@@ -83,25 +89,29 @@ pageextension 50159 PhysInventoryJournalExt extends "Phys. Inventory Journal"
 
         addafter(ShortcutDimCode8)
         {
-            field("Line No."; "Line No.")
+            field("Line No."; Rec."Line No.")
             {
                 ApplicationArea = All;
                 Editable = false;
+                ToolTip = 'Specifies the number of the journal line.';
             }
-            field("Item Tracking Code"; "Item Tracking Code")
+            field("Item Tracking Code"; Rec."Item Tracking Code")
             {
                 ApplicationArea = All;
                 Editable = false;
+                ToolTip = 'Specifies the value of the Item Tracking Code field.';
             }
-            field("Tracking Lot No."; "Tracking Lot No.")
+            field("Tracking Lot No."; Rec."Tracking Lot No.")
             {
                 ApplicationArea = All;
                 Editable = false;
+                ToolTip = 'Specifies the value of the Tracking Lot No. field.';
             }
-            field("Tracking Expiration Date"; "Tracking Expiration Date")
+            field("Tracking Expiration Date"; Rec."Tracking Expiration Date")
             {
                 ApplicationArea = All;
                 Editable = false;
+                ToolTip = 'Specifies the value of the Tracking Expiration Date field.';
             }
         }
     }
@@ -114,26 +124,28 @@ pageextension 50159 PhysInventoryJournalExt extends "Phys. Inventory Journal"
             action("Zeroise Physical Inventory")
             {
                 ApplicationArea = All;
+                ToolTip = 'Executes the Zeroise Physical Inventory action.';
 
                 trigger OnAction()
                 var
                     InventLines: Record "Item Journal Line";
                 begin
-                    InventLines.RESET;
-                    InventLines.SETRANGE(InventLines."Journal Template Name", "Journal Template Name");
-                    InventLines.SETRANGE(InventLines."Journal Batch Name", "Journal Batch Name");
-                    IF InventLines.FindSet() THEN BEGIN
-                        REPEAT
-                            InventLines.VALIDATE("Qty. (Phys. Inventory)", 0);
-                            InventLines.MODIFY();
-                        UNTIL InventLines.NEXT = 0;
-                    END;
+                    InventLines.Reset;
+                    InventLines.SETRANGE(InventLines."Journal Template Name", Rec."Journal Template Name");
+                    InventLines.SETRANGE(InventLines."Journal Batch Name", Rec."Journal Batch Name");
+                    if InventLines.FindSet() then begin
+                        repeat
+                            InventLines.Validate("Qty. (Phys. Inventory)", 0);
+                            InventLines.Modify();
+                        until InventLines.Next = 0;
+                    end;
                 end;
             }
 
             action("Update Bin")
             {
                 ApplicationArea = All;
+                ToolTip = 'Executes the Update Bin action.';
 
                 trigger OnAction()
                 var
@@ -145,15 +157,15 @@ pageextension 50159 PhysInventoryJournalExt extends "Phys. Inventory Journal"
                 begin
                     //select the bin
 
-                    InventLines.RESET;
-                    InventLines.SETRANGE("Journal Template Name", "Journal Template Name");
-                    InventLines.SETRANGE("Journal Batch Name", "Journal Batch Name");
+                    InventLines.Reset;
+                    InventLines.SETRANGE("Journal Template Name", Rec."Journal Template Name");
+                    InventLines.SETRANGE("Journal Batch Name", Rec."Journal Batch Name");
                     if InventLines.FindFirst() then begin
                         InventLines.TestField("Location Code");
 
-                        Bin.RESET;
+                        Bin.Reset;
                         Bin.SetFilter("Location Code", InventLines."Location Code");
-                        if page.RunModal(page::"Bin List", Bin) = Action::LookupOK then begin
+                        if Page.RunModal(Page::"Bin List", Bin) = Action::LookupOK then begin
                             BinCode := Bin.Code;
                         end;
                     end;
@@ -167,15 +179,15 @@ pageextension 50159 PhysInventoryJournalExt extends "Phys. Inventory Journal"
                     end;
 
 
-                    InventLines.RESET;
-                    InventLines.SETRANGE(InventLines."Journal Template Name", "Journal Template Name");
-                    InventLines.SETRANGE(InventLines."Journal Batch Name", "Journal Batch Name");
-                    IF InventLines.FindSet() THEN BEGIN
-                        REPEAT
-                            InventLines.VALIDATE("Bin Code", BinCode);
-                            InventLines.MODIFY();
-                        UNTIL InventLines.NEXT = 0;
-                    END;
+                    InventLines.Reset;
+                    InventLines.SETRANGE(InventLines."Journal Template Name", Rec."Journal Template Name");
+                    InventLines.SETRANGE(InventLines."Journal Batch Name", Rec."Journal Batch Name");
+                    if InventLines.FindSet() then begin
+                        repeat
+                            InventLines.Validate("Bin Code", BinCode);
+                            InventLines.Modify();
+                        until InventLines.Next = 0;
+                    end;
                 end;
             }
         }
@@ -184,7 +196,7 @@ pageextension 50159 PhysInventoryJournalExt extends "Phys. Inventory Journal"
         {
             action(UpdateCostCenterCode)
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 Caption = 'Update Cost Center Code';
                 Image = UpdateDescription;
                 ToolTip = 'Custom: Update Cost Center Code';
@@ -195,16 +207,16 @@ pageextension 50159 PhysInventoryJournalExt extends "Phys. Inventory Journal"
                 var
                     InventLines: Record "Item Journal Line";
                 begin
-                    InventLines.RESET;
-                    InventLines.SETRANGE(InventLines."Journal Template Name", Rec."Journal Template Name");
-                    InventLines.SETRANGE(InventLines."Journal Batch Name", Rec."Journal Batch Name");
+                    InventLines.Reset;
+                    InventLines.SetRange(InventLines."Journal Template Name", Rec."Journal Template Name");
+                    InventLines.SetRange(InventLines."Journal Batch Name", Rec."Journal Batch Name");
                     if InventLines.FindSet() then begin
                         ItemJnlBatch.Get(Rec."Journal Template Name", Rec."Journal Batch Name");
                         if ItemJnlBatch."Profit Center" <> '' then begin
                             repeat
                                 InventLines.ValidateShortcutDimCode(4, ItemJnlBatch."Profit Center");
-                                InventLines.MODIFY();
-                            until InventLines.NEXT = 0;
+                                InventLines.Modify();
+                            until InventLines.Next = 0;
                         end;
                     end;
                 end;
@@ -217,7 +229,7 @@ pageextension 50159 PhysInventoryJournalExt extends "Phys. Inventory Journal"
     var
         UserSetup: Record "User Setup";
     begin
-        UserSetup.GET(UserId);
+        UserSetup.Get(UserId);
         UnitCostEditable := UserSetup."Unit Cost Editable";
     end;
     //-1.0.0.228

@@ -4,16 +4,17 @@ report 50038 "TAL:Item Tracing Specification"
     RDLCLayout = './Layouts/rep38_50038_ItemTracingSpecification.rdlc';
     Caption = 'Item Tracing Specification';
     AllowScheduling = false;
+    ApplicationArea = All;
 
     dataset
     {
         dataitem("Integer"; "Integer")
         {
-            DataItemTableView = SORTING(Number);
+            DataItemTableView = sorting(Number);
             column(FormatToday; Format(Today, 0, 4))
             {
             }
-            column(CompanyName; COMPANYPROPERTY.DisplayName())
+            column(CompanyName; CompanyProperty.DisplayName())
             {
             }
             column(HeaderText1; HeaderText[1])
@@ -99,7 +100,7 @@ report 50038 "TAL:Item Tracing Specification"
                     Clear(Item);
 
                 Clear(RecRef);
-                RecRef.Open(DATABASE::"Item Tracing Buffer", true);
+                RecRef.Open(Database::"Item Tracing Buffer", true);
                 RecRef.GetTable(TempTrackEntry);
 
                 x := 0;
@@ -136,7 +137,7 @@ report 50038 "TAL:Item Tracing Specification"
 
         layout
         {
-            area(content)
+            area(Content)
             {
                 group(Options)
                 {
@@ -403,7 +404,7 @@ report 50038 "TAL:Item Tracing Specification"
         "Field": Record "Field";
         FieldSelection: Codeunit "Field Selection";
     begin
-        Field.SetRange(TableNo, DATABASE::"Item Tracing Buffer");
+        Field.SetRange(TableNo, Database::"Item Tracing Buffer");
         Field.SetFilter(Type,
           '%1|%2|%3|%4|%5|%6|%7|%8',
           Field.Type::Text,
@@ -427,7 +428,7 @@ report 50038 "TAL:Item Tracing Specification"
     begin
         FieldCaption[ArrayNo] := '';
         if FieldNumber <> 0 then
-            if TypeHelper.GetField(DATABASE::"Item Tracing Buffer", FieldNumber, Field) then
+            if TypeHelper.GetField(Database::"Item Tracing Buffer", FieldNumber, Field) then
                 FieldCaption[ArrayNo] := Field."Field Caption";
     end;
 }

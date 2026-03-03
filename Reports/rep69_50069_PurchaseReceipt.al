@@ -8,12 +8,13 @@ report 50069 "Purchase - Receipt FFH"
 
     Caption = 'Purchase - Receipt';
     PreviewMode = PrintLayout;
+    ApplicationArea = All;
 
     dataset
     {
         dataitem("Purch. Rcpt. Header"; "Purch. Rcpt. Header")
         {
-            DataItemTableView = SORTING("No.");
+            DataItemTableView = sorting("No.");
             RequestFilterFields = "No.", "Buy-from Vendor No.", "No. Printed";
             RequestFilterHeading = 'Posted Purchase Receipt';
             column(No_PurchRcptHeader; "No.")
@@ -50,10 +51,10 @@ report 50069 "Purchase - Receipt FFH"
             }
             dataitem(CopyLoop; "Integer")
             {
-                DataItemTableView = SORTING(Number);
+                DataItemTableView = sorting(Number);
                 dataitem(PageLoop; "Integer")
                 {
-                    DataItemTableView = SORTING(Number) WHERE(Number = CONST(1));
+                    DataItemTableView = sorting(Number) where(Number = const(1));
                     column(PurchRcptCopyText; StrSubstNo(Text002, CopyText))
                     {
                     }
@@ -188,7 +189,7 @@ report 50069 "Purchase - Receipt FFH"
                     dataitem(DimensionLoop1; "Integer")
                     {
                         DataItemLinkReference = "Purch. Rcpt. Header";
-                        DataItemTableView = SORTING(Number) WHERE(Number = FILTER(1 ..));
+                        DataItemTableView = sorting(Number) where(Number = filter(1 ..));
                         column(DimText; DimText)
                         {
                         }
@@ -232,9 +233,9 @@ report 50069 "Purchase - Receipt FFH"
                     }
                     dataitem("Purch. Rcpt. Line"; "Purch. Rcpt. Line")
                     {
-                        DataItemLink = "Document No." = FIELD("No.");
+                        DataItemLink = "Document No." = field("No.");
                         DataItemLinkReference = "Purch. Rcpt. Header";
-                        DataItemTableView = SORTING("Document No.", "Line No.");
+                        DataItemTableView = sorting("Document No.", "Line No.");
                         column(ShowInternalInfo; ShowInternalInfo)
                         {
                         }
@@ -290,7 +291,7 @@ report 50069 "Purchase - Receipt FFH"
                         //TAL 1.0.0.202 <<
                         dataitem(DimensionLoop2; "Integer")
                         {
-                            DataItemTableView = SORTING(Number) WHERE(Number = FILTER(1 ..));
+                            DataItemTableView = sorting(Number) where(Number = filter(1 ..));
                             column(DimText1; DimText)
                             {
                             }
@@ -353,7 +354,7 @@ report 50069 "Purchase - Receipt FFH"
                     }
                     dataitem(Total; "Integer")
                     {
-                        DataItemTableView = SORTING(Number) WHERE(Number = CONST(1));
+                        DataItemTableView = sorting(Number) where(Number = const(1));
                         column(BuyfromVenNo_PurchRcptHeader; "Purch. Rcpt. Header"."Buy-from Vendor No.")
                         {
                         }
@@ -369,7 +370,7 @@ report 50069 "Purchase - Receipt FFH"
                     }
                     dataitem(Total2; "Integer")
                     {
-                        DataItemTableView = SORTING(Number) WHERE(Number = CONST(1));
+                        DataItemTableView = sorting(Number) where(Number = const(1));
                         column(PaytoVenNo_PurchRcptHeader; "Purch. Rcpt. Header"."Pay-to Vendor No.")
                         {
                         }
@@ -418,7 +419,7 @@ report 50069 "Purchase - Receipt FFH"
                 trigger OnPostDataItem()
                 begin
                     if not CurrReport.Preview then
-                        CODEUNIT.Run(CODEUNIT::"Purch.Rcpt.-Printed", "Purch. Rcpt. Header");
+                        Codeunit.Run(Codeunit::"Purch.Rcpt.-Printed", "Purch. Rcpt. Header");
                 end;
 
                 trigger OnPreDataItem()
@@ -443,7 +444,7 @@ report 50069 "Purchase - Receipt FFH"
                 if LogInteraction then
                     if not CurrReport.Preview then
                         SegManagement.LogDocument(
-                          15, "No.", 0, 0, DATABASE::Vendor, "Buy-from Vendor No.", "Purchaser Code", '', "Posting Description", '');
+                          15, "No.", 0, 0, Database::Vendor, "Buy-from Vendor No.", "Purchaser Code", '', "Posting Description", '');
             end;
 
             trigger OnPreDataItem()
@@ -464,7 +465,7 @@ report 50069 "Purchase - Receipt FFH"
 
         layout
         {
-            area(content)
+            area(Content)
             {
                 group(Options)
                 {
@@ -472,22 +473,32 @@ report 50069 "Purchase - Receipt FFH"
                     field(NoOfCopies; NoOfCopies)
                     {
                         Caption = 'No. of Copies';
+                        ToolTip = 'Specifies the value of the No. of Copies field.';
+                        ApplicationArea = All;
                     }
                     field(ShowInternalInfo; ShowInternalInfo)
                     {
                         Caption = 'Show Internal Information';
+                        ToolTip = 'Specifies the value of the Show Internal Information field.';
+                        ApplicationArea = All;
                     }
                     field(LogInteraction; LogInteraction)
                     {
                         Caption = 'Log Interaction';
                         Enabled = LogInteractionEnable;
+                        ToolTip = 'Specifies the value of the Log Interaction field.';
+                        ApplicationArea = All;
                     }
                     field(ShowCorrectionLines; ShowCorrectionLines)
                     {
                         Caption = 'Show Correction Lines';
+                        ToolTip = 'Specifies the value of the Show Correction Lines field.';
+                        ApplicationArea = All;
                     }
                     field("Hide GlobalGAP COC"; vG_HideGlobalGapCOC)
                     {
+                        ToolTip = 'Specifies the value of the vG_HideGlobalGapCOC field.';
+                        ApplicationArea = All;
                     }
                 }
             }
@@ -592,11 +603,9 @@ report 50069 "Purchase - Receipt FFH"
 
     local procedure FormatDocumentFields(PurchRcptHeader: Record "Purch. Rcpt. Header")
     begin
-        with PurchRcptHeader do begin
-            FormatDocument.SetPurchaser(SalesPurchPerson, "Purchaser Code", PurchaserText);
+        FormatDocument.SetPurchaser(SalesPurchPerson, PurchRcptHeader."Purchaser Code", PurchaserText);
 
-            ReferenceText := FormatDocument.SetText("Your Reference" <> '', FieldCaption("Your Reference"));
-        end;
+        ReferenceText := FormatDocument.SetText(PurchRcptHeader."Your Reference" <> '', PurchRcptHeader.FieldCaption("Your Reference"));
     end;
 }
 

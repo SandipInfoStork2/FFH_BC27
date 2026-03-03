@@ -24,9 +24,10 @@ pageextension 50191 SalesReturnOrderSubformExt extends "Sales Return Order Subfo
 
         addafter("Variant Code")
         {
-            field("Shelf No."; "Shelf No.")
+            field("Shelf No."; Rec."Shelf No.")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Shelf No. field.';
             }
 
 
@@ -44,25 +45,28 @@ pageextension 50191 SalesReturnOrderSubformExt extends "Sales Return Order Subfo
         moveafter("Unit Price"; "VAT Prod. Posting Group")
         addafter("VAT Prod. Posting Group")
         {
-            field("Packing Group Description"; "Packing Group Description")
+            field("Packing Group Description"; Rec."Packing Group Description")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Packing Group Description field.';
             }
         }
 
         addbefore(Quantity)
         {
-            field("Quantity (Base)"; "Quantity (Base)")
+            field("Quantity (Base)"; Rec."Quantity (Base)")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Quantity (Base) field.';
             }
         }
 
         addafter("Reserved Quantity")
         {
-            field("Unit of Measure (Base)"; "Unit of Measure (Base)")
+            field("Unit of Measure (Base)"; Rec."Unit of Measure (Base)")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Unit of Measure (Base) field.';
             }
         }
 
@@ -73,9 +77,10 @@ pageextension 50191 SalesReturnOrderSubformExt extends "Sales Return Order Subfo
 
         addafter("Net Weight")
         {
-            field("Total Net Weight"; "Total Net Weight")
+            field("Total Net Weight"; Rec."Total Net Weight")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Total Net Weight field.';
             }
         }
 
@@ -103,26 +108,29 @@ pageextension 50191 SalesReturnOrderSubformExt extends "Sales Return Order Subfo
         addafter(ShortcutDimCode8)
         {
 
-            field("Req. Country"; "Req. Country")
+            field("Req. Country"; Rec."Req. Country")
             {
-                caption = 'Req. Country';
-                ApplicationArea = all;
+                Caption = 'Req. Country';
+                ApplicationArea = All;
                 Visible = false;//TAL 1.0.0.71
                 ToolTip = 'Custom: Req. Req. Country';
             }
-            field("Country/Region of Origin Code"; "Country/Region of Origin Code")
+            field("Country/Region of Origin Code"; Rec."Country/Region of Origin Code")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 Visible = true;
+                ToolTip = 'Specifies the value of the Country/Region of Origin Code field.';
             }
 
-            field("Product Class"; "Product Class")
+            field("Product Class"; Rec."Product Class")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Product Class (Κατηγορία) field.';
             }
-            field("Category 9"; "Category 9")
+            field("Category 9"; Rec."Category 9")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Potatoes District Region field.';
             }
         }
 
@@ -138,11 +146,12 @@ pageextension 50191 SalesReturnOrderSubformExt extends "Sales Return Order Subfo
                 ApplicationArea = All;
                 Caption = 'Item &Tracking Lines';
                 Image = ItemTrackingLines;
-                ShortCutKey = 'Shift+Ctrl+I';
+                ShortcutKey = 'Shift+Ctrl+I';
+                ToolTip = 'Executes the Item &Tracking Lines action.';
 
                 trigger OnAction();
                 begin
-                    OpenItemTrackingLines;
+                    Rec.OpenItemTrackingLines;
                 end;
             }
         }
@@ -153,7 +162,7 @@ pageextension 50191 SalesReturnOrderSubformExt extends "Sales Return Order Subfo
     var
         UserSetup: Record "User Setup";
     begin
-        UserSetup.GET(UserId);
+        UserSetup.Get(UserId);
         UnitCostEditable := UserSetup."Unit Cost Editable";
     end;
     //-1.0.0.228

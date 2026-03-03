@@ -16,7 +16,7 @@ xmlport 50001 "Import Dimens Trans Payroll"
     FieldDelimiter = 'None';
     FieldSeparator = '|';
     Format = VariableText;
-    Permissions = TableData "Dimension Set Entry" = rimd;
+    Permissions = tabledata "Dimension Set Entry" = rimd;
     UseRequestPage = false;
 
     schema
@@ -49,18 +49,18 @@ xmlport 50001 "Import Dimens Trans Payroll"
                 trigger OnAfterInsertRecord();
                 begin
 
-                    CLEAR(DimValue);
-                    DimValue.SETRANGE(DimValue."Dimension Code", DimCode);
-                    DimValue.SETRANGE(DimValue.Code, DimValueCode);
-                    if DimValue.FINDSET then;
+                    Clear(DimValue);
+                    DimValue.SetRange(DimValue."Dimension Code", DimCode);
+                    DimValue.SetRange(DimValue.Code, DimValueCode);
+                    if DimValue.FindSet then;
 
 
                     //MESSAGE(LineNo);
-                    GenJournal.RESET;
-                    GenJournal.SETRANGE(GenJournal."Journal Template Name", TemlateName);
-                    GenJournal.SETRANGE(GenJournal."Journal Batch Name", BatchName);
-                    GenJournal.SETFILTER(GenJournal."Line No.", LineNo);
-                    if GenJournal.FINDFIRST then begin
+                    GenJournal.Reset;
+                    GenJournal.SetRange(GenJournal."Journal Template Name", TemlateName);
+                    GenJournal.SetRange(GenJournal."Journal Batch Name", BatchName);
+                    GenJournal.SetFilter(GenJournal."Line No.", LineNo);
+                    if GenJournal.FindFirst then begin
                         case DimCode of
                             'DEPARTMENT':
                                 GenJournal.ValidateShortcutDimCode(1, DimValue.Code);
@@ -78,7 +78,7 @@ xmlport 50001 "Import Dimens Trans Payroll"
                                 GenJournal.ValidateShortcutDimCode(7, DimValue.Code);
                         end;
 
-                        GenJournal.MODIFY;
+                        GenJournal.Modify;
                     end;
                 end;
             }

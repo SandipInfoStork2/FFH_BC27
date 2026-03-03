@@ -6,16 +6,18 @@ pageextension 50259 PostedSalesShipmentLinesExt extends "Posted Sales Shipment L
 
         addafter("Document No.")
         {
-            field("Posting Date"; "Posting Date")
+            field("Posting Date"; Rec."Posting Date")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the posting date for the entry.';
             }
         }
         addafter("No.")
         {
-            field("Shelf No."; "Shelf No.")
+            field("Shelf No."; Rec."Shelf No.")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Shelf No. field.';
             }
         }
 
@@ -25,31 +27,36 @@ pageextension 50259 PostedSalesShipmentLinesExt extends "Posted Sales Shipment L
         }
         addafter("Description 2")
         {
-            field("Packing Group Description"; "Packing Group Description")
+            field("Packing Group Description"; Rec."Packing Group Description")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Packing Group Description field.';
             }
         }
 
         addafter("Quantity Invoiced")
         {
-            field("Quantity (Base)"; "Quantity (Base)")
+            field("Quantity (Base)"; Rec."Quantity (Base)")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 DecimalPlaces = 0 : 3;
+                ToolTip = 'Specifies the value of the Quantity (Base) field.';
             }
-            field("Unit of Measure (Base)"; "Unit of Measure (Base)")
+            field("Unit of Measure (Base)"; Rec."Unit of Measure (Base)")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Unit of Measure (Base) field.';
             }
 
-            field("Qty. Requested"; "Qty. Requested")
+            field("Qty. Requested"; Rec."Qty. Requested")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Custom: Qty. Requested';
             }
-            field("Qty. Confirmed"; "Qty. Confirmed")
+            field("Qty. Confirmed"; Rec."Qty. Confirmed")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Qty. Confirmed field.';
             }
 
             /*
@@ -70,99 +77,114 @@ pageextension 50259 PostedSalesShipmentLinesExt extends "Posted Sales Shipment L
             {
                 ApplicationArea = Dimensions;
                 CaptionClass = '1,2,3';
-                TableRelation = "Dimension Value".Code WHERE("Global Dimension No." = CONST(3),
-                                                                  "Dimension Value Type" = CONST(Standard),
-                                                                  Blocked = CONST(false));
+                TableRelation = "Dimension Value".Code where("Global Dimension No." = const(3),
+                                                                  "Dimension Value Type" = const(Standard),
+                                                                  Blocked = const(false));
                 Visible = DimVisible3;
+                ToolTip = 'Specifies the value of the ShortcutDimCode[3] field.';
             }
             field("ShortcutDimCode[4]"; ShortcutDimCode[4])
             {
                 ApplicationArea = Dimensions;
                 CaptionClass = '1,2,4';
-                TableRelation = "Dimension Value".Code WHERE("Global Dimension No." = CONST(4),
-                                                                  "Dimension Value Type" = CONST(Standard),
-                                                                  Blocked = CONST(false));
+                TableRelation = "Dimension Value".Code where("Global Dimension No." = const(4),
+                                                                  "Dimension Value Type" = const(Standard),
+                                                                  Blocked = const(false));
                 Visible = DimVisible4;
+                ToolTip = 'Specifies the value of the ShortcutDimCode[4] field.';
             }
             field("ShortcutDimCode[5]"; ShortcutDimCode[5])
             {
                 ApplicationArea = Dimensions;
                 CaptionClass = '1,2,5';
-                TableRelation = "Dimension Value".Code WHERE("Global Dimension No." = CONST(5),
-                                                                  "Dimension Value Type" = CONST(Standard),
-                                                                  Blocked = CONST(false));
+                TableRelation = "Dimension Value".Code where("Global Dimension No." = const(5),
+                                                                  "Dimension Value Type" = const(Standard),
+                                                                  Blocked = const(false));
                 Visible = DimVisible5;
+                ToolTip = 'Specifies the value of the ShortcutDimCode[5] field.';
             }
             field("ShortcutDimCode[6]"; ShortcutDimCode[6])
             {
                 ApplicationArea = Dimensions;
                 CaptionClass = '1,2,6';
-                TableRelation = "Dimension Value".Code WHERE("Global Dimension No." = CONST(6),
-                                                                  "Dimension Value Type" = CONST(Standard),
-                                                                  Blocked = CONST(false));
+                TableRelation = "Dimension Value".Code where("Global Dimension No." = const(6),
+                                                                  "Dimension Value Type" = const(Standard),
+                                                                  Blocked = const(false));
                 Visible = DimVisible6;
+                ToolTip = 'Specifies the value of the ShortcutDimCode[6] field.';
             }
             field("ShortcutDimCode[7]"; ShortcutDimCode[7])
             {
                 ApplicationArea = Dimensions;
                 CaptionClass = '1,2,7';
-                TableRelation = "Dimension Value".Code WHERE("Global Dimension No." = CONST(7),
-                                                                  "Dimension Value Type" = CONST(Standard),
-                                                                  Blocked = CONST(false));
+                TableRelation = "Dimension Value".Code where("Global Dimension No." = const(7),
+                                                                  "Dimension Value Type" = const(Standard),
+                                                                  Blocked = const(false));
                 Visible = DimVisible7;
+                ToolTip = 'Specifies the value of the ShortcutDimCode[7] field.';
             }
             field("ShortcutDimCode[8]"; ShortcutDimCode[8])
             {
                 ApplicationArea = Dimensions;
                 CaptionClass = '1,2,8';
-                TableRelation = "Dimension Value".Code WHERE("Global Dimension No." = CONST(8),
-                                                                  "Dimension Value Type" = CONST(Standard),
-                                                                  Blocked = CONST(false));
+                TableRelation = "Dimension Value".Code where("Global Dimension No." = const(8),
+                                                                  "Dimension Value Type" = const(Standard),
+                                                                  Blocked = const(false));
                 Visible = DimVisible8;
+                ToolTip = 'Specifies the value of the ShortcutDimCode[8] field.';
             }
 
-            field(Correction; Correction)
+            field(Correction; Rec.Correction)
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies that this sales shipment line has been posted as a corrective entry.';
             }
-            field("Order No."; "Order No.")
+            field("Order No."; Rec."Order No.")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Order No. field.';
             }
-            field("Order Line No."; "Order Line No.")
+            field("Order Line No."; Rec."Order Line No.")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Order Line No. field.';
             }
 
-            field("Transfer-from Code"; "Transfer-from Code")
+            field("Transfer-from Code"; Rec."Transfer-from Code")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Transfer-from Code field.';
             }
-            field("Transfer-to Code"; "Transfer-to Code")
+            field("Transfer-to Code"; Rec."Transfer-to Code")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Transfer-to Code field.';
             }
             field("Req. Country"; Rec."Req. Country")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 Visible = true;
+                ToolTip = 'Specifies the value of the Req. Country field.';
             }
 
             field("Country/Region of Origin Code"; Rec."Country/Region of Origin Code")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 Visible = true;
+                ToolTip = 'Custom: Country/Region of Origin Code';
             }
 
 
 
-            field("Product Class"; "Product Class")
+            field("Product Class"; Rec."Product Class")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Custom: Product Class (Κατηγορία)';
             }
-            field("Category 9"; "Category 9")
+            field("Category 9"; Rec."Category 9")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Custom: Potatoes District Region';
             }
         }
 
@@ -184,28 +206,30 @@ pageextension 50259 PostedSalesShipmentLinesExt extends "Posted Sales Shipment L
             action(ItemCard)
             {
                 ApplicationArea = All;
-                caption = 'Item Card';
+                Caption = 'Item Card';
                 Image = Item;
                 RunObject = page "Item Card";
                 RunPageLink = "No." = field("No.");
+                ToolTip = 'Executes the Item Card action.';
 
             }
 
             action(ProductionBOM)
             {
                 ApplicationArea = All;
-                caption = 'Item Production BOM';
+                Caption = 'Item Production BOM';
                 Image = Item;
+                ToolTip = 'Executes the Item Production BOM action.';
                 trigger OnAction()
                 var
                     Item: Record Item;
                     ProductionBOMHeader: Record "Production BOM Header";
                 begin
-                    item.Get("No.");
+                    Item.Get(Rec."No.");
                     Item.TestField("Production BOM No.");
 
-                    ProductionBOMHeader.GET(item."Production BOM No.");
-                    page.Run(page::"Production BOM", ProductionBOMHeader);
+                    ProductionBOMHeader.Get(Item."Production BOM No.");
+                    Page.Run(Page::"Production BOM", ProductionBOMHeader);
 
                 end;
 
@@ -238,7 +262,7 @@ pageextension 50259 PostedSalesShipmentLinesExt extends "Posted Sales Shipment L
 
     trigger OnAfterGetRecord()
     begin
-        ShowShortcutDimCode(ShortcutDimCode);
+        Rec.ShowShortcutDimCode(ShortcutDimCode);
     end;
 
     local procedure SetDimensionsVisibility()

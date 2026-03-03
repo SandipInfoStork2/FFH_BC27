@@ -14,24 +14,25 @@ report 50082 "Trial Balance - Full Detail"
     RDLCLayout = './Layouts/rep82_50082_TrialBalanceFullDetail.rdlc';
 
     Caption = 'Trial Balance - Full Detail';
+    ApplicationArea = All;
 
     dataset
     {
         dataitem("G/L Account"; "G/L Account")
         {
-            DataItemTableView = SORTING("No.");
+            DataItemTableView = sorting("No.");
             RequestFilterFields = "No.", "Account Type", "Date Filter", "Global Dimension 1 Filter", "Global Dimension 2 Filter";
-            column(STRSUBSTNO_Text000_PeriodText_; STRSUBSTNO(Text000, PeriodText))
+            column(STRSUBSTNO_Text000_PeriodText_; StrSubstNo(Text000, PeriodText))
             {
             }
 
-            column(COMPANYNAME; COMPANYNAME)
+            column(COMPANYNAME; CompanyName)
             {
             }
             column(PeriodText; PeriodText)
             {
             }
-            column(G_L_Account__TABLECAPTION__________GLFilter; TABLECAPTION + ': ' + GLFilter)
+            column(G_L_Account__TABLECAPTION__________GLFilter; TableCaption + ': ' + GLFilter)
             {
             }
             column(GLFilter; GLFilter)
@@ -52,7 +53,7 @@ report 50082 "Trial Balance - Full Detail"
             column(BalanceCaption; BalanceCaptionLbl)
             {
             }
-            column(G_L_Account___No__Caption; FIELDCAPTION("No."))
+            column(G_L_Account___No__Caption; FieldCaption("No."))
             {
             }
             column(PADSTR_____G_L_Account__Indentation___2___G_L_Account__NameCaption; PADSTR_____G_L_Account__Indentation___2___G_L_Account__NameCaptionLbl)
@@ -75,11 +76,11 @@ report 50082 "Trial Balance - Full Detail"
             }
             dataitem("Integer"; "Integer")
             {
-                DataItemTableView = SORTING(Number) WHERE(Number = CONST(1));
+                DataItemTableView = sorting(Number) where(Number = const(1));
                 column(G_L_Account___No__; "G/L Account"."No.")
                 {
                 }
-                column(PADSTR_____G_L_Account__Indentation___2___G_L_Account__Name; PADSTR('', "G/L Account".Indentation * 2) + "G/L Account".Name)
+                column(PADSTR_____G_L_Account__Indentation___2___G_L_Account__Name; PadStr('', "G/L Account".Indentation * 2) + "G/L Account".Name)
                 {
                 }
                 column(G_L_Account___Net_Change_; "G/L Account"."Net Change")
@@ -96,7 +97,7 @@ report 50082 "Trial Balance - Full Detail"
                 {
                     AutoFormatType = 1;
                 }
-                column(G_L_Account___Account_Type_; FORMAT("G/L Account"."Account Type", 0, 2))
+                column(G_L_Account___Account_Type_; Format("G/L Account"."Account Type", 0, 2))
                 {
                 }
                 column(No__of_Blank_Lines; "G/L Account"."No. of Blank Lines")
@@ -137,8 +138,8 @@ report 50082 "Trial Balance - Full Detail"
 
                     trigger OnAfterGetRecord()
                     begin
-                        IF BlankLineNo = 0 THEN
-                            CurrReport.BREAK;
+                        if BlankLineNo = 0 then
+                            CurrReport.Break;
 
                         BlankLineNo -= 1;
                     end;
@@ -157,9 +158,9 @@ report 50082 "Trial Balance - Full Detail"
                         //nodma
                         //IF CurrentGroup IN [3,4] THEN CurrReport.skip;
                         NewCategoryInt := GetCategoryType("G/L Account"."No.", "Bank Account"."Bank Acc. Posting Group", 2);//nodma
-                        IF NewCategoryInt <> 2 THEN CurrReport.SKIP;
+                        if NewCategoryInt <> 2 then CurrReport.Skip;
                         CreateBankFigures("Bank Account");
-                        IF isZeroValues THEN CurrReport.SKIP;
+                        if isZeroValues then CurrReport.Skip;
                         ShowGroups += 1;
                     end;
                 }
@@ -178,9 +179,9 @@ report 50082 "Trial Balance - Full Detail"
                         //nodma
                         //IF CurrentGroup IN [2,4] THEN CurrReport.BREAK;
                         NewCategoryInt := GetCategoryType("G/L Account"."No.", Customer."Customer Posting Group", 3);//nodma
-                        IF NewCategoryInt <> 3 THEN CurrReport.SKIP;
+                        if NewCategoryInt <> 3 then CurrReport.Skip;
                         CreateCustomerFigures(Customer);
-                        IF isZeroValues THEN CurrReport.SKIP;
+                        if isZeroValues then CurrReport.Skip;
                         ShowGroups += 1;
                     end;
                 }
@@ -199,9 +200,9 @@ report 50082 "Trial Balance - Full Detail"
                         //nodma
                         //IF CurrentGroup IN [2,3] THEN CurrReport.BREAK;
                         NewCategoryInt := GetCategoryType("G/L Account"."No.", Vendor."Vendor Posting Group", 4);
-                        IF NewCategoryInt <> 4 THEN CurrReport.SKIP;
+                        if NewCategoryInt <> 4 then CurrReport.Skip;
                         CreateVendorFigures(Vendor);
-                        IF isZeroValues THEN CurrReport.SKIP;
+                        if isZeroValues then CurrReport.Skip;
                         ShowGroups += 1;
                     end;
                 }
@@ -214,38 +215,38 @@ report 50082 "Trial Balance - Full Detail"
 
             trigger OnAfterGetRecord()
             begin
-                CALCFIELDS("Net Change", "Balance at Date", "Debit Amount", "Credit Amount"); //NOD0.1
+                CalcFields("Net Change", "Balance at Date", "Debit Amount", "Credit Amount"); //NOD0.1
 
-                IF ChangeGroupNo THEN BEGIN
+                if ChangeGroupNo then begin
                     PageGroupNo += 1;
-                    ChangeGroupNo := FALSE;
-                END;
+                    ChangeGroupNo := false;
+                end;
 
                 ChangeGroupNo := "New Page";
                 //nodma +
                 NewCategoryInt := 0;
                 CreateFigures("G/L Account");
                 ShowGroups := 0;
-                IF IsParentFunc("G/L Account"."No.") THEN
+                if IsParentFunc("G/L Account"."No.") then
                     IsParent := 1
-                ELSE
+                else
                     IsParent := 0;
 
                 //nodma-
-                IF ExcludeZeroMove THEN BEGIN
-                    IF (OpeningDC[1] = 0) AND (OpeningDC[2] = 0) AND (ClosingDC[1] = 0) AND (ClosingDC[2] = 0) AND ("G/L Account"."Net Change" = 0)
-                    AND ("G/L Account"."Debit Amount" = 0) AND ("G/L Account"."Credit Amount" = 0) THEN //NOD0.1
-                        CurrReport.SKIP;
-                END;
+                if ExcludeZeroMove then begin
+                    if (OpeningDC[1] = 0) and (OpeningDC[2] = 0) and (ClosingDC[1] = 0) and (ClosingDC[2] = 0) and ("G/L Account"."Net Change" = 0)
+                    and ("G/L Account"."Debit Amount" = 0) and ("G/L Account"."Credit Amount" = 0) then //NOD0.1
+                        CurrReport.Skip;
+                end;
 
-                IF PrintToExcel THEN
+                if PrintToExcel then
                     MakeExcelDataBody;
             end;
 
             trigger OnPreDataItem()
             begin
                 PageGroupNo := 0;
-                ChangeGroupNo := FALSE;
+                ChangeGroupNo := false;
             end;
         }
     }
@@ -255,7 +256,7 @@ report 50082 "Trial Balance - Full Detail"
 
         layout
         {
-            area(content)
+            area(Content)
             {
                 group(Options)
                 {
@@ -263,12 +264,14 @@ report 50082 "Trial Balance - Full Detail"
                     field(PrintToExcel; PrintToExcel)
                     {
                         Caption = 'Print to Excel';
-                        ApplicationArea = all;
+                        ApplicationArea = All;
+                        ToolTip = 'Specifies the value of the Print to Excel field.';
                     }
                     field(ExcludeZeroMove; ExcludeZeroMove)
                     {
                         Caption = 'Exclude Zero Movement Accounts';
-                        ApplicationArea = all;
+                        ApplicationArea = All;
+                        ToolTip = 'Specifies the value of the Exclude Zero Movement Accounts field.';
                     }
                 }
             }
@@ -285,23 +288,23 @@ report 50082 "Trial Balance - Full Detail"
 
     trigger OnPostReport()
     begin
-        IF PrintToExcel THEN
+        if PrintToExcel then
             CreateExcelbook;
     end;
 
     trigger OnPreReport()
     begin
-        GLFilter := "G/L Account".GETFILTERS;
-        PeriodText := "G/L Account".GETFILTER("Date Filter");
-        IF PeriodText = '' THEN
-            ERROR('Please Specify Date filter');//nodma
-        IF PrintToExcel THEN
+        GLFilter := "G/L Account".GetFilters;
+        PeriodText := "G/L Account".GetFilter("Date Filter");
+        if PeriodText = '' then
+            Error('Please Specify Date filter');//nodma
+        if PrintToExcel then
             MakeExcelInfo;
 
         //NODMA
-        FromDate := "G/L Account".GETRANGEMIN("G/L Account"."Date Filter");
-        ToDate := "G/L Account".GETRANGEMAX("G/L Account"."Date Filter");
-        IF (FromDate = 0D) OR (ToDate = 0D) THEN ERROR('Please Specify From and To date');//nodma
+        FromDate := "G/L Account".GetRangeMin("G/L Account"."Date Filter");
+        ToDate := "G/L Account".GetRangeMax("G/L Account"."Date Filter");
+        if (FromDate = 0D) or (ToDate = 0D) then Error('Please Specify From and To date');//nodma
     end;
 
     var
@@ -343,74 +346,74 @@ report 50082 "Trial Balance - Full Detail"
         IsParent: Integer;
         ExcludeZeroMove: Boolean;
 
-    [Scope('OnPrem')]
+
     procedure MakeExcelInfo()
     begin
         ExcelBuf.SetUseInfoSheet;
-        ExcelBuf.AddInfoColumn(FORMAT(Text005), FALSE, TRUE, FALSE, FALSE, '', ExcelBuf."Cell Type"::Text);
-        ExcelBuf.AddInfoColumn(COMPANYNAME, FALSE, FALSE, FALSE, FALSE, '', ExcelBuf."Cell Type"::Text);
+        ExcelBuf.AddInfoColumn(Format(Text005), false, true, false, false, '', ExcelBuf."Cell Type"::Text);
+        ExcelBuf.AddInfoColumn(CompanyName, false, false, false, false, '', ExcelBuf."Cell Type"::Text);
         ExcelBuf.NewRow;
-        ExcelBuf.AddInfoColumn(FORMAT(Text007), FALSE, TRUE, FALSE, FALSE, '', ExcelBuf."Cell Type"::Text);
-        ExcelBuf.AddInfoColumn(FORMAT(Text001), FALSE, FALSE, FALSE, FALSE, '', ExcelBuf."Cell Type"::Text);
+        ExcelBuf.AddInfoColumn(Format(Text007), false, true, false, false, '', ExcelBuf."Cell Type"::Text);
+        ExcelBuf.AddInfoColumn(Format(Text001), false, false, false, false, '', ExcelBuf."Cell Type"::Text);
         ExcelBuf.NewRow;
-        ExcelBuf.AddInfoColumn(FORMAT(Text006), FALSE, TRUE, FALSE, FALSE, '', ExcelBuf."Cell Type"::Text);
-        ExcelBuf.AddInfoColumn(REPORT::"Trial Balance", FALSE, FALSE, FALSE, FALSE, '', ExcelBuf."Cell Type"::Number);
+        ExcelBuf.AddInfoColumn(Format(Text006), false, true, false, false, '', ExcelBuf."Cell Type"::Text);
+        ExcelBuf.AddInfoColumn(Report::"Trial Balance", false, false, false, false, '', ExcelBuf."Cell Type"::Number);
         ExcelBuf.NewRow;
-        ExcelBuf.AddInfoColumn(FORMAT(Text008), FALSE, TRUE, FALSE, FALSE, '', ExcelBuf."Cell Type"::Text);
-        ExcelBuf.AddInfoColumn(USERID, FALSE, FALSE, FALSE, FALSE, '', ExcelBuf."Cell Type"::Text);
+        ExcelBuf.AddInfoColumn(Format(Text008), false, true, false, false, '', ExcelBuf."Cell Type"::Text);
+        ExcelBuf.AddInfoColumn(UserId, false, false, false, false, '', ExcelBuf."Cell Type"::Text);
         ExcelBuf.NewRow;
-        ExcelBuf.AddInfoColumn(FORMAT(Text009), FALSE, TRUE, FALSE, FALSE, '', ExcelBuf."Cell Type"::Text);
-        ExcelBuf.AddInfoColumn(TODAY, FALSE, FALSE, FALSE, FALSE, '', ExcelBuf."Cell Type"::Date);
+        ExcelBuf.AddInfoColumn(Format(Text009), false, true, false, false, '', ExcelBuf."Cell Type"::Text);
+        ExcelBuf.AddInfoColumn(Today, false, false, false, false, '', ExcelBuf."Cell Type"::Date);
         ExcelBuf.NewRow;
-        ExcelBuf.AddInfoColumn(FORMAT(Text010), FALSE, TRUE, FALSE, FALSE, '', ExcelBuf."Cell Type"::Text);
-        ExcelBuf.AddInfoColumn("G/L Account".GETFILTER("No."), FALSE, FALSE, FALSE, FALSE, '', ExcelBuf."Cell Type"::Text);
+        ExcelBuf.AddInfoColumn(Format(Text010), false, true, false, false, '', ExcelBuf."Cell Type"::Text);
+        ExcelBuf.AddInfoColumn("G/L Account".GetFilter("No."), false, false, false, false, '', ExcelBuf."Cell Type"::Text);
         ExcelBuf.NewRow;
-        ExcelBuf.AddInfoColumn(FORMAT(Text011), FALSE, TRUE, FALSE, FALSE, '', ExcelBuf."Cell Type"::Text);
-        ExcelBuf.AddInfoColumn("G/L Account".GETFILTER("Date Filter"), FALSE, FALSE, FALSE, FALSE, '', ExcelBuf."Cell Type"::Text);
+        ExcelBuf.AddInfoColumn(Format(Text011), false, true, false, false, '', ExcelBuf."Cell Type"::Text);
+        ExcelBuf.AddInfoColumn("G/L Account".GetFilter("Date Filter"), false, false, false, false, '', ExcelBuf."Cell Type"::Text);
         ExcelBuf.ClearNewRow;
         MakeExcelDataHeader;
     end;
 
     local procedure MakeExcelDataHeader()
     begin
-        ExcelBuf.AddColumn("G/L Account".FIELDCAPTION("No."), FALSE, '', TRUE, FALSE, TRUE, '', ExcelBuf."Cell Type"::Text);
-        ExcelBuf.AddColumn("G/L Account".FIELDCAPTION(Name), FALSE, '', TRUE, FALSE, TRUE, '', ExcelBuf."Cell Type"::Text);
+        ExcelBuf.AddColumn("G/L Account".FieldCaption("No."), false, '', true, false, true, '', ExcelBuf."Cell Type"::Text);
+        ExcelBuf.AddColumn("G/L Account".FieldCaption(Name), false, '', true, false, true, '', ExcelBuf."Cell Type"::Text);
 
         ExcelBuf.AddColumn(
-          FORMAT('Opening Balance - ' + Text003), FALSE, '', TRUE, FALSE, TRUE, '', ExcelBuf."Cell Type"::Text);
+          Format('Opening Balance - ' + Text003), false, '', true, false, true, '', ExcelBuf."Cell Type"::Text);
         ExcelBuf.AddColumn(
-          FORMAT('Opening Balance - ' + Text004), FALSE, '', TRUE, FALSE, TRUE, '', ExcelBuf."Cell Type"::Text);
+          Format('Opening Balance - ' + Text004), false, '', true, false, true, '', ExcelBuf."Cell Type"::Text);
 
         ExcelBuf.AddColumn(
-          FORMAT("G/L Account".FIELDCAPTION("Net Change") + ' - ' + Text003), FALSE, '', TRUE, FALSE, TRUE, '', ExcelBuf."Cell Type"::Text);
+          Format("G/L Account".FieldCaption("Net Change") + ' - ' + Text003), false, '', true, false, true, '', ExcelBuf."Cell Type"::Text);
         ExcelBuf.AddColumn(
-          FORMAT("G/L Account".FIELDCAPTION("Net Change") + ' - ' + Text004), FALSE, '', TRUE, FALSE, TRUE, '', ExcelBuf."Cell Type"::Text);
+          Format("G/L Account".FieldCaption("Net Change") + ' - ' + Text004), false, '', true, false, true, '', ExcelBuf."Cell Type"::Text);
         ExcelBuf.AddColumn(
-          FORMAT("G/L Account".FIELDCAPTION("Balance at Date") + ' - ' + Text003), FALSE, '', TRUE, FALSE, TRUE, '',
+          Format("G/L Account".FieldCaption("Balance at Date") + ' - ' + Text003), false, '', true, false, true, '',
           ExcelBuf."Cell Type"::Text);
         ExcelBuf.AddColumn(
-          FORMAT("G/L Account".FIELDCAPTION("Balance at Date") + ' - ' + Text004), FALSE, '', TRUE, FALSE, TRUE, '',
+          Format("G/L Account".FieldCaption("Balance at Date") + ' - ' + Text004), false, '', true, false, true, '',
           ExcelBuf."Cell Type"::Text);
     end;
 
-    [Scope('OnPrem')]
+
     procedure MakeExcelDataBody()
     var
         BlankFiller: Text[250];
     begin
-        BlankFiller := PADSTR(' ', MAXSTRLEN(BlankFiller), ' ');
+        BlankFiller := PadStr(' ', MaxStrLen(BlankFiller), ' ');
         ExcelBuf.NewRow;
         ExcelBuf.AddColumn(
-          "G/L Account"."No.", FALSE, '', "G/L Account"."Account Type" <> "G/L Account"."Account Type"::Posting, FALSE, FALSE, '',
+          "G/L Account"."No.", false, '', "G/L Account"."Account Type" <> "G/L Account"."Account Type"::Posting, false, false, '',
           ExcelBuf."Cell Type"::Text);
-        IF "G/L Account".Indentation = 0 THEN
+        if "G/L Account".Indentation = 0 then
             ExcelBuf.AddColumn(
-              "G/L Account".Name, FALSE, '', "G/L Account"."Account Type" <> "G/L Account"."Account Type"::Posting, FALSE, FALSE, '',
+              "G/L Account".Name, false, '', "G/L Account"."Account Type" <> "G/L Account"."Account Type"::Posting, false, false, '',
               ExcelBuf."Cell Type"::Text)
-        ELSE
+        else
             ExcelBuf.AddColumn(
-              COPYSTR(BlankFiller, 1, 2 * "G/L Account".Indentation) + "G/L Account".Name,
-              FALSE, '', "G/L Account"."Account Type" <> "G/L Account"."Account Type"::Posting, FALSE, FALSE, '', ExcelBuf."Cell Type"::Text);
+              CopyStr(BlankFiller, 1, 2 * "G/L Account".Indentation) + "G/L Account".Name,
+              false, '', "G/L Account"."Account Type" <> "G/L Account"."Account Type"::Posting, false, false, '', ExcelBuf."Cell Type"::Text);
 
         /*
         CASE TRUE OF
@@ -450,52 +453,56 @@ report 50082 "Trial Balance - Full Detail"
         END;
         */
 
-        IF OpeningDC[1] <> 0 THEN BEGIN
-            ExcelBuf.AddColumn(OpeningDC[1], FALSE, '', "G/L Account"."Account Type" <> "G/L Account"."Account Type"::Posting, FALSE, FALSE, '#,##0.00', ExcelBuf."Cell Type"::Number);
-        END ELSE BEGIN
-            ExcelBuf.AddColumn('', FALSE, '', "G/L Account"."Account Type" <> "G/L Account"."Account Type"::Posting, FALSE, FALSE, '', ExcelBuf."Cell Type"::Text);
-        END;
+        if OpeningDC[1] <> 0 then begin
+            ExcelBuf.AddColumn(OpeningDC[1], false, '', "G/L Account"."Account Type" <> "G/L Account"."Account Type"::Posting, false, false, '#,##0.00', ExcelBuf."Cell Type"::Number);
+        end else begin
+            ExcelBuf.AddColumn('', false, '', "G/L Account"."Account Type" <> "G/L Account"."Account Type"::Posting, false, false, '', ExcelBuf."Cell Type"::Text);
+        end;
 
-        IF OpeningDC[2] <> 0 THEN BEGIN
-            ExcelBuf.AddColumn(OpeningDC[2], FALSE, '', "G/L Account"."Account Type" <> "G/L Account"."Account Type"::Posting, FALSE, FALSE, '#,##0.00', ExcelBuf."Cell Type"::Number);
-        END ELSE BEGIN
-            ExcelBuf.AddColumn('', FALSE, '', "G/L Account"."Account Type" <> "G/L Account"."Account Type"::Posting, FALSE, FALSE, '', ExcelBuf."Cell Type"::Text);
-        END;
+        if OpeningDC[2] <> 0 then begin
+            ExcelBuf.AddColumn(OpeningDC[2], false, '', "G/L Account"."Account Type" <> "G/L Account"."Account Type"::Posting, false, false, '#,##0.00', ExcelBuf."Cell Type"::Number);
+        end else begin
+            ExcelBuf.AddColumn('', false, '', "G/L Account"."Account Type" <> "G/L Account"."Account Type"::Posting, false, false, '', ExcelBuf."Cell Type"::Text);
+        end;
 
-        IF PeriodMoveDC[1] <> 0 THEN BEGIN
-            ExcelBuf.AddColumn(PeriodMoveDC[1], FALSE, '', "G/L Account"."Account Type" <> "G/L Account"."Account Type"::Posting, FALSE, FALSE, '#,##0.00', ExcelBuf."Cell Type"::Number);
-        END ELSE BEGIN
-            ExcelBuf.AddColumn('', FALSE, '', "G/L Account"."Account Type" <> "G/L Account"."Account Type"::Posting, FALSE, FALSE, '', ExcelBuf."Cell Type"::Text);
-        END;
+        if PeriodMoveDC[1] <> 0 then begin
+            ExcelBuf.AddColumn(PeriodMoveDC[1], false, '', "G/L Account"."Account Type" <> "G/L Account"."Account Type"::Posting, false, false, '#,##0.00', ExcelBuf."Cell Type"::Number);
+        end else begin
+            ExcelBuf.AddColumn('', false, '', "G/L Account"."Account Type" <> "G/L Account"."Account Type"::Posting, false, false, '', ExcelBuf."Cell Type"::Text);
+        end;
 
-        IF PeriodMoveDC[2] <> 0 THEN BEGIN
-            ExcelBuf.AddColumn(PeriodMoveDC[2], FALSE, '', "G/L Account"."Account Type" <> "G/L Account"."Account Type"::Posting, FALSE, FALSE, '#,##0.00', ExcelBuf."Cell Type"::Number);
-        END ELSE BEGIN
-            ExcelBuf.AddColumn('', FALSE, '', "G/L Account"."Account Type" <> "G/L Account"."Account Type"::Posting, FALSE, FALSE, '', ExcelBuf."Cell Type"::Text);
-        END;
+        if PeriodMoveDC[2] <> 0 then begin
+            ExcelBuf.AddColumn(PeriodMoveDC[2], false, '', "G/L Account"."Account Type" <> "G/L Account"."Account Type"::Posting, false, false, '#,##0.00', ExcelBuf."Cell Type"::Number);
+        end else begin
+            ExcelBuf.AddColumn('', false, '', "G/L Account"."Account Type" <> "G/L Account"."Account Type"::Posting, false, false, '', ExcelBuf."Cell Type"::Text);
+        end;
 
-        IF ClosingDC[1] <> 0 THEN BEGIN
-            ExcelBuf.AddColumn(ClosingDC[1], FALSE, '', "G/L Account"."Account Type" <> "G/L Account"."Account Type"::Posting, FALSE, FALSE, '#,##0.00', ExcelBuf."Cell Type"::Number);
-        END ELSE BEGIN
-            ExcelBuf.AddColumn('', FALSE, '', "G/L Account"."Account Type" <> "G/L Account"."Account Type"::Posting, FALSE, FALSE, '', ExcelBuf."Cell Type"::Text);
-        END;
+        if ClosingDC[1] <> 0 then begin
+            ExcelBuf.AddColumn(ClosingDC[1], false, '', "G/L Account"."Account Type" <> "G/L Account"."Account Type"::Posting, false, false, '#,##0.00', ExcelBuf."Cell Type"::Number);
+        end else begin
+            ExcelBuf.AddColumn('', false, '', "G/L Account"."Account Type" <> "G/L Account"."Account Type"::Posting, false, false, '', ExcelBuf."Cell Type"::Text);
+        end;
 
-        IF ClosingDC[2] <> 0 THEN BEGIN
-            ExcelBuf.AddColumn(ClosingDC[2], FALSE, '', "G/L Account"."Account Type" <> "G/L Account"."Account Type"::Posting, FALSE, FALSE, '#,##0.00', ExcelBuf."Cell Type"::Number);
-        END ELSE BEGIN
-            ExcelBuf.AddColumn('', FALSE, '', "G/L Account"."Account Type" <> "G/L Account"."Account Type"::Posting, FALSE, FALSE, '', ExcelBuf."Cell Type"::Text);
-        END;
+        if ClosingDC[2] <> 0 then begin
+            ExcelBuf.AddColumn(ClosingDC[2], false, '', "G/L Account"."Account Type" <> "G/L Account"."Account Type"::Posting, false, false, '#,##0.00', ExcelBuf."Cell Type"::Number);
+        end else begin
+            ExcelBuf.AddColumn('', false, '', "G/L Account"."Account Type" <> "G/L Account"."Account Type"::Posting, false, false, '', ExcelBuf."Cell Type"::Text);
+        end;
 
     end;
 
-    [Scope('OnPrem')]
+
     procedure CreateExcelbook()
     begin
-        ExcelBuf.CreateBookAndOpenExcel('', Text002, Text001, COMPANYNAME, USERID);
-        ERROR('');
+        //ExcelBuf.CreateBookAndOpenExcel('', Text002, Text001, CompanyName, UserId);
+        ExcelBuf.CreateNewBook(Text002);
+        ExcelBuf.WriteSheet(Text001, CompanyName, UserId);
+        ExcelBuf.CloseBook();
+        ExcelBuf.OpenExcel();
+        Error('');
     end;
 
-    [Scope('OnPrem')]
+
     procedure GetCategoryType(GLAcc: Code[20]; paramCode: Code[20]; pType: Integer): Integer
     var
         BankAccountPostingGroup: Record "Bank Account Posting Group";
@@ -509,199 +516,199 @@ report 50082 "Trial Balance - Full Detail"
         // 2. Bank Accounts
         // 3. Customer
         // 4. Vendor
-        CASE pType OF
+        case pType of
             1:
-                BEGIN
+                begin
                     // *** Fixed Assets ***
-                    FAPostingGroup.RESET;
-                    FAPostingGroup.SETRANGE(Code, paramCode);
-                    IF FAPostingGroup.FINDFIRST THEN
-                        IF (FAPostingGroup."Acquisition Cost Account" = GLAcc) THEN
-                            EXIT(0);//Set FA Status NOT ACTIVE set to 1 if active
-                END;
+                    FAPostingGroup.Reset;
+                    FAPostingGroup.SetRange(Code, paramCode);
+                    if FAPostingGroup.FindFirst then
+                        if (FAPostingGroup."Acquisition Cost Account" = GLAcc) then
+                            exit(0);//Set FA Status NOT ACTIVE set to 1 if active
+                end;
             2:
-                BEGIN
+                begin
                     // *** Bank Accounts ***
-                    BankAccountPostingGroup.RESET;
-                    BankAccountPostingGroup.SETRANGE(Code, paramCode);
-                    IF BankAccountPostingGroup.FINDFIRST THEN
+                    BankAccountPostingGroup.Reset;
+                    BankAccountPostingGroup.SetRange(Code, paramCode);
+                    if BankAccountPostingGroup.FindFirst then
                         //IF BankAccountPostingGroup."G/L Bank Account No." = GLAcc THEN
-                        IF BankAccountPostingGroup."G/L Account No." = GLAcc THEN//TAL 0.1 VK
-                            EXIT(2);//Set Bank Status
-                END;
+                        if BankAccountPostingGroup."G/L Account No." = GLAcc then//TAL 0.1 VK
+                            exit(2);//Set Bank Status
+                end;
             3:
-                BEGIN
+                begin
                     // *** Customers ***
-                    CustomerPostingGroup.RESET;
-                    CustomerPostingGroup.SETRANGE(Code, paramCode);
-                    IF CustomerPostingGroup.FINDFIRST THEN
-                        IF CustomerPostingGroup."Receivables Account" = GLAcc THEN
-                            EXIT(3);
-                END;
+                    CustomerPostingGroup.Reset;
+                    CustomerPostingGroup.SetRange(Code, paramCode);
+                    if CustomerPostingGroup.FindFirst then
+                        if CustomerPostingGroup."Receivables Account" = GLAcc then
+                            exit(3);
+                end;
             4:
-                BEGIN
+                begin
                     // *** Vendors ***
-                    VendorPostingGroup.RESET;
-                    VendorPostingGroup.SETRANGE(Code, paramCode);
-                    IF VendorPostingGroup.FINDFIRST THEN
-                        IF VendorPostingGroup."Payables Account" = GLAcc THEN
-                            EXIT(4);
-                END;
-        END;
+                    VendorPostingGroup.Reset;
+                    VendorPostingGroup.SetRange(Code, paramCode);
+                    if VendorPostingGroup.FindFirst then
+                        if VendorPostingGroup."Payables Account" = GLAcc then
+                            exit(4);
+                end;
+        end;
 
-        EXIT(0);
+        exit(0);
     end;
 
-    [Scope('OnPrem')]
+
     procedure CreateFigures(pGLacc: Record "G/L Account")
     begin
         //CreateFigures For GL Accounts
-        CLEAR(OpeningDC);
-        CLEAR(PeriodMoveDC);
-        CLEAR(ClosingDC);
+        Clear(OpeningDC);
+        Clear(PeriodMoveDC);
+        Clear(ClosingDC);
 
-        pGLacc.RESET;
-        pGLacc.SETFILTER("Date Filter", '..%1', CALCDATE('-1D', FromDate));//NOD0.2
-        pGLacc.CALCFIELDS("Net Change", "Debit Amount", "Credit Amount");
+        pGLacc.Reset;
+        pGLacc.SetFilter("Date Filter", '..%1', CalcDate('-1D', FromDate));//NOD0.2
+        pGLacc.CalcFields("Net Change", "Debit Amount", "Credit Amount");
 
         //+NOD0.3
-        IF ("G/L Account"."Account Type" = "G/L Account"."Account Type"::Total) OR ("G/L Account"."Account Type" = "G/L Account"."Account Type"::"End-Total") THEN BEGIN
+        if ("G/L Account"."Account Type" = "G/L Account"."Account Type"::Total) or ("G/L Account"."Account Type" = "G/L Account"."Account Type"::"End-Total") then begin
             OpeningDC[1] := pGLacc."Debit Amount";
             OpeningDC[2] := pGLacc."Credit Amount";
-        END ELSE BEGIN
+        end else begin
             OpeningDC[1] := pGLacc."Net Change";
             OpeningDC[2] := -pGLacc."Net Change";
-        END;
+        end;
         //-NOD0.3
 
 
         //+NOD0.3
-        pGLacc.RESET;
-        pGLacc.SETFILTER("Date Filter", '..%1', ToDate);
-        pGLacc.CALCFIELDS("Net Change", "Debit Amount", "Credit Amount");
-        IF ("G/L Account"."Account Type" = "G/L Account"."Account Type"::Total) OR ("G/L Account"."Account Type" = "G/L Account"."Account Type"::"End-Total") THEN BEGIN
+        pGLacc.Reset;
+        pGLacc.SetFilter("Date Filter", '..%1', ToDate);
+        pGLacc.CalcFields("Net Change", "Debit Amount", "Credit Amount");
+        if ("G/L Account"."Account Type" = "G/L Account"."Account Type"::Total) or ("G/L Account"."Account Type" = "G/L Account"."Account Type"::"End-Total") then begin
             ClosingDC[1] := pGLacc."Debit Amount";
             ClosingDC[2] := pGLacc."Credit Amount";
-        END ELSE BEGIN
+        end else begin
             ClosingDC[1] := pGLacc."Net Change";
             ClosingDC[2] := -pGLacc."Net Change";
-        END;
+        end;
         //-NOD0.3
 
         //+NOD0.1
         //PeriodMoveDC[1] := ClosingDC[1] - OpeningDC[1];
         //PeriodMoveDC[2] := ClosingDC[2] - OpeningDC[2];
-        pGLacc.RESET;
-        pGLacc.SETFILTER("Date Filter", '%1..%2', FromDate, ToDate);
-        pGLacc.CALCFIELDS("Debit Amount", "Credit Amount");
+        pGLacc.Reset;
+        pGLacc.SetFilter("Date Filter", '%1..%2', FromDate, ToDate);
+        pGLacc.CalcFields("Debit Amount", "Credit Amount");
         PeriodMoveDC[1] := pGLacc."Debit Amount";
         PeriodMoveDC[2] := pGLacc."Credit Amount";
         //-NOD0.1
     end;
 
-    [Scope('OnPrem')]
+
     procedure CreateBankFigures(pBank: Record "Bank Account")
     begin
         //CreateBankFigures
-        CLEAR(OpeningDC);
-        CLEAR(PeriodMoveDC);
-        CLEAR(ClosingDC);
+        Clear(OpeningDC);
+        Clear(PeriodMoveDC);
+        Clear(ClosingDC);
 
-        pBank.RESET;
-        pBank.SETFILTER("Date Filter", '..%1', CALCDATE('-1D', FromDate));//NOD0.2
-        pBank.CALCFIELDS("Net Change (LCY)", "Debit Amount (LCY)", "Credit Amount (LCY)");
+        pBank.Reset;
+        pBank.SetFilter("Date Filter", '..%1', CalcDate('-1D', FromDate));//NOD0.2
+        pBank.CalcFields("Net Change (LCY)", "Debit Amount (LCY)", "Credit Amount (LCY)");
         OpeningDC[1] := pBank."Net Change (LCY)"; //pBank."Debit Amount (LCY)";
         OpeningDC[2] := -pBank."Net Change (LCY)"; //pBank."Credit Amount (LCY)";
 
-        pBank.RESET;
-        pBank.SETFILTER("Date Filter", '..%1', ToDate);
-        pBank.CALCFIELDS("Net Change (LCY)", "Debit Amount (LCY)", "Credit Amount (LCY)");
+        pBank.Reset;
+        pBank.SetFilter("Date Filter", '..%1', ToDate);
+        pBank.CalcFields("Net Change (LCY)", "Debit Amount (LCY)", "Credit Amount (LCY)");
         ClosingDC[1] := pBank."Net Change (LCY)"; //pBank."Debit Amount (LCY)"
         ClosingDC[2] := -pBank."Net Change (LCY)"; //pBank."Credit Amount (LCY)"
 
         //+NOD0.1
         //PeriodMoveDC[1] := ClosingDC[1] - OpeningDC[1];
         //PeriodMoveDC[2] := ClosingDC[2] - OpeningDC[2];
-        pBank.RESET;
-        pBank.SETFILTER("Date Filter", '%1..%2', FromDate, ToDate);
-        pBank.CALCFIELDS("Debit Amount (LCY)", "Credit Amount (LCY)");
+        pBank.Reset;
+        pBank.SetFilter("Date Filter", '%1..%2', FromDate, ToDate);
+        pBank.CalcFields("Debit Amount (LCY)", "Credit Amount (LCY)");
         PeriodMoveDC[1] := pBank."Debit Amount (LCY)";
         PeriodMoveDC[2] := pBank."Credit Amount (LCY)";
         //-NOD0.1
     end;
 
-    [Scope('OnPrem')]
+
     procedure CreateCustomerFigures(pCust: Record Customer)
     begin
         //CreateCustomerFigures
-        CLEAR(OpeningDC);
-        CLEAR(PeriodMoveDC);
-        CLEAR(ClosingDC);
+        Clear(OpeningDC);
+        Clear(PeriodMoveDC);
+        Clear(ClosingDC);
 
-        pCust.RESET;
-        pCust.SETFILTER("Date Filter", '..%1', CALCDATE('-1D', FromDate));//NOD0.2
-        pCust.CALCFIELDS("Net Change (LCY)", "Debit Amount (LCY)", "Credit Amount (LCY)");
+        pCust.Reset;
+        pCust.SetFilter("Date Filter", '..%1', CalcDate('-1D', FromDate));//NOD0.2
+        pCust.CalcFields("Net Change (LCY)", "Debit Amount (LCY)", "Credit Amount (LCY)");
         OpeningDC[1] := pCust."Net Change (LCY)";
         OpeningDC[2] := -pCust."Net Change (LCY)";
 
-        pCust.RESET;
-        pCust.SETFILTER("Date Filter", '..%1', ToDate);
-        pCust.CALCFIELDS("Net Change (LCY)", "Debit Amount (LCY)", "Credit Amount (LCY)");
+        pCust.Reset;
+        pCust.SetFilter("Date Filter", '..%1', ToDate);
+        pCust.CalcFields("Net Change (LCY)", "Debit Amount (LCY)", "Credit Amount (LCY)");
         ClosingDC[1] := pCust."Net Change (LCY)";
         ClosingDC[2] := -pCust."Net Change (LCY)";
 
         //+NOD0.1
         //PeriodMoveDC[1] := ClosingDC[1] - OpeningDC[1];
         //PeriodMoveDC[2] := ClosingDC[2] - OpeningDC[2];
-        pCust.RESET;
-        pCust.SETFILTER("Date Filter", '%1..%2', FromDate, ToDate);
-        pCust.CALCFIELDS("Debit Amount (LCY)", "Credit Amount (LCY)");
+        pCust.Reset;
+        pCust.SetFilter("Date Filter", '%1..%2', FromDate, ToDate);
+        pCust.CalcFields("Debit Amount (LCY)", "Credit Amount (LCY)");
         PeriodMoveDC[1] := pCust."Debit Amount (LCY)";
         PeriodMoveDC[2] := pCust."Credit Amount (LCY)";
         //-NOD0.1
     end;
 
-    [Scope('OnPrem')]
+
     procedure CreateVendorFigures(pVend: Record Vendor)
     begin
         //CreateCustomerFigures
-        CLEAR(OpeningDC);
-        CLEAR(PeriodMoveDC);
-        CLEAR(ClosingDC);
+        Clear(OpeningDC);
+        Clear(PeriodMoveDC);
+        Clear(ClosingDC);
 
-        pVend.RESET;
-        pVend.SETFILTER("Date Filter", '..%1', CALCDATE('-1D', FromDate));//NOD0.2
-        pVend.CALCFIELDS("Net Change (LCY)", "Debit Amount (LCY)", "Credit Amount (LCY)");
+        pVend.Reset;
+        pVend.SetFilter("Date Filter", '..%1', CalcDate('-1D', FromDate));//NOD0.2
+        pVend.CalcFields("Net Change (LCY)", "Debit Amount (LCY)", "Credit Amount (LCY)");
         OpeningDC[1] := -pVend."Net Change (LCY)";
         OpeningDC[2] := pVend."Net Change (LCY)";
 
-        pVend.RESET;
-        pVend.SETFILTER("Date Filter", '..%1', ToDate);
-        pVend.CALCFIELDS("Net Change (LCY)", "Debit Amount (LCY)", "Credit Amount (LCY)");
+        pVend.Reset;
+        pVend.SetFilter("Date Filter", '..%1', ToDate);
+        pVend.CalcFields("Net Change (LCY)", "Debit Amount (LCY)", "Credit Amount (LCY)");
         ClosingDC[1] := -pVend."Net Change (LCY)";
         ClosingDC[2] := pVend."Net Change (LCY)";
 
         //+NOD0.1
         //PeriodMoveDC[1] := ClosingDC[1] - OpeningDC[1];
         //PeriodMoveDC[2] := ClosingDC[2] - OpeningDC[2];
-        pVend.RESET;
-        pVend.SETFILTER("Date Filter", '%1..%2', FromDate, ToDate);
-        pVend.CALCFIELDS("Debit Amount (LCY)", "Credit Amount (LCY)");
+        pVend.Reset;
+        pVend.SetFilter("Date Filter", '%1..%2', FromDate, ToDate);
+        pVend.CalcFields("Debit Amount (LCY)", "Credit Amount (LCY)");
         PeriodMoveDC[1] := pVend."Debit Amount (LCY)";
         PeriodMoveDC[2] := pVend."Credit Amount (LCY)";
         //-NOD0.1
     end;
 
-    [Scope('OnPrem')]
+
     procedure isZeroValues(): Boolean
     begin
-        IF (OpeningDC[1] = 0) AND (OpeningDC[2] = 0) AND (PeriodMoveDC[1] = 0) AND (PeriodMoveDC[2] = 0) AND (ClosingDC[1] = 0) AND (ClosingDC[2] = 0) THEN
-            EXIT(TRUE)
-        ELSE
-            EXIT(FALSE);
+        if (OpeningDC[1] = 0) and (OpeningDC[2] = 0) and (PeriodMoveDC[1] = 0) and (PeriodMoveDC[2] = 0) and (ClosingDC[1] = 0) and (ClosingDC[2] = 0) then
+            exit(true)
+        else
+            exit(false);
     end;
 
-    [Scope('OnPrem')]
+
     procedure IsParentFunc(pGLAcc: Code[20]): Boolean
     var
         BankAccountPostingGroup: Record "Bank Account Posting Group";
@@ -712,49 +719,49 @@ report 50082 "Trial Balance - Full Detail"
         Vendors: Record Vendor;
     begin
         // *** Bank Accounts ***
-        BankAccountPostingGroup.RESET;
+        BankAccountPostingGroup.Reset;
         //BankAccountPostingGroup.SETRANGE("G/L Bank Account No.", pGLAcc);
-        BankAccountPostingGroup.SETRANGE("G/L Account No.", pGLAcc);//TAL 0.1 VK
-        IF BankAccountPostingGroup.FINDFIRST THEN BEGIN
-            Banks.RESET;
-            Banks.SETCURRENTKEY("Bank Acc. Posting Group");
-            Banks.SETRANGE("Bank Acc. Posting Group", BankAccountPostingGroup.Code);
-            IF Banks.FINDSET THEN
-                REPEAT
-                    Banks.CALCFIELDS(Balance);
-                    IF Banks.Balance <> 0 THEN
-                        EXIT(TRUE);
-                UNTIL Banks.NEXT = 0;
-        END;
+        BankAccountPostingGroup.SetRange("G/L Account No.", pGLAcc);//TAL 0.1 VK
+        if BankAccountPostingGroup.FindFirst then begin
+            Banks.Reset;
+            Banks.SetCurrentKey("Bank Acc. Posting Group");
+            Banks.SetRange("Bank Acc. Posting Group", BankAccountPostingGroup.Code);
+            if Banks.FindSet then
+                repeat
+                    Banks.CalcFields(Balance);
+                    if Banks.Balance <> 0 then
+                        exit(true);
+                until Banks.Next = 0;
+        end;
         // *** Customers ***
-        CustomerPostingGroup.RESET;
-        CustomerPostingGroup.SETRANGE("Receivables Account", pGLAcc);
-        IF CustomerPostingGroup.FINDFIRST THEN BEGIN
-            Customers.RESET;
-            Customers.SETCURRENTKEY("Customer Posting Group");
-            Customers.SETRANGE("Customer Posting Group", CustomerPostingGroup.Code);
-            IF Customers.FINDSET THEN
-                REPEAT
-                    Customers.CALCFIELDS(Balance);
-                    IF Customers.Balance <> 0 THEN
-                        EXIT(TRUE);
-                UNTIL Customers.NEXT = 0;
-        END;
+        CustomerPostingGroup.Reset;
+        CustomerPostingGroup.SetRange("Receivables Account", pGLAcc);
+        if CustomerPostingGroup.FindFirst then begin
+            Customers.Reset;
+            Customers.SetCurrentKey("Customer Posting Group");
+            Customers.SetRange("Customer Posting Group", CustomerPostingGroup.Code);
+            if Customers.FindSet then
+                repeat
+                    Customers.CalcFields(Balance);
+                    if Customers.Balance <> 0 then
+                        exit(true);
+                until Customers.Next = 0;
+        end;
         // *** Vendors ***
-        VendorPostingGroup.RESET;
-        VendorPostingGroup.SETRANGE("Payables Account", pGLAcc);
-        IF VendorPostingGroup.FINDFIRST THEN BEGIN
-            Vendors.RESET;
-            Vendors.SETCURRENTKEY("Vendor Posting Group");
-            Vendors.SETRANGE("Vendor Posting Group", VendorPostingGroup.Code);
-            IF Vendors.FINDSET THEN
-                REPEAT
-                    Vendors.CALCFIELDS(Balance);
-                    IF Vendors.Balance <> 0 THEN
-                        EXIT(TRUE);
-                UNTIL Vendors.NEXT = 0;
-        END;
-        EXIT(FALSE);
+        VendorPostingGroup.Reset;
+        VendorPostingGroup.SetRange("Payables Account", pGLAcc);
+        if VendorPostingGroup.FindFirst then begin
+            Vendors.Reset;
+            Vendors.SetCurrentKey("Vendor Posting Group");
+            Vendors.SetRange("Vendor Posting Group", VendorPostingGroup.Code);
+            if Vendors.FindSet then
+                repeat
+                    Vendors.CalcFields(Balance);
+                    if Vendors.Balance <> 0 then
+                        exit(true);
+                until Vendors.Next = 0;
+        end;
+        exit(false);
     end;
 }
 

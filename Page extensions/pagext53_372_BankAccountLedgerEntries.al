@@ -9,17 +9,19 @@ pageextension 50153 BankAccountLedgerEntriesExt extends "Bank Account Ledger Ent
         // Add changes to page layout here
         addafter("Document No.")
         {
-            field("External Document No."; "External Document No.")
+            field("External Document No."; Rec."External Document No.")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies a document number that refers to the customer''s or vendor''s numbering system.';
             }
         }
 
         addafter("Entry No.")
         {
-            field("Statement No."; "Statement No.")
+            field("Statement No."; Rec."Statement No.")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the bank account statement that the ledger entry has been applied to, if the Statement Status is Bank Account Ledger Applied.';
             }
         }
     }
@@ -34,13 +36,14 @@ pageextension 50153 BankAccountLedgerEntriesExt extends "Bank Account Ledger Ent
             {
                 ApplicationArea = All;
                 Image = Open;
+                ToolTip = 'Executes the Open Rec. Entry action.';
 
                 trigger OnAction();
                 var
                     cu_BALEUpdate: Codeunit "Bank Account Ledger Entry-Edit";
                 begin
                     //+TAL0.2
-                    CLEAR(cu_BALEUpdate);
+                    Clear(cu_BALEUpdate);
                     cu_BALEUpdate.OpenBankAccountLedgerEntry(Rec);
                     //-TAL0.2
                 end;
@@ -49,13 +52,14 @@ pageextension 50153 BankAccountLedgerEntriesExt extends "Bank Account Ledger Ent
             {
                 ApplicationArea = All;
                 Image = Close;
+                ToolTip = 'Executes the Close Rec. Entry action.';
 
                 trigger OnAction();
                 var
                     cu_BALEUpdate: Codeunit "Bank Account Ledger Entry-Edit";
                 begin
                     //+TAL0.2
-                    CLEAR(cu_BALEUpdate);
+                    Clear(cu_BALEUpdate);
                     cu_BALEUpdate.CloseBankAccountLedgerEntry(Rec);
 
 

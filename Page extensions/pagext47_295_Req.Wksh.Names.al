@@ -9,41 +9,49 @@ pageextension 50147 ReqWkshNamesExt extends "Req. Wksh. Names"
         // Add changes to page layout here
         addafter(Description)
         {
-            field("Create Date"; "Create Date")
+            field("Create Date"; Rec."Create Date")
             {
                 ApplicationArea = All;
                 Visible = false;
+                ToolTip = 'Specifies the value of the Create Date field.';
             }
-            field("Created By"; "Created By")
+            field("Created By"; Rec."Created By")
             {
                 ApplicationArea = All;
                 Visible = false;
+                ToolTip = 'Specifies the value of the Created By field.';
             }
-            field("Last Modified Date"; "Last Modified Date")
+            field("Last Modified Date"; Rec."Last Modified Date")
             {
                 ApplicationArea = All;
                 Visible = false;
+                ToolTip = 'Specifies the value of the Last Modified Date field.';
             }
-            field("Last Modified By"; "Last Modified By")
+            field("Last Modified By"; Rec."Last Modified By")
             {
                 ApplicationArea = All;
                 Visible = false;
+                ToolTip = 'Specifies the value of the Last Modified By field.';
             }
-            field("Vendor No."; "Vendor No.")
+            field("Vendor No."; Rec."Vendor No.")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Vendor No. field.';
             }
-            field("Vendor Name"; "Vendor Name")
+            field("Vendor Name"; Rec."Vendor Name")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Vendor Name field.';
             }
-            field("Transaction Type"; "Transaction Type")
+            field("Transaction Type"; Rec."Transaction Type")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Transaction Type field.';
             }
-            field("No. of Lines"; "No. of Lines")
+            field("No. of Lines"; Rec."No. of Lines")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the No. of Lines field.';
             }
             field(ProductionOrder; vG_ProductionOrderCount)
             {
@@ -52,10 +60,11 @@ pageextension 50147 ReqWkshNamesExt extends "Req. Wksh. Names"
                 CaptionML = ELL = 'Production Order',
                                 ENU = 'Production Order';
                 DrillDown = true;
+                ToolTip = 'Specifies the value of the vG_ProductionOrderCount field.';
 
                 trigger OnDrillDown();
                 begin
-                    PAGE.RUN(PAGE::"Released Production Orders", rG_ProductionOrder);
+                    Page.Run(Page::"Released Production Orders", rG_ProductionOrder);
                 end;
 
                 /*
@@ -71,11 +80,12 @@ pageextension 50147 ReqWkshNamesExt extends "Req. Wksh. Names"
                 CaptionML = ELL = 'Transfer Orders',
                                 ENU = 'Transfer Orders';
                 DrillDown = true;
+                ToolTip = 'Specifies the value of the vG_TransferOrderCount field.';
 
                 trigger OnDrillDown()
                 begin
 
-                    PAGE.RUN(PAGE::"Transfer Orders", rG_TransferHeader);
+                    Page.Run(Page::"Transfer Orders", rG_TransferHeader);
                 end;
 
                 /*
@@ -93,11 +103,12 @@ pageextension 50147 ReqWkshNamesExt extends "Req. Wksh. Names"
                                 ENU = 'Sales Return Order';
                 //DrillDownPageID = "Sales Return Order List";
                 DrillDown = true;
+                ToolTip = 'Specifies the value of the vG_SalesReturnOrderCount field.';
 
                 trigger OnDrillDown();
                 begin
 
-                    PAGE.RUN(PAGE::"Sales Return Order List", rG_SalesReturnOrder);
+                    Page.Run(Page::"Sales Return Order List", rG_SalesReturnOrder);
                 end;
 
                 /*
@@ -115,10 +126,11 @@ pageextension 50147 ReqWkshNamesExt extends "Req. Wksh. Names"
                                 ENU = 'Sales Order';
                 //DrillDownPageID = "Sales Order List";
                 DrillDown = true;
+                ToolTip = 'Specifies the value of the vG_SalesOrderCount field.';
 
                 trigger OnDrillDown();
                 begin
-                    PAGE.RUN(PAGE::"Sales Order List", rG_SalesOrder);
+                    Page.Run(Page::"Sales Order List", rG_SalesOrder);
                 end;
                 /*
                 trigger OnLookup(var Text: Text): Boolean;
@@ -127,11 +139,12 @@ pageextension 50147 ReqWkshNamesExt extends "Req. Wksh. Names"
                 end;
                 */
             }
-            field("No. of Boxes"; "No. of Boxes")
+            field("No. of Boxes"; Rec."No. of Boxes")
             {
                 ApplicationArea = All;
-                DrillDownPageID = "Purchase List Addon";
+                DrillDownPageId = "Purchase List Addon";
                 DrillDown = true;
+                ToolTip = 'Specifies the value of the No. of Boxes field.';
             }
             field(vG_PurchaseOrderCount; vG_PurchaseOrderCount)
             {
@@ -140,10 +153,11 @@ pageextension 50147 ReqWkshNamesExt extends "Req. Wksh. Names"
                                 ENU = 'Purchase Order';
                 //DrillDownPageID = "Sales Order List";
                 DrillDown = true;
+                ToolTip = 'Specifies the value of the vG_PurchaseOrderCount field.';
 
                 trigger OnDrillDown();
                 begin
-                    PAGE.RUN(PAGE::"Purchase Order List", rG_PurchaseOrder);
+                    Page.Run(Page::"Purchase Order List", rG_PurchaseOrder);
                 end;
 
                 /*
@@ -160,10 +174,11 @@ pageextension 50147 ReqWkshNamesExt extends "Req. Wksh. Names"
                                 ENU = 'Purchase Return Order';
                 //DrillDownPageID = "Sales Return Order List";
                 DrillDown = true;
+                ToolTip = 'Specifies the value of the vG_PurchaseReturnOrderCount field.';
 
                 trigger OnDrillDown();
                 begin
-                    PAGE.RUN(PAGE::"Purchase Return Order List", rG_PurchaseReturnOrder);
+                    Page.Run(Page::"Purchase Return Order List", rG_PurchaseReturnOrder);
                 end;
 
                 /*
@@ -173,13 +188,15 @@ pageextension 50147 ReqWkshNamesExt extends "Req. Wksh. Names"
                 end;
                 */
             }
-            field("Print Date Time"; "Print Date Time")
+            field("Print Date Time"; Rec."Print Date Time")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Print Date Time field.';
             }
-            field("Print By"; "Print By")
+            field("Print By"; Rec."Print By")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Print By field.';
             }
         }
     }
@@ -196,32 +213,32 @@ pageextension 50147 ReqWkshNamesExt extends "Req. Wksh. Names"
         //TRANSFERS
         vG_TransferOrderCount := 0;
 
-        CLEAR(rG_TransferHeader);
-        if "Vendor No." <> '' then begin
-            VendorLocation := DELSTR("Vendor No.", 2, 3);
+        Clear(rG_TransferHeader);
+        if Rec."Vendor No." <> '' then begin
+            VendorLocation := DELSTR(Rec."Vendor No.", 2, 3);
 
-            rG_TransferHeader.RESET;
-            rG_TransferHeader.SETFILTER("Req. Vendor No.", "Vendor No.");
-            if "Transaction Type" = "Transaction Type"::Inbound then begin
-                rG_TransferHeader.SETFILTER("Transfer-from Code", VendorLocation);
+            rG_TransferHeader.Reset;
+            rG_TransferHeader.SETFILTER("Req. Vendor No.", Rec."Vendor No.");
+            if Rec."Transaction Type" = Rec."Transaction Type"::Inbound then begin
+                rG_TransferHeader.SetFilter("Transfer-from Code", VendorLocation);
             end else
-                if "Transaction Type" = "Transaction Type"::Outbound then begin
-                    rG_TransferHeader.SETFILTER("Transfer-to Code", VendorLocation);
+                if Rec."Transaction Type" = Rec."Transaction Type"::Outbound then begin
+                    rG_TransferHeader.SetFilter("Transfer-to Code", VendorLocation);
                 end;
 
-            if rG_TransferHeader.FINDSET then begin
-                vG_TransferOrderCount := rG_TransferHeader.COUNT;
+            if rG_TransferHeader.FindSet then begin
+                vG_TransferOrderCount := rG_TransferHeader.Count;
             end;
         end;
 
         //Production Order
         vG_ProductionOrderCount := 0;
-        if "Transaction Type" = "Transaction Type"::Inbound then begin
-            rG_ProductionOrder.RESET;
-            rG_ProductionOrder.SETRANGE(Status, rG_ProductionOrder.Status::Released);
-            rG_ProductionOrder.SETFILTER("Vendor No.", "Vendor No.");
-            if rG_ProductionOrder.FINDSET then begin
-                vG_ProductionOrderCount := rG_ProductionOrder.COUNT;
+        if Rec."Transaction Type" = Rec."Transaction Type"::Inbound then begin
+            rG_ProductionOrder.Reset;
+            rG_ProductionOrder.SetRange(Status, rG_ProductionOrder.Status::Released);
+            rG_ProductionOrder.SETFILTER("Vendor No.", Rec."Vendor No.");
+            if rG_ProductionOrder.FindSet then begin
+                vG_ProductionOrderCount := rG_ProductionOrder.Count;
             end;
         end;
 
@@ -229,21 +246,21 @@ pageextension 50147 ReqWkshNamesExt extends "Req. Wksh. Names"
         //Count("Sales Header" WHERE (Document Type=FILTER(Order),Req. Vendor No.=FIELD(Vendor No.)))
         vG_SalesOrderCount := 0;
         vG_SalesReturnOrderCount := 0;
-        if "Transaction Type" = "Transaction Type"::Inbound then begin
-            rG_SalesReturnOrder.RESET;
-            rG_SalesReturnOrder.SETRANGE("Document Type", rG_SalesReturnOrder."Document Type"::"Return Order");
-            rG_SalesReturnOrder.SETFILTER("Req. Vendor No.", "Vendor No.");
-            if rG_SalesReturnOrder.FINDSET then begin
-                vG_SalesReturnOrderCount := rG_SalesReturnOrder.COUNT;
+        if Rec."Transaction Type" = Rec."Transaction Type"::Inbound then begin
+            rG_SalesReturnOrder.Reset;
+            rG_SalesReturnOrder.SetRange("Document Type", rG_SalesReturnOrder."Document Type"::"Return Order");
+            rG_SalesReturnOrder.SETFILTER("Req. Vendor No.", Rec."Vendor No.");
+            if rG_SalesReturnOrder.FindSet then begin
+                vG_SalesReturnOrderCount := rG_SalesReturnOrder.Count;
             end;
 
         end else
-            if "Transaction Type" = "Transaction Type"::Outbound then begin
-                rG_SalesOrder.RESET;
-                rG_SalesOrder.SETRANGE("Document Type", rG_SalesOrder."Document Type"::Order);
-                rG_SalesOrder.SETFILTER("Req. Vendor No.", "Vendor No.");
-                if rG_SalesOrder.FINDSET then begin
-                    vG_SalesOrderCount := rG_SalesOrder.COUNT;
+            if Rec."Transaction Type" = Rec."Transaction Type"::Outbound then begin
+                rG_SalesOrder.Reset;
+                rG_SalesOrder.SetRange("Document Type", rG_SalesOrder."Document Type"::Order);
+                rG_SalesOrder.SETFILTER("Req. Vendor No.", Rec."Vendor No.");
+                if rG_SalesOrder.FindSet then begin
+                    vG_SalesOrderCount := rG_SalesOrder.Count;
                 end;
             end;
 
@@ -251,21 +268,21 @@ pageextension 50147 ReqWkshNamesExt extends "Req. Wksh. Names"
         //Count("Purchase Header" WHERE (Buy-from Vendor No.=FIELD(Vendor No.),Document Type=FILTER(Order)))
         vG_PurchaseOrderCount := 0;
         vG_PurchaseReturnOrderCount := 0;
-        if "Transaction Type" = "Transaction Type"::Inbound then begin
-            rG_PurchaseOrder.RESET;
-            rG_PurchaseOrder.SETRANGE("Document Type", rG_PurchaseOrder."Document Type"::Order);
-            rG_PurchaseOrder.SETFILTER("Buy-from Vendor No.", "Vendor No.");
-            if rG_PurchaseOrder.FINDSET then begin
-                vG_PurchaseOrderCount := rG_PurchaseOrder.COUNT;
+        if Rec."Transaction Type" = Rec."Transaction Type"::Inbound then begin
+            rG_PurchaseOrder.Reset;
+            rG_PurchaseOrder.SetRange("Document Type", rG_PurchaseOrder."Document Type"::Order);
+            rG_PurchaseOrder.SETFILTER("Buy-from Vendor No.", Rec."Vendor No.");
+            if rG_PurchaseOrder.FindSet then begin
+                vG_PurchaseOrderCount := rG_PurchaseOrder.Count;
             end;
 
         end else
-            if "Transaction Type" = "Transaction Type"::Outbound then begin
-                rG_PurchaseReturnOrder.RESET;
-                rG_PurchaseReturnOrder.SETRANGE("Document Type", rG_PurchaseReturnOrder."Document Type"::"Return Order");
-                rG_PurchaseReturnOrder.SETFILTER("Buy-from Vendor No.", "Vendor No.");
-                if rG_PurchaseReturnOrder.FINDSET then begin
-                    vG_PurchaseReturnOrderCount := rG_PurchaseReturnOrder.COUNT;
+            if Rec."Transaction Type" = Rec."Transaction Type"::Outbound then begin
+                rG_PurchaseReturnOrder.Reset;
+                rG_PurchaseReturnOrder.SetRange("Document Type", rG_PurchaseReturnOrder."Document Type"::"Return Order");
+                rG_PurchaseReturnOrder.SETFILTER("Buy-from Vendor No.", Rec."Vendor No.");
+                if rG_PurchaseReturnOrder.FindSet then begin
+                    vG_PurchaseReturnOrderCount := rG_PurchaseReturnOrder.Count;
                 end;
             end;
     end;

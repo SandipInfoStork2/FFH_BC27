@@ -15,12 +15,13 @@ report 50044 "Sales - Return Receipt HORECA"
     CaptionML = ELL = 'Sales - Return Receipt HORECA',
                 ENU = 'Sales - Return Receipt HORECA';
     PreviewMode = PrintLayout;
+    ApplicationArea = All;
 
     dataset
     {
         dataitem("Return Receipt Header"; "Return Receipt Header")
         {
-            DataItemTableView = SORTING("No.");
+            DataItemTableView = sorting("No.");
             RequestFilterFields = "No.", "Sell-to Customer No.", "No. Printed";
             //ReqFilterHeading = 'Posted Return Receipt';
             column(No_ReturnRcptHeader; "No.")
@@ -28,10 +29,10 @@ report 50044 "Sales - Return Receipt HORECA"
             }
             dataitem(CopyLoop; "Integer")
             {
-                DataItemTableView = SORTING(Number);
+                DataItemTableView = sorting(Number);
                 dataitem(PageLoop; "Integer")
                 {
-                    DataItemTableView = SORTING(Number) WHERE(Number = CONST(1));
+                    DataItemTableView = sorting(Number) where(Number = const(1));
                     column(CompanyInfo1Picture; CompanyInfo1.Picture)
                     {
                     }
@@ -41,7 +42,7 @@ report 50044 "Sales - Return Receipt HORECA"
                     column(CompanyInfo3Picture; CompanyInfo3.Picture)
                     {
                     }
-                    column(SalesReturnRcptCopyText; STRSUBSTNO(Text002, CopyText))
+                    column(SalesReturnRcptCopyText; StrSubstNo(Text002, CopyText))
                     {
                     }
                     column(ShipToAddr1; ShipToAddr[1])
@@ -98,10 +99,10 @@ report 50044 "Sales - Return Receipt HORECA"
                     column(SellCustNo_ReturnRcptHdr; "Return Receipt Header"."Sell-to Customer No.")
                     {
                     }
-                    column(SellCustNo_ReturnRcptHdrCaption; "Return Receipt Header".FIELDCAPTION("Sell-to Customer No."))
+                    column(SellCustNo_ReturnRcptHdrCaption; "Return Receipt Header".FieldCaption("Sell-to Customer No."))
                     {
                     }
-                    column(DocDate_ReturnRcptHeader; FORMAT("Return Receipt Header"."Document Date", 0, 4))
+                    column(DocDate_ReturnRcptHeader; Format("Return Receipt Header"."Document Date", 0, 4))
                     {
                     }
                     column(SalesPersonText; SalesPersonText)
@@ -131,13 +132,13 @@ report 50044 "Sales - Return Receipt HORECA"
                     column(CompanyAddr6; CompanyAddr[6])
                     {
                     }
-                    column(ShptDt_ReturnRcptHeader; FORMAT("Return Receipt Header"."Shipment Date"))
+                    column(ShptDt_ReturnRcptHeader; Format("Return Receipt Header"."Shipment Date"))
                     {
                     }
                     column(OutputNo; OutputNo)
                     {
                     }
-                    column(PageCaption; STRSUBSTNO(Text003, ''))
+                    column(PageCaption; StrSubstNo(Text003, ''))
                     {
                     }
                     column(CompanyInfoPhoneNoCaption; CompanyInfoPhoneNoCaptionLbl)
@@ -181,7 +182,7 @@ report 50044 "Sales - Return Receipt HORECA"
                     dataitem(DimensionLoop1; "Integer")
                     {
                         DataItemLinkReference = "Return Receipt Header";
-                        DataItemTableView = SORTING(Number) WHERE(Number = FILTER(1 ..));
+                        DataItemTableView = sorting(Number) where(Number = filter(1 ..));
                         column(DimText; DimText)
                         {
                         }
@@ -195,42 +196,42 @@ report 50044 "Sales - Return Receipt HORECA"
                         trigger OnAfterGetRecord();
                         begin
                             if Number = 1 then begin
-                                if not DimSetEntry1.FINDSET then
-                                    CurrReport.BREAK;
+                                if not DimSetEntry1.FindSet then
+                                    CurrReport.Break;
                             end else
                                 if not Continue then
-                                    CurrReport.BREAK;
+                                    CurrReport.Break;
 
-                            CLEAR(DimText);
+                            Clear(DimText);
                             Continue := false;
                             repeat
                                 OldDimText := DimText;
                                 if DimText = '' then
-                                    DimText := STRSUBSTNO('%1 - %2', DimSetEntry1."Dimension Code", DimSetEntry1."Dimension Value Code")
+                                    DimText := StrSubstNo('%1 - %2', DimSetEntry1."Dimension Code", DimSetEntry1."Dimension Value Code")
                                 else
                                     DimText :=
-                                      STRSUBSTNO(
+                                      StrSubstNo(
                                         '%1; %2 - %3', DimText,
                                         DimSetEntry1."Dimension Code", DimSetEntry1."Dimension Value Code");
-                                if STRLEN(DimText) > MAXSTRLEN(OldDimText) then begin
+                                if StrLen(DimText) > MaxStrLen(OldDimText) then begin
                                     DimText := OldDimText;
                                     Continue := true;
                                     exit;
                                 end;
-                            until DimSetEntry1.NEXT = 0;
+                            until DimSetEntry1.Next = 0;
                         end;
 
                         trigger OnPreDataItem();
                         begin
                             if not ShowInternalInfo then
-                                CurrReport.BREAK;
+                                CurrReport.Break;
                         end;
                     }
                     dataitem("Return Receipt Line"; "Return Receipt Line")
                     {
-                        DataItemLink = "Document No." = FIELD("No.");
+                        DataItemLink = "Document No." = field("No.");
                         DataItemLinkReference = "Return Receipt Header";
-                        DataItemTableView = SORTING("Document No.", "Line No.");
+                        DataItemTableView = sorting("Document No.", "Line No.");
                         column(ShowInternalInfo; ShowInternalInfo)
                         {
                         }
@@ -249,16 +250,16 @@ report 50044 "Sales - Return Receipt HORECA"
                         column(No_ReturnReceiptLine; "No.")
                         {
                         }
-                        column(UOM_ReturnReceiptLineCaption; FIELDCAPTION("Unit of Measure"))
+                        column(UOM_ReturnReceiptLineCaption; FieldCaption("Unit of Measure"))
                         {
                         }
-                        column(Qty_ReturnReceiptLineCaption; FIELDCAPTION(Quantity))
+                        column(Qty_ReturnReceiptLineCaption; FieldCaption(Quantity))
                         {
                         }
-                        column(Desc_ReturnReceiptLineCaption; FIELDCAPTION(Description))
+                        column(Desc_ReturnReceiptLineCaption; FieldCaption(Description))
                         {
                         }
-                        column(No_ReturnReceiptLineCaption; FIELDCAPTION("No."))
+                        column(No_ReturnReceiptLineCaption; FieldCaption("No."))
                         {
                         }
                         column(LineNo_ReturnReceiptLine; "Line No.")
@@ -282,7 +283,7 @@ report 50044 "Sales - Return Receipt HORECA"
                         }
                         dataitem(DimensionLoop2; "Integer")
                         {
-                            DataItemTableView = SORTING(Number) WHERE(Number = FILTER(1 ..));
+                            DataItemTableView = sorting(Number) where(Number = filter(1 ..));
                             column(DimText1; DimText)
                             {
                             }
@@ -296,62 +297,62 @@ report 50044 "Sales - Return Receipt HORECA"
                             trigger OnAfterGetRecord();
                             begin
                                 if Number = 1 then begin
-                                    if not DimSetEntry2.FINDSET then
-                                        CurrReport.BREAK;
+                                    if not DimSetEntry2.FindSet then
+                                        CurrReport.Break;
                                 end else
                                     if not Continue then
-                                        CurrReport.BREAK;
+                                        CurrReport.Break;
 
-                                CLEAR(DimText);
+                                Clear(DimText);
                                 Continue := false;
                                 repeat
                                     OldDimText := DimText;
                                     if DimText = '' then
-                                        DimText := STRSUBSTNO('%1 - %2', DimSetEntry2."Dimension Code", DimSetEntry2."Dimension Value Code")
+                                        DimText := StrSubstNo('%1 - %2', DimSetEntry2."Dimension Code", DimSetEntry2."Dimension Value Code")
                                     else
                                         DimText :=
-                                          STRSUBSTNO(
+                                          StrSubstNo(
                                             '%1; %2 - %3', DimText,
                                             DimSetEntry2."Dimension Code", DimSetEntry2."Dimension Value Code");
-                                    if STRLEN(DimText) > MAXSTRLEN(OldDimText) then begin
+                                    if StrLen(DimText) > MaxStrLen(OldDimText) then begin
                                         DimText := OldDimText;
                                         Continue := true;
                                         exit;
                                     end;
-                                until DimSetEntry2.NEXT = 0;
+                                until DimSetEntry2.Next = 0;
                             end;
 
                             trigger OnPreDataItem();
                             begin
                                 if not ShowInternalInfo then
-                                    CurrReport.BREAK;
+                                    CurrReport.Break;
                             end;
                         }
 
                         trigger OnAfterGetRecord();
                         begin
                             if (not ShowCorrectionLines) and Correction then
-                                CurrReport.SKIP;
+                                CurrReport.Skip;
 
-                            DimSetEntry2.SETRANGE("Dimension Set ID", "Dimension Set ID");
+                            DimSetEntry2.SetRange("Dimension Set ID", "Dimension Set ID");
                             TypeInt := Type;
 
 
-                            CALCFIELDS("Unit of Measure (Base)");
+                            CalcFields("Unit of Measure (Base)");
 
                             vG_shelfno := '';
                             if "Return Receipt Line".Type = "Return Receipt Line".Type::Item then begin
-                                if rG_item.GET("Return Receipt Line"."No.") then begin
+                                if rG_item.Get("Return Receipt Line"."No.") then begin
                                     vG_shelfno := rG_item."Shelf No.";
                                 end;
                             end;
 
                             //+TAL0.1
                             if LogoOutput then begin
-                                CLEAR(CompanyInfo.Picture);
-                                CLEAR(CompanyInfo1.Picture);
-                                CLEAR(CompanyInfo2.Picture);
-                                CLEAR(CompanyInfo3.Picture);
+                                Clear(CompanyInfo.Picture);
+                                Clear(CompanyInfo1.Picture);
+                                Clear(CompanyInfo2.Picture);
+                                Clear(CompanyInfo3.Picture);
                             end else begin
                                 LogoOutput := true;
                             end;
@@ -359,25 +360,25 @@ report 50044 "Sales - Return Receipt HORECA"
 
                             //+TAL0.2
                             if rG_Customer."Report Decimal Places" then begin
-                                EVALUATE(Quantity, FORMAT(Quantity, 0, '<Precision,0:1><Standard Format,0>'));
-                                EVALUATE("Quantity (Base)", FORMAT("Quantity (Base)", 0, '<Precision,0:1><Standard Format,0>'));
+                                Evaluate(Quantity, Format(Quantity, 0, '<Precision,0:1><Standard Format,0>'));
+                                Evaluate("Quantity (Base)", Format("Quantity (Base)", 0, '<Precision,0:1><Standard Format,0>'));
 
                             end else begin
-                                EVALUATE(Quantity, FORMAT(Quantity, 0, '<Precision,0:0><Standard Format,0>'));
-                                EVALUATE("Quantity (Base)", FORMAT("Quantity (Base)", 0, '<Precision,0:0><Standard Format,0>'));
+                                Evaluate(Quantity, Format(Quantity, 0, '<Precision,0:0><Standard Format,0>'));
+                                Evaluate("Quantity (Base)", Format("Quantity (Base)", 0, '<Precision,0:0><Standard Format,0>'));
                             end;
                             //-TAL0.2
 
                             //+TAL0.3
-                            CLEAR(vG_ShortcutDimCode); //TAL0.4
-                            CLEAR(rG_DimensionValue);  //TAL0.4
+                            Clear(vG_ShortcutDimCode); //TAL0.4
+                            Clear(rG_DimensionValue);  //TAL0.4
                             if "Return Receipt Line".Type = "Return Receipt Line".Type::Item then begin   //TAL0.4
                                 DimMgt.GetShortcutDimensions("Return Receipt Line"."Dimension Set ID", vG_ShortcutDimCode);
 
-                                rG_DimensionValue.RESET;
-                                rG_DimensionValue.SETRANGE("Dimension Code", GLSetup."Shortcut Dimension 5 Code");
-                                rG_DimensionValue.SETFILTER(Code, vG_ShortcutDimCode[5]);
-                                if rG_DimensionValue.FINDSET then begin
+                                rG_DimensionValue.Reset;
+                                rG_DimensionValue.SetRange("Dimension Code", GLSetup."Shortcut Dimension 5 Code");
+                                rG_DimensionValue.SetFilter(Code, vG_ShortcutDimCode[5]);
+                                if rG_DimensionValue.FindSet then begin
 
                                 end;
                             end;
@@ -386,21 +387,21 @@ report 50044 "Sales - Return Receipt HORECA"
 
                         trigger OnPreDataItem();
                         begin
-                            MoreLines := FIND('+');
+                            MoreLines := Find('+');
                             while MoreLines and (Description = '') and ("No." = '') and (Quantity = 0) do
-                                MoreLines := NEXT(-1) <> 0;
+                                MoreLines := Next(-1) <> 0;
                             if not MoreLines then
-                                CurrReport.BREAK;
-                            SETRANGE("Line No.", 0, "Line No.");
+                                CurrReport.Break;
+                            SetRange("Line No.", 0, "Line No.");
                         end;
                     }
                     dataitem(Total; "Integer")
                     {
-                        DataItemTableView = SORTING(Number) WHERE(Number = CONST(1));
+                        DataItemTableView = sorting(Number) where(Number = const(1));
                     }
                     dataitem(Total2; "Integer")
                     {
-                        DataItemTableView = SORTING(Number) WHERE(Number = CONST(1));
+                        DataItemTableView = sorting(Number) where(Number = const(1));
                         column(BilltoCustNo_ReturnRcptHdr; "Return Receipt Header"."Bill-to Customer No.")
                         {
                         }
@@ -435,7 +436,7 @@ report 50044 "Sales - Return Receipt HORECA"
                         trigger OnPreDataItem();
                         begin
                             if not ShowCustAddr then
-                                CurrReport.BREAK;
+                                CurrReport.Break;
                         end;
                     }
                 }
@@ -446,20 +447,20 @@ report 50044 "Sales - Return Receipt HORECA"
                         CopyText := FormatDocument.GetCOPYText;
                         OutputNo += 1;
                     end;
-                    CurrReport.PAGENO := 1;
+                    CurrReport.PageNo := 1;
                 end;
 
                 trigger OnPostDataItem();
                 begin
-                    if not CurrReport.PREVIEW then
-                        CODEUNIT.RUN(CODEUNIT::"Return Receipt - Printed", "Return Receipt Header");
+                    if not CurrReport.Preview then
+                        Codeunit.Run(Codeunit::"Return Receipt - Printed", "Return Receipt Header");
                 end;
 
                 trigger OnPreDataItem();
                 begin
-                    NoOfLoops := 1 + ABS(NoOfCopies);
+                    NoOfLoops := 1 + Abs(NoOfCopies);
                     CopyText := '';
-                    SETRANGE(Number, 1, NoOfLoops);
+                    SetRange(Number, 1, NoOfLoops);
                     OutputNo := 1;
                 end;
             }
@@ -468,20 +469,20 @@ report 50044 "Sales - Return Receipt HORECA"
             var
                 Language: Codeunit Language;
             begin
-                CurrReport.LANGUAGE := Language.GetLanguageIdOrDefault("Language Code");
+                CurrReport.Language := Language.GetLanguageIdOrDefault("Language Code");
 
                 FormatAddressFields("Return Receipt Header");
                 FormatDocumentFields("Return Receipt Header");
 
-                DimSetEntry1.SETRANGE("Dimension Set ID", "Dimension Set ID");
+                DimSetEntry1.SetRange("Dimension Set ID", "Dimension Set ID");
 
                 if LogInteraction then
-                    if not CurrReport.PREVIEW then
+                    if not CurrReport.Preview then
                         SegManagement.LogDocument(
-                          20, "No.", 0, 0, DATABASE::Customer, "Bill-to Customer No.", "Salesperson Code",
+                          20, "No.", 0, 0, Database::Customer, "Bill-to Customer No.", "Salesperson Code",
                           "Campaign No.", "Posting Description", '');
 
-                rG_Customer.GET("Sell-to Customer No."); //TAL0.2
+                rG_Customer.Get("Sell-to Customer No."); //TAL0.2
                 if not rG_Customer."Show GlobalGab COC No." then begin
                     CompanyInfo."GlobalGab COC No." := '';
                 end;
@@ -505,7 +506,7 @@ report 50044 "Sales - Return Receipt HORECA"
 
         layout
         {
-            area(content)
+            area(Content)
             {
                 group(Options)
                 {
@@ -513,24 +514,33 @@ report 50044 "Sales - Return Receipt HORECA"
                     field(NoOfCopies; NoOfCopies)
                     {
                         Caption = 'No. of Copies';
+                        ToolTip = 'Specifies the value of the No. of Copies field.';
+                        ApplicationArea = All;
                     }
                     field(ShowInternalInfo; ShowInternalInfo)
                     {
                         Caption = 'Show Internal Information';
+                        ToolTip = 'Specifies the value of the Show Internal Information field.';
+                        ApplicationArea = All;
                     }
                     field(ShowCorrectionLines; ShowCorrectionLines)
                     {
                         Caption = 'Show Correction Lines';
+                        ToolTip = 'Specifies the value of the Show Correction Lines field.';
+                        ApplicationArea = All;
                     }
                     field(LogInteraction; LogInteraction)
                     {
                         Caption = 'Log Interaction';
                         Enabled = LogInteractionEnable;
+                        ToolTip = 'Specifies the value of the Log Interaction field.';
+                        ApplicationArea = All;
                     }
 
                     field("Hide GlobalGAP COC"; vG_HideGlobalGapCOC)
                     {
-                        ApplicationArea = all;
+                        ApplicationArea = All;
+                        ToolTip = 'Specifies the value of the vG_HideGlobalGapCOC field.';
                     }
                 }
             }
@@ -558,15 +568,15 @@ report 50044 "Sales - Return Receipt HORECA"
 
     trigger OnInitReport();
     begin
-        CompanyInfo.GET;
-        SalesSetup.GET;
-        GLSetup.GET;
+        CompanyInfo.Get;
+        SalesSetup.Get;
+        GLSetup.Get;
         FormatDocument.SetLogoPosition(SalesSetup."Logo Position on Documents", CompanyInfo1, CompanyInfo2, CompanyInfo3);
     end;
 
     trigger OnPreReport();
     begin
-        if not CurrReport.USEREQUESTPAGE then
+        if not CurrReport.UseRequestPage then
             InitLogInteraction;
 
         LogoOutput := false; //TAL0.1
@@ -646,11 +656,9 @@ report 50044 "Sales - Return Receipt HORECA"
 
     local procedure FormatDocumentFields(ReturnReceiptHeader: Record "Return Receipt Header");
     begin
-        with ReturnReceiptHeader do begin
-            FormatDocument.SetSalesPerson(SalesPurchPerson, "Salesperson Code", SalesPersonText);
+        FormatDocument.SetSalesPerson(SalesPurchPerson, ReturnReceiptHeader."Salesperson Code", SalesPersonText);
 
-            ReferenceText := FormatDocument.SetText("Your Reference" <> '', FIELDCAPTION("Your Reference"));
-        end;
+        ReferenceText := FormatDocument.SetText(ReturnReceiptHeader."Your Reference" <> '', ReturnReceiptHeader.FieldCaption("Your Reference"));
     end;
 }
 

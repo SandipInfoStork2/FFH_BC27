@@ -14,9 +14,10 @@ pageextension 50157 ApplyBankAccLedgerEntriesExt extends "Apply Bank Acc. Ledger
 
         addafter(LineApplied)
         {
-            field(Calculation; Calculation)
+            field(Calculation; Rec.Calculation)
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Calculation field.';
             }
         }
     }
@@ -25,12 +26,13 @@ pageextension 50157 ApplyBankAccLedgerEntriesExt extends "Apply Bank Acc. Ledger
     {
         // Add changes to page actions here
 
-        addfirst(processing)
+        addfirst(Processing)
         {
             action(Calculate)
             {
                 ApplicationArea = All;
                 Image = Calculate;
+                ToolTip = 'Executes the Calculate action.';
 
                 trigger OnAction();
                 var
@@ -38,14 +40,14 @@ pageextension 50157 ApplyBankAccLedgerEntriesExt extends "Apply Bank Acc. Ledger
                     vL_TotalAmount: Decimal;
                 begin
 
-                    CurrPage.SETSELECTIONFILTER(rL_BankLedgerEntry);
+                    CurrPage.SetSelectionFilter(rL_BankLedgerEntry);
                     vL_TotalAmount := 0;
-                    if FINDFIRST then begin
+                    if Rec.FINDFIRST then begin
                         repeat
                             vL_TotalAmount += rL_BankLedgerEntry.Amount;
-                        until rL_BankLedgerEntry.NEXT = 0;
+                        until rL_BankLedgerEntry.Next = 0;
                     end;
-                    MESSAGE('Total Amount: ' + FORMAT(vL_TotalAmount));
+                    Message('Total Amount: ' + Format(vL_TotalAmount));
                 end;
             }
         }

@@ -10,11 +10,12 @@ page 50048 "Posted Sales Line I- Update"
     ShowFilter = false;
     SourceTable = "Sales Invoice Line";
     SourceTableTemporary = true;
-    Permissions = TableData "Sales Invoice Line" = m;
+    Permissions = tabledata "Sales Invoice Line" = m;
+    ApplicationArea = All;
 
     layout
     {
-        area(content)
+        area(Content)
         {
             group(General)
             {
@@ -31,16 +32,17 @@ page 50048 "Posted Sales Line I- Update"
                     Editable = false;
                     ToolTip = 'Specifies the name of customer at the sell-to address.';
                 }
-                field("Posting Date"; rec."Posting Date")
+                field("Posting Date"; Rec."Posting Date")
                 {
                     ApplicationArea = Basic, Suite;
                     Editable = false;
                     ToolTip = 'Specifies the posting date for the entry.';
                 }
-                field("No."; rec."No.")
+                field("No."; Rec."No.")
                 {
                     ApplicationArea = Basic, Suite;
                     Editable = false;
+                    ToolTip = 'Specifies what you are selling, such as a product or a fixed asset. You’ll see different lists of things to choose from depending on your choice in the Type field.';
                 }
             }
             group(Lines)
@@ -57,7 +59,7 @@ page 50048 "Posted Sales Line I- Update"
                 }
 
 
-                field(Description; rec.Description)
+                field(Description; Rec.Description)
                 {
                     ApplicationArea = Suite;
                     Caption = 'Description';
@@ -68,7 +70,7 @@ page 50048 "Posted Sales Line I- Update"
                 //2
                 group(GrpReqCountry)
                 {
-                    caption = '';
+                    Caption = '';
                     field(OldCountryRegionofOriginCode; xSalesInvoiceLine."Country/Region of Origin Code")
                     {
                         ApplicationArea = Suite;
@@ -77,7 +79,7 @@ page 50048 "Posted Sales Line I- Update"
                         Editable = false;
                     }
 
-                    field(CountryRegionofOriginCode; rec."Country/Region of Origin Code")
+                    field(CountryRegionofOriginCode; Rec."Country/Region of Origin Code")
                     {
                         ApplicationArea = Suite;
                         Caption = 'Country/Region of Origin Code';
@@ -91,7 +93,7 @@ page 50048 "Posted Sales Line I- Update"
                 //3
                 group(GrpProductClass)
                 {
-                    caption = '';
+                    Caption = '';
                     field(OldProductClass; xSalesInvoiceLine."Product Class")
                     {
                         ApplicationArea = Suite;
@@ -100,7 +102,7 @@ page 50048 "Posted Sales Line I- Update"
                         Editable = false;
                     }
 
-                    field(ProductClass; rec."Product Class")
+                    field(ProductClass; Rec."Product Class")
                     {
                         ApplicationArea = Suite;
                         Caption = 'Product Class (Κατηγορία)';
@@ -113,7 +115,7 @@ page 50048 "Posted Sales Line I- Update"
                 //4
                 group(GrpCategory9)
                 {
-                    caption = '';
+                    Caption = '';
                     field(OldCategory9; xSalesInvoiceLine."Category 9")
                     {
                         ApplicationArea = Suite;
@@ -122,7 +124,7 @@ page 50048 "Posted Sales Line I- Update"
                         Editable = false;
                     }
 
-                    field(Category9; rec."Category 9")
+                    field(Category9; Rec."Category 9")
                     {
                         ApplicationArea = Suite;
                         Caption = 'Potatoes District Region';
@@ -144,17 +146,17 @@ page 50048 "Posted Sales Line I- Update"
     trigger OnOpenPage()
     begin
         xSalesInvoiceLine := Rec;
-        rG_SalesInvoiceHeader.GET(xSalesInvoiceLine."Document No.");
+        rG_SalesInvoiceHeader.Get(xSalesInvoiceLine."Document No.");
     end;
 
     trigger OnQueryClosePage(CloseAction: Action): Boolean
     var
         rL_SalesInvoiceLine: Record "Sales Invoice Line";
     begin
-        if CloseAction = ACTION::LookupOK then
+        if CloseAction = Action::LookupOK then
             if RecordChanged then begin
                 //CODEUNIT.Run(CODEUNIT::"Shipment Header - Edit", Rec);
-                rL_SalesInvoiceLine.GET(rec."Document No.", rec."Line No.");
+                rL_SalesInvoiceLine.Get(Rec."Document No.", Rec."Line No.");
                 rL_SalesInvoiceLine.Description := Rec.Description;
                 rL_SalesInvoiceLine."Country/Region of Origin Code" := Rec."Country/Region of Origin Code";
                 rL_SalesInvoiceLine."Product Class" := Rec."Product Class";
@@ -171,10 +173,10 @@ page 50048 "Posted Sales Line I- Update"
     local procedure RecordChanged() IsChanged: Boolean
     begin
         IsChanged :=
-         (rec."Description" <> xSalesInvoiceLine."Description") or
-          (rec."Country/Region of Origin Code" <> xSalesInvoiceLine."Country/Region of Origin Code") or
-          (rec."Product Class" <> xSalesInvoiceLine."Product Class") or
-          (rec."Category 9" <> xSalesInvoiceLine."Category 9");
+         (Rec.Description <> xSalesInvoiceLine.Description) or
+          (Rec."Country/Region of Origin Code" <> xSalesInvoiceLine."Country/Region of Origin Code") or
+          (Rec."Product Class" <> xSalesInvoiceLine."Product Class") or
+          (Rec."Category 9" <> xSalesInvoiceLine."Category 9");
 
         OnAfterRecordChanged(Rec, xSalesInvoiceLine, IsChanged);
     end;
@@ -183,7 +185,7 @@ page 50048 "Posted Sales Line I- Update"
     procedure SetRec(SalesInvoiceLine: Record "Sales Invoice Line")
     begin
         Rec := SalesInvoiceLine;
-        rec.Insert;
+        Rec.Insert;
     end;
 
     [IntegrationEvent(false, false)]

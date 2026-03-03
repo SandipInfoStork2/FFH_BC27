@@ -57,6 +57,7 @@ pageextension 50103 GeneralLedgerEntriesExt extends "General Ledger Entries"
             {
                 ApplicationArea = All;
                 Editable = false;
+                ToolTip = 'Specifies the value of the Register No. field.';
             }
         }
     }

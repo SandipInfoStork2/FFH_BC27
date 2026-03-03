@@ -10,25 +10,29 @@ pageextension 50207 VendorHistBuyfromFactBoxExt extends "Vendor Hist. Buy-from F
         // Add changes to page layout here
         addafter(NoOfIncomingDocuments)
         {
-            field("No. of Released Prod. Orders"; "No. of Released Prod. Orders")
+            field("No. of Released Prod. Orders"; Rec."No. of Released Prod. Orders")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the No. of Released Prod. Orders field.';
             }
-            field("No. of Finished Prod. Orders"; "No. of Finished Prod. Orders")
+            field("No. of Finished Prod. Orders"; Rec."No. of Finished Prod. Orders")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the No. of Finished Prod. Orders field.';
             }
         }
 
         addafter(CueIncomingDocuments)
         {
-            field("CueNo. of Released Prod. Orders"; "No. of Released Prod. Orders")
+            field("CueNo. of Released Prod. Orders"; Rec."No. of Released Prod. Orders")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the No. of Released Prod. Orders field.';
             }
-            field("CueNo. of Finished Prod. Orders"; "No. of Finished Prod. Orders")
+            field("CueNo. of Finished Prod. Orders"; Rec."No. of Finished Prod. Orders")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the No. of Finished Prod. Orders field.';
             }
         }
 

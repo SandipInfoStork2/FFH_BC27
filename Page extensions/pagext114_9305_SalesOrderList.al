@@ -47,9 +47,10 @@ pageextension 50214 SalesOrderListExt extends "Sales Order List"
 
         addafter("Bill-to Name")
         {
-            field("Batch No."; "Batch No.")
+            field("Batch No."; Rec."Batch No.")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Batch No. field.';
             }
         }
 
@@ -62,44 +63,53 @@ pageextension 50214 SalesOrderListExt extends "Sales Order List"
 
         addafter("Completely Shipped")
         {
-            field("Total Qty"; "Total Qty")
+            field("Total Qty"; Rec."Total Qty")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Total Qty field.';
             }
-            field("Total Qty Shipped"; "Total Qty Shipped")
+            field("Total Qty Shipped"; Rec."Total Qty Shipped")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Total Qty Shipped field.';
             }
-            field("Total Qty Invoiced"; "Total Qty Invoiced")
+            field("Total Qty Invoiced"; Rec."Total Qty Invoiced")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Total Qty Invoiced field.';
             }
-            field("Req. Vendor No."; "Req. Vendor No.")
+            field("Req. Vendor No."; Rec."Req. Vendor No.")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Req. Vendor No. field.';
             }
-            field("Delivery No."; "Delivery No.")
+            field("Delivery No."; Rec."Delivery No.")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Delivery No. field.';
             }
-            field("Delivery Sequence"; "Delivery Sequence")
+            field("Delivery Sequence"; Rec."Delivery Sequence")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Delivery Sequence field.';
             }
             field(vG_SundryGrowerExists; vG_SundryGrowerExists)
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 CaptionML = ELL = 'Sundry Grower Exists',
                                 ENU = 'Sundry Grower Exists';
                 Editable = false;
+                ToolTip = 'Specifies the value of the vG_SundryGrowerExists field.';
             }
-            field("Customer Reference No."; "Customer Reference No.")
+            field("Customer Reference No."; Rec."Customer Reference No.")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Customer Reference No. field.';
             }
-            field("Excel Order Date"; "Excel Order Date")
+            field("Excel Order Date"; Rec."Excel Order Date")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Excel Order Date field.';
             }
         }
 
@@ -111,38 +121,43 @@ pageextension 50214 SalesOrderListExt extends "Sales Order List"
 
         modify("Requested Delivery Date")
         {
-            visible = true;
+            Visible = true;
         }
         moveafter("Ship-to Code"; "Requested Delivery Date")
         addafter("Requested Delivery Date")
         {
 
-            field("Requested Delivery Time"; "Requested Delivery Time")
+            field("Requested Delivery Time"; Rec."Requested Delivery Time")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Requested Delivery Time field.';
             }
 
-            field("Shipment Date2"; "Shipment Date")
+            field("Shipment Date2"; Rec."Shipment Date")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies when items on the document are shipped or were shipped. A shipment date is usually calculated from a requested delivery date plus lead time.';
             }
 
-            field("Shipment Time"; "Shipment Time")
+            field("Shipment Time"; Rec."Shipment Time")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Shipment Time field.';
 
             }
 
-            field(SystemCreatedAt; SystemCreatedAt)
+            field(SystemCreatedAt; Rec.SystemCreatedAt)
             {
                 ApplicationArea = All;
                 Editable = false;
+                ToolTip = 'Specifies the value of the SystemCreatedAt field.';
             }
 
             field(SystemCreatedBy; rG_User."User Name")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 Caption = 'System Created By';
+                ToolTip = 'Specifies the value of the System Created By field.';
 
             }
 
@@ -150,13 +165,15 @@ pageextension 50214 SalesOrderListExt extends "Sales Order List"
             field(NumDays; numdays)
             {
                 Caption = 'Allowed HORECA Users Edit Days';
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Allowed HORECA Users Edit Days field.';
             }
 
-            field("HORECA Status"; "HORECA Status")
+            field("HORECA Status"; Rec."HORECA Status")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 StyleExpr = HorecaStatusStyleTxt;
+                ToolTip = 'Specifies the value of the HORECA Status field.';
             }
         }
 
@@ -171,44 +188,47 @@ pageextension 50214 SalesOrderListExt extends "Sales Order List"
         {
             action("Delete Invoiced S.O.")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 Image = Delete;
                 Promoted = true;
                 PromotedCategory = Process;
-                RunObject = Report "Delete Invoiced Sales Orders";
+                RunObject = report "Delete Invoiced Sales Orders";
+                ToolTip = 'Executes the Delete Invoiced S.O. action.';
             }
             action("Import HORECA Order v1")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 Image = ImportExcel;
                 Promoted = true;
                 PromotedCategory = Process;
                 Visible = false;
+                ToolTip = 'Executes the Import HORECA Order v1 action.';
 
                 trigger OnAction();
                 var
                     rL_SalesHeader: Record "Sales Header";
                 begin
                     //+TAL0.9
-                    CLEAR(cu_GeneralMgt);
+                    Clear(cu_GeneralMgt);
                     cu_GeneralMgt.ImportHorecaOrders(1, false); //TAL0.10
                                                                 //-TAL0.9
                 end;
             }
             action("Import HORECA Order v2")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 Image = ImportExcel;
                 Promoted = true;
                 PromotedCategory = Process;
-                caption = 'Import HORECA Order v2 (zip)';
+                Caption = 'Import HORECA Order v2 (zip)';
+                ToolTip = 'Executes the Import HORECA Order v2 (zip) action.';
 
                 trigger OnAction();
                 var
                     rL_SalesHeader: Record "Sales Header";
                 begin
                     //+TAL0.9
-                    CLEAR(cu_GeneralMgt);
+                    Clear(cu_GeneralMgt);
                     cu_GeneralMgt.ImportHorecaOrders(2, false); //TAL0.10
                                                                 //-TAL0.9
                 end;
@@ -219,18 +239,19 @@ pageextension 50214 SalesOrderListExt extends "Sales Order List"
 
             action("Import HORECA Order Excel")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 Image = ImportExcel;
                 Promoted = true;
                 PromotedCategory = Process;
-                caption = 'Import HORECA Order v2 (xlsx)';
+                Caption = 'Import HORECA Order v2 (xlsx)';
+                ToolTip = 'Executes the Import HORECA Order v2 (xlsx) action.';
 
                 trigger OnAction();
                 var
                     rL_SalesHeader: Record "Sales Header";
                 begin
                     //+TAL0.9
-                    CLEAR(cu_GeneralMgt);
+                    Clear(cu_GeneralMgt);
                     cu_GeneralMgt.ImportHorecaOrders(2, true); //TAL0.10
                                                                //-TAL0.9
                 end;
@@ -240,7 +261,8 @@ pageextension 50214 SalesOrderListExt extends "Sales Order List"
                 ApplicationArea = All;
                 Promoted = true;
                 PromotedCategory = Process;
-                caption = 'Count Records';
+                Caption = 'Count Records';
+                ToolTip = 'Executes the Count Records action.';
 
                 trigger OnAction()
                 begin
@@ -256,6 +278,7 @@ pageextension 50214 SalesOrderListExt extends "Sales Order List"
                 // PromotedCategory = Process;
                 //PromotedOnly = true;
                 RunObject = report "HORECA Auto Release";
+                ToolTip = 'Executes the HORECA Auto Release action.';
             }
 
         }
@@ -276,7 +299,7 @@ pageextension 50214 SalesOrderListExt extends "Sales Order List"
                 trigger OnAction()
                 begin
                     LinesInstructionMgt.SalesCheckAllLinesHaveQuantityAssigned(Rec);
-                    SendToPosting(CODEUNIT::"Sales-Post + Print");
+                    Rec.SendToPosting(Codeunit::"Sales-Post + Print");
                 end;
             }
         }
@@ -307,13 +330,14 @@ pageextension 50214 SalesOrderListExt extends "Sales Order List"
                 Promoted = true;
                 PromotedCategory = Process;
                 PromotedOnly = true;
+                ToolTip = 'Executes the Item Tracking Appendix action.';
 
                 trigger OnAction();
                 var
                     vL_SalesHeader: Record "Sales Header";
                 begin
                     vL_SalesHeader := Rec;
-                    CurrPage.SETSELECTIONFILTER(vL_SalesHeader);
+                    CurrPage.SetSelectionFilter(vL_SalesHeader);
                     vL_SalesHeader.PrintAppendixRecords(vL_SalesHeader);
                 end;
             }
@@ -325,7 +349,8 @@ pageextension 50214 SalesOrderListExt extends "Sales Order List"
                 Promoted = true;
                 PromotedCategory = Process;
                 PromotedOnly = true;
-                RunObject = Page "Order per Ship-to Location (S)";
+                RunObject = page "Order per Ship-to Location (S)";
+                ToolTip = 'Executes the Order per Ship-to Address action.';
             }
 
 
@@ -381,27 +406,27 @@ pageextension 50214 SalesOrderListExt extends "Sales Order List"
     begin
 
         //+TAL0.6
-        AllowMoveUpPage := "Delivery Sequence" <> 1; //TRUE; //(DataKind = CONST_DK_PAGE) AND NOT IsFirst;
-        AllowMoveDownPage := "Delivery Sequence" <> COUNT; //TRUE;//(DataKind = CONST_DK_PAGE) AND NOT IsLast;
+        AllowMoveUpPage := Rec."Delivery Sequence" <> 1; //TRUE; //(DataKind = CONST_DK_PAGE) AND NOT IsFirst;
+        AllowMoveDownPage := Rec."Delivery Sequence" <> Rec.COUNT; //TRUE;//(DataKind = CONST_DK_PAGE) AND NOT IsLast;
         //-TAL0.6
 
         //+TAL0.8
-        vG_SundryGrowerExists := cu_GeneralMgt.SundryGrowerExistsSO("No.");
+        vG_SundryGrowerExists := cu_GeneralMgt.SundryGrowerExistsSO(Rec."No.");
         StyleTxt := '';
         if vG_SundryGrowerExists then begin
             StyleTxt := 'Attention';
         end;
         //-TAL0.8
 
-        clear(rG_User);
+        Clear(rG_User);
         if rG_User.Get(Rec.SystemCreatedBy) then;
 
         numdays := 0;
-        if ("Requested Delivery Date" <> 0D) and (Status = Status::Open) and ("Ship-to Code" <> '') then begin
-            numdays := "Requested Delivery Date" - WorkDate();
+        if (Rec."Requested Delivery Date" <> 0D) and (Rec.Status = Rec.Status::Open) and (Rec."Ship-to Code" <> '') then begin
+            numdays := Rec."Requested Delivery Date" - WorkDate();
         end;
 
-        HorecaStatusStyleTxt := GetHorecaStatusStyleText();
+        HorecaStatusStyleTxt := Rec.GetHorecaStatusStyleText();
 
     end;
 
@@ -413,20 +438,20 @@ pageextension 50214 SalesOrderListExt extends "Sales Order List"
         FocusedRec := Rec;
 
         if _MoveUp then begin
-            Rec2.GET("No.");
-            NEXT(-1);
-            Rec1.GET("No.");
+            Rec2.GET(Rec."No.");
+            Rec.NEXT(-1);
+            Rec1.GET(Rec."No.");
         end
         else begin
-            Rec1.GET("No.");
-            NEXT(1);
-            Rec2.GET("No.");
+            Rec1.GET(Rec."No.");
+            Rec.NEXT(1);
+            Rec2.GET(Rec."No.");
         end;
 
         Rec1."Delivery Sequence" += 1;
-        Rec1.MODIFY(false);
+        Rec1.Modify(false);
         Rec2."Delivery Sequence" -= 1;
-        Rec2.MODIFY(false);
+        Rec2.Modify(false);
 
         RefreshCurrentPage(false);
         //CurrPage.UPDATE(FALSE);
@@ -438,19 +463,19 @@ pageextension 50214 SalesOrderListExt extends "Sales Order List"
     begin
         //CheckInitialized;
         //BuildTree;
-        SETCURRENTKEY("Delivery No.", "Delivery Sequence");
+        Rec.SETCURRENTKEY("Delivery No.", "Delivery Sequence");
 
         if not _InitialRefresh then
-            CurrPage.UPDATE(false);
+            CurrPage.Update(false);
 
-        if FINDFIRST then begin
+        if Rec.FINDFIRST then begin
             if not _InitialRefresh then begin
                 Eof := false;
-                while (("No." <> FocusedRec."No.")) and not Eof do
-                    Eof := NEXT = 0;
+                while ((Rec."No." <> FocusedRec."No.")) and not Eof do
+                    Eof := Rec.NEXT = 0;
 
                 if Eof then
-                    FINDFIRST;
+                    Rec.FINDFIRST;
             end;
         end;
     end;

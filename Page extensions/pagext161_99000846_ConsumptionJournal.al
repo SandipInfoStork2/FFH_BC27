@@ -22,7 +22,7 @@ pageextension 50261 ConsumptionJournalExt extends "Consumption Journal"
     var
         UserSetup: Record "User Setup";
     begin
-        UserSetup.GET(UserId);
+        UserSetup.Get(UserId);
         UnitCostEditable := UserSetup."Unit Cost Editable";
     end;
     //-1.0.0.228

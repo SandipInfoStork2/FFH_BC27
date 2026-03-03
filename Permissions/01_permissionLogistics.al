@@ -1,6 +1,6 @@
-permissionset 50001 "TAL_Logistics_EXT"
+permissionset 50001 TAL_Logistics_EXT
 {
-    Assignable = True;
+    Assignable = true;
     Access = Public;
 
 

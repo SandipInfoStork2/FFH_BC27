@@ -5,9 +5,10 @@ pageextension 50248 SalesListExt extends "Sales List"
         // Add changes to page layout here
         addafter("External Document No.")
         {
-            field("Week No."; "Week No.")
+            field("Week No."; Rec."Week No.")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Week No. field.';
             }
         }
     }

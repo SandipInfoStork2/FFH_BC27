@@ -4,67 +4,78 @@ page 50014 "Lidl Lot Sample"
     LinksAllowed = false;
     PageType = List;
     SourceTable = Date;
+    ApplicationArea = All;
 
     layout
     {
-        area(content)
+        area(Content)
         {
             repeater(Group)
             {
-                field("Period Start"; "Period Start")
+                field("Period Start"; Rec."Period Start")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Period Start field.';
                 }
                 field(vl_ExtDocNo; vl_ExtDocNo)
                 {
                     Caption = 'vl_ExtDocNo';
-                    ApplicationArea = all;
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the vl_ExtDocNo field.';
                 }
-                field("Period No."; "Period No.")
+                field("Period No."; Rec."Period No.")
                 {
-                    StyleExpr = TRUE;
-                    ApplicationArea = all;
+                    StyleExpr = true;
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Period No. field.';
                 }
-                field("Period Name"; "Period Name")
+                field("Period Name"; Rec."Period Name")
                 {
-                    StyleExpr = TRUE;
-                    ApplicationArea = all;
+                    StyleExpr = true;
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Period Name field.';
                 }
                 field("Week No"; vG_WeekNo)
                 {
                     Caption = 'Week No.';
-                    ApplicationArea = all;
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Week No. field.';
                 }
                 field(vL_WeekLot; vL_WeekLot)
                 {
                     Caption = 'vL_WeekLot';
                     Style = Strong;
-                    StyleExpr = TRUE;
-                    ApplicationArea = all;
+                    StyleExpr = true;
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the vL_WeekLot field.';
                 }
                 field(vL_DayLot; vL_DayLot)
                 {
                     Caption = 'vL_DayLot';
                     Style = Strong;
-                    StyleExpr = TRUE;
-                    ApplicationArea = all;
+                    StyleExpr = true;
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the vL_DayLot field.';
                 }
                 field(vl_LotNo; vl_LotNo)
                 {
                     Caption = 'vl_LotNo';
                     Style = Strong;
-                    StyleExpr = TRUE;
-                    ApplicationArea = all;
+                    StyleExpr = true;
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the vl_LotNo field.';
                 }
                 field(vL_Week; vL_Week)
                 {
                     Caption = 'vL_Week';
-                    ApplicationArea = all;
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the vL_Week field.';
                 }
                 field(vL_Day; vL_Day)
                 {
                     Caption = 'vL_Day';
-                    ApplicationArea = all;
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the vL_Day field.';
                 }
 
             }
@@ -78,13 +89,13 @@ page 50014 "Lidl Lot Sample"
     trigger OnAfterGetRecord();
     begin
 
-        vG_WeekNo := DATE2DWY("Period Start", 2);
+        vG_WeekNo := DATE2DWY(Rec."Period Start", 2);
         CalcLidl;
     end;
 
     trigger OnOpenPage();
     begin
-        RESET;
+        Rec.RESET;
         SetDateFilter;
     end;
 
@@ -104,11 +115,11 @@ page 50014 "Lidl Lot Sample"
         //IF AmountType = AmountType::"Net Change" THEN
         //Cust.SETRANGE("Date Filter","Period Start","Period End")
         //ELSE
-        vG_StartDate := DMY2DATE(31, 12, 2020);
-        vG_EndDate := DMY2DATE(31, 12, 2023);
+        vG_StartDate := DMY2Date(31, 12, 2020);
+        vG_EndDate := DMY2Date(31, 12, 2023);
 
-        SETRANGE("Period Start", vG_StartDate, vG_EndDate);
-        SETRANGE("Period Type", "Period Type"::Date);
+        Rec.SETRANGE("Period Start", vG_StartDate, vG_EndDate);
+        Rec.SETRANGE("Period Type", Rec."Period Type"::Date);
     end;
 
     local procedure CalcLidl();
@@ -120,8 +131,8 @@ page 50014 "Lidl Lot Sample"
         vL_DayWeekTemp: Text;
     begin
 
-        vl_OrderDate := "Period Start";
-        vL_Day := FORMAT(DATE2DWY(vl_OrderDate, 1) + 1);
+        vl_OrderDate := Rec."Period Start";
+        vL_Day := Format(Date2DWY(vl_OrderDate, 1) + 1);
         vL_DayTemp := vL_Day; //TAL0.7
 
         //+TAL0.5
@@ -138,48 +149,48 @@ page 50014 "Lidl Lot Sample"
         end;
         //-TAL0.5
 
-        vL_Day := PADSTR('', 2 - STRLEN(vL_Day), '0') + vL_Day;
+        vL_Day := PadStr('', 2 - StrLen(vL_Day), '0') + vL_Day;
 
 
-        vL_Week := FORMAT(DATE2DWY(vl_OrderDate, 2));
-        vL_DayWeekTemp := FORMAT(DATE2DWY(vl_OrderDate, 1));
+        vL_Week := Format(Date2DWY(vl_OrderDate, 2));
+        vL_DayWeekTemp := Format(Date2DWY(vl_OrderDate, 1));
         //+TAL0.7
         if vL_DayWeekTemp = '7' then begin //sunday placed
-            EVALUATE(tmp_int, vL_Week);
+            Evaluate(tmp_int, vL_Week);
             tmp_int += 1;
-            vL_Week := FORMAT(tmp_int);
+            vL_Week := Format(tmp_int);
         end;
         //-TAL0.7
 
         //check greater than 52
-        EVALUATE(tmp_int, vL_Week);
+        Evaluate(tmp_int, vL_Week);
         if tmp_int > 52 then begin
             tmp_int := 1;
-            vL_Week := FORMAT(tmp_int);
+            vL_Week := Format(tmp_int);
         end;
 
-        vL_WeekDayText := COPYSTR(FORMAT(vl_OrderDate, 0, '<Weekday Text>'), 1, 3);
-        vL_WeekDayText := UPPERCASE(vL_WeekDayText);
-        vL_Week := PADSTR('', 2 - STRLEN(vL_Week), '0') + vL_Week;
-        vl_ExtDocNo := vL_Week + ' - ' + vL_Day + ' ' + vL_WeekDayText + ' 7019' + FORMAT(vl_OrderDate, 0, '<Day,2><Month,2><Year,2>') + '01';
+        vL_WeekDayText := CopyStr(Format(vl_OrderDate, 0, '<Weekday Text>'), 1, 3);
+        vL_WeekDayText := UpperCase(vL_WeekDayText);
+        vL_Week := PadStr('', 2 - StrLen(vL_Week), '0') + vL_Week;
+        vl_ExtDocNo := vL_Week + ' - ' + vL_Day + ' ' + vL_WeekDayText + ' 7019' + Format(vl_OrderDate, 0, '<Day,2><Month,2><Year,2>') + '01';
 
         //**************
         //Lots
         //***************
         //+TAL0.6
         //DATE2DWY Monday =1
-        vL_DayLot := FORMAT(DATE2DWY(vl_OrderDate, 1));
+        vL_DayLot := Format(Date2DWY(vl_OrderDate, 1));
 
         vL_DayTemp := vL_DayLot; //TAL0.7
         if vL_DayTemp = '8' then begin //sunday placed
             vL_DayLot := '1';
         end;
-        vL_DayLot := PADSTR('', 2 - STRLEN(vL_DayLot), '0') + vL_DayLot;
+        vL_DayLot := PadStr('', 2 - StrLen(vL_DayLot), '0') + vL_DayLot;
 
 
         //MESSAGE(vL_DayLot);
-        vL_WeekLot := FORMAT(DATE2DWY(vl_OrderDate, 2));
-        vL_WeekLot := PADSTR('', 2 - STRLEN(vL_WeekLot), '0') + vL_WeekLot;
+        vL_WeekLot := Format(Date2DWY(vl_OrderDate, 2));
+        vL_WeekLot := PadStr('', 2 - StrLen(vL_WeekLot), '0') + vL_WeekLot;
         vl_LotNo := 'Lot No: ' + vL_WeekLot + '-' + vL_DayLot;
     end;
 }

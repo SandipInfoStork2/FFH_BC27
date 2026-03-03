@@ -5,7 +5,7 @@ tableextension 50160 InventoryPostingSetup extends "Inventory Posting Setup"
         // Add changes to table fields here
         field(50000; "Location Name"; Text[100])
         {
-            CalcFormula = Lookup(Location.Name WHERE(Code = FIELD("Location Code")));
+            CalcFormula = lookup(Location.Name where(Code = field("Location Code")));
             Editable = false;
             FieldClass = FlowField;
         }

@@ -12,15 +12,15 @@ report 50070 "Sales - Shipment FFH"
     // TAL0.7 2021/11/03 VC Option to Hide Global Gap
     DefaultLayout = RDLC;
     RDLCLayout = './Layouts/rep70_50070_SalesShipment.rdlc';
-
     Caption = 'Sales - Shipment';
     PreviewMode = PrintLayout;
+    ApplicationArea = All;
 
     dataset
     {
         dataitem("Sales Shipment Header"; "Sales Shipment Header")
         {
-            DataItemTableView = SORTING("No.");
+            DataItemTableView = sorting("No.");
             RequestFilterFields = "No.", "Sell-to Customer No.", "No. Printed";
             RequestFilterHeading = 'Posted Sales Shipment';
             column(No_SalesShptHeader; "No.")
@@ -28,10 +28,10 @@ report 50070 "Sales - Shipment FFH"
             }
             dataitem(CopyLoop; "Integer")
             {
-                DataItemTableView = SORTING(Number);
+                DataItemTableView = sorting(Number);
                 dataitem(PageLoop; "Integer")
                 {
-                    DataItemTableView = SORTING(Number) WHERE(Number = CONST(1));
+                    DataItemTableView = sorting(Number) where(Number = const(1));
                     column(CompanyInfo2Picture; CompanyInfo2.Picture)
                     {
                     }
@@ -207,7 +207,7 @@ report 50070 "Sales - Shipment FFH"
                     dataitem(DimensionLoop1; "Integer")
                     {
                         DataItemLinkReference = "Sales Shipment Header";
-                        DataItemTableView = SORTING(Number) WHERE(Number = FILTER(1 ..));
+                        DataItemTableView = sorting(Number) where(Number = filter(1 ..));
                         column(DimText; DimText)
                         {
                         }
@@ -251,9 +251,9 @@ report 50070 "Sales - Shipment FFH"
                     }
                     dataitem("Sales Shipment Line"; "Sales Shipment Line")
                     {
-                        DataItemLink = "Document No." = FIELD("No.");
+                        DataItemLink = "Document No." = field("No.");
                         DataItemLinkReference = "Sales Shipment Header";
-                        DataItemTableView = SORTING("Document No.", "Line No.");
+                        DataItemTableView = sorting("Document No.", "Line No.");
                         column(Description_SalesShptLine; Description)
                         {
                         }
@@ -330,7 +330,7 @@ report 50070 "Sales - Shipment FFH"
                         //TAL 1.0.0.201 <<
                         dataitem(DimensionLoop2; "Integer")
                         {
-                            DataItemTableView = SORTING(Number) WHERE(Number = FILTER(1 ..));
+                            DataItemTableView = sorting(Number) where(Number = filter(1 ..));
                             column(DimText1; DimText)
                             {
                             }
@@ -374,7 +374,7 @@ report 50070 "Sales - Shipment FFH"
                         }
                         dataitem(DisplayAsmInfo; "Integer")
                         {
-                            DataItemTableView = SORTING(Number);
+                            DataItemTableView = sorting(Number);
                             column(PostedAsmLineItemNo; BlanksForIndent + PostedAsmLine."No.")
                             {
                             }
@@ -485,7 +485,7 @@ report 50070 "Sales - Shipment FFH"
                                 ItemTrackingDocMgt.SetRetrieveAsmItemTracking(true);
                                 TrackingSpecCount :=
                                   ItemTrackingDocMgt.RetrieveDocumentItemTracking(TrackingSpecBuffer,
-                                    "Sales Shipment Header"."No.", DATABASE::"Sales Shipment Header", 0);
+                                    "Sales Shipment Header"."No.", Database::"Sales Shipment Header", 0);
                                 ItemTrackingDocMgt.SetRetrieveAsmItemTracking(false);
                                 //-VC
                             end;
@@ -511,11 +511,11 @@ report 50070 "Sales - Shipment FFH"
                     }
                     dataitem(Total; "Integer")
                     {
-                        DataItemTableView = SORTING(Number) WHERE(Number = CONST(1));
+                        DataItemTableView = sorting(Number) where(Number = const(1));
                     }
                     dataitem(Total2; "Integer")
                     {
-                        DataItemTableView = SORTING(Number) WHERE(Number = CONST(1));
+                        DataItemTableView = sorting(Number) where(Number = const(1));
                         column(BilltoCustNo_SalesShptHeader; "Sales Shipment Header"."Bill-to Customer No.")
                         {
                         }
@@ -558,16 +558,16 @@ report 50070 "Sales - Shipment FFH"
                     }
                     dataitem("Sales Comment Line"; "Sales Comment Line")
                     {
-                        DataItemLink = "No." = FIELD("No.");
+                        DataItemLink = "No." = field("No.");
                         DataItemLinkReference = "Sales Shipment Header";
-                        DataItemTableView = SORTING("No.") WHERE("Document Type" = FILTER(Shipment));
+                        DataItemTableView = sorting("No.") where("Document Type" = filter(Shipment));
                         column(Comment; "Sales Comment Line".Comment)
                         {
                         }
                     }
                     dataitem(ItemTrackingLine; "Integer")
                     {
-                        DataItemTableView = SORTING(Number);
+                        DataItemTableView = sorting(Number);
                         column(TrackingSpecBufferNo; TrackingSpecBuffer."Item No.")
                         {
                         }
@@ -578,7 +578,7 @@ report 50070 "Sales - Shipment FFH"
                         {
                         }
 
-                        column(TrackingSpecBufferExpDate; format(vG_ExpDate))
+                        column(TrackingSpecBufferExpDate; Format(vG_ExpDate))
                         {
                         }
                         column(TrackingSpecBufferSerNo; TrackingSpecBuffer."Serial No.")
@@ -613,7 +613,7 @@ report 50070 "Sales - Shipment FFH"
                         }
                         dataitem(TotalItemTracking; "Integer")
                         {
-                            DataItemTableView = SORTING(Number) WHERE(Number = CONST(1));
+                            DataItemTableView = sorting(Number) where(Number = const(1));
                             column(Quantity1; TotalQty)
                             {
                             }
@@ -746,7 +746,7 @@ report 50070 "Sales - Shipment FFH"
                 if LogInteraction then
                     if not CurrReport.Preview then
                         SegManagement.LogDocument(
-                          5, "No.", 0, 0, DATABASE::Customer, "Sell-to Customer No.", "Salesperson Code",
+                          5, "No.", 0, 0, Database::Customer, "Sell-to Customer No.", "Salesperson Code",
                           "Campaign No.", "Posting Description", '');
 
                 rG_Customer.Get("Sell-to Customer No."); //TAL0.2
@@ -773,7 +773,7 @@ report 50070 "Sales - Shipment FFH"
 
         layout
         {
-            area(content)
+            area(Content)
             {
                 group(Options)
                 {
@@ -781,34 +781,50 @@ report 50070 "Sales - Shipment FFH"
                     field(NoOfCopies; NoOfCopies)
                     {
                         Caption = 'No. of Copies';
+                        ApplicationArea = All;
+                        ToolTip = 'Specifies the value of the No. of Copies field.';
                     }
                     field(ShowInternalInfo; ShowInternalInfo)
                     {
                         Caption = 'Show Internal Information';
+                        ApplicationArea = All;
+                        ToolTip = 'Specifies the value of the Show Internal Information field.';
                     }
                     field(LogInteraction; LogInteraction)
                     {
                         Caption = 'Log Interaction';
                         Enabled = LogInteractionEnable;
+                        ApplicationArea = All;
+                        ToolTip = 'Specifies the value of the Log Interaction field.';
                     }
                     field("Show Correction Lines"; ShowCorrectionLines)
                     {
                         Caption = 'Show Correction Lines';
+                        ApplicationArea = All;
+                        ToolTip = 'Specifies the value of the Show Correction Lines field.';
                     }
                     field(ShowLotSN; ShowLotSN)
                     {
                         Caption = 'Show Serial/Lot Number Appendix';
+                        ApplicationArea = All;
+                        ToolTip = 'Specifies the value of the Show Serial/Lot Number Appendix field.';
                     }
                     field(DisplayAsmInfo; DisplayAssemblyInformation)
                     {
                         Caption = 'Show Assembly Components';
+                        ApplicationArea = All;
+                        ToolTip = 'Specifies the value of the Show Assembly Components field.';
                     }
                     field(ShowZeroQtyLines; vG_ShowZeroQtyLines)
                     {
                         Caption = 'Show Zero Qty Lines';
+                        ApplicationArea = All;
+                        ToolTip = 'Specifies the value of the Show Zero Qty Lines field.';
                     }
                     field("Hide GlobalGAP COC"; vG_HideGlobalGapCOC)
                     {
+                        ApplicationArea = All;
+                        ToolTip = 'Specifies the value of the vG_HideGlobalGapCOC field.';
                     }
                 }
             }
@@ -956,19 +972,19 @@ report 50070 "Sales - Shipment FFH"
         LogoOutput: Boolean;
         vG_HideGlobalGapCOC: Boolean;
 
-        vG_ItemReferenceNo: code[50];
+        vG_ItemReferenceNo: Code[50];
 
         vG_ExpDate: Date;
         rG_ItemLedgerEntry: Record "Item Ledger Entry";
 
-    [Scope('Internal')]
+
     procedure InitLogInteraction()
     begin
         // LogInteraction := SegManagement.FindInteractTmplCode(5) <> '';
         LogInteraction := SegManagement.FindInteractionTemplateCode(5) <> '';
     end;
 
-    [Scope('Internal')]
+
     procedure InitializeRequest(NewNoOfCopies: Integer; NewShowInternalInfo: Boolean; NewLogInteraction: Boolean; NewShowCorrectionLines: Boolean; NewShowLotSN: Boolean; DisplayAsmInfo: Boolean)
     begin
         NoOfCopies := NewNoOfCopies;
@@ -979,7 +995,7 @@ report 50070 "Sales - Shipment FFH"
         DisplayAssemblyInformation := DisplayAsmInfo;
     end;
 
-    [Scope('Internal')]
+
     procedure GetUnitOfMeasureDescr(UOMCode: Code[10]): Text[10]
     var
         UnitOfMeasure: Record "Unit of Measure";
@@ -989,7 +1005,7 @@ report 50070 "Sales - Shipment FFH"
         exit(UnitOfMeasure.Description);
     end;
 
-    [Scope('Internal')]
+
     procedure BlanksForIndent(): Text[10]
     begin
         exit(PadStr('', 2, ' '));

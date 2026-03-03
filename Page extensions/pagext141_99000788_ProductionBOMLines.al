@@ -21,21 +21,23 @@ pageextension 50241 ProductionBOMLinesExt extends "Production BOM Lines"
 
         addafter("Routing Link Code")
         {
-            field("Item Category Code"; "Item Category Code")
+            field("Item Category Code"; Rec."Item Category Code")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Item Category Code field.';
             }
 
-            field("Last Direct Cost"; "Last Direct Cost")
+            field("Last Direct Cost"; Rec."Last Direct Cost")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Last Direct Cost field.';
             }
 
             field(LastDirectCostPerKG; vG_LastDirectCostPerKG)
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 Editable = false;
-                caption = 'Last Direct Cost per KG';
+                Caption = 'Last Direct Cost per KG';
                 ToolTip = 'Custom: Last Direct Cost per KG';
                 DecimalPlaces = 2 : 5;
                 trigger OnDrillDown()
@@ -46,31 +48,33 @@ pageextension 50241 ProductionBOMLinesExt extends "Production BOM Lines"
 
             field(LandedUnitCost; vG_LandedUnitCost)
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 Editable = false;
-                caption = 'Last Landed Unit Cost';
+                Caption = 'Last Landed Unit Cost';
                 ToolTip = 'Custom: Last Landed Unit Cost = Item Ldger Entry Last Purchase Receipt SUM("Cost Amount (Actual)" + "Cost Amount (Expected)")/Quantity';
                 DecimalPlaces = 2 : 5;
                 Visible = false;
                 trigger OnDrillDown()
                 begin
-                    DrillDownLandedCost();
+                    Rec.DrillDownLandedCost();
                 end;
             }
 
 
 
-            field("Unit Cost"; "Unit Cost")
+            field("Unit Cost"; Rec."Unit Cost")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 Visible = false;
+                ToolTip = 'Specifies the value of the Unit Cost field.';
             }
 
-            field(SystemCreatedAt; SystemCreatedAt)
+            field(SystemCreatedAt; Rec.SystemCreatedAt)
             {
                 ApplicationArea = All;
                 Editable = false;
                 Caption = 'System Created At';
+                ToolTip = 'Specifies the value of the System Created At field.';
             }
 
             field(SystemCreatedBy; rG_User1."User Name")
@@ -78,13 +82,15 @@ pageextension 50241 ProductionBOMLinesExt extends "Production BOM Lines"
                 ApplicationArea = All;
                 Editable = false;
                 Caption = 'System Created By';
+                ToolTip = 'Specifies the value of the System Created By field.';
             }
 
-            field(SystemModifiedAt; SystemModifiedAt)
+            field(SystemModifiedAt; Rec.SystemModifiedAt)
             {
                 ApplicationArea = All;
                 Editable = false;
                 Caption = 'System Modified At';
+                ToolTip = 'Specifies the value of the System Modified At field.';
             }
 
             field(SystemModifiedBy; rG_User2."User Name")
@@ -92,6 +98,7 @@ pageextension 50241 ProductionBOMLinesExt extends "Production BOM Lines"
                 ApplicationArea = All;
                 Editable = false;
                 Caption = 'System Modified By';
+                ToolTip = 'Specifies the value of the System Modified By field.';
             }
         }
     }
@@ -105,10 +112,11 @@ pageextension 50241 ProductionBOMLinesExt extends "Production BOM Lines"
             action(ItemCard)
             {
                 ApplicationArea = All;
-                caption = 'Item Card';
+                Caption = 'Item Card';
                 Image = Item;
                 RunObject = page "Item Card";
                 RunPageLink = "No." = field("No.");
+                ToolTip = 'Executes the Item Card action.';
 
             }
         }
@@ -127,21 +135,21 @@ pageextension 50241 ProductionBOMLinesExt extends "Production BOM Lines"
         vG_LastDirectCostPerKG := 0;
         vL_LastDirectCost := 0;
 
-        if (Type = Type::Item) and ("No." <> '') then begin
-            if rL_Item.GET("No.") then begin
+        if (Rec.Type = Rec.Type::Item) and (Rec."No." <> '') then begin
+            if rL_Item.GET(Rec."No.") then begin
                 vL_LastDirectCost := rL_Item."Last Direct Cost"; //rL_Item.GetLandedCost();
                 vG_LandedUnitCost := rL_Item.GetLandedCost();
-                rL_ItemMaster.RESET;
-                rL_ItemMaster.SetFilter("Production BOM No.", "Production BOM No.");
+                rL_ItemMaster.Reset;
+                rL_ItemMaster.SetFilter("Production BOM No.", Rec."Production BOM No.");
                 if rL_ItemMaster.FindSet() then begin
 
                     SRSetup.Get;
                     CostOtherFixed := 0;
-                    ItemCategory.RESET;
+                    ItemCategory.Reset;
                     ItemCategory.SetFilter(Code, SRSetup."FILM Category Filter");
                     if ItemCategory.FindSet() then begin
                         repeat
-                            if "Item Category Code" = ItemCategory.Code then begin
+                            if Rec."Item Category Code" = ItemCategory.Code then begin
                                 CostOtherFixed := SRSetup."FILM Cost";
                             end;
                         until ItemCategory.Next() = 0;
@@ -152,7 +160,7 @@ pageextension 50241 ProductionBOMLinesExt extends "Production BOM Lines"
                     end else begin
                         //+1.0.0.197
                         if rL_ItemMaster."Package Qty" <> 0 then begin
-                            vG_LastDirectCostPerKG := Round((vL_LastDirectCost / rL_ItemMaster."Package Qty") * "Quantity per", 0.01, '>');
+                            vG_LastDirectCostPerKG := Round((vL_LastDirectCost / rL_ItemMaster."Package Qty") * Rec."Quantity per", 0.01, '>');
                         end;
                         //-1.0.0.197
 
@@ -166,10 +174,10 @@ pageextension 50241 ProductionBOMLinesExt extends "Production BOM Lines"
 
         end;
 
-        clear(rG_User1);
+        Clear(rG_User1);
         if rG_User1.Get(Rec.SystemCreatedBy) then;
 
-        clear(rG_User2);
+        Clear(rG_User2);
         if rG_User2.Get(Rec.SystemModifiedBy) then;
 
 

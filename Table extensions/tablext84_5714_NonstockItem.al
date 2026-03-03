@@ -64,7 +64,7 @@ tableextension 50184 NonstockItemExt extends "Nonstock Item"
             Caption = 'Καλιμπράζ 47';
         }
 
-        field(50076; "Variety"; Text[50])
+        field(50076; Variety; Text[50])
         {
             DataClassification = ToBeClassified;
             Caption = 'Ποικιλία';

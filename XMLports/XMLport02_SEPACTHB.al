@@ -41,7 +41,7 @@ xmlport 50002 "SEPA CT pain.001.001.03 HB"
                     }
                     textelement(InitgPty)
                     {
-                        fieldelement(Nm; CompanyInformation.Name)
+                        fieldelement(Nm; companyinformation.Name)
                         {
                         }
                         textelement(initgptyid)
@@ -66,13 +66,13 @@ xmlport 50002 "SEPA CT pain.001.001.03 HB"
                 {
                     XmlName = 'PmtInf';
                     UseTemporary = true;
-                    fieldelement(PmtInfId; PaymentExportDataGroup."Payment Information ID")
+                    fieldelement(PmtInfId; paymentexportdatagroup."Payment Information ID")
                     {
                     }
-                    fieldelement(PmtMtd; PaymentExportDataGroup."SEPA Payment Method Text")
+                    fieldelement(PmtMtd; paymentexportdatagroup."SEPA Payment Method Text")
                     {
                     }
-                    fieldelement(BtchBookg; PaymentExportDataGroup."SEPA Batch Booking")
+                    fieldelement(BtchBookg; paymentexportdatagroup."SEPA Batch Booking")
                     {
                     }
                     textelement(PmtTpInf)
@@ -85,18 +85,18 @@ xmlport 50002 "SEPA CT pain.001.001.03 HB"
                             }
                         }
                     }
-                    fieldelement(ReqdExctnDt; PaymentExportDataGroup."Transfer Date")
+                    fieldelement(ReqdExctnDt; paymentexportdatagroup."Transfer Date")
                     {
                     }
                     textelement(Dbtr)
                     {
-                        fieldelement(Nm; CompanyInformation.Name)
+                        fieldelement(Nm; companyinformation.Name)
                         {
                         }
                         textelement(dbtrpstladr)
                         {
                             XmlName = 'PstlAdr';
-                            fieldelement(Ctry; CompanyInformation."Country/Region Code")
+                            fieldelement(Ctry; companyinformation."Country/Region Code")
                             {
                             }
                         }
@@ -106,7 +106,7 @@ xmlport 50002 "SEPA CT pain.001.001.03 HB"
                             textelement(dbtrorgid)
                             {
                                 XmlName = 'OrgId';
-                                fieldelement(BICOrBEI; PaymentExportDataGroup."Sender Bank BIC")
+                                fieldelement(BICOrBEI; paymentexportdatagroup."Sender Bank BIC")
                                 {
                                 }
                                 textelement(Othr)
@@ -124,13 +124,13 @@ xmlport 50002 "SEPA CT pain.001.001.03 HB"
                         textelement(dbtracctid)
                         {
                             XmlName = 'Id';
-                            fieldelement(IBAN; PaymentExportDataGroup."Sender Bank Account No.")
+                            fieldelement(IBAN; paymentexportdatagroup."Sender Bank Account No.")
                             {
                                 MaxOccurs = Once;
                                 MinOccurs = Once;
                             }
                         }
-                        fieldelement(Ccy; PaymentExportDataGroup."Sender Bank Account Currency")
+                        fieldelement(Ccy; paymentexportdatagroup."Sender Bank Account Currency")
                         {
                         }
                     }
@@ -139,28 +139,28 @@ xmlport 50002 "SEPA CT pain.001.001.03 HB"
                         textelement(dbtragtfininstnid)
                         {
                             XmlName = 'FinInstnId';
-                            fieldelement(BIC; PaymentExportDataGroup."Sender Bank BIC")
+                            fieldelement(BIC; paymentexportdatagroup."Sender Bank BIC")
                             {
                                 MaxOccurs = Once;
                                 MinOccurs = Once;
                             }
                         }
                     }
-                    fieldelement(ChrgBr; PaymentExportDataGroup."SEPA Charge Bearer Text")
+                    fieldelement(ChrgBr; paymentexportdatagroup."SEPA Charge Bearer Text")
                     {
                     }
                     tableelement(paymentexportdata; "Payment Export Data")
                     {
-                        LinkFields = "Sender Bank BIC" = FIELD("Sender Bank BIC"), "SEPA Instruction Priority Text" = FIELD("SEPA Instruction Priority Text"), "Transfer Date" = FIELD("Transfer Date"), "SEPA Batch Booking" = FIELD("SEPA Batch Booking"), "SEPA Charge Bearer Text" = FIELD("SEPA Charge Bearer Text");
-                        LinkTable = PaymentExportDataGroup;
+                        LinkFields = "Sender Bank BIC" = field("Sender Bank BIC"), "SEPA Instruction Priority Text" = field("SEPA Instruction Priority Text"), "Transfer Date" = field("Transfer Date"), "SEPA Batch Booking" = field("SEPA Batch Booking"), "SEPA Charge Bearer Text" = field("SEPA Charge Bearer Text");
+                        LinkTable = paymentexportdatagroup;
                         XmlName = 'CdtTrfTxInf';
                         UseTemporary = true;
                         textelement(PmtId)
                         {
-                            fieldelement(InstrId; PaymentExportData."End-to-End ID")
+                            fieldelement(InstrId; paymentexportdata."End-to-End ID")
                             {
                             }
-                            fieldelement(EndToEndId; PaymentExportData."End-to-End ID")
+                            fieldelement(EndToEndId; paymentexportdata."End-to-End ID")
                             {
                             }
                         }
@@ -177,21 +177,21 @@ xmlport 50002 "SEPA CT pain.001.001.03 HB"
                             }
                             textelement(CtgyPurp)
                             {
-                                fieldelement(Cd; PaymentExportData."Category Purpose")
+                                fieldelement(Cd; paymentexportdata."Category Purpose")
                                 {
                                 }
                             }
                         }
                         textelement(Amt)
                         {
-                            fieldelement(InstdAmt; PaymentExportData.Amount)
+                            fieldelement(InstdAmt; paymentexportdata.Amount)
                             {
-                                fieldattribute(Ccy; PaymentExportData."Currency Code")
+                                fieldattribute(Ccy; paymentexportdata."Currency Code")
                                 {
                                 }
                             }
                         }
-                        fieldelement(ChrgBr; PaymentExportDataGroup."SEPA Charge Bearer Text")
+                        fieldelement(ChrgBr; paymentexportdatagroup."SEPA Charge Bearer Text")
                         {
                         }
                         textelement(CdtrAgt)
@@ -199,47 +199,47 @@ xmlport 50002 "SEPA CT pain.001.001.03 HB"
                             textelement(cdtragtfininstnid)
                             {
                                 XmlName = 'FinInstnId';
-                                fieldelement(BIC; PaymentExportData."Recipient Bank BIC")
+                                fieldelement(BIC; paymentexportdata."Recipient Bank BIC")
                                 {
-                                    FieldValidate = yes;
+                                    FieldValidate = Yes;
                                 }
                             }
                         }
                         textelement(Cdtr)
                         {
-                            fieldelement(Nm; PaymentExportData."Recipient Name")
+                            fieldelement(Nm; paymentexportdata."Recipient Name")
                             {
                             }
                             textelement(cdtrpstladr)
                             {
                                 XmlName = 'PstlAdr';
-                                fieldelement(Ctry; PaymentExportData."Recipient Country/Region Code")
+                                fieldelement(Ctry; paymentexportdata."Recipient Country/Region Code")
                                 {
 
                                     trigger OnBeforePassField();
                                     begin
-                                        if PaymentExportData."Recipient Country/Region Code" = '' then
-                                            currXMLport.SKIP;
+                                        if paymentexportdata."Recipient Country/Region Code" = '' then
+                                            currXMLport.Skip;
                                     end;
                                 }
-                                fieldelement(AdrLine; PaymentExportData."Recipient Address")
+                                fieldelement(AdrLine; paymentexportdata."Recipient Address")
                                 {
 
                                     trigger OnBeforePassField();
                                     begin
-                                        if PaymentExportData."Recipient Address" = '' then
-                                            currXMLport.SKIP;
+                                        if paymentexportdata."Recipient Address" = '' then
+                                            currXMLport.Skip;
                                     end;
                                 }
 
                                 trigger OnBeforePassVariable();
                                 begin
-                                    if (PaymentExportData."Recipient Address" = '') and
-                                       (PaymentExportData."Recipient Post Code" = '') and
-                                       (PaymentExportData."Recipient City" = '') and
-                                       (PaymentExportData."Recipient Country/Region Code" = '')
+                                    if (paymentexportdata."Recipient Address" = '') and
+                                       (paymentexportdata."Recipient Post Code" = '') and
+                                       (paymentexportdata."Recipient City" = '') and
+                                       (paymentexportdata."Recipient Country/Region Code" = '')
                                     then
-                                        currXMLport.SKIP;
+                                        currXMLport.Skip;
                                 end;
                             }
                         }
@@ -248,9 +248,9 @@ xmlport 50002 "SEPA CT pain.001.001.03 HB"
                             textelement(cdtracctid)
                             {
                                 XmlName = 'Id';
-                                fieldelement(IBAN; PaymentExportData."Recipient Bank Acc. No.")
+                                fieldelement(IBAN; paymentexportdata."Recipient Bank Acc. No.")
                                 {
-                                    FieldValidate = yes;
+                                    FieldValidate = Yes;
                                     MaxOccurs = Once;
                                     MinOccurs = Once;
                                 }
@@ -271,22 +271,22 @@ xmlport 50002 "SEPA CT pain.001.001.03 HB"
 
                                 trigger OnBeforePassVariable();
                                 begin
-                                    if RemittanceText2 = '' then
-                                        currXMLport.SKIP;
+                                    if remittancetext2 = '' then
+                                        currXMLport.Skip;
                                 end;
                             }
 
                             trigger OnBeforePassVariable();
                             begin
-                                RemittanceText1 := '';
-                                RemittanceText2 := '';
-                                TempPaymentExportRemittanceText.SETRANGE("Pmt. Export Data Entry No.", PaymentExportData."Entry No.");
-                                if not TempPaymentExportRemittanceText.FINDSET then
-                                    currXMLport.SKIP;
-                                RemittanceText1 := COPYSTR(rG_CompanyInfo."Name" + '-' + cu_Convert.Pc2Elot(TempPaymentExportRemittanceText.Text), 1, 140);
-                                if TempPaymentExportRemittanceText.NEXT = 0 then
+                                remittancetext1 := '';
+                                remittancetext2 := '';
+                                TempPaymentExportRemittanceText.SetRange("Pmt. Export Data Entry No.", paymentexportdata."Entry No.");
+                                if not TempPaymentExportRemittanceText.FindSet then
+                                    currXMLport.Skip;
+                                remittancetext1 := CopyStr(rG_CompanyInfo.Name + '-' + cu_Convert.Pc2Elot(TempPaymentExportRemittanceText.Text), 1, 140);
+                                if TempPaymentExportRemittanceText.Next = 0 then
                                     exit;
-                                RemittanceText2 := COPYSTR(rG_CompanyInfo."Name" + '-' + cu_Convert.Pc2Elot(TempPaymentExportRemittanceText.Text), 1, 140);
+                                remittancetext2 := CopyStr(rG_CompanyInfo.Name + '-' + cu_Convert.Pc2Elot(TempPaymentExportRemittanceText.Text), 1, 140);
                             end;
                         }
                     }
@@ -294,8 +294,8 @@ xmlport 50002 "SEPA CT pain.001.001.03 HB"
 
                 trigger OnAfterGetRecord();
                 begin
-                    if not PaymentExportData.GetPreserveNonLatinCharacters then
-                        PaymentExportData.CompanyInformationConvertToLatin(CompanyInformation);
+                    if not paymentexportdata.GetPreserveNonLatinCharacters then
+                        paymentexportdata.CompanyInformationConvertToLatin(companyinformation);
                 end;
             }
         }
@@ -328,155 +328,155 @@ xmlport 50002 "SEPA CT pain.001.001.03 HB"
     var
         SEPACTFillExportBuffer: Codeunit "SEPA CT-Fill Export Buffer";
         PaymentGroupNo: Integer;
-        rL_BankAccount: record "Bank Account";
+        rL_BankAccount: Record "Bank Account";
         rL_GenJournalLine: Record "Gen. Journal Line";
-        rL_Vendor: Record VEndor;
+        rL_Vendor: Record Vendor;
         rL_Customer: Record Customer;
         rL_VendorBankAccount: Record "Vendor Bank Account";
         rL_CustomerBankAccount: Record "Customer Bank Account";
         rL_GLSetup: Record "General Ledger Setup";
     begin
-        SEPACTFillExportBuffer.FillExportBuffer("Gen. Journal Line", PaymentExportData);
+        SEPACTFillExportBuffer.FillExportBuffer("Gen. Journal Line", paymentexportdata);
 
-        rL_GLSetup.GET;
-        PaymentExportData.RESET;
-        if PaymentExportData.FindSet() then begin
+        rL_GLSetup.Get;
+        paymentexportdata.Reset;
+        if paymentexportdata.FindSet() then begin
             // WITH PaymentExportData DO BEGIN
             //Message(Format(PaymentExportData.Count));
             repeat
-                rL_Customer.RESET;
-                rL_Customer.SetFilter(Name, PaymentExportData."Recipient Name");
-                rL_Customer.SetFilter(Address, PaymentExportData."Recipient Address");
+                rL_Customer.Reset;
+                rL_Customer.SetFilter(Name, paymentexportdata."Recipient Name");
+                rL_Customer.SetFilter(Address, paymentexportdata."Recipient Address");
                 if rL_Customer.FindSet then begin
                     if rL_Customer.Count > 1 then begin
                         Error('More than one customer found');
                     end;
 
-                    rL_CustomerBankAccount.RESET;
+                    rL_CustomerBankAccount.Reset;
                     rL_CustomerBankAccount.SetFilter("Customer No.", rL_Customer."No.");
-                    rL_CustomerBankAccount.SetFilter(IBAN, PaymentExportData."Recipient Bank Acc. No.");
-                    IF rL_CustomerBankAccount.FindFirst THEN BEGIN
+                    rL_CustomerBankAccount.SetFilter(IBAN, paymentexportdata."Recipient Bank Acc. No.");
+                    if rL_CustomerBankAccount.FindFirst then begin
                         //+TAL0.5
-                        PaymentExportData."Intermediary Bank Swift Code" := rL_CustomerBankAccount."Intermediary Bank Swift Code";
-                        PaymentExportData."Sorting Code" := rL_CustomerBankAccount."Sorting Code";
-                        PaymentExportData."R Correspondent Swift Code" := rL_CustomerBankAccount."R Correspondent Swift Code";
+                        paymentexportdata."Intermediary Bank Swift Code" := rL_CustomerBankAccount."Intermediary Bank Swift Code";
+                        paymentexportdata."Sorting Code" := rL_CustomerBankAccount."Sorting Code";
+                        paymentexportdata."R Correspondent Swift Code" := rL_CustomerBankAccount."R Correspondent Swift Code";
                         //PaymentExportData."R Correspondent Bank Name" := cu_Convert.Pc2Elot(rL_CustomerBankAccount."R Correspondent Bank Name");
-                        PaymentExportData."R Correspondent Bank Name" := rL_CustomerBankAccount."R Correspondent Bank Name";
+                        paymentexportdata."R Correspondent Bank Name" := rL_CustomerBankAccount."R Correspondent Bank Name";
                         //PaymentExportData."R Correspondent Address 1" := cu_Convert.Pc2Elot(rL_CustomerBankAccount."R Correspondent Address 1");
-                        PaymentExportData."R Correspondent Address 1" := rL_CustomerBankAccount."R Correspondent Address 1";
+                        paymentexportdata."R Correspondent Address 1" := rL_CustomerBankAccount."R Correspondent Address 1";
                         //PaymentExportData."R Correspondent Address 2" := cu_Convert.Pc2Elot(rL_CustomerBankAccount."R Correspondent Address 2");
-                        PaymentExportData."R Correspondent Address 2" := rL_CustomerBankAccount."R Correspondent Address 2";
+                        paymentexportdata."R Correspondent Address 2" := rL_CustomerBankAccount."R Correspondent Address 2";
                         //PaymentExportData."R Correspondent Address 3" := cu_Convert.Pc2Elot(rL_CustomerBankAccount."R Correspondent Address 3");
-                        PaymentExportData."R Correspondent Address 3" := rL_CustomerBankAccount."R Correspondent Address 3";
-                        PaymentExportData."Thrd R Institution Swift Code" := rL_CustomerBankAccount."Thrd R Institution Swift Code";
+                        paymentexportdata."R Correspondent Address 3" := rL_CustomerBankAccount."R Correspondent Address 3";
+                        paymentexportdata."Thrd R Institution Swift Code" := rL_CustomerBankAccount."Thrd R Institution Swift Code";
                         //PaymentExportData."Thrd R Institution Bank Name" := cu_Convert.Pc2Elot(rL_CustomerBankAccount."Thrd R Institution Bank Name");
-                        PaymentExportData."Thrd R Institution Bank Name" := rL_CustomerBankAccount."Thrd R Institution Bank Name";
+                        paymentexportdata."Thrd R Institution Bank Name" := rL_CustomerBankAccount."Thrd R Institution Bank Name";
                         //PaymentExportData."Thr R Institution RC Address 1" := cu_Convert.Pc2Elot(rL_CustomerBankAccount."Thr R Institution RC Address 1");
-                        PaymentExportData."Thr R Institution RC Address 1" := rL_CustomerBankAccount."Thr R Institution RC Address 1";
+                        paymentexportdata."Thr R Institution RC Address 1" := rL_CustomerBankAccount."Thr R Institution RC Address 1";
                         //PaymentExportData."Thr R Institution RC Address 2" := cu_Convert.Pc2Elot(rL_CustomerBankAccount."Thr R Institution RC Address 2");
-                        PaymentExportData."Thr R Institution RC Address 2" := rL_CustomerBankAccount."Thr R Institution RC Address 2";
+                        paymentexportdata."Thr R Institution RC Address 2" := rL_CustomerBankAccount."Thr R Institution RC Address 2";
                         //PaymentExportData."Thr R Institution RC Address 3" := cu_Convert.Pc2Elot(rL_CustomerBankAccount."Thr R Institution RC Address 3");
-                        PaymentExportData."Thr R Institution RC Address 3" := rL_CustomerBankAccount."Thr R Institution RC Address 3";
+                        paymentexportdata."Thr R Institution RC Address 3" := rL_CustomerBankAccount."Thr R Institution RC Address 3";
                         //-TAL0.5
-                    END;
+                    end;
 
-                end ELSE BEGIN
-                    rL_Vendor.RESET;
-                    rL_Vendor.SetFilter(Name, PaymentExportData."Recipient Name");
-                    rL_Vendor.SetFilter(Address, PaymentExportData."Recipient Address");
+                end else begin
+                    rL_Vendor.Reset;
+                    rL_Vendor.SetFilter(Name, paymentexportdata."Recipient Name");
+                    rL_Vendor.SetFilter(Address, paymentexportdata."Recipient Address");
                     if rL_Vendor.FindSet then begin
                         if rL_Vendor.Count > 1 then begin
                             Error('More than one vendor found');
                         end;
 
-                        rL_VendorBankAccount.RESET;
+                        rL_VendorBankAccount.Reset;
                         rL_VendorBankAccount.SetFilter("Vendor No.", rL_Vendor."No.");
-                        rL_VendorBankAccount.SetFilter(IBAN, PaymentExportData."Recipient Bank Acc. No.");
-                        IF rL_VendorBankAccount.FindFirst THEN BEGIN
+                        rL_VendorBankAccount.SetFilter(IBAN, paymentexportdata."Recipient Bank Acc. No.");
+                        if rL_VendorBankAccount.FindFirst then begin
                             //+TAL0.5
-                            PaymentExportData."Intermediary Bank Swift Code" := rL_VendorBankAccount."Intermediary Bank Swift Code";
-                            PaymentExportData."Sorting Code" := rL_VendorBankAccount."Sorting Code";
-                            PaymentExportData."R Correspondent Swift Code" := rL_VendorBankAccount."R Correspondent Swift Code";
+                            paymentexportdata."Intermediary Bank Swift Code" := rL_VendorBankAccount."Intermediary Bank Swift Code";
+                            paymentexportdata."Sorting Code" := rL_VendorBankAccount."Sorting Code";
+                            paymentexportdata."R Correspondent Swift Code" := rL_VendorBankAccount."R Correspondent Swift Code";
                             //PaymentExportData."R Correspondent Bank Name" := cu_Convert.Pc2Elot(rL_VendorBankAccount."R Correspondent Bank Name");
-                            PaymentExportData."R Correspondent Bank Name" := rL_VendorBankAccount."R Correspondent Bank Name";
+                            paymentexportdata."R Correspondent Bank Name" := rL_VendorBankAccount."R Correspondent Bank Name";
                             //PaymentExportData."R Correspondent Address 1" := cu_Convert.Pc2Elot(rL_VendorBankAccount."R Correspondent Address 1");
-                            PaymentExportData."R Correspondent Address 1" := rL_VendorBankAccount."R Correspondent Address 1";
+                            paymentexportdata."R Correspondent Address 1" := rL_VendorBankAccount."R Correspondent Address 1";
                             //PaymentExportData."R Correspondent Address 2" := cu_Convert.Pc2Elot(rL_VendorBankAccount."R Correspondent Address 2");
-                            PaymentExportData."R Correspondent Address 2" := rL_VendorBankAccount."R Correspondent Address 2";
+                            paymentexportdata."R Correspondent Address 2" := rL_VendorBankAccount."R Correspondent Address 2";
                             //PaymentExportData."R Correspondent Address 3" := cu_Convert.Pc2Elot(rL_VendorBankAccount."R Correspondent Address 3");
-                            PaymentExportData."R Correspondent Address 3" := rL_VendorBankAccount."R Correspondent Address 3";
-                            PaymentExportData."Thrd R Institution Swift Code" := rL_VendorBankAccount."Thrd R Institution Swift Code";
+                            paymentexportdata."R Correspondent Address 3" := rL_VendorBankAccount."R Correspondent Address 3";
+                            paymentexportdata."Thrd R Institution Swift Code" := rL_VendorBankAccount."Thrd R Institution Swift Code";
                             //PaymentExportData."Thrd R Institution Bank Name" := cu_Convert.Pc2Elot(rL_VendorBankAccount."Thrd R Institution Bank Name");
-                            PaymentExportData."Thrd R Institution Bank Name" := rL_VendorBankAccount."Thrd R Institution Bank Name";
+                            paymentexportdata."Thrd R Institution Bank Name" := rL_VendorBankAccount."Thrd R Institution Bank Name";
                             //PaymentExportData."Thr R Institution RC Address 1" := cu_Convert.Pc2Elot(rL_VendorBankAccount."Thr R Institution RC Address 1");
-                            PaymentExportData."Thr R Institution RC Address 1" := rL_VendorBankAccount."Thr R Institution RC Address 1";
+                            paymentexportdata."Thr R Institution RC Address 1" := rL_VendorBankAccount."Thr R Institution RC Address 1";
                             //PaymentExportData."Thr R Institution RC Address 2" := cu_Convert.Pc2Elot(rL_VendorBankAccount."Thr R Institution RC Address 2");
-                            PaymentExportData."Thr R Institution RC Address 2" := rL_VendorBankAccount."Thr R Institution RC Address 2";
+                            paymentexportdata."Thr R Institution RC Address 2" := rL_VendorBankAccount."Thr R Institution RC Address 2";
                             //PaymentExportData."Thr R Institution RC Address 3" := cu_Convert.Pc2Elot(rL_VendorBankAccount."Thr R Institution RC Address 3");
-                            PaymentExportData."Thr R Institution RC Address 3" := rL_VendorBankAccount."Thr R Institution RC Address 3";
+                            paymentexportdata."Thr R Institution RC Address 3" := rL_VendorBankAccount."Thr R Institution RC Address 3";
                             //-TAL0.5
-                        END;
+                        end;
 
                     end;
-                END;
+                end;
 
 
 
                 //convert characters
                 //PaymentExportData."Recipient Name" := COPYSTR(cu_Convert.Pc2Elot(PaymentExportData."Recipient Name"), 1, 35);
-                PaymentExportData."Recipient Name" := COPYSTR(PaymentExportData."Recipient Name", 1, 35);
+                paymentexportdata."Recipient Name" := CopyStr(paymentexportdata."Recipient Name", 1, 35);
                 //PaymentExportData."Recipient Address" := COPYSTR(cu_Convert.Pc2Elot(PaymentExportData."Recipient Address"), 1, 35);
-                PaymentExportData."Recipient Address" := COPYSTR(PaymentExportData."Recipient Address", 1, 35);
+                paymentexportdata."Recipient Address" := CopyStr(paymentexportdata."Recipient Address", 1, 35);
                 //PaymentExportData."Recipient Address 2" := COPYSTR(cu_Convert.Pc2Elot(PaymentExportData."Recipient Address 2"), 1, 35);
-                PaymentExportData."Recipient Address 2" := COPYSTR(PaymentExportData."Recipient Address 2", 1, 35);
+                paymentexportdata."Recipient Address 2" := CopyStr(paymentexportdata."Recipient Address 2", 1, 35);
                 //PaymentExportData."Recipient City" := COPYSTR(cu_Convert.Pc2Elot(PaymentExportData."Recipient City"), 1, 35);
-                PaymentExportData."Recipient City" := COPYSTR(PaymentExportData."Recipient City", 1, 35);
+                paymentexportdata."Recipient City" := CopyStr(paymentexportdata."Recipient City", 1, 35);
                 //PaymentExportData."Recipient County" := cu_Convert.Pc2Elot(PaymentExportData."Recipient County");
-                PaymentExportData."Recipient County" := PaymentExportData."Recipient County";
+                paymentexportdata."Recipient County" := paymentexportdata."Recipient County";
                 //PaymentExportData."Recipient Post Code" := cu_Convert.Pc2Elot(PaymentExportData."Recipient Post Code");
-                PaymentExportData."Recipient Post Code" := PaymentExportData."Recipient Post Code";
+                paymentexportdata."Recipient Post Code" := paymentexportdata."Recipient Post Code";
 
-                rL_BankAccount.GET(PaymentExportData."Sender Bank Account Code");
-                rL_BankAccount.testfield("Bank Transfer Company Code");
-                PaymentExportData."Bank Transfer Company Code" := rL_BankAccount."Bank Transfer Company Code";
-                PaymentExportData."Category Purpose" := 'SUPP'; //TempGenJnlLine."Reason Code";
-                PaymentExportData.SetPreserveNonLatinCharacters(true);
+                rL_BankAccount.Get(paymentexportdata."Sender Bank Account Code");
+                rL_BankAccount.TestField("Bank Transfer Company Code");
+                paymentexportdata."Bank Transfer Company Code" := rL_BankAccount."Bank Transfer Company Code";
+                paymentexportdata."Category Purpose" := 'SUPP'; //TempGenJnlLine."Reason Code";
+                paymentexportdata.SetPreserveNonLatinCharacters(true);
 
                 //+TAL0.1   
-                IF rL_BankAccount."Currency Code" = '' THEN BEGIN
-                    PaymentExportData."Sender Bank Account Currency" := rL_GLSetup."LCY Code";
-                END ELSE BEGIN
-                    PaymentExportData."Sender Bank Account Currency" := rL_BankAccount."Currency Code";
-                END;
+                if rL_BankAccount."Currency Code" = '' then begin
+                    paymentexportdata."Sender Bank Account Currency" := rL_GLSetup."LCY Code";
+                end else begin
+                    paymentexportdata."Sender Bank Account Currency" := rL_BankAccount."Currency Code";
+                end;
                 //-TAL0.1  
-                PaymentExportData.Modify();
+                paymentexportdata.Modify();
 
-            until PaymentExportData.Next = 0;
+            until paymentexportdata.Next = 0;
         end;
 
         //end;
-        rG_CompanyInfo.GET;
+        rG_CompanyInfo.Get;
 
-        PaymentExportData.GetRemittanceTexts(TempPaymentExportRemittanceText);
+        paymentexportdata.GetRemittanceTexts(TempPaymentExportRemittanceText);
 
-        ServiceLevel := 'SEPA';
-        ServiceLevel2 := 'SEPA';
+        servicelevel := 'SEPA';
+        servicelevel2 := 'SEPA';
         //CategoryPurpose:='SUPP';
-        CompanyCode := PaymentExportData."Bank Transfer Company Code";
-        CompanyCode2 := PaymentExportData."Bank Transfer Company Code";
+        companycode := paymentexportdata."Bank Transfer Company Code";
+        companycode2 := paymentexportdata."Bank Transfer Company Code";
 
-        NoOfTransfers := FORMAT(PaymentExportData.COUNT);
-        MessageID := PaymentExportData."Message ID";
-        CreatedDateTime := FORMAT(CURRENTDATETIME, 19, 9);
-        PaymentExportData.CALCSUMS(Amount);
-        ControlSum := FORMAT(PaymentExportData.Amount, 0, 9);
+        nooftransfers := Format(paymentexportdata.Count);
+        messageid := paymentexportdata."Message ID";
+        createddatetime := Format(CurrentDateTime, 19, 9);
+        paymentexportdata.CalcSums(Amount);
+        controlsum := Format(paymentexportdata.Amount, 0, 9);
 
-        PaymentExportData.SETCURRENTKEY(
+        paymentexportdata.SetCurrentKey(
           "Sender Bank BIC", "SEPA Instruction Priority Text", "Transfer Date",
           "SEPA Batch Booking", "SEPA Charge Bearer Text");
 
-        if not PaymentExportData.FINDSET then
-            ERROR(NoDataToExportErr);
+        if not paymentexportdata.FindSet then
+            Error(NoDataToExportErr);
 
         InitPmtGroup;
         repeat
@@ -484,38 +484,38 @@ xmlport 50002 "SEPA CT pain.001.001.03 HB"
                 InsertPmtGroup(PaymentGroupNo);
                 InitPmtGroup;
             end;
-            PaymentExportDataGroup."Line No." += 1;
-            PaymentExportDataGroup.Amount += PaymentExportData.Amount;
-        until PaymentExportData.NEXT = 0;
+            paymentexportdatagroup."Line No." += 1;
+            paymentexportdatagroup.Amount += paymentexportdata.Amount;
+        until paymentexportdata.Next = 0;
         InsertPmtGroup(PaymentGroupNo);
     end;
 
     local procedure IsNewGroup(): Boolean;
     begin
         exit(
-          (PaymentExportData."Sender Bank BIC" <> PaymentExportDataGroup."Sender Bank BIC") or
-          (PaymentExportData."SEPA Instruction Priority Text" <> PaymentExportDataGroup."SEPA Instruction Priority Text") or
-          (PaymentExportData."Transfer Date" <> PaymentExportDataGroup."Transfer Date") or
-          (PaymentExportData."SEPA Batch Booking" <> PaymentExportDataGroup."SEPA Batch Booking") or
-          (PaymentExportData."SEPA Charge Bearer Text" <> PaymentExportDataGroup."SEPA Charge Bearer Text"));
+          (paymentexportdata."Sender Bank BIC" <> paymentexportdatagroup."Sender Bank BIC") or
+          (paymentexportdata."SEPA Instruction Priority Text" <> paymentexportdatagroup."SEPA Instruction Priority Text") or
+          (paymentexportdata."Transfer Date" <> paymentexportdatagroup."Transfer Date") or
+          (paymentexportdata."SEPA Batch Booking" <> paymentexportdatagroup."SEPA Batch Booking") or
+          (paymentexportdata."SEPA Charge Bearer Text" <> paymentexportdatagroup."SEPA Charge Bearer Text"));
     end;
 
     local procedure InitPmtGroup();
     begin
-        PaymentExportDataGroup := PaymentExportData;
-        PaymentExportDataGroup."Line No." := 0; // used for counting transactions within group
-        PaymentExportDataGroup.Amount := 0; // used for summarizing transactions within group
+        paymentexportdatagroup := paymentexportdata;
+        paymentexportdatagroup."Line No." := 0; // used for counting transactions within group
+        paymentexportdatagroup.Amount := 0; // used for summarizing transactions within group
     end;
 
     local procedure InsertPmtGroup(var PaymentGroupNo: Integer);
     begin
         PaymentGroupNo += 1;
-        PaymentExportDataGroup."Entry No." := PaymentGroupNo;
-        PaymentExportDataGroup."Payment Information ID" :=
-          COPYSTR(
-            STRSUBSTNO('%1/%2', PaymentExportData."Message ID", PaymentGroupNo),
-            1, MAXSTRLEN(PaymentExportDataGroup."Payment Information ID"));
-        PaymentExportDataGroup.INSERT;
+        paymentexportdatagroup."Entry No." := PaymentGroupNo;
+        paymentexportdatagroup."Payment Information ID" :=
+          CopyStr(
+            StrSubstNo('%1/%2', paymentexportdata."Message ID", PaymentGroupNo),
+            1, MaxStrLen(paymentexportdatagroup."Payment Information ID"));
+        paymentexportdatagroup.Insert;
     end;
 }
 

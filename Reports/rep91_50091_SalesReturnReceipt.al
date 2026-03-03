@@ -3,12 +3,13 @@ report 50091 "Sales - Return Receipt FFH"
     DefaultLayout = RDLC;
     RDLCLayout = './Layouts/rep91_50091_SalesReturnReceipt.rdlc';
     Caption = 'Sales - Return Receipt';
+    ApplicationArea = All;
 
     dataset
     {
         dataitem("Return Receipt Header"; "Return Receipt Header")
         {
-            DataItemTableView = SORTING("No.");
+            DataItemTableView = sorting("No.");
             RequestFilterFields = "No.", "Sell-to Customer No.", "No. Printed";
             RequestFilterHeading = 'Posted Return Receipt';
             column(No_ReturnRcptHeader; "No.")
@@ -52,10 +53,10 @@ report 50091 "Sales - Return Receipt FFH"
             }
             dataitem(CopyLoop; "Integer")
             {
-                DataItemTableView = SORTING(Number);
+                DataItemTableView = sorting(Number);
                 dataitem(PageLoop; "Integer")
                 {
-                    DataItemTableView = SORTING(Number) WHERE(Number = CONST(1));
+                    DataItemTableView = sorting(Number) where(Number = const(1));
                     column(CompanyInfo1Picture; CompanyInfo1.Picture)
                     {
                     }
@@ -240,7 +241,7 @@ report 50091 "Sales - Return Receipt FFH"
                     dataitem(DimensionLoop1; "Integer")
                     {
                         DataItemLinkReference = "Return Receipt Header";
-                        DataItemTableView = SORTING(Number) WHERE(Number = FILTER(1 ..));
+                        DataItemTableView = sorting(Number) where(Number = filter(1 ..));
                         column(DimText; DimText)
                         {
                         }
@@ -287,9 +288,9 @@ report 50091 "Sales - Return Receipt FFH"
                     }
                     dataitem("Return Receipt Line"; "Return Receipt Line")
                     {
-                        DataItemLink = "Document No." = FIELD("No.");
+                        DataItemLink = "Document No." = field("No.");
                         DataItemLinkReference = "Return Receipt Header";
-                        DataItemTableView = SORTING("Document No.", "Line No.");
+                        DataItemTableView = sorting("Document No.", "Line No.");
                         column(ShowInternalInfo; ShowInternalInfo)
                         {
                         }
@@ -338,7 +339,7 @@ report 50091 "Sales - Return Receipt FFH"
 
                         dataitem(DimensionLoop2; "Integer")
                         {
-                            DataItemTableView = SORTING(Number) WHERE(Number = FILTER(1 ..));
+                            DataItemTableView = sorting(Number) where(Number = filter(1 ..));
                             column(DimText1; DimText)
                             {
                             }
@@ -426,11 +427,11 @@ report 50091 "Sales - Return Receipt FFH"
 
                     dataitem(Total; "Integer")
                     {
-                        DataItemTableView = SORTING(Number) WHERE(Number = CONST(1));
+                        DataItemTableView = sorting(Number) where(Number = const(1));
                     }
                     dataitem(Total2; "Integer")
                     {
-                        DataItemTableView = SORTING(Number) WHERE(Number = CONST(1));
+                        DataItemTableView = sorting(Number) where(Number = const(1));
                         column(BilltoCustNo_ReturnRcptHdr; "Return Receipt Header"."Bill-to Customer No.")
                         {
                         }
@@ -481,7 +482,7 @@ report 50091 "Sales - Return Receipt FFH"
                 trigger OnPostDataItem()
                 begin
                     if not IsReportInPreviewMode then
-                        CODEUNIT.Run(CODEUNIT::"Return Receipt - Printed", "Return Receipt Header");
+                        Codeunit.Run(Codeunit::"Return Receipt - Printed", "Return Receipt Header");
                 end;
 
                 trigger OnPreDataItem()
@@ -518,7 +519,7 @@ report 50091 "Sales - Return Receipt FFH"
 
                 DimSetEntry1.SetRange("Dimension Set ID", "Dimension Set ID");
 
-                rG_Customer.GET("Sell-to Customer No.");
+                rG_Customer.Get("Sell-to Customer No.");
                 if not rG_Customer."Show GlobalGab COC No." then begin
                     CompanyInfo."GlobalGab COC No." := '';
                 end;
@@ -537,7 +538,7 @@ report 50091 "Sales - Return Receipt FFH"
 
         layout
         {
-            area(content)
+            area(Content)
             {
                 group(Options)
                 {
@@ -569,7 +570,8 @@ report 50091 "Sales - Return Receipt FFH"
                     }
                     field("Hide GlobalGAP COC"; vG_HideGlobalGapCOC)
                     {
-                        ApplicationArea = all;
+                        ApplicationArea = All;
+                        ToolTip = 'Specifies the value of the vG_HideGlobalGapCOC field.';
                     }
                 }
             }
@@ -609,7 +611,7 @@ report 50091 "Sales - Return Receipt FFH"
         if LogInteraction and not IsReportInPreviewMode then
             if "Return Receipt Header".FindSet then
                 repeat
-                    SegManagement.LogDocument(20, "Return Receipt Header"."No.", 0, 0, DATABASE::Customer,
+                    SegManagement.LogDocument(20, "Return Receipt Header"."No.", 0, 0, Database::Customer,
                       "Return Receipt Header"."Bill-to Customer No.", "Return Receipt Header"."Salesperson Code",
                       "Return Receipt Header"."Campaign No.", "Return Receipt Header"."Posting Description", '');
                 until "Return Receipt Header".Next() = 0;
@@ -680,7 +682,7 @@ report 50091 "Sales - Return Receipt FFH"
 
         zitem: Record Item;
         zshelfno: Code[20];
-        vG_ItemReferenceNo: code[50];
+        vG_ItemReferenceNo: Code[50];
 
         vG_HideGlobalGapCOC: Boolean;
 
@@ -708,19 +710,17 @@ report 50091 "Sales - Return Receipt FFH"
 
     local procedure FormatDocumentFields(ReturnReceiptHeader: Record "Return Receipt Header")
     begin
-        with ReturnReceiptHeader do begin
-            FormatDocument.SetSalesPerson(SalesPurchPerson, "Salesperson Code", SalesPersonText);
+        FormatDocument.SetSalesPerson(SalesPurchPerson, ReturnReceiptHeader."Salesperson Code", SalesPersonText);
 
-            ReferenceText := FormatDocument.SetText("Your Reference" <> '', FieldCaption("Your Reference"));
-        end;
+        ReferenceText := FormatDocument.SetText(ReturnReceiptHeader."Your Reference" <> '', ReturnReceiptHeader.FieldCaption("Your Reference"));
     end;
 
-    [IntegrationEvent(TRUE, false)]
+    [IntegrationEvent(true, false)]
     local procedure OnAfterInitReport()
     begin
     end;
 
-    [IntegrationEvent(TRUE, false)]
+    [IntegrationEvent(true, false)]
     local procedure OnAfterPostDataItem(var ReturnReceiptHeader: Record "Return Receipt Header")
     begin
     end;

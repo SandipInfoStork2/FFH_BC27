@@ -5,15 +5,16 @@ pageextension 50246 SalesQuoteExt extends "Sales Quote"
         // Add changes to page layout here
         addafter("External Document No.")
         {
-            field("Week No."; "Week No.")
+            field("Week No."; Rec."Week No.")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Week No. field.';
 
                 trigger OnLookup(var Text: Text): Boolean
                 var
                     myInt: Integer;
                 begin
-                    page.Run(page::"Lidl Lot Sample");
+                    Page.Run(Page::"Lidl Lot Sample");
                 end;
             }
         }
@@ -25,7 +26,7 @@ pageextension 50246 SalesQuoteExt extends "Sales Quote"
                 ApplicationArea = Basic, Suite;
                 Editable = SalesLinesAvailable;
                 Enabled = SalesLinesAvailable;
-                SubPageLink = "Document No." = FIELD("No.");
+                SubPageLink = "Document No." = field("No.");
                 UpdatePropagation = Both;
             }
 
@@ -34,7 +35,7 @@ pageextension 50246 SalesQuoteExt extends "Sales Quote"
                 ApplicationArea = Basic, Suite;
                 Editable = SalesLinesAvailable;
                 Enabled = SalesLinesAvailable;
-                SubPageLink = "Document No." = FIELD("No.");
+                SubPageLink = "Document No." = field("No.");
                 UpdatePropagation = Both;
             }
 
@@ -54,7 +55,7 @@ pageextension 50246 SalesQuoteExt extends "Sales Quote"
         {
             group(PriceDates)
             {
-                caption = 'Previous Price Dates';
+                Caption = 'Previous Price Dates';
                 /*
                 field(vG_PriceStartDate; vG_PriceStartDate)
                 {
@@ -86,14 +87,14 @@ pageextension 50246 SalesQuoteExt extends "Sales Quote"
                 }
                 */
 
-                field("Price Start Date"; "Price Start Date")
+                field("Price Start Date"; Rec."Price Start Date")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     ToolTip = 'Custom: Get Costing Price Previous Week - Start Date';
                 }
-                field("Price End Date"; "Price End Date")
+                field("Price End Date"; Rec."Price End Date")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     ToolTip = 'Custom: Get Costing Price Previous Week - End Date';
                 }
 
@@ -102,15 +103,15 @@ pageextension 50246 SalesQuoteExt extends "Sales Quote"
 
             group(UpdatePriceDates)
             {
-                caption = 'Update Price Dates';
-                field("Price Update Start Date"; "Price Update Start Date")
+                Caption = 'Update Price Dates';
+                field("Price Update Start Date"; Rec."Price Update Start Date")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     ToolTip = 'Custom: Update Prices Previous Week - Start Date';
                 }
-                field("Price Update End Date"; "Price Update End Date")
+                field("Price Update End Date"; Rec."Price Update End Date")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     ToolTip = 'Custom: Update Prices Previous Week - End Date';
                 }
             }
@@ -192,11 +193,12 @@ pageextension 50246 SalesQuoteExt extends "Sales Quote"
         {
             action(ImportLidlHistory)
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 Caption = 'Import Lidl History';
                 Image = ImportExcel;
                 Promoted = true;
                 PromotedCategory = Process;
+                ToolTip = 'Executes the Import Lidl History action.';
 
                 trigger OnAction();
                 var
@@ -204,10 +206,10 @@ pageextension 50246 SalesQuoteExt extends "Sales Quote"
 
                     rL_SalesHeader: Record "Sales Header";
                 begin
-                    CLEAR(rL_SalesHeader);
-                    rL_SalesHeader.SETRANGE("Document Type", "Document Type");
-                    rL_SalesHeader.SETFILTER("No.", "No.");
-                    if rL_SalesHeader.FINDFIRST then begin
+                    Clear(rL_SalesHeader);
+                    rL_SalesHeader.SETRANGE("Document Type", Rec."Document Type");
+                    rL_SalesHeader.SETFILTER("No.", Rec."No.");
+                    if rL_SalesHeader.FindFirst then begin
                         Clear(cu_GeneralMgt);
                         cu_GeneralMgt.ImportLidlHistory(rL_SalesHeader);
                     end;
@@ -223,30 +225,32 @@ pageextension 50246 SalesQuoteExt extends "Sales Quote"
                 Promoted = true;
                 PromotedCategory = Process;
                 Image = Calculate;
+                ToolTip = 'Executes the Calculate Price Dates action.';
 
                 trigger OnAction()
                 var
                 begin
-                    TestField("Document Date");
-                    TestField("Requested Delivery Date");
-                    SQPriceDateCalculation();
+                    Rec.TestField("Document Date");
+                    Rec.TestField("Requested Delivery Date");
+                    Rec.SQPriceDateCalculation();
                 end;
             }
 
             action(ExportCompPrices)
             {
                 ApplicationArea = All;
-                caption = 'Export Lidl Quote';
+                Caption = 'Export Lidl Quote';
                 Image = ExportToExcel;
                 Promoted = true;
                 PromotedCategory = Process;
+                ToolTip = 'Executes the Export Lidl Quote action.';
 
                 trigger OnAction()
                 var
                     cu_GeneralMgt: Codeunit "General Mgt.";
                 begin
                     Clear(cu_GeneralMgt);
-                    cu_GeneralMgt.ExportLidlQuote("No.");
+                    cu_GeneralMgt.ExportLidlQuote(Rec."No.");
                 end;
             }
 
@@ -259,9 +263,9 @@ pageextension 50246 SalesQuoteExt extends "Sales Quote"
             var
                 myInt: Integer;
             begin
-                TestField("Requested Delivery Date");
-                TestField("Price Start Date");
-                TestField("Price End Date");
+                Rec.TestField("Requested Delivery Date");
+                Rec.TestField("Price Start Date");
+                Rec.TestField("Price End Date");
             end;
 
             trigger OnAfterAction()
@@ -274,7 +278,7 @@ pageextension 50246 SalesQuoteExt extends "Sales Quote"
                 SRSetup: Record "Sales & Receivables Setup";
             //rL_SalesLine: Record "Sales Line";
             begin
-                SRSetup.GET();
+                SRSetup.Get();
                 //Check 1
                 /*
                 rL_SalesLine."Price Previous Week Box" := 0;
@@ -293,17 +297,17 @@ pageextension 50246 SalesQuoteExt extends "Sales Quote"
                 //Check 2 Last 4 weaks
                 if SRSetup."Lidl Copy Quote History" then begin
 
-                    vL_DateFilterPrevious4Weeks := FORMAT(CalcDate('-4W', "Document Date")) + '..' + FORMAT(CalcDate('-1D', "Document Date")); //1.0.0.220
+                    vL_DateFilterPrevious4Weeks := Format(CalcDate('-4W', Rec."Document Date")) + '..' + Format(CalcDate('-1D', Rec."Document Date")); //1.0.0.220
                     LineSource := '-4W ' + vL_DateFilterPrevious4Weeks;
-                    addAdditionalLines(vL_DateFilterPrevious4Weeks, LineSource, "Sell-to Customer No.");
+                    addAdditionalLines(vL_DateFilterPrevious4Weeks, LineSource, Rec."Sell-to Customer No.");
 
                     //check 3 last year next 4 weeks
-                    PreviousYearDocumentDate := CalcDate('-1Y', "Document Date");
+                    PreviousYearDocumentDate := CalcDate('-1Y', Rec."Document Date");
                     PreviousYearEndDate := CalcDate('+4W', PreviousYearDocumentDate);
 
-                    vL_DateFilterNext4WeeksLastYear := Format(PreviousYearDocumentDate) + '..' + FORMAT(PreviousYearEndDate);
+                    vL_DateFilterNext4WeeksLastYear := Format(PreviousYearDocumentDate) + '..' + Format(PreviousYearEndDate);
                     LineSource := '+4W ' + vL_DateFilterNext4WeeksLastYear;
-                    addAdditionalLines(vL_DateFilterNext4WeeksLastYear, LineSource, "Sell-to Customer No.");
+                    addAdditionalLines(vL_DateFilterNext4WeeksLastYear, LineSource, Rec."Sell-to Customer No.");
                 end;
 
 
@@ -321,10 +325,11 @@ pageextension 50246 SalesQuoteExt extends "Sales Quote"
             action(SalesLinesMinus4W)
             {
                 ApplicationArea = All;
-                caption = 'Sales Quotes -4W,+4W Last Year';
+                Caption = 'Sales Quotes -4W,+4W Last Year';
                 Image = ExportToExcel;
                 Promoted = true;
                 PromotedCategory = Process;
+                ToolTip = 'Executes the Sales Quotes -4W,+4W Last Year action.';
 
                 trigger OnAction()
                 var
@@ -336,21 +341,21 @@ pageextension 50246 SalesQuoteExt extends "Sales Quote"
                     rL_SalesHeader: Record "Sales Header";
 
                 begin
-                    vL_DateFilterPrevious4Weeks := FORMAT(CalcDate('-4W', "Document Date")) + '..' + FORMAT(CalcDate('-1D', "Document Date")); //1.0.0.220
+                    vL_DateFilterPrevious4Weeks := Format(CalcDate('-4W', Rec."Document Date")) + '..' + Format(CalcDate('-1D', Rec."Document Date")); //1.0.0.220
 
-                    PreviousYearDocumentDate := CalcDate('-1Y', "Document Date");
+                    PreviousYearDocumentDate := CalcDate('-1Y', Rec."Document Date");
                     PreviousYearEndDate := CalcDate('+4W', PreviousYearDocumentDate);
 
-                    vL_DateFilterNext4WeeksLastYear := Format(PreviousYearDocumentDate) + '..' + FORMAT(PreviousYearEndDate);
+                    vL_DateFilterNext4WeeksLastYear := Format(PreviousYearDocumentDate) + '..' + Format(PreviousYearEndDate);
 
-                    rL_SalesHeader.RESET;
-                    rL_SalesHeader.SetRange("Document Type", "Document Type");
+                    rL_SalesHeader.Reset;
+                    rL_SalesHeader.SetRange("Document Type", Rec."Document Type");
                     rL_SalesHeader.SetFilter("Document Date", vL_DateFilterPrevious4Weeks + '|' + vL_DateFilterNext4WeeksLastYear);
-                    rL_SalesHeader.SetFilter("Sell-to Customer No.", "Sell-to Customer No.");
+                    rL_SalesHeader.SetFilter("Sell-to Customer No.", Rec."Sell-to Customer No.");
                     if rL_SalesHeader.FindSet() then begin
 
                     end;
-                    page.Run(page::"Sales Quotes", rL_SalesHeader);
+                    Page.Run(Page::"Sales Quotes", rL_SalesHeader);
 
 
                     /*
@@ -394,7 +399,7 @@ pageextension 50246 SalesQuoteExt extends "Sales Quote"
 
     local procedure SetSalesLinesAvailability()
     begin
-        SalesLinesAvailable := ("Sell-to Customer No." <> '') OR ("Sell-to Customer Templ. Code" <> '') OR ("Sell-to Contact No." <> '');
+        SalesLinesAvailable := (Rec."Sell-to Customer No." <> '') or (Rec."Sell-to Customer Templ. Code" <> '') or (Rec."Sell-to Contact No." <> '');
     end;
 
 
@@ -407,29 +412,29 @@ pageextension 50246 SalesQuoteExt extends "Sales Quote"
         vL_LineNo: Integer;
     begin
         //Message(pFilter);
-        rL_SalesHeader.RESET;
+        rL_SalesHeader.Reset;
         rL_SalesHeader.SetRange("Document Type", rL_SalesHeader."Document Type"::Quote);
         rL_SalesHeader.SetFilter("Document Date", pFilter);
         rL_SalesHeader.SetFilter("Sell-to Customer No.", pSelltoCustomerNo);
         if rL_SalesHeader.FindSet() then begin
             repeat
-                rL_SalesLine.RESET;
+                rL_SalesLine.Reset;
                 rL_SalesLine.SetRange("Document Type", rL_SalesHeader."Document Type");
                 rL_SalesLine.SetFilter("Document No.", rL_SalesHeader."No.");
                 rL_SalesLine.SetRange(Type, rL_SalesLine.Type::Item);
                 if rL_SalesLine.FindSet() then begin
                     repeat
-                        rL_SalesLineCurrent.RESET;
+                        rL_SalesLineCurrent.Reset;
                         rL_SalesLineCurrent.SetRange("Document Type", rL_SalesLineCurrent."Document Type"::Quote);
-                        rL_SalesLineCurrent.SetFilter("Document No.", "No.");
+                        rL_SalesLineCurrent.SetFilter("Document No.", Rec."No.");
                         rL_SalesLineCurrent.SetFilter("No.", rL_SalesLine."No.");
                         if not rL_SalesLineCurrent.FindSet() then begin
                             //add new line
 
                             vL_LineNo := 0;
-                            rL_SalesLineNew.RESET;
-                            rL_SalesLineNew.SetRange("Document Type", "Document Type");
-                            rL_SalesLineNew.SetFilter("Document No.", "No.");
+                            rL_SalesLineNew.Reset;
+                            rL_SalesLineNew.SetRange("Document Type", Rec."Document Type");
+                            rL_SalesLineNew.SetFilter("Document No.", Rec."No.");
                             if rL_SalesLineNew.FindLast() then begin
                                 vL_LineNo := rL_SalesLineNew."Line No.";
                             end;
@@ -439,8 +444,8 @@ pageextension 50246 SalesQuoteExt extends "Sales Quote"
                             //"Cost Profit %" := SRsetup."Cost Profit %";
 
                             Clear(rL_SalesLineNew);
-                            rL_SalesLineNew.Validate("Document Type", "Document Type");
-                            rL_SalesLineNew.Validate("Document No.", "No.");
+                            rL_SalesLineNew.Validate("Document Type", Rec."Document Type");
+                            rL_SalesLineNew.Validate("Document No.", Rec."No.");
                             rL_SalesLineNew.Validate("Line No.", vL_LineNo);
                             rL_SalesLineNew.SetHideValidationDialog(true);
                             rL_SalesLineNew.Insert(true);
@@ -454,54 +459,54 @@ pageextension 50246 SalesQuoteExt extends "Sales Quote"
                             rL_SalesLineNew."Line Source" := rL_SalesHeader."External Document No."; //rL_SalesHeader."No." + ' ' + pLineSource;
 
 
-                            rL_SalesLineNew.validate("Pallet Qty", rL_SalesLine."Pallet Qty");
+                            rL_SalesLineNew.Validate("Pallet Qty", rL_SalesLine."Pallet Qty");
                             rL_SalesLineNew."Country/Region of Origin Code" := rL_SalesLine."Country/Region of Origin Code";
-                            rL_SalesLineNew.validate("Product Class", rL_SalesLine."Product Class");
-                            rL_SalesLineNew.validate("Package Qty", rL_SalesLine."Package Qty");
-                            rL_SalesLineNew.validate("Calibration Min.", rL_SalesLine."Calibration Min.");
-                            rL_SalesLineNew.validate("Calibration Max.", rL_SalesLine."Calibration Max.");
-                            rL_SalesLineNew.validate("Calibration UOM", rL_SalesLine."Calibration UOM");
-                            rL_SalesLineNew.validate("Variety", rL_SalesLine."Variety");
-                            rL_SalesLineNew.validate("Currency Code", rL_SalesLine."Currency Code");
-                            rL_SalesLineNew.validate("Price Previous Week Box", rL_SalesLine."Price Previous Week Box");
-                            rL_SalesLineNew.validate("Price Previous Week PCS", rL_SalesLine."Price Previous Week PCS");
-                            rL_SalesLineNew.validate("Price Previous Week KG", rL_SalesLine."Price Previous Week KG");
-                            rL_SalesLineNew.validate("Price Box", rL_SalesLine."Price Box");
-                            rL_SalesLineNew.validate("Price PCS", rL_SalesLine."Price PCS");
-                            rL_SalesLineNew.validate("Price KG", rL_SalesLine."Price KG");
-                            rL_SalesLineNew.validate("Row Index", 0);
-                            rL_SalesLineNew.validate("Qty Box Date 1", rL_SalesLine."Qty Box Date 1");
-                            rL_SalesLineNew.validate("Qty Box Date 2", rL_SalesLine."Qty Box Date 2");
-                            rL_SalesLineNew.validate("Qty Box Date 3", rL_SalesLine."Qty Box Date 3");
-                            rL_SalesLineNew.validate("Qty Box Date 4", rL_SalesLine."Qty Box Date 4");
-                            rL_SalesLineNew.validate("Qty Box Date 5", rL_SalesLine."Qty Box Date 5");
-                            rL_SalesLineNew.validate("Qty Box Date 6", rL_SalesLine."Qty Box Date 6");
-                            rL_SalesLineNew.validate("Qty Box Date 7", rL_SalesLine."Qty Box Date 7");
-                            rL_SalesLineNew.validate("Qty Box Date 8", rL_SalesLine."Qty Box Date 8");
-                            rL_SalesLineNew.validate("Total Qty on Boxes", rL_SalesLine."Total Qty on Boxes");
-                            rL_SalesLineNew.validate("Additional Information", rL_SalesLine."Additional Information");
-                            rL_SalesLineNew.validate("Pressure Min.", rL_SalesLine."Pressure Min.");
-                            rL_SalesLineNew.validate("Pressure Max.", rL_SalesLine."Pressure Max.");
-                            rL_SalesLineNew.validate("Brix Min", rL_SalesLine."Brix Min");
-                            rL_SalesLineNew.validate("Vendor Name", rL_SalesLine."Vendor Name");
-                            rL_SalesLineNew.validate("QC 1 Min", rL_SalesLine."QC 1 Min");
-                            rL_SalesLineNew.validate("QC 1 Max", rL_SalesLine."QC 1 Max");
-                            rL_SalesLineNew.validate("QC 1 Text", rL_SalesLine."QC 1 Text");
-                            rL_SalesLineNew.validate("QC 2 Min", rL_SalesLine."QC 2 Min");
-                            rL_SalesLineNew.validate("QC 2 Max", rL_SalesLine."QC 2 Max");
-                            rL_SalesLineNew.validate("QC 2 Text", rL_SalesLine."QC 2 Text");
-                            rL_SalesLineNew.validate("Box Width", rL_SalesLine."Box Width");
-                            rL_SalesLineNew.validate("Box Char 1", rL_SalesLine."Box Char 1");
-                            rL_SalesLineNew.validate("Box Length", rL_SalesLine."Box Length");
-                            rL_SalesLineNew.validate("Box Char 2", rL_SalesLine."Box Char 2");
-                            rL_SalesLineNew.validate("Box Height", rL_SalesLine."Box Height");
-                            rL_SalesLineNew.validate("Box Changed Date", rL_SalesLine."Box Changed Date");
-                            rL_SalesLineNew.validate("Harvest Temp. From", rL_SalesLine."Harvest Temp. From");
-                            rL_SalesLineNew.validate("Harvest Temp. To", rL_SalesLine."Harvest Temp. To");
-                            rL_SalesLineNew.validate("Freezer Harvest Temp. From", rL_SalesLine."Freezer Harvest Temp. From");
-                            rL_SalesLineNew.validate("Freezer Harvest Temp. To", rL_SalesLine."Freezer Harvest Temp. To");
-                            rL_SalesLineNew.validate("Transfer Temp. From", rL_SalesLine."Transfer Temp. From");
-                            rL_SalesLineNew.validate("Transfer Temp. To", rL_SalesLine."Transfer Temp. To");
+                            rL_SalesLineNew.Validate("Product Class", rL_SalesLine."Product Class");
+                            rL_SalesLineNew.Validate("Package Qty", rL_SalesLine."Package Qty");
+                            rL_SalesLineNew.Validate("Calibration Min.", rL_SalesLine."Calibration Min.");
+                            rL_SalesLineNew.Validate("Calibration Max.", rL_SalesLine."Calibration Max.");
+                            rL_SalesLineNew.Validate("Calibration UOM", rL_SalesLine."Calibration UOM");
+                            rL_SalesLineNew.Validate(Variety, rL_SalesLine.Variety);
+                            rL_SalesLineNew.Validate("Currency Code", rL_SalesLine."Currency Code");
+                            rL_SalesLineNew.Validate("Price Previous Week Box", rL_SalesLine."Price Previous Week Box");
+                            rL_SalesLineNew.Validate("Price Previous Week PCS", rL_SalesLine."Price Previous Week PCS");
+                            rL_SalesLineNew.Validate("Price Previous Week KG", rL_SalesLine."Price Previous Week KG");
+                            rL_SalesLineNew.Validate("Price Box", rL_SalesLine."Price Box");
+                            rL_SalesLineNew.Validate("Price PCS", rL_SalesLine."Price PCS");
+                            rL_SalesLineNew.Validate("Price KG", rL_SalesLine."Price KG");
+                            rL_SalesLineNew.Validate("Row Index", 0);
+                            rL_SalesLineNew.Validate("Qty Box Date 1", rL_SalesLine."Qty Box Date 1");
+                            rL_SalesLineNew.Validate("Qty Box Date 2", rL_SalesLine."Qty Box Date 2");
+                            rL_SalesLineNew.Validate("Qty Box Date 3", rL_SalesLine."Qty Box Date 3");
+                            rL_SalesLineNew.Validate("Qty Box Date 4", rL_SalesLine."Qty Box Date 4");
+                            rL_SalesLineNew.Validate("Qty Box Date 5", rL_SalesLine."Qty Box Date 5");
+                            rL_SalesLineNew.Validate("Qty Box Date 6", rL_SalesLine."Qty Box Date 6");
+                            rL_SalesLineNew.Validate("Qty Box Date 7", rL_SalesLine."Qty Box Date 7");
+                            rL_SalesLineNew.Validate("Qty Box Date 8", rL_SalesLine."Qty Box Date 8");
+                            rL_SalesLineNew.Validate("Total Qty on Boxes", rL_SalesLine."Total Qty on Boxes");
+                            rL_SalesLineNew.Validate("Additional Information", rL_SalesLine."Additional Information");
+                            rL_SalesLineNew.Validate("Pressure Min.", rL_SalesLine."Pressure Min.");
+                            rL_SalesLineNew.Validate("Pressure Max.", rL_SalesLine."Pressure Max.");
+                            rL_SalesLineNew.Validate("Brix Min", rL_SalesLine."Brix Min");
+                            rL_SalesLineNew.Validate("Vendor Name", rL_SalesLine."Vendor Name");
+                            rL_SalesLineNew.Validate("QC 1 Min", rL_SalesLine."QC 1 Min");
+                            rL_SalesLineNew.Validate("QC 1 Max", rL_SalesLine."QC 1 Max");
+                            rL_SalesLineNew.Validate("QC 1 Text", rL_SalesLine."QC 1 Text");
+                            rL_SalesLineNew.Validate("QC 2 Min", rL_SalesLine."QC 2 Min");
+                            rL_SalesLineNew.Validate("QC 2 Max", rL_SalesLine."QC 2 Max");
+                            rL_SalesLineNew.Validate("QC 2 Text", rL_SalesLine."QC 2 Text");
+                            rL_SalesLineNew.Validate("Box Width", rL_SalesLine."Box Width");
+                            rL_SalesLineNew.Validate("Box Char 1", rL_SalesLine."Box Char 1");
+                            rL_SalesLineNew.Validate("Box Length", rL_SalesLine."Box Length");
+                            rL_SalesLineNew.Validate("Box Char 2", rL_SalesLine."Box Char 2");
+                            rL_SalesLineNew.Validate("Box Height", rL_SalesLine."Box Height");
+                            rL_SalesLineNew.Validate("Box Changed Date", rL_SalesLine."Box Changed Date");
+                            rL_SalesLineNew.Validate("Harvest Temp. From", rL_SalesLine."Harvest Temp. From");
+                            rL_SalesLineNew.Validate("Harvest Temp. To", rL_SalesLine."Harvest Temp. To");
+                            rL_SalesLineNew.Validate("Freezer Harvest Temp. From", rL_SalesLine."Freezer Harvest Temp. From");
+                            rL_SalesLineNew.Validate("Freezer Harvest Temp. To", rL_SalesLine."Freezer Harvest Temp. To");
+                            rL_SalesLineNew.Validate("Transfer Temp. From", rL_SalesLine."Transfer Temp. From");
+                            rL_SalesLineNew.Validate("Transfer Temp. To", rL_SalesLine."Transfer Temp. To");
                             rL_SalesLineNew.Modify(true);
 
 

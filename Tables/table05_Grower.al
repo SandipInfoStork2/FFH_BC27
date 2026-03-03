@@ -4,8 +4,8 @@ table 50005 Grower
     // TAL0.3 2021/04/02 VC add field Producer Group Name
     // TAL0.4 2021/11/16 VC add field Country of Destination
 
-    DrillDownPageID = "Grower List";
-    LookupPageID = "Grower List";
+    DrillDownPageId = "Grower List";
+    LookupPageId = "Grower List";
 
     fields
     {
@@ -17,7 +17,7 @@ table 50005 Grower
             trigger OnValidate();
             begin
                 if "No." <> xRec."No." then begin
-                    PurchSetup.GET;
+                    PurchSetup.Get;
                     NoSeries.TestManual(PurchSetup."Grower Nos.");
                     //NoSeriesMgt.TestManual(PurchSetup."Grower Nos.");
                     "No. Series" := '';
@@ -31,7 +31,7 @@ table 50005 Grower
 
             trigger OnValidate();
             begin
-                if ("Search Name" = UPPERCASE(xRec.Name)) or ("Search Name" = '') then
+                if ("Search Name" = UpperCase(xRec.Name)) or ("Search Name" = '') then
                     "Search Name" := Name;
             end;
         }
@@ -198,46 +198,46 @@ table 50005 Grower
         {
             Caption = 'Producer Group';
             DataClassification = ToBeClassified;
-            TableRelation = "General Categories".Code WHERE("Table No." = CONST(23),
-                                                             Type = CONST(Category1));
+            TableRelation = "General Categories".Code where("Table No." = const(23),
+                                                             Type = const(Category1));
         }
         field(50011; "Category 2"; Code[20])
         {
             CaptionML = ELL = 'GLOBALG.A.P. Option',
                         ENU = 'GLOBALG.A.P. Option';
             DataClassification = ToBeClassified;
-            TableRelation = "General Categories".Code WHERE("Table No." = CONST(23),
-                                                             Type = CONST(Category2));
+            TableRelation = "General Categories".Code where("Table No." = const(23),
+                                                             Type = const(Category2));
         }
         field(50012; "Category 3"; Code[20])
         {
             CaptionML = ELL = 'Status GRASP',
                         ENU = 'Status GRASP ';
             DataClassification = ToBeClassified;
-            TableRelation = "General Categories".Code WHERE("Table No." = CONST(23),
-                                                             Type = CONST(Category3));
+            TableRelation = "General Categories".Code where("Table No." = const(23),
+                                                             Type = const(Category3));
         }
         field(50013; "Category 4"; Code[20])
         {
             CaptionML = ELL = 'Status LIDL supply chain',
                         ENU = 'Status LIDL supply chain';
             DataClassification = ToBeClassified;
-            TableRelation = "General Categories".Code WHERE("Table No." = CONST(23),
-                                                             Type = CONST(Category4));
+            TableRelation = "General Categories".Code where("Table No." = const(23),
+                                                             Type = const(Category4));
         }
         field(50014; "Category 5"; Code[20])
         {
             CaptionML = ELL = 'Grower',
                         ENU = 'Grower';
             DataClassification = ToBeClassified;
-            TableRelation = "General Categories".Code WHERE("Table No." = CONST(23),
-                                                             Type = CONST(Category5));
+            TableRelation = "General Categories".Code where("Table No." = const(23),
+                                                             Type = const(Category5));
         }
         field(50015; "Category 6"; Code[20])
         {
             DataClassification = ToBeClassified;
-            TableRelation = "General Categories".Code WHERE("Table No." = CONST(23),
-                                                             Type = CONST(Category6));
+            TableRelation = "General Categories".Code where("Table No." = const(23),
+                                                             Type = const(Category6));
         }
         field(50020; "GGN Expiry Date"; Date)
         {
@@ -245,17 +245,17 @@ table 50005 Grower
 
             trigger OnValidate();
             begin
-                if "GGN Expiry Date" >= TODAY then begin
-                    VALIDATE("Grower Certified", true);
+                if "GGN Expiry Date" >= Today then begin
+                    Validate("Grower Certified", true);
                 end else begin
-                    VALIDATE("Grower Certified", false);
+                    Validate("Grower Certified", false);
                 end;
             end;
         }
         field(50021; "No. of Products"; Integer)
         {
             BlankZero = true;
-            CalcFormula = Count("Item Grower Vendor" WHERE("Grower No." = FIELD("No.")));
+            CalcFormula = count("Item Grower Vendor" where("Grower No." = field("No.")));
             Editable = false;
             FieldClass = FlowField;
         }
@@ -265,7 +265,7 @@ table 50005 Grower
         }
         field(50023; "Grower Vendor GLN"; Code[13])
         {
-            CalcFormula = Lookup(Vendor.GLN WHERE("No." = FIELD("Grower Vendor No.")));
+            CalcFormula = lookup(Vendor.GLN where("No." = field("Grower Vendor No.")));
             CaptionML = ELL = 'Grower Vendor GLN',
                         ENU = 'Grower Vendor GLN';
             Editable = false;
@@ -282,14 +282,14 @@ table 50005 Grower
         }
         field(50024; "Grower Vendor Name"; Text[100])
         {
-            CalcFormula = Lookup(Vendor.Name WHERE("No." = FIELD("Grower Vendor No.")));
+            CalcFormula = lookup(Vendor.Name where("No." = field("Grower Vendor No.")));
             Editable = false;
             FieldClass = FlowField;
             TableRelation = Vendor;
         }
         field(50025; "Grower Vendor GGN"; Code[14])
         {
-            CalcFormula = Lookup(Vendor.GGN WHERE("No." = FIELD("Grower Vendor No.")));
+            CalcFormula = lookup(Vendor.GGN where("No." = field("Grower Vendor No.")));
             CaptionML = ELL = 'Grower Vendor GGN',
                         ENU = 'Grower Vendor GGN';
             Editable = false;
@@ -310,9 +310,9 @@ table 50005 Grower
         }
         field(50027; "Producer Group Name"; Text[100])
         {
-            CalcFormula = Lookup("General Categories".Description WHERE("Table No." = FILTER(23),
-                                                                         Type = FILTER(Category1),
-                                                                         Code = FIELD("Category 1")));
+            CalcFormula = lookup("General Categories".Description where("Table No." = filter(23),
+                                                                         Type = filter(Category1),
+                                                                         Code = field("Category 1")));
             Editable = false;
             FieldClass = FlowField;
         }
@@ -333,8 +333,8 @@ table 50005 Grower
         field(50030; "Status Biodiversity"; Code[20])
         {
             DataClassification = ToBeClassified;
-            TableRelation = "General Categories".Code WHERE("Table No." = CONST(23),
-                                                             Type = CONST(Category3));
+            TableRelation = "General Categories".Code where("Table No." = const(23),
+                                                             Type = const(Category3));
         }
 
         field(50031; "Biodiversity Expiry Date"; Date)
@@ -345,8 +345,8 @@ table 50005 Grower
         field(50032; "Status SPRING"; Code[20])
         {
             DataClassification = ToBeClassified;
-            TableRelation = "General Categories".Code WHERE("Table No." = CONST(23),
-                                                             Type = CONST(Category3));
+            TableRelation = "General Categories".Code where("Table No." = const(23),
+                                                             Type = const(Category3));
         }
 
         field(50033; "SPRING Expiry Date"; Date)
@@ -384,26 +384,26 @@ table 50005 Grower
         rL_ItemGrowerVendor: Record "Item Grower Vendor";
     begin
 
-        rL_ItemGrowerVendor.SETRANGE("Grower No.", "No.");
-        rL_ItemGrowerVendor.DELETEALL;
+        rL_ItemGrowerVendor.SetRange("Grower No.", "No.");
+        rL_ItemGrowerVendor.DeleteAll;
     end;
 
     trigger OnInsert();
     begin
         if "No." = '' then begin
-            PurchSetup.GET;
+            PurchSetup.Get;
             "No." := NoSeries.GetNextNo(PurchSetup."Grower Nos.", 0D);
             //NoSeriesMgt.InitSeries(PurchSetup."Grower Nos.", xRec."No. Series", 0D, "No.", "No. Series");
         end;
 
-        "Creation Date" := CURRENTDATETIME;
-        "Created By" := USERID;
+        "Creation Date" := CurrentDateTime;
+        "Created By" := UserId;
     end;
 
     trigger OnModify();
     begin
-        "Last Modified Date" := CURRENTDATETIME;
-        "Last Modified By" := USERID;
+        "Last Modified Date" := CurrentDateTime;
+        "Last Modified By" := UserId;
     end;
 
     procedure GetPurchasesQty(): Decimal
@@ -419,13 +419,13 @@ table 50005 Grower
         //Message(Getfilter("Date Filter"));
         //end;
 
-        rL_ILE.RESET;
+        rL_ILE.Reset;
         rL_ILE.SetCurrentKey("Entry Type", "Source Type", "Lot Grower No.", "Posting Date", "Source No.");
         rL_ILE.SetRange("Entry Type", rL_ILE."Entry Type"::Purchase);
         rL_ILE.SetRange("Source Type", rL_ILE."Source Type"::Vendor);
 
-        if Getfilter("Date Filter") <> '' then begin
-            rL_ILE.SetFilter("Posting Date", Getfilter("Date Filter"));
+        if GetFilter("Date Filter") <> '' then begin
+            rL_ILE.SetFilter("Posting Date", GetFilter("Date Filter"));
         end;
 
         if "Lot No. Filter" <> '' then begin
@@ -433,7 +433,7 @@ table 50005 Grower
         end;
 
         rL_ILE.SetFilter("Lot Grower No.", "No.");
-        IF rL_ILE.FindSet() then begin
+        if rL_ILE.FindSet() then begin
             rL_ILE.CalcSums(Quantity);
             //repeat
             //   vL_TotalQty += rL_ILE.Quantity;
@@ -452,13 +452,13 @@ table 50005 Grower
     begin
         vL_TotalQty := 0;
 
-        rL_ILE.RESET;
+        rL_ILE.Reset;
         rL_ILE.SetCurrentKey("Entry Type", "Source Type", "Lot Grower No.", "Posting Date", "Source No.");
         rL_ILE.SetRange("Entry Type", rL_ILE."Entry Type"::Purchase);
         rL_ILE.SetRange("Source Type", rL_ILE."Source Type"::Vendor);
 
-        if Getfilter("Date Filter") <> '' then begin
-            rL_ILE.SetFilter("Posting Date", Getfilter("Date Filter"));
+        if GetFilter("Date Filter") <> '' then begin
+            rL_ILE.SetFilter("Posting Date", GetFilter("Date Filter"));
         end;
 
         if "Lot No. Filter" <> '' then begin
@@ -466,7 +466,7 @@ table 50005 Grower
         end;
 
         rL_ILE.SetFilter("Lot Grower No.", "No.");
-        IF rL_ILE.FindSet() then begin
+        if rL_ILE.FindSet() then begin
             rL_ILE.CalcSums("Total Net Weight");
         end;
         vL_TotalQty := rL_ILE."Total Net Weight";
@@ -483,12 +483,12 @@ table 50005 Grower
     begin
         vL_TotalQty := 0;
 
-        rL_ILE.RESET;
+        rL_ILE.Reset;
         rL_ILE.SetCurrentKey("Entry Type", "Source Type", "Lot Grower No.", "Posting Date", "Source No.");
         rL_ILE.SetRange("Entry Type", rL_ILE."Entry Type"::Sale);
 
-        if Getfilter("Date Filter") <> '' then begin
-            rL_ILE.SetFilter("Posting Date", Getfilter("Date Filter"));
+        if GetFilter("Date Filter") <> '' then begin
+            rL_ILE.SetFilter("Posting Date", GetFilter("Date Filter"));
         end;
 
         if "Lot No. Filter" <> '' then begin
@@ -501,7 +501,7 @@ table 50005 Grower
             rL_ILE.SetFilter("Source No.", "Customer No. Filter");
         end;
 
-        IF rL_ILE.FindSet() then begin
+        if rL_ILE.FindSet() then begin
             rL_ILE.CalcSums(Quantity);
         end;
         vL_TotalQty := rL_ILE.Quantity;
@@ -517,12 +517,12 @@ table 50005 Grower
     begin
         vL_TotalQty := 0;
 
-        rL_ILE.RESET;
+        rL_ILE.Reset;
         rL_ILE.SetCurrentKey("Entry Type", "Source Type", "Lot Grower No.", "Posting Date", "Source No.");
         rL_ILE.SetRange("Entry Type", rL_ILE."Entry Type"::Sale);
 
-        if Getfilter("Date Filter") <> '' then begin
-            rL_ILE.SetFilter("Posting Date", Getfilter("Date Filter"));
+        if GetFilter("Date Filter") <> '' then begin
+            rL_ILE.SetFilter("Posting Date", GetFilter("Date Filter"));
         end;
 
         if "Lot No. Filter" <> '' then begin
@@ -535,7 +535,7 @@ table 50005 Grower
             rL_ILE.SetFilter("Source No.", "Customer No. Filter");
         end;
 
-        IF rL_ILE.FindSet() then begin
+        if rL_ILE.FindSet() then begin
             rL_ILE.CalcSums("Total Net Weight");
         end;
         vL_TotalQty := rL_ILE."Total Net Weight";

@@ -5,13 +5,15 @@ pageextension 50262 PostedSalesShipmentUpdateExt extends "Posted Sales Shipment 
         // Add changes to page layout here
         addafter("Package Tracking No.")
         {
-            field("Shipping Temperature"; "Shipping Temperature")
+            field("Shipping Temperature"; Rec."Shipping Temperature")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Shipping Temperature °C field.';
             }
-            field("Shipping Quality Control"; "Shipping Quality Control")
+            field("Shipping Quality Control"; Rec."Shipping Quality Control")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Shipping Quality Control field.';
             }
         }
     }

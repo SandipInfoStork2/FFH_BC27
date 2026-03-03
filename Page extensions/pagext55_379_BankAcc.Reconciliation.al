@@ -18,11 +18,11 @@ pageextension 50155 BankAccReconciliationExt extends "Bank Acc. Reconciliation"
                 Promoted = true;
                 PromotedCategory = Process;
                 PromotedIsBig = true;
-                RunObject = Page "Bank Account Ledger Entries";
-                RunPageLink = "Bank Account No." = FIELD("Bank Account No.");
-                RunPageView = SORTING("Bank Account No.")
-                                  ORDER(Descending);
-                ShortCutKey = 'Ctrl+F7';
+                RunObject = page "Bank Account Ledger Entries";
+                RunPageLink = "Bank Account No." = field("Bank Account No.");
+                RunPageView = sorting("Bank Account No.")
+                                  order(descending);
+                ShortcutKey = 'Ctrl+F7';
                 ToolTip = 'View the history of transactions that have been posted for the selected record.';
             }
         }

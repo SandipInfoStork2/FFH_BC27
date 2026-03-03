@@ -2,580 +2,723 @@ page 50008 "Purchase Order Addon P E"
 {
     PageType = List;
     SourceTable = "Purchase Header Addon Posted";
+    ApplicationArea = All;
 
     layout
     {
-        area(content)
+        area(Content)
         {
             repeater(Group)
             {
-                field("Document Type"; "Document Type")
+                field("Document Type"; Rec."Document Type")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Document Type field.';
                 }
-                field("Buy-from Vendor No."; "Buy-from Vendor No.")
+                field("Buy-from Vendor No."; Rec."Buy-from Vendor No.")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Buy-from Vendor No. field.';
                 }
-                field("No."; "No.")
+                field("No."; Rec."No.")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the No. field.';
                 }
-                field("Pay-to Vendor No."; "Pay-to Vendor No.")
+                field("Pay-to Vendor No."; Rec."Pay-to Vendor No.")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Pay-to Vendor No. field.';
                 }
-                field("Pay-to Name"; "Pay-to Name")
+                field("Pay-to Name"; Rec."Pay-to Name")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Pay-to Name field.';
                 }
-                field("Pay-to Name 2"; "Pay-to Name 2")
+                field("Pay-to Name 2"; Rec."Pay-to Name 2")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Pay-to Name 2 field.';
                 }
-                field("Pay-to Address"; "Pay-to Address")
+                field("Pay-to Address"; Rec."Pay-to Address")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Pay-to Address field.';
                 }
-                field("Pay-to Address 2"; "Pay-to Address 2")
+                field("Pay-to Address 2"; Rec."Pay-to Address 2")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Pay-to Address 2 field.';
                 }
-                field("Pay-to City"; "Pay-to City")
+                field("Pay-to City"; Rec."Pay-to City")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Pay-to City field.';
                 }
-                field("Pay-to Contact"; "Pay-to Contact")
+                field("Pay-to Contact"; Rec."Pay-to Contact")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Pay-to Contact field.';
                 }
-                field("Your Reference"; "Your Reference")
+                field("Your Reference"; Rec."Your Reference")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Your Reference field.';
                 }
-                field("Ship-to Code"; "Ship-to Code")
+                field("Ship-to Code"; Rec."Ship-to Code")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Ship-to Code field.';
                 }
-                field("Ship-to Name"; "Ship-to Name")
+                field("Ship-to Name"; Rec."Ship-to Name")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Ship-to Name field.';
                 }
-                field("Ship-to Name 2"; "Ship-to Name 2")
+                field("Ship-to Name 2"; Rec."Ship-to Name 2")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Ship-to Name 2 field.';
                 }
-                field("Ship-to Address"; "Ship-to Address")
+                field("Ship-to Address"; Rec."Ship-to Address")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Ship-to Address field.';
                 }
-                field("Ship-to Address 2"; "Ship-to Address 2")
+                field("Ship-to Address 2"; Rec."Ship-to Address 2")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Ship-to Address 2 field.';
                 }
-                field("Ship-to City"; "Ship-to City")
+                field("Ship-to City"; Rec."Ship-to City")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Ship-to City field.';
                 }
-                field("Ship-to Contact"; "Ship-to Contact")
+                field("Ship-to Contact"; Rec."Ship-to Contact")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Ship-to Contact field.';
                 }
-                field("Order Date"; "Order Date")
+                field("Order Date"; Rec."Order Date")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Order Date field.';
                 }
-                field("Posting Date"; "Posting Date")
+                field("Posting Date"; Rec."Posting Date")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Posting Date field.';
                 }
-                field("Expected Receipt Date"; "Expected Receipt Date")
+                field("Expected Receipt Date"; Rec."Expected Receipt Date")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Expected Receipt Date field.';
                 }
-                field("Posting Description"; "Posting Description")
+                field("Posting Description"; Rec."Posting Description")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Posting Description field.';
                 }
-                field("Payment Terms Code"; "Payment Terms Code")
+                field("Payment Terms Code"; Rec."Payment Terms Code")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Payment Terms Code field.';
                 }
-                field("Due Date"; "Due Date")
+                field("Due Date"; Rec."Due Date")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Due Date field.';
                 }
-                field("Payment Discount %"; "Payment Discount %")
+                field("Payment Discount %"; Rec."Payment Discount %")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Payment Discount % field.';
                 }
-                field("Pmt. Discount Date"; "Pmt. Discount Date")
+                field("Pmt. Discount Date"; Rec."Pmt. Discount Date")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Pmt. Discount Date field.';
                 }
-                field("Shipment Method Code"; "Shipment Method Code")
+                field("Shipment Method Code"; Rec."Shipment Method Code")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Shipment Method Code field.';
                 }
-                field("Location Code"; "Location Code")
+                field("Location Code"; Rec."Location Code")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Location Code field.';
                 }
-                field("Shortcut Dimension 1 Code"; "Shortcut Dimension 1 Code")
+                field("Shortcut Dimension 1 Code"; Rec."Shortcut Dimension 1 Code")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Shortcut Dimension 1 Code field.';
                 }
-                field("Shortcut Dimension 2 Code"; "Shortcut Dimension 2 Code")
+                field("Shortcut Dimension 2 Code"; Rec."Shortcut Dimension 2 Code")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Shortcut Dimension 2 Code field.';
                 }
-                field("Vendor Posting Group"; "Vendor Posting Group")
+                field("Vendor Posting Group"; Rec."Vendor Posting Group")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Vendor Posting Group field.';
                 }
-                field("Currency Code"; "Currency Code")
+                field("Currency Code"; Rec."Currency Code")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Currency Code field.';
                 }
-                field("Currency Factor"; "Currency Factor")
+                field("Currency Factor"; Rec."Currency Factor")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Currency Factor field.';
                 }
-                field("Prices Including VAT"; "Prices Including VAT")
+                field("Prices Including VAT"; Rec."Prices Including VAT")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Prices Including VAT field.';
                 }
-                field("Invoice Disc. Code"; "Invoice Disc. Code")
+                field("Invoice Disc. Code"; Rec."Invoice Disc. Code")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Invoice Disc. Code field.';
                 }
-                field("Language Code"; "Language Code")
+                field("Language Code"; Rec."Language Code")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Language Code field.';
                 }
-                field("Purchaser Code"; "Purchaser Code")
+                field("Purchaser Code"; Rec."Purchaser Code")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Purchaser Code field.';
                 }
-                field("Order Class"; "Order Class")
+                field("Order Class"; Rec."Order Class")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Order Class field.';
                 }
-                field(Comment; Comment)
+                field(Comment; Rec.Comment)
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Comment field.';
                 }
-                field("No. Printed"; "No. Printed")
+                field("No. Printed"; Rec."No. Printed")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the No. Printed field.';
                 }
-                field("On Hold"; "On Hold")
+                field("On Hold"; Rec."On Hold")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the On Hold field.';
                 }
-                field("Applies-to Doc. Type"; "Applies-to Doc. Type")
+                field("Applies-to Doc. Type"; Rec."Applies-to Doc. Type")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Applies-to Doc. Type field.';
                 }
-                field("Applies-to Doc. No."; "Applies-to Doc. No.")
+                field("Applies-to Doc. No."; Rec."Applies-to Doc. No.")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Applies-to Doc. No. field.';
                 }
-                field("Bal. Account No."; "Bal. Account No.")
+                field("Bal. Account No."; Rec."Bal. Account No.")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Bal. Account No. field.';
                 }
-                field(Receive; Receive)
+                field(Receive; Rec.Receive)
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Receive field.';
                 }
-                field(Invoice; Invoice)
+                field(Invoice; Rec.Invoice)
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Invoice field.';
                 }
-                field("Print Posted Documents"; "Print Posted Documents")
+                field("Print Posted Documents"; Rec."Print Posted Documents")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Print Posted Documents field.';
                 }
-                field(Amount; Amount)
+                field(Amount; Rec.Amount)
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Amount field.';
                 }
-                field("Amount Including VAT"; "Amount Including VAT")
+                field("Amount Including VAT"; Rec."Amount Including VAT")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Amount Including VAT field.';
                 }
-                field("Receiving No."; "Receiving No.")
+                field("Receiving No."; Rec."Receiving No.")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Receiving No. field.';
                 }
-                field("Posting No."; "Posting No.")
+                field("Posting No."; Rec."Posting No.")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Posting No. field.';
                 }
-                field("Last Receiving No."; "Last Receiving No.")
+                field("Last Receiving No."; Rec."Last Receiving No.")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Last Receiving No. field.';
                 }
-                field("Last Posting No."; "Last Posting No.")
+                field("Last Posting No."; Rec."Last Posting No.")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Last Posting No. field.';
                 }
-                field("Vendor Order No."; "Vendor Order No.")
+                field("Vendor Order No."; Rec."Vendor Order No.")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Vendor Order No. field.';
                 }
-                field("Vendor Shipment No."; "Vendor Shipment No.")
+                field("Vendor Shipment No."; Rec."Vendor Shipment No.")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Vendor Shipment No. field.';
                 }
-                field("Vendor Invoice No."; "Vendor Invoice No.")
+                field("Vendor Invoice No."; Rec."Vendor Invoice No.")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Vendor Invoice No. field.';
                 }
-                field("Vendor Cr. Memo No."; "Vendor Cr. Memo No.")
+                field("Vendor Cr. Memo No."; Rec."Vendor Cr. Memo No.")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Vendor Cr. Memo No. field.';
                 }
-                field("VAT Registration No."; "VAT Registration No.")
+                field("VAT Registration No."; Rec."VAT Registration No.")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the VAT Registration No. field.';
                 }
-                field("Sell-to Customer No."; "Sell-to Customer No.")
+                field("Sell-to Customer No."; Rec."Sell-to Customer No.")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Sell-to Customer No. field.';
                 }
-                field("Reason Code"; "Reason Code")
+                field("Reason Code"; Rec."Reason Code")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Reason Code field.';
                 }
-                field("Gen. Bus. Posting Group"; "Gen. Bus. Posting Group")
+                field("Gen. Bus. Posting Group"; Rec."Gen. Bus. Posting Group")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Gen. Bus. Posting Group field.';
                 }
-                field("Transaction Type"; "Transaction Type")
+                field("Transaction Type"; Rec."Transaction Type")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Transaction Type field.';
                 }
-                field("Transport Method"; "Transport Method")
+                field("Transport Method"; Rec."Transport Method")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Transport Method field.';
                 }
-                field("VAT Country/Region Code"; "VAT Country/Region Code")
+                field("VAT Country/Region Code"; Rec."VAT Country/Region Code")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the VAT Country/Region Code field.';
                 }
-                field("Buy-from Vendor Name"; "Buy-from Vendor Name")
+                field("Buy-from Vendor Name"; Rec."Buy-from Vendor Name")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Buy-from Vendor Name field.';
                 }
-                field("Buy-from Vendor Name 2"; "Buy-from Vendor Name 2")
+                field("Buy-from Vendor Name 2"; Rec."Buy-from Vendor Name 2")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Buy-from Vendor Name 2 field.';
                 }
-                field("Buy-from Address"; "Buy-from Address")
+                field("Buy-from Address"; Rec."Buy-from Address")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Buy-from Address field.';
                 }
-                field("Buy-from Address 2"; "Buy-from Address 2")
+                field("Buy-from Address 2"; Rec."Buy-from Address 2")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Buy-from Address 2 field.';
                 }
-                field("Buy-from City"; "Buy-from City")
+                field("Buy-from City"; Rec."Buy-from City")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Buy-from City field.';
                 }
-                field("Buy-from Contact"; "Buy-from Contact")
+                field("Buy-from Contact"; Rec."Buy-from Contact")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Buy-from Contact field.';
                 }
-                field("Pay-to Post Code"; "Pay-to Post Code")
+                field("Pay-to Post Code"; Rec."Pay-to Post Code")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Pay-to Post Code field.';
                 }
-                field("Pay-to County"; "Pay-to County")
+                field("Pay-to County"; Rec."Pay-to County")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Pay-to County field.';
                 }
-                field("Pay-to Country/Region Code"; "Pay-to Country/Region Code")
+                field("Pay-to Country/Region Code"; Rec."Pay-to Country/Region Code")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Pay-to Country/Region Code field.';
                 }
-                field("Buy-from Post Code"; "Buy-from Post Code")
+                field("Buy-from Post Code"; Rec."Buy-from Post Code")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Buy-from Post Code field.';
                 }
-                field("Buy-from County"; "Buy-from County")
+                field("Buy-from County"; Rec."Buy-from County")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Buy-from County field.';
                 }
-                field("Buy-from Country/Region Code"; "Buy-from Country/Region Code")
+                field("Buy-from Country/Region Code"; Rec."Buy-from Country/Region Code")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Buy-from Country/Region Code field.';
                 }
-                field("Ship-to Post Code"; "Ship-to Post Code")
+                field("Ship-to Post Code"; Rec."Ship-to Post Code")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Ship-to Post Code field.';
                 }
-                field("Ship-to County"; "Ship-to County")
+                field("Ship-to County"; Rec."Ship-to County")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Ship-to County field.';
                 }
-                field("Ship-to Country/Region Code"; "Ship-to Country/Region Code")
+                field("Ship-to Country/Region Code"; Rec."Ship-to Country/Region Code")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Ship-to Country/Region Code field.';
                 }
-                field("Bal. Account Type"; "Bal. Account Type")
+                field("Bal. Account Type"; Rec."Bal. Account Type")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Bal. Account Type field.';
                 }
-                field("Order Address Code"; "Order Address Code")
+                field("Order Address Code"; Rec."Order Address Code")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Order Address Code field.';
                 }
-                field("Entry Point"; "Entry Point")
+                field("Entry Point"; Rec."Entry Point")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Entry Point field.';
                 }
-                field(Correction; Correction)
+                field(Correction; Rec.Correction)
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Correction field.';
                 }
-                field("Document Date"; "Document Date")
+                field("Document Date"; Rec."Document Date")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Document Date field.';
                 }
-                field("Area"; Area)
+                field("Area"; Rec.Area)
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Area field.';
                 }
-                field("Transaction Specification"; "Transaction Specification")
+                field("Transaction Specification"; Rec."Transaction Specification")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Transaction Specification field.';
                 }
-                field("Payment Method Code"; "Payment Method Code")
+                field("Payment Method Code"; Rec."Payment Method Code")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Payment Method Code field.';
                 }
-                field("No. Series"; "No. Series")
+                field("No. Series"; Rec."No. Series")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the No. Series field.';
                 }
-                field("Posting No. Series"; "Posting No. Series")
+                field("Posting No. Series"; Rec."Posting No. Series")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Posting No. Series field.';
                 }
-                field("Receiving No. Series"; "Receiving No. Series")
+                field("Receiving No. Series"; Rec."Receiving No. Series")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Receiving No. Series field.';
                 }
-                field("Tax Area Code"; "Tax Area Code")
+                field("Tax Area Code"; Rec."Tax Area Code")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Tax Area Code field.';
                 }
-                field("Tax Liable"; "Tax Liable")
+                field("Tax Liable"; Rec."Tax Liable")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Tax Liable field.';
                 }
-                field("VAT Bus. Posting Group"; "VAT Bus. Posting Group")
+                field("VAT Bus. Posting Group"; Rec."VAT Bus. Posting Group")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the VAT Bus. Posting Group field.';
                 }
-                field("Applies-to ID"; "Applies-to ID")
+                field("Applies-to ID"; Rec."Applies-to ID")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Applies-to ID field.';
                 }
-                field("VAT Base Discount %"; "VAT Base Discount %")
+                field("VAT Base Discount %"; Rec."VAT Base Discount %")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the VAT Base Discount % field.';
                 }
-                field(Status; Status)
+                field(Status; Rec.Status)
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Status field.';
                 }
-                field("Invoice Discount Calculation"; "Invoice Discount Calculation")
+                field("Invoice Discount Calculation"; Rec."Invoice Discount Calculation")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Invoice Discount Calculation field.';
                 }
-                field("Invoice Discount Value"; "Invoice Discount Value")
+                field("Invoice Discount Value"; Rec."Invoice Discount Value")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Invoice Discount Value field.';
                 }
-                field("Send IC Document"; "Send IC Document")
+                field("Send IC Document"; Rec."Send IC Document")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Send IC Document field.';
                 }
-                field("IC Status"; "IC Status")
+                field("IC Status"; Rec."IC Status")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the IC Status field.';
                 }
-                field("Buy-from IC Partner Code"; "Buy-from IC Partner Code")
+                field("Buy-from IC Partner Code"; Rec."Buy-from IC Partner Code")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Buy-from IC Partner Code field.';
                 }
-                field("Pay-to IC Partner Code"; "Pay-to IC Partner Code")
+                field("Pay-to IC Partner Code"; Rec."Pay-to IC Partner Code")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Pay-to IC Partner Code field.';
                 }
-                field("IC Direction"; "IC Direction")
+                field("IC Direction"; Rec."IC Direction")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the IC Direction field.';
                 }
-                field("Prepayment No."; "Prepayment No.")
+                field("Prepayment No."; Rec."Prepayment No.")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Prepayment No. field.';
                 }
-                field("Last Prepayment No."; "Last Prepayment No.")
+                field("Last Prepayment No."; Rec."Last Prepayment No.")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Last Prepayment No. field.';
                 }
-                field("Prepmt. Cr. Memo No."; "Prepmt. Cr. Memo No.")
+                field("Prepmt. Cr. Memo No."; Rec."Prepmt. Cr. Memo No.")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Prepmt. Cr. Memo No. field.';
                 }
-                field("Last Prepmt. Cr. Memo No."; "Last Prepmt. Cr. Memo No.")
+                field("Last Prepmt. Cr. Memo No."; Rec."Last Prepmt. Cr. Memo No.")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Last Prepmt. Cr. Memo No. field.';
                 }
-                field("Prepayment %"; "Prepayment %")
+                field("Prepayment %"; Rec."Prepayment %")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Prepayment % field.';
                 }
-                field("Prepayment No. Series"; "Prepayment No. Series")
+                field("Prepayment No. Series"; Rec."Prepayment No. Series")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Prepayment No. Series field.';
                 }
-                field("Compress Prepayment"; "Compress Prepayment")
+                field("Compress Prepayment"; Rec."Compress Prepayment")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Compress Prepayment field.';
                 }
-                field("Prepayment Due Date"; "Prepayment Due Date")
+                field("Prepayment Due Date"; Rec."Prepayment Due Date")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Prepayment Due Date field.';
                 }
-                field("Prepmt. Cr. Memo No. Series"; "Prepmt. Cr. Memo No. Series")
+                field("Prepmt. Cr. Memo No. Series"; Rec."Prepmt. Cr. Memo No. Series")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Prepmt. Cr. Memo No. Series field.';
                 }
-                field("Prepmt. Posting Description"; "Prepmt. Posting Description")
+                field("Prepmt. Posting Description"; Rec."Prepmt. Posting Description")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Prepmt. Posting Description field.';
                 }
-                field("Prepmt. Pmt. Discount Date"; "Prepmt. Pmt. Discount Date")
+                field("Prepmt. Pmt. Discount Date"; Rec."Prepmt. Pmt. Discount Date")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Prepmt. Pmt. Discount Date field.';
                 }
-                field("Prepmt. Payment Terms Code"; "Prepmt. Payment Terms Code")
+                field("Prepmt. Payment Terms Code"; Rec."Prepmt. Payment Terms Code")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Prepmt. Payment Terms Code field.';
                 }
-                field("Prepmt. Payment Discount %"; "Prepmt. Payment Discount %")
+                field("Prepmt. Payment Discount %"; Rec."Prepmt. Payment Discount %")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Prepmt. Payment Discount % field.';
                 }
-                field("Quote No."; "Quote No.")
+                field("Quote No."; Rec."Quote No.")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Quote No. field.';
                 }
-                field("Job Queue Status"; "Job Queue Status")
+                field("Job Queue Status"; Rec."Job Queue Status")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Job Queue Status field.';
                 }
-                field("Job Queue Entry ID"; "Job Queue Entry ID")
+                field("Job Queue Entry ID"; Rec."Job Queue Entry ID")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Job Queue Entry ID field.';
                 }
-                field("Dimension Set ID"; "Dimension Set ID")
+                field("Dimension Set ID"; Rec."Dimension Set ID")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Dimension Set ID field.';
                 }
-                field("No. of Archived Versions"; "No. of Archived Versions")
+                field("No. of Archived Versions"; Rec."No. of Archived Versions")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the No. of Archived Versions field.';
                 }
-                field("Doc. No. Occurrence"; "Doc. No. Occurrence")
+                field("Doc. No. Occurrence"; Rec."Doc. No. Occurrence")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Doc. No. Occurrence field.';
                 }
-                field("Campaign No."; "Campaign No.")
+                field("Campaign No."; Rec."Campaign No.")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Campaign No. field.';
                 }
-                field("Buy-from Contact No."; "Buy-from Contact No.")
+                field("Buy-from Contact No."; Rec."Buy-from Contact No.")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Buy-from Contact No. field.';
                 }
-                field("Pay-to Contact No."; "Pay-to Contact No.")
+                field("Pay-to Contact No."; Rec."Pay-to Contact No.")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Pay-to Contact No. field.';
                 }
-                field("Responsibility Center"; "Responsibility Center")
+                field("Responsibility Center"; Rec."Responsibility Center")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Responsibility Center field.';
                 }
-                field("Completely Received"; "Completely Received")
+                field("Completely Received"; Rec."Completely Received")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Completely Received field.';
                 }
-                field("Posting from Whse. Ref."; "Posting from Whse. Ref.")
+                field("Posting from Whse. Ref."; Rec."Posting from Whse. Ref.")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Posting from Whse. Ref. field.';
                 }
-                field("Location Filter"; "Location Filter")
+                field("Location Filter"; Rec."Location Filter")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Location Filter field.';
                 }
-                field("Requested Receipt Date"; "Requested Receipt Date")
+                field("Requested Receipt Date"; Rec."Requested Receipt Date")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Requested Receipt Date field.';
                 }
-                field("Promised Receipt Date"; "Promised Receipt Date")
+                field("Promised Receipt Date"; Rec."Promised Receipt Date")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Promised Receipt Date field.';
                 }
-                field("Lead Time Calculation"; "Lead Time Calculation")
+                field("Lead Time Calculation"; Rec."Lead Time Calculation")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Lead Time Calculation field.';
                 }
-                field("Inbound Whse. Handling Time"; "Inbound Whse. Handling Time")
+                field("Inbound Whse. Handling Time"; Rec."Inbound Whse. Handling Time")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Inbound Whse. Handling Time field.';
                 }
-                field("Date Filter"; "Date Filter")
+                field("Date Filter"; Rec."Date Filter")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Date Filter field.';
                 }
-                field("Vendor Authorization No."; "Vendor Authorization No.")
+                field("Vendor Authorization No."; Rec."Vendor Authorization No.")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Vendor Authorization No. field.';
                 }
-                field("Return Shipment No."; "Return Shipment No.")
+                field("Return Shipment No."; Rec."Return Shipment No.")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Return Shipment No. field.';
                 }
-                field("Return Shipment No. Series"; "Return Shipment No. Series")
+                field("Return Shipment No. Series"; Rec."Return Shipment No. Series")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Return Shipment No. Series field.';
                 }
-                field(Ship; Ship)
+                field(Ship; Rec.Ship)
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Ship field.';
                 }
-                field("Last Return Shipment No."; "Last Return Shipment No.")
+                field("Last Return Shipment No."; Rec."Last Return Shipment No.")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Last Return Shipment No. field.';
                 }
-                field("Assigned User ID"; "Assigned User ID")
+                field("Assigned User ID"; Rec."Assigned User ID")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Assigned User ID field.';
                 }
-                field(bPosted; bPosted)
+                field(bPosted; Rec.bPosted)
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the bPosted field.';
                 }
-                field(bEnabled; bEnabled)
+                field(bEnabled; Rec.bEnabled)
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the bEnabled field.';
                 }
             }
         }

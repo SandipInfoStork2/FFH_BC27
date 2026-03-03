@@ -10,17 +10,20 @@ pageextension 50143 StandardPurchaseCodeSubformExt extends "Standard Purchase Co
         // Add changes to page layout here
         addafter(Description)
         {
-            field("Description 2"; "Description 2")
+            field("Description 2"; Rec."Description 2")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Description 2 field.';
             }
-            field("Extended Description"; "Extended Description")
+            field("Extended Description"; Rec."Extended Description")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Extended Description field.';
             }
-            field("Replenishment System"; "Replenishment System")
+            field("Replenishment System"; Rec."Replenishment System")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Replenishment System field.';
             }
         }
     }

@@ -33,12 +33,14 @@ pageextension 50120 PurchInvoiceSubformExt extends "Purch. Invoice Subform"
             {
                 ApplicationArea = All;
                 Visible = false;
+                ToolTip = 'Specifies the value of the VAT Calculation Type field.';
             }
             field("VAT %78370"; Rec."VAT %")
             {
                 ApplicationArea = All;
                 QuickEntry = false;
                 Visible = false;
+                ToolTip = 'Specifies the value of the VAT % field.';
             }
 
         }
@@ -47,6 +49,7 @@ pageextension 50120 PurchInvoiceSubformExt extends "Purch. Invoice Subform"
             field("VAT Prod. Posting Group83232"; Rec."VAT Prod. Posting Group")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the VAT product posting group. Links business transactions made for the item, resource, or G/L account with the general ledger, to account for VAT amounts resulting from trade with that record.';
             }
         }
 
@@ -71,11 +74,12 @@ pageextension 50120 PurchInvoiceSubformExt extends "Purch. Invoice Subform"
                 ApplicationArea = All;
                 Caption = 'Item &Tracking Lines';
                 Image = ItemTrackingLines;
-                ShortCutKey = 'Shift+Ctrl+I';
+                ShortcutKey = 'Shift+Ctrl+I';
+                ToolTip = 'Executes the Item &Tracking Lines action.';
 
                 trigger OnAction();
                 begin
-                    OpenItemTrackingLines;
+                    Rec.OpenItemTrackingLines;
                 end;
             }
         }

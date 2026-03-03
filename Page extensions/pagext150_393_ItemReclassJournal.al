@@ -28,7 +28,8 @@ pageextension 50250 ItemReclassJournalExt extends "Item Reclass. Journal"
         {
             action("Get Expiring Items")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Executes the Get Expiring Items action.';
 
                 trigger OnAction();
                 var
@@ -36,11 +37,11 @@ pageextension 50250 ItemReclassJournalExt extends "Item Reclass. Journal"
                     ExpiringItems: Report "Expiring Items";
                 begin
 
-                    ItemJnlLine.COPY(Rec);
-                    CLEAR(ExpiringItems);
+                    ItemJnlLine.Copy(Rec);
+                    Clear(ExpiringItems);
                     ExpiringItems.SetItemJnl(ItemJnlLine);
-                    ExpiringItems.RUNMODAL;
-                    CurrPage.UPDATE(false);
+                    ExpiringItems.RunModal;
+                    CurrPage.Update(false);
                 end;
             }
         }

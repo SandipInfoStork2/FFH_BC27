@@ -23,14 +23,14 @@ tableextension 50104 VendorExt extends Vendor
         field(50004; "No. of Released Prod. Orders"; Integer)
         {
             FieldClass = FlowField;
-            CalcFormula = Count("Production Order" WHERE("Vendor No." = FIELD("No."), Status = FILTER(Released)));
+            CalcFormula = count("Production Order" where("Vendor No." = field("No."), Status = filter(Released)));
             Editable = false;
 
         }
         field(50005; "No. of Finished Prod. Orders"; Integer)
         {
             FieldClass = FlowField;
-            CalcFormula = Count("Production Order" WHERE("Vendor No." = FIELD("No."), Status = FILTER(Finished)));
+            CalcFormula = count("Production Order" where("Vendor No." = field("No."), Status = filter(Finished)));
             Editable = false;
 
         }
@@ -62,40 +62,40 @@ tableextension 50104 VendorExt extends Vendor
         {
             Caption = 'Producer Group';
             DataClassification = ToBeClassified;
-            TableRelation = "General Categories".Code WHERE("Table No." = CONST(23), Type = CONST(Category1));
+            TableRelation = "General Categories".Code where("Table No." = const(23), Type = const(Category1));
         }
         field(50011; "Category 2"; Code[20])
         {
             CaptionML = ELL = 'GLOBALG.A.P. Option',
                         ENU = 'GLOBALG.A.P. Option';
             DataClassification = ToBeClassified;
-            TableRelation = "General Categories".Code WHERE("Table No." = CONST(23), Type = CONST(Category2));
+            TableRelation = "General Categories".Code where("Table No." = const(23), Type = const(Category2));
         }
         field(50012; "Category 3"; Code[20])
         {
             CaptionML = ELL = 'Status GRASP',
                         ENU = 'Status GRASP ';
             DataClassification = ToBeClassified;
-            TableRelation = "General Categories".Code WHERE("Table No." = CONST(23), Type = CONST(Category3));
+            TableRelation = "General Categories".Code where("Table No." = const(23), Type = const(Category3));
         }
         field(50013; "Category 4"; Code[20])
         {
             CaptionML = ELL = 'Status LIDL supply chain',
                         ENU = 'Status LIDL supply chain';
             DataClassification = ToBeClassified;
-            TableRelation = "General Categories".Code WHERE("Table No." = CONST(23), Type = CONST(Category4));
+            TableRelation = "General Categories".Code where("Table No." = const(23), Type = const(Category4));
         }
         field(50014; "Category 5"; Code[20])
         {
             CaptionML = ELL = 'Grower',
                         ENU = 'Grower';
             DataClassification = ToBeClassified;
-            TableRelation = "General Categories".Code WHERE("Table No." = CONST(23), Type = CONST(Category5));
+            TableRelation = "General Categories".Code where("Table No." = const(23), Type = const(Category5));
         }
         field(50015; "Category 6"; Code[20])
         {
             DataClassification = ToBeClassified;
-            TableRelation = "General Categories".Code WHERE("Table No." = CONST(23), Type = CONST(Category6));
+            TableRelation = "General Categories".Code where("Table No." = const(23), Type = const(Category6));
         }
         field(50020; "GGN Expiry Date"; Date)
         {
@@ -103,11 +103,11 @@ tableextension 50104 VendorExt extends Vendor
 
             trigger OnValidate();
             begin
-                IF "GGN Expiry Date" >= TODAY THEN BEGIN
-                    VALIDATE("Grower Certified", TRUE);
-                END ELSE BEGIN
-                    VALIDATE("Grower Certified", FALSE);
-                END;
+                if "GGN Expiry Date" >= Today then begin
+                    Validate("Grower Certified", true);
+                end else begin
+                    Validate("Grower Certified", false);
+                end;
             end;
         }
         field(50022; Comments; Text[150])
@@ -130,9 +130,9 @@ tableextension 50104 VendorExt extends Vendor
         myInt: Integer;
     begin
         //+TAL0.1
-        IF "No." = '' THEN BEGIN
-            ERROR('Blank No is not allowed');
-        END;
+        if "No." = '' then begin
+            Error('Blank No is not allowed');
+        end;
         //-TAL0.1
     end;
 
@@ -141,9 +141,9 @@ tableextension 50104 VendorExt extends Vendor
         myInt: Integer;
     begin
         //+TAL0.1
-        IF "No." = '' THEN BEGIN
-            ERROR('Blank No is not allowed');
-        END;
+        if "No." = '' then begin
+            Error('Blank No is not allowed');
+        end;
         //-TAL0.1
     end;
 

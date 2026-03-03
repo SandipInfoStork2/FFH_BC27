@@ -9,45 +9,51 @@ page 50043 "Item Ledger Entry - Update"
     ShowFilter = false;
     SourceTable = "Item Ledger Entry";
     SourceTableTemporary = true;
-    Permissions = TableData "Item Ledger Entry" = rm;
+    Permissions = tabledata "Item Ledger Entry" = rm;
+    ApplicationArea = All;
 
     layout
     {
-        area(content)
+        area(Content)
         {
             group(General)
             {
-                field("No."; "Entry No.")
+                field("No."; Rec."Entry No.")
                 {
                     ApplicationArea = Basic, Suite;
                     Editable = false;
                     ToolTip = 'Specifies the FA Entry number. You cannot change the number because the document has already been posted.';
                 }
 
-                field("Item No."; "Item No.")
+                field("Item No."; Rec."Item No.")
                 {
                     ApplicationArea = Basic, Suite;
                     Editable = false;
+                    ToolTip = 'Specifies the number of the item in the entry.';
                 }
-                field(Description; Description)
+                field(Description; Rec.Description)
                 {
                     ApplicationArea = Basic, Suite;
                     Editable = false;
+                    ToolTip = 'Specifies a description of the entry.';
                 }
 
 
-                field("Posting Date"; "Posting Date")
+                field("Posting Date"; Rec."Posting Date")
                 {
                     ApplicationArea = Basic, Suite;
                     Editable = false;
+                    ToolTip = 'Specifies the entry''s posting date.';
                 }
-                field("Remaining Quantity"; "Remaining Quantity")
+                field("Remaining Quantity"; Rec."Remaining Quantity")
                 {
                     ApplicationArea = Basic, Suite;
+                    ToolTip = 'Specifies the quantity in the Quantity field that remains to be processed.';
                 }
-                field(Open; Open)
+                field(Open; Rec.Open)
                 {
                     ApplicationArea = Basic, Suite;
+                    ToolTip = 'Specifies whether the entry has been fully applied to.';
                 }
 
                 /*
@@ -109,14 +115,14 @@ page 50043 "Item Ledger Entry - Update"
     var
         ILE: Record "Item Ledger Entry";
     begin
-        if CloseAction = ACTION::LookupOK then
+        if CloseAction = Action::LookupOK then
             if RecordChanged() then begin
                 ILE := Rec;
                 ILE.LockTable();
                 ILE.Find();
 
-                ILE."Remaining Quantity" := "Remaining Quantity";
-                ILE.Open := Open;
+                ILE."Remaining Quantity" := Rec."Remaining Quantity";
+                ILE.Open := Rec.Open;
                 /*
                 ILE."Country/Region Code" := "Country/Region Code";
                 ILE."Transaction Type" := "Transaction Type";
@@ -127,7 +133,7 @@ page 50043 "Item Ledger Entry - Update"
                 ILE."Shpt. Method Code" := "Shpt. Method Code";
                 ILE."Country/Region of Origin Code" := "Country/Region of Origin Code";
                 */
-                ILE.TestField("Entry No.", "Entry No.");
+                ILE.TestField("Entry No.", Rec."Entry No.");
                 ILE.Modify();
             end;
         //CODEUNIT.Run(CODEUNIT::"Sales Invoice Hdr. - Edit", Rec);
@@ -138,8 +144,8 @@ page 50043 "Item Ledger Entry - Update"
 
     local procedure RecordChanged() IsChanged: Boolean
     begin
-        IsChanged := ("Remaining Quantity" <> xItemLedgerEntry."Remaining Quantity") or
-        (Open <> xItemLedgerEntry.Open)
+        IsChanged := (Rec."Remaining Quantity" <> xItemLedgerEntry."Remaining Quantity") or
+        (Rec.Open <> xItemLedgerEntry.Open)
 
         /*
         IsChanged :=
@@ -158,7 +164,7 @@ page 50043 "Item Ledger Entry - Update"
     procedure SetRec(ItemLedgerEntry: Record "Item Ledger Entry")
     begin
         Rec := ItemLedgerEntry;
-        Insert();
+        Rec.Insert();
     end;
 
 }

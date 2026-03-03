@@ -10,7 +10,7 @@ tableextension 50151 ProdOrderLineExt extends "Prod. Order Line"
         // Add changes to table fields here
         field(50009; "Shelf No."; Code[10])
         {
-            CalcFormula = Lookup("Item"."Shelf No." WHERE("No." = FIELD("Item No.")));
+            CalcFormula = lookup(Item."Shelf No." where("No." = field("Item No.")));
             Caption = 'Shelf No.';
             Editable = false;
             FieldClass = FlowField;

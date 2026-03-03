@@ -16,7 +16,7 @@ tableextension 50110 PurchaseLineExt extends "Purchase Line"
 
         field(50000; "Unit of Measure (Base)"; Code[10])
         {
-            CalcFormula = Lookup(Item."Base Unit of Measure" WHERE("No." = FIELD("No.")));
+            CalcFormula = lookup(Item."Base Unit of Measure" where("No." = field("No.")));
             Editable = false;
             FieldClass = FlowField;
         }
@@ -32,12 +32,12 @@ tableextension 50110 PurchaseLineExt extends "Purchase Line"
         field(50013; "Transfer-from Code"; Code[10])
         {
             Caption = 'Transfer-from Code';
-            TableRelation = Location WHERE("Use As In-Transit" = CONST(false));
+            TableRelation = Location where("Use As In-Transit" = const(false));
         }
         field(50014; "Transfer-to Code"; Code[10])
         {
             Caption = 'Transfer-to Code';
-            TableRelation = Location WHERE("Use As In-Transit" = CONST(false));
+            TableRelation = Location where("Use As In-Transit" = const(false));
         }
         //TAL 1.0.0.201 <<
 
@@ -61,10 +61,10 @@ tableextension 50110 PurchaseLineExt extends "Purchase Line"
     begin
         if "Document Type" = "Document Type"::Order then begin
 
-            rL_PPSetup.GET;
+            rL_PPSetup.Get;
 
 
-            rL_PurchaseHeader.RESET;
+            rL_PurchaseHeader.Reset;
             rL_PurchaseHeader.SetRange("Document Type", "Document Type");
             rL_PurchaseHeader.SetFilter("No.", "Document No.");
             if rL_PurchaseHeader.FindSet() then begin

@@ -5,6 +5,7 @@ report 50056 "Sales Order Production"
     RDLCLayout = './Layouts/rep56_50056_SalesOrderProduction.rdlc';
 
     PreviewMode = PrintLayout;
+    ApplicationArea = All;
 
     dataset
     {
@@ -37,13 +38,13 @@ report 50056 "Sales Order Production"
             column(UnitofMeasureCode_SalesLine; "Sales Line"."Unit of Measure Code")
             {
             }
-            column(ShipmentDate_SalesLine; FORMAT("Sales Line"."Shipment Date"))
+            column(ShipmentDate_SalesLine; Format("Sales Line"."Shipment Date"))
             {
             }
             column(ShiptoCode_SalesLine; "Sales Line"."Ship-to Code")
             {
             }
-            column(vG_ShowDetails; FORMAT(vG_ShowDetails))
+            column(vG_ShowDetails; Format(vG_ShowDetails))
             {
             }
             column(ItemWithRouting; ItemWithRouting)
@@ -76,11 +77,11 @@ report 50056 "Sales Order Production"
 
             trigger OnPreDataItem();
             begin
-                "Sales Line".SETRANGE("Document Type", "Sales Line"."Document Type"::Order);
-                "Sales Line".SETRANGE(Type, "Sales Line".Type::Item);
-                "Sales Line".SETFILTER(Quantity, '<>%1', 0);
+                "Sales Line".SetRange("Document Type", "Sales Line"."Document Type"::Order);
+                "Sales Line".SetRange(Type, "Sales Line".Type::Item);
+                "Sales Line".SetFilter(Quantity, '<>%1', 0);
 
-                rG_CompanyInformation.GET;
+                rG_CompanyInformation.Get;
                 DisplayName := rG_CompanyInformation.Name;
 
 
@@ -100,18 +101,18 @@ report 50056 "Sales Order Production"
                 SalesHeader: Record "Sales Header";
             begin
 
-                rG_Item.GET("No.");
+                rG_Item.Get("No.");
                 ItemWithRouting := rG_Item."Routing No." <> '';
 
-                rG_SalesHeader.GET("Sales Line"."Document Type", "Sales Line"."Document No.");
+                rG_SalesHeader.Get("Sales Line"."Document Type", "Sales Line"."Document No.");
                 //rG_ShiptoAddress.GET(rG_SalesHeader."Bill-to Customer No.",rG_SalesHeader."Ship-to Code");
 
                 //+TAL0.1
                 vG_ShiptoName := '';
-                rG_ShiptoAddress.RESET;
-                rG_ShiptoAddress.SETFILTER("Customer No.", rG_SalesHeader."Bill-to Customer No.");
-                rG_ShiptoAddress.SETRANGE(Code, "Sales Line"."Ship-to Code");
-                if rG_ShiptoAddress.FINDSET then begin
+                rG_ShiptoAddress.Reset;
+                rG_ShiptoAddress.SetFilter("Customer No.", rG_SalesHeader."Bill-to Customer No.");
+                rG_ShiptoAddress.SetRange(Code, "Sales Line"."Ship-to Code");
+                if rG_ShiptoAddress.FindSet then begin
                     vG_ShiptoName := rG_ShiptoAddress.Name;
                 end;
 
@@ -125,8 +126,8 @@ report 50056 "Sales Order Production"
                 //-1.0.0.198
 
                 if vG_ShowSellToDetails then begin
-                    SalesHeader.RESET;
-                    SalesHeader.get("Document Type", "Document No.");
+                    SalesHeader.Reset;
+                    SalesHeader.Get("Document Type", "Document No.");
                     vG_ShiptoName := SalesHeader."Sell-to Customer Name";
                     "Sales Line"."Ship-to Code" := '';
                 end;
@@ -143,7 +144,7 @@ report 50056 "Sales Order Production"
 
         layout
         {
-            area(content)
+            area(Content)
             {
                 group(Options)
                 {
@@ -151,6 +152,7 @@ report 50056 "Sales Order Production"
                     {
                         ApplicationArea = All;
                         Caption = 'Show Details';
+                        ToolTip = 'Specifies the value of the Show Details field.';
                     }
                     field(ShowSellToDetails; vG_ShowSellToDetails)
                     {
@@ -175,6 +177,7 @@ report 50056 "Sales Order Production"
                     {
                         ApplicationArea = All;
                         Caption = 'Show Description 2';
+                        ToolTip = 'Specifies the value of the Show Description 2 field.';
                     }
                 }
             }

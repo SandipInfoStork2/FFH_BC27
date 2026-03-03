@@ -17,47 +17,56 @@ pageextension 50138 PostedSalesShipmentsExt extends "Posted Sales Shipments"
         addafter("Shipment Date")
         {
 
-            field("Batch No."; "Batch No.")
+            field("Batch No."; Rec."Batch No.")
             {
                 ApplicationArea = All;
                 Editable = false;
+                ToolTip = 'Specifies the value of the Batch No. field.';
             }
-            field("Order No."; "Order No.")
+            field("Order No."; Rec."Order No.")
             {
                 ApplicationArea = All;
                 Editable = false;
+                ToolTip = 'Specifies the number of the sales order that this invoice was posted from.';
             }
-            field("Lot No."; "Lot No.")
+            field("Lot No."; Rec."Lot No.")
             {
                 ApplicationArea = All;
                 Editable = false;
+                ToolTip = 'Specifies the value of the Lot No. field.';
             }
-            field("Total Qty"; "Total Qty")
+            field("Total Qty"; Rec."Total Qty")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Total Qty field.';
             }
-            field("Total Qty (Base)"; "Total Qty (Base)")
+            field("Total Qty (Base)"; Rec."Total Qty (Base)")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Total Qty (Base) field.';
             }
-            field("Total Weight"; "Total Weight")
+            field("Total Weight"; Rec."Total Weight")
             {
                 ApplicationArea = All;
                 DecimalPlaces = 0 : 0;
+                ToolTip = 'Specifies the value of the Total Weight field.';
             }
-            field("Delivery No."; "Delivery No.")
+            field("Delivery No."; Rec."Delivery No.")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Delivery No. field.';
             }
-            field("Delivery Sequence"; "Delivery Sequence")
+            field("Delivery Sequence"; Rec."Delivery Sequence")
             {
                 ApplicationArea = All;
                 BlankZero = true;
+                ToolTip = 'Specifies the value of the Delivery Sequence field.';
             }
 
-            field("Customer Reference No."; "Customer Reference No.")
+            field("Customer Reference No."; Rec."Customer Reference No.")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Customer Reference No. field.';
             }
         }
 
@@ -80,13 +89,14 @@ pageextension 50138 PostedSalesShipmentsExt extends "Posted Sales Shipments"
                 Promoted = true;
                 PromotedCategory = Process;
                 PromotedOnly = true;
+                ToolTip = 'Executes the Item Tracking Appendix action.';
 
                 trigger OnAction();
                 var
                     SalesShipmentHeader: Record "Sales Shipment Header";
                 begin
                     SalesShipmentHeader := Rec;
-                    CurrPage.SETSELECTIONFILTER(SalesShipmentHeader);
+                    CurrPage.SetSelectionFilter(SalesShipmentHeader);
                     SalesShipmentHeader.PrintAppendixRecords(SalesShipmentHeader);
                 end;
             }
@@ -131,20 +141,22 @@ pageextension 50138 PostedSalesShipmentsExt extends "Posted Sales Shipments"
                 action(Editable)
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Executes the Editable action.';
 
                     trigger OnAction();
                     begin
-                        CurrPage.EDITABLE(true);
+                        CurrPage.Editable(true);
                     end;
                 }
             }
 
             action(OrderQty)
             {
-                caption = 'Order Qty';
+                Caption = 'Order Qty';
                 ApplicationArea = All;
                 RunObject = page "Order Qty";
                 RunPageLink = "Document No." = field("Order No.");
+                ToolTip = 'Executes the Order Qty action.';
             }
         }
     }
@@ -152,8 +164,8 @@ pageextension 50138 PostedSalesShipmentsExt extends "Posted Sales Shipments"
     trigger OnAfterGetRecord();
     begin
         //+TAL0.3
-        AllowMoveUpPage := "Delivery Sequence" <> 1; //TRUE; //(DataKind = CONST_DK_PAGE) AND NOT IsFirst;
-        AllowMoveDownPage := "Delivery Sequence" <> COUNT; //TRUE;//(DataKind = CONST_DK_PAGE) AND NOT IsLast;
+        AllowMoveUpPage := Rec."Delivery Sequence" <> 1; //TRUE; //(DataKind = CONST_DK_PAGE) AND NOT IsFirst;
+        AllowMoveDownPage := Rec."Delivery Sequence" <> Rec.COUNT; //TRUE;//(DataKind = CONST_DK_PAGE) AND NOT IsLast;
         //-TAL0.3
     end;
 
@@ -165,20 +177,20 @@ pageextension 50138 PostedSalesShipmentsExt extends "Posted Sales Shipments"
         FocusedRec := Rec;
 
         if _MoveUp then begin
-            Rec2.GET("No.");
-            NEXT(-1);
-            Rec1.GET("No.");
+            Rec2.GET(Rec."No.");
+            Rec.NEXT(-1);
+            Rec1.GET(Rec."No.");
         end
         else begin
-            Rec1.GET("No.");
-            NEXT(1);
-            Rec2.GET("No.");
+            Rec1.GET(Rec."No.");
+            Rec.NEXT(1);
+            Rec2.GET(Rec."No.");
         end;
 
         Rec1."Delivery Sequence" += 1;
-        Rec1.MODIFY(false);
+        Rec1.Modify(false);
         Rec2."Delivery Sequence" -= 1;
-        Rec2.MODIFY(false);
+        Rec2.Modify(false);
 
         RefreshCurrentPage(false);
         //CurrPage.UPDATE(FALSE);
@@ -190,19 +202,19 @@ pageextension 50138 PostedSalesShipmentsExt extends "Posted Sales Shipments"
     begin
         //CheckInitialized;
         //BuildTree;
-        SETCURRENTKEY("Delivery No.", "Delivery Sequence");
+        Rec.SETCURRENTKEY("Delivery No.", "Delivery Sequence");
 
         if not _InitialRefresh then
-            CurrPage.UPDATE(false);
+            CurrPage.Update(false);
 
-        if FINDFIRST then begin
+        if Rec.FINDFIRST then begin
             if not _InitialRefresh then begin
                 Eof := false;
-                while (("No." <> FocusedRec."No.")) and not Eof do
-                    Eof := NEXT = 0;
+                while ((Rec."No." <> FocusedRec."No.")) and not Eof do
+                    Eof := Rec.NEXT = 0;
 
                 if Eof then
-                    FINDFIRST;
+                    Rec.FINDFIRST;
             end;
         end;
     end;

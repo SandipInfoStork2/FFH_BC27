@@ -37,9 +37,10 @@ pageextension 50115 SalesOrderSubformExt extends "Sales Order Subform"
 
         addafter("Variant Code")
         {
-            field("Shelf No."; "Shelf No.")
+            field("Shelf No."; Rec."Shelf No.")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Shelf No. field.';
 
                 trigger OnValidate();
                 begin
@@ -59,9 +60,10 @@ pageextension 50115 SalesOrderSubformExt extends "Sales Order Subform"
         addafter(ShortcutDimCode5)
         {
             //TAL 1.0.0.71 >>
-            field("Unit of Measure (Base)"; "Unit of Measure (Base)")
+            field("Unit of Measure (Base)"; Rec."Unit of Measure (Base)")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Unit of Measure (Base) field.';
             }
 
             // field("Quantity (Base)"; "Quantity (Base)")
@@ -74,10 +76,12 @@ pageextension 50115 SalesOrderSubformExt extends "Sales Order Subform"
             //     ApplicationArea = all;
             // }
             //TAL 1.0.0.71 <<
-            field("Package Qty"; "Package Qty")
+            field("Package Qty"; Rec."Package Qty")
             {
-                ApplicationArea = all;
-                Visible = false;//TAL 1.0.0.71
+                ApplicationArea = All;
+                Visible = false;
+                //TAL 1.0.0.71                                                                                                                                                                                                                                                                                                                            ToolTip = 'Specifies the value of the Package Qty field.';
+
             }
 
         }
@@ -133,31 +137,35 @@ pageextension 50115 SalesOrderSubformExt extends "Sales Order Subform"
 
         addafter("Reserved Quantity")
         {
-            field("Req. Country"; "Req. Country")
+            field("Req. Country"; Rec."Req. Country")
             {
-                caption = 'Req. Country';
-                ApplicationArea = all;
+                Caption = 'Req. Country';
+                ApplicationArea = All;
                 Visible = true;//TAL 1.0.0.71
                 ToolTip = 'Custom: Req. Country/Country/Region of Origin Code';
             }
-            field("Country/Region of Origin Code"; "Country/Region of Origin Code")
+            field("Country/Region of Origin Code"; Rec."Country/Region of Origin Code")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 Visible = true;
+                ToolTip = 'Specifies the value of the Country/Region of Origin Code field.';
             }
 
-            field("Product Class"; "Product Class")
+            field("Product Class"; Rec."Product Class")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Product Class (Κατηγορία) field.';
             }
-            field("Category 9"; "Category 9")
+            field("Category 9"; Rec."Category 9")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Potatoes District Region field.';
             }
-            field("Packing Group Description"; "Packing Group Description")
+            field("Packing Group Description"; Rec."Packing Group Description")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 Visible = false;
+                ToolTip = 'Specifies the value of the Packing Group Description field.';
             }
         }
 
@@ -181,10 +189,11 @@ pageextension 50115 SalesOrderSubformExt extends "Sales Order Subform"
         addafter("Net Weight")
         {
 
-            field("Total Net Weight"; "Total Net Weight")
+            field("Total Net Weight"; Rec."Total Net Weight")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 Visible = false;
+                ToolTip = 'Specifies the value of the Total Net Weight field.';
             }
         }
 
@@ -235,9 +244,11 @@ pageextension 50115 SalesOrderSubformExt extends "Sales Order Subform"
 
         addafter("Shortcut Dimension 2 Code")
         {
-            field("Quantity (Base)"; "Quantity (Base)")
+            field("Quantity (Base)"; Rec."Quantity (Base)")
             {
                 DecimalPlaces = 0 : 3;
+                ToolTip = 'Specifies the value of the Quantity (Base) field.';
+                ApplicationArea = All;
             }
         }
         moveafter("Quantity (Base)"; "Unit of Measure")
@@ -247,23 +258,27 @@ pageextension 50115 SalesOrderSubformExt extends "Sales Order Subform"
         }
         addafter("VAT Prod. Posting Group")
         {
-            field("New Order Qty"; "New Order Qty")
+            field("New Order Qty"; Rec."New Order Qty")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 Visible = false;
+                ToolTip = 'Specifies the value of the New Order Qty field.';
             }
 
-            field("Qty. Requested"; "Qty. Requested")
+            field("Qty. Requested"; Rec."Qty. Requested")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Qty. Requested field.';
             }
-            field("Qty. Confirmed"; "Qty. Confirmed")
+            field("Qty. Confirmed"; Rec."Qty. Confirmed")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Qty. Confirmed field.';
             }
             field("Shipped Not Inv. (LCY) No VAT54230"; Rec."Shipped Not Inv. (LCY) No VAT")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Shipped Not Invoiced (LCY) field.';
             }
         }
         modify(ShortcutDimCode6)
@@ -281,10 +296,12 @@ pageextension 50115 SalesOrderSubformExt extends "Sales Order Subform"
             field("Transfer-from Code"; Rec."Transfer-from Code")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Transfer-from Code field.';
             }
             field("Transfer-to Code"; Rec."Transfer-to Code")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Transfer-to Code field.';
             }
         }
         //TAL 1.0.0.201 <<
@@ -298,13 +315,15 @@ pageextension 50115 SalesOrderSubformExt extends "Sales Order Subform"
 
         addafter(ShortcutDimCode8)
         {
-            field("Shipping Temperature"; "Shipping Temperature")
+            field("Shipping Temperature"; Rec."Shipping Temperature")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Shipping Temperature °C field.';
             }
-            field("Shipping Quality Control"; "Shipping Quality Control")
+            field("Shipping Quality Control"; Rec."Shipping Quality Control")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Shipping Quality Control field.';
             }
         }
 
@@ -320,9 +339,10 @@ pageextension 50115 SalesOrderSubformExt extends "Sales Order Subform"
         {
             action("Clear Qty. to Ship ")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 Image = Completed;
                 Promoted = true;
+                ToolTip = 'Executes the Clear Qty. to Ship  action.';
 
                 trigger OnAction();
                 var
@@ -330,16 +350,16 @@ pageextension 50115 SalesOrderSubformExt extends "Sales Order Subform"
                     rL_SalesLine: Record "Sales Line";
                 begin
                     //+TAL0.3
-                    rL_SalesLine.RESET;
-                    rL_SalesLine.SETRANGE("Document Type", "Document Type");
-                    rL_SalesLine.SETRANGE("Document No.", "Document No.");
+                    rL_SalesLine.Reset;
+                    rL_SalesLine.SETRANGE("Document Type", Rec."Document Type");
+                    rL_SalesLine.SETRANGE("Document No.", Rec."Document No.");
 
 
-                    if rL_SalesLine.FINDSET then begin
+                    if rL_SalesLine.FindSet then begin
                         repeat
-                            rL_SalesLine.VALIDATE("Qty. to Ship", 0); //TAL0.4
-                            rL_SalesLine.MODIFY;
-                        until rL_SalesLine.NEXT = 0;
+                            rL_SalesLine.Validate("Qty. to Ship", 0); //TAL0.4
+                            rL_SalesLine.Modify;
+                        until rL_SalesLine.Next = 0;
                     end;
 
                     //-TAL0.3
@@ -347,22 +367,24 @@ pageextension 50115 SalesOrderSubformExt extends "Sales Order Subform"
             }
             action(ItemTrackingLines2)
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 Caption = 'Item &Tracking Lines';
                 Image = ItemTrackingLines;
-                ShortCutKey = 'Shift+Ctrl+I';
+                ShortcutKey = 'Shift+Ctrl+I';
+                ToolTip = 'Executes the Item &Tracking Lines action.';
 
                 trigger OnAction();
                 begin
-                    OpenItemTrackingLines;
+                    Rec.OpenItemTrackingLines;
                 end;
             }
 
             action("Delete Zero Line Qty")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 Image = Delete;
                 Promoted = true;
+                ToolTip = 'Executes the Delete Zero Line Qty action.';
 
                 trigger OnAction();
                 var
@@ -370,19 +392,19 @@ pageextension 50115 SalesOrderSubformExt extends "Sales Order Subform"
                     rL_SalesLine: Record "Sales Line";
                 begin
                     //+TAL0.3
-                    rL_SalesLine.RESET;
-                    rL_SalesLine.SETRANGE("Document Type", "Document Type");
-                    rL_SalesLine.SETRANGE("Document No.", "Document No.");
+                    rL_SalesLine.Reset;
+                    rL_SalesLine.SETRANGE("Document Type", Rec."Document Type");
+                    rL_SalesLine.SETRANGE("Document No.", Rec."Document No.");
                     rL_SalesLine.SetRange(Type, rL_SalesLine.Type::Item);
                     rL_SalesLine.SetRange(Quantity, 0);
-                    if rL_SalesLine.FINDSET then begin
-                        if not confirm(Text50000, false, rL_SalesLine.Count) then begin
+                    if rL_SalesLine.FindSet then begin
+                        if not Confirm(Text50000, false, rL_SalesLine.Count) then begin
                             exit;
                         end;
 
                         repeat
                             rL_SalesLine.Delete(true);
-                        until rL_SalesLine.NEXT = 0;
+                        until rL_SalesLine.Next = 0;
                     end;
 
                     //-TAL0.3
@@ -392,7 +414,7 @@ pageextension 50115 SalesOrderSubformExt extends "Sales Order Subform"
             //+1.0.0.277
             action(ImportExcelGeneral)
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 Caption = 'Import Excel General';
                 ToolTip = 'Custom: Col 1: Reeference No., Col 2 Desc., Col 3 Qty';
                 Image = ImportExcel;
@@ -405,10 +427,10 @@ pageextension 50115 SalesOrderSubformExt extends "Sales Order Subform"
 
                     rL_SalesHeader: Record "Sales Header";
                 begin
-                    CLEAR(rL_SalesHeader);
-                    rL_SalesHeader.SETRANGE("Document Type", "Document Type");
-                    rL_SalesHeader.SETFILTER("No.", "Document No.");
-                    if rL_SalesHeader.FINDFIRST then begin
+                    Clear(rL_SalesHeader);
+                    rL_SalesHeader.SETRANGE("Document Type", Rec."Document Type");
+                    rL_SalesHeader.SETFILTER("No.", Rec."Document No.");
+                    if rL_SalesHeader.FindFirst then begin
                         Clear(cu_GeneralMgt);
                         cu_GeneralMgt.ImportFoodyLines(rL_SalesHeader);
                     end;
@@ -430,7 +452,7 @@ pageextension 50115 SalesOrderSubformExt extends "Sales Order Subform"
     var
         UserSetup: Record "User Setup";
     begin
-        UserSetup.GET(UserId);
+        UserSetup.Get(UserId);
         UnitCostEditable := UserSetup."Unit Cost Editable";
     end;
     //-1.0.0.228

@@ -10,20 +10,22 @@ pageextension 50130 PostedSalesCreditMemoExt extends "Posted Sales Credit Memo"
 
         addafter("No. Printed")
         {
-            field("Reason Code"; "Reason Code")
+            field("Reason Code"; Rec."Reason Code")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 Editable = false;
                 Visible = true;
+                ToolTip = 'Specifies the value of the Reason Code field.';
             }
         }
 
         addafter("External Document No.")
         {
-            field("Customer Reference No."; "Customer Reference No.")
+            field("Customer Reference No."; Rec."Customer Reference No.")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 Editable = false;
+                ToolTip = 'Specifies the value of the Customer Reference No. field.';
             }
         }
     }
@@ -35,21 +37,22 @@ pageextension 50130 PostedSalesCreditMemoExt extends "Posted Sales Credit Memo"
         {
             action("Export EDI")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 Image = ExportFile;
                 Promoted = true;
                 PromotedCategory = Process;
                 PromotedIsBig = true;
+                ToolTip = 'Executes the Export EDI action.';
 
                 trigger OnAction();
                 var
                     SalesInvHeader: Record "Sales Invoice Header";
                     SalesCrMemoHeader: Record "Sales Cr.Memo Header";
                 begin
-                    CLEAR(cu_GeneralMgt);
+                    Clear(cu_GeneralMgt);
                     SalesCrMemoHeader := Rec;
                     CurrPage.SetSelectionFilter(SalesCrMemoHeader);
-                    cu_GeneralMgt.ExportRLIDE("No.", false, true, SalesInvHeader, SalesCrMemoHeader); //TAL0.2
+                    cu_GeneralMgt.ExportRLIDE(Rec."No.", false, true, SalesInvHeader, SalesCrMemoHeader); //TAL0.2
                 end;
             }
         }

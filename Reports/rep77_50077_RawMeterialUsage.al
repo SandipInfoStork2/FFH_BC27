@@ -12,7 +12,7 @@ report 50077 "Raw Material Usage"
 
             RequestFilterFields = "Posting Date", "Location Code", "Entry Type", "Item No.";
 
-            column(COMPANYNAME; COMPANYPROPERTY.DisplayName)
+            column(COMPANYNAME; CompanyProperty.DisplayName)
             {
             }
 
@@ -20,7 +20,7 @@ report 50077 "Raw Material Usage"
             {
             }
 
-            column(ReportDate; format(Today))
+            column(ReportDate; Format(Today))
             {
 
             }
@@ -30,7 +30,7 @@ report 50077 "Raw Material Usage"
 
             }
 
-            column(Posting_Date; FORMAT("Posting Date"))
+            column(Posting_Date; Format("Posting Date"))
             {
 
             }
@@ -86,16 +86,16 @@ report 50077 "Raw Material Usage"
                 ProdOrderLine: Record "Prod. Order Line";
             begin
 
-                clear(rG_ItemDesc);
-                clear(rG_SourceItemDesc);
+                Clear(rG_ItemDesc);
+                Clear(rG_SourceItemDesc);
 
-                if rG_ItemDesc.GET("Item No.") then;
+                if rG_ItemDesc.Get("Item No.") then;
 
-                if rG_SourceItemDesc.get("Source No.") then;
+                if rG_SourceItemDesc.Get("Source No.") then;
 
                 vG_SourceUOM := '';
                 vG_FinishedQty := 0;
-                ProdOrderLine.RESET;
+                ProdOrderLine.Reset;
                 ProdOrderLine.SetRange(Status, ProdOrderLine.Status::Finished);
                 ProdOrderLine.SetFilter("Prod. Order No.", "Document No.");
                 ProdOrderLine.SetFilter("Item No.", "Source No.");
@@ -132,7 +132,7 @@ report 50077 "Raw Material Usage"
 
         actions
         {
-            area(processing)
+            area(Processing)
             {/*
 
                 action(ActionName)

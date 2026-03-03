@@ -27,7 +27,7 @@ pageextension 50238 FinishedProdOrderLinesExt extends "Finished Prod. Order Line
     var
         UserSetup: Record "User Setup";
     begin
-        UserSetup.GET(UserId);
+        UserSetup.Get(UserId);
         UnitCostEditable := UserSetup."Unit Cost Editable";
     end;
     //-1.0.0.228

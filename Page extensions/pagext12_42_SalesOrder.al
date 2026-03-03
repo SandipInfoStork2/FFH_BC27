@@ -24,7 +24,7 @@ pageextension 50112 SalesOrderExt extends "Sales Order"
         // Add changes to page layout here
         addafter("Sell-to Customer Name")
         {
-            field("Bill-to Name2"; "Bill-to Name")
+            field("Bill-to Name2"; Rec."Bill-to Name")
             {
                 ApplicationArea = Basic, Suite;
                 Caption = 'Bill-to Name';
@@ -35,9 +35,9 @@ pageextension 50112 SalesOrderExt extends "Sales Order"
 
                 trigger OnValidate()
                 begin
-                    if GetFilter("Bill-to Customer No.") = xRec."Bill-to Customer No." then
-                        if "Bill-to Customer No." <> xRec."Bill-to Customer No." then
-                            SetRange("Bill-to Customer No.");
+                    if Rec.GetFilter("Bill-to Customer No.") = xRec."Bill-to Customer No." then
+                        if Rec."Bill-to Customer No." <> xRec."Bill-to Customer No." then
+                            Rec.SetRange("Bill-to Customer No.");
 
                     CurrPage.SaveRecord;
                     //if ApplicationAreaMgmtFacade.IsFoundationEnabled then
@@ -72,30 +72,35 @@ pageextension 50112 SalesOrderExt extends "Sales Order"
 
         addafter("External Document No.")
         {
-            field("Batch No."; "Batch No.")
+            field("Batch No."; Rec."Batch No.")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Batch No. field.';
             }
-            field("Lot No."; "Lot No.")
+            field("Lot No."; Rec."Lot No.")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Lot No. field.';
             }
         }
 
         addafter("Package Tracking No.")
         {
-            field("Delivery No."; "Delivery No.")
+            field("Delivery No."; Rec."Delivery No.")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Delivery No. field.';
             }
-            field("Delivery Sequence"; "Delivery Sequence")
+            field("Delivery Sequence"; Rec."Delivery Sequence")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Delivery Sequence field.';
             }
-            field("Chain of Custody Tracking"; "Chain of Custody Tracking")
+            field("Chain of Custody Tracking"; Rec."Chain of Custody Tracking")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 Visible = false;
+                ToolTip = 'Specifies the value of the Chain of Custody Tracking field.';
             }
         }
 
@@ -104,34 +109,40 @@ pageextension 50112 SalesOrderExt extends "Sales Order"
             group(Log)
             {
                 Caption = 'Log';
-                field("Created By"; "Created By")
+                field("Created By"; Rec."Created By")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Created By field.';
                 }
-                field("Create Date"; "Create Date")
+                field("Create Date"; Rec."Create Date")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Create Date field.';
                 }
-                field("Last Modified By"; "Last Modified By")
+                field("Last Modified By"; Rec."Last Modified By")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Last Modified By field.';
                 }
-                field("Last Modified Date"; "Last Modified Date")
+                field("Last Modified Date"; Rec."Last Modified Date")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Last Modified Date field.';
                 }
             }
 
             group(QC)
             {
                 Caption = 'Quality Control';
-                field("Shipping Temperature"; "Shipping Temperature")
+                field("Shipping Temperature"; Rec."Shipping Temperature")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Shipping Temperature °C field.';
                 }
-                field("Shipping Quality Control"; "Shipping Quality Control")
+                field("Shipping Quality Control"; Rec."Shipping Quality Control")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Shipping Quality Control field.';
                 }
             }
         }
@@ -143,25 +154,27 @@ pageextension 50112 SalesOrderExt extends "Sales Order"
                 ApplicationArea = All;
                 Caption = 'Picture';
                 Provider = SalesLines;
-                SubPageLink = "Document Type" = FIELD("Document Type"),
-                              "Document No." = FIELD("Document No."),
-                              "Line No." = FIELD("Line No.");
+                SubPageLink = "Document Type" = field("Document Type"),
+                              "Document No." = field("Document No."),
+                              "Line No." = field("Line No.");
             }
         }
 
         addafter("Your Reference")
         {
-            field("Customer Reference No."; "Customer Reference No.")
+            field("Customer Reference No."; Rec."Customer Reference No.")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Customer Reference No. field.';
             }
         }
 
         addafter("Promised Delivery Date")
         {
-            field("Excel Order Date"; "Excel Order Date")
+            field("Excel Order Date"; Rec."Excel Order Date")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Excel Order Date field.';
             }
         }
 
@@ -172,10 +185,11 @@ pageextension 50112 SalesOrderExt extends "Sales Order"
 
         addafter("Requested Delivery Date")
         {
-            field("Requested Delivery Time"; "Requested Delivery Time")
+            field("Requested Delivery Time"; Rec."Requested Delivery Time")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 ShowMandatory = true;
+                ToolTip = 'Specifies the value of the Requested Delivery Time field.';
             }
         }
 
@@ -186,41 +200,46 @@ pageextension 50112 SalesOrderExt extends "Sales Order"
 
         addafter("Shipment Date")
         {
-            field("Shipment Time"; "Shipment Time")
+            field("Shipment Time"; Rec."Shipment Time")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 ShowMandatory = true;
+                ToolTip = 'Specifies the value of the Shipment Time field.';
             }
         }
 
         addafter(Status)
         {
-            field("Location Code2"; "Location Code")
+            field("Location Code2"; Rec."Location Code")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 ShowMandatory = true;
+                ToolTip = 'Specifies the location from where items are to be shipped. This field acts as the default location for new lines. You can update the location code for individual lines as needed.';
             }
 
         }
 
         addafter("Work Description")
         {
-            field("Transfer-from Code"; "Transfer-from Code")
+            field("Transfer-from Code"; Rec."Transfer-from Code")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Transfer-from Code field.';
             }
-            field("Transfer-to Code"; "Transfer-to Code")
+            field("Transfer-to Code"; Rec."Transfer-to Code")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Transfer-to Code field.';
             }
         }
 
         addafter("Combine Shipments")
         {
-            field("HORECA Status"; "HORECA Status")
+            field("HORECA Status"; Rec."HORECA Status")
             {
                 ApplicationArea = All;
                 StyleExpr = HorecaStatusStyleTxt;
+                ToolTip = 'Specifies the value of the HORECA Status field.';
             }
         }
 
@@ -250,8 +269,8 @@ pageextension 50112 SalesOrderExt extends "Sales Order"
                     SelectedSalesLine: Record "Sales Line";
                 begin
                     //TAL0.15
-                    CurrPage.SalesLines.PAGE.SETSELECTIONFILTER(SelectedSalesLine);
-                    f_CreatePurchaseOrder(Rec, SelectedSalesLine);
+                    CurrPage.SalesLines.Page.SetSelectionFilter(SelectedSalesLine);
+                    Rec.f_CreatePurchaseOrder(Rec, SelectedSalesLine);
                     //TAL0.15
                 end;
             }
@@ -267,18 +286,19 @@ pageextension 50112 SalesOrderExt extends "Sales Order"
                 Image = ImportExcel;
                 Promoted = true;
                 PromotedCategory = Process;
+                ToolTip = 'Executes the Import Lidl Order action.';
 
                 trigger OnAction();
                 var
                     rL_SalesHeader: Record "Sales Header";
                 begin
                     //+TAL0.8
-                    CLEAR(rL_SalesHeader);
-                    rL_SalesHeader.SETRANGE("Document Type", "Document Type");
-                    rL_SalesHeader.SETFILTER("No.", "No.");
-                    if rL_SalesHeader.FINDFIRST then begin
+                    Clear(rL_SalesHeader);
+                    rL_SalesHeader.SETRANGE("Document Type", Rec."Document Type");
+                    rL_SalesHeader.SETFILTER("No.", Rec."No.");
+                    if rL_SalesHeader.FindFirst then begin
                         //MESSAGE(FORMAT(rL_SalesHeader.COUNT));
-                        CLEAR(cu_GeneralMgt);
+                        Clear(cu_GeneralMgt);
                         cu_GeneralMgt.ImportLidlOrder(rL_SalesHeader);
                     end;
                     //-TAL0.8
@@ -291,18 +311,19 @@ pageextension 50112 SalesOrderExt extends "Sales Order"
                 Image = ImportExcel;
                 Promoted = true;
                 PromotedCategory = Process;
+                ToolTip = 'Executes the Import Lidl Order Confirmation action.';
 
                 trigger OnAction();
                 var
                     rL_SalesHeader: Record "Sales Header";
                 begin
                     //+TAL0.8
-                    CLEAR(rL_SalesHeader);
-                    rL_SalesHeader.SETRANGE("Document Type", "Document Type");
-                    rL_SalesHeader.SETFILTER("No.", "No.");
-                    if rL_SalesHeader.FINDFIRST then begin
+                    Clear(rL_SalesHeader);
+                    rL_SalesHeader.SETRANGE("Document Type", Rec."Document Type");
+                    rL_SalesHeader.SETFILTER("No.", Rec."No.");
+                    if rL_SalesHeader.FindFirst then begin
                         //MESSAGE(FORMAT(rL_SalesHeader.COUNT));
-                        CLEAR(cu_GeneralMgt);
+                        Clear(cu_GeneralMgt);
                         cu_GeneralMgt.ImportLidlOrderConfirmation(rL_SalesHeader);
                     end;
                     //-TAL0.8
@@ -311,11 +332,12 @@ pageextension 50112 SalesOrderExt extends "Sales Order"
 
             action(ImportExcelFoody)
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 Caption = 'Import Foody Order';
                 Image = ImportExcel;
                 Promoted = true;
                 PromotedCategory = Process;
+                ToolTip = 'Executes the Import Foody Order action.';
 
                 trigger OnAction();
                 var
@@ -323,10 +345,10 @@ pageextension 50112 SalesOrderExt extends "Sales Order"
 
                     rL_SalesHeader: Record "Sales Header";
                 begin
-                    CLEAR(rL_SalesHeader);
-                    rL_SalesHeader.SETRANGE("Document Type", "Document Type");
-                    rL_SalesHeader.SETFILTER("No.", "No.");
-                    if rL_SalesHeader.FINDFIRST then begin
+                    Clear(rL_SalesHeader);
+                    rL_SalesHeader.SETRANGE("Document Type", Rec."Document Type");
+                    rL_SalesHeader.SETFILTER("No.", Rec."No.");
+                    if rL_SalesHeader.FindFirst then begin
                         Clear(cu_GeneralMgt);
                         cu_GeneralMgt.ImportFoodyHeader(rL_SalesHeader);
                     end;
@@ -337,11 +359,12 @@ pageextension 50112 SalesOrderExt extends "Sales Order"
 
             action(ImportExcelWolt)
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 Caption = 'Import Wolt Order';
                 Image = ImportExcel;
                 Promoted = true;
                 PromotedCategory = Process;
+                ToolTip = 'Executes the Import Wolt Order action.';
 
                 trigger OnAction();
                 var
@@ -349,10 +372,10 @@ pageextension 50112 SalesOrderExt extends "Sales Order"
 
                     rL_SalesHeader: Record "Sales Header";
                 begin
-                    CLEAR(rL_SalesHeader);
-                    rL_SalesHeader.SETRANGE("Document Type", "Document Type");
-                    rL_SalesHeader.SETFILTER("No.", "No.");
-                    if rL_SalesHeader.FINDFIRST then begin
+                    Clear(rL_SalesHeader);
+                    rL_SalesHeader.SETRANGE("Document Type", Rec."Document Type");
+                    rL_SalesHeader.SETFILTER("No.", Rec."No.");
+                    if rL_SalesHeader.FindFirst then begin
                         Clear(cu_GeneralMgt);
                         cu_GeneralMgt.ImportWolt(rL_SalesHeader);
                     end;
@@ -367,7 +390,8 @@ pageextension 50112 SalesOrderExt extends "Sales Order"
                 Image = Recalculate;
                 Promoted = true;
                 PromotedCategory = Process;
-                caption = 'Recalcuate Prices';
+                Caption = 'Recalcuate Prices';
+                ToolTip = 'Executes the Recalcuate Prices action.';
 
                 trigger OnAction()
 
@@ -382,13 +406,13 @@ pageextension 50112 SalesOrderExt extends "Sales Order"
                     vL_OldPrice: Decimal;
                     vL_NewPrice: Decimal;
                 begin
-                    if not Confirm(vL_Text50000, false, Format("Order Date")) then begin
+                    if not Confirm(vL_Text50000, false, Format(Rec."Order Date")) then begin
                         exit;
                     end;
 
-                    rL_SalesLine.RESET;
-                    rL_SalesLine.SetRange("Document Type", "Document Type");
-                    rL_SalesLine.SetFilter("Document No.", "No.");
+                    rL_SalesLine.Reset;
+                    rL_SalesLine.SetRange("Document Type", Rec."Document Type");
+                    rL_SalesLine.SetFilter("Document No.", Rec."No.");
                     rL_SalesLine.SetRange(Type, rL_SalesLine.Type::Item);
                     if rL_SalesLine.FindSet() then begin
                         repeat
@@ -427,13 +451,14 @@ pageextension 50112 SalesOrderExt extends "Sales Order"
                 Promoted = true;
                 PromotedCategory = Category6;
                 PromotedIsBig = true;
-                ShortCutKey = 'Shift+F9';
+                ShortcutKey = 'Shift+F9';
+                ToolTip = 'Executes the Post and &Print action.';
 
                 trigger OnAction();
                 begin
 
                     LinesInstructionMgt.SalesCheckAllLinesHaveQuantityAssigned(Rec);
-                    SendToPosting(CODEUNIT::"Sales-Post + Print");
+                    Rec.SendToPosting(Codeunit::"Sales-Post + Print");
                 end;
             }
         }
@@ -488,27 +513,27 @@ pageextension 50112 SalesOrderExt extends "Sales Order"
                 PromotedCategory = Process;
                 PromotedOnly = true;
                 ToolTip = 'Send an order confirmation by email. The Send Email window opens prefilled for the customer so you can add or change information before you send the email.';
-                visible = false;
+                Visible = false;
                 trigger OnAction();
                 var
-                    parameters: text;
+                    parameters: Text;
                     rpt_WorkOrder: Report "Work Order Lidl";
                     SalesHeader: Record "Sales Header";
                     SalesLineWorkOrder: Record "Sales Line";
                 begin
                     SalesHeader := Rec;
-                    CurrPage.SETSELECTIONFILTER(SalesHeader);
+                    CurrPage.SetSelectionFilter(SalesHeader);
 
 
-                    clear(rpt_WorkOrder);
+                    Clear(rpt_WorkOrder);
                     rpt_WorkOrder.SetTableView(SalesHeader);
 
-                    SalesLineWorkOrder.RESET;
+                    SalesLineWorkOrder.Reset;
                     SalesLineWorkOrder.SetRange("Document Type", SalesHeader."Document Type");
                     SalesLineWorkOrder.SetFilter("Document No.", SalesHeader."No.");
                     SalesLineWorkOrder.SetRange(Type, SalesLineWorkOrder.Type::Item);
-                    SalesLineWorkOrder.setfilter("Location Code", '%1', 'ARAD-3');
-                    if SalesLineWorkOrder.findset then;
+                    SalesLineWorkOrder.SetFilter("Location Code", '%1', 'ARAD-3');
+                    if SalesLineWorkOrder.FindSet then;
 
                     rpt_WorkOrder.SetTableView(SalesLineWorkOrder);
 
@@ -529,13 +554,14 @@ pageextension 50112 SalesOrderExt extends "Sales Order"
                 Promoted = true;
                 PromotedCategory = Process;
                 PromotedOnly = true;
+                ToolTip = 'Executes the Item Tracking Appendix action.';
 
                 trigger OnAction();
                 var
                     vL_SalesHeader: Record "Sales Header";
                 begin
                     vL_SalesHeader := Rec;
-                    CurrPage.SETSELECTIONFILTER(vL_SalesHeader);
+                    CurrPage.SetSelectionFilter(vL_SalesHeader);
                     vL_SalesHeader.PrintAppendixRecords(vL_SalesHeader);
                 end;
             }
@@ -547,10 +573,11 @@ pageextension 50112 SalesOrderExt extends "Sales Order"
         {
             action(LidlOrderHistory)
             {
-                caption = 'Lidl Order History';
+                Caption = 'Lidl Order History';
                 ApplicationArea = All;
                 RunObject = page "Lidl Order Archive";
                 RunPageLink = "Sales Order No." = field("No.");
+                ToolTip = 'Executes the Lidl Order History action.';
             }
         }
 
@@ -558,8 +585,9 @@ pageextension 50112 SalesOrderExt extends "Sales Order"
         {
             action(OrderQty)
             {
-                caption = 'Order Qty';
+                Caption = 'Order Qty';
                 ApplicationArea = All;
+                ToolTip = 'Executes the Order Qty action.';
                 //RunObject = page "Order Qty";
                 //  RunPageLink = "Customer No." = field("Sell-to Customer No."),
                 // "Order Date" = field("Order Date");   //"Document No." = field("No.");
@@ -568,12 +596,12 @@ pageextension 50112 SalesOrderExt extends "Sales Order"
                 var
                     OrderQty: Record "Order Qty";
                 begin
-                    OrderQty.RESEt;
+                    OrderQty.Reset;
                     OrderQty.SetCurrentKey("Customer No.", "Order Date", "Shelf No.", "Version No.");
-                    OrderQty.SetFilter("Customer No.", "Sell-to Customer No.");
-                    OrderQty.SetRange("Order Date", "Order Date");
+                    OrderQty.SetFilter("Customer No.", Rec."Sell-to Customer No.");
+                    OrderQty.SetRange("Order Date", Rec."Order Date");
                     if OrderQty.FindSet() then begin
-                        page.Run(PAge::"Order Qty", OrderQty);
+                        Page.Run(Page::"Order Qty", OrderQty);
                     end;
 
                 end;
@@ -587,7 +615,7 @@ pageextension 50112 SalesOrderExt extends "Sales Order"
     begin
         //+TAL0.5
         vG_EditWebOrder := true;
-        if rG_UserSetup.GET(USERID) then begin
+        if rG_UserSetup.Get(UserId) then begin
             if (rG_UserSetup."User Department" = rG_UserSetup."User Department"::"Web Order") and (rG_UserSetup."Sales Resp. Ctr. Filter" <> '') then begin
                 vG_EditWebOrder := false;
             end;
@@ -597,7 +625,7 @@ pageextension 50112 SalesOrderExt extends "Sales Order"
 
     trigger OnAfterGetRecord()
     begin
-        HorecaStatusStyleTxt := GetHorecaStatusStyleText();
+        HorecaStatusStyleTxt := Rec.GetHorecaStatusStyleText();
     end;
 
     var

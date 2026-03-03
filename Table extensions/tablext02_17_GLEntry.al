@@ -8,7 +8,7 @@ tableextension 50102 GLEntryExt extends "G/L Entry"
         field(50000; "Cost Center"; Code[20])
         {
             FieldClass = FlowField;
-            CalcFormula = Lookup("Dimension Set Entry"."Dimension Value Code" WHERE("Dimension Set ID" = FIELD("Dimension Set ID"), "Dimension Code" = CONST('COST CENTRE')));
+            CalcFormula = lookup("Dimension Set Entry"."Dimension Value Code" where("Dimension Set ID" = field("Dimension Set ID"), "Dimension Code" = const('COST CENTRE')));
 
         }
         field(50001; "Register No."; Integer)

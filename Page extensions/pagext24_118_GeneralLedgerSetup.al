@@ -8,17 +8,20 @@ pageextension 50124 GeneralLedgerSetupExt extends "General Ledger Setup"
             group(Other)
             {
                 Caption = 'Other';
-                field("Cheque Page Line No"; "Cheque Page Line No")
+                field("Cheque Page Line No"; Rec."Cheque Page Line No")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Cheque Page Line No field.';
                 }
-                field("Cheque Template Name"; "Cheque Template Name")
+                field("Cheque Template Name"; Rec."Cheque Template Name")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Cheque Template Name field.';
                 }
-                field("E-Trade Export Path"; "E-Trade Export Path")
+                field("E-Trade Export Path"; Rec."E-Trade Export Path")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the E-Trade Export Path field.';
                 }
             }
 

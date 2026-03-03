@@ -5,12 +5,13 @@ report 50087 "Transfer Shipment FFH"
     RDLCLayout = './Layouts/rep87_50087_TransferShipment.rdlc';
 
     Caption = 'Transfer Shipment';
+    ApplicationArea = All;
 
     dataset
     {
         dataitem("Transfer Shipment Header"; "Transfer Shipment Header")
         {
-            DataItemTableView = SORTING("No.");
+            DataItemTableView = sorting("No.");
             RequestFilterFields = "No.", "Transfer-from Code", "Transfer-to Code";
             RequestFilterHeading = 'Posted Transfer Shipment';
             column(No_TransShptHeader; "No.")
@@ -18,10 +19,10 @@ report 50087 "Transfer Shipment FFH"
             }
             dataitem(CopyLoop; "Integer")
             {
-                DataItemTableView = SORTING(Number);
+                DataItemTableView = sorting(Number);
                 dataitem(PageLoop; "Integer")
                 {
-                    DataItemTableView = SORTING(Number) WHERE(Number = CONST(1));
+                    DataItemTableView = sorting(Number) where(Number = const(1));
                     column(CopyTextCaption; StrSubstNo(Text001, CopyText))
                     {
                     }
@@ -113,7 +114,7 @@ report 50087 "Transfer Shipment FFH"
                     dataitem(DimensionLoop1; "Integer")
                     {
                         DataItemLinkReference = "Transfer Shipment Header";
-                        DataItemTableView = SORTING(Number) WHERE(Number = FILTER(1 ..));
+                        DataItemTableView = sorting(Number) where(Number = filter(1 ..));
                         column(DimText; DimText)
                         {
                         }
@@ -160,9 +161,9 @@ report 50087 "Transfer Shipment FFH"
                     }
                     dataitem("Transfer Shipment Line"; "Transfer Shipment Line")
                     {
-                        DataItemLink = "Document No." = FIELD("No.");
+                        DataItemLink = "Document No." = field("No.");
                         DataItemLinkReference = "Transfer Shipment Header";
-                        DataItemTableView = SORTING("Document No.", "Line No.");
+                        DataItemTableView = sorting("Document No.", "Line No.");
                         column(ShowInternalInfo; ShowInternalInfo)
                         {
                         }
@@ -193,7 +194,7 @@ report 50087 "Transfer Shipment FFH"
                         }
                         dataitem(DimensionLoop2; "Integer")
                         {
-                            DataItemTableView = SORTING(Number) WHERE(Number = FILTER(1 ..));
+                            DataItemTableView = sorting(Number) where(Number = filter(1 ..));
                             column(DimText4; DimText)
                             {
                             }
@@ -293,7 +294,7 @@ report 50087 "Transfer Shipment FFH"
 
         layout
         {
-            area(content)
+            area(Content)
             {
                 group(Options)
                 {
@@ -301,10 +302,14 @@ report 50087 "Transfer Shipment FFH"
                     field(NoOfCopies; NoOfCopies)
                     {
                         Caption = 'No. of Copies';
+                        ToolTip = 'Specifies the value of the No. of Copies field.';
+                        ApplicationArea = All;
                     }
                     field(ShowInternalInfo; ShowInternalInfo)
                     {
                         Caption = 'Show Internal Information';
+                        ToolTip = 'Specifies the value of the Show Internal Information field.';
+                        ApplicationArea = All;
                     }
                 }
             }

@@ -15,7 +15,7 @@ pageextension 50117 PurchaseOrderExt extends "Purchase Order"
 
         addafter("Buy-from Vendor Name")
         {
-            field("Pay-to Name2"; "Pay-to Name")
+            field("Pay-to Name2"; Rec."Pay-to Name")
             {
                 ApplicationArea = Basic, Suite;
                 Caption = 'Name';
@@ -26,9 +26,9 @@ pageextension 50117 PurchaseOrderExt extends "Purchase Order"
 
                 trigger OnValidate()
                 begin
-                    if GetFilter("Pay-to Vendor No.") = xRec."Pay-to Vendor No." then
-                        if "Pay-to Vendor No." <> xRec."Pay-to Vendor No." then
-                            SetRange("Pay-to Vendor No.");
+                    if Rec.GetFilter("Pay-to Vendor No.") = xRec."Pay-to Vendor No." then
+                        if Rec."Pay-to Vendor No." <> xRec."Pay-to Vendor No." then
+                            Rec.SetRange("Pay-to Vendor No.");
 
                     CurrPage.Update();
                 end;
@@ -37,9 +37,10 @@ pageextension 50117 PurchaseOrderExt extends "Purchase Order"
 
         addafter("Promised Receipt Date")
         {
-            field("Receiving No."; "Receiving No.")
+            field("Receiving No."; Rec."Receiving No.")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Receiving No. field.';
             }
         }
 
@@ -49,17 +50,20 @@ pageextension 50117 PurchaseOrderExt extends "Purchase Order"
             group("Deliver to Vendor")
             {
                 Caption = 'Deliver to Vendor';
-                field("Deliver-to Vendor No."; "Deliver-to Vendor No.")
+                field("Deliver-to Vendor No."; Rec."Deliver-to Vendor No.")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Deliver-to Vendor No. field.';
                 }
-                field("Deliver-to Name"; "Deliver-to Name")
+                field("Deliver-to Name"; Rec."Deliver-to Name")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Deliver-to Name field.';
                 }
-                field("Deliver Address Code"; "Deliver Address Code")
+                field("Deliver Address Code"; Rec."Deliver Address Code")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Deliver Address Code field.';
                 }
             }
         }
@@ -70,9 +74,10 @@ pageextension 50117 PurchaseOrderExt extends "Purchase Order"
         }
         addafter("Expected Receipt Date")
         {
-            field("Expected Receipt Time"; "Expected Receipt Time")
+            field("Expected Receipt Time"; Rec."Expected Receipt Time")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Expected Receipt Time field.';
                 //ShowMandatory = true;
             }
         }
@@ -80,29 +85,33 @@ pageextension 50117 PurchaseOrderExt extends "Purchase Order"
 
         addafter(Status)
         {
-            field("Location Code2"; "Location Code")
+            field("Location Code2"; Rec."Location Code")
             {
                 ApplicationArea = Location;
                 ToolTip = 'Specifies a code for the location where you want the items to be placed when they are received.';
                 ShowMandatory = true;
             }
-            field("Expected Receipt Date2"; "Expected Receipt Date")
+            field("Expected Receipt Date2"; Rec."Expected Receipt Date")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 ShowMandatory = true;
+                ToolTip = 'Specifies the date you expect the items to be available in your warehouse. If you leave the field blank, it will be calculated as follows: Planned Receipt Date + Safety Lead Time + Inbound Warehouse Handling Time = Expected Receipt Date.';
             }
-            field("Expected Receipt Time2"; "Expected Receipt Time")
+            field("Expected Receipt Time2"; Rec."Expected Receipt Time")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Expected Receipt Time field.';
                 //ShowMandatory = true;
             }
-            field("Transfer-from Code"; "Transfer-from Code")
+            field("Transfer-from Code"; Rec."Transfer-from Code")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Transfer-from Code field.';
             }
-            field("Transfer-to Code"; "Transfer-to Code")
+            field("Transfer-to Code"; Rec."Transfer-to Code")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Transfer-to Code field.';
             }
         }
 
@@ -112,13 +121,15 @@ pageextension 50117 PurchaseOrderExt extends "Purchase Order"
             group(QC)
             {
                 Caption = 'Quality Control';
-                field("Receiving Temperature"; "Receiving Temperature")
+                field("Receiving Temperature"; Rec."Receiving Temperature")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Receiving Temperature °C field.';
                 }
-                field("Receiving Quality Control"; "Receiving Quality Control")
+                field("Receiving Quality Control"; Rec."Receiving Quality Control")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Receiving Quality Control field.';
                 }
             }
         }
@@ -132,19 +143,20 @@ pageextension 50117 PurchaseOrderExt extends "Purchase Order"
         {
             action("Create Lots")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 Image = CreateSerialNo;
                 Promoted = true;
                 PromotedCategory = Process;
                 PromotedOnly = true;
+                ToolTip = 'Executes the Create Lots action.';
 
                 trigger OnAction();
                 var
                     cu_GeneralMgt: Codeunit "General Mgt.";
                 begin
                     //
-                    CLEAR(cu_GeneralMgt);
-                    cu_GeneralMgt.POCreateLot("No.");
+                    Clear(cu_GeneralMgt);
+                    cu_GeneralMgt.POCreateLot(Rec."No.");
                 end;
             }
         }
@@ -167,8 +179,8 @@ pageextension 50117 PurchaseOrderExt extends "Purchase Order"
                 begin
                     //+TAL0.5
                     PurchaseHeader := Rec;
-                    CurrPage.SETSELECTIONFILTER(PurchaseHeader);
-                    REPORT.RUN(REPORT::"Purchase Delivery Order", true, false, PurchaseHeader);
+                    CurrPage.SetSelectionFilter(PurchaseHeader);
+                    Report.Run(Report::"Purchase Delivery Order", true, false, PurchaseHeader);
                     //-TAL0.5
                 end;
             }
@@ -178,12 +190,14 @@ pageextension 50117 PurchaseOrderExt extends "Purchase Order"
                 Promoted = true;
                 PromotedCategory = Process;
                 PromotedOnly = true;
+                ToolTip = 'Executes the Item Tracking Appendix action.';
+                ApplicationArea = All;
 
                 trigger OnAction();
                 var
                     vL_PurchaseHeader: Record "Purchase Header";
                 begin
-                    CurrPage.SETSELECTIONFILTER(vL_PurchaseHeader);
+                    CurrPage.SetSelectionFilter(vL_PurchaseHeader);
                     vL_PurchaseHeader.PrintAppendixRecords(vL_PurchaseHeader);
                 end;
             }

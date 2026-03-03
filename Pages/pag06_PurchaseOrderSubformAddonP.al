@@ -13,419 +13,502 @@ page 50006 "Purchase Order Subform Addon P"
     MultipleNewLines = true;
     PageType = ListPart;
     SourceTable = "Purchase Line Addon Posted";
-    SourceTableView = WHERE("Document Type" = FILTER(Order));
+    SourceTableView = where("Document Type" = filter(Order));
+    ApplicationArea = All;
 
     layout
     {
-        area(content)
+        area(Content)
         {
             repeater(Control1)
             {
-                field(Type; Type)
+                field(Type; Rec.Type)
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Type field.';
                 }
-                field("No."; "No.")
+                field("No."; Rec."No.")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the No. field.';
                 }
-                field("Cross-Reference No."; "Cross-Reference No.")
-                {
-                    ApplicationArea = All;
-                    Visible = false;
-                }
-                field("IC Partner Code"; "IC Partner Code")
+                field("Cross-Reference No."; Rec."Cross-Reference No.")
                 {
                     ApplicationArea = All;
                     Visible = false;
+                    ToolTip = 'Specifies the value of the Cross-Reference No. field.';
                 }
-                field("IC Partner Ref. Type"; "IC Partner Ref. Type")
+                field("IC Partner Code"; Rec."IC Partner Code")
                 {
                     ApplicationArea = All;
                     Visible = false;
+                    ToolTip = 'Specifies the value of the IC Partner Code field.';
                 }
-                field("IC Partner Reference"; "IC Partner Reference")
+                field("IC Partner Ref. Type"; Rec."IC Partner Ref. Type")
                 {
                     ApplicationArea = All;
                     Visible = false;
+                    ToolTip = 'Specifies the value of the IC Partner Ref. Type field.';
                 }
-                field("Variant Code"; "Variant Code")
+                field("IC Partner Reference"; Rec."IC Partner Reference")
                 {
                     ApplicationArea = All;
                     Visible = false;
+                    ToolTip = 'Specifies the value of the IC Partner Reference field.';
                 }
-                field(Nonstock; Nonstock)
+                field("Variant Code"; Rec."Variant Code")
                 {
                     ApplicationArea = All;
                     Visible = false;
+                    ToolTip = 'Specifies the value of the Variant Code field.';
                 }
-                field("VAT Prod. Posting Group"; "VAT Prod. Posting Group")
+                field(Nonstock; Rec.Nonstock)
                 {
                     ApplicationArea = All;
                     Visible = false;
+                    ToolTip = 'Specifies the value of the Nonstock field.';
                 }
-                field(Description; Description)
-                {
-                    ApplicationArea = All;
-                }
-                field("Drop Shipment"; "Drop Shipment")
+                field("VAT Prod. Posting Group"; Rec."VAT Prod. Posting Group")
                 {
                     ApplicationArea = All;
                     Visible = false;
+                    ToolTip = 'Specifies the value of the VAT Prod. Posting Group field.';
                 }
-                field("Return Reason Code"; "Return Reason Code")
+                field(Description; Rec.Description)
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Description field.';
+                }
+                field("Drop Shipment"; Rec."Drop Shipment")
                 {
                     ApplicationArea = All;
                     Visible = false;
+                    ToolTip = 'Specifies the value of the Drop Shipment field.';
                 }
-                field("Location Code"; "Location Code")
-                {
-                    ApplicationArea = All;
-                }
-                field("Bin Code"; "Bin Code")
+                field("Return Reason Code"; Rec."Return Reason Code")
                 {
                     ApplicationArea = All;
                     Visible = false;
+                    ToolTip = 'Specifies the value of the Return Reason Code field.';
                 }
-                field(Quantity; Quantity)
+                field("Location Code"; Rec."Location Code")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Location Code field.';
+                }
+                field("Bin Code"; Rec."Bin Code")
+                {
+                    ApplicationArea = All;
+                    Visible = false;
+                    ToolTip = 'Specifies the value of the Bin Code field.';
+                }
+                field(Quantity; Rec.Quantity)
                 {
                     ApplicationArea = All;
                     BlankZero = true;
+                    ToolTip = 'Specifies the value of the Quantity field.';
                 }
-                field("Reserved Quantity"; "Reserved Quantity")
+                field("Reserved Quantity"; Rec."Reserved Quantity")
                 {
                     ApplicationArea = All;
                     BlankZero = true;
+                    ToolTip = 'Specifies the value of the Reserved Quantity field.';
                 }
-                field("Job Remaining Qty."; "Job Remaining Qty.")
-                {
-                    ApplicationArea = All;
-                    BlankZero = true;
-                    Visible = false;
-                }
-                field("Unit of Measure Code"; "Unit of Measure Code")
-                {
-                    ApplicationArea = All;
-                }
-                field("Unit of Measure"; "Unit of Measure")
-                {
-                    ApplicationArea = All;
-                    Visible = false;
-                }
-                field("Direct Unit Cost"; "Direct Unit Cost")
-                {
-                    ApplicationArea = All;
-                    BlankZero = true;
-                }
-                field("Indirect Cost %"; "Indirect Cost %")
-                {
-                    ApplicationArea = All;
-                    Visible = false;
-                }
-                field("Unit Cost (LCY)"; "Unit Cost (LCY)")
-                {
-                    ApplicationArea = All;
-                    Visible = false;
-                }
-                field("Unit Price (LCY)"; "Unit Price (LCY)")
+                field("Job Remaining Qty."; Rec."Job Remaining Qty.")
                 {
                     ApplicationArea = All;
                     BlankZero = true;
                     Visible = false;
+                    ToolTip = 'Specifies the value of the Job Remaining Qty. field.';
                 }
-                field("Line Amount"; "Line Amount")
+                field("Unit of Measure Code"; Rec."Unit of Measure Code")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Unit of Measure Code field.';
+                }
+                field("Unit of Measure"; Rec."Unit of Measure")
+                {
+                    ApplicationArea = All;
+                    Visible = false;
+                    ToolTip = 'Specifies the value of the Unit of Measure field.';
+                }
+                field("Direct Unit Cost"; Rec."Direct Unit Cost")
                 {
                     ApplicationArea = All;
                     BlankZero = true;
+                    ToolTip = 'Specifies the value of the Direct Unit Cost field.';
                 }
-                field("Line Discount %"; "Line Discount %")
+                field("Indirect Cost %"; Rec."Indirect Cost %")
+                {
+                    ApplicationArea = All;
+                    Visible = false;
+                    ToolTip = 'Specifies the value of the Indirect Cost % field.';
+                }
+                field("Unit Cost (LCY)"; Rec."Unit Cost (LCY)")
+                {
+                    ApplicationArea = All;
+                    Visible = false;
+                    ToolTip = 'Specifies the value of the Unit Cost (LCY) field.';
+                }
+                field("Unit Price (LCY)"; Rec."Unit Price (LCY)")
                 {
                     ApplicationArea = All;
                     BlankZero = true;
-                }
-                field("Line Discount Amount"; "Line Discount Amount")
-                {
-                    ApplicationArea = All;
                     Visible = false;
+                    ToolTip = 'Specifies the value of the Unit Price (LCY) field.';
                 }
-                field("Prepayment %"; "Prepayment %")
-                {
-                    ApplicationArea = All;
-                    Visible = false;
-                }
-                field("Prepmt. Line Amount"; "Prepmt. Line Amount")
-                {
-                    ApplicationArea = All;
-                    Visible = false;
-                }
-                field("Prepmt. Amt. Inv."; "Prepmt. Amt. Inv.")
-                {
-                    ApplicationArea = All;
-                    Visible = false;
-                }
-                field("Allow Invoice Disc."; "Allow Invoice Disc.")
-                {
-                    ApplicationArea = All;
-                    Visible = false;
-                }
-                field("Inv. Discount Amount"; "Inv. Discount Amount")
-                {
-                    ApplicationArea = All;
-                    Visible = false;
-                }
-                field("Qty. to Receive"; "Qty. to Receive")
+                field("Line Amount"; Rec."Line Amount")
                 {
                     ApplicationArea = All;
                     BlankZero = true;
+                    ToolTip = 'Specifies the value of the Line Amount field.';
                 }
-                field("Quantity Received"; "Quantity Received")
+                field("Line Discount %"; Rec."Line Discount %")
                 {
                     ApplicationArea = All;
                     BlankZero = true;
+                    ToolTip = 'Specifies the value of the Line Discount % field.';
                 }
-                field("Qty. to Invoice"; "Qty. to Invoice")
+                field("Line Discount Amount"; Rec."Line Discount Amount")
+                {
+                    ApplicationArea = All;
+                    Visible = false;
+                    ToolTip = 'Specifies the value of the Line Discount Amount field.';
+                }
+                field("Prepayment %"; Rec."Prepayment %")
+                {
+                    ApplicationArea = All;
+                    Visible = false;
+                    ToolTip = 'Specifies the value of the Prepayment % field.';
+                }
+                field("Prepmt. Line Amount"; Rec."Prepmt. Line Amount")
+                {
+                    ApplicationArea = All;
+                    Visible = false;
+                    ToolTip = 'Specifies the value of the Prepmt. Line Amount field.';
+                }
+                field("Prepmt. Amt. Inv."; Rec."Prepmt. Amt. Inv.")
+                {
+                    ApplicationArea = All;
+                    Visible = false;
+                    ToolTip = 'Specifies the value of the Prepmt. Amt. Inv. field.';
+                }
+                field("Allow Invoice Disc."; Rec."Allow Invoice Disc.")
+                {
+                    ApplicationArea = All;
+                    Visible = false;
+                    ToolTip = 'Specifies the value of the Allow Invoice Disc. field.';
+                }
+                field("Inv. Discount Amount"; Rec."Inv. Discount Amount")
+                {
+                    ApplicationArea = All;
+                    Visible = false;
+                    ToolTip = 'Specifies the value of the Inv. Discount Amount field.';
+                }
+                field("Qty. to Receive"; Rec."Qty. to Receive")
                 {
                     ApplicationArea = All;
                     BlankZero = true;
+                    ToolTip = 'Specifies the value of the Qty. to Receive field.';
                 }
-                field("Quantity Invoiced"; "Quantity Invoiced")
+                field("Quantity Received"; Rec."Quantity Received")
                 {
                     ApplicationArea = All;
                     BlankZero = true;
+                    ToolTip = 'Specifies the value of the Quantity Received field.';
                 }
-                field("Prepmt Amt to Deduct"; "Prepmt Amt to Deduct")
-                {
-                    ApplicationArea = All;
-                    Visible = false;
-                }
-                field("Prepmt Amt Deducted"; "Prepmt Amt Deducted")
-                {
-                    ApplicationArea = All;
-                    Visible = false;
-                }
-                field("Allow Item Charge Assignment"; "Allow Item Charge Assignment")
-                {
-                    ApplicationArea = All;
-                    Visible = false;
-                }
-                field("Qty. to Assign"; "Qty. to Assign")
+                field("Qty. to Invoice"; Rec."Qty. to Invoice")
                 {
                     ApplicationArea = All;
                     BlankZero = true;
+                    ToolTip = 'Specifies the value of the Qty. to Invoice field.';
                 }
-                field("Qty. Assigned"; "Qty. Assigned")
+                field("Quantity Invoiced"; Rec."Quantity Invoiced")
                 {
                     ApplicationArea = All;
                     BlankZero = true;
+                    ToolTip = 'Specifies the value of the Quantity Invoiced field.';
                 }
-                field("Job No."; "Job No.")
+                field("Prepmt Amt to Deduct"; Rec."Prepmt Amt to Deduct")
                 {
                     ApplicationArea = All;
                     Visible = false;
+                    ToolTip = 'Specifies the value of the Prepmt Amt to Deduct field.';
                 }
-                field("Job Task No."; "Job Task No.")
+                field("Prepmt Amt Deducted"; Rec."Prepmt Amt Deducted")
                 {
                     ApplicationArea = All;
                     Visible = false;
+                    ToolTip = 'Specifies the value of the Prepmt Amt Deducted field.';
                 }
-                field("Job Planning Line No."; "Job Planning Line No.")
+                field("Allow Item Charge Assignment"; Rec."Allow Item Charge Assignment")
                 {
                     ApplicationArea = All;
                     Visible = false;
+                    ToolTip = 'Specifies the value of the Allow Item Charge Assignment field.';
                 }
-                field("Job Line Type"; "Job Line Type")
+                field("Qty. to Assign"; Rec."Qty. to Assign")
+                {
+                    ApplicationArea = All;
+                    BlankZero = true;
+                    ToolTip = 'Specifies the value of the Qty. to Assign field.';
+                }
+                field("Qty. Assigned"; Rec."Qty. Assigned")
+                {
+                    ApplicationArea = All;
+                    BlankZero = true;
+                    ToolTip = 'Specifies the value of the Qty. Assigned field.';
+                }
+                field("Job No."; Rec."Job No.")
                 {
                     ApplicationArea = All;
                     Visible = false;
+                    ToolTip = 'Specifies the value of the Job No. field.';
                 }
-                field("Job Unit Price"; "Job Unit Price")
+                field("Job Task No."; Rec."Job Task No.")
                 {
                     ApplicationArea = All;
                     Visible = false;
+                    ToolTip = 'Specifies the value of the Job Task No. field.';
                 }
-                field("Job Line Amount"; "Job Line Amount")
+                field("Job Planning Line No."; Rec."Job Planning Line No.")
                 {
                     ApplicationArea = All;
                     Visible = false;
+                    ToolTip = 'Specifies the value of the Job Planning Line No. field.';
                 }
-                field("Job Line Discount Amount"; "Job Line Discount Amount")
+                field("Job Line Type"; Rec."Job Line Type")
                 {
                     ApplicationArea = All;
                     Visible = false;
+                    ToolTip = 'Specifies the value of the Job Line Type field.';
                 }
-                field("Job Line Discount %"; "Job Line Discount %")
+                field("Job Unit Price"; Rec."Job Unit Price")
                 {
                     ApplicationArea = All;
                     Visible = false;
+                    ToolTip = 'Specifies the value of the Job Unit Price field.';
                 }
-                field("Job Total Price"; "Job Total Price")
+                field("Job Line Amount"; Rec."Job Line Amount")
                 {
                     ApplicationArea = All;
                     Visible = false;
+                    ToolTip = 'Specifies the value of the Job Line Amount field.';
                 }
-                field("Job Unit Price (LCY)"; "Job Unit Price (LCY)")
+                field("Job Line Discount Amount"; Rec."Job Line Discount Amount")
                 {
                     ApplicationArea = All;
                     Visible = false;
+                    ToolTip = 'Specifies the value of the Job Line Discount Amount field.';
                 }
-                field("Job Total Price (LCY)"; "Job Total Price (LCY)")
+                field("Job Line Discount %"; Rec."Job Line Discount %")
                 {
                     ApplicationArea = All;
                     Visible = false;
+                    ToolTip = 'Specifies the value of the Job Line Discount % field.';
                 }
-                field("Job Line Amount (LCY)"; "Job Line Amount (LCY)")
+                field("Job Total Price"; Rec."Job Total Price")
                 {
                     ApplicationArea = All;
                     Visible = false;
+                    ToolTip = 'Specifies the value of the Job Total Price field.';
                 }
-                field("Job Line Disc. Amount (LCY)"; "Job Line Disc. Amount (LCY)")
+                field("Job Unit Price (LCY)"; Rec."Job Unit Price (LCY)")
                 {
                     ApplicationArea = All;
                     Visible = false;
+                    ToolTip = 'Specifies the value of the Job Unit Price (LCY) field.';
                 }
-                field("Requested Receipt Date"; "Requested Receipt Date")
+                field("Job Total Price (LCY)"; Rec."Job Total Price (LCY)")
                 {
                     ApplicationArea = All;
                     Visible = false;
+                    ToolTip = 'Specifies the value of the Job Total Price (LCY) field.';
                 }
-                field("Promised Receipt Date"; "Promised Receipt Date")
+                field("Job Line Amount (LCY)"; Rec."Job Line Amount (LCY)")
                 {
                     ApplicationArea = All;
                     Visible = false;
+                    ToolTip = 'Specifies the value of the Job Line Amount (LCY) field.';
                 }
-                field("Planned Receipt Date"; "Planned Receipt Date")
-                {
-                    ApplicationArea = All;
-                }
-                field("Expected Receipt Date"; "Expected Receipt Date")
-                {
-                    ApplicationArea = All;
-                }
-                field("Order Date"; "Order Date")
-                {
-                    ApplicationArea = All;
-                }
-                field("Lead Time Calculation"; "Lead Time Calculation")
+                field("Job Line Disc. Amount (LCY)"; Rec."Job Line Disc. Amount (LCY)")
                 {
                     ApplicationArea = All;
                     Visible = false;
+                    ToolTip = 'Specifies the value of the Job Line Disc. Amount (LCY) field.';
                 }
-                field("Planning Flexibility"; "Planning Flexibility")
+                field("Requested Receipt Date"; Rec."Requested Receipt Date")
                 {
                     ApplicationArea = All;
                     Visible = false;
+                    ToolTip = 'Specifies the value of the Requested Receipt Date field.';
                 }
-                field("Prod. Order No."; "Prod. Order No.")
+                field("Promised Receipt Date"; Rec."Promised Receipt Date")
                 {
                     ApplicationArea = All;
                     Visible = false;
+                    ToolTip = 'Specifies the value of the Promised Receipt Date field.';
                 }
-                field("Prod. Order Line No."; "Prod. Order Line No.")
+                field("Planned Receipt Date"; Rec."Planned Receipt Date")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Planned Receipt Date field.';
+                }
+                field("Expected Receipt Date"; Rec."Expected Receipt Date")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Expected Receipt Date field.';
+                }
+                field("Order Date"; Rec."Order Date")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Order Date field.';
+                }
+                field("Lead Time Calculation"; Rec."Lead Time Calculation")
                 {
                     ApplicationArea = All;
                     Visible = false;
+                    ToolTip = 'Specifies the value of the Lead Time Calculation field.';
                 }
-                field("Operation No."; "Operation No.")
+                field("Planning Flexibility"; Rec."Planning Flexibility")
                 {
                     ApplicationArea = All;
                     Visible = false;
+                    ToolTip = 'Specifies the value of the Planning Flexibility field.';
                 }
-                field("Work Center No."; "Work Center No.")
+                field("Prod. Order No."; Rec."Prod. Order No.")
                 {
                     ApplicationArea = All;
                     Visible = false;
+                    ToolTip = 'Specifies the value of the Prod. Order No. field.';
                 }
-                field(Finished; Finished)
+                field("Prod. Order Line No."; Rec."Prod. Order Line No.")
                 {
                     ApplicationArea = All;
                     Visible = false;
+                    ToolTip = 'Specifies the value of the Prod. Order Line No. field.';
                 }
-                field("Whse. Outstanding Qty. (Base)"; "Whse. Outstanding Qty. (Base)")
+                field("Operation No."; Rec."Operation No.")
                 {
                     ApplicationArea = All;
                     Visible = false;
+                    ToolTip = 'Specifies the value of the Operation No. field.';
                 }
-                field("Inbound Whse. Handling Time"; "Inbound Whse. Handling Time")
+                field("Work Center No."; Rec."Work Center No.")
                 {
                     ApplicationArea = All;
                     Visible = false;
+                    ToolTip = 'Specifies the value of the Work Center No. field.';
                 }
-                field("Blanket Order No."; "Blanket Order No.")
+                field(Finished; Rec.Finished)
                 {
                     ApplicationArea = All;
                     Visible = false;
+                    ToolTip = 'Specifies the value of the Finished field.';
                 }
-                field("Blanket Order Line No."; "Blanket Order Line No.")
+                field("Whse. Outstanding Qty. (Base)"; Rec."Whse. Outstanding Qty. (Base)")
                 {
                     ApplicationArea = All;
                     Visible = false;
+                    ToolTip = 'Specifies the value of the Whse. Outstanding Qty. (Base) field.';
                 }
-                field("Appl.-to Item Entry"; "Appl.-to Item Entry")
+                field("Inbound Whse. Handling Time"; Rec."Inbound Whse. Handling Time")
                 {
                     ApplicationArea = All;
                     Visible = false;
+                    ToolTip = 'Specifies the value of the Inbound Whse. Handling Time field.';
                 }
-                field("Shortcut Dimension 1 Code"; "Shortcut Dimension 1 Code")
+                field("Blanket Order No."; Rec."Blanket Order No.")
                 {
                     ApplicationArea = All;
                     Visible = false;
+                    ToolTip = 'Specifies the value of the Blanket Order No. field.';
                 }
-                field("Shortcut Dimension 2 Code"; "Shortcut Dimension 2 Code")
+                field("Blanket Order Line No."; Rec."Blanket Order Line No.")
                 {
                     ApplicationArea = All;
                     Visible = false;
+                    ToolTip = 'Specifies the value of the Blanket Order Line No. field.';
+                }
+                field("Appl.-to Item Entry"; Rec."Appl.-to Item Entry")
+                {
+                    ApplicationArea = All;
+                    Visible = false;
+                    ToolTip = 'Specifies the value of the Appl.-to Item Entry field.';
+                }
+                field("Shortcut Dimension 1 Code"; Rec."Shortcut Dimension 1 Code")
+                {
+                    ApplicationArea = All;
+                    Visible = false;
+                    ToolTip = 'Specifies the value of the Shortcut Dimension 1 Code field.';
+                }
+                field("Shortcut Dimension 2 Code"; Rec."Shortcut Dimension 2 Code")
+                {
+                    ApplicationArea = All;
+                    Visible = false;
+                    ToolTip = 'Specifies the value of the Shortcut Dimension 2 Code field.';
                 }
                 field("ShortcutDimCode[3]"; ShortcutDimCode[3])
                 {
                     ApplicationArea = All;
                     CaptionClass = '1,2,3';
                     Visible = false;
+                    ToolTip = 'Specifies the value of the ShortcutDimCode[3] field.';
                 }
                 field("ShortcutDimCode[4]"; ShortcutDimCode[4])
                 {
                     ApplicationArea = All;
                     CaptionClass = '1,2,4';
                     Visible = false;
+                    ToolTip = 'Specifies the value of the ShortcutDimCode[4] field.';
                 }
                 field("ShortcutDimCode[5]"; ShortcutDimCode[5])
                 {
                     ApplicationArea = All;
                     CaptionClass = '1,2,5';
                     Visible = false;
+                    ToolTip = 'Specifies the value of the ShortcutDimCode[5] field.';
                 }
                 field("ShortcutDimCode[6]"; ShortcutDimCode[6])
                 {
                     ApplicationArea = All;
                     CaptionClass = '1,2,6';
                     Visible = false;
+                    ToolTip = 'Specifies the value of the ShortcutDimCode[6] field.';
                 }
                 field("ShortcutDimCode[7]"; ShortcutDimCode[7])
                 {
                     ApplicationArea = All;
                     CaptionClass = '1,2,7';
                     Visible = false;
+                    ToolTip = 'Specifies the value of the ShortcutDimCode[7] field.';
                 }
                 field("ShortcutDimCode[8]"; ShortcutDimCode[8])
                 {
                     ApplicationArea = All;
                     CaptionClass = '1,2,8';
                     Visible = false;
+                    ToolTip = 'Specifies the value of the ShortcutDimCode[8] field.';
                 }
-                field("Document No."; "Document No.")
+                field("Document No."; Rec."Document No.")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Document No. field.';
                 }
-                field("Line No."; "Line No.")
+                field("Line No."; Rec."Line No.")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Line No. field.';
                 }
-                field("Buy-from Vendor No."; "Buy-from Vendor No.")
+                field("Buy-from Vendor No."; Rec."Buy-from Vendor No.")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Buy-from Vendor No. field.';
                 }
-                field("Pay-to Vendor No."; "Pay-to Vendor No.")
+                field("Pay-to Vendor No."; Rec."Pay-to Vendor No.")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Pay-to Vendor No. field.';
                 }
             }
         }

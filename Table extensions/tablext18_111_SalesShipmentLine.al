@@ -24,7 +24,7 @@ tableextension 50118 SalesShipmentLineExt extends "Sales Shipment Line"
         // Add changes to table fields here
         field(50000; "Unit of Measure (Base)"; Text[10])
         {
-            CalcFormula = Lookup(Item."Base Unit of Measure" WHERE("No." = FIELD("No.")));
+            CalcFormula = lookup(Item."Base Unit of Measure" where("No." = field("No.")));
             FieldClass = FlowField;
         }
 
@@ -88,14 +88,14 @@ tableextension 50118 SalesShipmentLineExt extends "Sales Shipment Line"
             DataClassification = ToBeClassified;
 
             Caption = 'Product Class (Κατηγορία)';
-            TableRelation = "General Categories".Code WHERE("Table No." = CONST(27), Type = CONST(Category8));
+            TableRelation = "General Categories".Code where("Table No." = const(27), Type = const(Category8));
         }
 
         field(50072; "Category 9"; Code[20])
         {
             Caption = 'Potatoes District Region';
             DataClassification = ToBeClassified;
-            TableRelation = "General Categories".Code WHERE("Table No." = CONST(27), Type = CONST(Category9));
+            TableRelation = "General Categories".Code where("Table No." = const(27), Type = const(Category9));
         }
 
 
@@ -103,12 +103,12 @@ tableextension 50118 SalesShipmentLineExt extends "Sales Shipment Line"
         field(50143; "Transfer-from Code"; Code[10])
         {
             Caption = 'Transfer-from Code';
-            TableRelation = Location WHERE("Use As In-Transit" = CONST(false));
+            TableRelation = Location where("Use As In-Transit" = const(false));
         }
         field(50144; "Transfer-to Code"; Code[10])
         {
             Caption = 'Transfer-to Code';
-            TableRelation = Location WHERE("Use As In-Transit" = CONST(false));
+            TableRelation = Location where("Use As In-Transit" = const(false));
         }
         //TAL 1.0.0.201 <<
 

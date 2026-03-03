@@ -7,51 +7,54 @@ page 50023 "Grower Item Catalog"
     DataCaptionFields = "Grower No.";
     PageType = List;
     SourceTable = "Item Grower Vendor";
+    ApplicationArea = All;
 
     layout
     {
-        area(content)
+        area(Content)
         {
             repeater(Control1)
             {
-                field("Grower No."; "Grower No.")
+                field("Grower No."; Rec."Grower No.")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the number of the vendor who offers the alternate direct unit cost.';
                     Visible = false;
                 }
-                field("Category 1"; "Category 1")
+                field("Category 1"; Rec."Category 1")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Category 1 field.';
                 }
-                field("Product Name"; "Product Name")
+                field("Product Name"; Rec."Product Name")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Product Name field.';
                 }
-                field("Item No."; "Item No.")
+                field("Item No."; Rec."Item No.")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the number of the item that the alternate direct unit cost is valid for.';
                 }
-                field("Variant Code"; "Variant Code")
+                field("Variant Code"; Rec."Variant Code")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies a variant code for the item.';
                     Visible = false;
                 }
-                field("Vendor Item No."; "Vendor Item No.")
+                field("Vendor Item No."; Rec."Vendor Item No.")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the number that the vendor uses for this item.';
                 }
-                field("Lead Time Calculation"; "Lead Time Calculation")
+                field("Lead Time Calculation"; Rec."Lead Time Calculation")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies a date formula for the amount of time that it takes to replenish the item.';
                 }
             }
         }
-        area(factboxes)
+        area(FactBoxes)
         {
             systempart(Control1900383207; Links)
             {
@@ -68,7 +71,7 @@ page 50023 "Grower Item Catalog"
 
     actions
     {
-        area(navigation)
+        area(Navigation)
         {
             group("Ve&ndor Item")
             {
@@ -79,10 +82,10 @@ page 50023 "Grower Item Catalog"
                     ApplicationArea = Suite;
                     Caption = 'Purch. Prices';
                     Image = Price;
-                    RunObject = Page "Purchase Prices";
-                    RunPageLink = "Item No." = FIELD("Item No."),
-                                  "Vendor No." = FIELD("Grower No.");
-                    RunPageView = SORTING("Item No.", "Vendor No.");
+                    RunObject = page "Purchase Prices";
+                    RunPageLink = "Item No." = field("Item No."),
+                                  "Vendor No." = field("Grower No.");
+                    RunPageView = sorting("Item No.", "Vendor No.");
                     ToolTip = 'Define purchase price agreements with vendors for specific items.';
                 }
                 action("P&urch. Line Discounts")
@@ -90,9 +93,9 @@ page 50023 "Grower Item Catalog"
                     ApplicationArea = Suite;
                     Caption = 'P&urch. Line Discounts';
                     Image = LineDiscount;
-                    RunObject = Page "Purchase Line Discounts";
-                    RunPageLink = "Item No." = FIELD("Item No."),
-                                  "Vendor No." = FIELD("Grower No.");
+                    RunObject = page "Purchase Line Discounts";
+                    RunPageLink = "Item No." = field("Item No."),
+                                  "Vendor No." = field("Grower No.");
                     ToolTip = 'Define purchase line discounts with vendors. For example, you may get for a line discount if you buy items from a vendor in large quantities.';
                 }
             }

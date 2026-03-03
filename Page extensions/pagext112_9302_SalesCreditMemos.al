@@ -9,13 +9,15 @@ pageextension 50212 SalesCreditMemosExt extends "Sales Credit Memos"
         // Add changes to page layout here
         addafter(Amount)
         {
-            field("Req. Vendor No."; "Req. Vendor No.")
+            field("Req. Vendor No."; Rec."Req. Vendor No.")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Req. Vendor No. field.';
             }
-            field("Reason Code"; "Reason Code")
+            field("Reason Code"; Rec."Reason Code")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the reason code, a supplementary source code that enables you to trace the document.';
             }
         }
 
@@ -29,18 +31,19 @@ pageextension 50212 SalesCreditMemosExt extends "Sales Credit Memos"
         {
             action("Post and &Print")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 Caption = 'Post and &Print';
                 Image = PostPrint;
                 Promoted = true;
                 PromotedCategory = Category5;
                 PromotedIsBig = true;
-                ShortCutKey = 'Shift+F9';
+                ShortcutKey = 'Shift+F9';
+                ToolTip = 'Executes the Post and &Print action.';
 
                 trigger OnAction();
                 begin
                     CheckSalesCheckAllLinesHaveQuantityAssigned(Rec);
-                    SendToPosting(CODEUNIT::"Sales-Post + Print");
+                    Rec.SendToPosting(Codeunit::"Sales-Post + Print");
                 end;
             }
         }

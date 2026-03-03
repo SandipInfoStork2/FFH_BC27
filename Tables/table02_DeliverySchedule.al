@@ -12,12 +12,12 @@ table 50002 "Delivery Schedule"
         field(5; Driver; Code[20])
         {
             DataClassification = ToBeClassified;
-            TableRelation = Resource."No." WHERE("Resource Group No." = CONST('DRIVER'));
+            TableRelation = Resource."No." where("Resource Group No." = const('DRIVER'));
         }
         field(6; Van; Code[20])
         {
             DataClassification = ToBeClassified;
-            TableRelation = Resource."No." WHERE("Resource Group No." = CONST('VAN'));
+            TableRelation = Resource."No." where("Resource Group No." = const('VAN'));
         }
         field(7; "Delivery Date"; Date)
         {
@@ -31,7 +31,7 @@ table 50002 "Delivery Schedule"
                 //The value 3 corresponds to year.
 
                 if "Delivery Date" <> 0D then begin
-                    "Week No." := DATE2DWY("Delivery Date", 2);
+                    "Week No." := Date2DWY("Delivery Date", 2);
                 end;
             end;
         }
@@ -54,7 +54,7 @@ table 50002 "Delivery Schedule"
         }
         field(12; "No. of Sales Shipments"; Integer)
         {
-            CalcFormula = Count("Sales Shipment Header" WHERE("Delivery No." = FIELD("Delivery No.")));
+            CalcFormula = count("Sales Shipment Header" where("Delivery No." = field("Delivery No.")));
             Editable = false;
             FieldClass = FlowField;
         }
@@ -64,11 +64,11 @@ table 50002 "Delivery Schedule"
         }
         field(14; "No. of Sales Orders"; Integer)
         {
-            CalcFormula = Count("Sales Header" WHERE("Delivery No." = FIELD("Delivery No.")));
+            CalcFormula = count("Sales Header" where("Delivery No." = field("Delivery No.")));
             Editable = false;
             FieldClass = FlowField;
         }
-        field(300; "Work Description"; BLOB)
+        field(300; "Work Description"; Blob)
         {
             Caption = 'Work Description';
             DataClassification = ToBeClassified;
@@ -136,15 +136,15 @@ table 50002 "Delivery Schedule"
     begin
 
         if "Delivery No." <> '' then begin
-            rL_SalesShipmentHeader.RESET;
-            rL_SalesShipmentHeader.SETCURRENTKEY("Delivery No.");
-            rL_SalesShipmentHeader.SETFILTER("Delivery No.", "Delivery No.");
-            if rL_SalesShipmentHeader.FINDSET then begin
+            rL_SalesShipmentHeader.Reset;
+            rL_SalesShipmentHeader.SetCurrentKey("Delivery No.");
+            rL_SalesShipmentHeader.SetFilter("Delivery No.", "Delivery No.");
+            if rL_SalesShipmentHeader.FindSet then begin
                 repeat
                     rL_SalesShipmentHeader."Delivery No." := '';
                     rL_SalesShipmentHeader."Delivery Sequence" := 0;
-                    rL_SalesShipmentHeader.MODIFY;
-                until rL_SalesShipmentHeader.NEXT = 0;
+                    rL_SalesShipmentHeader.Modify;
+                until rL_SalesShipmentHeader.Next = 0;
             end;
         end;
     end;
@@ -152,25 +152,25 @@ table 50002 "Delivery Schedule"
     trigger OnInsert();
     begin
         if "Delivery No." = '' then begin
-            rG_WarehouseSetup.GET;
-            rG_WarehouseSetup.TESTFIELD("Delivery Nos.");
+            rG_WarehouseSetup.Get;
+            rG_WarehouseSetup.TestField("Delivery Nos.");
             "Delivery No." := NoSeries.GetNextNo(rG_WarehouseSetup."Delivery Nos.", 0D);
             //NoSeriesMgt.InitSeries(rG_WarehouseSetup."Delivery Nos.", xRec."No. Series", 0D, "Delivery No.", "No. Series");
         end;
 
-        "Creation Date" := CURRENTDATETIME;
-        "Created By" := USERID;
+        "Creation Date" := CurrentDateTime;
+        "Created By" := UserId;
 
-        TESTFIELD(Driver);
-        TESTFIELD(Van);
+        TestField(Driver);
+        TestField(Van);
 
-        VALIDATE("Delivery Date", TODAY);
+        Validate("Delivery Date", Today);
     end;
 
     trigger OnModify();
     begin
-        "Last Modified Date" := CURRENTDATETIME;
-        "Last Modified By" := USERID;
+        "Last Modified Date" := CurrentDateTime;
+        "Last Modified By" := UserId;
     end;
 
     var

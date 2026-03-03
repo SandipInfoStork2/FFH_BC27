@@ -16,9 +16,9 @@ tableextension 50115 UserSetupExt extends "User Setup"
 
             trigger OnValidate();
             begin
-                IF "Job Queue Email" THEN BEGIN
-                    TESTFIELD("E-Mail");
-                END;
+                if "Job Queue Email" then begin
+                    TestField("E-Mail");
+                end;
             end;
         }
         field(50011; "User Department"; Option)
@@ -36,9 +36,9 @@ tableextension 50115 UserSetupExt extends "User Setup"
         {
             DataClassification = CustomerContent;
         }
-        field(50019; "Signature"; BLOB)
+        field(50019; Signature; Blob)
         {
-            SubType = Bitmap;
+            Subtype = Bitmap;
             DataClassification = CustomerContent;
         }
         //TAL 1.0.0.69 <<
@@ -70,7 +70,7 @@ tableextension 50115 UserSetupExt extends "User Setup"
         }
 
 
-        field(50024; "HORECA Min. Order Period"; dateformula)
+        field(50024; "HORECA Min. Order Period"; DateFormula)
         {
             Caption = 'HORECA Min. Order Period';
 

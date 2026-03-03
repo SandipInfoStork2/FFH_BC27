@@ -12,118 +12,141 @@ page 50065 "Order Qty"
         {
             repeater(GroupName)
             {
-                field("Document Type"; "Document Type")
+                field("Document Type"; Rec."Document Type")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Document Type field.';
                 }
-                field("Document No."; "Document No.")
+                field("Document No."; Rec."Document No.")
                 {
-                    ApplicationArea = all;
-                }
-
-                field("Line No."; "Line No.")
-                {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Document No. field.';
                 }
 
-                field("Version No."; "Version No.")
+                field("Line No."; Rec."Line No.")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Line No. field.';
                 }
 
-                field("Max Version No."; "Max Version No.")
+                field("Version No."; Rec."Version No.")
                 {
-                    ApplicationArea = all;
-                }
-                field(Deleted; Deleted)
-                {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Version No. field.';
                 }
 
-                field("Sales Unit of Measure Code"; "Sales Unit of Measure Code")
+                field("Max Version No."; Rec."Max Version No.")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Max Version No. field.';
+                }
+                field(Deleted; Rec.Deleted)
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Deleted field.';
                 }
 
-                field("Sales Line Quantity"; "Sales Line Quantity")
+                field("Sales Unit of Measure Code"; Rec."Sales Unit of Measure Code")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Sales Unit of Measure Code field.';
                 }
 
-                field("Create Datime"; "Create Datime")
+                field("Sales Line Quantity"; Rec."Sales Line Quantity")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Sales Line Quantity field.';
                 }
 
-                field("Order Date"; "Order Date")
+                field("Create Datime"; Rec."Create Datime")
                 {
-                    ApplicationArea = all;
-                }
-                field("Customer No."; "Customer No.")
-                {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Create Datime field.';
                 }
 
-                field("Item No."; "Item No.")
+                field("Order Date"; Rec."Order Date")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Order Date field.';
                 }
-                field("Shelf No."; "Shelf No.")
+                field("Customer No."; Rec."Customer No.")
                 {
-                    ApplicationArea = all;
-                }
-                field("New Order Qty"; "New Order Qty")
-                {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Customer No. field.';
                 }
 
-                field("Qty. Requested"; "Qty. Requested")
+                field("Item No."; Rec."Item No.")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Item No. field.';
+                }
+                field("Shelf No."; Rec."Shelf No.")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Shelf No. field.';
+                }
+                field("New Order Qty"; Rec."New Order Qty")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the New Order Qty field.';
                 }
 
-                field("Previous Qty. Requested"; "Previous Qty. Requested")
+                field("Qty. Requested"; Rec."Qty. Requested")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Qty. Requested field.';
                 }
 
-                field("Stat. Qty. Requested Change"; "Stat. Qty. Requested Change")
+                field("Previous Qty. Requested"; Rec."Previous Qty. Requested")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Previous Qty. Requested field.';
                 }
 
-                field("Stat. Qty. Requested Change %"; "Stat. Qty. Requested Change %")
+                field("Stat. Qty. Requested Change"; Rec."Stat. Qty. Requested Change")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Stat. Qty. Requested Change field.';
                 }
 
-                field("Qty. Confirmed"; "Qty. Confirmed")
+                field("Stat. Qty. Requested Change %"; Rec."Stat. Qty. Requested Change %")
                 {
-                    ApplicationArea = all;
-                }
-                field("Previous Qty. Confirmed"; "Previous Qty. Confirmed")
-                {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Stat. Qty. Requested Change % field.';
                 }
 
-                field("Stat. Qty. Confirmed Change"; "Stat. Qty. Confirmed Change")
+                field("Qty. Confirmed"; Rec."Qty. Confirmed")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Qty. Confirmed field.';
+                }
+                field("Previous Qty. Confirmed"; Rec."Previous Qty. Confirmed")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Previous Qty. Confirmed field.';
                 }
 
-                field("Stat. Qty. Confirmed Change %"; "Stat. Qty. Confirmed Change %")
+                field("Stat. Qty. Confirmed Change"; Rec."Stat. Qty. Confirmed Change")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Stat. Qty. Confirmed Change field.';
                 }
 
-                field("UOM (Base)"; "UOM (Base)")
+                field("Stat. Qty. Confirmed Change %"; Rec."Stat. Qty. Confirmed Change %")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Stat. Qty. Confirmed Change % field.';
+                }
+
+                field("UOM (Base)"; Rec."UOM (Base)")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the UOM (Base) field.';
                 }
 
             }
         }
-        area(Factboxes)
+        area(FactBoxes)
         {
 
         }
@@ -139,24 +162,25 @@ page 50065 "Order Qty"
                 Visible = true;
                 Caption = 'Show Document';
                 Image = Document;
+                ToolTip = 'Executes the Show Document action.';
 
                 trigger OnAction();
                 var
                     SalesHeader: Record "Sales Header";
                     SalesShipmentHeader: Record "Sales Shipment Header";
                 begin
-                    case "Document Type" of
+                    case Rec."Document Type" of
                         "Order Qty Document Type"::"Sales Order":
                             begin
-                                clear(SalesHeader);
+                                Clear(SalesHeader);
 
-                                if SalesHeader.get("Document Type", "Document No.") then begin
-                                    page.Run(Page::"Sales Order", SalesHeader);
+                                if SalesHeader.get(Rec."Document Type", Rec."Document No.") then begin
+                                    Page.Run(Page::"Sales Order", SalesHeader);
                                 end else begin
-                                    clear(SalesShipmentHeader);
-                                    SalesShipmentHeader.SetFilter("Order No.", "Document No.");
+                                    Clear(SalesShipmentHeader);
+                                    SalesShipmentHeader.SetFilter("Order No.", Rec."Document No.");
                                     if SalesShipmentHeader.FindSet() then begin
-                                        page.Run(Page::"Posted Sales Shipments", SalesShipmentHeader);
+                                        Page.Run(Page::"Posted Sales Shipments", SalesShipmentHeader);
                                     end;
 
                                 end;
@@ -165,9 +189,9 @@ page 50065 "Order Qty"
 
                         "Order Qty Document Type"::"Sales Shipment":
                             begin
-                                clear(SalesShipmentHeader);
-                                SalesShipmentHeader.get("Document No.");
-                                page.Run(Page::"Posted Sales Shipment", SalesShipmentHeader);
+                                Clear(SalesShipmentHeader);
+                                SalesShipmentHeader.get(Rec."Document No.");
+                                Page.Run(Page::"Posted Sales Shipment", SalesShipmentHeader);
                             end;
 
                     end;
@@ -180,22 +204,24 @@ page 50065 "Order Qty"
             action(RecCount)
             {
                 ApplicationArea = All;
-                caption = 'Count';
+                Caption = 'Count';
+                ToolTip = 'Executes the Count action.';
 
                 trigger OnAction()
                 begin
-                    Message('# Records:' + Format(rec.Count));
+                    Message('# Records:' + Format(Rec.Count));
                 end;
             }
 
             action(UpdateMax)
             {
                 ApplicationArea = All;
-                caption = 'Update Max';
+                Caption = 'Update Max';
+                ToolTip = 'Executes the Update Max action.';
 
                 trigger OnAction()
                 begin
-                    UpdateMaxVersionNo(Rec);
+                    Rec.UpdateMaxVersionNo(Rec);
 
                 end;
             }

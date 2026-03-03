@@ -13,50 +13,57 @@ pageextension 50126 PostedSalesShipmentExt extends "Posted Sales Shipment"
         // Add changes to page layout here
         addafter("External Document No.")
         {
-            field("Batch No."; "Batch No.")
+            field("Batch No."; Rec."Batch No.")
             {
                 ApplicationArea = All;
                 Editable = false;
+                ToolTip = 'Specifies the value of the Batch No. field.';
             }
-            field("Lot No."; "Lot No.")
+            field("Lot No."; Rec."Lot No.")
             {
                 ApplicationArea = All;
                 Editable = false;
+                ToolTip = 'Specifies the value of the Lot No. field.';
             }
 
         }
 
         addafter("Responsibility Center")
         {
-            field("Delivery No."; "Delivery No.")
+            field("Delivery No."; Rec."Delivery No.")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Delivery No. field.';
             }
-            field("Delivery Sequence"; "Delivery Sequence")
+            field("Delivery Sequence"; Rec."Delivery Sequence")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Delivery Sequence field.';
             }
         }
 
         addafter("External Document No.")
         {
-            field("Customer Reference No."; "Customer Reference No.")
+            field("Customer Reference No."; Rec."Customer Reference No.")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 Editable = false;
+                ToolTip = 'Specifies the value of the Customer Reference No. field.';
             }
         }
         addafter("Delivery Sequence")
         {
-            field("Transfer-from Code"; "Transfer-from Code")
+            field("Transfer-from Code"; Rec."Transfer-from Code")
             {
                 ApplicationArea = All;
-                Editable = False;
+                Editable = false;
+                ToolTip = 'Specifies the value of the Transfer-from Code field.';
             }
-            field("Transfer-to Code"; "Transfer-to Code")
+            field("Transfer-to Code"; Rec."Transfer-to Code")
             {
                 ApplicationArea = All;
-                Editable = False;
+                Editable = false;
+                ToolTip = 'Specifies the value of the Transfer-to Code field.';
             }
         }
 
@@ -65,15 +72,17 @@ pageextension 50126 PostedSalesShipmentExt extends "Posted Sales Shipment"
             group(QC)
             {
                 Caption = 'Quality Control';
-                field("Shipping Temperature"; "Shipping Temperature")
+                field("Shipping Temperature"; Rec."Shipping Temperature")
                 {
-                    ApplicationArea = all;
-                    Editable = False;
+                    ApplicationArea = All;
+                    Editable = false;
+                    ToolTip = 'Specifies the value of the Shipping Temperature °C field.';
                 }
-                field("Shipping Quality Control"; "Shipping Quality Control")
+                field("Shipping Quality Control"; Rec."Shipping Quality Control")
                 {
-                    ApplicationArea = all;
-                    Editable = False;
+                    ApplicationArea = All;
+                    Editable = false;
+                    ToolTip = 'Specifies the value of the Shipping Quality Control field.';
                 }
             }
         }
@@ -103,15 +112,17 @@ pageextension 50126 PostedSalesShipmentExt extends "Posted Sales Shipment"
             {
                 ApplicationArea = All;
                 Caption = 'Delivery Schedule';
-                RunObject = Page "Delivery Schedule List";
+                RunObject = page "Delivery Schedule List";
+                ToolTip = 'Executes the Delivery Schedule action.';
             }
 
             action(PostedInvtPickList)
             {
                 ApplicationArea = All;
                 Caption = 'Posted Invt. Pick List';
-                RunObject = Page "Posted Invt. Pick List";
+                RunObject = page "Posted Invt. Pick List";
                 RunPageLink = "Source No." = field("No.");
+                ToolTip = 'Executes the Posted Invt. Pick List action.';
             }
         }
 
@@ -124,13 +135,14 @@ pageextension 50126 PostedSalesShipmentExt extends "Posted Sales Shipment"
                 Promoted = true;
                 PromotedCategory = Process;
                 PromotedOnly = true;
+                ToolTip = 'Executes the Item Tracking Appendix action.';
 
                 trigger OnAction();
                 var
                     SalesShipmentHeader: Record "Sales Shipment Header";
                 begin
                     SalesShipmentHeader := Rec;
-                    CurrPage.SETSELECTIONFILTER(SalesShipmentHeader);
+                    CurrPage.SetSelectionFilter(SalesShipmentHeader);
                     SalesShipmentHeader.PrintAppendixRecords(SalesShipmentHeader);
                 end;
             }
@@ -143,13 +155,14 @@ pageextension 50126 PostedSalesShipmentExt extends "Posted Sales Shipment"
                 PromotedCategory = Process;
                 PromotedOnly = true;
                 Visible = true;
+                ToolTip = 'Executes the Item Tracking Appendix Quality action.';
 
                 trigger OnAction();
                 var
                     SalesShipmentHeader: Record "Sales Shipment Header";
                 begin
                     SalesShipmentHeader := Rec;
-                    CurrPage.SETSELECTIONFILTER(SalesShipmentHeader);
+                    CurrPage.SetSelectionFilter(SalesShipmentHeader);
                     SalesShipmentHeader.PrintAppendixRecordsQuality(SalesShipmentHeader);
                 end;
             }
@@ -168,9 +181,9 @@ pageextension 50126 PostedSalesShipmentExt extends "Posted Sales Shipment"
                 ApplicationArea = Basic, Suite;
                 Caption = 'Customer';
                 Image = Customer;
-                RunObject = Page "Customer Card";
-                RunPageLink = "No." = FIELD("Sell-to Customer No.");
-                ShortCutKey = 'Shift+F7';
+                RunObject = page "Customer Card";
+                RunPageLink = "No." = field("Sell-to Customer No.");
+                ShortcutKey = 'Shift+F7';
                 ToolTip = 'View or edit detailed information about the customer.';
             }
 

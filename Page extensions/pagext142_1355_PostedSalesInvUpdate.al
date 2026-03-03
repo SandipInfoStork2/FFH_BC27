@@ -5,18 +5,21 @@ pageextension 50242 PostedSalesInvUpdateExt extends "Posted Sales Inv. - Update"
         // Add changes to page layout here
         addafter("Payment Reference")
         {
-            field("Sell-to E-Mail"; "Sell-to E-Mail")
+            field("Sell-to E-Mail"; Rec."Sell-to E-Mail")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 Caption = 'Sell-to E-Mail';
+                ToolTip = 'Specifies the value of the Sell-to E-Mail field.';
             }
-            field("Customer Reference No."; "Customer Reference No.")
+            field("Customer Reference No."; Rec."Customer Reference No.")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Customer Reference No. field.';
             }
-            field("Reason Code"; "Reason Code")
+            field("Reason Code"; Rec."Reason Code")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Reason Code field.';
             }
         }
     }

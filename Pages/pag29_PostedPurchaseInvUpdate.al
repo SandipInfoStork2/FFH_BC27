@@ -9,11 +9,12 @@ page 50029 "Posted Purchase Line - Update"
     ShowFilter = false;
     SourceTable = "Purch. Inv. Line";
     SourceTableTemporary = true;
-    Permissions = TableData "Purch. Inv. Line" = m;
+    Permissions = tabledata "Purch. Inv. Line" = m;
+    ApplicationArea = All;
 
     layout
     {
-        area(content)
+        area(Content)
         {
             group(General)
             {
@@ -30,16 +31,17 @@ page 50029 "Posted Purchase Line - Update"
                     Editable = false;
                     ToolTip = 'Specifies the name of vendor at the buy-from address.';
                 }
-                field("Posting Date"; rec."Posting Date")
+                field("Posting Date"; Rec."Posting Date")
                 {
                     ApplicationArea = Basic, Suite;
                     Editable = false;
                     ToolTip = 'Specifies the posting date for the entry.';
                 }
-                field("No."; rec."No.")
+                field("No."; Rec."No.")
                 {
                     ApplicationArea = Basic, Suite;
                     Editable = false;
+                    ToolTip = 'Specifies the number of the involved entry or record, according to the specified number series.';
                 }
             }
             group(Lines)
@@ -54,7 +56,7 @@ page 50029 "Posted Purchase Line - Update"
                     Editable = false;
                 }
 
-                field(Description; rec.Description)
+                field(Description; Rec.Description)
                 {
                     ApplicationArea = Suite;
                     Caption = 'Description';
@@ -75,16 +77,16 @@ page 50029 "Posted Purchase Line - Update"
     trigger OnOpenPage()
     begin
         xPurchInvoiceLine := Rec;
-        rG_PurchInvoiceHeader.GET(xPurchInvoiceLine."Document No.");
+        rG_PurchInvoiceHeader.Get(xPurchInvoiceLine."Document No.");
     end;
 
     trigger OnQueryClosePage(CloseAction: Action): Boolean
     var
         rL_PurchInvoiceLine: Record "Purch. Inv. Line";
     begin
-        if CloseAction = ACTION::LookupOK then
+        if CloseAction = Action::LookupOK then
             if RecordChanged then begin
-                rL_PurchInvoiceLine.GET(rec."Document No.", rec."Line No.");
+                rL_PurchInvoiceLine.Get(Rec."Document No.", Rec."Line No.");
                 rL_PurchInvoiceLine.Description := Rec.Description;
                 rL_PurchInvoiceLine.Modify();
             end;
@@ -97,7 +99,7 @@ page 50029 "Posted Purchase Line - Update"
     local procedure RecordChanged() IsChanged: Boolean
     begin
         IsChanged :=
-         (rec."Description" <> xPurchInvoiceLine."Description");
+         (Rec.Description <> xPurchInvoiceLine.Description);
 
 
         OnAfterRecordChanged(Rec, xPurchInvoiceLine, IsChanged);
@@ -106,7 +108,7 @@ page 50029 "Posted Purchase Line - Update"
     procedure SetRec(PurchInvoiceLine: Record "Purch. Inv. Line")
     begin
         Rec := PurchInvoiceLine;
-        rec.Insert;
+        Rec.Insert;
     end;
 
     [IntegrationEvent(false, false)]

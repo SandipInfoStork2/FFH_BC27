@@ -19,7 +19,7 @@ report 50075 "Boxes Statement Summary"
 
         dataitem(LocationInt; "Integer")
         {
-            DataItemTableView = SORTING(Number) WHERE(Number = FILTER(1));
+            DataItemTableView = sorting(Number) where(Number = filter(1));
             //column(LocationCode; Location.Code)
             // {
             // }
@@ -101,7 +101,7 @@ report 50075 "Boxes Statement Summary"
 
             dataitem("Item Ledger Entry"; "Item Ledger Entry")
             {
-                DataItemTableView = SORTING("Source Type", "Source No.", "Item No."); //"Entry Type", Nonstock, 
+                DataItemTableView = sorting("Source Type", "Source No.", "Item No."); //"Entry Type", Nonstock, 
                 RequestFilterFields = "Source Type", "Source No.", "Posting Date", "Shortcut Dimension 5 Code", "Item Category Code", "Item No.";  // "Gen. Prod. Posting Group", 
                                                                                                                                                    //DataItemLink = "Location Code" = field(Code);
 
@@ -120,7 +120,7 @@ report 50075 "Boxes Statement Summary"
                 column(Showdetails; Showdetails)
                 {
                 }
-                column(CompName; COMPANYNAME)
+                column(CompName; CompanyName)
                 {
                 }
                 column(itemfilter; itemfilter)
@@ -134,7 +134,7 @@ report 50075 "Boxes Statement Summary"
                 {
                 }
 
-                column(PostingDate_ItemLedgerEntry; FORMAT("Item Ledger Entry"."Posting Date"))
+                column(PostingDate_ItemLedgerEntry; Format("Item Ledger Entry"."Posting Date"))
                 {
                 }
                 column(EntryType_ItemLedgerEntry; "Item Ledger Entry"."Entry Type")
@@ -168,12 +168,12 @@ report 50075 "Boxes Statement Summary"
                 }
 
 
-                column(LastTransDate; FORMAT(LastTransDate))
+                column(LastTransDate; Format(LastTransDate))
                 {
 
                 }
 
-                column(LedgerEntryPostingStartDate; FORMAT(LedgerEntryPostingStartDate))
+                column(LedgerEntryPostingStartDate; Format(LedgerEntryPostingStartDate))
                 {
 
                 }
@@ -214,7 +214,7 @@ report 50075 "Boxes Statement Summary"
                     //SetFilter("Posting Date", '>= %1', LedgerEntryPostingStartDate);
 
                     // ILEFilters := "Item Ledger Entry".GetFilters();
-                    if format("Item Ledger Entry".GetFilter("Posting Date")) = '' then begin
+                    if Format("Item Ledger Entry".GetFilter("Posting Date")) = '' then begin
                         Error(Text50000);
                     end;
 
@@ -236,10 +236,10 @@ report 50075 "Boxes Statement Summary"
                     if SameStartPeriod then begin
                         OpeningBalancePeriod := 'Same Start Date. No Opening Balance';
                     end else begin
-                        OpeningBalancePeriod := format(LedgerEntryPostingStartDate) + '..' + format(vG_StartDate);
+                        OpeningBalancePeriod := Format(LedgerEntryPostingStartDate) + '..' + Format(vG_StartDate);
                     end;
 
-                    MovementPeriod := format("Item Ledger Entry".GetFilter("Posting Date"));
+                    MovementPeriod := Format("Item Ledger Entry".GetFilter("Posting Date"));
                 end;
 
                 trigger OnAfterGetRecord();
@@ -250,9 +250,9 @@ report 50075 "Boxes Statement Summary"
                     ILEStart: Record "Item Ledger Entry";
                     ILEEnd: Record "Item Ledger Entry";
                 begin
-                    clear(item);
+                    Clear(item);
                     itemdesc := '';
-                    if item.GET("Item No.") then begin
+                    if item.Get("Item No.") then begin
                         itemdesc := item.Description;
                     end;
 
@@ -261,21 +261,21 @@ report 50075 "Boxes Statement Summary"
                     case "Source Type" of
                         "Source Type"::Customer:
                             begin
-                                if Customer.GET("Source No.") then begin
+                                if Customer.Get("Source No.") then begin
                                     vG_SourceName := Customer.Name;
                                 end;
                             end;
 
                         "Source Type"::Vendor:
                             begin
-                                if Vendor.GET("Source No.") then begin
+                                if Vendor.Get("Source No.") then begin
                                     vG_SourceName := Vendor.Name;
                                 end;
                             end;
                     end;
 
                     LastTransDate := 0D;
-                    LastILE.RESET;
+                    LastILE.Reset;
                     LastILE.SetCurrentKey("Source Type", "Source No.", "Shortcut Dimension 5 Code", "Item No.", "Posting Date");
                     LastILE.SetRange("Source Type", "Item Ledger Entry"."Source Type");
                     LastILE.SetFilter("Source No.", "Item Ledger Entry"."Source No.");
@@ -292,7 +292,7 @@ report 50075 "Boxes Statement Summary"
 
                     vG_StartBalance := 0;
                     vG_EndBalance := 0;
-                    ILEStart.RESET;
+                    ILEStart.Reset;
                     ILEStart.SetCurrentKey("Source Type", "Source No.", "Shortcut Dimension 5 Code", "Item No.", "Posting Date");
                     ILEStart.SetRange("Source Type", "Item Ledger Entry"."Source Type");
                     ILEStart.SetFilter("Source No.", "Item Ledger Entry"."Source No.");
@@ -306,7 +306,7 @@ report 50075 "Boxes Statement Summary"
                         vG_StartBalance := ILEStart.Quantity;
                     end;
 
-                    ILEEnd.RESET;
+                    ILEEnd.Reset;
                     ILEEnd.SetCurrentKey("Source Type", "Source No.", "Shortcut Dimension 5 Code", "Item No.", "Posting Date");
                     ILEEnd.SetRange("Source Type", "Item Ledger Entry"."Source Type");
                     ILEEnd.SetFilter("Source No.", "Item Ledger Entry"."Source No.");
@@ -321,7 +321,7 @@ report 50075 "Boxes Statement Summary"
                     end;
 
 
-                    IF PrintToExcel THEN
+                    if PrintToExcel then
                         MakeExcelDataBody;
                 end;
             }
@@ -349,7 +349,7 @@ report 50075 "Boxes Statement Summary"
         layout
         {
 
-            area(content)
+            area(Content)
             {
 
 
@@ -374,12 +374,14 @@ report 50075 "Boxes Statement Summary"
                         Caption = 'Show Details';
                         ApplicationArea = All;
                         Visible = true;
+                        ToolTip = 'Specifies the value of the Show Details field.';
                     }
 
                     field(PrintToExcel; PrintToExcel)
                     {
                         Caption = 'Print to Excel';
-                        ApplicationArea = all;
+                        ApplicationArea = All;
+                        ToolTip = 'Specifies the value of the Print to Excel field.';
                     }
                 }
 
@@ -417,20 +419,20 @@ report 50075 "Boxes Statement Summary"
         SRSetup: Record "Sales & Receivables Setup";
     begin
         //Showdetails := true;
-        CompanyInfo.GET;
-        CompanyInfo.CALCFIELDS(Picture);
+        CompanyInfo.Get;
+        CompanyInfo.CalcFields(Picture);
 
 
-        SRSetup.GET();
+        SRSetup.Get();
         LedgerEntryPostingStartDate := SRSetup."Box Stmt Start Date";
 
     end;
 
     trigger OnPreReport();
     begin
-        itemfilter := "Item Ledger Entry".GETFILTERS();
+        itemfilter := "Item Ledger Entry".GetFilters();
 
-        IF PrintToExcel THEN
+        if PrintToExcel then
             MakeExcelInfo;
 
 
@@ -443,7 +445,7 @@ report 50075 "Boxes Statement Summary"
 
     trigger OnPostReport()
     begin
-        IF PrintToExcel THEN
+        if PrintToExcel then
             CreateExcelbook;
     end;
 
@@ -475,10 +477,10 @@ report 50075 "Boxes Statement Summary"
         Customer: Record Customer;
         pCustomerList: Page "Customer List";
     begin
-        if PAGE.RunModal(PAGE::"Customer List", Customer) = ACTION::LookupOK then begin
+        if Page.RunModal(Page::"Customer List", Customer) = Action::LookupOK then begin
             vG_SourceNo2 := Customer."No.";
             vG_SourceName2 := Customer.Name;
-            vG_LocationCode2 := DELCHR(vG_SourceNo2, '=', 'UST'); //DelChr('UST', '=', vG_SourceNo)
+            vG_LocationCode2 := DelChr(vG_SourceNo2, '=', 'UST'); //DelChr('UST', '=', vG_SourceNo)
             CheckLocation2();
             vG_CustomerGroupDimensionCode := '';
             vG_CustomerGroupDimensionName := '';
@@ -490,30 +492,30 @@ report 50075 "Boxes Statement Summary"
         Vendor: Record Vendor;
         pVendorList: Page "Vendor List";
     begin
-        if PAGE.RunModal(PAGE::"Vendor List", Vendor) = ACTION::LookupOK then begin
+        if Page.RunModal(Page::"Vendor List", Vendor) = Action::LookupOK then begin
             vG_SourceNo1 := Vendor."No.";
             vG_SourceName1 := Vendor.Name;
-            vG_LocationCode1 := DELCHR(vG_SourceNo1, '=', 'END');
+            vG_LocationCode1 := DelChr(vG_SourceNo1, '=', 'END');
             CheckLocation1();
         end;
     end;
 
     local procedure MakeExcelDataHeader()
     begin
-        ExcelBuf.AddColumn('Source Type', FALSE, '', TRUE, FALSE, TRUE, '', ExcelBuf."Cell Type"::Text);
-        ExcelBuf.AddColumn('Source No.', FALSE, '', TRUE, FALSE, TRUE, '', ExcelBuf."Cell Type"::Text);
-        ExcelBuf.AddColumn('Source Name', FALSE, '', TRUE, FALSE, TRUE, '', ExcelBuf."Cell Type"::Text);
-        ExcelBuf.AddColumn('Posting Date', FALSE, '', TRUE, FALSE, TRUE, '', ExcelBuf."Cell Type"::Text);
-        ExcelBuf.AddColumn('Entry Type', FALSE, '', TRUE, FALSE, TRUE, '', ExcelBuf."Cell Type"::Text);
-        ExcelBuf.AddColumn('Document Type', FALSE, '', TRUE, FALSE, TRUE, '', ExcelBuf."Cell Type"::Text);
-        ExcelBuf.AddColumn('Document No.', FALSE, '', TRUE, FALSE, TRUE, '', ExcelBuf."Cell Type"::Text);
-        ExcelBuf.AddColumn('Customergroup', FALSE, '', TRUE, FALSE, TRUE, '', ExcelBuf."Cell Type"::Text);
-        ExcelBuf.AddColumn('Item No.', FALSE, '', TRUE, FALSE, TRUE, '', ExcelBuf."Cell Type"::Text);
-        ExcelBuf.AddColumn('Item Description', FALSE, '', TRUE, FALSE, TRUE, '', ExcelBuf."Cell Type"::Text);
-        ExcelBuf.AddColumn('Quantity', FALSE, '', TRUE, FALSE, TRUE, '', ExcelBuf."Cell Type"::Text);
-        ExcelBuf.AddColumn('Start Balance', FALSE, '', TRUE, FALSE, TRUE, '', ExcelBuf."Cell Type"::Text);
-        ExcelBuf.AddColumn('End Balance', FALSE, '', TRUE, FALSE, TRUE, '', ExcelBuf."Cell Type"::Text);
-        ExcelBuf.AddColumn('Last Transation Date', FALSE, '', TRUE, FALSE, TRUE, '', ExcelBuf."Cell Type"::Text);
+        ExcelBuf.AddColumn('Source Type', false, '', true, false, true, '', ExcelBuf."Cell Type"::Text);
+        ExcelBuf.AddColumn('Source No.', false, '', true, false, true, '', ExcelBuf."Cell Type"::Text);
+        ExcelBuf.AddColumn('Source Name', false, '', true, false, true, '', ExcelBuf."Cell Type"::Text);
+        ExcelBuf.AddColumn('Posting Date', false, '', true, false, true, '', ExcelBuf."Cell Type"::Text);
+        ExcelBuf.AddColumn('Entry Type', false, '', true, false, true, '', ExcelBuf."Cell Type"::Text);
+        ExcelBuf.AddColumn('Document Type', false, '', true, false, true, '', ExcelBuf."Cell Type"::Text);
+        ExcelBuf.AddColumn('Document No.', false, '', true, false, true, '', ExcelBuf."Cell Type"::Text);
+        ExcelBuf.AddColumn('Customergroup', false, '', true, false, true, '', ExcelBuf."Cell Type"::Text);
+        ExcelBuf.AddColumn('Item No.', false, '', true, false, true, '', ExcelBuf."Cell Type"::Text);
+        ExcelBuf.AddColumn('Item Description', false, '', true, false, true, '', ExcelBuf."Cell Type"::Text);
+        ExcelBuf.AddColumn('Quantity', false, '', true, false, true, '', ExcelBuf."Cell Type"::Text);
+        ExcelBuf.AddColumn('Start Balance', false, '', true, false, true, '', ExcelBuf."Cell Type"::Text);
+        ExcelBuf.AddColumn('End Balance', false, '', true, false, true, '', ExcelBuf."Cell Type"::Text);
+        ExcelBuf.AddColumn('Last Transation Date', false, '', true, false, true, '', ExcelBuf."Cell Type"::Text);
 
     end;
 
@@ -521,31 +523,31 @@ report 50075 "Boxes Statement Summary"
     var
         BlankFiller: Text[250];
     begin
-        BlankFiller := PADSTR(' ', MAXSTRLEN(BlankFiller), ' ');
+        BlankFiller := PadStr(' ', MaxStrLen(BlankFiller), ' ');
         ExcelBuf.NewRow;
-        ExcelBuf.AddColumn("Item Ledger Entry"."Source Type", FALSE, '', FALSE, FALSE, FALSE, '', ExcelBuf."Cell Type"::Text);
-        ExcelBuf.AddColumn("Item Ledger Entry"."Source No.", FALSE, '', FALSE, FALSE, FALSE, '', ExcelBuf."Cell Type"::Text);
-        ExcelBuf.AddColumn(vG_SourceName, FALSE, '', FALSE, FALSE, FALSE, '', ExcelBuf."Cell Type"::Text);
+        ExcelBuf.AddColumn("Item Ledger Entry"."Source Type", false, '', false, false, false, '', ExcelBuf."Cell Type"::Text);
+        ExcelBuf.AddColumn("Item Ledger Entry"."Source No.", false, '', false, false, false, '', ExcelBuf."Cell Type"::Text);
+        ExcelBuf.AddColumn(vG_SourceName, false, '', false, false, false, '', ExcelBuf."Cell Type"::Text);
 
-        ExcelBuf.AddColumn("Item Ledger Entry"."Posting Date", FALSE, '', FALSE, FALSE, FALSE, '', ExcelBuf."Cell Type"::Date);
-        ExcelBuf.AddColumn("Item Ledger Entry"."Entry Type", FALSE, '', FALSE, FALSE, FALSE, '', ExcelBuf."Cell Type"::Text);
-        ExcelBuf.AddColumn("Item Ledger Entry"."Document Type", FALSE, '', FALSE, FALSE, FALSE, '', ExcelBuf."Cell Type"::Text);
-        ExcelBuf.AddColumn("Item Ledger Entry"."Document No.", FALSE, '', FALSE, FALSE, FALSE, '', ExcelBuf."Cell Type"::Text);
-        ExcelBuf.AddColumn("Item Ledger Entry"."Shortcut Dimension 5 Code", FALSE, '', FALSE, FALSE, FALSE, '', ExcelBuf."Cell Type"::Text);
-        ExcelBuf.AddColumn("Item Ledger Entry"."Item No.", FALSE, '', FALSE, FALSE, FALSE, '', ExcelBuf."Cell Type"::Text);
-        ExcelBuf.AddColumn(itemdesc, FALSE, '', FALSE, FALSE, FALSE, '', ExcelBuf."Cell Type"::Text);
-        ExcelBuf.AddColumn("Item Ledger Entry".Quantity, FALSE, '', FALSE, FALSE, FALSE, '', ExcelBuf."Cell Type"::Number);
-        ExcelBuf.AddColumn(vG_StartBalance, FALSE, '', FALSE, FALSE, FALSE, '', ExcelBuf."Cell Type"::Number);
-        ExcelBuf.AddColumn(vG_EndBalance, FALSE, '', FALSE, FALSE, FALSE, '', ExcelBuf."Cell Type"::Number);
-        ExcelBuf.AddColumn(LastTransDate, FALSE, '', FALSE, FALSE, FALSE, '', ExcelBuf."Cell Type"::Date);
+        ExcelBuf.AddColumn("Item Ledger Entry"."Posting Date", false, '', false, false, false, '', ExcelBuf."Cell Type"::Date);
+        ExcelBuf.AddColumn("Item Ledger Entry"."Entry Type", false, '', false, false, false, '', ExcelBuf."Cell Type"::Text);
+        ExcelBuf.AddColumn("Item Ledger Entry"."Document Type", false, '', false, false, false, '', ExcelBuf."Cell Type"::Text);
+        ExcelBuf.AddColumn("Item Ledger Entry"."Document No.", false, '', false, false, false, '', ExcelBuf."Cell Type"::Text);
+        ExcelBuf.AddColumn("Item Ledger Entry"."Shortcut Dimension 5 Code", false, '', false, false, false, '', ExcelBuf."Cell Type"::Text);
+        ExcelBuf.AddColumn("Item Ledger Entry"."Item No.", false, '', false, false, false, '', ExcelBuf."Cell Type"::Text);
+        ExcelBuf.AddColumn(itemdesc, false, '', false, false, false, '', ExcelBuf."Cell Type"::Text);
+        ExcelBuf.AddColumn("Item Ledger Entry".Quantity, false, '', false, false, false, '', ExcelBuf."Cell Type"::Number);
+        ExcelBuf.AddColumn(vG_StartBalance, false, '', false, false, false, '', ExcelBuf."Cell Type"::Number);
+        ExcelBuf.AddColumn(vG_EndBalance, false, '', false, false, false, '', ExcelBuf."Cell Type"::Number);
+        ExcelBuf.AddColumn(LastTransDate, false, '', false, false, false, '', ExcelBuf."Cell Type"::Date);
     end;
 
     procedure MakeExcelInfo()
     begin
         ExcelBuf.SetUseInfoSheet;
 
-        ExcelBuf.AddInfoColumn(FORMAT(Text001), FALSE, TRUE, FALSE, FALSE, '', ExcelBuf."Cell Type"::Text);
-        ExcelBuf.AddInfoColumn(COMPANYNAME, FALSE, FALSE, FALSE, FALSE, '', ExcelBuf."Cell Type"::Text);
+        ExcelBuf.AddInfoColumn(Format(Text001), false, true, false, false, '', ExcelBuf."Cell Type"::Text);
+        ExcelBuf.AddInfoColumn(CompanyName, false, false, false, false, '', ExcelBuf."Cell Type"::Text);
 
         ExcelBuf.NewRow;
         /*
@@ -575,8 +577,12 @@ report 50075 "Boxes Statement Summary"
     procedure CreateExcelbook()
     begin
         //BoxStatement.xlsx
-        ExcelBuf.CreateBookAndOpenExcel('', Text002, Text001, COMPANYNAME, USERID);
-        ERROR('');
+        //ExcelBuf.CreateBookAndOpenExcel('', Text002, Text001, CompanyName, UserId);
+        ExcelBuf.CreateNewBook(Text002);
+        ExcelBuf.WriteSheet(Text002, CompanyName, UserId);
+        ExcelBuf.CloseBook();
+        ExcelBuf.OpenExcel();
+        Error('');
     end;
 
 

@@ -6,8 +6,8 @@ tableextension 50181 WarehouseBasicCueExt extends "Warehouse Basic Cue"
         field(50000; "Upcoming Ship. Transfer Orders"; Integer)
         {
             //AccessByPermission = TableData "Purch. Rcpt. Header" = R;
-            CalcFormula = Count("Transfer Header" WHERE(Status = FILTER(Released),
-                                                         "Shipment Date" = FIELD("Date Filter3")
+            CalcFormula = count("Transfer Header" where(Status = filter(Released),
+                                                         "Shipment Date" = field("Date Filter3")
                                                         ));
             Caption = 'Upcoming Shipment Transfer Orders';
             Editable = false;
@@ -17,8 +17,8 @@ tableextension 50181 WarehouseBasicCueExt extends "Warehouse Basic Cue"
         field(50001; "Upcoming Rec. Transfer Orders"; Integer)
         {
             //AccessByPermission = TableData "Purch. Rcpt. Header" = R;
-            CalcFormula = Count("Transfer Header" WHERE(Status = FILTER(Released),
-                                                         "Receipt Date" = FIELD("Date Filter3")
+            CalcFormula = count("Transfer Header" where(Status = filter(Released),
+                                                         "Receipt Date" = field("Date Filter3")
                                                         ));
             Caption = 'Upcoming Receipt Transfer Orders';
             Editable = false;
@@ -28,7 +28,7 @@ tableextension 50181 WarehouseBasicCueExt extends "Warehouse Basic Cue"
         field(50002; "Count Transfer Orders"; Integer)
         {
 
-            CalcFormula = Count("Transfer Header");
+            CalcFormula = count("Transfer Header");
             Caption = 'Count Transfer Orders';
             Editable = false;
             FieldClass = FlowField;
@@ -44,9 +44,9 @@ tableextension 50181 WarehouseBasicCueExt extends "Warehouse Basic Cue"
         field(50004; "Outstanding Ship. T.O."; Integer)
         {
 
-            CalcFormula = Count("Transfer Header" WHERE(
-                                                         Status = FILTER(Released),
-                                                         "Completely Shipped" = FILTER(false)
+            CalcFormula = count("Transfer Header" where(
+                                                         Status = filter(Released),
+                                                         "Completely Shipped" = filter(false)
                                                          ));
             Caption = 'Outstanding Shipment Transfer Orders';
             Editable = false;
@@ -56,9 +56,9 @@ tableextension 50181 WarehouseBasicCueExt extends "Warehouse Basic Cue"
         field(50005; "Outstanding Receipt. T.O."; Integer)
         {
 
-            CalcFormula = Count("Transfer Header" WHERE(
-                                                         Status = FILTER(Released),
-                                                         "Completely Received" = FILTER(false)
+            CalcFormula = count("Transfer Header" where(
+                                                         Status = filter(Released),
+                                                         "Completely Received" = filter(false)
                                                          ));
             Caption = 'Outstanding Receipt Transfer Orders';
             Editable = false;
@@ -68,8 +68,8 @@ tableextension 50181 WarehouseBasicCueExt extends "Warehouse Basic Cue"
         field(50006; "Open Transfer Orders"; Integer)
         {
 
-            CalcFormula = Count("Transfer Header" WHERE(
-                                                         Status = FILTER(Open)
+            CalcFormula = count("Transfer Header" where(
+                                                         Status = filter(Open)
                                                          ));
             Caption = 'Open Transfer Orders';
             Editable = false;
@@ -82,10 +82,10 @@ tableextension 50181 WarehouseBasicCueExt extends "Warehouse Basic Cue"
         //ARAD-1 Aradipou - Main
         field(50007; "To Aradipou - Main Orders"; Integer)
         {
-          
-            CalcFormula = Count("Transfer Header" WHERE(
-                                                        "Transfer-to Code" = FILTER('ARAD-1'),
-                                                         "Completely Received" = FILTER(false)));
+
+            CalcFormula = count("Transfer Header" where(
+                                                        "Transfer-to Code" = filter('ARAD-1'),
+                                                         "Completely Received" = filter(false)));
             Caption = 'Aradipou - Main Orders';
             Editable = false;
             FieldClass = FlowField;
@@ -95,10 +95,10 @@ tableextension 50181 WarehouseBasicCueExt extends "Warehouse Basic Cue"
 
         field(50008; "To Fresh Cut Orders"; Integer)
         {
-            
-            CalcFormula = Count("Transfer Header" WHERE(
-                                                         "Transfer-to Code" = FILTER('ARAD-3'),
-                                                         "Completely Received" = FILTER(false)));
+
+            CalcFormula = count("Transfer Header" where(
+                                                         "Transfer-to Code" = filter('ARAD-3'),
+                                                         "Completely Received" = filter(false)));
             Caption = 'To Fresh Cut Orders';
             Editable = false;
             FieldClass = FlowField;
@@ -108,10 +108,10 @@ tableextension 50181 WarehouseBasicCueExt extends "Warehouse Basic Cue"
 
         field(50009; "To Kitchen Orders"; Integer)
         {
-           
-            CalcFormula = Count("Transfer Header" WHERE(
-                                                         "Transfer-to Code" = FILTER('ARAD-4'),
-                                                         "Completely Received" = FILTER(false)));
+
+            CalcFormula = count("Transfer Header" where(
+                                                         "Transfer-to Code" = filter('ARAD-4'),
+                                                         "Completely Received" = filter(false)));
             Caption = 'To Kitchen Orders';
             Editable = false;
             FieldClass = FlowField;
@@ -120,10 +120,10 @@ tableextension 50181 WarehouseBasicCueExt extends "Warehouse Basic Cue"
         //ARAD-5 - Potatoes
         field(50010; "To Potatoes Orders"; Integer)
         {
-          
-            CalcFormula = Count("Transfer Header" WHERE(
-                                                         "Transfer-to Code" = FILTER('ARAD-5'),
-                                                         "Completely Received" = FILTER(false)));
+
+            CalcFormula = count("Transfer Header" where(
+                                                         "Transfer-to Code" = filter('ARAD-5'),
+                                                         "Completely Received" = filter(false)));
             Caption = 'To Potatoes Orders';
             Editable = false;
             FieldClass = FlowField;
@@ -136,9 +136,9 @@ tableextension 50181 WarehouseBasicCueExt extends "Warehouse Basic Cue"
         field(50012; "From Aradipou - Main Orders"; Integer)
         {
 
-            CalcFormula = Count("Transfer Header" WHERE(
-                                                         "Transfer-From Code" = FILTER('ARAD-1'),
-                                                         "Completely Shipped" = FILTER(false)));
+            CalcFormula = count("Transfer Header" where(
+                                                         "Transfer-from Code" = filter('ARAD-1'),
+                                                         "Completely Shipped" = filter(false)));
             Caption = 'From Aradipou - Main Orders';
             Editable = false;
             FieldClass = FlowField;
@@ -149,9 +149,9 @@ tableextension 50181 WarehouseBasicCueExt extends "Warehouse Basic Cue"
         field(50013; "From Fresh Cut Orders"; Integer)
         {
 
-            CalcFormula = Count("Transfer Header" WHERE(
-                                                          "Transfer-From Code" = FILTER('ARAD-3'),
-                                                          "Completely Shipped" = FILTER(false)));
+            CalcFormula = count("Transfer Header" where(
+                                                          "Transfer-from Code" = filter('ARAD-3'),
+                                                          "Completely Shipped" = filter(false)));
             Caption = 'From Fresh Cut Orders';
             Editable = false;
             FieldClass = FlowField;
@@ -162,9 +162,9 @@ tableextension 50181 WarehouseBasicCueExt extends "Warehouse Basic Cue"
         field(50014; "From Kitchen Orders"; Integer)
         {
 
-            CalcFormula = Count("Transfer Header" WHERE(
-                                                          "Transfer-From Code" = FILTER('ARAD-4'),
-                                                          "Completely Shipped" = FILTER(false)));
+            CalcFormula = count("Transfer Header" where(
+                                                          "Transfer-from Code" = filter('ARAD-4'),
+                                                          "Completely Shipped" = filter(false)));
             Caption = 'From Kitchen Orders';
             Editable = false;
             FieldClass = FlowField;
@@ -174,9 +174,9 @@ tableextension 50181 WarehouseBasicCueExt extends "Warehouse Basic Cue"
         field(50015; "From Potatoes Orders"; Integer)
         {
 
-            CalcFormula = Count("Transfer Header" WHERE(
-                                                          "Transfer-From Code" = FILTER('ARAD-5'),
-                                                          "Completely Shipped" = FILTER(false)));
+            CalcFormula = count("Transfer Header" where(
+                                                          "Transfer-from Code" = filter('ARAD-5'),
+                                                          "Completely Shipped" = filter(false)));
             Caption = 'From Potatoes Orders';
             Editable = false;
             FieldClass = FlowField;

@@ -12,19 +12,19 @@ tableextension 50174 PurchasePriceExt extends "Purchase Price"
 
         field(50000; "Item Description"; Text[100])
         {
-            CalcFormula = Lookup(Item.Description WHERE("No." = FIELD("Item No.")));
+            CalcFormula = lookup(Item.Description where("No." = field("Item No.")));
             Editable = false;
             FieldClass = FlowField;
         }
         field(50005; "Item Category Code"; Code[20])
         {
-            CalcFormula = Lookup(Item."Item Category Code" WHERE("No." = FIELD("Item No.")));
+            CalcFormula = lookup(Item."Item Category Code" where("No." = field("Item No.")));
             Editable = false;
             FieldClass = FlowField;
         }
         field(50006; "Global Dimension 2 Code"; Code[20])
         {
-            CalcFormula = Lookup(Item."Global Dimension 2 Code" WHERE("No." = FIELD("Item No.")));
+            CalcFormula = lookup(Item."Global Dimension 2 Code" where("No." = field("Item No.")));
             CaptionClass = '1,1,2';
             Caption = 'Global Dimension 2 Code';
             Editable = false;
@@ -48,8 +48,8 @@ tableextension 50174 PurchasePriceExt extends "Purchase Price"
         myInt: Integer;
     begin
         //+TAL0.1
-        "Last Modified Date" := CURRENTDATETIME;
-        "Last Modified By" := USERID;
+        "Last Modified Date" := CurrentDateTime;
+        "Last Modified By" := UserId;
         //-TAL0.1 
     end;
 
@@ -58,8 +58,8 @@ tableextension 50174 PurchasePriceExt extends "Purchase Price"
         myInt: Integer;
     begin
         //+TAL0.1
-        "Last Modified Date" := CURRENTDATETIME;
-        "Last Modified By" := USERID;
+        "Last Modified Date" := CurrentDateTime;
+        "Last Modified By" := UserId;
         //-TAL0.1 
     end;
 

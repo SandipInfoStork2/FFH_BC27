@@ -10,7 +10,7 @@ tableextension 50168 BinExt extends Bin
         }
         field(50001; "No. Activity Lines"; Integer)
         {
-            CalcFormula = Count("Warehouse Activity Line" WHERE("Bin Code" = FIELD(Code), "Location Code" = FIELD("Location Code")));
+            CalcFormula = count("Warehouse Activity Line" where("Bin Code" = field(Code), "Location Code" = field("Location Code")));
             Editable = false;
             FieldClass = FlowField;
         }

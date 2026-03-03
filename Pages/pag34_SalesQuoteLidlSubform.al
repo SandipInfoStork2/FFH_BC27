@@ -7,18 +7,19 @@ page 50034 "Sales Quote Lidl Subform"
     MultipleNewLines = true;
     PageType = ListPart;
     SourceTable = "Sales Line";
-    SourceTableView = WHERE("Document Type" = FILTER(Quote));
+    SourceTableView = where("Document Type" = filter(Quote));
+    ApplicationArea = All;
 
     layout
     {
-        area(content)
+        area(Content)
         {
             repeater(Control1)
             {
                 ShowCaption = false;
                 FreezeColumn = Description;
 
-                field(Type; Type)
+                field(Type; Rec.Type)
                 {
                     ApplicationArea = Advanced;
                     ToolTip = 'Specifies the type of entity that will be posted for this sales line, such as Item, Resource, or G/L Account.';
@@ -38,8 +39,8 @@ page 50034 "Sales Quote Lidl Subform"
                     ApplicationArea = Basic, Suite;
                     Caption = 'Type';
                     Editable = CurrPageIsEditable;
-                    LookupPageID = "Option Lookup List";
-                    TableRelation = "Option Lookup Buffer"."Option Caption" WHERE("Lookup Type" = CONST(Sales));
+                    LookupPageId = "Option Lookup List";
+                    TableRelation = "Option Lookup Buffer"."Option Caption" where("Lookup Type" = const(Sales));
                     ToolTip = 'Specifies the type of transaction that will be posted with the document line. If you select Comment, then you can enter any text in the Description field, such as a message to a customer. ';
                     Visible = IsFoundation;
 
@@ -59,7 +60,7 @@ page 50034 "Sales Quote Lidl Subform"
 
                 //item cross reference
 
-                field("Item Reference No."; "Item Reference No.")
+                field("Item Reference No."; Rec."Item Reference No.")
                 {
                     ApplicationArea = Suite, ItemReferences;
                     ToolTip = 'Specifies the referenced item number.';
@@ -84,24 +85,25 @@ page 50034 "Sales Quote Lidl Subform"
                     end;
                 }
 
-                field(Checked; Checked)
+                field(Checked; Rec.Checked)
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     Width = 1;
+                    ToolTip = 'Specifies the value of the Checked field.';
                 }
 
 
 
-                field("No."; "No.")
+                field("No."; Rec."No.")
                 {
                     ApplicationArea = Basic, Suite;
-                    ShowMandatory = NOT IsCommentLine;
+                    ShowMandatory = not IsCommentLine;
                     ToolTip = 'Specifies the number of a general ledger account, item, resource, additional cost, or fixed asset, depending on the contents of the Type field.';
                     Width = 8;
 
                     trigger OnValidate()
                     begin
-                        ShowShortcutDimCode(ShortcutDimCode);
+                        Rec.ShowShortcutDimCode(ShortcutDimCode);
                         NoOnAfterValidate();
                         UpdateEditableOnRow();
                         UpdateTypeText();
@@ -111,55 +113,64 @@ page 50034 "Sales Quote Lidl Subform"
                     end;
                 }
 
-                field(Description; Description)
+                field(Description; Rec.Description)
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     Width = 30;
+                    ToolTip = 'Specifies a description of what you’re selling. Based on your choices in the Type and No. fields, the field may show suggested text that you can change it for this document. To add a comment, set the Type field to Comment and write the comment itself here.';
                 }
-                field("Pallet Qty"; "Pallet Qty")
+                field("Pallet Qty"; Rec."Pallet Qty")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     Width = 5;
+                    ToolTip = 'Specifies the value of the Περιεχ.Παλ. field.';
                 }
-                field("Country/Region of Origin Code"; "Country/Region of Origin Code")
+                field("Country/Region of Origin Code"; Rec."Country/Region of Origin Code")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     Caption = 'Προέλευση';
                     Width = 2;
+                    ToolTip = 'Specifies the value of the Προέλευση field.';
 
                 }
 
-                field("Product Class"; "Product Class")
+                field("Product Class"; Rec."Product Class")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     Width = 5;
+                    ToolTip = 'Specifies the value of the Product Class (Κατηγορία) field.';
                 }
-                field("Package Qty"; "Package Qty")
+                field("Package Qty"; Rec."Package Qty")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     Caption = 'Κιβώτιο -  Περιεχόμενο';
                     Width = 5;
+                    ToolTip = 'Specifies the value of the Κιβώτιο -  Περιεχόμενο field.';
 
                 }
-                field("Calibration Min."; "Calibration Min.")
+                field("Calibration Min."; Rec."Calibration Min.")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     Width = 5;
+                    ToolTip = 'Specifies the value of the Καλιμπράζ Ελαχ. field.';
                 }
-                field("Calibration Max."; "Calibration Max.")
+                field("Calibration Max."; Rec."Calibration Max.")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     Width = 5;
+                    ToolTip = 'Specifies the value of the Καλιμπράζ Μεγ. field.';
                 }
-                field("Calibration UOM"; "Calibration UOM")
+                field("Calibration UOM"; Rec."Calibration UOM")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     Width = 5;
+                    ToolTip = 'Specifies the value of the Καλιμπράζ 47 field.';
                 }
-                field(Variety; Variety)
+                field(Variety; Rec.Variety)
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     Width = 15;
+                    ToolTip = 'Specifies the value of the Ποικιλία field.';
 
                     trigger OnLookup(var Text: Text): Boolean
                     var
@@ -170,11 +181,11 @@ page 50034 "Sales Quote Lidl Subform"
 
                         rL_ItemVariant: Record "Item Variant";
                     begin
-                        rL_ItemVariant.RESET;
-                        rL_ItemVariant.SetFilter("Item No.", "No.");
+                        rL_ItemVariant.Reset;
+                        rL_ItemVariant.SetFilter("Item No.", Rec."No.");
 
-                        IF PAGE.RUNMODAL(PAGE::"Item Variants", rL_ItemVariant) = ACTION::LookupOK THEN BEGIN
-                            Variety := rL_ItemVariant.Description;
+                        if Page.RunModal(Page::"Item Variants", rL_ItemVariant) = Action::LookupOK then begin
+                            Rec.Variety := rL_ItemVariant.Description;
                         end;
 
 
@@ -207,267 +218,310 @@ page 50034 "Sales Quote Lidl Subform"
 
                     end;
                 }
-                field("Currency Code"; "Currency Code")
+                field("Currency Code"; Rec."Currency Code")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     Caption = 'Νόμισμα';
                     Width = 3;
+                    ToolTip = 'Specifies the currency code for the amount on this line.';
                 }
-                field("Price Previous Week Box"; "Price Previous Week Box")
+                field("Price Previous Week Box"; Rec."Price Previous Week Box")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     BlankZero = true;
                     Width = 5;
+                    ToolTip = 'Specifies the value of the Τιμές προηγούμενης Εβδομάδας ανά  Κιβ. field.';
                 }
-                field("Price Previous Week PCS"; "Price Previous Week PCS")
+                field("Price Previous Week PCS"; Rec."Price Previous Week PCS")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     BlankZero = true;
                     Width = 5;
+                    ToolTip = 'Specifies the value of the Τιμές προηγούμενης Εβδομάδας ανά τεμ/συσκ field.';
                 }
-                field("Price Previous Week KG"; "Price Previous Week KG")
+                field("Price Previous Week KG"; Rec."Price Previous Week KG")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     BlankZero = true;
                     Width = 5;
+                    ToolTip = 'Specifies the value of the Τιμές προηγούμενης Εβδομάδας  ανά kg field.';
                 }
-                field("Price Box"; "Price Box")
+                field("Price Box"; Rec."Price Box")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     BlankZero = true;
                     Width = 5;
+                    ToolTip = 'Specifies the value of the Τιμές ανά Κιβ. field.';
                 }
-                field("Price PCS"; "Price PCS")
+                field("Price PCS"; Rec."Price PCS")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     BlankZero = true;
                     Width = 5;
+                    ToolTip = 'Specifies the value of the Τιμές ανά τεμ/συσκ field.';
                 }
-                field("Price KG"; "Price KG")
+                field("Price KG"; Rec."Price KG")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     BlankZero = true;
                     Width = 5;
+                    ToolTip = 'Specifies the value of the Τιμές ανά kg field.';
                 }
-                field("Row Index"; "Row Index")
+                field("Row Index"; Rec."Row Index")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     Width = 5;
+                    ToolTip = 'Specifies the value of the Ποσότητα ανά σειρά field.';
                 }
-                field("Qty Box Date 1"; "Qty Box Date 1")
+                field("Qty Box Date 1"; Rec."Qty Box Date 1")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     CaptionClass = '3,' + MATRIX_ColumnCaption[1];
                     Width = 5;
+                    ToolTip = 'Specifies the value of the Date 1 Ποσότητα σε κιβώτια field.';
                 }
 
-                field("Qty Box Date 2"; "Qty Box Date 2")
+                field("Qty Box Date 2"; Rec."Qty Box Date 2")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     CaptionClass = '3,' + MATRIX_ColumnCaption[2];
                     Width = 5;
+                    ToolTip = 'Specifies the value of the Date 2 Ποσότητα σε κιβώτια field.';
                 }
 
-                field("Qty Box Date 3"; "Qty Box Date 3")
+                field("Qty Box Date 3"; Rec."Qty Box Date 3")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     CaptionClass = '3,' + MATRIX_ColumnCaption[3];
                     Width = 5;
+                    ToolTip = 'Specifies the value of the Date 3 Ποσότητα σε κιβώτια field.';
                 }
 
-                field("Qty Box Date 4"; "Qty Box Date 4")
+                field("Qty Box Date 4"; Rec."Qty Box Date 4")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     CaptionClass = '3,' + MATRIX_ColumnCaption[4];
                     Width = 5;
+                    ToolTip = 'Specifies the value of the Date 4 Ποσότητα σε κιβώτια field.';
                 }
 
-                field("Qty Box Date 5"; "Qty Box Date 5")
+                field("Qty Box Date 5"; Rec."Qty Box Date 5")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     CaptionClass = '3,' + MATRIX_ColumnCaption[5];
                     Width = 5;
+                    ToolTip = 'Specifies the value of the Date 5 Ποσότητα σε κιβώτια field.';
                 }
 
-                field("Qty Box Date 6"; "Qty Box Date 6")
+                field("Qty Box Date 6"; Rec."Qty Box Date 6")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     CaptionClass = '3,' + MATRIX_ColumnCaption[6];
                     Width = 5;
+                    ToolTip = 'Specifies the value of the Date 6 Ποσότητα σε κιβώτια field.';
                 }
 
-                field("Qty Box Date 7"; "Qty Box Date 7")
+                field("Qty Box Date 7"; Rec."Qty Box Date 7")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     CaptionClass = '3,' + MATRIX_ColumnCaption[7];
                     Width = 5;
+                    ToolTip = 'Specifies the value of the Date 7 Ποσότητα σε κιβώτια field.';
                 }
-                field("Qty Box Date 8"; "Qty Box Date 8")
+                field("Qty Box Date 8"; Rec."Qty Box Date 8")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     CaptionClass = '3,' + MATRIX_ColumnCaption[8];
                     Width = 5;
+                    ToolTip = 'Specifies the value of the Date 8 Ποσότητα σε κιβώτια field.';
                 }
-                field("Total Qty on Boxes"; "Total Qty on Boxes")
+                field("Total Qty on Boxes"; Rec."Total Qty on Boxes")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     Width = 5;
+                    ToolTip = 'Specifies the value of the Συνολική ποσότητα σε κιβώτια field.';
                 }
-                field("Additional Information"; "Additional Information")
+                field("Additional Information"; Rec."Additional Information")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     Width = 15;
+                    ToolTip = 'Specifies the value of the Πρόσθετες πληροφορίες field.';
                 }
-                field("Pressure Min."; "Pressure Min.")
+                field("Pressure Min."; Rec."Pressure Min.")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     Width = 5;
+                    ToolTip = 'Specifies the value of the Πίεση kg/cm² Ελαχ. field.';
                 }
-                field("Pressure Max."; "Pressure Max.")
+                field("Pressure Max."; Rec."Pressure Max.")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     Width = 5;
+                    ToolTip = 'Specifies the value of the Πίεση kg/cm² Μεγ. field.';
                 }
-                field("Brix Min"; "Brix Min")
+                field("Brix Min"; Rec."Brix Min")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     Width = 5;
+                    ToolTip = 'Specifies the value of the Brix σε ° Ελαχ. field.';
                 }
-                field("Vendor Name"; "Vendor Name")
+                field("Vendor Name"; Rec."Vendor Name")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     Width = 5;
+                    ToolTip = 'Specifies the value of the Επωνυμία field.';
                 }
-                field("QC 1 Min"; "QC 1 Min")
+                field("QC 1 Min"; Rec."QC 1 Min")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     Width = 5;
+                    ToolTip = 'Specifies the value of the Πρόσθετα Ποιοτικά Χαρακτηριστικά Ελαχ. field.';
                 }
-                field("QC 1 Max"; "QC 1 Max")
+                field("QC 1 Max"; Rec."QC 1 Max")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     Width = 5;
+                    ToolTip = 'Specifies the value of the Πρόσθετα Ποιοτικά Χαρακτηριστικά Μεγ. field.';
                 }
-                field("QC 1 Text"; "QC 1 Text")
+                field("QC 1 Text"; Rec."QC 1 Text")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     Width = 5;
+                    ToolTip = 'Specifies the value of the Πρόσθετα Ποιοτικά Χαρακτηριστικά Μον. field.';
                 }
 
-                field("QC 2 Min"; "QC 2 Min")
+                field("QC 2 Min"; Rec."QC 2 Min")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     Width = 5;
+                    ToolTip = 'Specifies the value of the Πρόσθετα Ποιοτικά Χαρακτηριστικά Ελαχ. field.';
                 }
-                field("QC 2 Max"; "QC 2 Max")
+                field("QC 2 Max"; Rec."QC 2 Max")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     Width = 5;
+                    ToolTip = 'Specifies the value of the Πρόσθετα Ποιοτικά Χαρακτηριστικά Μεγ. field.';
                 }
-                field("QC 2 Text"; "QC 2 Text")
+                field("QC 2 Text"; Rec."QC 2 Text")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     Width = 5;
+                    ToolTip = 'Specifies the value of the Πρόσθετα Ποιοτικά Χαρακτηριστικά Μον. field.';
                 }
-                field("Box Width"; "Box Width")
+                field("Box Width"; Rec."Box Width")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     Width = 5;
+                    ToolTip = 'Specifies the value of the Κιβώτιο / Στάντζα Πλάτος σε cm field.';
                 }
-                field("Box Char 1"; "Box Char 1")
+                field("Box Char 1"; Rec."Box Char 1")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     Width = 5;
+                    ToolTip = 'Specifies the value of the Κιβώτιο / Στάντζα X field.';
                 }
-                field("Box Length"; "Box Length")
+                field("Box Length"; Rec."Box Length")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     Width = 5;
+                    ToolTip = 'Specifies the value of the Κιβώτιο / Στάντζα Μήκος σε cm field.';
                 }
-                field("Box Char 2"; "Box Char 2")
+                field("Box Char 2"; Rec."Box Char 2")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     Width = 5;
+                    ToolTip = 'Specifies the value of the Κιβώτιο / Στάντζα X field.';
                 }
-                field("Box Height"; "Box Height")
+                field("Box Height"; Rec."Box Height")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     Width = 5;
+                    ToolTip = 'Specifies the value of the Κιβώτιο / Στάντζα Ύψος σε cm field.';
                 }
-                field("Box Changed Date"; "Box Changed Date")
+                field("Box Changed Date"; Rec."Box Changed Date")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     Width = 5;
+                    ToolTip = 'Specifies the value of the Ημερομηνία ολοκλήρωσης αλλαγής κιβωτίου field.';
 
                 }
-                field("Harvest Temp. From"; "Harvest Temp. From")
+                field("Harvest Temp. From"; Rec."Harvest Temp. From")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     Width = 10;
+                    ToolTip = 'Specifies the value of the Θερμοκρασία συγκομιδής σε Cº Από field.';
                 }
-                field("Harvest Temp. To"; "Harvest Temp. To")
+                field("Harvest Temp. To"; Rec."Harvest Temp. To")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     Width = 10;
+                    ToolTip = 'Specifies the value of the Θερμοκρασία συγκομιδής σε Cº Έως field.';
                 }
 
-                field("Freezer Harvest Temp. From"; "Freezer Harvest Temp. From")
+                field("Freezer Harvest Temp. From"; Rec."Freezer Harvest Temp. From")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     Width = 10;
+                    ToolTip = 'Specifies the value of the Θερμοκρασία συντήρησης σε θάλαμο μετά την συγκομιδή σε Cº Από field.';
                 }
-                field("Freezer Harvest Temp. To"; "Freezer Harvest Temp. To")
+                field("Freezer Harvest Temp. To"; Rec."Freezer Harvest Temp. To")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     Width = 10;
+                    ToolTip = 'Specifies the value of the Θερμοκρασία συντήρησης σε θάλαμο μετά την συγκομιδή σε Cº Έως field.';
                 }
-                field("Transfer Temp. From"; "Transfer Temp. From")
+                field("Transfer Temp. From"; Rec."Transfer Temp. From")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     Width = 10;
+                    ToolTip = 'Specifies the value of the Συμφων. Θερμοκρ.με την μεταφ. κατά την παράδοση στις αποθ.Lidl σε Cº Από field.';
                 }
-                field("Transfer Temp. To"; "Transfer Temp. To")
+                field("Transfer Temp. To"; Rec."Transfer Temp. To")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     Width = 10;
+                    ToolTip = 'Specifies the value of the παράδοση στις αποθ.Lidl σε Cº Έως field.';
                 }
 
 
 
 
-                field("Line No."; "Line No.")
+                field("Line No."; Rec."Line No.")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     Width = 5;
+                    ToolTip = 'Specifies the line number.';
                 }
-                field("Line Source"; "Line Source")
+                field("Line Source"; Rec."Line Source")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     Width = 5;
+                    ToolTip = 'Specifies the value of the Line Source field.';
 
                     trigger OnAssistEdit()
                     var
                         rL_SalesHeader: Record "Sales Header";
                     begin
-                        rL_SalesHeader.RESET;
-                        rL_SalesHeader.SetFilter("External Document No.", "Line Source");
-                        rL_SalesHeader.SetFilter("Sell-to Customer No.", "Sell-to Customer No.");
+                        rL_SalesHeader.Reset;
+                        rL_SalesHeader.SetFilter("External Document No.", Rec."Line Source");
+                        rL_SalesHeader.SetFilter("Sell-to Customer No.", Rec."Sell-to Customer No.");
                         if rL_SalesHeader.FindSet() then begin
-                            page.RunModal(page::"Sales Quote", rL_SalesHeader);
+                            Page.RunModal(Page::"Sales Quote", rL_SalesHeader);
                         end;
 
                     end;
                 }
 
-                field("Shelf No."; "Shelf No.")
+                field("Shelf No."; Rec."Shelf No.")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     Caption = 'IAN/Shelf No.';
                     Width = 5;
+                    ToolTip = 'Specifies the value of the IAN/Shelf No. field.';
 
                     trigger OnValidate();
                     begin
-                        GetItemFromShelfNo();
+                        Rec.GetItemFromShelfNo();
                     end;
                 }
 
@@ -495,11 +549,11 @@ page 50034 "Sales Quote Lidl Subform"
 
     actions
     {
-        area(processing)
+        area(Processing)
         {
             action(SelectMultiItems)
             {
-                AccessByPermission = TableData Item = R;
+                AccessByPermission = tabledata Item = R;
                 ApplicationArea = Basic, Suite;
                 Caption = 'Select items';
                 Ellipsis = true;
@@ -508,13 +562,13 @@ page 50034 "Sales Quote Lidl Subform"
 
                 trigger OnAction()
                 begin
-                    SelectMultipleItemsPFV();
+                    Rec.SelectMultipleItemsPFV();
                 end;
             }
 
             action("Select Nonstoc&k Items")
             {
-                AccessByPermission = TableData "Nonstock Item" = R;
+                AccessByPermission = tabledata "Nonstock Item" = R;
                 ApplicationArea = Basic, Suite;
                 Caption = 'Select Ca&talog Items';
                 Image = NonStockItem;
@@ -531,32 +585,34 @@ page 50034 "Sales Quote Lidl Subform"
             action(ItemCard)
             {
                 ApplicationArea = All;
-                caption = 'Item Card';
+                Caption = 'Item Card';
                 Image = Item;
                 RunObject = page "Item Card";
                 RunPageLink = "No." = field("No.");
+                ToolTip = 'Executes the Item Card action.';
 
             }
 
             action(History)
             {
                 ApplicationArea = All;
-                caption = 'Previous Offered Prices';
+                Caption = 'Previous Offered Prices';
                 Image = History;
+                ToolTip = 'Executes the Previous Offered Prices action.';
                 trigger OnAction()
                 var
                     SalesLine: Record "Sales Line";
 
                 begin
-                    SalesLine.RESET;
+                    SalesLine.Reset;
 
                     //SalesLine.SetCurrentKey("Posting Date");
                     //SalesLine.SetAscending("Posting Date", true);
                     SalesLine.SetRange("Document Type", SalesLine."Document Type"::Quote);
                     SalesLine.SetRange(Type, SalesLine.Type::Item);
-                    SalesLine.SetFilter("No.", "No.");
+                    SalesLine.SetFilter("No.", Rec."No.");
                     if SalesLine.FindSet() then;
-                    page.Run(page::"Sales Quote Lidl Lines", SalesLine);
+                    Page.Run(Page::"Sales Quote Lidl Lines", SalesLine);
                 end;
 
             }
@@ -589,7 +645,7 @@ page 50034 "Sales Quote Lidl Subform"
                     //PromotedOnly = true;
                     Visible = IsSaaSExcelAddinEnabled;
                     ToolTip = 'Send the data in the sub page to an Excel file for analysis or editing';
-                    AccessByPermission = System "Allow Action Export To Excel" = X;
+                    AccessByPermission = system "Allow Action Export To Excel" = X;
 
                     trigger OnAction()
                     var
@@ -626,9 +682,9 @@ page 50034 "Sales Quote Lidl Subform"
         //UpdateTypeText();
         //SetItemChargeFieldsStyle();
 
-        SalesHeader.RESET;
-        SalesHeader.SetRange("Document Type", "Document Type");
-        SalesHeader.SetFilter("No.", "Document No.");
+        SalesHeader.Reset;
+        SalesHeader.SetRange("Document Type", Rec."Document Type");
+        SalesHeader.SetFilter("No.", Rec."Document No.");
         if SalesHeader.FindSet() then begin
             if SalesHeader."Requested Delivery Date" <> 0D then begin
                 vL_Date1 := CalcDate('-WD6', SalesHeader."Requested Delivery Date");
@@ -646,14 +702,14 @@ page 50034 "Sales Quote Lidl Subform"
         end;
 
         if vL_Date1 <> 0D then begin
-            MATRIX_ColumnCaption[1] := FORMAT(vL_Date1) + BoxLabel;
-            MATRIX_ColumnCaption[2] := FORMAT(vL_Date2) + BoxLabel;
-            MATRIX_ColumnCaption[3] := FORMAT(vL_Date3) + BoxLabel;
-            MATRIX_ColumnCaption[4] := FORMAT(vL_Date4) + BoxLabel;
-            MATRIX_ColumnCaption[5] := FORMAT(vL_Date5) + BoxLabel;
-            MATRIX_ColumnCaption[6] := FORMAT(vL_Date6) + BoxLabel;
-            MATRIX_ColumnCaption[7] := FORMAT(vL_Date7) + BoxLabel;
-            MATRIX_ColumnCaption[8] := FORMAT(vL_Date8) + BoxLabel;
+            MATRIX_ColumnCaption[1] := Format(vL_Date1) + BoxLabel;
+            MATRIX_ColumnCaption[2] := Format(vL_Date2) + BoxLabel;
+            MATRIX_ColumnCaption[3] := Format(vL_Date3) + BoxLabel;
+            MATRIX_ColumnCaption[4] := Format(vL_Date4) + BoxLabel;
+            MATRIX_ColumnCaption[5] := Format(vL_Date5) + BoxLabel;
+            MATRIX_ColumnCaption[6] := Format(vL_Date6) + BoxLabel;
+            MATRIX_ColumnCaption[7] := Format(vL_Date7) + BoxLabel;
+            MATRIX_ColumnCaption[8] := Format(vL_Date8) + BoxLabel;
         end else begin
             MATRIX_ColumnCaption[1] := 'Date 1 Ποσότητα σε κιβώτια';
             MATRIX_ColumnCaption[2] := 'Date 2 Ποσότητα σε κιβώτια';
@@ -677,7 +733,7 @@ page 50034 "Sales Quote Lidl Subform"
     var
         SalesLineReserve: Codeunit "Sales Line-Reserve";
     begin
-        if (Quantity <> 0) and ItemExists("No.") then begin
+        if (Rec.Quantity <> 0) and Rec.ItemExists(Rec."No.") then begin
             Commit();
             if not SalesLineReserve.DeleteLineConfirm(Rec) then
                 exit(false);
@@ -689,7 +745,7 @@ page 50034 "Sales Quote Lidl Subform"
     trigger OnFindRecord(Which: Text): Boolean
     begin
         DocumentTotals.SalesCheckAndClearTotals(Rec, xRec, TotalSalesLine, VATAmount, InvoiceDiscountAmount, InvoiceDiscountPct);
-        exit(Find(Which));
+        exit(Rec.Find(Which));
     end;
 
     trigger OnInit()
@@ -709,7 +765,7 @@ page 50034 "Sales Quote Lidl Subform"
 
     trigger OnNewRecord(BelowxRec: Boolean)
     begin
-        InitType;
+        Rec.InitType;
         OnNewRecordOnAfterInitType(Rec, xRec, BelowxRec);
         SetDefaultType();
 
@@ -784,7 +840,7 @@ page 50034 "Sales Quote Lidl Subform"
 
     procedure ApproveCalcInvDisc()
     begin
-        CODEUNIT.Run(CODEUNIT::"Sales-Disc. (Yes/No)", Rec);
+        Codeunit.Run(Codeunit::"Sales-Disc. (Yes/No)", Rec);
         DocumentTotals.SalesDocTotalsNotUpToDate();
     end;
 
@@ -795,7 +851,7 @@ page 50034 "Sales Quote Lidl Subform"
         if SuppressTotals then
             exit;
 
-        SalesHeader.Get("Document Type", "Document No.");
+        SalesHeader.Get(Rec."Document Type", Rec."Document No.");
         SalesCalcDiscByType.ApplyInvDiscBasedOnAmt(InvoiceDiscountAmount, SalesHeader);
         DocumentTotals.SalesDocTotalsNotUpToDate();
         CurrPage.Update(false);
@@ -811,7 +867,7 @@ page 50034 "Sales Quote Lidl Subform"
 
     local procedure ExplodeBOM()
     begin
-        CODEUNIT.Run(CODEUNIT::"Sales-Explode BOM", Rec);
+        Codeunit.Run(Codeunit::"Sales-Explode BOM", Rec);
         DocumentTotals.SalesDocTotalsNotUpToDate();
     end;
 
@@ -829,17 +885,17 @@ page 50034 "Sales Quote Lidl Subform"
 
     local procedure ShowItemSub()
     begin
-        ShowItemSub;
+        Rec.ShowItemSub;
     end;
 
     local procedure ShowNonstockItems()
     begin
-        ShowNonstock;
+        Rec.ShowNonstock;
     end;
 
     local procedure ItemChargeAssgnt()
     begin
-        ShowItemChargeAssgnt();
+        Rec.ShowItemChargeAssgnt();
     end;
 
     procedure UpdateForm(SetSaveRecord: Boolean)
@@ -850,7 +906,7 @@ page 50034 "Sales Quote Lidl Subform"
     procedure NoOnAfterValidate()
     begin
         InsertExtendedText(false);
-        if (Type = Type::"Charge (Item)") and ("No." <> xRec."No.") and
+        if (Rec.Type = Rec.Type::"Charge (Item)") and (Rec."No." <> xRec."No.") and
            (xRec."No." <> '')
         then
             CurrPage.SaveRecord();
@@ -872,9 +928,9 @@ page 50034 "Sales Quote Lidl Subform"
 
     protected procedure QuantityOnAfterValidate()
     begin
-        if Reserve = Reserve::Always then begin
+        if Rec.Reserve = Rec.Reserve::Always then begin
             CurrPage.SaveRecord();
-            AutoReserve();
+            Rec.AutoReserve();
         end;
         DeltaUpdateTotals();
 
@@ -883,24 +939,24 @@ page 50034 "Sales Quote Lidl Subform"
 
     protected procedure UnitofMeasureCodeOnAfterValidate()
     begin
-        if Reserve = Reserve::Always then begin
+        if Rec.Reserve = Rec.Reserve::Always then begin
             CurrPage.SaveRecord();
-            AutoReserve();
+            Rec.AutoReserve();
         end;
         DeltaUpdateTotals();
     end;
 
     local procedure SaveAndAutoAsmToOrder()
     begin
-        if (Type = Type::Item) and IsAsmToOrderRequired then begin
+        if (Rec.Type = Rec.Type::Item) and Rec.IsAsmToOrderRequired then begin
             CurrPage.SaveRecord();
-            AutoAsmToOrder;
+            Rec.AutoAsmToOrder;
         end;
     end;
 
     procedure UpdateEditableOnRow()
     begin
-        IsCommentLine := not HasTypeToFillMandatoryFields;
+        IsCommentLine := not Rec.HasTypeToFillMandatoryFields;
         IsBlankNumber := IsCommentLine;
         UnitofMeasureCodeIsChangeable := not IsCommentLine;
 
@@ -917,7 +973,7 @@ page 50034 "Sales Quote Lidl Subform"
         SalesHeader: Record "Sales Header";
     begin
         CurrPage.Update();
-        SalesHeader.Get("Document Type", "Document No.");
+        SalesHeader.Get(Rec."Document Type", Rec."Document No.");
         SalesCalcDiscByType.ApplyDefaultInvoiceDiscount(TotalSalesHeader."Invoice Discount Amount", SalesHeader);
     end;
 
@@ -949,8 +1005,8 @@ page 50034 "Sales Quote Lidl Subform"
             exit;
 
         DocumentTotals.SalesDeltaUpdateTotals(Rec, xRec, TotalSalesLine, VATAmount, InvoiceDiscountAmount, InvoiceDiscountPct);
-        if "Line Amount" <> xRec."Line Amount" then
-            SendLineInvoiceDiscountResetNotification();
+        if Rec."Line Amount" <> xRec."Line Amount" then
+            Rec.SendLineInvoiceDiscountResetNotification();
     end;
 
     procedure ForceTotalsCalculation()
@@ -967,7 +1023,7 @@ page 50034 "Sales Quote Lidl Subform"
 
         CurrPage.SaveRecord();
 
-        SalesHeader.Get("Document Type", "Document No.");
+        SalesHeader.Get(Rec."Document Type", Rec."Document No.");
         DocumentTotals.SalesRedistributeInvoiceDiscountAmounts(Rec, VATAmount, TotalSalesLine);
         CurrPage.Update(false);
     end;
@@ -979,13 +1035,13 @@ page 50034 "Sales Quote Lidl Subform"
         OnBeforeUpdateTypeText(Rec);
 
         RecRef.GetTable(Rec);
-        TypeAsText := TempOptionLookupBuffer.FormatOption(RecRef.Field(FieldNo(Type)));
+        TypeAsText := TempOptionLookupBuffer.FormatOption(RecRef.Field(Rec.FieldNo(Type)));
     end;
 
     procedure SetItemChargeFieldsStyle()
     begin
         ItemChargeStyleExpression := '';
-        if AssignedItemCharge then
+        if Rec.AssignedItemCharge then
             ItemChargeStyleExpression := 'Unfavorable';
     end;
 
@@ -1021,7 +1077,7 @@ page 50034 "Sales Quote Lidl Subform"
     var
         AssembleToOrderLink: Record "Assemble-to-Order Link";
     begin
-        ValidateShortcutDimCode(DimIndex, ShortcutDimCode[DimIndex]);
+        Rec.ValidateShortcutDimCode(DimIndex, ShortcutDimCode[DimIndex]);
         AssembleToOrderLink.UpdateAsmDimFromSalesLine(Rec);
 
         OnAfterValidateShortcutDimCode(Rec, ShortcutDimCode, DimIndex);
@@ -1037,10 +1093,10 @@ page 50034 "Sales Quote Lidl Subform"
             exit;
 
         if xRec."Document No." = '' then
-            Type := GetDefaultLineType();
+            Rec.Type := Rec.GetDefaultLineType();
     end;
 
-    [IntegrationEvent(TRUE, false)]
+    [IntegrationEvent(true, false)]
     local procedure OnAfterNoOnAfterValidate(var SalesLine: Record "Sales Line"; xSalesLine: Record "Sales Line")
     begin
     end;

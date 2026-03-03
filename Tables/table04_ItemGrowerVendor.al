@@ -8,7 +8,7 @@ table 50004 "Item Grower Vendor"
 
     CaptionML = ELL = 'Item Grower Vendor',
                 ENU = 'Item Grower Vendor';
-    LookupPageID = "Grower Item Catalog";
+    LookupPageId = "Grower Item Catalog";
 
     fields
     {
@@ -27,7 +27,7 @@ table 50004 "Item Grower Vendor"
 
             trigger OnValidate();
             begin
-                Vend.GET("Grower No.");
+                Vend.Get("Grower No.");
                 "Lead Time Calculation" := Vend."Lead Time Calculation";
             end;
         }
@@ -42,21 +42,21 @@ table 50004 "Item Grower Vendor"
         field(5700; "Variant Code"; Code[10])
         {
             Caption = 'Variant Code';
-            TableRelation = "Item Variant".Code WHERE("Item No." = FIELD("Item No."));
+            TableRelation = "Item Variant".Code where("Item No." = field("Item No."));
         }
         field(50000; "Category 1"; Code[20])
         {
             CaptionML = ELL = 'Grower Product No',
                         ENU = 'Grower Product No';
             DataClassification = ToBeClassified;
-            TableRelation = "General Categories".Code WHERE("Table No." = CONST(50004),
-                                                             Type = CONST(Category1));
+            TableRelation = "General Categories".Code where("Table No." = const(50004),
+                                                             Type = const(Category1));
         }
         field(50001; "Product Name"; Text[100])
         {
-            CalcFormula = Lookup("General Categories".Description WHERE("Table No." = FILTER(50004),
-                                                                         Type = FILTER(Category1),
-                                                                         Code = FIELD("Category 1")));
+            CalcFormula = lookup("General Categories".Description where("Table No." = filter(50004),
+                                                                         Type = filter(Category1),
+                                                                         Code = field("Category 1")));
             Editable = false;
             FieldClass = FlowField;
         }
@@ -86,7 +86,7 @@ table 50004 "Item Grower Vendor"
 
     trigger OnInsert();
     begin
-        xRec.INIT;
+        xRec.Init;
         UpdateItemCrossReference;
     end;
 

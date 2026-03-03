@@ -13,22 +13,26 @@ pageextension 50225 FinishedProductionOrderExt extends "Finished Production Orde
         // Add changes to page layout here
         addafter("Last Date Modified")
         {
-            field("Creation Date"; "Creation Date")
+            field("Creation Date"; Rec."Creation Date")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the date on which you created the production order.';
             }
-            field("Created By"; "Created By")
+            field("Created By"; Rec."Created By")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Created By field.';
             }
-            field("Client Computer Name"; "Client Computer Name")
+            field("Client Computer Name"; Rec."Client Computer Name")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Client Computer Name field.';
             }
             //+1.0.0.229
-            field("Packing Agent"; "Packing Agent")
+            field("Packing Agent"; Rec."Packing Agent")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Packing Agent field.';
             }
 
             //1.0.0.229
@@ -73,7 +77,7 @@ pageextension 50225 FinishedProductionOrderExt extends "Finished Production Orde
                 begin
                     ProductionOrder := Rec;
                     CurrPage.SetSelectionFilter(ProductionOrder);
-                    Report.Run(report::"Prod. Order Comp. and Routing", true, false, ProductionOrder);
+                    Report.Run(Report::"Prod. Order Comp. and Routing", true, false, ProductionOrder);
                 end;
             }
         }

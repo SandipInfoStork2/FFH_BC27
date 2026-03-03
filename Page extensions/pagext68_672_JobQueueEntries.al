@@ -9,17 +9,18 @@ pageextension 50168 JobQueueEntriesExt extends "Job Queue Entries"
         // Add changes to page layout here
         addafter("Ending Time")
         {
-            field("Email Result"; "Email Result")
+            field("Email Result"; Rec."Email Result")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Email Result field.';
             }
         }
 
         addafter("User ID")
         {
-            field("Execute User ID"; "Execute User ID")
+            field("Execute User ID"; Rec."Execute User ID")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 ToolTip = 'Custom: Execute User ID';
             }
         }
@@ -38,6 +39,7 @@ pageextension 50168 JobQueueEntriesExt extends "Job Queue Entries"
                 Promoted = true;
                 PromotedCategory = Process;
                 Caption = 'Update User';
+                ToolTip = 'Executes the Update User action.';
 
                 trigger OnAction()
                 var
@@ -48,11 +50,11 @@ pageextension 50168 JobQueueEntriesExt extends "Job Queue Entries"
                 begin
 
                     //pop up to select user
-                    rL_User.RESET;
+                    rL_User.Reset;
                     rL_User.SetFilter("License Type", '%1|%2', rL_User."License Type"::"Device Only User", rL_User."License Type"::"Full User");
                     rL_User.SetRange(State, rL_User.State::Enabled);
-                    if rL_User.findset then begin
-                        if page.RunModal(Page::"Users", rL_User) = Action::LookupOK then begin
+                    if rL_User.FindSet then begin
+                        if Page.RunModal(Page::Users, rL_User) = Action::LookupOK then begin
                             vL_User := rL_User."User Name";
                         end;
                     end;
@@ -61,14 +63,14 @@ pageextension 50168 JobQueueEntriesExt extends "Job Queue Entries"
                         exit;
                     end;
 
-                    rL_JobQueueEntry.RESET;
+                    rL_JobQueueEntry.Reset;
                     if rL_JobQueueEntry.FindSet() then begin
                         repeat
                             rL_JobQueueEntry."User ID" := vL_User;
-                            rL_JobQueueEntry."Execute User ID" := "User ID";
+                            rL_JobQueueEntry."Execute User ID" := Rec."User ID";
                             rL_JobQueueEntry.Modify();
 
-                        until rL_JobQueueEntry.next = 0;
+                        until rL_JobQueueEntry.Next = 0;
                     end;
                     Message('Process Completed');
 

@@ -11,14 +11,14 @@ report 50021 "HORECA Order Reminder Manager"
     {
         dataitem(IntegerDS; Integer)
         {
-            DataItemTableView = SORTING(Number) WHERE(Number = FILTER(1));
+            DataItemTableView = sorting(Number) where(Number = filter(1));
 
             trigger OnAfterGetRecord()
             var
                 cuGeneralMgt: Codeunit "General Mgt.";
             begin
 
-                CLEAR(cuGeneralMgt);
+                Clear(cuGeneralMgt);
                 cuGeneralMgt.HORECAOrderReminderManager();
             end;
         }

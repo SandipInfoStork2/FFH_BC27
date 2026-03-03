@@ -12,21 +12,25 @@ pageextension 50141 PostedPurchaseReceiptsExt extends "Posted Purchase Receipts"
         // Add changes to page layout here
         addafter("Shipment Method Code")
         {
-            field("Deliver-to Vendor No."; "Deliver-to Vendor No.")
+            field("Deliver-to Vendor No."; Rec."Deliver-to Vendor No.")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Deliver-to Vendor No. field.';
             }
-            field("Deliver-to Name"; "Deliver-to Name")
+            field("Deliver-to Name"; Rec."Deliver-to Name")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Deliver-to Name field.';
             }
-            field("Order No."; "Order No.")
+            field("Order No."; Rec."Order No.")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the line number of the order that created the entry.';
             }
-            field("Gen. Bus. Posting Group"; "Gen. Bus. Posting Group")
+            field("Gen. Bus. Posting Group"; Rec."Gen. Bus. Posting Group")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Gen. Bus. Posting Group field.';
             }
         }
 
@@ -48,13 +52,14 @@ pageextension 50141 PostedPurchaseReceiptsExt extends "Posted Purchase Receipts"
                 Promoted = true;
                 PromotedCategory = Process;
                 PromotedOnly = true;
+                ToolTip = 'Executes the Grower Receipt action.';
 
                 trigger OnAction();
                 var
                     PurchRcptHeader: Record "Purch. Rcpt. Header";
                 begin
                     PurchRcptHeader := Rec;
-                    CurrPage.SETSELECTIONFILTER(PurchRcptHeader);
+                    CurrPage.SetSelectionFilter(PurchRcptHeader);
                     PurchRcptHeader.PrintGrowerReceiptRecords(PurchRcptHeader);
                 end;
             }
@@ -65,13 +70,14 @@ pageextension 50141 PostedPurchaseReceiptsExt extends "Posted Purchase Receipts"
                 Promoted = true;
                 PromotedCategory = Process;
                 PromotedOnly = true;
+                ToolTip = 'Executes the Item Tracking Appendix action.';
 
                 trigger OnAction();
                 var
                     PurchRcptHeader: Record "Purch. Rcpt. Header";
                 begin
                     PurchRcptHeader := Rec;
-                    CurrPage.SETSELECTIONFILTER(PurchRcptHeader);
+                    CurrPage.SetSelectionFilter(PurchRcptHeader);
                     PurchRcptHeader.PrintAppendixRecords(PurchRcptHeader);
                 end;
             }

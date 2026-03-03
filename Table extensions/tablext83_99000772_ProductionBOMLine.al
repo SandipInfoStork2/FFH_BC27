@@ -36,14 +36,14 @@ tableextension 50183 ProductionBOMLineExt extends "Production BOM Line"
     var
         rL_LastILE: Record "Item Ledger Entry";
     begin
-        rL_LastILE.RESET;
+        rL_LastILE.Reset;
         rL_LastILE.SetRange("Entry Type", rL_LastILE."Entry Type"::Purchase);
         rL_LastILE.SetRange("Document Type", rL_LastILE."Document Type"::"Purchase Receipt");
         rL_LastILE.SetFilter("Item No.", "No.");
         if rL_LastILE.FindLast() then begin
 
         end;
-        Page.Run(page::"Item Ledger Entries", rL_LastILE);
+        Page.Run(Page::"Item Ledger Entries", rL_LastILE);
     end;
 
     var

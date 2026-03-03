@@ -19,7 +19,7 @@ report 50094 "Boxes Statement By Location"
 
         dataitem(LocationInt; "Integer")
         {
-            DataItemTableView = SORTING(Number) WHERE(Number = FILTER(1));
+            DataItemTableView = sorting(Number) where(Number = filter(1));
             //column(LocationCode; Location.Code)
             // {
             // }
@@ -80,11 +80,11 @@ report 50094 "Boxes Statement By Location"
             {
             }
 
-            column(StartDate; FORMAT(vG_StartDate))
+            column(StartDate; Format(vG_StartDate))
             {
             }
 
-            column(EndDate; FORMAT(vG_EndDate))
+            column(EndDate; Format(vG_EndDate))
             {
             }
 
@@ -110,13 +110,13 @@ report 50094 "Boxes Statement By Location"
 
             dataitem("Item Ledger Entry"; "Item Ledger Entry")
             {
-                DataItemTableView = SORTING("Item No.", "Posting Date"); //"Entry Type", Nonstock, 
+                DataItemTableView = sorting("Item No.", "Posting Date"); //"Entry Type", Nonstock, 
                 RequestFilterFields = "Entry Type", "Item No.";//, "Source Type", "Source No.", "Shortcut Dimension 5 Code"; // "Gen. Prod. Posting Group", 
                 //DataItemLink = "Location Code" = field(Code);
                 column(Showdetails; Showdetails)
                 {
                 }
-                column(CompName; COMPANYNAME)
+                column(CompName; CompanyName)
                 {
                 }
                 column(itemdesc; itemdesc)
@@ -128,7 +128,7 @@ report 50094 "Boxes Statement By Location"
                 column(ItemNo_ItemLedgerEntry; "Item Ledger Entry"."Item No.")
                 {
                 }
-                column(PostingDate_ItemLedgerEntry; FORMAT("Item Ledger Entry"."Posting Date"))
+                column(PostingDate_ItemLedgerEntry; Format("Item Ledger Entry"."Posting Date"))
                 {
                 }
                 column(EntryType_ItemLedgerEntry; "Item Ledger Entry"."Entry Type")
@@ -199,7 +199,7 @@ report 50094 "Boxes Statement By Location"
 
                 begin
 
-                    item.GET("Item No.");
+                    item.Get("Item No.");
                     itemdesc := item.Description;
 
                     vG_StartBalance := 0;
@@ -236,7 +236,7 @@ report 50094 "Boxes Statement By Location"
 
                         if vG_CalcBalances or vG_CalcBalances2 then begin
                             //Start Balance
-                            ILEStart.RESET;
+                            ILEStart.Reset;
                             ILEStart.SetFilter("Posting Date", '<%1', vG_StartDate);
                             ILEStart.SetFilter("Item No.", "Item Ledger Entry"."Item No.");
 
@@ -291,7 +291,7 @@ report 50094 "Boxes Statement By Location"
                             end;
 
                             //End Balance
-                            ILEEnd.RESET;
+                            ILEEnd.Reset;
                             ILEEnd.SetFilter("Posting Date", '..%1', vG_EndDate);// <=
                             ILEEnd.SetFilter("Item No.", "Item Ledger Entry"."Item No.");
 
@@ -544,13 +544,14 @@ report 50094 "Boxes Statement By Location"
         layout
         {
 
-            area(content)
+            area(Content)
             {
                 field(Showdetails; Showdetails)
                 {
                     Caption = 'Show Details';
                     ApplicationArea = All;
                     Visible = false;
+                    ToolTip = 'Specifies the value of the Show Details field.';
                 }
 
                 group(Options)
@@ -566,12 +567,13 @@ report 50094 "Boxes Statement By Location"
                         Caption = 'Gen. Prod. Posting Group';
                         TableRelation = "Gen. Product Posting Group";
                         Visible = false;
+                        ToolTip = 'Specifies the value of the Gen. Prod. Posting Group field.';
 
                         trigger OnLookup(var Text: Text): Boolean
                         var
                             GenProductPostingGroup: Record "Gen. Product Posting Group";
                         begin
-                            if PAGE.RunModal(PAGE::"Gen. Business Posting Groups", GenProductPostingGroup) = ACTION::LookupOK then begin
+                            if Page.RunModal(Page::"Gen. Business Posting Groups", GenProductPostingGroup) = Action::LookupOK then begin
                                 vG_GenProdPostingGroup := GenProductPostingGroup.Code;
                             end;
                         end;
@@ -583,31 +585,34 @@ report 50094 "Boxes Statement By Location"
                         Caption = 'Item Category Code';
                         //TableRelation = "Item Category";
                         Visible = true;
+                        ToolTip = 'Specifies the value of the Item Category Code field.';
 
                         trigger OnLookup(var Text: Text): Boolean
                         var
                             ItemCategory: Record "Item Category";
                             pItemCategories: Page "Item Categories";
                         begin
-                            clear(vG_ItemCategoryCodeFilter);
-                            clear(pItemCategories);
-                            pItemCategories.SETTABLEVIEW(ItemCategory);
-                            pItemCategories.LOOKUPMODE(TRUE);
-                            IF pItemCategories.RUNMODAL = ACTION::LookupOK THEN BEGIN
+                            Clear(vG_ItemCategoryCodeFilter);
+                            Clear(pItemCategories);
+                            pItemCategories.SetTableView(ItemCategory);
+                            pItemCategories.LookupMode(true);
+                            if pItemCategories.RunModal = Action::LookupOK then begin
                                 vG_ItemCategoryCodeFilter := pItemCategories.GetSelectionFilter();
                                 //Message(vG_ItemCategoryCodeFilter);
-                            END;
+                            end;
                         end;
                     }
                     field(StartDate; vG_StartDate)
                     {
                         ApplicationArea = All;
                         Caption = 'Start Date';
+                        ToolTip = 'Specifies the value of the Start Date field.';
                     }
                     field(EndDate; vG_EndDate)
                     {
                         ApplicationArea = All;
                         Caption = 'End Date';
+                        ToolTip = 'Specifies the value of the End Date field.';
                     }
 
                     group(Source)
@@ -635,6 +640,7 @@ report 50094 "Boxes Statement By Location"
                             Caption = 'Vendor No.';
                             Visible = vG_ShowBoxStatementCode;
                             ApplicationArea = All;
+                            ToolTip = 'Specifies the value of the Vendor No. field.';
 
                             trigger OnValidate()
                             var
@@ -654,10 +660,10 @@ report 50094 "Boxes Statement By Location"
 
                                 //vG_SourceType::Vendor:
                                 // begin
-                                if Vendor.GET(vG_SourceNo1) then begin
+                                if Vendor.Get(vG_SourceNo1) then begin
                                     vG_SourceNo1 := Vendor."No.";
                                     vG_SourceName1 := Vendor.Name;
-                                    vG_LocationCode1 := DELCHR(vG_SourceNo1, '=', 'END');
+                                    vG_LocationCode1 := DelChr(vG_SourceNo1, '=', 'END');
                                     CheckLocation1();
                                 end;
                                 //end;
@@ -675,6 +681,7 @@ report 50094 "Boxes Statement By Location"
                         {
                             Caption = 'Vendor Name';
                             ApplicationArea = All;
+                            ToolTip = 'Specifies the value of the Vendor Name field.';
 
                             trigger OnLookup(var Text: Text): Boolean
                             begin
@@ -686,7 +693,7 @@ report 50094 "Boxes Statement By Location"
                                 myInt: Integer;
                             begin
                                 if vG_SourceName1 = '' then begin
-                                    initialiseVendor();
+                                    InitialiseVendor();
                                 end;
                             end;
                         }
@@ -696,6 +703,7 @@ report 50094 "Boxes Statement By Location"
                             Caption = 'Vendor Location Code';
                             Visible = vG_ShowBoxStatementCode;
                             ApplicationArea = All;
+                            ToolTip = 'Specifies the value of the Vendor Location Code field.';
                         }
 
                         field(LocationExists1; vG_LocationExists1)
@@ -703,6 +711,7 @@ report 50094 "Boxes Statement By Location"
                             Caption = 'Vendor Location Exists';
                             Visible = vG_ShowBoxStatementCode;
                             ApplicationArea = All;
+                            ToolTip = 'Specifies the value of the Vendor Location Exists field.';
                         }
                     }
 
@@ -733,15 +742,16 @@ report 50094 "Boxes Statement By Location"
                             Caption = 'Customer No.';
                             Visible = vG_ShowBoxStatementCode;
                             ApplicationArea = All;
+                            ToolTip = 'Specifies the value of the Customer No. field.';
 
                             trigger OnValidate()
                             var
                                 Customer: Record Customer;
                             begin
-                                if Customer.GET(vG_SourceNo2) then begin
+                                if Customer.Get(vG_SourceNo2) then begin
                                     vG_SourceNo2 := Customer."No.";
                                     vG_SourceName2 := Customer.Name;
-                                    vG_LocationCode2 := DELCHR(vG_SourceNo2, '=', 'UST'); //DelChr('UST', '=', vG_SourceNo)
+                                    vG_LocationCode2 := DelChr(vG_SourceNo2, '=', 'UST'); //DelChr('UST', '=', vG_SourceNo)
                                     CheckLocation2();
                                     vG_CustomerGroupDimensionCode := '';
                                     vG_CustomerGroupDimensionName := '';
@@ -758,6 +768,7 @@ report 50094 "Boxes Statement By Location"
                         {
                             Caption = 'Customer Name';
                             ApplicationArea = All;
+                            ToolTip = 'Specifies the value of the Customer Name field.';
 
                             trigger OnLookup(var Text: Text): Boolean
                             begin
@@ -769,7 +780,7 @@ report 50094 "Boxes Statement By Location"
                                 myInt: Integer;
                             begin
                                 if vG_SourceName2 = '' then begin
-                                    initialiseCustomer();
+                                    InitialiseCustomer();
                                 end;
                             end;
                         }
@@ -783,17 +794,18 @@ report 50094 "Boxes Statement By Location"
                             Caption = 'Customer Group Dimension Code';
                             Visible = vG_ShowBoxStatementCode;
                             ApplicationArea = All;
+                            ToolTip = 'Specifies the value of the Customer Group Dimension Code field.';
 
                             trigger OnLookup(var Text: Text): Boolean
                             var
 
                                 DimensionValue: Record "Dimension Value";
                             begin
-                                DimensionValue.RESET;
+                                DimensionValue.Reset;
                                 DimensionValue.SetRange("Global Dimension No.", 5);
                                 if DimensionValue.FindSet() then;
 
-                                if PAGE.RunModal(PAGE::"Dimension Values", DimensionValue) = ACTION::LookupOK then begin
+                                if Page.RunModal(Page::"Dimension Values", DimensionValue) = Action::LookupOK then begin
                                     vG_CustomerGroupDimensionCode := DimensionValue.Code;
                                     vG_CustomerGroupDimensionName := DimensionValue.Name;
 
@@ -806,7 +818,7 @@ report 50094 "Boxes Statement By Location"
                             begin
                                 vG_CustomerGroupDimensionName := '';
                                 if vG_CustomerGroupDimensionCode <> '' then begin
-                                    DimensionValue.RESET;
+                                    DimensionValue.Reset;
                                     DimensionValue.SetRange("Global Dimension No.", 5);
                                     DimensionValue.SetFilter(Code, vG_CustomerGroupDimensionCode);
                                     if DimensionValue.FindSet() then begin
@@ -822,15 +834,16 @@ report 50094 "Boxes Statement By Location"
                         {
                             Caption = 'Customer Branch';
                             ApplicationArea = All;
+                            ToolTip = 'Specifies the value of the Customer Branch field.';
                             trigger OnLookup(var Text: Text): Boolean
                             var
                                 DimensionValue: Record "Dimension Value";
                             begin
-                                DimensionValue.RESET;
+                                DimensionValue.Reset;
                                 DimensionValue.SetRange("Global Dimension No.", 5);
                                 if DimensionValue.FindSet() then;
 
-                                if PAGE.RunModal(PAGE::"Dimension Values", DimensionValue) = ACTION::LookupOK then begin
+                                if Page.RunModal(Page::"Dimension Values", DimensionValue) = Action::LookupOK then begin
                                     vG_CustomerGroupDimensionCode := DimensionValue.Code;
                                     vG_CustomerGroupDimensionName := DimensionValue.Name;
 
@@ -852,6 +865,7 @@ report 50094 "Boxes Statement By Location"
                             Caption = 'Customer Location Code';
                             Visible = vG_ShowBoxStatementCustomerLocation;
                             ApplicationArea = All;
+                            ToolTip = 'Specifies the value of the Customer Location Code field.';
                         }
 
                         field(LocationExists2; vG_LocationExists2)
@@ -859,6 +873,7 @@ report 50094 "Boxes Statement By Location"
                             Caption = 'Customer Location Exists';
                             Visible = vG_ShowBoxStatementCustomerLocation;
                             ApplicationArea = All;
+                            ToolTip = 'Specifies the value of the Customer Location Exists field.';
                         }
                     }
 
@@ -880,7 +895,7 @@ report 50094 "Boxes Statement By Location"
         begin
             //vG_GenProdPostingGroup := 'ST-PACKMAT';
 
-            SRSetup.GET;
+            SRSetup.Get;
             vG_ShowBoxStatementCode := SRSetup."Box Statement Codes";
 
             vG_ShowBoxStatementCustomerLocation := SRSetup."Box Stmt Show Cust. Location";
@@ -906,15 +921,15 @@ report 50094 "Boxes Statement By Location"
     trigger OnInitReport();
     begin
         Showdetails := true;
-        CompanyInfo.GET;
-        CompanyInfo.CALCFIELDS(Picture);
-        SRSetup.GET;
+        CompanyInfo.Get;
+        CompanyInfo.CalcFields(Picture);
+        SRSetup.Get;
         vG_ItemCategoryCodeFilter := SRSetup."Box Stmt Item Category Filter";//  'CARTONS|PLBOX';vvvv
     end;
 
     trigger OnPreReport();
     begin
-        itemfilter := "Item Ledger Entry".GETFILTERS;
+        itemfilter := "Item Ledger Entry".GetFilters;
     end;
 
 
@@ -945,10 +960,10 @@ report 50094 "Boxes Statement By Location"
         Customer: Record Customer;
         pCustomerList: Page "Customer List";
     begin
-        if PAGE.RunModal(PAGE::"Customer List", Customer) = ACTION::LookupOK then begin
+        if Page.RunModal(Page::"Customer List", Customer) = Action::LookupOK then begin
             vG_SourceNo2 := Customer."No.";
             vG_SourceName2 := Customer.Name;
-            vG_LocationCode2 := DELCHR(vG_SourceNo2, '=', 'UST'); //DelChr('UST', '=', vG_SourceNo)
+            vG_LocationCode2 := DelChr(vG_SourceNo2, '=', 'UST'); //DelChr('UST', '=', vG_SourceNo)
             CheckLocation2();
             vG_CustomerGroupDimensionCode := '';
             vG_CustomerGroupDimensionName := '';
@@ -960,10 +975,10 @@ report 50094 "Boxes Statement By Location"
         Vendor: Record Vendor;
         pVendorList: Page "Vendor List";
     begin
-        if PAGE.RunModal(PAGE::"Vendor List", Vendor) = ACTION::LookupOK then begin
+        if Page.RunModal(Page::"Vendor List", Vendor) = Action::LookupOK then begin
             vG_SourceNo1 := Vendor."No.";
             vG_SourceName1 := Vendor.Name;
-            vG_LocationCode1 := DELCHR(vG_SourceNo1, '=', 'END');
+            vG_LocationCode1 := DelChr(vG_SourceNo1, '=', 'END');
             CheckLocation1();
         end;
     end;

@@ -19,25 +19,25 @@ pageextension 50218 CustomerReportSelectionsExt extends "Customer Report Selecti
                 begin
                     case Usage3 of
                         Usage3::Quote:
-                            Usage := Usage::"S.Quote";
+                            Rec.Usage := Rec.Usage::"S.Quote";
                         Usage3::"Confirmation Order":
-                            Usage := Usage::"S.Order";
+                            Rec.Usage := Rec.Usage::"S.Order";
                         Usage3::Invoice:
-                            Usage := Usage::"S.Invoice";
+                            Rec.Usage := Rec.Usage::"S.Invoice";
                         Usage3::"Credit Memo":
-                            Usage := Usage::"S.Cr.Memo";
+                            Rec.Usage := Rec.Usage::"S.Cr.Memo";
                         Usage3::"Customer Statement":
-                            Usage := Usage::"C.Statement";
+                            Rec.Usage := Rec.Usage::"C.Statement";
                         Usage3::"Job Quote":
-                            Usage := Usage::JQ;
+                            Rec.Usage := Rec.Usage::JQ;
                         Usage3::Reminder:
-                            Usage := Usage::Reminder;
+                            Rec.Usage := Rec.Usage::Reminder;
                         Usage3::Shipment:
-                            Usage := Usage::"S.Shipment";
+                            Rec.Usage := Rec.Usage::"S.Shipment";
                         Usage3::"S.Ret.Rcpt.":
-                            Usage := Usage::"S.Ret.Rcpt.";
+                            Rec.Usage := Rec.Usage::"S.Ret.Rcpt.";
                         Usage3::"Payment Receipt":
-                            Usage := Usage::"Payment Receipt";
+                            Rec.Usage := Rec.Usage::"Payment Receipt";
 
                     end;
                 end;
@@ -66,7 +66,7 @@ pageextension 50218 CustomerReportSelectionsExt extends "Customer Report Selecti
     var
         CustomReportSelection: Record "Custom Report Selection";
     begin
-        case Usage of
+        case Rec.Usage of
             CustomReportSelection.Usage::"S.Quote":
                 Usage3 := Usage3::Quote;
             CustomReportSelection.Usage::"S.Order":

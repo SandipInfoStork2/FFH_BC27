@@ -7,26 +7,31 @@ pageextension 50177 TransferOrderExt extends "Transfer Order"
 
         addafter("In-Transit Code")
         {
-            field("Salesperson Code"; "Salesperson Code")
+            field("Salesperson Code"; Rec."Salesperson Code")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Salesperson Code field.';
             }
-            field("Salesperson Name"; "Salesperson Name")
+            field("Salesperson Name"; Rec."Salesperson Name")
             {
                 ApplicationArea = All;
                 Editable = false;
+                ToolTip = 'Specifies the value of the Salesperson Name field.';
             }
 
-            field("Shipment Date2"; "Shipment Date")
+            field("Shipment Date2"; Rec."Shipment Date")
             {
                 ApplicationArea = All;
-                caption = 'Shipment/Delivery Date';
+                Caption = 'Shipment/Delivery Date';
                 ShowMandatory = true;
+                ToolTip = 'Specifies when items on the document are shipped or were shipped. A shipment date is usually calculated from a requested delivery date plus lead time.';
             }
-            field("Shipment/Delivery Time"; "Shipment/Delivery Time")
+            field("Shipment/Delivery Time"; Rec."Shipment/Delivery Time")
             {
-                caption = 'Shipment/Delivery Time';
+                Caption = 'Shipment/Delivery Time';
                 ShowMandatory = true;
+                ToolTip = 'Specifies the value of the Shipment/Delivery Time field.';
+                ApplicationArea = All;
             }
         }
     }
@@ -37,7 +42,7 @@ pageextension 50177 TransferOrderExt extends "Transfer Order"
 
         addafter("&Print")
         {
-            action("Email")
+            action(Email)
             {
 
                 ApplicationArea = Basic, Suite;
@@ -47,9 +52,9 @@ pageextension 50177 TransferOrderExt extends "Transfer Order"
                 PromotedCategory = Category8;
                 PromotedIsBig = true;
                 ToolTip = 'Custom: Email Transfer Order';
-                trigger onAction()
+                trigger OnAction()
                 begin
-                    PrintTransferOrder(true);
+                    Rec.PrintTransferOrder(true);
                 end;
 
             }
@@ -59,17 +64,18 @@ pageextension 50177 TransferOrderExt extends "Transfer Order"
                 Promoted = true;
                 PromotedCategory = Process;
                 PromotedOnly = true;
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Executes the Get Expiring Items action.';
 
                 trigger OnAction();
                 var
                     ExpiringItems: Report "Transfer Expiring Items";
                 begin
 
-                    CLEAR(ExpiringItems);
+                    Clear(ExpiringItems);
                     ExpiringItems.SetHeader(Rec);
-                    ExpiringItems.RUNMODAL;
-                    CurrPage.UPDATE(false);
+                    ExpiringItems.RunModal;
+                    CurrPage.Update(false);
                 end;
             }
         }

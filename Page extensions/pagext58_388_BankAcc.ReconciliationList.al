@@ -15,17 +15,20 @@ pageextension 50158 BankAccReconciliationListExt extends "Bank Acc. Reconciliati
 
         addafter(StatementEndingBalance)
         {
-            field("Total Transaction Amount"; "Total Transaction Amount")
+            field("Total Transaction Amount"; Rec."Total Transaction Amount")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the sum of values in the Statement Amount field on all the lines in the Bank Acc. Reconciliation and Payment Reconciliation Journal windows.';
             }
-            field("Total Applied Amount"; "Total Applied Amount")
+            field("Total Applied Amount"; Rec."Total Applied Amount")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Total Applied Amount field.';
             }
-            field("Total Difference"; "Total Difference")
+            field("Total Difference"; Rec."Total Difference")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the sum of values in the Difference field on all lines in the Bank Acc. Reconciliation window that belong to the bank account reconciliation.';
             }
         }
     }

@@ -19,14 +19,14 @@ tableextension 50129 ShiptoAddressExt extends "Ship-to Address"
                 GLNCalculator: Codeunit "GLN Calculator";
             begin
                 //+TAL0.2
-                IF "GLN Delivery" <> '' THEN
+                if "GLN Delivery" <> '' then
                     GLNCalculator.AssertValidCheckDigit13("GLN Delivery");
                 //-TAL0.2
             end;
         }
         field(50002; "No. of Orders"; Integer)
         {
-            CalcFormula = Count("Sales Header" WHERE("Ship-to Code" = FIELD(Code), "Bill-to Customer No." = FIELD("Customer No.")));
+            CalcFormula = count("Sales Header" where("Ship-to Code" = field(Code), "Bill-to Customer No." = field("Customer No.")));
             Editable = false;
             FieldClass = FlowField;
         }
@@ -98,7 +98,7 @@ tableextension 50129 ShiptoAddressExt extends "Ship-to Address"
             begin
                 //check if the password has been entered.
                 if "Shop Password" <> '' then begin
-                    ShiptoAdress.RESET;
+                    ShiptoAdress.Reset;
                     ShiptoAdress.SetFilter("Customer No.", "Customer No.");
                     ShiptoAdress.SetFilter("Shop Password", "Shop Password");
                     if ShiptoAdress.FindSet() then begin
@@ -119,7 +119,7 @@ tableextension 50129 ShiptoAddressExt extends "Ship-to Address"
     var
         UserSetup: Record "User Setup";
     begin
-        UserSetup.GET(UserId);
+        UserSetup.Get(UserId);
         if UserSetup."HORECA Customer No." <> '' then begin
             UserSetup.TestField("HORECA Customer No.");
             UserSetup.TestField("HORECA Ship-to Filter");

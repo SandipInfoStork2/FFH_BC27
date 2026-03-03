@@ -18,19 +18,19 @@ tableextension 50114 ItemJournalLineExt extends "Item Journal Line"
                 Item: Record Item;
             begin
                 //+TAL0.1
-                Item.GET("Item No.");
-                IF Item."Max Unit Cost" <> 0 THEN BEGIN
-                    IF "Unit Cost" > Item."Max Unit Cost" THEN BEGIN
-                        ERROR(Text50000, FORMAT("Unit Cost"), FORMAT(Item."Max Unit Cost"), Item."No.");
-                    END;
-                END;
+                Item.Get("Item No.");
+                if Item."Max Unit Cost" <> 0 then begin
+                    if "Unit Cost" > Item."Max Unit Cost" then begin
+                        Error(Text50000, Format("Unit Cost"), Format(Item."Max Unit Cost"), Item."No.");
+                    end;
+                end;
                 //-TAL0.1
             end;
         }
         field(50001; "Grower No."; Code[20])
         {
             DataClassification = ToBeClassified;
-            TableRelation = Vendor WHERE("Vendor Posting Group" = FILTER('GROWER'));
+            TableRelation = Vendor where("Vendor Posting Group" = filter('GROWER'));
         }
         field(50002; "Vendor No."; Code[20])
         {
@@ -49,27 +49,27 @@ tableextension 50114 ItemJournalLineExt extends "Item Journal Line"
         }
         field(50060; "Location Name"; Text[100])
         {
-            CalcFormula = Lookup(Location.Name WHERE(Code = FIELD("Location Code")));
+            CalcFormula = lookup(Location.Name where(Code = field("Location Code")));
             FieldClass = FlowField;
         }
 
         field(50061; "Item Tracking Code"; Code[20])
         {
-            CalcFormula = Lookup(Item."Item Tracking Code" WHERE("No." = FIELD("Item No.")));
+            CalcFormula = lookup(Item."Item Tracking Code" where("No." = field("Item No.")));
             FieldClass = FlowField;
             Editable = false;
         }
 
         field(50062; "Tracking Lot No."; Code[50])
         {
-            CalcFormula = Lookup("Reservation Entry"."Lot No." WHERE("Item No." = FIELD("Item No."), "Location Code" = FIELD("Location Code"), "Source ID" = FIELD("Journal Template Name"), "Source Batch Name" = FIELD("Journal Batch Name"), "Source Ref. No." = FIELD("Line No.")));
+            CalcFormula = lookup("Reservation Entry"."Lot No." where("Item No." = field("Item No."), "Location Code" = field("Location Code"), "Source ID" = field("Journal Template Name"), "Source Batch Name" = field("Journal Batch Name"), "Source Ref. No." = field("Line No.")));
             FieldClass = FlowField;
             Editable = false;
         }
 
         field(50063; "Tracking Expiration Date"; Date)
         {
-            CalcFormula = Lookup("Reservation Entry"."Expiration Date" WHERE("Item No." = FIELD("Item No."), "Location Code" = FIELD("Location Code"), "Source ID" = FIELD("Journal Template Name"), "Source Batch Name" = FIELD("Journal Batch Name"), "Source Ref. No." = FIELD("Line No.")));
+            CalcFormula = lookup("Reservation Entry"."Expiration Date" where("Item No." = field("Item No."), "Location Code" = field("Location Code"), "Source ID" = field("Journal Template Name"), "Source Batch Name" = field("Journal Batch Name"), "Source Ref. No." = field("Line No.")));
             FieldClass = FlowField;
             Editable = false;
         }
@@ -85,7 +85,7 @@ tableextension 50114 ItemJournalLineExt extends "Item Journal Line"
         {
             Caption = 'Packing Agent';
             DataClassification = ToBeClassified;
-            TableRelation = "General Categories".Code WHERE("Table No." = CONST(5404), Type = CONST(Category1));
+            TableRelation = "General Categories".Code where("Table No." = const(5404), Type = const(Category1));
         }
         //-1.0.0.229
     }

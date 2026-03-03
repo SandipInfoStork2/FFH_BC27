@@ -3,36 +3,42 @@ page 50028 "User Setup Card"
 
     PageType = Card;
     SourceTable = "User Setup";
-    
+    ApplicationArea = All;
+
     layout
     {
-        area(content)
+        area(Content)
         {
             group(General)
             {
-                field("User ID"; "User ID")
+                field("User ID"; Rec."User ID")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the ID of the user who posted the entry, to be used, for example, in the change log.';
                 }
-                field(Name; Name)
+                field(Name; Rec.Name)
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
+                    ToolTip = 'Custom: Name';
                 }
-                field("Salespers./Purch. Code"; "Salespers./Purch. Code")
+                field("Salespers./Purch. Code"; Rec."Salespers./Purch. Code")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the salesperson or purchaser code that relates to the User ID field.';
                 }
-                field("E-Mail"; "E-Mail")
+                field("E-Mail"; Rec."E-Mail")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the email address of the user in the User ID field.';
                 }
             }
             group(Signature)
             {
                 Caption = 'Signature';
-                field(Control1000000004; Signature)
+                field(Control1000000004; Rec.Signature)
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Signature field.';
                 }
             }
 

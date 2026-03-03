@@ -4,10 +4,11 @@ page 50042 "Transfer Logistics Activities"
     PageType = CardPart;
     RefreshOnActivate = true;
     SourceTable = "Warehouse Basic Cue";
+    ApplicationArea = All;
 
     layout
     {
-        area(content)
+        area(Content)
         {
 
             //Aradipou - Main
@@ -18,62 +19,70 @@ page 50042 "Transfer Logistics Activities"
 
             cuegroup("Aradipou - Main")
             {
-                field("From Aradipou - Main Orders"; "From Aradipou - Main Orders")
+                field("From Aradipou - Main Orders"; Rec."From Aradipou - Main Orders")
                 {
-                    caption = 'Ship';
-                    ApplicationArea = all;
+                    Caption = 'Ship';
+                    ApplicationArea = All;
                     DrillDownPageId = "Transfer Orders";
+                    ToolTip = 'Specifies the value of the Ship field.';
                 }
-                field("To Aradipou - Main Orders"; "To Aradipou - Main Orders")
+                field("To Aradipou - Main Orders"; Rec."To Aradipou - Main Orders")
                 {
-                    caption = 'Receive';
-                    ApplicationArea = all;
+                    Caption = 'Receive';
+                    ApplicationArea = All;
                     DrillDownPageId = "Transfer Orders";
+                    ToolTip = 'Specifies the value of the Receive field.';
                 }
             }
             cuegroup("Fresh Cut")
             {
-                field("From Fresh Cut Orders"; "From Fresh Cut Orders")
+                field("From Fresh Cut Orders"; Rec."From Fresh Cut Orders")
                 {
-                    caption = 'Ship';
-                    ApplicationArea = all;
+                    Caption = 'Ship';
+                    ApplicationArea = All;
                     DrillDownPageId = "Transfer Orders";
+                    ToolTip = 'Specifies the value of the Ship field.';
                 }
-                field("To Fresh Cut Orders"; "To Fresh Cut Orders")
+                field("To Fresh Cut Orders"; Rec."To Fresh Cut Orders")
                 {
-                    caption = 'Receive';
-                    ApplicationArea = all;
+                    Caption = 'Receive';
+                    ApplicationArea = All;
                     DrillDownPageId = "Transfer Orders";
-                }
-            }
-            cuegroup("Kitchen")
-            {
-                field("From Kitchen Orders"; "From Kitchen Orders")
-                {
-                    caption = 'Ship';
-                    ApplicationArea = all;
-                    DrillDownPageId = "Transfer Orders";
-                }
-                field("To Kitchen Orders"; "To Kitchen Orders")
-                {
-                    caption = 'Receive';
-                    ApplicationArea = all;
-                    DrillDownPageId = "Transfer Orders";
+                    ToolTip = 'Specifies the value of the Receive field.';
                 }
             }
-            cuegroup("Potatoes")
+            cuegroup(Kitchen)
             {
-                field("From Potatoes Orders"; "From Potatoes Orders")
+                field("From Kitchen Orders"; Rec."From Kitchen Orders")
                 {
-                    caption = 'Ship';
-                    ApplicationArea = all;
+                    Caption = 'Ship';
+                    ApplicationArea = All;
                     DrillDownPageId = "Transfer Orders";
+                    ToolTip = 'Specifies the value of the Ship field.';
                 }
-                field("To Potatoes Orders"; "To Potatoes Orders")
+                field("To Kitchen Orders"; Rec."To Kitchen Orders")
                 {
-                    caption = 'Receive';
-                    ApplicationArea = all;
+                    Caption = 'Receive';
+                    ApplicationArea = All;
                     DrillDownPageId = "Transfer Orders";
+                    ToolTip = 'Specifies the value of the Receive field.';
+                }
+            }
+            cuegroup(Potatoes)
+            {
+                field("From Potatoes Orders"; Rec."From Potatoes Orders")
+                {
+                    Caption = 'Ship';
+                    ApplicationArea = All;
+                    DrillDownPageId = "Transfer Orders";
+                    ToolTip = 'Specifies the value of the Ship field.';
+                }
+                field("To Potatoes Orders"; Rec."To Potatoes Orders")
+                {
+                    Caption = 'Receive';
+                    ApplicationArea = All;
+                    DrillDownPageId = "Transfer Orders";
+                    ToolTip = 'Specifies the value of the Receive field.';
                 }
             }
 
@@ -82,40 +91,45 @@ page 50042 "Transfer Logistics Activities"
                 Caption = 'Pre Ship/Receipt Follow-up on Transfer Orders';
                 Visible = false;
 
-                field("Open Transfer Orders"; "Open Transfer Orders")
+                field("Open Transfer Orders"; Rec."Open Transfer Orders")
                 {
                     Caption = 'Transfer Order Open';
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     DrillDownPageId = "Transfer Orders";
+                    ToolTip = 'Specifies the value of the Transfer Order Open field.';
                 }
-                field("Upcoming Ship. Transfer Orders"; "Upcoming Ship. Transfer Orders")
+                field("Upcoming Ship. Transfer Orders"; Rec."Upcoming Ship. Transfer Orders")
                 {
                     Caption = 'Upcoming Shipments';
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     DrillDownPageId = "Transfer Orders";
+                    ToolTip = 'Specifies the value of the Upcoming Shipments field.';
                 }
-                field("Upcoming Rec. Transfer Orders"; "Upcoming Rec. Transfer Orders")
+                field("Upcoming Rec. Transfer Orders"; Rec."Upcoming Rec. Transfer Orders")
                 {
                     Caption = 'Upcoming Receipts';
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     DrillDownPageId = "Transfer Orders";
+                    ToolTip = 'Specifies the value of the Upcoming Receipts field.';
                 }
             }
             cuegroup("Post Follow-up")
             {
                 Caption = 'Post Ship/Receipt Follow-up on Transfer Orders';
                 Visible = false;
-                field("Outstanding Ship. T.O."; "Outstanding Ship. T.O.")
+                field("Outstanding Ship. T.O."; Rec."Outstanding Ship. T.O.")
                 {
                     Caption = 'Outstanding Shipments';
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     DrillDownPageId = "Transfer Orders";
+                    ToolTip = 'Specifies the value of the Outstanding Shipments field.';
                 }
-                field("Outstanding Receipt. T.O."; "Outstanding Receipt. T.O.")
+                field("Outstanding Receipt. T.O."; Rec."Outstanding Receipt. T.O.")
                 {
                     Caption = 'Outstanding Receipts';
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     DrillDownPageId = "Transfer Orders";
+                    ToolTip = 'Specifies the value of the Outstanding Receipts field.';
                 }
 
 
@@ -125,7 +139,7 @@ page 50042 "Transfer Logistics Activities"
                     {
                         ApplicationArea = Basic, Suite;
                         Caption = 'New Transfer Order';
-                        RunObject = Page "Transfer Order";
+                        RunObject = page "Transfer Order";
                         RunPageMode = Create;
                         ToolTip = 'Move items from one warehouse location to another.';
                     }
@@ -137,11 +151,12 @@ page 50042 "Transfer Logistics Activities"
 
             cuegroup("Count")
             {
-                field("Count Transfer Orders"; "Count Transfer Orders")
+                field("Count Transfer Orders"; Rec."Count Transfer Orders")
                 {
                     Caption = 'Transfer Orders';
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     DrillDownPageId = "Transfer Orders";
+                    ToolTip = 'Specifies the value of the Transfer Orders field.';
                 }
             }
 
@@ -154,19 +169,19 @@ page 50042 "Transfer Logistics Activities"
 
     trigger OnOpenPage()
     begin
-        Reset;
-        if not Get then begin
-            Init;
-            Insert;
+        Rec.Reset;
+        if not Rec.Get then begin
+            Rec.Init;
+            Rec.Insert;
         end;
 
-        SetRange("Date Filter", 0D, WorkDate);
-        SetRange("Date Filter2", WorkDate, WorkDate);
-        SetFilter("Date Filter3", '>=%1', WorkDate);
-        SetRange("User ID Filter", UserId);
+        Rec.SetRange("Date Filter", 0D, WorkDate);
+        Rec.SetRange("Date Filter2", WorkDate, WorkDate);
+        Rec.SetFilter("Date Filter3", '>=%1', WorkDate);
+        Rec.SetRange("User ID Filter", UserId);
 
         LocationCode := WhseWMSCue.GetEmployeeLocation(UserId);
-        SetFilter("Location Filter", LocationCode);
+        Rec.SetFilter("Location Filter", LocationCode);
     end;
 
     var

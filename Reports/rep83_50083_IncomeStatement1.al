@@ -5,24 +5,25 @@ report 50083 "Income Statement 1"
     RDLCLayout = './Layouts/rep83_50083_IncomeStatement1.rdlc';
 
     Caption = 'Income Statement';
+    ApplicationArea = All;
 
     dataset
     {
         dataitem("G/L Account"; "G/L Account")
         {
-            DataItemTableView = SORTING("No.") WHERE("Income/Balance" = CONST("Income Statement"));
+            DataItemTableView = sorting("No.") where("Income/Balance" = const("Income Statement"));
             RequestFilterFields = "No.", "Account Type", "Date Filter", "Global Dimension 1 Filter", "Global Dimension 2 Filter";
-            column(FORMAT_TODAY_0_4_; FORMAT(TODAY, 0, 4))
+            column(FORMAT_TODAY_0_4_; Format(Today, 0, 4))
             {
             }
             column(LongText_1____LongText_2____LongText_3____LongText_4_; LongText[1] + LongText[2] + LongText[3] + LongText[4])
             {
             }
 
-            column(COMPANYNAME; COMPANYNAME)
+            column(COMPANYNAME; CompanyName)
             {
             }
-            column(USERID; USERID)
+            column(USERID; UserId)
             {
             }
             column(TotalLongText; TotalLongText)
@@ -34,7 +35,7 @@ report 50083 "Income Statement 1"
             column(TotalHeaderText; TotalHeaderText)
             {
             }
-            column(G_L_Account__TABLENAME__________GLFilter; "G/L Account".TABLENAME + ': ' + GLFilter)
+            column(G_L_Account__TABLENAME__________GLFilter; "G/L Account".TableName + ': ' + GLFilter)
             {
             }
             column(GLFilter; GLFilter)
@@ -87,7 +88,7 @@ report 50083 "Income Statement 1"
             }
             dataitem(BlankLineCounter; "Integer")
             {
-                DataItemTableView = SORTING(Number);
+                DataItemTableView = sorting(Number);
                 column(G_L_Account___No__of_Blank_Lines_; "G/L Account"."No. of Blank Lines")
                 {
                 }
@@ -97,16 +98,16 @@ report 50083 "Income Statement 1"
 
                 trigger OnPreDataItem()
                 begin
-                    SETRANGE(Number, 1, "G/L Account"."No. of Blank Lines");
+                    SetRange(Number, 1, "G/L Account"."No. of Blank Lines");
                 end;
             }
             dataitem("Integer"; "Integer")
             {
-                DataItemTableView = SORTING(Number) WHERE(Number = CONST(1));
+                DataItemTableView = sorting(Number) where(Number = const(1));
                 column(G_L_Account___No__; "G/L Account"."No.")
                 {
                 }
-                column(PADSTR_____G_L_Account__Indentation___2___G_L_Account__Name; PADSTR('', "G/L Account".Indentation * 2) + "G/L Account".Name)
+                column(PADSTR_____G_L_Account__Indentation___2___G_L_Account__Name; PadStr('', "G/L Account".Indentation * 2) + "G/L Account".Name)
                 {
                 }
                 column(ShowAccType; ShowAccType)
@@ -115,7 +116,7 @@ report 50083 "Income Statement 1"
                 column(G_L_Account___No___Control1500022; "G/L Account"."No.")
                 {
                 }
-                column(PADSTR_____G_L_Account__Indentation___2___G_L_Account__Name_Control1500023; PADSTR('', "G/L Account".Indentation * 2) + "G/L Account".Name)
+                column(PADSTR_____G_L_Account__Indentation___2___G_L_Account__Name_Control1500023; PadStr('', "G/L Account".Indentation * 2) + "G/L Account".Name)
                 {
                 }
                 column(CurrentPeriodNetChange; CurrentPeriodNetChange)
@@ -141,7 +142,7 @@ report 50083 "Income Statement 1"
                 column(G_L_Account___No___Control1500029; "G/L Account"."No.")
                 {
                 }
-                column(PADSTR_____G_L_Account__Indentation___2___G_L_Account__Name_Control1500030; PADSTR('', "G/L Account".Indentation * 2) + "G/L Account".Name)
+                column(PADSTR_____G_L_Account__Indentation___2___G_L_Account__Name_Control1500030; PadStr('', "G/L Account".Indentation * 2) + "G/L Account".Name)
                 {
                 }
                 column(LastYTDNetChange_Control1500031; LastYTDNetChange)
@@ -174,60 +175,60 @@ report 50083 "Income Statement 1"
 
             trigger OnAfterGetRecord()
             begin
-                IF NOT AddCurr THEN BEGIN
-                    SETRANGE("Date Filter", CurrentPeriodStart, CurrentPeriodEnd);
-                    CALCFIELDS("Net Change");
+                if not AddCurr then begin
+                    SetRange("Date Filter", CurrentPeriodStart, CurrentPeriodEnd);
+                    CalcFields("Net Change");
                     CurrentPeriodNetChange := ReportMngmt.RoundAmount("Net Change", RoundingFactor);
 
-                    SETRANGE("Date Filter", CurrentYearStart, CurrentPeriodEnd);
-                    CALCFIELDS("Net Change");
+                    SetRange("Date Filter", CurrentYearStart, CurrentPeriodEnd);
+                    CalcFields("Net Change");
                     CurrentYTDNetChange := ReportMngmt.RoundAmount("Net Change", RoundingFactor);
 
-                    SETRANGE("Date Filter", LastYearCurrentPeriodStart, LastYearCurrentPeriodEnd);
-                    CALCFIELDS("Net Change");
+                    SetRange("Date Filter", LastYearCurrentPeriodStart, LastYearCurrentPeriodEnd);
+                    CalcFields("Net Change");
                     LastYrCurrPeriodNetChange := ReportMngmt.RoundAmount("Net Change", RoundingFactor);
 
-                    SETRANGE("Date Filter", LastYearStart, LastYearCurrentPeriodEnd);
-                    CALCFIELDS("Net Change");
+                    SetRange("Date Filter", LastYearStart, LastYearCurrentPeriodEnd);
+                    CalcFields("Net Change");
                     LastYTDNetChange := ReportMngmt.RoundAmount("Net Change", RoundingFactor);
 
-                    IF (CurrentPeriodNetChange = 0) AND (CurrentYTDNetChange = 0) AND
-                       (LastYrCurrPeriodNetChange = 0) AND (LastYTDNetChange = 0) AND
+                    if (CurrentPeriodNetChange = 0) and (CurrentYTDNetChange = 0) and
+                       (LastYrCurrPeriodNetChange = 0) and (LastYTDNetChange = 0) and
                        ("Account Type" = "Account Type"::Posting)
-                    THEN
-                        CurrReport.SKIP;
-                END ELSE BEGIN
-                    SETRANGE("Date Filter", CurrentPeriodStart, CurrentPeriodEnd);
-                    CALCFIELDS("Additional-Currency Net Change");
+                    then
+                        CurrReport.Skip;
+                end else begin
+                    SetRange("Date Filter", CurrentPeriodStart, CurrentPeriodEnd);
+                    CalcFields("Additional-Currency Net Change");
                     CurrentPeriodNetChange :=
                       ReportMngmt.RoundAmount("Additional-Currency Net Change", RoundingFactor);
 
-                    SETRANGE("Date Filter", CurrentYearStart, CurrentPeriodEnd);
-                    CALCFIELDS("Additional-Currency Net Change");
+                    SetRange("Date Filter", CurrentYearStart, CurrentPeriodEnd);
+                    CalcFields("Additional-Currency Net Change");
                     CurrentYTDNetChange :=
                       ReportMngmt.RoundAmount("Additional-Currency Net Change", RoundingFactor);
 
-                    SETRANGE("Date Filter", LastYearCurrentPeriodStart, LastYearCurrentPeriodEnd);
-                    CALCFIELDS("Additional-Currency Net Change");
+                    SetRange("Date Filter", LastYearCurrentPeriodStart, LastYearCurrentPeriodEnd);
+                    CalcFields("Additional-Currency Net Change");
                     LastYrCurrPeriodNetChange :=
                       ReportMngmt.RoundAmount("Additional-Currency Net Change", RoundingFactor);
 
-                    SETRANGE("Date Filter", LastYearStart, LastYearCurrentPeriodEnd);
-                    CALCFIELDS("Net Change");
+                    SetRange("Date Filter", LastYearStart, LastYearCurrentPeriodEnd);
+                    CalcFields("Net Change");
                     LastYTDNetChange :=
                       ReportMngmt.RoundAmount("Additional-Currency Net Change", RoundingFactor);
 
-                    IF (CurrentPeriodNetChange = 0) AND (CurrentYTDNetChange = 0) AND
-                       (LastYrCurrPeriodNetChange = 0) AND (LastYTDNetChange = 0) AND
+                    if (CurrentPeriodNetChange = 0) and (CurrentYTDNetChange = 0) and
+                       (LastYrCurrPeriodNetChange = 0) and (LastYTDNetChange = 0) and
                        ("Account Type" = "Account Type"::Posting)
-                    THEN
-                        CurrReport.SKIP;
-                END;
+                    then
+                        CurrReport.Skip;
+                end;
                 PageGroupNo := NextPageGroupNo;
                 ShowAccType := "G/L Account"."Account Type";
-                IF "G/L Account"."New Page" THEN
+                if "G/L Account"."New Page" then
                     NextPageGroupNo := PageGroupNo + 1;
-                IF PageGroupNo = NextPageGroupNo THEN
+                if PageGroupNo = NextPageGroupNo then
                     PageGroupNo := NextPageGroupNo - 1;
             end;
 
@@ -235,17 +236,17 @@ report 50083 "Income Statement 1"
             begin
                 // Add TotalLongText,TotalHeaderText.Begin,COMMENTS
                 TotalLongText :=
-                  STRSUBSTNO(
+                  StrSubstNo(
                     'Period: %1..%2 versus %3..%4',
                     CurrentPeriodStart, CurrentPeriodEnd, LastYearCurrentPeriodStart, LastYearCurrentPeriodEnd) + '' + '' + '';
 
-                GLSetupNNC.GET;
-                IF AddCurr THEN
-                    TotalHeaderText := STRSUBSTNO(Text1450000, GLSetupNNC."Additional Reporting Currency")
-                ELSE BEGIN
-                    GLSetupNNC.TESTFIELD("LCY Code");
-                    TotalHeaderText := STRSUBSTNO(Text1450000, GLSetupNNC."LCY Code");
-                END;
+                GLSetupNNC.Get;
+                if AddCurr then
+                    TotalHeaderText := StrSubstNo(Text1450000, GLSetupNNC."Additional Reporting Currency")
+                else begin
+                    GLSetupNNC.TestField("LCY Code");
+                    TotalHeaderText := StrSubstNo(Text1450000, GLSetupNNC."LCY Code");
+                end;
                 // Add TotalLongText,TotalHeaderText.End
 
                 PageGroupNo := 1;
@@ -260,7 +261,7 @@ report 50083 "Income Statement 1"
 
         layout
         {
-            area(content)
+            area(Content)
             {
                 group(Options)
                 {
@@ -268,13 +269,15 @@ report 50083 "Income Statement 1"
                     field(AmountsInWhole; RoundingFactor)
                     {
                         Caption = 'Amounts in whole';
-                        ApplicationArea = all;
+                        ApplicationArea = All;
+                        ToolTip = 'Specifies the value of the Amounts in whole field.';
                     }
                     field(ShowAmountsInAddReportingCurrency; AddCurr)
                     {
                         Caption = 'Show Amounts in Add. Reporting Currency';
                         MultiLine = true;
-                        ApplicationArea = all;
+                        ApplicationArea = All;
+                        ToolTip = 'Specifies the value of the Show Amounts in Add. Reporting Currency field.';
                     }
                 }
             }
@@ -291,26 +294,26 @@ report 50083 "Income Statement 1"
 
     trigger OnPreReport()
     begin
-        GLFilter := "G/L Account".GETFILTERS;
+        GLFilter := "G/L Account".GetFilters;
         RoundFactorText := ReportMngmt.RoundDescription(RoundingFactor);
-        CurrentPeriodStart := "G/L Account".GETRANGEMIN("Date Filter");
-        CurrentPeriodEnd := "G/L Account".GETRANGEMAX("Date Filter");
+        CurrentPeriodStart := "G/L Account".GetRangeMin("Date Filter");
+        CurrentPeriodEnd := "G/L Account".GetRangeMax("Date Filter");
 
-        LastYearCurrentPeriodStart := CALCDATE('-1Y', NORMALDATE(CurrentPeriodStart) + 1) - 1;
-        LastYearCurrentPeriodEnd := CALCDATE('-1Y', NORMALDATE(CurrentPeriodEnd) + 1) - 1;
-        IF CurrentPeriodStart <> NORMALDATE(CurrentPeriodStart) THEN
-            LastYearCurrentPeriodStart := CLOSINGDATE(LastYearCurrentPeriodStart);
-        IF CurrentPeriodEnd <> NORMALDATE(CurrentPeriodEnd) THEN
-            LastYearCurrentPeriodEnd := CLOSINGDATE(LastYearCurrentPeriodEnd);
+        LastYearCurrentPeriodStart := CalcDate('-1Y', NormalDate(CurrentPeriodStart) + 1) - 1;
+        LastYearCurrentPeriodEnd := CalcDate('-1Y', NormalDate(CurrentPeriodEnd) + 1) - 1;
+        if CurrentPeriodStart <> NormalDate(CurrentPeriodStart) then
+            LastYearCurrentPeriodStart := ClosingDate(LastYearCurrentPeriodStart);
+        if CurrentPeriodEnd <> NormalDate(CurrentPeriodEnd) then
+            LastYearCurrentPeriodEnd := ClosingDate(LastYearCurrentPeriodEnd);
 
-        AccPeriod.RESET;
-        AccPeriod.SETRANGE("New Fiscal Year", TRUE, TRUE);
-        AccPeriod.SETFILTER("Starting Date", '..%1', CurrentPeriodEnd);
-        AccPeriod.FINDLAST;
+        AccPeriod.Reset;
+        AccPeriod.SetRange("New Fiscal Year", true, true);
+        AccPeriod.SetFilter("Starting Date", '..%1', CurrentPeriodEnd);
+        AccPeriod.FindLast;
         CurrentYearStart := AccPeriod."Starting Date";
 
-        AccPeriod.SETFILTER("Starting Date", '..%1', LastYearCurrentPeriodEnd);
-        IF AccPeriod.FINDLAST THEN
+        AccPeriod.SetFilter("Starting Date", '..%1', LastYearCurrentPeriodEnd);
+        if AccPeriod.FindLast then
             LastYearStart := AccPeriod."Starting Date";
     end;
 

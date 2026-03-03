@@ -1,44 +1,44 @@
-dotnet
-{
-    // assembly(System)
-    // {
-    //     Version = '4.0.0.0';
-    //     Culture = neutral;
-    //     PublicKeyToken = 'b77a5c561934e089';
+//dotnet
+//{
+// assembly(System)
+// {
+//     Version = '4.0.0.0';
+//     Culture = neutral;
+//     PublicKeyToken = 'b77a5c561934e089';
 
-    //     type(System.Text.RegularExpressions.Regex; MyRegEx) { }
-    //     type(System.Text.RegularExpressions.RegexOptions; MyRegExOptions) { }
-
-
-
-    //     //RegEx: DotNet "'System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'.System.Text.RegularExpressions.Regex";
-    //     //RegExOptions: DotNet "'System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'.System.Text.RegularExpressions.RegexOptions";
-    //     //System.Environment.'mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'
-
-    // }
-    // assembly(mscorlib)
-    // {
-    //     type(System.ArgumentNullException; MyRegEx1) { }
-    //     type(System.ArgumentNullException; MyRegExOptions1) { }
-
-    //     type(System.IO.StreamWriter; streamWriter_DT) { }
-
-    //     type(System.Text.UnicodeEncoding; encoding_DT) { }
-
-    //     type(System.IO.Directory; Folder_DT) { }
-    //     type("System.Collections.Generic.List`1"; Lst_DT) { }
-    //     type(System.Object; Obj_DT) { }
-
-    //     type(System.Environment; MyENV) { }
-
-    //     //streamWriter: DotNet "'mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'.System.IO.StreamWriter";
-    //     //encoding: DotNet "'mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'.System.Text.UnicodeEncoding";
-
-    // }
+//     type(System.Text.RegularExpressions.Regex; MyRegEx) { }
+//     type(System.Text.RegularExpressions.RegexOptions; MyRegExOptions) { }
 
 
 
-}
+//     //RegEx: DotNet "'System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'.System.Text.RegularExpressions.Regex";
+//     //RegExOptions: DotNet "'System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'.System.Text.RegularExpressions.RegexOptions";
+//     //System.Environment.'mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'
+
+// }
+// assembly(mscorlib)
+// {
+//     type(System.ArgumentNullException; MyRegEx1) { }
+//     type(System.ArgumentNullException; MyRegExOptions1) { }
+
+//     type(System.IO.StreamWriter; streamWriter_DT) { }
+
+//     type(System.Text.UnicodeEncoding; encoding_DT) { }
+
+//     type(System.IO.Directory; Folder_DT) { }
+//     type("System.Collections.Generic.List`1"; Lst_DT) { }
+//     type(System.Object; Obj_DT) { }
+
+//     type(System.Environment; MyENV) { }
+
+//     //streamWriter: DotNet "'mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'.System.IO.StreamWriter";
+//     //encoding: DotNet "'mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'.System.Text.UnicodeEncoding";
+
+// }
+
+
+
+//}
 
 
 
@@ -65,17 +65,17 @@ codeunit 50000 "General Mgt."
     //TAL0.18 2022/01/21 VC look up producer group growers
 
 
-    Permissions = TableData "Item Ledger Entry" = rm,
-                  TableData "Value Entry" = rm,
-                  TableData "Sales Shipment Header" = rm,
-                  TableData "Sales Shipment Line" = rm,
-                  TableData "Sales Invoice Header" = rm,
-                  TableData "Sales Invoice Line" = rm,
-                  TableData "Sales Cr.Memo Header" = rm,
-                  TableData "Sales Cr.Memo Line" = rm,
-                  TableData "Return Receipt Header" = rm,
-                  TableData "Return Receipt Line" = rm,
-                  TableData "Sales & Receivables Setup" = rm;
+    Permissions = tabledata "Item Ledger Entry" = rm,
+                  tabledata "Value Entry" = rm,
+                  tabledata "Sales Shipment Header" = rm,
+                  tabledata "Sales Shipment Line" = rm,
+                  tabledata "Sales Invoice Header" = rm,
+                  tabledata "Sales Invoice Line" = rm,
+                  tabledata "Sales Cr.Memo Header" = rm,
+                  tabledata "Sales Cr.Memo Line" = rm,
+                  tabledata "Return Receipt Header" = rm,
+                  tabledata "Return Receipt Line" = rm,
+                  tabledata "Sales & Receivables Setup" = rm;
 
     trigger OnRun();
     begin
@@ -89,7 +89,7 @@ codeunit 50000 "General Mgt."
         WindowTotalCount: Integer;
         WindowLineCount: Integer;
         CurrentLine: Text;
-        TargetText: BigText;
+        //TargetText: BigText;
         Text1000013: TextConst ENU = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ./- ', NLD = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ./- ';
         Text1000014: TextConst ENU = 'Invalid sign used in Fillingcharacter', NLD = 'Ongeldig teken gebruikt in vulteken';
         Text1000015: TextConst ENU = '<Integer>', NLD = '<Integer>';
@@ -97,8 +97,11 @@ codeunit 50000 "General Mgt."
         Text1000008: TextConst ENU = '<standard format,2>', NLD = '<standard format,2>';
         Text1000009: TextConst ENU = 'X', NLD = 'X';
         vG_UseDotNet: Boolean;
-        TargetFile: File;
-        TargetStream: OutStream;
+        //TargetFile: File;
+        TempBlob: Codeunit "Temp Blob";
+        OutStr: OutStream;
+        InStr: InStream;
+        //TargetStream: OutStream;
         ExportFileName: Text[1024];
         rG_SRSetup: Record "Sales & Receivables Setup";
         // streamWriter: DotNet streamWriter_DT; //"'mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'.System.IO.StreamWriter";
@@ -188,7 +191,6 @@ codeunit 50000 "General Mgt."
         Text50021: Label 'Are you sure to Update Return Receipt Line Net Weight %1 records?';
         Text50022: Label 'Are you sure to Update ILE Level Zero %1 records?';
         Text50023: Label 'Are you sure to Update ILE Lot Grower No. %1 records?';
-
         vG_TempBlob: Codeunit "Temp Blob";
         vG_OutS: OutStream;
         vG_InS: InStream;
@@ -239,17 +241,18 @@ codeunit 50000 "General Mgt."
         OrderQty: Record "Order Qty";
         OrderQtyExists: Boolean;
         OrderQtyHeaderExists: Boolean;
+        Instream: InStream;
 
     begin
         //MESSAGE(FORMAT(pSalesOrder.COUNT));
         vInsert := false;
-        pSalesOrder.TESTFIELD("Sell-to Customer No.", 'CUST00032');
+        pSalesOrder.TestField("Sell-to Customer No.", 'CUST00032');
         if pSalesOrder."External Document No." = '' then begin
             //insert mode
             vInsert := true;
         end else begin
             //modify mode
-            pSalesOrder.TESTFIELD("External Document No.", '');
+            pSalesOrder.TestField("External Document No.", '');
         end;
 
         /*
@@ -265,53 +268,56 @@ codeunit 50000 "General Mgt."
 
         //MyDecimalPoint:= GetDecimalsPoint;
 
-        rG_SRSetup.GET;
-        rG_SRSetup.TESTFIELD("Lidl Import Sundry Grower"); //TAL0.14
+        rG_SRSetup.Get;
+        rG_SRSetup.TestField("Lidl Import Sundry Grower"); //TAL0.14
 
         //open the file
-        vL_FileName := cu_FileMgt.UploadFile(Text50000, ExcelFileExtensionTok);
+        /* vL_FileName := cu_FileMgt.UploadFile(Text50000, ExcelFileExtensionTok);
         SheetName := ExcelBuffer.SelectSheetsName(vL_FileName);
         if SheetName = '' then
             exit;
 
-        ExcelBuffer.OpenBook(vL_FileName, SheetName);
-        ExcelBuffer.ReadSheet;
+        ExcelBuffer.OpenBook(vL_FileName, SheetName); */
+        IF UploadIntoStream(Text50000, 'C:\TEMP', 'All Files (*.*)|*.*', vL_FileName, Instream) then begin
+            ExcelBuffer.OpenBookStream(Instream, ExcelBuffer.SelectSheetsNameStream(Instream));
+            ExcelBuffer.ReadSheet;
+        end;
         RowNo := 0;
         ColumnNo := 0;
 
-        ExcelBuffer.RESET;
-        ExcelBuffer.FINDLAST;
+        ExcelBuffer.Reset;
+        ExcelBuffer.FindLast;
         RowNoMax := ExcelBuffer."Row No.";
         ColumnNoMax := 28; //ExcelBuffer."Column No."; //NOD0.2;
 
         vL_RowNo := 0;
 
-        Window.OPEN('Record Processing #1###############');
+        Window.Open('Record Processing #1###############');
         WindowTotalCount := RowNoMax;
         WindowLineCount := 0;
 
         //Get the order Date
-        ExcelBuffer.RESET;
-        ExcelBuffer.SETRANGE("Row No.", 1);
-        ExcelBuffer.SETRANGE("Column No.", 2);
-        if ExcelBuffer.FINDSET then begin
+        ExcelBuffer.Reset;
+        ExcelBuffer.SetRange("Row No.", 1);
+        ExcelBuffer.SetRange("Column No.", 2);
+        if ExcelBuffer.FindSet then begin
             //MESSAGE(Trim(ExcelBuffer."Cell Value as Text"));
-            EVALUATE(vl_OrderDate, Trim(ExcelBuffer."Cell Value as Text"));
+            Evaluate(vl_OrderDate, Trim(ExcelBuffer."Cell Value as Text"));
         end;
 
 
         //Get the Batch No.
-        ExcelBuffer.RESET;
-        ExcelBuffer.SETRANGE("Row No.", 2);
-        ExcelBuffer.SETRANGE("Column No.", 2);
-        if ExcelBuffer.FINDSET then begin
+        ExcelBuffer.Reset;
+        ExcelBuffer.SetRange("Row No.", 2);
+        ExcelBuffer.SetRange("Column No.", 2);
+        if ExcelBuffer.FindSet then begin
             //MESSAGE(Trim(ExcelBuffer."Cell Value as Text"));
-            EVALUATE(vL_BatchNo, Trim(ExcelBuffer."Cell Value as Text"));
+            Evaluate(vL_BatchNo, Trim(ExcelBuffer."Cell Value as Text"));
 
             //48 - 03 TUE 607428111701 - 29389
             //Lot No 4802
 
-            vL_Day := FORMAT(DATE2DWY(vl_OrderDate, 1) + 1);
+            vL_Day := Format(Date2DWY(vl_OrderDate, 1) + 1);
             vL_DayTemp := vL_Day; //TAL0.7
 
             //+TAL0.5
@@ -328,30 +334,30 @@ codeunit 50000 "General Mgt."
             end;
             //-TAL0.5
 
-            vL_Day := PADSTR('', 2 - STRLEN(vL_Day), '0') + vL_Day;
+            vL_Day := PadStr('', 2 - StrLen(vL_Day), '0') + vL_Day;
 
 
-            vL_Week := FORMAT(DATE2DWY(vl_OrderDate, 2));
-            vL_DayWeekTemp := FORMAT(DATE2DWY(vl_OrderDate, 1));
+            vL_Week := Format(Date2DWY(vl_OrderDate, 2));
+            vL_DayWeekTemp := Format(Date2DWY(vl_OrderDate, 1));
             //+TAL0.7
             if vL_DayWeekTemp = '7' then begin //sunday placed
-                EVALUATE(tmp_int, vL_Week);
+                Evaluate(tmp_int, vL_Week);
                 tmp_int += 1;
-                vL_Week := FORMAT(tmp_int);
+                vL_Week := Format(tmp_int);
             end;
             //-TAL0.7
 
             //check greater than 52
-            EVALUATE(tmp_int, vL_Week);
+            Evaluate(tmp_int, vL_Week);
             if tmp_int > 52 then begin
                 tmp_int := 1;
-                vL_Week := FORMAT(tmp_int);
+                vL_Week := Format(tmp_int);
             end;
 
-            vL_WeekDayText := COPYSTR(FORMAT(vl_OrderDate, 0, '<Weekday Text>'), 1, 3);
-            vL_WeekDayText := UPPERCASE(vL_WeekDayText);
-            vL_Week := PADSTR('', 2 - STRLEN(vL_Week), '0') + vL_Week;
-            vl_ExtDocNo := vL_Week + ' - ' + vL_Day + ' ' + vL_WeekDayText + ' 7019' + FORMAT(vl_OrderDate, 0, '<Day,2><Month,2><Year,2>') + '01';
+            vL_WeekDayText := CopyStr(Format(vl_OrderDate, 0, '<Weekday Text>'), 1, 3);
+            vL_WeekDayText := UpperCase(vL_WeekDayText);
+            vL_Week := PadStr('', 2 - StrLen(vL_Week), '0') + vL_Week;
+            vl_ExtDocNo := vL_Week + ' - ' + vL_Day + ' ' + vL_WeekDayText + ' 7019' + Format(vl_OrderDate, 0, '<Day,2><Month,2><Year,2>') + '01';
 
             //+TAL0.6
             //DATE2DWY Monday =1
@@ -364,14 +370,14 @@ codeunit 50000 "General Mgt."
             //Lots
             //***************
             //DATE2DWY Monday =1
-            vL_DayLot := FORMAT(DATE2DWY(vl_OrderDate, 1));
+            vL_DayLot := Format(Date2DWY(vl_OrderDate, 1));
             vL_DayTemp := vL_DayLot;
             if vL_DayTemp = '8' then begin
                 vL_DayLot := '1';
             end;
-            vL_DayLot := PADSTR('', 2 - STRLEN(vL_DayLot), '0') + vL_DayLot;
-            vL_WeekLot := FORMAT(DATE2DWY(vl_OrderDate, 2));
-            vL_WeekLot := PADSTR('', 2 - STRLEN(vL_WeekLot), '0') + vL_WeekLot;
+            vL_DayLot := PadStr('', 2 - StrLen(vL_DayLot), '0') + vL_DayLot;
+            vL_WeekLot := Format(Date2DWY(vl_OrderDate, 2));
+            vL_WeekLot := PadStr('', 2 - StrLen(vL_WeekLot), '0') + vL_WeekLot;
             vl_LotNo := 'Lot No: ' + vL_WeekLot + '-' + vL_DayLot;
             //+TAL0.6
         end;
@@ -379,49 +385,49 @@ codeunit 50000 "General Mgt."
         //MESSAGE(vl_ExtDocNo);
         //MESSAGE(vl_LotNo);
 
-        pSalesOrder.VALIDATE("Posting Date", vl_OrderDate);
-        pSalesOrder.VALIDATE("Document Date", vl_OrderDate);
-        pSalesOrder.VALIDATE("Order Date", vl_OrderDate); //1.0.0.113
-        pSalesOrder.VALIDATE("Requested Delivery Date", vl_OrderDate);
-        pSalesOrder.VALIDATE("External Document No.", vl_ExtDocNo);
-        pSalesOrder.VALIDATE("Batch No.", vL_BatchNo);
-        pSalesOrder.VALIDATE("Lot No.", 'L' + vL_WeekLot + '-' + vL_DayLot); //TAL0.11
-        pSalesOrder.MODIFY;
+        pSalesOrder.Validate("Posting Date", vl_OrderDate);
+        pSalesOrder.Validate("Document Date", vl_OrderDate);
+        pSalesOrder.Validate("Order Date", vl_OrderDate); //1.0.0.113
+        pSalesOrder.Validate("Requested Delivery Date", vl_OrderDate);
+        pSalesOrder.Validate("External Document No.", vl_ExtDocNo);
+        pSalesOrder.Validate("Batch No.", vL_BatchNo);
+        pSalesOrder.Validate("Lot No.", 'L' + vL_WeekLot + '-' + vL_DayLot); //TAL0.11
+        pSalesOrder.Modify;
 
-        vL_ItemTrackingLotNo := 'L' + COPYSTR(FORMAT(DATE2DWY(vl_OrderDate, 3)), 3, 2) + '-' + vL_WeekLot + '-' + vL_DayLot;
+        vL_ItemTrackingLotNo := 'L' + CopyStr(Format(Date2DWY(vl_OrderDate, 3)), 3, 2) + '-' + vL_WeekLot + '-' + vL_DayLot;
 
 
         tmpLineNo := 0;
         //insert the first 3 lines
         if vInsert then begin
             tmpLineNo := 10000;
-            CLEAR(SalesLine);
+            Clear(SalesLine);
             SalesLine."Document Type" := pSalesOrder."Document Type";
             SalesLine."Document No." := pSalesOrder."No.";
             SalesLine."Line No." := tmpLineNo;
             SalesLine.Description := vl_ExtDocNo;
-            SalesLine.INSERT(true);
+            SalesLine.Insert(true);
 
             tmpLineNo += 10000;
-            CLEAR(SalesLine);
+            Clear(SalesLine);
             SalesLine."Document Type" := pSalesOrder."Document Type";
             SalesLine."Document No." := pSalesOrder."No.";
             SalesLine."Line No." := tmpLineNo;
             SalesLine.Description := vl_LotNo;
-            SalesLine.INSERT(true);
+            SalesLine.Insert(true);
 
             tmpLineNo += 10000;
-            CLEAR(SalesLine);
+            Clear(SalesLine);
             SalesLine."Document Type" := pSalesOrder."Document Type";
             SalesLine."Document No." := pSalesOrder."No.";
             SalesLine."Line No." := tmpLineNo;
             SalesLine.Description := '=========================';
-            SalesLine.INSERT(true);
+            SalesLine.Insert(true);
         end;
 
 
         OrderQtyHeaderExists := false;
-        OrderQty.RESET;
+        OrderQty.Reset;
         OrderQty.SetRange("Customer No.", pSalesOrder."Sell-to Customer No.");
         OrderQty.SetRange("Order Date", pSalesOrder."Order Date");
         if OrderQty.FindSet() then begin
@@ -429,12 +435,12 @@ codeunit 50000 "General Mgt."
         end;
 
 
-        ExcelBuffer.RESET;
+        ExcelBuffer.Reset;
         for RowNo := 8 to RowNoMax do begin //STARTING LINE
-            ExcelBuffer.SETRANGE("Row No.", RowNo);
+            ExcelBuffer.SetRange("Row No.", RowNo);
 
             WindowLineCount += 1;
-            Window.UPDATE(1, FORMAT(WindowLineCount) + '/' + FORMAT(WindowTotalCount));
+            Window.Update(1, Format(WindowLineCount) + '/' + Format(WindowTotalCount));
 
             Colmn1_DeliveryID := '';
             Colmn4_ItemNo := '';
@@ -444,42 +450,42 @@ codeunit 50000 "General Mgt."
 
 
             for ColumnNo := 1 to ColumnNoMax do begin
-                ExcelBuffer.SETRANGE("Column No.", ColumnNo);
-                if ExcelBuffer.FINDFIRST then begin
+                ExcelBuffer.SetRange("Column No.", ColumnNo);
+                if ExcelBuffer.FindFirst then begin
 
                     case ColumnNo of
 
                         1:
                             begin
-                                EVALUATE(Colmn1_DeliveryID, Trim(ExcelBuffer."Cell Value as Text"));
+                                Evaluate(Colmn1_DeliveryID, Trim(ExcelBuffer."Cell Value as Text"));
                             end;
 
                         4:
                             begin
-                                EVALUATE(Colmn4_ItemNo, Trim(ExcelBuffer."Cell Value as Text"));
+                                Evaluate(Colmn4_ItemNo, Trim(ExcelBuffer."Cell Value as Text"));
                             end;
 
                         9:
                             begin
-                                EVALUATE(Colmn9_CountryCode, Trim(ExcelBuffer."Cell Value as Text"));
+                                Evaluate(Colmn9_CountryCode, Trim(ExcelBuffer."Cell Value as Text"));
                             end;
 
 
                         10:
                             begin
-                                EVALUATE(Colmn10_ProductClassCat, Trim(ExcelBuffer."Cell Value as Text"));
+                                Evaluate(Colmn10_ProductClassCat, Trim(ExcelBuffer."Cell Value as Text"));
                             end;
 
                         11:
                             begin
-                                EVALUATE(Colmn11_PackageQty, ConvertDelim(Trim(ExcelBuffer."Cell Value as Text"))); //TAL0.4
+                                Evaluate(Colmn11_PackageQty, ConvertDelim(Trim(ExcelBuffer."Cell Value as Text"))); //TAL0.4
 
                             end;
 
 
                         28:
                             begin
-                                EVALUATE(Colmn24_QtyRequested, Trim(ExcelBuffer."Cell Value as Text"));
+                                Evaluate(Colmn24_QtyRequested, Trim(ExcelBuffer."Cell Value as Text"));
 
 
 
@@ -489,29 +495,29 @@ codeunit 50000 "General Mgt."
 
                                     //get navision item No
                                     if rG_SRSetup."Enable Lidl Cross-Ref Search" then begin
-                                        rL_CrossReference.RESET;
+                                        rL_CrossReference.Reset;
                                         /* rL_CrossReference.SETRANGE("Cross-Reference Type", rL_CrossReference."Cross-Reference Type"::Customer);
                                         rL_CrossReference.SETFILTER("Cross-Reference Type No.", pSalesOrder."Sell-to Customer No.");
                                         rL_CrossReference.SETFILTER("Cross-Reference No.", Colmn4_ItemNo);
                                         rL_CrossReference.SETRANGE("Discontinue Bar Code", false); */
-                                        rL_CrossReference.SETRANGE("Reference Type", rL_CrossReference."Reference Type"::Customer);
-                                        rL_CrossReference.SETFILTER("Reference Type No.", pSalesOrder."Sell-to Customer No.");
-                                        rL_CrossReference.SETFILTER("Reference No.", Colmn4_ItemNo);
+                                        rL_CrossReference.SetRange("Reference Type", rL_CrossReference."Reference Type"::Customer);
+                                        rL_CrossReference.SetFilter("Reference Type No.", pSalesOrder."Sell-to Customer No.");
+                                        rL_CrossReference.SetFilter("Reference No.", Colmn4_ItemNo);
                                         //rL_CrossReference.SETRANGE("Discontinue Bar Code", false); //field remove from table due to not used
-                                        if rL_CrossReference.FINDSET then begin
-                                            rL_Item.GET(rL_CrossReference."Item No.");
-                                            rL_Item.TESTFIELD("Package Qty", Colmn11_PackageQty);
+                                        if rL_CrossReference.FindSet then begin
+                                            rL_Item.Get(rL_CrossReference."Item No.");
+                                            rL_Item.TestField("Package Qty", Colmn11_PackageQty);
 
                                         end else begin
-                                            ERROR('Item not found in Item Card-> Cross References: Cross-Reference No.: ' + Colmn4_ItemNo + ' Package Qty: ' + FORMAT(Colmn11_PackageQty));
+                                            Error('Item not found in Item Card-> Cross References: Cross-Reference No.: ' + Colmn4_ItemNo + ' Package Qty: ' + Format(Colmn11_PackageQty));
                                         end;
 
                                     end else begin
-                                        rL_Item.RESET;
-                                        rL_Item.SETFILTER("Shelf No.", Colmn4_ItemNo);
-                                        rL_Item.SETRANGE("Package Qty", Colmn11_PackageQty);
-                                        if not rL_Item.FINDSET then begin
-                                            ERROR('Item not found: Shelf No.: ' + Colmn4_ItemNo + ' Package Qty: ' + FORMAT(Colmn11_PackageQty));
+                                        rL_Item.Reset;
+                                        rL_Item.SetFilter("Shelf No.", Colmn4_ItemNo);
+                                        rL_Item.SetRange("Package Qty", Colmn11_PackageQty);
+                                        if not rL_Item.FindSet then begin
+                                            Error('Item not found: Shelf No.: ' + Colmn4_ItemNo + ' Package Qty: ' + Format(Colmn11_PackageQty));
                                         end;
 
                                     end;
@@ -523,17 +529,17 @@ codeunit 50000 "General Mgt."
 
 
                                         tmpLineNo += 10000;
-                                        CLEAR(SalesLine);
+                                        Clear(SalesLine);
                                         SalesLine.SetHideValidationDialog(false); //1.0.0.221
                                         SalesLine."Document Type" := pSalesOrder."Document Type";
                                         SalesLine."Document No." := pSalesOrder."No.";
                                         SalesLine."Line No." := tmpLineNo;
-                                        SalesLine.INSERT(true);
-                                        SalesLine.VALIDATE(Type, SalesLine.Type::Item);
-                                        SalesLine.VALIDATE("No.", rL_Item."No.");
-                                        SalesLine.VALIDATE("Qty. Requested", Colmn24_QtyRequested);
-                                        SalesLine.VALIDATE(Quantity, Colmn24_QtyRequested * Colmn11_PackageQty); //TAL0.2
-                                        SalesLine.VALIDATE("Req. Country", Colmn9_CountryCode);
+                                        SalesLine.Insert(true);
+                                        SalesLine.Validate(Type, SalesLine.Type::Item);
+                                        SalesLine.Validate("No.", rL_Item."No.");
+                                        SalesLine.Validate("Qty. Requested", Colmn24_QtyRequested);
+                                        SalesLine.Validate(Quantity, Colmn24_QtyRequested * Colmn11_PackageQty); //TAL0.2
+                                        SalesLine.Validate("Req. Country", Colmn9_CountryCode);
 
                                         //SalesLine.VALIDATE("Product Class", Colmn10_ProductClassCat);
                                         //+1.0.0.303
@@ -543,12 +549,12 @@ codeunit 50000 "General Mgt."
                                         //-1.0.0.303
 
                                         SalesLine."Product Class" := Colmn10_ProductClassCat;
-                                        SalesLine.MODIFY;
+                                        SalesLine.Modify;
 
                                         //case when excel 1 was zero and then excel 3 has value
                                         OrderQtyExists := false;
                                         if (SalesLine."Shelf No." <> '') and (OrderQtyHeaderExists) then begin
-                                            OrderQty.RESET;
+                                            OrderQty.Reset;
                                             OrderQty.SetRange("Customer No.", pSalesOrder."Sell-to Customer No.");
                                             OrderQty.SetRange("Order Date", pSalesOrder."Order Date");
                                             OrderQty.SetFilter("Shelf No.", SalesLine."Shelf No.");
@@ -562,9 +568,9 @@ codeunit 50000 "General Mgt."
 
                                                 if (OrderQtyExists = false) then begin
                                                     SalesLine."New Order Qty" := true;
-                                                    SalesLine.MODIFY;
+                                                    SalesLine.Modify;
 
-                                                    OrderQty.RESET;
+                                                    OrderQty.Reset;
                                                     OrderQty.SetRange("Customer No.", pSalesOrder."Sell-to Customer No.");
                                                     OrderQty.SetRange("Order Date", pSalesOrder."Order Date");
                                                     OrderQty.SetFilter("Shelf No.", SalesLine."Shelf No.");
@@ -580,42 +586,42 @@ codeunit 50000 "General Mgt."
                                         end;
 
 
-                                        rL_Item.TESTFIELD("Item Tracking Code");
+                                        rL_Item.TestField("Item Tracking Code");
                                         if rL_Item."Item Tracking Code" <> '' then begin
-                                            CLEAR(rL_ReservationEntry);
-                                            rL_ReservationEntry.INIT;
+                                            Clear(rL_ReservationEntry);
+                                            rL_ReservationEntry.Init;
                                             rL_ReservationEntry."Entry No." := 0;
-                                            rL_ReservationEntry.VALIDATE("Item No.", SalesLine."No.");
-                                            rL_ReservationEntry.VALIDATE("Location Code", SalesLine."Location Code");
-                                            rL_ReservationEntry.VALIDATE("Quantity (Base)", -1 * SalesLine."Quantity (Base)");
-                                            rL_ReservationEntry.VALIDATE("Reservation Status", rL_ReservationEntry."Reservation Status"::Surplus);
-                                            rL_ReservationEntry.VALIDATE("Creation Date", TODAY);
-                                            rL_ReservationEntry.VALIDATE("Source Type", 37);
-                                            rL_ReservationEntry.VALIDATE("Source Subtype", 1);
-                                            rL_ReservationEntry.VALIDATE("Source ID", SalesLine."Document No.");
+                                            rL_ReservationEntry.Validate("Item No.", SalesLine."No.");
+                                            rL_ReservationEntry.Validate("Location Code", SalesLine."Location Code");
+                                            rL_ReservationEntry.Validate("Quantity (Base)", -1 * SalesLine."Quantity (Base)");
+                                            rL_ReservationEntry.Validate("Reservation Status", rL_ReservationEntry."Reservation Status"::Surplus);
+                                            rL_ReservationEntry.Validate("Creation Date", Today);
+                                            rL_ReservationEntry.Validate("Source Type", 37);
+                                            rL_ReservationEntry.Validate("Source Subtype", 1);
+                                            rL_ReservationEntry.Validate("Source ID", SalesLine."Document No.");
 
-                                            rL_ReservationEntry.VALIDATE("Source Ref. No.", SalesLine."Line No.");
-                                            rL_ReservationEntry.VALIDATE(Quantity, -1 * SalesLine.Quantity);
-                                            rL_ReservationEntry.VALIDATE("Qty. per Unit of Measure", SalesLine."Qty. per Unit of Measure");
-                                            rL_ReservationEntry.VALIDATE("Qty. to Handle (Base)", -1 * SalesLine."Quantity (Base)");
-                                            rL_ReservationEntry.VALIDATE("Qty. to Invoice (Base)", -1 * SalesLine."Quantity (Base)");
+                                            rL_ReservationEntry.Validate("Source Ref. No.", SalesLine."Line No.");
+                                            rL_ReservationEntry.Validate(Quantity, -1 * SalesLine.Quantity);
+                                            rL_ReservationEntry.Validate("Qty. per Unit of Measure", SalesLine."Qty. per Unit of Measure");
+                                            rL_ReservationEntry.Validate("Qty. to Handle (Base)", -1 * SalesLine."Quantity (Base)");
+                                            rL_ReservationEntry.Validate("Qty. to Invoice (Base)", -1 * SalesLine."Quantity (Base)");
 
-                                            rL_ReservationEntry.VALIDATE("Shipment Date", SalesLine."Shipment Date");
-                                            rL_ReservationEntry.VALIDATE("Created By", USERID);
+                                            rL_ReservationEntry.Validate("Shipment Date", SalesLine."Shipment Date");
+                                            rL_ReservationEntry.Validate("Created By", UserId);
 
 
-                                            rL_ReservationEntry.VALIDATE("Lot No.", vL_ItemTrackingLotNo);
-                                            rL_ReservationEntry.VALIDATE("Item Tracking", rL_ReservationEntry."Item Tracking"::"Lot No.");
-                                            rL_ReservationEntry.INSERT(true);
+                                            rL_ReservationEntry.Validate("Lot No.", vL_ItemTrackingLotNo);
+                                            rL_ReservationEntry.Validate("Item Tracking", rL_ReservationEntry."Item Tracking"::"Lot No.");
+                                            rL_ReservationEntry.Insert(true);
 
                                             //+TAL0.14
                                             //insert lot information card
-                                            CLEAR(rL_LotNoInformation);
-                                            rL_LotNoInformation.INIT;
-                                            rL_LotNoInformation.VALIDATE("Item No.", SalesLine."No.");
-                                            rL_LotNoInformation.VALIDATE("Lot No.", vL_ItemTrackingLotNo);
-                                            rL_LotNoInformation.VALIDATE("Grower No.", rG_SRSetup."Lidl Import Sundry Grower");
-                                            if rL_LotNoInformation.INSERT(true) then;
+                                            Clear(rL_LotNoInformation);
+                                            rL_LotNoInformation.Init;
+                                            rL_LotNoInformation.Validate("Item No.", SalesLine."No.");
+                                            rL_LotNoInformation.Validate("Lot No.", vL_ItemTrackingLotNo);
+                                            rL_LotNoInformation.Validate("Grower No.", rG_SRSetup."Lidl Import Sundry Grower");
+                                            if rL_LotNoInformation.Insert(true) then;
                                             //-TAL0.14
 
 
@@ -631,7 +637,7 @@ codeunit 50000 "General Mgt."
 
 
                                             vL_RowVersion := 1;
-                                            clear(rL_LidlOrderArchive);
+                                            Clear(rL_LidlOrderArchive);
                                             rL_LidlOrderArchive.Reset();
 
                                             rL_LidlOrderArchive.SetCurrentKey("Sales Order No.", "Order Date", "Order Time", "Item No.", "Version No.");
@@ -643,10 +649,10 @@ codeunit 50000 "General Mgt."
                                                 vL_RowVersion := rL_LidlOrderArchive."Version No." + 1;
                                             end;
 
-                                            clear(rL_LidlOrderArchive);
+                                            Clear(rL_LidlOrderArchive);
                                             rL_LidlOrderArchive.Validate("Sales Order No.", SalesLine."Document No.");
                                             rL_LidlOrderArchive.Validate("Order Date", pSalesOrder."Order Date");
-                                            rL_LidlOrderArchive.Validate("Order Time", CreateDateTime(workdate, Time)); //pSalesOrder."Order Date"
+                                            rL_LidlOrderArchive.Validate("Order Time", CreateDateTime(WorkDate, Time)); //pSalesOrder."Order Date"
                                             rL_LidlOrderArchive.Validate("Customer No.", pSalesOrder."Sell-to Customer No.");
                                             rL_LidlOrderArchive.Validate("Shelf No.", SalesLine."Shelf No.");
                                             rL_LidlOrderArchive.Validate("Item No.", SalesLine."No.");
@@ -661,7 +667,7 @@ codeunit 50000 "General Mgt."
 
                                         //becuase excel cannot be editted to delete the lines, commit after each transaction
                                         if rG_SRSetup."Lidl Import Dev Mode" then begin
-                                            COMMIT;
+                                            Commit;
                                         end;
 
                                     end;
@@ -675,7 +681,7 @@ codeunit 50000 "General Mgt."
             end; //end for 2
 
         end; //end for 1
-        Window.CLOSE;
+        Window.Close;
 
     end;
 
@@ -700,12 +706,13 @@ codeunit 50000 "General Mgt."
         rL_CrossReference: Record "Item Reference";
         rL_Item: Record Item;
         SalesLine: Record "Sales Line";
+        Instream: InStream;
     begin
 
 
-        SalesLine.RESET;
+        SalesLine.Reset;
         SalesLine.SetRange("Document Type", pSalesOrder."Document Type");
-        SalesLine.setFilter("Document No.", pSalesOrder."No.");
+        SalesLine.SetFilter("Document No.", pSalesOrder."No.");
         SalesLine.SetRange(Type, SalesLine.Type::Item);
         if SalesLine.FindSet() then begin
             repeat
@@ -713,48 +720,52 @@ codeunit 50000 "General Mgt."
                 SalesLine.Modify();
             until SalesLine.Next() = 0;
         end;
-        commit;
+        Commit;
 
 
-        rG_SRSetup.GET;
+        rG_SRSetup.Get;
 
         //open the file
-        vL_FileName := cu_FileMgt.UploadFile(Text50000, ExcelFileExtensionTok);
+        /* vL_FileName := cu_FileMgt.UploadFile(Text50000, ExcelFileExtensionTok);
         SheetName := ExcelBuffer.SelectSheetsName(vL_FileName);
         if SheetName = '' then
             exit;
 
-        ExcelBuffer.OpenBook(vL_FileName, SheetName);
-        ExcelBuffer.ReadSheet;
+        ExcelBuffer.OpenBook(vL_FileName, SheetName); */
+        IF UploadIntoStream(Text50000, 'C:\TEMP', 'All Files (*.*)|*.*', vL_FileName, Instream) then begin
+            ExcelBuffer.OpenBookStream(Instream, ExcelBuffer.SelectSheetsNameStream(Instream));
+            ExcelBuffer.ReadSheet;
+        end;
+        //ExcelBuffer.ReadSheet;
         RowNo := 0;
         ColumnNo := 0;
 
-        ExcelBuffer.RESET;
-        ExcelBuffer.FINDLAST;
+        ExcelBuffer.Reset;
+        ExcelBuffer.FindLast;
         RowNoMax := ExcelBuffer."Row No.";
         ColumnNoMax := 31; //ExcelBuffer."Column No."; //NOD0.2;
 
         vL_RowNo := 0;
 
-        Window.OPEN('Record Processing #1###############');
+        Window.Open('Record Processing #1###############');
         WindowTotalCount := RowNoMax;
         WindowLineCount := 0;
 
         //Get the order Date
-        ExcelBuffer.RESET;
-        ExcelBuffer.SETRANGE("Row No.", 1);
-        ExcelBuffer.SETRANGE("Column No.", 2);
-        if ExcelBuffer.FINDSET then begin
+        ExcelBuffer.Reset;
+        ExcelBuffer.SetRange("Row No.", 1);
+        ExcelBuffer.SetRange("Column No.", 2);
+        if ExcelBuffer.FindSet then begin
             //MESSAGE(Trim(ExcelBuffer."Cell Value as Text"));
-            EVALUATE(vl_OrderDate, Trim(ExcelBuffer."Cell Value as Text"));
+            Evaluate(vl_OrderDate, Trim(ExcelBuffer."Cell Value as Text"));
         end;
 
-        ExcelBuffer.RESET;
+        ExcelBuffer.Reset;
         for RowNo := 8 to RowNoMax do begin //STARTING LINE
-            ExcelBuffer.SETRANGE("Row No.", RowNo);
+            ExcelBuffer.SetRange("Row No.", RowNo);
 
             WindowLineCount += 1;
-            Window.UPDATE(1, FORMAT(WindowLineCount) + '/' + FORMAT(WindowTotalCount));
+            Window.Update(1, Format(WindowLineCount) + '/' + Format(WindowTotalCount));
 
             Colmn3_Truck := '';
             Colmn4_ItemNo := '';
@@ -764,8 +775,8 @@ codeunit 50000 "General Mgt."
 
 
             for ColumnNo := 1 to ColumnNoMax do begin
-                ExcelBuffer.SETRANGE("Column No.", ColumnNo);
-                if ExcelBuffer.FINDFIRST then begin
+                ExcelBuffer.SetRange("Column No.", ColumnNo);
+                if ExcelBuffer.FindFirst then begin
 
                     case ColumnNo of
                         1:
@@ -775,27 +786,27 @@ codeunit 50000 "General Mgt."
 
                         3:
                             begin
-                                EVALUATE(Colmn3_Truck, Trim(ExcelBuffer."Cell Value as Text"));
+                                Evaluate(Colmn3_Truck, Trim(ExcelBuffer."Cell Value as Text"));
                             end;
 
                         4:
                             begin
-                                EVALUATE(Colmn4_ItemNo, Trim(ExcelBuffer."Cell Value as Text"));
+                                Evaluate(Colmn4_ItemNo, Trim(ExcelBuffer."Cell Value as Text"));
                             end;
 
                         9:
                             begin
-                                EVALUATE(Colmn9_CountryOrigin, Trim(ExcelBuffer."Cell Value as Text"));
+                                Evaluate(Colmn9_CountryOrigin, Trim(ExcelBuffer."Cell Value as Text"));
                             end;
 
                         11:
                             begin
-                                EVALUATE(Colmn11_PackageQty, ConvertDelim(Trim(ExcelBuffer."Cell Value as Text"))); //TAL0.4
+                                Evaluate(Colmn11_PackageQty, ConvertDelim(Trim(ExcelBuffer."Cell Value as Text"))); //TAL0.4
                             end;
 
                         31:
                             begin
-                                EVALUATE(Colmn31_QtyConfirmed, Trim(ExcelBuffer."Cell Value as Text"));
+                                Evaluate(Colmn31_QtyConfirmed, Trim(ExcelBuffer."Cell Value as Text"));
 
                                 //MESSAGE('Colmn1_DeliveryID: '+ Colmn1_DeliveryID + 'Colmn4_ItemNo: '+ Colmn4_ItemNo +' Colmn11_PackageQty: '+FORMAT(Colmn11_PackageQty));
                                 //EXIT;
@@ -803,52 +814,52 @@ codeunit 50000 "General Mgt."
                                     Clear(rL_Item);
                                     //get navision item No
                                     if rG_SRSetup."Enable Lidl Cross-Ref Search" then begin
-                                        rL_CrossReference.RESET;
+                                        rL_CrossReference.Reset;
                                         /* rL_CrossReference.SETRANGE("Cross-Reference Type", rL_CrossReference."Cross-Reference Type"::Customer);
                                         rL_CrossReference.SETFILTER("Cross-Reference Type No.", pSalesOrder."Sell-to Customer No.");
                                         rL_CrossReference.SETFILTER("Cross-Reference No.", Colmn4_ItemNo);
                                         rL_CrossReference.SETRANGE("Discontinue Bar Code", false); */
-                                        rL_CrossReference.SETRANGE("Reference Type", rL_CrossReference."Reference Type"::Customer);
-                                        rL_CrossReference.SETFILTER("Reference Type No.", pSalesOrder."Sell-to Customer No.");
-                                        rL_CrossReference.SETFILTER("Reference No.", Colmn4_ItemNo);
+                                        rL_CrossReference.SetRange("Reference Type", rL_CrossReference."Reference Type"::Customer);
+                                        rL_CrossReference.SetFilter("Reference Type No.", pSalesOrder."Sell-to Customer No.");
+                                        rL_CrossReference.SetFilter("Reference No.", Colmn4_ItemNo);
                                         //rL_CrossReference.SETRANGE("Discontinue Bar Code", false); //Field remove from table due to not is use
-                                        if rL_CrossReference.FINDSET then begin
-                                            rL_Item.GET(rL_CrossReference."Item No.");
-                                            rL_Item.TESTFIELD("Package Qty", Colmn11_PackageQty);
+                                        if rL_CrossReference.FindSet then begin
+                                            rL_Item.Get(rL_CrossReference."Item No.");
+                                            rL_Item.TestField("Package Qty", Colmn11_PackageQty);
 
                                         end else begin
                                             //if not rG_SRSetup."Lidl Import Dev Mode" then begin
                                             //ERROR('Item not found in Item Card-> Cross References: Cross-Reference No.: ' + Colmn4_ItemNo + ' Package Qty: ' + FORMAT(Colmn11_PackageQty));
-                                            message('Item not found in Item Card-> Cross References: Cross-Reference No.: ' + Colmn4_ItemNo + ' Package Qty: ' + FORMAT(Colmn11_PackageQty));
+                                            Message('Item not found in Item Card-> Cross References: Cross-Reference No.: ' + Colmn4_ItemNo + ' Package Qty: ' + Format(Colmn11_PackageQty));
                                             // end;
 
 
                                         end;
 
                                     end else begin
-                                        rL_Item.RESET;
-                                        rL_Item.SETFILTER("Shelf No.", Colmn4_ItemNo);
-                                        rL_Item.SETRANGE("Package Qty", Colmn11_PackageQty);
-                                        if not rL_Item.FINDSET then begin
+                                        rL_Item.Reset;
+                                        rL_Item.SetFilter("Shelf No.", Colmn4_ItemNo);
+                                        rL_Item.SetRange("Package Qty", Colmn11_PackageQty);
+                                        if not rL_Item.FindSet then begin
                                             //if not rG_SRSetup."Lidl Import Dev Mode" then begin
                                             //ERROR('Item not found: Shelf No.: ' + Colmn4_ItemNo + ' Package Qty: ' + FORMAT(Colmn11_PackageQty));
-                                            message('Item not found: Shelf No.: ' + Colmn4_ItemNo + ' Package Qty: ' + FORMAT(Colmn11_PackageQty));
+                                            Message('Item not found: Shelf No.: ' + Colmn4_ItemNo + ' Package Qty: ' + Format(Colmn11_PackageQty));
                                             //end;
                                         end;
                                     end;
 
                                     //
                                     if rL_Item."No." <> '' then begin
-                                        SalesLine.RESET;
+                                        SalesLine.Reset;
                                         SalesLine.SetRange("Document Type", pSalesOrder."Document Type");
-                                        SalesLine.setFilter("Document No.", pSalesOrder."No.");
+                                        SalesLine.SetFilter("Document No.", pSalesOrder."No.");
                                         SalesLine.SetRange(Type, SalesLine.Type::Item);
                                         SalesLine.SetFilter("Shelf No.", Colmn4_ItemNo); //filter based on shelf no
                                         //SalesLine.setFilter("No.", rL_Item."No.");
                                         SalesLine.SetRange("Excel Confirm Write", false); //handle unique excel value, if same item exists on the excel not to process
                                         SalesLine.SetFilter("Req. Country", Colmn9_CountryOrigin); //1.0.0.221
                                         if SalesLine.FindSet() then begin
-                                            SalesLine.VALIDATE("Qty. Confirmed", Colmn31_QtyConfirmed); //1.0.0.207
+                                            SalesLine.Validate("Qty. Confirmed", Colmn31_QtyConfirmed); //1.0.0.207
                                             SalesLine."Excel Confirm Write" := true;
                                             SalesLine.Modify();
                                         end;
@@ -858,7 +869,7 @@ codeunit 50000 "General Mgt."
 
                                     //becuase excel cannot be editted to delete the lines, commit after each transaction
                                     if rG_SRSetup."Lidl Import Dev Mode" then begin
-                                        COMMIT;
+                                        Commit;
                                     end;
 
                                 end;
@@ -869,20 +880,20 @@ codeunit 50000 "General Mgt."
 
             end; //for column=1
         end; //end for 1
-        Window.CLOSE;
+        Window.Close;
     end;
 
     local procedure Trim(pInput: Text) Trimmed: Text;
     begin
 
-        Trimmed := DELCHR(pInput, '<', ' ');
-        Trimmed := DELCHR(Trimmed, '>', ' ');
+        Trimmed := DelChr(pInput, '<', ' ');
+        Trimmed := DelChr(Trimmed, '>', ' ');
     end;
 
     local procedure RemoveDash(pInput: Text) Trimmed: Text;
     begin
 
-        Trimmed := DELCHR(pInput, '=', '-');
+        Trimmed := DelChr(pInput, '=', '-');
 
     end;
 
@@ -891,8 +902,8 @@ codeunit 50000 "General Mgt."
         TempStr: Text;
     begin
 
-        TempStr := FORMAT(1.23, 0);
-        DecimalPoint := COPYSTR(TempStr, 2, 1);
+        TempStr := Format(1.23, 0);
+        DecimalPoint := CopyStr(TempStr, 2, 1);
         exit(DecimalPoint);
     end;
 
@@ -901,10 +912,10 @@ codeunit 50000 "General Mgt."
         lText: Text;
         delim: Text;
     begin
-        lText := FORMAT(1.1);
-        delim := COPYSTR(lText, 2, 1);
-        lExpression := CONVERTSTR(lExpression, ',', FORMAT(delim));
-        lExpression := CONVERTSTR(lExpression, '.', FORMAT(delim));
+        lText := Format(1.1);
+        delim := CopyStr(lText, 2, 1);
+        lExpression := ConvertStr(lExpression, ',', Format(delim));
+        lExpression := ConvertStr(lExpression, '.', Format(delim));
         exit(lExpression);
     end;
 
@@ -915,34 +926,29 @@ codeunit 50000 "General Mgt."
         vL_extension: Text;
         DataCompression: Codeunit "Data Compression";
         ZipFileName: Text[50];
-
     begin
-        rG_CompanyInfo.GET;
-        rG_CompanyInfo.TESTFIELD("VAT Registration No.");
-        rG_CompanyInfo.TESTFIELD(GLN);
-
+        rG_CompanyInfo.Get;
+        rG_CompanyInfo.TestField("VAT Registration No.");
+        rG_CompanyInfo.TestField(GLN);
 
         //https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/methods-auto/file/file-downloadfromstream-method
 
         if pInvoice then begin
-
             ZipFileName := 'SalesInvoices_' + Format(CurrentDateTime) + '.zip';
             DataCompression.CreateZipArchive();
             if pSalesInvHeader.FindSet() then begin
                 repeat
-
-
                     pDocumentNo := pSalesInvHeader."No.";
                     //new
                     //set the counter
-                    rG_SRSetup.GET;
-                    if rG_SRSetup."EDI Last Date" = TODAY then begin
+                    rG_SRSetup.Get;
+                    if rG_SRSetup."EDI Last Date" = Today then begin
                         rG_SRSetup."EDI Counter" += 1;
-                        rG_SRSetup.MODIFY;
+                        rG_SRSetup.Modify;
                     end else begin
-                        rG_SRSetup."EDI Last Date" := TODAY;
+                        rG_SRSetup."EDI Last Date" := Today;
                         rG_SRSetup."EDI Counter" := 1;
-                        rG_SRSetup.MODIFY;
+                        rG_SRSetup.Modify;
                     end;
                     vG_UseDotNet := rG_SRSetup."EDI Export Dot Net";
 
@@ -952,37 +958,32 @@ codeunit 50000 "General Mgt."
                     end;
                     vL_extension := '.txt';
                     FileNameHeader := HeaderPrefix + '_' +
-                               FORMAT(TODAY, 0, '<YEAR4><MONTH,2><Day,2>') + '_' +
-                               FORMAT(rG_SRSetup."EDI Counter") +
+                               Format(Today, 0, '<YEAR4><MONTH,2><Day,2>') + '_' +
+                               Format(rG_SRSetup."EDI Counter") +
                                vL_extension;
 
                     FileNameLines := LinesPrefix + '_' +
-                                FORMAT(TODAY, 0, '<YEAR4><MONTH,2><Day,2>') + '_' +
-                                FORMAT(rG_SRSetup."EDI Counter") +
+                                Format(Today, 0, '<YEAR4><MONTH,2><Day,2>') + '_' +
+                                Format(rG_SRSetup."EDI Counter") +
                                 vL_extension;
 
-
-
-                    rG_SalesInvoiceHeader.GET(pDocumentNo);
+                    rG_SalesInvoiceHeader.Get(pDocumentNo);
                     CheckEDIInvoice(rG_SalesInvoiceHeader);
                     //prepare Header
                     CreateFile(FileNameHeader);
                     HeaderInfoSInvoice;
                     CloseFile;
 
-
-
-
                     //add to zip
                     //cu_FileMgt.DownloadToFile(rG_SRSetup."EDI Export Path Server" + FileNameHeader, rG_SRSetup."EDI Export Path Client" + FileNameHeader);
-                    vG_TempBlob.CreateInStream(vG_InS, TEXTENCODING::UTF8);
+                    vG_TempBlob.CreateInStream(vG_InS, TextEncoding::UTF8);
                     DataCompression.AddEntry(vG_InS, FileNameHeader);
 
-                    rG_SalesInvoiceLine.RESET;
-                    rG_SalesInvoiceLine.SETFILTER("Document No.", rG_SalesInvoiceHeader."No.");
-                    rG_SalesInvoiceLine.SETRANGE(Type, rG_SalesInvoiceLine.Type::Item);
-                    rG_SalesInvoiceLine.SETFILTER("No.", '<>%1', '');
-                    if rG_SalesInvoiceLine.FINDSET then begin
+                    rG_SalesInvoiceLine.Reset;
+                    rG_SalesInvoiceLine.SetFilter("Document No.", rG_SalesInvoiceHeader."No.");
+                    rG_SalesInvoiceLine.SetRange(Type, rG_SalesInvoiceLine.Type::Item);
+                    rG_SalesInvoiceLine.SetFilter("No.", '<>%1', '');
+                    if rG_SalesInvoiceLine.FindSet then begin
                         //Create the lines file
                         CreateFile(FileNameLines);
                         sLineNo := 0;
@@ -990,12 +991,12 @@ codeunit 50000 "General Mgt."
                             //prepare Lines
                             sLineNo += 1;
                             BodyInfoSInvoiceLines;
-                        until rG_SalesInvoiceLine.NEXT = 0;
+                        until rG_SalesInvoiceLine.Next = 0;
                         CloseFile;
 
                         //add to zip
                         //cu_FileMgt.DownloadToFile(rG_SRSetup."EDI Export Path Server" + FileNameLines, rG_SRSetup."EDI Export Path Client" + FileNameLines);
-                        vG_TempBlob.CreateInStream(vG_InS, TEXTENCODING::UTF8);
+                        vG_TempBlob.CreateInStream(vG_InS, TextEncoding::UTF8);
                         DataCompression.AddEntry(vG_InS, FileNameLines);
                     end;
                 until pSalesInvHeader.Next() = 0;
@@ -1008,19 +1009,17 @@ codeunit 50000 "General Mgt."
             DataCompression.CreateZipArchive();
             if pSalesCrMemoHeader.FindSet() then begin
                 repeat
-
-
                     pDocumentNo := pSalesCrMemoHeader."No.";
                     //new
                     //set the counter
-                    rG_SRSetup.GET;
-                    if rG_SRSetup."EDI Last Date" = TODAY then begin
+                    rG_SRSetup.Get;
+                    if rG_SRSetup."EDI Last Date" = Today then begin
                         rG_SRSetup."EDI Counter" += 1;
-                        rG_SRSetup.MODIFY;
+                        rG_SRSetup.Modify;
                     end else begin
-                        rG_SRSetup."EDI Last Date" := TODAY;
+                        rG_SRSetup."EDI Last Date" := Today;
                         rG_SRSetup."EDI Counter" := 1;
-                        rG_SRSetup.MODIFY;
+                        rG_SRSetup.Modify;
                     end;
                     vG_UseDotNet := rG_SRSetup."EDI Export Dot Net";
 
@@ -1031,17 +1030,17 @@ codeunit 50000 "General Mgt."
 
                     vL_extension := '.txt';
                     FileNameHeader := HeaderPrefix + '_' +
-                               FORMAT(TODAY, 0, '<YEAR4><MONTH,2><Day,2>') + '_' +
-                               FORMAT(rG_SRSetup."EDI Counter") +
+                               Format(Today, 0, '<YEAR4><MONTH,2><Day,2>') + '_' +
+                               Format(rG_SRSetup."EDI Counter") +
                                vL_extension;
 
                     FileNameLines := LinesPrefix + '_' +
-                                FORMAT(TODAY, 0, '<YEAR4><MONTH,2><Day,2>') + '_' +
-                                FORMAT(rG_SRSetup."EDI Counter") +
+                                Format(Today, 0, '<YEAR4><MONTH,2><Day,2>') + '_' +
+                                Format(rG_SRSetup."EDI Counter") +
                                 vL_extension;
 
 
-                    rG_SalesCrMemoHeader.GET(pDocumentNo);
+                    rG_SalesCrMemoHeader.Get(pDocumentNo);
 
                     CheckEDICrMemo(rG_SalesCrMemoHeader);
                     //prepare Header
@@ -1051,25 +1050,25 @@ codeunit 50000 "General Mgt."
 
                     //add to zip
                     //cu_FileMgt.DownloadToFile(rG_SRSetup."EDI Export Path Server" + FileNameHeader, rG_SRSetup."EDI Export Path Client" + FileNameHeader);
-                    vG_TempBlob.CreateInStream(vG_InS, TEXTENCODING::UTF8);
+                    vG_TempBlob.CreateInStream(vG_InS, TextEncoding::UTF8);
                     DataCompression.AddEntry(vG_InS, FileNameHeader);
 
-                    rG_SalesCrMemoLine.RESET;
-                    rG_SalesCrMemoLine.SETFILTER("Document No.", rG_SalesCrMemoHeader."No.");
-                    rG_SalesCrMemoLine.SETRANGE(Type, rG_SalesCrMemoLine.Type::Item);
-                    rG_SalesCrMemoLine.SETFILTER("No.", '<>%1', '');
-                    if rG_SalesCrMemoLine.FINDSET then begin
+                    rG_SalesCrMemoLine.Reset;
+                    rG_SalesCrMemoLine.SetFilter("Document No.", rG_SalesCrMemoHeader."No.");
+                    rG_SalesCrMemoLine.SetRange(Type, rG_SalesCrMemoLine.Type::Item);
+                    rG_SalesCrMemoLine.SetFilter("No.", '<>%1', '');
+                    if rG_SalesCrMemoLine.FindSet then begin
                         CreateFile(FileNameLines);
                         sLineNo := 0;
                         repeat
                             sLineNo += 1;
                             BodyInfoSCrMemoLines
-                        until rG_SalesCrMemoLine.NEXT = 0;
+                        until rG_SalesCrMemoLine.Next = 0;
                         CloseFile;
 
                         //add to zip
                         //cu_FileMgt.DownloadToFile(rG_SRSetup."EDI Export Path Server" + FileNameLines, rG_SRSetup."EDI Export Path Client" + FileNameLines);
-                        vG_TempBlob.CreateInStream(vG_InS, TEXTENCODING::UTF8);
+                        vG_TempBlob.CreateInStream(vG_InS, TextEncoding::UTF8);
                         DataCompression.AddEntry(vG_InS, FileNameLines);
                     end;
                 until pSalesCrMemoHeader.Next() = 0;
@@ -1084,9 +1083,8 @@ codeunit 50000 "General Mgt."
             DownloadFromStream(vG_InS, '', '', '', ZipFileName);
         end;
 
-
-        MESSAGE(FORMAT(FileNameHeader) + ' File Generated');
-        MESSAGE(FORMAT(FileNameLines) + ' File Generated');
+        Message(Format(FileNameHeader) + ' File Generated');
+        Message(Format(FileNameLines) + ' File Generated');
 
         //CLEAR(auOpenFolder);
         //CREATE(auOpenFolder);
@@ -1102,23 +1100,22 @@ codeunit 50000 "General Mgt."
         ILE: Record "Item Ledger Entry";
         ReasonCode: Record "Reason Code";
     begin
-
-        rL_SalesHeader.RESET;
-        rL_SalesHeader.SETRANGE("Document Type", SalesHeader."Document Type");
-        rL_SalesHeader.SETFILTER("No.", SalesHeader."No.");
-        rL_SalesHeader.FINDFIRST;
+        rL_SalesHeader.Reset;
+        rL_SalesHeader.SetRange("Document Type", SalesHeader."Document Type");
+        rL_SalesHeader.SetFilter("No.", SalesHeader."No.");
+        rL_SalesHeader.FindFirst;
 
         //MESSAGE(FORMAT(SalesHeader.COUNT));
         if rL_SalesHeader."Document Type" <> rL_SalesHeader."Document Type"::"Credit Memo" then begin
             exit;
         end;
 
-        rL_Customer.GET(rL_SalesHeader."Bill-to Customer No.");
+        rL_Customer.Get(rL_SalesHeader."Bill-to Customer No.");
         if rL_Customer.GLN = '' then begin
             exit;
         end;
 
-        SalesHeader.TESTFIELD("Reason Code");
+        SalesHeader.TestField("Reason Code");
 
         if SalesHeader."Reason Code" <> '' then begin
             if SalesHeader."Applies-to Doc. Type" = SalesHeader."Applies-to Doc. Type"::Invoice then begin
@@ -1126,14 +1123,14 @@ codeunit 50000 "General Mgt."
                     //popup user to select Reason Code
                     //cu //update item ledger entries reason code
                     //
-                    VE.RESET;
+                    VE.Reset;
                     VE.SetRange("Document Type", VE."Document Type"::"Sales Invoice");
                     VE.SetFilter("Document No.", SalesHeader."Applies-to Doc. No.");
                     VE.SetFilter("Reason Code", '');
                     if VE.FindSet() then begin
                         repeat
                             //if reason code is CR103 these will mark the invoice entries with CR103
-                            ReasonCode.GET(SalesHeader."Reason Code");
+                            ReasonCode.Get(SalesHeader."Reason Code");
                             if ReasonCode."Mark Invoice Entries" then begin
                                 VE."Reason Code" := SalesHeader."Reason Code";
                                 VE.Modify();
@@ -1160,13 +1157,13 @@ codeunit 50000 "General Mgt."
         rL_Customer: Record Customer;
         rL_SalesInvoiceHeader: Record "Sales Invoice Header";
     begin
-        rL_SalesInvoiceHeader.RESET;
-        rL_SalesInvoiceHeader.SETFILTER("No.", pSalesInvoiceHeader."No.");
-        rL_SalesInvoiceHeader.FINDFIRST;
+        rL_SalesInvoiceHeader.Reset;
+        rL_SalesInvoiceHeader.SetFilter("No.", pSalesInvoiceHeader."No.");
+        rL_SalesInvoiceHeader.FindFirst;
         //MESSAGE(FORMAT(rL_SalesInvoiceHeader.COUNT));
 
-        rL_Customer.GET(rL_SalesInvoiceHeader."Bill-to Customer No.");
-        rL_Customer.TESTFIELD(GLN);
+        rL_Customer.Get(rL_SalesInvoiceHeader."Bill-to Customer No.");
+        rL_Customer.TestField(GLN);
     end;
 
     procedure CheckEDICrMemo(var pSalesCrMemoHeader: Record "Sales Cr.Memo Header");
@@ -1174,17 +1171,16 @@ codeunit 50000 "General Mgt."
         rL_Customer: Record Customer;
         rL_SalesCrMemoHeader: Record "Sales Cr.Memo Header";
     begin
-        rL_SalesCrMemoHeader.RESET;
-        rL_SalesCrMemoHeader.SETFILTER("No.", pSalesCrMemoHeader."No.");
-        rL_SalesCrMemoHeader.FINDFIRST;
+        rL_SalesCrMemoHeader.Reset;
+        rL_SalesCrMemoHeader.SetFilter("No.", pSalesCrMemoHeader."No.");
+        rL_SalesCrMemoHeader.FindFirst;
 
         //MESSAGE(FORMAT(rL_SalesCrMemoHeader.COUNT));
 
+        rL_Customer.Get(rL_SalesCrMemoHeader."Bill-to Customer No.");
+        rL_Customer.TestField(GLN);
 
-        rL_Customer.GET(rL_SalesCrMemoHeader."Bill-to Customer No.");
-        rL_Customer.TESTFIELD(GLN);
-
-        rL_SalesCrMemoHeader.TESTFIELD("Reason Code");
+        rL_SalesCrMemoHeader.TestField("Reason Code");
     end;
 
     procedure WriteText(Text: Text[250]; Numberpos: Integer; Align: Code[1]; "Filling character": Text[1]; LineTransition: Boolean) LineText: Text[1024];
@@ -1214,39 +1210,37 @@ codeunit 50000 "General Mgt."
         NewLine2 := 10;
         CharTab := 9;
 
-
         if vG_UseDotNet = true then begin
 
         end else begin
             if LineTransition then begin
-                LineText += FORMAT(NewLine) + FORMAT(NewLine2);
+                LineText += Format(NewLine) + Format(NewLine2);
             end;
         end;
-
     end;
 
     procedure FillOut(var Text: Text[250]; Numberpos: Integer; Align: Code[1]; "Filling character": Text[1]);
     begin
-        if Numberpos > STRLEN(Text) then begin
+        if Numberpos > StrLen(Text) then begin
             if "Filling character" = '' then
                 "Filling character" := ' ';
             case Align of
                 '', '<':
-                    Text := PADSTR(Text, Numberpos, "Filling character");
+                    Text := PadStr(Text, Numberpos, "Filling character");
                 '>':
-                    Text := PADSTR('', Numberpos - STRLEN(Text), "Filling character") + Text;
+                    Text := PadStr('', Numberpos - StrLen(Text), "Filling character") + Text;
                 else
-                    ERROR(Text1000014);
+                    Error(Text1000014);
             end;
         end else
-            if (Numberpos < STRLEN(Text)) then begin
+            if (Numberpos < StrLen(Text)) then begin
                 case Align of
                     '', '<':
-                        Text := COPYSTR(Text, 1, Numberpos);
+                        Text := CopyStr(Text, 1, Numberpos);
                     '>':
-                        Text := DELSTR(Text, 1, STRLEN(Text) - Numberpos);
+                        Text := DelStr(Text, 1, StrLen(Text) - Numberpos);
                     else
-                        ERROR(Text1000014);
+                        Error(Text1000014);
                 end;
             end;
     end;
@@ -1305,9 +1299,8 @@ codeunit 50000 "General Mgt."
     var
         Encoding: TextEncoding;
     begin
-        CLEAR(TargetFile);
-        CLEAR(TargetStream);
-        CLEAR(TargetText);
+        Clear(TempBlob);
+        Clear(OutStr);
 
         /* ExportFileName := rG_SRSetup."EDI Export Path Server" + pFileName;
 
@@ -1336,8 +1329,6 @@ codeunit 50000 "General Mgt."
         ExportFileName := rG_SRSetup."EDI Export Path Server" + pFileName;
 
         if rG_SRSetup."EDI Create Server File" then begin
-            // Create file
-            TargetFile.Create(ExportFileName);
 
             // Choose encoding from setup
             case rG_SRSetup."EDI Encoding Export" of
@@ -1352,37 +1343,36 @@ codeunit 50000 "General Mgt."
             end;
 
             // Create stream with selected encoding
-            TargetFile.CreateOutStream(TargetStream);
+            TempBlob.CreateOutStream(OutStr, Encoding);
         end;
     end;
 
     local procedure CloseFile();
     begin
-
         //TargetFile.SEEK(TargetFile.POS()-2);
 
         if vG_UseDotNet = true then begin
             //streamWriter.Close();
-            TargetFile.CLOSE;
+            //TargetFile.CLOSE;
+            TempBlob.CreateInStream(InStr);
         end else begin
             if rG_SRSetup."EDI Create Server File" then begin
-                TargetText.WRITE(TargetStream); //encoding
+                //TargetText.Write(TargetStream); //encoding
             end;
-
-            TargetText.Write(vG_OutS);
-
-
+            //TargetText.Write(vG_OutS);
+            TempBlob.CreateInStream(InStr);
         end;
 
         if rG_SRSetup."EDI Create Server File" then begin
-            TargetFile.CLOSE;
+            //TargetFile.CLOSE;
+            TempBlob.CreateInStream(InStr);
         end;
+        DownloadFromStream(InStr, '', '', '', ExportFileName);
     end;
 
     local procedure FormatDecimal(pDecimal: Text): Text;
     begin
-
-        exit(DELCHR(pDecimal, '=', ',.'));
+        exit(DelChr(pDecimal, '=', ',.'));
     end;
 
     procedure HeaderInfoSInvoice();
@@ -1412,16 +1402,15 @@ codeunit 50000 "General Mgt."
             VATArrayColumn5[I] := '';
         end;
 
-        rL_Customer.GET(rG_SalesInvoiceHeader."Bill-to Customer No.");
-
+        rL_Customer.Get(rG_SalesInvoiceHeader."Bill-to Customer No.");
 
         if rG_SalesInvoiceHeader."Currency Code" = '' then
             currency.InitRoundingPrecision
         else
-            currency.GET(rG_SalesInvoiceHeader."Currency Code");
+            currency.Get(rG_SalesInvoiceHeader."Currency Code");
 
-        SalesInvLine.SETRANGE("Document No.", rG_SalesInvoiceHeader."No.");
-        if SalesInvLine.FIND('-') then
+        SalesInvLine.SetRange("Document No.", rG_SalesInvoiceHeader."No.");
+        if SalesInvLine.Find('-') then
             repeat
                 CustAmount := CustAmount + SalesInvLine.Amount;
                 AmountInclVAT := AmountInclVAT + SalesInvLine."Amount Including VAT";
@@ -1435,46 +1424,45 @@ codeunit 50000 "General Mgt."
                 TotalGrossWeight := TotalGrossWeight + (SalesInvLine.Quantity * SalesInvLine."Gross Weight");
                 TotalVolume := TotalVolume + (SalesInvLine.Quantity * SalesInvLine."Unit Volume");
                 if SalesInvLine."Units per Parcel" > 0 then
-                    TotalParcels := TotalParcels + ROUND(SalesInvLine.Quantity / SalesInvLine."Units per Parcel", 1, '>');
+                    TotalParcels := TotalParcels + Round(SalesInvLine.Quantity / SalesInvLine."Units per Parcel", 1, '>');
                 if SalesInvLine."VAT %" <> VATPercentage then
                     if VATPercentage = 0 then
                         VATPercentage := SalesInvLine."VAT %"
                     else
                         VATPercentage := -1;
                 TotalAdjCostLCY := TotalAdjCostLCY + CostCalcMgt.CalcSalesInvLineCostLCY(SalesInvLine);
-            until SalesInvLine.NEXT = 0;
+            until SalesInvLine.Next = 0;
         VATAmount := AmountInclVAT - CustAmount;
-        InvDiscAmount := ROUND(InvDiscAmount, currency."Amount Rounding Precision");
+        InvDiscAmount := Round(InvDiscAmount, currency."Amount Rounding Precision");
 
         if VATPercentage <= 0 then
             VATAmountText := Text000
         else
-            VATAmountText := STRSUBSTNO(Text001, VATPercentage);
+            VATAmountText := StrSubstNo(Text001, VATPercentage);
 
         if rG_SalesInvoiceHeader."Currency Code" = '' then
             AmountLCY := CustAmount
         else
             AmountLCY :=
               CurrExchRate.ExchangeAmtFCYToLCY(
-                WORKDATE, rG_SalesInvoiceHeader."Currency Code", CustAmount, rG_SalesInvoiceHeader."Currency Factor");
+                WorkDate, rG_SalesInvoiceHeader."Currency Code", CustAmount, rG_SalesInvoiceHeader."Currency Factor");
 
         SalesInvLine.CalcVATAmountLines(rG_SalesInvoiceHeader, TempVATAmountLine);
 
-        CLEAR(rG_SalesShipment);
-        rG_ValueEntry.RESET;
-        rG_ValueEntry.SETFILTER("Document No.", rG_SalesInvoiceHeader."No.");
-        rG_ValueEntry.SETRANGE("Document Type", rG_ValueEntry."Document Type"::"Sales Invoice");
-        if rG_ValueEntry.FINDSET then begin
+        Clear(rG_SalesShipment);
+        rG_ValueEntry.Reset;
+        rG_ValueEntry.SetFilter("Document No.", rG_SalesInvoiceHeader."No.");
+        rG_ValueEntry.SetRange("Document Type", rG_ValueEntry."Document Type"::"Sales Invoice");
+        if rG_ValueEntry.FindSet then begin
             rG_TempILENo := rG_ValueEntry."Item Ledger Entry No.";
-            rG_ValueEntry.RESET;
-            rG_ValueEntry.SETRANGE("Item Ledger Entry No.", rG_TempILENo);
-            rG_ValueEntry.SETRANGE("Document Type", rG_ValueEntry."Document Type"::"Sales Shipment");
-            if rG_ValueEntry.FINDSET then begin
-                rG_SalesShipment.RESET;
-                rG_SalesShipment.SETFILTER("No.", rG_ValueEntry."Document No.");
-                if rG_SalesShipment.FINDSET then;
+            rG_ValueEntry.Reset;
+            rG_ValueEntry.SetRange("Item Ledger Entry No.", rG_TempILENo);
+            rG_ValueEntry.SetRange("Document Type", rG_ValueEntry."Document Type"::"Sales Shipment");
+            if rG_ValueEntry.FindSet then begin
+                rG_SalesShipment.Reset;
+                rG_SalesShipment.SetFilter("No.", rG_ValueEntry."Document No.");
+                if rG_SalesShipment.FindSet then;
             end;
-
         end;
 
 
@@ -1498,56 +1486,56 @@ codeunit 50000 "General Mgt."
         if rG_SalesInvoiceHeader."Ship-to Code" = '' then begin
             vG_GLNDelivery := rL_Customer."GLN Delivery";
         end else begin
-            rG_ShipToAddress.RESET;
-            rG_ShipToAddress.SETFILTER("Customer No.", rG_SalesInvoiceHeader."Sell-to Customer No.");
-            rG_ShipToAddress.SETFILTER(Code, rG_SalesInvoiceHeader."Ship-to Code");
-            if rG_ShipToAddress.FINDSET then begin
+            rG_ShipToAddress.Reset;
+            rG_ShipToAddress.SetFilter("Customer No.", rG_SalesInvoiceHeader."Sell-to Customer No.");
+            rG_ShipToAddress.SetFilter(Code, rG_SalesInvoiceHeader."Ship-to Code");
+            if rG_ShipToAddress.FindSet then begin
                 vG_GLNDelivery := rG_ShipToAddress."GLN Delivery";
             end;
         end;
         if vG_GLNDelivery = '' then begin
-            ERROR('GLN Delivery cannot be blank for Document ' + rG_SalesInvoiceHeader."No.");
+            Error('GLN Delivery cannot be blank for Document ' + rG_SalesInvoiceHeader."No.");
         end;
 
         CurrentLine += WriteText(vG_GLNDelivery, 13, '<', '', false); //6 GLN Τόπου παράδοσης [GLN_delivery]
         CurrentLine += WriteText('', 13, '<', '', false); //7 ΑΦΜ αντιπροσώπου [afm_distrib]
         CurrentLine += WriteText('', 13, '<', '', false); //8 ΑΦΜ εντολέα[afm_issuer]
         CurrentLine += WriteText('2', 2, '<', '', false); //9 Τύπος παραστατικού [inv_type]
-        CurrentLine += WriteText(COPYSTR(rG_SalesInvoiceHeader."No. Series", 1, 3), 3, '<', '', false); //10 Σειρά Παραστατικού  [inv_sec]
+        CurrentLine += WriteText(CopyStr(rG_SalesInvoiceHeader."No. Series", 1, 3), 3, '<', '', false); //10 Σειρά Παραστατικού  [inv_sec]
 
         CurrentLine += WriteText(rG_SalesInvoiceHeader."No.", 20, '<', '', false); //11 Αριθμός Παραστατικού [inv_number]
-        CurrentLine += WriteText(FORMAT(rG_SalesInvoiceHeader."Posting Date", 0, Text1000010), 8, '<', '', false); //12 Ημ/νία έκδοσης παραστατικού [inv_date]
+        CurrentLine += WriteText(Format(rG_SalesInvoiceHeader."Posting Date", 0, Text1000010), 8, '<', '', false); //12 Ημ/νία έκδοσης παραστατικού [inv_date]
         CurrentLine += WriteText('', 2, '<', '', false); //13 Τύπος Αντίστοιχου Παραστατικού [ref_inv_type]
         CurrentLine += WriteText('', 3, '<', '', false); //14 Σειρά Αντίστοιχου Παραστατικού [ref_inv_seq]
         CurrentLine += WriteText(rG_SalesShipment."No.", 20, '<', '', false); //15 Αριθμός Αντίστοιχου Παραστατικού [ref_inv_number]
-        CurrentLine += WriteText(FORMAT(rG_SalesShipment."Posting Date", 0, Text1000010), 8, '<', '', false); //16 Ημερομηνία Αντίστοιχου Παραστατικού [ref_inv_date]
+        CurrentLine += WriteText(Format(rG_SalesShipment."Posting Date", 0, Text1000010), 8, '<', '', false); //16 Ημερομηνία Αντίστοιχου Παραστατικού [ref_inv_date]
         CurrentLine += WriteText(rG_SalesShipment."External Document No.", 20, '<', '', false); //17 Αριθμός Αντίστοιχης Παραγγελίας [order_seq]
         CurrentLine += WriteText('', 3, '<', '', false); //18 Σειρά Αντίστοιχης Παραγγελίας[order_seq]
-        CurrentLine += WriteText(FORMAT(rG_SalesShipment."Order Date", 0, Text1000010), 8, '<', '', false); //19 Ημερομηνία Παραγγελίας [order_date]
-        CurrentLine += WriteText(FORMAT(rG_SalesInvoiceHeader."Shipment Date", 0, Text1000010), 8, '<', '', false); //20 Ημερομηνία παράδοσης [arrival_date]
+        CurrentLine += WriteText(Format(rG_SalesShipment."Order Date", 0, Text1000010), 8, '<', '', false); //19 Ημερομηνία Παραγγελίας [order_date]
+        CurrentLine += WriteText(Format(rG_SalesInvoiceHeader."Shipment Date", 0, Text1000010), 8, '<', '', false); //20 Ημερομηνία παράδοσης [arrival_date]
 
-        CurrentLine += WriteText(FORMAT(rG_SalesInvoiceHeader."Shipment Date", 0, Text1000010), 8, '<', '', false); //21 Ημερομηνία αποστολής [departure_date]
+        CurrentLine += WriteText(Format(rG_SalesInvoiceHeader."Shipment Date", 0, Text1000010), 8, '<', '', false); //21 Ημερομηνία αποστολής [departure_date]
         CurrentLine += WriteText('30', 2, '<', '', false); //22 Τρόπος πληρωμής [payment_type]
         CurrentLine += WriteText('', 100, '<', '', false); //23 Περιγραφή Όρων πληρωμής  [payment_terms]
 
         if rG_SalesInvoiceHeader."Currency Code" = '' then begin
-            rG_GLSetup.GET;
+            rG_GLSetup.Get;
             CurrentLine += WriteText(rG_GLSetup."LCY Code", 3, '<', '', false); //24 Νόμισμα  [currency]
         end else begin
             CurrentLine += WriteText(rG_SalesInvoiceHeader."Currency Code", 3, '<', '', false); //24 Νόμισμα  [currency]
         end;
 
-        rG_PaymentTerms.GET(rG_SalesInvoiceHeader."Payment Terms Code");
+        rG_PaymentTerms.Get(rG_SalesInvoiceHeader."Payment Terms Code");
 
 
-        CurrentLine += WriteText(DELCHR(FORMAT(rG_PaymentTerms."Due Date Calculation"), '=', 'D'), 3, '<', '', false); //25 Αριθμός Ημερών για Πληρωμή  [payment_days]
+        CurrentLine += WriteText(DelChr(Format(rG_PaymentTerms."Due Date Calculation"), '=', 'D'), 3, '<', '', false); //25 Αριθμός Ημερών για Πληρωμή  [payment_days]
         CurrentLine += WriteText('', 1, '<', '', false); //26 Καθεστώς ΦΠΑ Προμηθευτή [supplier_vat]
         CurrentLine += WriteText('', 1, '<', '', false); //27 Κωδικός Κίνησης [move_code]
 
-        Amountstr := FORMAT(CustAmount, 0, Text1000016);
+        Amountstr := Format(CustAmount, 0, Text1000016);
         CurrentLine += WriteText(Amountstr, 14, '<', '', false); //28 Καθαρή Αξία προ εκπτώσεων [net_amount]
 
-        Amountstr := FORMAT(InvDiscAmount, 0, Text1000016);
+        Amountstr := Format(InvDiscAmount, 0, Text1000016);
         CurrentLine += WriteText(Amountstr, 14, '<', '', false); //29 Αξία Εκπτώσεων [allow_amount] 14,2
         CurrentLine += WriteText('', 5, '<', '', false); //30 Ποσοστό άλλων εκπτώσεων  [oth_allow_percent]
 
@@ -1558,28 +1546,28 @@ codeunit 50000 "General Mgt."
         CurrentLine += WriteText('', 14, '<', '', false); //35 Αξία άλλων επιβαρύνσεων [oth_charges_amount]
         CurrentLine += WriteText('', 14, '<', '', false); //36 Συνολική Αξία Επιβαρύνσεων [total_charges]
 
-        if TempVATAmountLine.FINDSET then begin
+        if TempVATAmountLine.FindSet then begin
             I := 0;
             repeat
                 I += 1;
 
-                VATArrayColumn1[I] := FORMAT(TempVATAmountLine."VAT %");
+                VATArrayColumn1[I] := Format(TempVATAmountLine."VAT %");
 
-                Amountstr := FORMAT(TempVATAmountLine."VAT Amount", 0, Text1000016);
+                Amountstr := Format(TempVATAmountLine."VAT Amount", 0, Text1000016);
                 VATArrayColumn2[I] := Amountstr;
                 VATArrayColumn3[I] := '';
 
-                Amountstr := FORMAT(TempVATAmountLine."VAT Base", 0, Text1000016);
+                Amountstr := Format(TempVATAmountLine."VAT Base", 0, Text1000016);
                 VATArrayColumn4[I] := Amountstr;
 
-                Amountstr := FORMAT(TempVATAmountLine."Amount Including VAT", 0, Text1000016);
+                Amountstr := Format(TempVATAmountLine."Amount Including VAT", 0, Text1000016);
                 VATArrayColumn5[I] := Amountstr;
 
-            until TempVATAmountLine.NEXT = 0;
+            until TempVATAmountLine.Next = 0;
         end;
 
         if I > 3 then begin
-            ERROR('Only up to 3 VAT Rates are supported');
+            Error('Only up to 3 VAT Rates are supported');
         end;
 
         CurrentLine += WriteText(VATArrayColumn1[1], 2, '<', '', false); //37 Ποσοστό ΦΠΑ 1 [vat_rate1]
@@ -1613,29 +1601,31 @@ codeunit 50000 "General Mgt."
 
         CurrentLine += WriteText('', 14, '<', '', false); //61 Συνολικό Φορολογούμενο Ποσό [total_taxable_amount]#
 
-        Amountstr := FORMAT(VATAmount, 0, Text1000016);
+        Amountstr := Format(VATAmount, 0, Text1000016);
         CurrentLine += WriteText(Amountstr, 14, '<', '', false); //62 Συνολικό ΦΠΑ [total_vat_amount]
 
 
-        Amountstr := FORMAT(CustAmount, 0, Text1000016);
+        Amountstr := Format(CustAmount, 0, Text1000016);
         CurrentLine += WriteText(Amountstr, 14, '<', '', false); //63 Μεικτή Αξία [gross_amount]
         CurrentLine += WriteText('', 14, '<', '', false); //64 Αξία μεταφορικών [transport_amount]
         CurrentLine += WriteText('', 14, '<', '', false); //65 ΦΠΑ μεταφορικών[transport_vat]
 
-        Amountstr := FORMAT(AmountInclVAT, 0, Text1000016);
+        Amountstr := Format(AmountInclVAT, 0, Text1000016);
         CurrentLine += WriteText(Amountstr, 14, '<', '', false); //66 Συνολικό Ποσό Πληρωμής [total_pay_amount]
-        CurrentLine += WriteText(FORMAT(LineQty, 0, Text1000017), 11, '<', '', false); //67 Σύνολο τεμαχίων [total_cu] 11,3
+        CurrentLine += WriteText(Format(LineQty, 0, Text1000017), 11, '<', '', false); //67 Σύνολο τεμαχίων [total_cu] 11,3
         CurrentLine += WriteText('', 100, '<', '', true); //68  Σχόλια  [comments] //last line
 
         if vG_UseDotNet = true then begin
             //streamWriter.WriteLine(CurrentLine);
-            TargetFile.Write(CurrentLine);
+            //TargetFile.Write(CurrentLine);
+            OutStr.WriteText(CurrentLine);
         end else begin
-            TargetText.ADDTEXT(CurrentLine);  //NOD0.7
+            //TargetText.AddText(CurrentLine);  //NOD0.7
+            OutStr.WriteText(CurrentLine);
         end;
 
-        rG_SalesInvoiceHeader."Export DateTime" := CURRENTDATETIME;
-        rG_SalesInvoiceHeader.MODIFY;
+        rG_SalesInvoiceHeader."Export DateTime" := CurrentDateTime;
+        rG_SalesInvoiceHeader.Modify;
     end;
 
     procedure BodyInfoSInvoiceLines();
@@ -1650,31 +1640,29 @@ codeunit 50000 "General Mgt."
         PotatoesDesc: Text;
         ProductClass: Text;
     begin
-
-
         CurrentLine := '';
         CurrentLine += WriteText(rG_SalesInvoiceLine."Document No.", 14, '<', '', false); //1 Αριθμός εγγραφής [ref_number]
-        CurrentLine += WriteText(FORMAT(sLineNo), 14, '<', '', false); //2 Αύξων αριθμός γραμμής [line_number]
+        CurrentLine += WriteText(Format(sLineNo), 14, '<', '', false); //2 Αύξων αριθμός γραμμής [line_number]
 
         vG_ShelfNo := '';
-        rG_Item.GET(rG_SalesInvoiceLine."No.");
+        rG_Item.Get(rG_SalesInvoiceLine."No.");
         if rG_SalesInvoiceLine."Shelf No." = '' then begin
             vG_ShelfNo := rG_Item."Shelf No.";
         end else begin
             vG_ShelfNo := rG_SalesInvoiceLine."Shelf No.";
         end;
         if vG_ShelfNo = '' then begin
-            ERROR('Shelf No. cannot be blank. Item No.' + rG_SalesInvoiceLine."No.");
+            Error('Shelf No. cannot be blank. Item No.' + rG_SalesInvoiceLine."No.");
         end;
 
         CurrentLine += WriteText(vG_ShelfNo, 20, '<', '', false); //3 Κωδικός προϊόντος προμηθευτή [SKU]
 
         //find the cross reference
-        rG_CrossReference.RESET;
-        rG_CrossReference.SETFILTER("Item No.", rG_SalesInvoiceLine."No.");
+        rG_CrossReference.Reset;
+        rG_CrossReference.SetFilter("Item No.", rG_SalesInvoiceLine."No.");
         //rG_CrossReference.SETRANGE("Cross-Reference Type", rG_CrossReference."Cross-Reference Type"::"Bar Code");
-        rG_CrossReference.SETRANGE("Reference Type", rG_CrossReference."Reference Type"::"Bar Code");
-        if rG_CrossReference.FINDSET then begin
+        rG_CrossReference.SetRange("Reference Type", rG_CrossReference."Reference Type"::"Bar Code");
+        if rG_CrossReference.FindSet then begin
             //CurrentLine += WriteText(rG_CrossReference."Cross-Reference No.", 14, '<', '', false); //4 ΕΑΝ τεμαχίου [EAN_cu]
             CurrentLine += WriteText(rG_CrossReference."Reference No.", 14, '<', '', false); //4 ΕΑΝ τεμαχίου [EAN_cu]
         end else begin
@@ -1685,19 +1673,19 @@ codeunit 50000 "General Mgt."
         CurrentLine += WriteText(rG_SalesInvoiceLine.Description, 70, '<', '', false); //5 Περιγραφή Προϊόντος [prod_description]
         CurrentLine += WriteText(rG_SalesInvoiceLine."Unit of Measure Code", 9, '<', '', false); //6 Μονάδα μέτρησης της ποσότητας παράδοσης [delivery_mu]
 
-        Amountstr := FORMAT(rG_SalesInvoiceLine."Qty. per Unit of Measure", 0, Text1000017);
+        Amountstr := Format(rG_SalesInvoiceLine."Qty. per Unit of Measure", 0, Text1000017);
         CurrentLine += WriteText(Amountstr, 11, '<', '', false); //7 Συντελεστής Κιβωτιοποίησης [delivery_capacity] 11,3
 
-        Amountstr := FORMAT(rG_SalesInvoiceLine.Quantity, 0, Text1000017);
+        Amountstr := Format(rG_SalesInvoiceLine.Quantity, 0, Text1000017);
         CurrentLine += WriteText(Amountstr, 11, '<', '', false); //8 Ποσότητα παράδοσης  [delivery_qty]
 
-        Amountstr := FORMAT(rG_SalesInvoiceLine."Unit Price", 0, Text1000016);
+        Amountstr := Format(rG_SalesInvoiceLine."Unit Price", 0, Text1000016);
         CurrentLine += WriteText(Amountstr, 14, '<', '', false); //9  Τιμή μονάδος [price]
 
-        Amountstr := FORMAT(rG_SalesInvoiceLine."Line Discount %", 0, Text1000018);
+        Amountstr := Format(rG_SalesInvoiceLine."Line Discount %", 0, Text1000018);
         CurrentLine += WriteText(Amountstr, 5, '<', '', false); //10  Ποσοστό έκπτωσης 1[allow_percent1]
 
-        Amountstr := FORMAT(rG_SalesInvoiceLine."Line Discount Amount", 0, Text1000018);
+        Amountstr := Format(rG_SalesInvoiceLine."Line Discount Amount", 0, Text1000018);
         CurrentLine += WriteText(Amountstr, 14, '<', '', false); //11 Ποσό έκπτωσης  1 [allow_amount1]
         CurrentLine += WriteText('', 5, '<', '', false); //12 Ποσοστό έκπτωσης 2[allow_percent2]
         CurrentLine += WriteText('', 14, '<', '', false); //13  Ποσό έκπτωσης  2 [allow_amount2]
@@ -1713,24 +1701,23 @@ codeunit 50000 "General Mgt."
         CurrentLine += WriteText('', 5, '<', '', false); //21 Ποσοστό επιβάρυνσης 2 [charge_percent2]
         CurrentLine += WriteText('', 14, '<', '', false); //22 Ποσό επιβάρυνσης 2 [charge_amount2]
         CurrentLine += WriteText('', 14, '<', '', false); //23 Συνολική αξία επιβαρύνσεων [total_charges]
-        CurrentLine += WriteText(FORMAT(rG_SalesInvoiceLine."VAT %"), 3, '<', '', false); //24 Ποσοστό ΦΠΑ [vat_percent]
+        CurrentLine += WriteText(Format(rG_SalesInvoiceLine."VAT %"), 3, '<', '', false); //24 Ποσοστό ΦΠΑ [vat_percent]
 
-        Amountstr := FORMAT(rG_SalesInvoiceLine."Amount Including VAT" - rG_SalesInvoiceLine.Amount, 0, Text1000016);
+        Amountstr := Format(rG_SalesInvoiceLine."Amount Including VAT" - rG_SalesInvoiceLine.Amount, 0, Text1000016);
         CurrentLine += WriteText(Amountstr, 14, '<', '', false); //25 Αξία ΦΠΑ [vat_amount]
         CurrentLine += WriteText('', 5, '<', '', false); //26 Ποσοστό άλλων φόρων  [tax_percent]
         CurrentLine += WriteText('', 14, '<', '', false); //27 Αξία άλλων φόρων [tax_amount]
         CurrentLine += WriteText('', 14, '<', '', false); //28 Καθαρή αξία προ έκπτωσεων [net_amount]
         CurrentLine += WriteText('', 14, '<', '', false); //29 Υποκείμενη αξία [sub_amount]
-        Amountstr := FORMAT(rG_SalesInvoiceLine."VAT Base Amount", 0, Text1000016);
+        Amountstr := Format(rG_SalesInvoiceLine."VAT Base Amount", 0, Text1000016);
         CurrentLine += WriteText(Amountstr, 14, '<', '', false); //30 Φορολογούμενο ποσό [taxable_amount]
 
-        Amountstr := FORMAT(rG_SalesInvoiceLine.Quantity * rG_SalesInvoiceLine."Unit Price", 0, Text1000016);
+        Amountstr := Format(rG_SalesInvoiceLine.Quantity * rG_SalesInvoiceLine."Unit Price", 0, Text1000016);
         CurrentLine += WriteText(Amountstr, 14, '<', '', false); //31 Μεικτή αξία [gross_amount]
-
 
         CurrentLine += WriteText('', 14, '<', '', false); //32 Τελική τιμή μονάδος [net_price]
 
-        Amountstr := FORMAT(rG_SalesInvoiceLine."Line Amount", 0, Text1000016);
+        Amountstr := Format(rG_SalesInvoiceLine."Line Amount", 0, Text1000016);
         CurrentLine += WriteText(Amountstr, 14, '<', '', false); //33 Συνολική τελική αξία προϊόντος [final_amount]
 
         CurrentLine += WriteText(rG_SalesInvoiceLine."Shipment No.", 20, '<', '', false); //34 Αριθμός αντίστοιχου παραστατικού – σε περίπτωση που ένα παραστατικό σχετίζεται με πολλά αντίστοιχα [ref_inv_number]4
@@ -1741,7 +1728,7 @@ codeunit 50000 "General Mgt."
             CurrentLine += WriteText('1', 20, '<', '', false); //35  Τύπος αντίστοιχου παραστατικού – σε περίπτωση που ένα παραστατικό σχετίζεται με πολλά αντίστοιχα [ref_inv_type]
         end;
 
-        CurrentLine += WriteText(FORMAT(rG_SalesInvoiceLine."Shipment Date", 0, Text1000010), 8, '<', '', false); //36 Ημερομηνία αντίστοιχου παραστατικού– σε περίπτωση που ένα παραστατικό σχετίζεται με πολλά αντίστοιχα [ref_inv_date]
+        CurrentLine += WriteText(Format(rG_SalesInvoiceLine."Shipment Date", 0, Text1000010), 8, '<', '', false); //36 Ημερομηνία αντίστοιχου παραστατικού– σε περίπτωση που ένα παραστατικό σχετίζεται με πολλά αντίστοιχα [ref_inv_date]
         CurrentLine += WriteText('', 20, '<', '', false); //37 Αριθμός αντίστοιχης παραγγελίας πελάτη – σε περίπτωση που ένα παραστατικό σχετίζεται με πολλές παραγγελίες πελάτη [order_number]
         CurrentLine += WriteText('', 8, '<', '', false); //38 Ημερομηνία αντίστοιχης παραγγελίας πελάτη – σε περίπτωση που ένα παραστατικό σχετίζεται με πολλές παραγγελίες πελάτη [order_date]
         CurrentLine += WriteText('', 8, '<', '', false); //39 Ημερομηνία λήξης [expire_date]
@@ -1750,11 +1737,11 @@ codeunit 50000 "General Mgt."
 
         //+1.0.0.303
         CommentLine := '';
-        Customer.GET(rG_SalesInvoiceHeader."Sell-to Customer No.");
+        Customer.Get(rG_SalesInvoiceHeader."Sell-to Customer No.");
         if Customer."Mandatory CY Fields" then begin
             ProductClass := rG_SalesInvoiceLine."Product Class";
 
-            if Country.get(rG_SalesInvoiceLine."Country/Region of Origin Code") then begin
+            if Country.Get(rG_SalesInvoiceLine."Country/Region of Origin Code") then begin
                 CountryofOriginName := Country.Name;
                 CommentLine := CountryofOriginName;
             end;
@@ -1764,7 +1751,7 @@ codeunit 50000 "General Mgt."
             end;
 
 
-            if GenCat.GET(27, GenCat.Type::Category9, rG_SalesInvoiceLine."Category 9") then begin
+            if GenCat.Get(27, GenCat.Type::Category9, rG_SalesInvoiceLine."Category 9") then begin
                 PotatoesDesc := GenCat.Description;
                 CommentLine += ',' + PotatoesDesc;
             end;
@@ -1775,9 +1762,11 @@ codeunit 50000 "General Mgt."
 
         if vG_UseDotNet = true then begin
             //streamWriter.WriteLine(CurrentLine);
-            TargetFile.Write(CurrentLine);
+            //TargetFile.Write(CurrentLine);
+            OutStr.WriteText(CurrentLine);
         end else begin
-            TargetText.ADDTEXT(CurrentLine);  //NOD0.7
+            //TargetText.AddText(CurrentLine);  //NOD0.7
+            OutStr.WriteText(CurrentLine);
         end;
     end;
 
@@ -1808,16 +1797,16 @@ codeunit 50000 "General Mgt."
             VATArrayColumn5[I] := '';
         end;
 
-        rL_Customer.GET(rG_SalesCrMemoHeader."Bill-to Customer No.");
+        rL_Customer.Get(rG_SalesCrMemoHeader."Bill-to Customer No.");
 
 
         if rG_SalesCrMemoHeader."Currency Code" = '' then
             currency.InitRoundingPrecision
         else
-            currency.GET(rG_SalesCrMemoHeader."Currency Code");
+            currency.Get(rG_SalesCrMemoHeader."Currency Code");
 
-        SalesCrMemoLine.SETRANGE("Document No.", rG_SalesCrMemoHeader."No.");
-        if SalesCrMemoLine.FIND('-') then
+        SalesCrMemoLine.SetRange("Document No.", rG_SalesCrMemoHeader."No.");
+        if SalesCrMemoLine.Find('-') then
             repeat
                 CustAmount := CustAmount + SalesCrMemoLine.Amount;
                 AmountInclVAT := AmountInclVAT + SalesCrMemoLine."Amount Including VAT";
@@ -1831,28 +1820,28 @@ codeunit 50000 "General Mgt."
                 TotalGrossWeight := TotalGrossWeight + (SalesCrMemoLine.Quantity * SalesCrMemoLine."Gross Weight");
                 TotalVolume := TotalVolume + (SalesCrMemoLine.Quantity * SalesCrMemoLine."Unit Volume");
                 if SalesCrMemoLine."Units per Parcel" > 0 then
-                    TotalParcels := TotalParcels + ROUND(SalesCrMemoLine.Quantity / SalesCrMemoLine."Units per Parcel", 1, '>');
+                    TotalParcels := TotalParcels + Round(SalesCrMemoLine.Quantity / SalesCrMemoLine."Units per Parcel", 1, '>');
                 if SalesCrMemoLine."VAT %" <> VATPercentage then
                     if VATPercentage = 0 then
                         VATPercentage := SalesCrMemoLine."VAT %"
                     else
                         VATPercentage := -1;
                 TotalAdjCostLCY := TotalAdjCostLCY + CostCalcMgt.CalcSalesCrMemoLineCostLCY(SalesCrMemoLine);
-            until SalesCrMemoLine.NEXT = 0;
+            until SalesCrMemoLine.Next = 0;
         VATAmount := AmountInclVAT - CustAmount;
-        InvDiscAmount := ROUND(InvDiscAmount, currency."Amount Rounding Precision");
+        InvDiscAmount := Round(InvDiscAmount, currency."Amount Rounding Precision");
 
         if VATPercentage <= 0 then
             VATAmountText := Text000
         else
-            VATAmountText := STRSUBSTNO(Text001, VATPercentage);
+            VATAmountText := StrSubstNo(Text001, VATPercentage);
 
         if rG_SalesInvoiceHeader."Currency Code" = '' then
             AmountLCY := CustAmount
         else
             AmountLCY :=
               CurrExchRate.ExchangeAmtFCYToLCY(
-                WORKDATE, rG_SalesInvoiceHeader."Currency Code", CustAmount, rG_SalesInvoiceHeader."Currency Factor");
+                WorkDate, rG_SalesInvoiceHeader."Currency Code", CustAmount, rG_SalesInvoiceHeader."Currency Factor");
 
         SalesCrMemoLine.CalcVATAmountLines(rG_SalesCrMemoHeader, TempVATAmountLine);
 
@@ -1873,14 +1862,14 @@ codeunit 50000 "General Mgt."
         CurrentLine += WriteText('', 13, '<', '', false); //7 ΑΦΜ αντιπροσώπου [afm_distrib]
         CurrentLine += WriteText('', 13, '<', '', false); //8 ΑΦΜ εντολέα[afm_issuer]
 
-        rG_ReasonCode.GET(rG_SalesCrMemoHeader."Reason Code");
+        rG_ReasonCode.Get(rG_SalesCrMemoHeader."Reason Code");
 
-        CurrentLine += WriteText(FORMAT(rG_ReasonCode."EDI Code"), 2, '<', '', false); //9 Τύπος παραστατικού [inv_type]
+        CurrentLine += WriteText(Format(rG_ReasonCode."EDI Code"), 2, '<', '', false); //9 Τύπος παραστατικού [inv_type]
 
-        CurrentLine += WriteText(COPYSTR(rG_SalesCrMemoHeader."No. Series", 1, 3), 3, '<', '', false); //10 Σειρά Παραστατικού  [inv_sec]
+        CurrentLine += WriteText(CopyStr(rG_SalesCrMemoHeader."No. Series", 1, 3), 3, '<', '', false); //10 Σειρά Παραστατικού  [inv_sec]
 
         CurrentLine += WriteText(rG_SalesCrMemoHeader."No.", 20, '<', '', false); //11 Αριθμός Παραστατικού [inv_number]
-        CurrentLine += WriteText(FORMAT(rG_SalesCrMemoHeader."Posting Date", 0, Text1000010), 8, '<', '', false); //12 Ημ/νία έκδοσης παραστατικού [inv_date]
+        CurrentLine += WriteText(Format(rG_SalesCrMemoHeader."Posting Date", 0, Text1000010), 8, '<', '', false); //12 Ημ/νία έκδοσης παραστατικού [inv_date]
         CurrentLine += WriteText('', 2, '<', '', false); //13 Τύπος Αντίστοιχου Παραστατικού [ref_inv_type]
         CurrentLine += WriteText('', 3, '<', '', false); //14 Σειρά Αντίστοιχου Παραστατικού [ref_inv_seq]
         CurrentLine += WriteText('', 20, '<', '', false); //15 Αριθμός Αντίστοιχου Παραστατικού [ref_inv_number]
@@ -1888,30 +1877,30 @@ codeunit 50000 "General Mgt."
         CurrentLine += WriteText(rG_SalesCrMemoHeader."External Document No.", 20, '<', '', false); //17 Αριθμός Αντίστοιχης Παραγγελίας [order_seq]
         CurrentLine += WriteText('', 3, '<', '', false); //18 Σειρά Αντίστοιχης Παραγγελίας[order_seq]
         CurrentLine += WriteText('', 8, '<', '', false); //19 Ημερομηνία Παραγγελίας [order_date]
-        CurrentLine += WriteText(FORMAT(rG_SalesCrMemoHeader."Shipment Date", 0, Text1000010), 8, '<', '', false); //20 Ημερομηνία παράδοσης [arrival_date]
+        CurrentLine += WriteText(Format(rG_SalesCrMemoHeader."Shipment Date", 0, Text1000010), 8, '<', '', false); //20 Ημερομηνία παράδοσης [arrival_date]
 
-        CurrentLine += WriteText(FORMAT(rG_SalesCrMemoHeader."Shipment Date", 0, Text1000010), 8, '<', '', false); //21 Ημερομηνία αποστολής [departure_date]
+        CurrentLine += WriteText(Format(rG_SalesCrMemoHeader."Shipment Date", 0, Text1000010), 8, '<', '', false); //21 Ημερομηνία αποστολής [departure_date]
         CurrentLine += WriteText('30', 2, '<', '', false); //22 Τρόπος πληρωμής [payment_type]
         CurrentLine += WriteText('', 100, '<', '', false); //23 Περιγραφή Όρων πληρωμής  [payment_terms]
 
         if rG_SalesCrMemoHeader."Currency Code" = '' then begin
-            rG_GLSetup.GET;
+            rG_GLSetup.Get;
             CurrentLine += WriteText(rG_GLSetup."LCY Code", 3, '<', '', false); //24 Νόμισμα  [currency]
         end else begin
             CurrentLine += WriteText(rG_SalesCrMemoHeader."Currency Code", 3, '<', '', false); //24 Νόμισμα  [currency]
         end;
 
-        rG_PaymentTerms.GET(rG_SalesCrMemoHeader."Payment Terms Code");
+        rG_PaymentTerms.Get(rG_SalesCrMemoHeader."Payment Terms Code");
 
 
-        CurrentLine += WriteText(DELCHR(FORMAT(rG_PaymentTerms."Due Date Calculation"), '=', 'D'), 3, '<', '', false); //25 Αριθμός Ημερών για Πληρωμή  [payment_days]
+        CurrentLine += WriteText(DelChr(Format(rG_PaymentTerms."Due Date Calculation"), '=', 'D'), 3, '<', '', false); //25 Αριθμός Ημερών για Πληρωμή  [payment_days]
         CurrentLine += WriteText('', 1, '<', '', false); //26 Καθεστώς ΦΠΑ Προμηθευτή [supplier_vat]
         CurrentLine += WriteText('', 1, '<', '', false); //27 Κωδικός Κίνησης [move_code]
 
-        Amountstr := FORMAT(CustAmount, 0, Text1000016);
+        Amountstr := Format(CustAmount, 0, Text1000016);
         CurrentLine += WriteText(Amountstr, 14, '<', '', false); //28 Καθαρή Αξία προ εκπτώσεων [net_amount]
 
-        Amountstr := FORMAT(InvDiscAmount, 0, Text1000016);
+        Amountstr := Format(InvDiscAmount, 0, Text1000016);
         CurrentLine += WriteText(Amountstr, 14, '<', '', false); //29 Αξία Εκπτώσεων [allow_amount] 14,2
         CurrentLine += WriteText('', 5, '<', '', false); //30 Ποσοστό άλλων εκπτώσεων  [oth_allow_percent]
 
@@ -1922,28 +1911,28 @@ codeunit 50000 "General Mgt."
         CurrentLine += WriteText('', 14, '<', '', false); //35 Αξία άλλων επιβαρύνσεων [oth_charges_amount]
         CurrentLine += WriteText('', 14, '<', '', false); //36 Συνολική Αξία Επιβαρύνσεων [total_charges]
 
-        if TempVATAmountLine.FINDSET then begin
+        if TempVATAmountLine.FindSet then begin
             I := 0;
             repeat
                 I += 1;
 
-                VATArrayColumn1[I] := FORMAT(TempVATAmountLine."VAT %");
+                VATArrayColumn1[I] := Format(TempVATAmountLine."VAT %");
 
-                Amountstr := FORMAT(TempVATAmountLine."VAT Amount", 0, Text1000016);
+                Amountstr := Format(TempVATAmountLine."VAT Amount", 0, Text1000016);
                 VATArrayColumn2[I] := Amountstr;
                 VATArrayColumn3[I] := '';
 
-                Amountstr := FORMAT(TempVATAmountLine."VAT Base", 0, Text1000016);
+                Amountstr := Format(TempVATAmountLine."VAT Base", 0, Text1000016);
                 VATArrayColumn4[I] := Amountstr;
 
-                Amountstr := FORMAT(TempVATAmountLine."Amount Including VAT", 0, Text1000016);
+                Amountstr := Format(TempVATAmountLine."Amount Including VAT", 0, Text1000016);
                 VATArrayColumn5[I] := Amountstr;
 
-            until TempVATAmountLine.NEXT = 0;
+            until TempVATAmountLine.Next = 0;
         end;
 
         if I > 3 then begin
-            ERROR('Only up to 3 VAT Rates are supported');
+            Error('Only up to 3 VAT Rates are supported');
         end;
 
         CurrentLine += WriteText(VATArrayColumn1[1], 2, '<', '', false); //37 Ποσοστό ΦΠΑ 1 [vat_rate1]
@@ -1977,79 +1966,77 @@ codeunit 50000 "General Mgt."
 
         CurrentLine += WriteText('', 14, '<', '', false); //61 Συνολικό Φορολογούμενο Ποσό [total_taxable_amount]#
 
-        Amountstr := FORMAT(VATAmount, 0, Text1000016);
+        Amountstr := Format(VATAmount, 0, Text1000016);
         CurrentLine += WriteText(Amountstr, 14, '<', '', false); //62 Συνολικό ΦΠΑ [total_vat_amount]
 
 
-        Amountstr := FORMAT(CustAmount, 0, Text1000016);
+        Amountstr := Format(CustAmount, 0, Text1000016);
         CurrentLine += WriteText(Amountstr, 14, '<', '', false); //63 Μεικτή Αξία [gross_amount]
         CurrentLine += WriteText('', 14, '<', '', false); //64 Αξία μεταφορικών [transport_amount]
         CurrentLine += WriteText('', 14, '<', '', false); //65 ΦΠΑ μεταφορικών[transport_vat]
 
-        Amountstr := FORMAT(AmountInclVAT, 0, Text1000016);
+        Amountstr := Format(AmountInclVAT, 0, Text1000016);
         CurrentLine += WriteText(Amountstr, 14, '<', '', false); //66 Συνολικό Ποσό Πληρωμής [total_pay_amount]
-        CurrentLine += WriteText(FORMAT(LineQty, 0, Text1000017), 11, '<', '', false); //67 Σύνολο τεμαχίων [total_cu] 11,3
+        CurrentLine += WriteText(Format(LineQty, 0, Text1000017), 11, '<', '', false); //67 Σύνολο τεμαχίων [total_cu] 11,3
         CurrentLine += WriteText('', 100, '<', '', true); //68  Σχόλια  [comments] //last line
 
         if vG_UseDotNet = true then begin
             //streamWriter.WriteLine(CurrentLine);
-            TargetFile.Write(CurrentLine);
+            //TargetFile.Write(CurrentLine);
+            OutStr.WriteText(CurrentLine);
         end else begin
-            TargetText.ADDTEXT(CurrentLine);  //NOD0.7
+            //TargetText.AddText(CurrentLine);  //NOD0.7
+            OutStr.WriteText(CurrentLine);
         end;
 
-        rG_SalesCrMemoHeader."Export DateTime" := CURRENTDATETIME;
-        rG_SalesCrMemoHeader.MODIFY;
+        rG_SalesCrMemoHeader."Export DateTime" := CurrentDateTime;
+        rG_SalesCrMemoHeader.Modify;
     end;
 
     procedure BodyInfoSCrMemoLines();
     var
         BankAcc: Record "Bank Account";
-
         CommentLine: Text;
         Country: Record "Country/Region";
         GenCat: Record "General Categories";
         Customer: Record Customer;
-
         CountryofOriginName: Text;
         PotatoesDesc: Text;
         ProductClass: Text;
     begin
-
         CurrentLine := '';
         CurrentLine += WriteText(rG_SalesCrMemoLine."Document No.", 14, '<', '', false); //1 Αριθμός εγγραφής [ref_number]
-        CurrentLine += WriteText(FORMAT(sLineNo), 14, '<', '', false); //2 Αύξων αριθμός γραμμής [line_number]
+        CurrentLine += WriteText(Format(sLineNo), 14, '<', '', false); //2 Αύξων αριθμός γραμμής [line_number]
         CurrentLine += WriteText(rG_SalesCrMemoLine."Shelf No.", 20, '<', '', false); //3 Κωδικός προϊόντος προμηθευτή [SKU]
 
         //find the cross reference
-        rG_CrossReference.RESET;
-        rG_CrossReference.SETFILTER("Item No.", rG_SalesCrMemoLine."No.");
+        rG_CrossReference.Reset;
+        rG_CrossReference.SetFilter("Item No.", rG_SalesCrMemoLine."No.");
         //rG_CrossReference.SETRANGE("Cross-Reference Type", rG_CrossReference."Cross-Reference Type"::"Bar Code");
-        rG_CrossReference.SETRANGE("Reference Type", rG_CrossReference."Reference Type"::"Bar Code");
-        if rG_CrossReference.FINDSET then begin
+        rG_CrossReference.SetRange("Reference Type", rG_CrossReference."Reference Type"::"Bar Code");
+        if rG_CrossReference.FindSet then begin
             CurrentLine += WriteText(rG_CrossReference."Reference No.", 14, '<', '', false); //4 ΕΑΝ τεμαχίου [EAN_cu]
             //CurrentLine += WriteText(rG_CrossReference."Cross-Reference No.", 14, '<', '', false); //4 ΕΑΝ τεμαχίου [EAN_cu]
         end else begin
             CurrentLine += WriteText('', 14, '<', '', false); //4 ΕΑΝ τεμαχίου [EAN_cu]
         end;
 
-
         CurrentLine += WriteText(rG_SalesCrMemoLine.Description, 70, '<', '', false); //5 Περιγραφή Προϊόντος [prod_description]
         CurrentLine += WriteText(rG_SalesCrMemoLine."Unit of Measure Code", 9, '<', '', false); //6 Μονάδα μέτρησης της ποσότητας παράδοσης [delivery_mu]
 
-        Amountstr := FORMAT(rG_SalesCrMemoLine."Qty. per Unit of Measure", 0, Text1000017);
+        Amountstr := Format(rG_SalesCrMemoLine."Qty. per Unit of Measure", 0, Text1000017);
         CurrentLine += WriteText(Amountstr, 11, '<', '', false); //7 Συντελεστής Κιβωτιοποίησης [delivery_capacity] 11,3
 
-        Amountstr := FORMAT(rG_SalesCrMemoLine.Quantity, 0, Text1000017);
+        Amountstr := Format(rG_SalesCrMemoLine.Quantity, 0, Text1000017);
         CurrentLine += WriteText(Amountstr, 11, '<', '', false); //8 Ποσότητα παράδοσης  [delivery_qty]
 
-        Amountstr := FORMAT(rG_SalesCrMemoLine."Unit Price", 0, Text1000016);
+        Amountstr := Format(rG_SalesCrMemoLine."Unit Price", 0, Text1000016);
         CurrentLine += WriteText(Amountstr, 14, '<', '', false); //9  Τιμή μονάδος [price]
 
-        Amountstr := FORMAT(rG_SalesCrMemoLine."Line Discount %", 0, Text1000018);
+        Amountstr := Format(rG_SalesCrMemoLine."Line Discount %", 0, Text1000018);
         CurrentLine += WriteText(Amountstr, 5, '<', '', false); //10  Ποσοστό έκπτωσης 1[allow_percent1]
 
-        Amountstr := FORMAT(rG_SalesCrMemoLine."Line Discount Amount", 0, Text1000018);
+        Amountstr := Format(rG_SalesCrMemoLine."Line Discount Amount", 0, Text1000018);
         CurrentLine += WriteText(Amountstr, 14, '<', '', false); //11 Ποσό έκπτωσης  1 [allow_amount1]
         CurrentLine += WriteText('', 5, '<', '', false); //12 Ποσοστό έκπτωσης 2[allow_percent2]
         CurrentLine += WriteText('', 14, '<', '', false); //13  Ποσό έκπτωσης  2 [allow_amount2]
@@ -2061,28 +2048,27 @@ codeunit 50000 "General Mgt."
         CurrentLine += WriteText('', 5, '<', '', false); //19 Ποσοστό επιβάρυνσης 1 [charge_percent1]
         CurrentLine += WriteText('', 14, '<', '', false); //20 Ποσό επιβάρυνσης 1 [charge_amount1]
 
-
         CurrentLine += WriteText('', 5, '<', '', false); //21 Ποσοστό επιβάρυνσης 2 [charge_percent2]
         CurrentLine += WriteText('', 14, '<', '', false); //22 Ποσό επιβάρυνσης 2 [charge_amount2]
         CurrentLine += WriteText('', 14, '<', '', false); //23 Συνολική αξία επιβαρύνσεων [total_charges]
-        CurrentLine += WriteText(FORMAT(rG_SalesCrMemoLine."VAT %"), 3, '<', '', false); //24 Ποσοστό ΦΠΑ [vat_percent]
+        CurrentLine += WriteText(Format(rG_SalesCrMemoLine."VAT %"), 3, '<', '', false); //24 Ποσοστό ΦΠΑ [vat_percent]
 
-        Amountstr := FORMAT(rG_SalesCrMemoLine."Amount Including VAT" - rG_SalesCrMemoLine.Amount, 0, Text1000016);
+        Amountstr := Format(rG_SalesCrMemoLine."Amount Including VAT" - rG_SalesCrMemoLine.Amount, 0, Text1000016);
         CurrentLine += WriteText(Amountstr, 14, '<', '', false); //25 Αξία ΦΠΑ [vat_amount]
         CurrentLine += WriteText('', 5, '<', '', false); //26 Ποσοστό άλλων φόρων  [tax_percent]
         CurrentLine += WriteText('', 14, '<', '', false); //27 Αξία άλλων φόρων [tax_amount]
         CurrentLine += WriteText('', 14, '<', '', false); //28 Καθαρή αξία προ έκπτωσεων [net_amount]
         CurrentLine += WriteText('', 14, '<', '', false); //29 Υποκείμενη αξία [sub_amount]
-        Amountstr := FORMAT(rG_SalesCrMemoLine."VAT Base Amount", 0, Text1000016);
+        Amountstr := Format(rG_SalesCrMemoLine."VAT Base Amount", 0, Text1000016);
         CurrentLine += WriteText(Amountstr, 14, '<', '', false); //30 Φορολογούμενο ποσό [taxable_amount]
 
-        Amountstr := FORMAT(rG_SalesCrMemoLine.Quantity * rG_SalesCrMemoLine."Unit Price", 0, Text1000016);
+        Amountstr := Format(rG_SalesCrMemoLine.Quantity * rG_SalesCrMemoLine."Unit Price", 0, Text1000016);
         CurrentLine += WriteText(Amountstr, 14, '<', '', false); //31 Μεικτή αξία [gross_amount]
 
 
         CurrentLine += WriteText('', 14, '<', '', false); //32 Τελική τιμή μονάδος [net_price]
 
-        Amountstr := FORMAT(rG_SalesCrMemoLine."Line Amount", 0, Text1000016);
+        Amountstr := Format(rG_SalesCrMemoLine."Line Amount", 0, Text1000016);
         CurrentLine += WriteText(Amountstr, 14, '<', '', false); //33 Συνολική τελική αξία προϊόντος [final_amount]
 
         CurrentLine += WriteText('', 20, '<', '', false); //34 Αριθμός αντίστοιχου παραστατικού – σε περίπτωση που ένα παραστατικό σχετίζεται με πολλά αντίστοιχα [ref_inv_number]4
@@ -2095,11 +2081,11 @@ codeunit 50000 "General Mgt."
 
         //+1.0.0.303
         CommentLine := '';
-        Customer.GET(rG_SalesCrMemoHeader."Sell-to Customer No.");
+        Customer.Get(rG_SalesCrMemoHeader."Sell-to Customer No.");
         if Customer."Mandatory CY Fields" then begin
             ProductClass := rG_SalesCrMemoLine."Product Class";
 
-            if Country.get(rG_SalesCrMemoLine."Country/Region of Origin Code") then begin
+            if Country.Get(rG_SalesCrMemoLine."Country/Region of Origin Code") then begin
                 CountryofOriginName := Country.Name;
                 CommentLine := CountryofOriginName;
             end;
@@ -2108,7 +2094,7 @@ codeunit 50000 "General Mgt."
                 CommentLine += ',' + ProductClass;
             end;
 
-            if GenCat.GET(27, GenCat.Type::Category9, rG_SalesCrMemoLine."Category 9") then begin
+            if GenCat.Get(27, GenCat.Type::Category9, rG_SalesCrMemoLine."Category 9") then begin
                 PotatoesDesc := GenCat.Description;
                 CommentLine += ',' + PotatoesDesc;
             end;
@@ -2118,9 +2104,11 @@ codeunit 50000 "General Mgt."
 
         if vG_UseDotNet = true then begin
             //streamWriter.WriteLine(CurrentLine);
-            TargetFile.Write(CurrentLine);
+            //TargetFile.Write(CurrentLine);
+            OutStr.WriteText(CurrentLine);
         end else begin
-            TargetText.ADDTEXT(CurrentLine);  //NOD0.7
+            //TargetText.AddText(CurrentLine);  //NOD0.7
+            OutStr.WriteText(CurrentLine);
         end;
     end;
 
@@ -2129,14 +2117,14 @@ codeunit 50000 "General Mgt."
         hlpint: Integer;
         hlptxt: Text[30];
     begin
-        AmountText := FORMAT((ROUND(Amount, 1, '<')), 0, Text1000015);
-        AmountText := PADSTR('', LengthBeforecomma - STRLEN(AmountText), FillingSign) +
+        AmountText := Format((Round(Amount, 1, '<')), 0, Text1000015);
+        AmountText := PadStr('', LengthBeforecomma - StrLen(AmountText), FillingSign) +
                        AmountText +
                        DecimalSeperator;
-        hlpint := (Amount * (POWER(10, DecimalPlaces))) mod (POWER(10, DecimalPlaces));
-        hlptxt := FORMAT(hlpint, 0, Text1000015);
-        if STRLEN(hlptxt) < DecimalPlaces then
-            hlptxt := PADSTR('', DecimalPlaces - STRLEN(hlptxt), '0') + hlptxt;
+        hlpint := (Amount * (Power(10, DecimalPlaces))) mod (Power(10, DecimalPlaces));
+        hlptxt := Format(hlpint, 0, Text1000015);
+        if StrLen(hlptxt) < DecimalPlaces then
+            hlptxt := PadStr('', DecimalPlaces - StrLen(hlptxt), '0') + hlptxt;
 
         if hlptxt <> '0' then begin
             AmountText := AmountText + hlptxt;
@@ -2148,15 +2136,15 @@ codeunit 50000 "General Mgt."
         hlpint: Integer;
         hlptxt: Text[30];
     begin
-        AmountText := FORMAT((ROUND(Amount, 1, '<')), 0, Text1000015);
-        AmountText := PADSTR('', LengthBeforecomma - STRLEN(AmountText), FillingSign) +
+        AmountText := Format((Round(Amount, 1, '<')), 0, Text1000015);
+        AmountText := PadStr('', LengthBeforecomma - StrLen(AmountText), FillingSign) +
                        AmountText +
                        DecimalSeperator
                         ;
-        hlpint := (Amount * (POWER(10, DecimalPlaces))) mod (POWER(10, DecimalPlaces));
-        hlptxt := FORMAT(hlpint, 0, Text1000015);
-        if STRLEN(hlptxt) < DecimalPlaces then
-            hlptxt := PADSTR('', DecimalPlaces - STRLEN(hlptxt), '0') + hlptxt;
+        hlpint := (Amount * (Power(10, DecimalPlaces))) mod (Power(10, DecimalPlaces));
+        hlptxt := Format(hlpint, 0, Text1000015);
+        if StrLen(hlptxt) < DecimalPlaces then
+            hlptxt := PadStr('', DecimalPlaces - StrLen(hlptxt), '0') + hlptxt;
         AmountText := hlptxt + AmountText;
     end;
 
@@ -2169,7 +2157,7 @@ codeunit 50000 "General Mgt."
         PCTable := 'ϊϋάέήίύώόαβγδεζηθικλμνξοπρστυφχψωςΆΈΉΊΎΏΌΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ&''"%';
         ElotTable := 'iyaeiiyooabgdeziuiklmnjoprstyfxcosAEIIYOOABGDEZIUIKLMNJOPRSTYFXCO    ';
 
-        exit(CONVERTSTR(InString, PCTable, ElotTable));
+        exit(ConvertStr(InString, PCTable, ElotTable));
     end;
 
     procedure Pc2ElotHB(InString: Text[250]): Text[250];
@@ -2181,7 +2169,7 @@ codeunit 50000 "General Mgt."
         PCTable := '.,';
         ElotTable := ',.';
 
-        exit(CONVERTSTR(InString, PCTable, ElotTable));
+        exit(ConvertStr(InString, PCTable, ElotTable));
     end;
 
     procedure CreateProductionDocuments(pWorksheetName: Code[10]; pBatchName: Code[10]);
@@ -2190,48 +2178,43 @@ codeunit 50000 "General Mgt."
         rL_RequisitionWkshName: Record "Requisition Wksh. Name";
         rL_ProductionOrder: Record "Production Order";
     begin
-        if not CONFIRM(Text50005, false) then begin
+        if not Confirm(Text50005, false) then begin
             exit;
         end;
 
-        rL_RequisitionWkshName.GET(pWorksheetName, pBatchName);
+        rL_RequisitionWkshName.Get(pWorksheetName, pBatchName);
 
         //check data
-        rL_ReqLine.RESET;
-        rL_ReqLine.SETFILTER("Worksheet Template Name", pWorksheetName);
-        rL_ReqLine.SETFILTER("Journal Batch Name", pBatchName);
-        rL_ReqLine.SETFILTER(Quantity, '<>%1', 0);
-        if rL_ReqLine.FINDSET then begin
+        rL_ReqLine.Reset;
+        rL_ReqLine.SetFilter("Worksheet Template Name", pWorksheetName);
+        rL_ReqLine.SetFilter("Journal Batch Name", pBatchName);
+        rL_ReqLine.SetFilter(Quantity, '<>%1', 0);
+        if rL_ReqLine.FindSet then begin
             repeat
-                rL_ReqLine.TESTFIELD("Location Code");
-                rL_ReqLine.TESTFIELD("Vendor No.");
-            until rL_ReqLine.NEXT = 0;
+                rL_ReqLine.TestField("Location Code");
+                rL_ReqLine.TestField("Vendor No.");
+            until rL_ReqLine.Next = 0;
         end;
 
-
-        rL_ReqLine.RESET;
-        rL_ReqLine.SETFILTER("Worksheet Template Name", pWorksheetName);
-        rL_ReqLine.SETFILTER("Journal Batch Name", pBatchName);
-        rL_ReqLine.SETFILTER(Quantity, '<>%1', 0);
-        if rL_ReqLine.FINDSET then begin
+        rL_ReqLine.Reset;
+        rL_ReqLine.SetFilter("Worksheet Template Name", pWorksheetName);
+        rL_ReqLine.SetFilter("Journal Batch Name", pBatchName);
+        rL_ReqLine.SetFilter(Quantity, '<>%1', 0);
+        if rL_ReqLine.FindSet then begin
             repeat
-
-
                 if rL_RequisitionWkshName."Transaction Type" = rL_RequisitionWkshName."Transaction Type"::Inbound then begin
                     case rL_ReqLine."Replenishment System" of
-                        rL_ReqLine."Replenishment System"::"Box":
+                        rL_ReqLine."Replenishment System"::Box:
                             begin
                                 CreateBox(true, rL_ReqLine, rL_RequisitionWkshName."Vendor No.");
                             end;
-
 
                         rL_ReqLine."Replenishment System"::Transfer://FROM VENDOR TO ARADIPOU
                             begin
                                 CreateTransfer(true, rL_ReqLine, rL_RequisitionWkshName."Vendor No.");
                             end;
 
-
-                        rL_ReqLine."Replenishment System"::"Sale", rL_ReqLine."Replenishment System"::"Sales Return Order": //TAL0.1
+                        rL_ReqLine."Replenishment System"::Sale, rL_ReqLine."Replenishment System"::"Sales Return Order": //TAL0.1
                             begin
                                 CreateSalesDocument(true, rL_ReqLine, rL_RequisitionWkshName."Vendor No.");
                             end;
@@ -2240,24 +2223,21 @@ codeunit 50000 "General Mgt."
                             begin
                                 CreatePurchaseDocument(true, rL_ReqLine, rL_ReqLine."Vendor No.");
                             end;
-
                     end;
-
                 end else
                     if rL_RequisitionWkshName."Transaction Type" = rL_RequisitionWkshName."Transaction Type"::Outbound then begin
                         case rL_ReqLine."Replenishment System" of
-                            rL_ReqLine."Replenishment System"::"Box":
+                            rL_ReqLine."Replenishment System"::Box:
                                 begin
                                     CreateBox(false, rL_ReqLine, rL_RequisitionWkshName."Vendor No.");
                                 end;
-
 
                             rL_ReqLine."Replenishment System"::Transfer: //FROM ARADIPOU TO VENDOR
                                 begin
                                     CreateTransfer(false, rL_ReqLine, rL_RequisitionWkshName."Vendor No.");
                                 end;
 
-                            rL_ReqLine."Replenishment System"::"Sale":
+                            rL_ReqLine."Replenishment System"::Sale:
                                 begin
                                     CreateSalesDocument(false, rL_ReqLine, rL_RequisitionWkshName."Vendor No.");
                                 end;
@@ -2266,36 +2246,33 @@ codeunit 50000 "General Mgt."
                                 begin
                                     CreatePurchaseDocument(false, rL_ReqLine, rL_ReqLine."Vendor No.");
                                 end;
-
                         end;
                     end;
 
                 //+TAL0.10
                 if rL_ReqLine."Prod. Order No. Ref" <> '' then begin
-                    rL_ProductionOrder.RESET;
-                    rL_ProductionOrder.SETRANGE(Status, rL_ProductionOrder.Status::Released);
-                    rL_ProductionOrder.SETFILTER("No.", rL_ReqLine."Prod. Order No. Ref");
-                    if rL_ProductionOrder.FINDFIRST then begin
-                        rL_ProductionOrder.VALIDATE("Documents Created", true);
-                        rL_ProductionOrder.MODIFY;
+                    rL_ProductionOrder.Reset;
+                    rL_ProductionOrder.SetRange(Status, rL_ProductionOrder.Status::Released);
+                    rL_ProductionOrder.SetFilter("No.", rL_ReqLine."Prod. Order No. Ref");
+                    if rL_ProductionOrder.FindFirst then begin
+                        rL_ProductionOrder.Validate("Documents Created", true);
+                        rL_ProductionOrder.Modify;
                     end;
                 end;
             //-TAL0.10
-
-
-            until rL_ReqLine.NEXT = 0;
+            until rL_ReqLine.Next = 0;
         end;
 
-        rL_ReqLine.RESET;
-        rL_ReqLine.SETFILTER("Worksheet Template Name", pWorksheetName);
-        rL_ReqLine.SETFILTER("Journal Batch Name", pBatchName);
-        if rL_ReqLine.FINDSET then begin
+        rL_ReqLine.Reset;
+        rL_ReqLine.SetFilter("Worksheet Template Name", pWorksheetName);
+        rL_ReqLine.SetFilter("Journal Batch Name", pBatchName);
+        if rL_ReqLine.FindSet then begin
             repeat
-                rL_ReqLine.DELETE;
-            until rL_ReqLine.NEXT = 0;
+                rL_ReqLine.Delete;
+            until rL_ReqLine.Next = 0;
         end;
 
-        MESSAGE('Documents Created');
+        Message('Documents Created');
     end;
 
     local procedure CreateBox(pInbound: Boolean; var pReqLine: Record "Requisition Line"; pVendorNo: Code[20]);
@@ -2304,50 +2281,48 @@ codeunit 50000 "General Mgt."
         rL_PurchaseLineAddon: Record "Purchase Line Addon";
         vL_LineNo: Integer;
     begin
-
-        rL_PurchaseHeaderAddon.RESET;
-        rL_PurchaseHeaderAddon.SETRANGE("Document Type", rL_PurchaseHeaderAddon."Document Type"::Order);
-        rL_PurchaseHeaderAddon.SETFILTER("Buy-from Vendor No.", pVendorNo);
-        rL_PurchaseHeaderAddon.SETRANGE("Posting Date", TODAY);
-        if not rL_PurchaseHeaderAddon.FINDSET then begin
-            CLEAR(rL_PurchaseHeaderAddon);
-            rL_PurchaseHeaderAddon.INIT;
+        rL_PurchaseHeaderAddon.Reset;
+        rL_PurchaseHeaderAddon.SetRange("Document Type", rL_PurchaseHeaderAddon."Document Type"::Order);
+        rL_PurchaseHeaderAddon.SetFilter("Buy-from Vendor No.", pVendorNo);
+        rL_PurchaseHeaderAddon.SetRange("Posting Date", Today);
+        if not rL_PurchaseHeaderAddon.FindSet then begin
+            Clear(rL_PurchaseHeaderAddon);
+            rL_PurchaseHeaderAddon.Init;
             rL_PurchaseHeaderAddon.SetHideValidationDialog(true);
-            rL_PurchaseHeaderAddon.VALIDATE("Document Type", rL_PurchaseHeaderAddon."Document Type"::Order);
-            rL_PurchaseHeaderAddon.INSERT(true);
-            rL_PurchaseHeaderAddon.VALIDATE("Buy-from Vendor No.", pVendorNo);
-            rL_PurchaseHeaderAddon.VALIDATE("Posting Date", TODAY);
-            rL_PurchaseHeaderAddon.MODIFY;
+            rL_PurchaseHeaderAddon.Validate("Document Type", rL_PurchaseHeaderAddon."Document Type"::Order);
+            rL_PurchaseHeaderAddon.Insert(true);
+            rL_PurchaseHeaderAddon.Validate("Buy-from Vendor No.", pVendorNo);
+            rL_PurchaseHeaderAddon.Validate("Posting Date", Today);
+            rL_PurchaseHeaderAddon.Modify;
         end;
 
-
         vL_LineNo := 0;
-        CLEAR(rL_PurchaseLineAddon);
-        rL_PurchaseLineAddon.RESET;
-        rL_PurchaseLineAddon.SETRANGE("Document Type", rL_PurchaseHeaderAddon."Document Type");
-        rL_PurchaseLineAddon.SETFILTER("Document No.", rL_PurchaseHeaderAddon."No.");
-        if rL_PurchaseLineAddon.FINDLAST then begin
+        Clear(rL_PurchaseLineAddon);
+        rL_PurchaseLineAddon.Reset;
+        rL_PurchaseLineAddon.SetRange("Document Type", rL_PurchaseHeaderAddon."Document Type");
+        rL_PurchaseLineAddon.SetFilter("Document No.", rL_PurchaseHeaderAddon."No.");
+        if rL_PurchaseLineAddon.FindLast then begin
             vL_LineNo := rL_PurchaseLineAddon."Line No.";
         end;
 
         vL_LineNo += 10000;
 
-        rL_PurchaseLineAddon.RESET;
-        rL_PurchaseLineAddon.VALIDATE("Document Type", rL_PurchaseHeaderAddon."Document Type");
-        rL_PurchaseLineAddon.VALIDATE("Document No.", rL_PurchaseHeaderAddon."No.");
+        rL_PurchaseLineAddon.Reset;
+        rL_PurchaseLineAddon.Validate("Document Type", rL_PurchaseHeaderAddon."Document Type");
+        rL_PurchaseLineAddon.Validate("Document No.", rL_PurchaseHeaderAddon."No.");
         rL_PurchaseLineAddon."Line No." := vL_LineNo;
-        rL_PurchaseLineAddon.INSERT(true);
+        rL_PurchaseLineAddon.Insert(true);
 
-        rL_PurchaseLineAddon.VALIDATE(Type, rL_PurchaseLineAddon.Type::Item);
-        rL_PurchaseLineAddon.VALIDATE("No.", pReqLine."No.");
-        rL_PurchaseLineAddon.VALIDATE("Location Code", pReqLine."Location Code");
+        rL_PurchaseLineAddon.Validate(Type, rL_PurchaseLineAddon.Type::Item);
+        rL_PurchaseLineAddon.Validate("No.", pReqLine."No.");
+        rL_PurchaseLineAddon.Validate("Location Code", pReqLine."Location Code");
         if pInbound then begin
-            rL_PurchaseLineAddon.VALIDATE(Quantity, pReqLine.Quantity);
+            rL_PurchaseLineAddon.Validate(Quantity, pReqLine.Quantity);
         end else begin
-            rL_PurchaseLineAddon.VALIDATE(Quantity, pReqLine.Quantity * -1);
+            rL_PurchaseLineAddon.Validate(Quantity, pReqLine.Quantity * -1);
         end;
 
-        rL_PurchaseLineAddon.MODIFY;
+        rL_PurchaseLineAddon.Modify;
     end;
 
     local procedure CreateTransfer(pInbound: Boolean; var pReqLine: Record "Requisition Line"; pVendorNo: Code[20]);
@@ -2358,59 +2333,56 @@ codeunit 50000 "General Mgt."
         VendorLocation: Code[20];
     begin
         //MESSAGE('Before:'+pVendorNo);
-        VendorLocation := DELSTR(pVendorNo, 2, 3);
+        VendorLocation := DelStr(pVendorNo, 2, 3);
         //MESSAGE('After:'+VendorLocation);
 
 
-        rL_TransferHeader.RESET;
-        rL_TransferHeader.SETFILTER("Req. Vendor No.", pVendorNo);
-        rL_TransferHeader.SETRANGE("Posting Date", TODAY);
+        rL_TransferHeader.Reset;
+        rL_TransferHeader.SetFilter("Req. Vendor No.", pVendorNo);
+        rL_TransferHeader.SetRange("Posting Date", Today);
         if pInbound then begin
-            rL_TransferHeader.SETFILTER("Transfer-from Code", VendorLocation);
+            rL_TransferHeader.SetFilter("Transfer-from Code", VendorLocation);
         end else begin
-            rL_TransferHeader.SETFILTER("Transfer-to Code", VendorLocation);
+            rL_TransferHeader.SetFilter("Transfer-to Code", VendorLocation);
         end;
 
-        if not rL_TransferHeader.FINDSET then begin
-            CLEAR(rL_TransferHeader);
+        if not rL_TransferHeader.FindSet then begin
+            Clear(rL_TransferHeader);
             rL_TransferHeader.InitRecord;
             rL_TransferHeader.SetHideValidationDialog(true);
-            rL_TransferHeader.VALIDATE("Req. Vendor No.", pVendorNo);
-            rL_TransferHeader.VALIDATE("Posting Date", TODAY);
-            rL_TransferHeader.INSERT(true);
+            rL_TransferHeader.Validate("Req. Vendor No.", pVendorNo);
+            rL_TransferHeader.Validate("Posting Date", Today);
+            rL_TransferHeader.Insert(true);
 
             if pInbound then begin
-                rL_TransferHeader.VALIDATE("Transfer-from Code", VendorLocation);
-                rL_TransferHeader.VALIDATE("Transfer-to Code", pReqLine."Location Code");
+                rL_TransferHeader.Validate("Transfer-from Code", VendorLocation);
+                rL_TransferHeader.Validate("Transfer-to Code", pReqLine."Location Code");
             end else begin
-                rL_TransferHeader.VALIDATE("Transfer-from Code", pReqLine."Location Code");
-                rL_TransferHeader.VALIDATE("Transfer-to Code", VendorLocation);
+                rL_TransferHeader.Validate("Transfer-from Code", pReqLine."Location Code");
+                rL_TransferHeader.Validate("Transfer-to Code", VendorLocation);
             end;
-            rL_TransferHeader.VALIDATE("In-Transit Code", 'TRANSIT');
+            rL_TransferHeader.Validate("In-Transit Code", 'TRANSIT');
 
-            rL_TransferHeader.MODIFY;
-
+            rL_TransferHeader.Modify;
         end;
 
-
-
         vL_LineNo := 0;
-        CLEAR(rL_TransferLine);
-        rL_TransferLine.RESET;
-        rL_TransferLine.SETFILTER("Document No.", rL_TransferHeader."No.");
-        if rL_TransferLine.FINDLAST then begin
+        Clear(rL_TransferLine);
+        rL_TransferLine.Reset;
+        rL_TransferLine.SetFilter("Document No.", rL_TransferHeader."No.");
+        if rL_TransferLine.FindLast then begin
             vL_LineNo := rL_TransferLine."Line No.";
         end;
 
         vL_LineNo += 10000;
-        CLEAR(rL_TransferLine);
-        rL_TransferLine.VALIDATE("Document No.", rL_TransferHeader."No.");
-        rL_TransferLine.VALIDATE("Line No.", vL_LineNo);
-        rL_TransferLine.INSERT(true);
+        Clear(rL_TransferLine);
+        rL_TransferLine.Validate("Document No.", rL_TransferHeader."No.");
+        rL_TransferLine.Validate("Line No.", vL_LineNo);
+        rL_TransferLine.Insert(true);
 
-        rL_TransferLine.VALIDATE("Item No.", pReqLine."No.");
-        rL_TransferLine.VALIDATE(Quantity, pReqLine.Quantity);
-        rL_TransferLine.MODIFY;
+        rL_TransferLine.Validate("Item No.", pReqLine."No.");
+        rL_TransferLine.Validate(Quantity, pReqLine.Quantity);
+        rL_TransferLine.Modify;
     end;
 
     local procedure CreateSalesDocument(pInbound: Boolean; var pReqLine: Record "Requisition Line"; pVendorNo: Code[20]);
@@ -2421,61 +2393,61 @@ codeunit 50000 "General Mgt."
         vL_LineNo: Integer;
     begin
 
-        rL_Vendor.GET(pVendorNo);
-        rL_Vendor.TESTFIELD(Customer);
+        rL_Vendor.Get(pVendorNo);
+        rL_Vendor.TestField(Customer);
 
         //find the customer from the vendor
-        rL_SalesHeader.RESET;
+        rL_SalesHeader.Reset;
         if pInbound then begin
-            rL_SalesHeader.SETRANGE("Document Type", rL_SalesHeader."Document Type"::"Return Order");
+            rL_SalesHeader.SetRange("Document Type", rL_SalesHeader."Document Type"::"Return Order");
         end else begin
-            rL_SalesHeader.SETRANGE("Document Type", rL_SalesHeader."Document Type"::Order);
+            rL_SalesHeader.SetRange("Document Type", rL_SalesHeader."Document Type"::Order);
         end;
 
-        rL_SalesHeader.SETFILTER("Sell-to Customer No.", rL_Vendor.Customer);
-        rL_SalesHeader.SETRANGE("Posting Date", TODAY);
-        rL_SalesHeader.SETFILTER("Req. Vendor No.", rL_Vendor."No.");
-        if not rL_SalesHeader.FINDSET then begin
-            CLEAR(rL_SalesHeader);
-            rL_SalesHeader.INIT;
+        rL_SalesHeader.SetFilter("Sell-to Customer No.", rL_Vendor.Customer);
+        rL_SalesHeader.SetRange("Posting Date", Today);
+        rL_SalesHeader.SetFilter("Req. Vendor No.", rL_Vendor."No.");
+        if not rL_SalesHeader.FindSet then begin
+            Clear(rL_SalesHeader);
+            rL_SalesHeader.Init;
             rL_SalesHeader.SetHideValidationDialog(true);
             if pInbound then begin
-                rL_SalesHeader.VALIDATE("Document Type", rL_SalesHeader."Document Type"::"Return Order");
+                rL_SalesHeader.Validate("Document Type", rL_SalesHeader."Document Type"::"Return Order");
             end else begin
-                rL_SalesHeader.VALIDATE("Document Type", rL_SalesHeader."Document Type"::Order);
+                rL_SalesHeader.Validate("Document Type", rL_SalesHeader."Document Type"::Order);
             end;
-            rL_SalesHeader.INSERT(true);
+            rL_SalesHeader.Insert(true);
             //rL_SalesHeader.VALIDATE("Bill-to Customer No.",rL_Vendor.Customer);
-            rL_SalesHeader.VALIDATE("Sell-to Customer No.", rL_Vendor.Customer);//anp-gp
-            rL_SalesHeader.VALIDATE("Posting Date", TODAY);
-            rL_SalesHeader.VALIDATE("Req. Vendor No.", rL_Vendor."No.");
-            rL_SalesHeader.MODIFY;
+            rL_SalesHeader.Validate("Sell-to Customer No.", rL_Vendor.Customer);//anp-gp
+            rL_SalesHeader.Validate("Posting Date", Today);
+            rL_SalesHeader.Validate("Req. Vendor No.", rL_Vendor."No.");
+            rL_SalesHeader.Modify;
         end;
 
 
         vL_LineNo := 0;
-        CLEAR(rL_SalesLine);
-        rL_SalesLine.RESET;
-        rL_SalesLine.SETRANGE("Document Type", rL_SalesHeader."Document Type");
-        rL_SalesLine.SETFILTER("Document No.", rL_SalesHeader."No.");
-        if rL_SalesLine.FINDLAST then begin
+        Clear(rL_SalesLine);
+        rL_SalesLine.Reset;
+        rL_SalesLine.SetRange("Document Type", rL_SalesHeader."Document Type");
+        rL_SalesLine.SetFilter("Document No.", rL_SalesHeader."No.");
+        if rL_SalesLine.FindLast then begin
             vL_LineNo := rL_SalesLine."Line No.";
         end;
 
         vL_LineNo += 10000;
 
-        rL_SalesLine.RESET;
-        rL_SalesLine.VALIDATE("Document Type", rL_SalesHeader."Document Type");
-        rL_SalesLine.VALIDATE("Document No.", rL_SalesHeader."No.");
+        rL_SalesLine.Reset;
+        rL_SalesLine.Validate("Document Type", rL_SalesHeader."Document Type");
+        rL_SalesLine.Validate("Document No.", rL_SalesHeader."No.");
         rL_SalesLine."Line No." := vL_LineNo;
-        rL_SalesLine.INSERT(true);
+        rL_SalesLine.Insert(true);
 
-        rL_SalesLine.VALIDATE(Type, rL_SalesLine.Type::Item);
-        rL_SalesLine.VALIDATE("No.", pReqLine."No.");
-        rL_SalesLine.VALIDATE("Location Code", pReqLine."Location Code");
-        rL_SalesLine.VALIDATE(Quantity, pReqLine.Quantity);
+        rL_SalesLine.Validate(Type, rL_SalesLine.Type::Item);
+        rL_SalesLine.Validate("No.", pReqLine."No.");
+        rL_SalesLine.Validate("Location Code", pReqLine."Location Code");
+        rL_SalesLine.Validate(Quantity, pReqLine.Quantity);
 
-        rL_SalesLine.MODIFY;
+        rL_SalesLine.Modify;
     end;
 
     local procedure CreatePurchaseDocument(pInbound: Boolean; var pReqLine: Record "Requisition Line"; pVendorNo: Code[20]);
@@ -2486,62 +2458,62 @@ codeunit 50000 "General Mgt."
         vL_LineNo: Integer;
     begin
 
-        rL_Vendor.GET(pVendorNo);
+        rL_Vendor.Get(pVendorNo);
         //rL_Vendor.TESTFIELD(Customer);
 
         //find the customer from the vendor
-        rL_PurchaseHeader.RESET;
+        rL_PurchaseHeader.Reset;
         if pInbound then begin
-            rL_PurchaseHeader.SETRANGE("Document Type", rL_PurchaseHeader."Document Type"::Order);
+            rL_PurchaseHeader.SetRange("Document Type", rL_PurchaseHeader."Document Type"::Order);
         end else begin
-            rL_PurchaseHeader.SETRANGE("Document Type", rL_PurchaseHeader."Document Type"::"Return Order");
+            rL_PurchaseHeader.SetRange("Document Type", rL_PurchaseHeader."Document Type"::"Return Order");
         end;
 
-        rL_PurchaseHeader.SETFILTER("Buy-from Vendor No.", rL_Vendor."No.");
-        rL_PurchaseHeader.SETRANGE("Posting Date", TODAY);
-        rL_PurchaseHeader.SETFILTER("Req. Vendor No.", rL_Vendor."No.");
-        if not rL_PurchaseHeader.FINDSET then begin
-            CLEAR(rL_PurchaseHeader);
-            rL_PurchaseHeader.INIT;
+        rL_PurchaseHeader.SetFilter("Buy-from Vendor No.", rL_Vendor."No.");
+        rL_PurchaseHeader.SetRange("Posting Date", Today);
+        rL_PurchaseHeader.SetFilter("Req. Vendor No.", rL_Vendor."No.");
+        if not rL_PurchaseHeader.FindSet then begin
+            Clear(rL_PurchaseHeader);
+            rL_PurchaseHeader.Init;
             rL_PurchaseHeader.SetHideValidationDialog(true);
             if pInbound then begin
-                rL_PurchaseHeader.VALIDATE("Document Type", rL_PurchaseHeader."Document Type"::Order);
+                rL_PurchaseHeader.Validate("Document Type", rL_PurchaseHeader."Document Type"::Order);
             end else begin
-                rL_PurchaseHeader.VALIDATE("Document Type", rL_PurchaseHeader."Document Type"::"Return Order");
+                rL_PurchaseHeader.Validate("Document Type", rL_PurchaseHeader."Document Type"::"Return Order");
             end;
-            rL_PurchaseHeader.INSERT(true);
-            rL_PurchaseHeader.VALIDATE("Buy-from Vendor No.", rL_Vendor."No.");
-            rL_PurchaseHeader.VALIDATE("Posting Date", TODAY);
-            rL_PurchaseHeader.Validate("Expected Receipt Date", TODAY);
-            rL_PurchaseHeader.VALIDATE("Req. Vendor No.", rL_Vendor."No.");
-            rL_PurchaseHeader.MODIFY;
+            rL_PurchaseHeader.Insert(true);
+            rL_PurchaseHeader.Validate("Buy-from Vendor No.", rL_Vendor."No.");
+            rL_PurchaseHeader.Validate("Posting Date", Today);
+            rL_PurchaseHeader.Validate("Expected Receipt Date", Today);
+            rL_PurchaseHeader.Validate("Req. Vendor No.", rL_Vendor."No.");
+            rL_PurchaseHeader.Modify;
         end;
 
 
         vL_LineNo := 0;
-        CLEAR(rL_PurchaseLine);
-        rL_PurchaseLine.RESET;
-        rL_PurchaseLine.SETRANGE("Document Type", rL_PurchaseHeader."Document Type");
-        rL_PurchaseLine.SETFILTER("Document No.", rL_PurchaseHeader."No.");
-        if rL_PurchaseLine.FINDLAST then begin
+        Clear(rL_PurchaseLine);
+        rL_PurchaseLine.Reset;
+        rL_PurchaseLine.SetRange("Document Type", rL_PurchaseHeader."Document Type");
+        rL_PurchaseLine.SetFilter("Document No.", rL_PurchaseHeader."No.");
+        if rL_PurchaseLine.FindLast then begin
             vL_LineNo := rL_PurchaseLine."Line No.";
         end;
 
         vL_LineNo += 10000;
 
-        rL_PurchaseLine.RESET;
-        CLEAR(rL_PurchaseLine);
-        rL_PurchaseLine.VALIDATE("Document Type", rL_PurchaseHeader."Document Type");
-        rL_PurchaseLine.VALIDATE("Document No.", rL_PurchaseHeader."No.");
+        rL_PurchaseLine.Reset;
+        Clear(rL_PurchaseLine);
+        rL_PurchaseLine.Validate("Document Type", rL_PurchaseHeader."Document Type");
+        rL_PurchaseLine.Validate("Document No.", rL_PurchaseHeader."No.");
         rL_PurchaseLine."Line No." := vL_LineNo;
-        rL_PurchaseLine.INSERT(true);
+        rL_PurchaseLine.Insert(true);
 
-        rL_PurchaseLine.VALIDATE(Type, rL_PurchaseLine.Type::Item);
-        rL_PurchaseLine.VALIDATE("No.", pReqLine."No.");
-        rL_PurchaseLine.VALIDATE("Location Code", pReqLine."Location Code");
-        rL_PurchaseLine.VALIDATE(Quantity, pReqLine.Quantity);
+        rL_PurchaseLine.Validate(Type, rL_PurchaseLine.Type::Item);
+        rL_PurchaseLine.Validate("No.", pReqLine."No.");
+        rL_PurchaseLine.Validate("Location Code", pReqLine."Location Code");
+        rL_PurchaseLine.Validate(Quantity, pReqLine.Quantity);
         //rL_PurchaseLine."Prod. Order No.":=pReqLine."Prod. Order No. Ref";
-        rL_PurchaseLine.MODIFY;
+        rL_PurchaseLine.Modify;
     end;
 
     procedure ExportChainOfCustody(pDeliveryNo: Code[20]; pDraft: Boolean);
@@ -2599,28 +2571,28 @@ codeunit 50000 "General Mgt."
         SheetNameTxt: Text;
     begin
 
-        rL_DeliverySchedule.GET(pDeliveryNo);
-        rL_CompanyInformation.GET;
-        rL_CompanyInformation.TESTFIELD("Lidl Rep. No");
-        rL_CompanyInformation.TESTFIELD("Lidl Rep. Name");
-        rL_CompanyInformation.TESTFIELD("Packaging Location GLN");
-        rL_CompanyInformation.TESTFIELD("Packaging Location Name");
+        rL_DeliverySchedule.Get(pDeliveryNo);
+        rL_CompanyInformation.Get;
+        rL_CompanyInformation.TestField("Lidl Rep. No");
+        rL_CompanyInformation.TestField("Lidl Rep. Name");
+        rL_CompanyInformation.TestField("Packaging Location GLN");
+        rL_CompanyInformation.TestField("Packaging Location Name");
 
         if pDraft then begin //Sales Header
-            rL_SalesHeader.RESET;
-            rL_SalesHeader.SETCURRENTKEY("Delivery No.", "Delivery Sequence");
-            rL_SalesHeader.SETFILTER("Delivery No.", rL_DeliverySchedule."Delivery No.");
-            if rL_SalesHeader.FINDSET then begin
+            rL_SalesHeader.Reset;
+            rL_SalesHeader.SetCurrentKey("Delivery No.", "Delivery Sequence");
+            rL_SalesHeader.SetFilter("Delivery No.", rL_DeliverySchedule."Delivery No.");
+            if rL_SalesHeader.FindSet then begin
 
 
-                vL_Week := PADSTR('', 2 - STRLEN(FORMAT(rL_DeliverySchedule."Week No.")), '0') + FORMAT(rL_DeliverySchedule."Week No.");
+                vL_Week := PadStr('', 2 - StrLen(Format(rL_DeliverySchedule."Week No.")), '0') + Format(rL_DeliverySchedule."Week No.");
 
-                rL_Customer.GET(rL_SalesHeader."Bill-to Customer No.");
-                rL_Customer.TESTFIELD("Country/Region Code");
-                vL_FileName := STRSUBSTNO(l_Text50028, rL_Customer."Country/Region Code", FORMAT(rL_DeliverySchedule."Delivery Date"), vL_Week);
+                rL_Customer.Get(rL_SalesHeader."Bill-to Customer No.");
+                rL_Customer.TestField("Country/Region Code");
+                vL_FileName := StrSubstNo(l_Text50028, rL_Customer."Country/Region Code", Format(rL_DeliverySchedule."Delivery Date"), vL_Week);
                 //'ΠΑΡΑΔΩΣΕΙΣ '+ rL_Customer."Country/Region Code" +' '+FORMAT(rL_DeliverySchedule."Delivery Date")+' - WEEK '+vL_Week;
 
-                CLEAR(rL_ExcelBuf);
+                Clear(rL_ExcelBuf);
                 rL_ExcelBuf.AddColumn(l_Text50000_Draft, false, '', true, false, false, '', rL_ExcelBuf."Cell Type"::Text);
                 rL_ExcelBuf.NewRow;
 
@@ -2656,34 +2628,34 @@ codeunit 50000 "General Mgt."
 
 
                 repeat
-                    rL_Customer.GET(rL_SalesHeader."Bill-to Customer No.");
+                    rL_Customer.Get(rL_SalesHeader."Bill-to Customer No.");
 
 
-                    rL_SalesLine.RESET;
-                    rL_SalesLine.SETFILTER("Document No.", rL_SalesHeader."No.");
-                    rL_SalesLine.SETRANGE(Type, rL_SalesLine.Type::Item);
-                    rL_SalesLine.SETFILTER(Quantity, '<>%1', 0);
-                    if rL_SalesLine.FINDSET then begin
+                    rL_SalesLine.Reset;
+                    rL_SalesLine.SetFilter("Document No.", rL_SalesHeader."No.");
+                    rL_SalesLine.SetRange(Type, rL_SalesLine.Type::Item);
+                    rL_SalesLine.SetFilter(Quantity, '<>%1', 0);
+                    if rL_SalesLine.FindSet then begin
                         repeat
-                            rL_SalesLine.TESTFIELD("Shelf No.");
+                            rL_SalesLine.TestField("Shelf No.");
 
-                            rL_ItemCrossReference.RESET;
+                            rL_ItemCrossReference.Reset;
                             //rL_ItemCrossReference.SETRANGE("Cross-Reference Type", rL_ItemCrossReference."Cross-Reference Type"::Customer);
-                            rL_ItemCrossReference.SETRANGE("Reference Type", rL_ItemCrossReference."Reference Type"::Customer);
-                            rL_ItemCrossReference.SETFILTER("Item No.", rL_SalesLine."No.");
+                            rL_ItemCrossReference.SetRange("Reference Type", rL_ItemCrossReference."Reference Type"::Customer);
+                            rL_ItemCrossReference.SetFilter("Item No.", rL_SalesLine."No.");
                             //rL_ItemCrossReference.SETFILTER("Cross-Reference Type No.", rL_Customer."No.");
-                            rL_ItemCrossReference.SETFILTER("Reference Type No.", rL_Customer."No.");
-                            if not rL_ItemCrossReference.FINDSET then begin
-                                ERROR('Item Cross Reference for Item No. ' + rL_SalesLine."No." + ' not found.');
+                            rL_ItemCrossReference.SetFilter("Reference Type No.", rL_Customer."No.");
+                            if not rL_ItemCrossReference.FindSet then begin
+                                Error('Item Cross Reference for Item No. ' + rL_SalesLine."No." + ' not found.');
                             end;
 
-                            rL_LidlItem.RESET;
-                            rL_LidlItem.SETRANGE("Table No.", DATABASE::Item);
-                            rL_LidlItem.SETRANGE(Type, rL_GeneralCategories.Type::Category2);
-                            rL_LidlItem.SETFILTER(Code, rL_ItemCrossReference."Reference No.");
+                            rL_LidlItem.Reset;
+                            rL_LidlItem.SetRange("Table No.", Database::Item);
+                            rL_LidlItem.SetRange(Type, rL_GeneralCategories.Type::Category2);
+                            rL_LidlItem.SetFilter(Code, rL_ItemCrossReference."Reference No.");
                             //rL_LidlItem.SETFILTER(Code, rL_ItemCrossReference."Cross-Reference No.");
-                            if not rL_LidlItem.FINDSET then begin
-                                ERROR('Lidl Item not found ' + rL_ItemCrossReference."Reference No.");
+                            if not rL_LidlItem.FindSet then begin
+                                Error('Lidl Item not found ' + rL_ItemCrossReference."Reference No.");
                                 //ERROR('Lidl Item not found ' + rL_ItemCrossReference."Cross-Reference No.");
                             end;
 
@@ -2696,14 +2668,14 @@ codeunit 50000 "General Mgt."
 
                             //END;
 
-                            vL_Packaging := FORMAT(rL_LidlItem."Package Qty") + ' ' + Capitalise(FORMAT(rL_LidlItem."Unit of Measure"));
+                            vL_Packaging := Format(rL_LidlItem."Package Qty") + ' ' + Capitalise(Format(rL_LidlItem."Unit of Measure"));
                             vL_Caliber := '';
-                            if rL_GeneralCategories.GET(27, rL_GeneralCategories.Type::Category6, rL_LidlItem."Category 6") then begin
+                            if rL_GeneralCategories.Get(27, rL_GeneralCategories.Type::Category6, rL_LidlItem."Category 6") then begin
                                 vL_Caliber := rL_LidlItem."Category 4" + '-' + rL_LidlItem."Category 5" + ' ' + rL_GeneralCategories.Description;
                             end;
 
                             vL_Variety := '';
-                            if rL_GeneralCategories.GET(27, rL_GeneralCategories.Type::Category7, rL_LidlItem."Category 7") then begin
+                            if rL_GeneralCategories.Get(27, rL_GeneralCategories.Type::Category7, rL_LidlItem."Category 7") then begin
                                 vL_Variety := rL_GeneralCategories.Description;
                             end;
 
@@ -2712,7 +2684,7 @@ codeunit 50000 "General Mgt."
                             //rL_Grower.GET(rL_SalesLine."Grower No.");
                             // rL_Grower.TESTFIELD(GGN);
 
-                            rL_ExcelBuf.AddColumn(FORMAT(rL_DeliverySchedule."Delivery Date", 0, '<Day,2>/<Month,2>/<Year4>'), false, '', false, false, false, '', rL_ExcelBuf."Cell Type"::Text); //1
+                            rL_ExcelBuf.AddColumn(Format(rL_DeliverySchedule."Delivery Date", 0, '<Day,2>/<Month,2>/<Year4>'), false, '', false, false, false, '', rL_ExcelBuf."Cell Type"::Text); //1
                             rL_ExcelBuf.AddColumn(rL_SalesHeader."Ship-to Country/Region Code", false, '', false, false, false, '', rL_ExcelBuf."Cell Type"::Text); //2
                             rL_ExcelBuf.AddColumn(rL_Customer."Ship-to Warehouse Code", false, '', false, false, false, '', rL_ExcelBuf."Cell Type"::Text); //3
                             rL_ExcelBuf.AddColumn(rL_Customer."Ship-to Warehouse Name", false, '', false, false, false, '', rL_ExcelBuf."Cell Type"::Text); //4
@@ -2735,36 +2707,36 @@ codeunit 50000 "General Mgt."
                             rL_ExcelBuf.AddColumn(rL_CompanyInformation."Packaging Location Name", false, '', false, false, false, '', rL_ExcelBuf."Cell Type"::Text); //21
                             rL_ExcelBuf.AddColumn(rL_Grower.GGN, false, '', false, false, false, '', rL_ExcelBuf."Cell Type"::Text); //22
                             rL_ExcelBuf.AddColumn(rL_Grower.Name + rL_Grower."Name 2", false, '', false, false, false, '', rL_ExcelBuf."Cell Type"::Text); //23
-                            rL_ExcelBuf.AddColumn(ROUND(rL_SalesLine."Quantity (Base)", 1, '>'), false, '', false, false, false, '', rL_ExcelBuf."Cell Type"::Text); //24
+                            rL_ExcelBuf.AddColumn(Round(rL_SalesLine."Quantity (Base)", 1, '>'), false, '', false, false, false, '', rL_ExcelBuf."Cell Type"::Text); //24
                             rL_ExcelBuf.AddColumn('ΝΑΙ', false, '', false, false, false, '', rL_ExcelBuf."Cell Type"::Text); //25
                             rL_ExcelBuf.AddColumn('', false, '', false, false, false, '', rL_ExcelBuf."Cell Type"::Text); //26
                             rL_ExcelBuf.AddColumn(rL_DeliverySchedule.Van, false, '', false, false, false, '', rL_ExcelBuf."Cell Type"::Text); //27
                             rL_ExcelBuf.NewRow;
-                        until rL_SalesLine.NEXT = 0;
+                        until rL_SalesLine.Next = 0;
 
                     end;
 
-                until rL_SalesHeader.NEXT = 0;
+                until rL_SalesHeader.Next = 0;
 
             end;
 
 
         end else begin //Sales Shipment Lines
 
-            rL_SalesShipmentHeader.RESET;
-            rL_SalesShipmentHeader.SETCURRENTKEY("Delivery No.", "Delivery Sequence");
-            rL_SalesShipmentHeader.SETFILTER("Delivery No.", rL_DeliverySchedule."Delivery No.");
-            if rL_SalesShipmentHeader.FINDSET then begin
+            rL_SalesShipmentHeader.Reset;
+            rL_SalesShipmentHeader.SetCurrentKey("Delivery No.", "Delivery Sequence");
+            rL_SalesShipmentHeader.SetFilter("Delivery No.", rL_DeliverySchedule."Delivery No.");
+            if rL_SalesShipmentHeader.FindSet then begin
 
 
-                vL_Week := PADSTR('', 2 - STRLEN(FORMAT(rL_DeliverySchedule."Week No.")), '0') + FORMAT(rL_DeliverySchedule."Week No.");
+                vL_Week := PadStr('', 2 - StrLen(Format(rL_DeliverySchedule."Week No.")), '0') + Format(rL_DeliverySchedule."Week No.");
 
-                rL_Customer.GET(rL_SalesShipmentHeader."Bill-to Customer No.");
-                rL_Customer.TESTFIELD("Country/Region Code");
-                vL_FileName := STRSUBSTNO(l_Text50028, rL_Customer."Country/Region Code", FORMAT(rL_DeliverySchedule."Delivery Date"), vL_Week);
+                rL_Customer.Get(rL_SalesShipmentHeader."Bill-to Customer No.");
+                rL_Customer.TestField("Country/Region Code");
+                vL_FileName := StrSubstNo(l_Text50028, rL_Customer."Country/Region Code", Format(rL_DeliverySchedule."Delivery Date"), vL_Week);
                 //'ΠΑΡΑΔΩΣΕΙΣ '+ rL_Customer."Country/Region Code" +' '+FORMAT(rL_DeliverySchedule."Delivery Date")+' - WEEK '+vL_Week;
 
-                CLEAR(rL_ExcelBuf);
+                Clear(rL_ExcelBuf);
                 rL_ExcelBuf.AddColumn(l_Text50000, false, '', true, false, false, '', rL_ExcelBuf."Cell Type"::Text);
                 rL_ExcelBuf.NewRow;
 
@@ -2800,7 +2772,7 @@ codeunit 50000 "General Mgt."
 
 
                 repeat
-                    rL_Customer.GET(rL_SalesShipmentHeader."Bill-to Customer No.");
+                    rL_Customer.Get(rL_SalesShipmentHeader."Bill-to Customer No.");
 
 
                     /*
@@ -2868,31 +2840,31 @@ codeunit 50000 "General Mgt."
                     */
 
                     //TAL0.12
-                    rL_ItemLedgerEntry.RESET;
-                    rL_ItemLedgerEntry.SETFILTER("Document No.", rL_SalesShipmentHeader."No.");
-                    if rL_ItemLedgerEntry.FINDSET then begin
+                    rL_ItemLedgerEntry.Reset;
+                    rL_ItemLedgerEntry.SetFilter("Document No.", rL_SalesShipmentHeader."No.");
+                    if rL_ItemLedgerEntry.FindSet then begin
                         repeat
-                            rL_SalesShipmentLine.GET(rL_ItemLedgerEntry."Document No.", rL_ItemLedgerEntry."Document Line No.");
+                            rL_SalesShipmentLine.Get(rL_ItemLedgerEntry."Document No.", rL_ItemLedgerEntry."Document Line No.");
 
-                            rL_SalesShipmentLine.TESTFIELD("Shelf No.");
+                            rL_SalesShipmentLine.TestField("Shelf No.");
 
-                            rL_ItemCrossReference.RESET;
+                            rL_ItemCrossReference.Reset;
                             //rL_ItemCrossReference.SETRANGE("Cross-Reference Type", rL_ItemCrossReference."Cross-Reference Type"::Customer);
-                            rL_ItemCrossReference.SETRANGE("Reference Type", rL_ItemCrossReference."Reference Type"::Customer);
-                            rL_ItemCrossReference.SETFILTER("Item No.", rL_ItemLedgerEntry."Item No.");
+                            rL_ItemCrossReference.SetRange("Reference Type", rL_ItemCrossReference."Reference Type"::Customer);
+                            rL_ItemCrossReference.SetFilter("Item No.", rL_ItemLedgerEntry."Item No.");
                             //rL_ItemCrossReference.SETFILTER("Cross-Reference Type No.", rL_Customer."No.");
-                            rL_ItemCrossReference.SETFILTER("Reference Type No.", rL_Customer."No.");
-                            if not rL_ItemCrossReference.FINDSET then begin
-                                ERROR('Item Cross Reference for Item No. ' + rL_SalesLine."No." + ' not found.');
+                            rL_ItemCrossReference.SetFilter("Reference Type No.", rL_Customer."No.");
+                            if not rL_ItemCrossReference.FindSet then begin
+                                Error('Item Cross Reference for Item No. ' + rL_SalesLine."No." + ' not found.');
                             end;
 
-                            rL_LidlItem.RESET;
-                            rL_LidlItem.SETRANGE("Table No.", DATABASE::Item);
-                            rL_LidlItem.SETRANGE(Type, rL_GeneralCategories.Type::Category2);
-                            rL_LidlItem.SETFILTER(Code, rL_ItemCrossReference."Reference No.");
+                            rL_LidlItem.Reset;
+                            rL_LidlItem.SetRange("Table No.", Database::Item);
+                            rL_LidlItem.SetRange(Type, rL_GeneralCategories.Type::Category2);
+                            rL_LidlItem.SetFilter(Code, rL_ItemCrossReference."Reference No.");
                             //rL_LidlItem.SETFILTER(Code, rL_ItemCrossReference."Cross-Reference No.");
-                            if not rL_LidlItem.FINDSET then begin
-                                ERROR('Lidl Item not found ' + rL_ItemCrossReference."Reference No.");
+                            if not rL_LidlItem.FindSet then begin
+                                Error('Lidl Item not found ' + rL_ItemCrossReference."Reference No.");
                                 //ERROR('Lidl Item not found ' + rL_ItemCrossReference."Cross-Reference No.");
                             end;
 
@@ -2904,35 +2876,35 @@ codeunit 50000 "General Mgt."
 
                             //END;
 
-                            vL_Packaging := FORMAT(rL_LidlItem."Package Qty") + ' ' + Capitalise(FORMAT(rL_LidlItem."Unit of Measure"));
+                            vL_Packaging := Format(rL_LidlItem."Package Qty") + ' ' + Capitalise(Format(rL_LidlItem."Unit of Measure"));
                             vL_Caliber := '';
-                            if rL_GeneralCategories.GET(27, rL_GeneralCategories.Type::Category6, rL_LidlItem."Category 6") then begin
+                            if rL_GeneralCategories.Get(27, rL_GeneralCategories.Type::Category6, rL_LidlItem."Category 6") then begin
                                 vL_Caliber := rL_LidlItem."Category 4" + '-' + rL_LidlItem."Category 5" + ' ' + rL_GeneralCategories.Description;
                             end;
 
                             vL_Variety := '';
-                            if rL_GeneralCategories.GET(27, rL_GeneralCategories.Type::Category7, rL_LidlItem."Category 7") then begin
+                            if rL_GeneralCategories.Get(27, rL_GeneralCategories.Type::Category7, rL_LidlItem."Category 7") then begin
                                 vL_Variety := rL_GeneralCategories.Description;
                             end;
 
                             //rL_ItemLedgerEntry.CALCFIELDS("Lot Grower No.");
-                            CLEAR(rL_Grower);
-                            rL_Grower.GET(rL_ItemLedgerEntry."Lot Grower No.");
-                            rL_Grower.TESTFIELD(GGN);
+                            Clear(rL_Grower);
+                            rL_Grower.Get(rL_ItemLedgerEntry."Lot Grower No.");
+                            rL_Grower.TestField(GGN);
 
-                            CLEAR(rL_Vendor);
+                            Clear(rL_Vendor);
                             if rL_Grower."Grower Vendor No." = '' then begin
-                                rL_Vendor.GET(rL_Grower."No.");
-                                rL_Vendor.TESTFIELD(GLN);
+                                rL_Vendor.Get(rL_Grower."No.");
+                                rL_Vendor.TestField(GLN);
                             end else begin
-                                rL_Vendor.GET(rL_Grower."Grower Vendor No.");
-                                rL_Vendor.TESTFIELD(GLN);
+                                rL_Vendor.Get(rL_Grower."Grower Vendor No.");
+                                rL_Vendor.TestField(GLN);
 
                             end;
 
 
 
-                            rL_ExcelBuf.AddColumn(FORMAT(rL_DeliverySchedule."Delivery Date", 0, '<Day,2>/<Month,2>/<Year4>'), false, '', false, false, false, '', rL_ExcelBuf."Cell Type"::Text); //1
+                            rL_ExcelBuf.AddColumn(Format(rL_DeliverySchedule."Delivery Date", 0, '<Day,2>/<Month,2>/<Year4>'), false, '', false, false, false, '', rL_ExcelBuf."Cell Type"::Text); //1
                             rL_ExcelBuf.AddColumn(rL_SalesShipmentHeader."Ship-to Country/Region Code", false, '', false, false, false, '', rL_ExcelBuf."Cell Type"::Text); //2
                             rL_ExcelBuf.AddColumn(rL_Customer."Ship-to Warehouse Code", false, '', false, false, false, '', rL_ExcelBuf."Cell Type"::Text); //3
                             rL_ExcelBuf.AddColumn(rL_Customer."Ship-to Warehouse Name", false, '', false, false, false, '', rL_ExcelBuf."Cell Type"::Text); //4
@@ -2957,17 +2929,17 @@ codeunit 50000 "General Mgt."
                             rL_ExcelBuf.AddColumn(rL_Grower.GGN, false, '', false, false, false, '', rL_ExcelBuf."Cell Type"::Text); //22
                             rL_ExcelBuf.AddColumn(rL_Grower.Name + rL_Grower."Name 2", false, '', false, false, false, '', rL_ExcelBuf."Cell Type"::Text); //23
                                                                                                                                                            //rL_ExcelBuf.AddColumn(ROUND(rL_ItemLedgerEntry.Quantity,1,'>'),FALSE,'',FALSE,FALSE,FALSE,'',rL_ExcelBuf."Cell Type"::Text); //24
-                            rL_ExcelBuf.AddColumn(ROUND(rL_ItemLedgerEntry.Quantity * -1, 2), false, '', false, false, false, '', rL_ExcelBuf."Cell Type"::Text); //24
+                            rL_ExcelBuf.AddColumn(Round(rL_ItemLedgerEntry.Quantity * -1, 2), false, '', false, false, false, '', rL_ExcelBuf."Cell Type"::Text); //24
                             rL_ExcelBuf.AddColumn('ΝΑΙ', false, '', false, false, false, '', rL_ExcelBuf."Cell Type"::Text); //25
                             rL_ExcelBuf.AddColumn('', false, '', false, false, false, '', rL_ExcelBuf."Cell Type"::Text); //26
                             rL_ExcelBuf.AddColumn(rL_DeliverySchedule.Van, false, '', false, false, false, '', rL_ExcelBuf."Cell Type"::Text); //27
                             rL_ExcelBuf.NewRow;
-                        until rL_ItemLedgerEntry.NEXT = 0;
+                        until rL_ItemLedgerEntry.Next = 0;
 
                     end;
 
 
-                until rL_SalesShipmentHeader.NEXT = 0;
+                until rL_SalesShipmentHeader.Next = 0;
 
             end;
 
@@ -2997,13 +2969,13 @@ codeunit 50000 "General Mgt."
     var
         tmpText: Text;
     begin
-        if STRLEN(pText) < 1 then begin
+        if StrLen(pText) < 1 then begin
             exit(pText);
         end;
 
         tmpText := pText;
 
-        pText := UPPERCASE(COPYSTR(pText, 1, 1)) + LOWERCASE(DELSTR(pText, 1, 1));
+        pText := UpperCase(CopyStr(pText, 1, 1)) + LowerCase(DelStr(pText, 1, 1));
 
         exit(pText);
     end;
@@ -3020,20 +2992,20 @@ codeunit 50000 "General Mgt."
         //+TAL0.13
         vL_OldGrowerNo := '';
 
-        rL_ILE.RESET;
-        rL_ILE.SETCURRENTKEY("Document No.", "Lot Grower No.");
-        rL_ILE.SETRANGE("Document Type", rL_ILE."Document Type"::"Purchase Receipt");
-        rL_ILE.SETFILTER("Document No.", pDocNo);
-        rL_ILE.SETFILTER("Lot Grower No.", '<>%1', '');
-        rL_ILE.SETFILTER("Lot No.", '<>%1', '');
-        if rL_ILE.FINDSET then begin
+        rL_ILE.Reset;
+        rL_ILE.SetCurrentKey("Document No.", "Lot Grower No.");
+        rL_ILE.SetRange("Document Type", rL_ILE."Document Type"::"Purchase Receipt");
+        rL_ILE.SetFilter("Document No.", pDocNo);
+        rL_ILE.SetFilter("Lot Grower No.", '<>%1', '');
+        rL_ILE.SetFilter("Lot No.", '<>%1', '');
+        if rL_ILE.FindSet then begin
             repeat
                 //rL_ILE.CALCFIELDS("Lot Grower No.");
 
                 if vL_OldGrowerNo <> rL_ILE."Lot Grower No." then begin
                     //IF  rL_ILE."Receipt Doc. No." = '' THEN BEGIN
                     vL_NextDocNo := '';
-                    PurchSetup.GET;
+                    PurchSetup.Get;
                     NoSeriesMgt.AreRelated(PurchSetup."Grower Receipt Nos.", vL_TmpNoSeries);// InitSeries(PurchSetup."Grower Receipt Nos.", vL_TmpNoSeries, 0D, vL_NextDocNo, vL_TmpNoSeries); 28FEB2026
                     //END;
                 end;
@@ -3041,9 +3013,9 @@ codeunit 50000 "General Mgt."
                 vL_OldGrowerNo := rL_ILE."Lot Grower No.";
 
                 rL_ILE."Receipt Doc. No." := vL_NextDocNo;
-                rL_ILE.MODIFY();
+                rL_ILE.Modify();
 
-            until rL_ILE.NEXT = 0;
+            until rL_ILE.Next = 0;
         end;
         //-TAL0.13
     end;
@@ -3069,34 +3041,39 @@ codeunit 50000 "General Mgt."
         Colmn7_Valid: Text;
         rL_GeneralCategories: Record "General Categories";
         rL_RowCount: Integer;
+        Instream: InStream;
     begin
         //open the file
-        vL_FileName := cu_FileMgt.UploadFile(Text50000, ExcelFileExtensionTok);
+        /* vL_FileName := cu_FileMgt.UploadFile(Text50000, ExcelFileExtensionTok);
         SheetName := ExcelBuffer.SelectSheetsName(vL_FileName);
         if SheetName = '' then
             exit;
 
         ExcelBuffer.OpenBook(vL_FileName, SheetName);
-        ExcelBuffer.ReadSheet;
+        ExcelBuffer.ReadSheet; */
+        IF UploadIntoStream(Text50000, 'C:\TEMP', 'All Files (*.*)|*.*', vL_FileName, Instream) then begin
+            ExcelBuffer.OpenBookStream(Instream, ExcelBuffer.SelectSheetsNameStream(Instream));
+            ExcelBuffer.ReadSheet;
+        end;
         RowNo := 0;
         ColumnNo := 0;
 
-        ExcelBuffer.RESET;
-        ExcelBuffer.FINDLAST;
+        ExcelBuffer.Reset;
+        ExcelBuffer.FindLast;
         RowNoMax := ExcelBuffer."Row No.";
         ColumnNoMax := 7; //ExcelBuffer."Column No."; //NOD0.2;
 
         vL_RowNo := 0;
 
-        Window.OPEN('Record Processing #1###############');
+        Window.Open('Record Processing #1###############');
         WindowTotalCount := RowNoMax;
         WindowLineCount := 0;
 
         for RowNo := 2 to RowNoMax do begin
-            ExcelBuffer.SETRANGE("Row No.", RowNo);
+            ExcelBuffer.SetRange("Row No.", RowNo);
 
             WindowLineCount += 1;
-            Window.UPDATE(1, FORMAT(WindowLineCount) + '/' + FORMAT(WindowTotalCount));
+            Window.Update(1, Format(WindowLineCount) + '/' + Format(WindowTotalCount));
 
             //Grower
             //COUNTRY
@@ -3117,43 +3094,43 @@ codeunit 50000 "General Mgt."
 
 
             for ColumnNo := 1 to ColumnNoMax do begin
-                ExcelBuffer.SETRANGE("Column No.", ColumnNo);
-                if ExcelBuffer.FINDFIRST then begin
+                ExcelBuffer.SetRange("Column No.", ColumnNo);
+                if ExcelBuffer.FindFirst then begin
                     case ColumnNo of
                         1:
                             begin
-                                EVALUATE(Colmn1_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                                Evaluate(Colmn1_Valid, Trim(ExcelBuffer."Cell Value as Text"));
                             end;
 
                         2:
                             begin
-                                EVALUATE(Colmn2_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                                Evaluate(Colmn2_Valid, Trim(ExcelBuffer."Cell Value as Text"));
                             end;
 
 
                         3:
                             begin
-                                EVALUATE(Colmn3_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                                Evaluate(Colmn3_Valid, Trim(ExcelBuffer."Cell Value as Text"));
                             end;
 
                         4:
                             begin
-                                EVALUATE(Colmn4_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                                Evaluate(Colmn4_Valid, Trim(ExcelBuffer."Cell Value as Text"));
                             end;
 
                         5:
                             begin
-                                EVALUATE(Colmn5_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                                Evaluate(Colmn5_Valid, Trim(ExcelBuffer."Cell Value as Text"));
                             end;
 
                         6:
                             begin
-                                EVALUATE(Colmn6_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                                Evaluate(Colmn6_Valid, Trim(ExcelBuffer."Cell Value as Text"));
                             end;
 
                         7:
                             begin
-                                EVALUATE(Colmn7_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                                Evaluate(Colmn7_Valid, Trim(ExcelBuffer."Cell Value as Text"));
                             end;
 
                     end; //end case
@@ -3164,22 +3141,22 @@ codeunit 50000 "General Mgt."
             //Create or update vendor
             if Colmn1_Valid <> '' then begin
 
-                CLEAR(rL_Vendor);
-                rL_Vendor.INIT;
-                rL_Vendor.VALIDATE("No. Series", 'VEND-GROW');
+                Clear(rL_Vendor);
+                rL_Vendor.Init;
+                rL_Vendor.Validate("No. Series", 'VEND-GROW');
 
-                if STRLEN(Colmn1_Valid) > 50 then begin
+                if StrLen(Colmn1_Valid) > 50 then begin
 
-                    rL_Vendor.VALIDATE(Name, COPYSTR(Colmn1_Valid, 1, 50));
-                    rL_Vendor.VALIDATE("Name 2", COPYSTR(Colmn1_Valid, 51, STRLEN(Colmn1_Valid) - 50));
+                    rL_Vendor.Validate(Name, CopyStr(Colmn1_Valid, 1, 50));
+                    rL_Vendor.Validate("Name 2", CopyStr(Colmn1_Valid, 51, StrLen(Colmn1_Valid) - 50));
 
                 end else begin
-                    rL_Vendor.VALIDATE(Name, Colmn1_Valid);
+                    rL_Vendor.Validate(Name, Colmn1_Valid);
                 end;
 
 
-                rL_Vendor.VALIDATE("Vendor Posting Group", 'GROWER');
-                rL_Vendor.INSERT(true);
+                rL_Vendor.Validate("Vendor Posting Group", 'GROWER');
+                rL_Vendor.Insert(true);
 
                 if Colmn2_Valid = 'GR' then begin
                     Colmn2_Valid := 'EL';
@@ -3199,37 +3176,37 @@ codeunit 50000 "General Mgt."
 
 
 
-                rL_Vendor.VALIDATE("Country/Region Code", Colmn2_Valid);
-                rL_Vendor.VALIDATE(GGN, Colmn3_Valid);
-                rL_Vendor.VALIDATE(TC, Colmn4_Valid);
+                rL_Vendor.Validate("Country/Region Code", Colmn2_Valid);
+                rL_Vendor.Validate(GGN, Colmn3_Valid);
+                rL_Vendor.Validate(TC, Colmn4_Valid);
 
                 if Colmn6_Valid <> '' then begin
-                    rL_Vendor.VALIDATE("Grower Vendor No.", Colmn6_Valid);
+                    rL_Vendor.Validate("Grower Vendor No.", Colmn6_Valid);
                 end;
 
                 if Colmn7_Valid <> '' then begin
-                    rL_GeneralCategories.RESET;
-                    rL_GeneralCategories.SETRANGE("Table No.", DATABASE::Vendor);
-                    rL_GeneralCategories.SETRANGE(Type, rL_GeneralCategories.Type::Category1);
-                    rL_GeneralCategories.SETRANGE(Description, Colmn7_Valid);
-                    if not rL_GeneralCategories.FINDSET then begin
-                        CLEAR(rL_GeneralCategories);
-                        rL_GeneralCategories.RESET;
-                        rL_GeneralCategories.SETRANGE("Table No.", DATABASE::Vendor);
-                        rL_GeneralCategories.SETRANGE(Type, rL_GeneralCategories.Type::Category1);
-                        if rL_GeneralCategories.FINDSET then;
-                        rL_RowCount := rL_GeneralCategories.COUNT + 1;
+                    rL_GeneralCategories.Reset;
+                    rL_GeneralCategories.SetRange("Table No.", Database::Vendor);
+                    rL_GeneralCategories.SetRange(Type, rL_GeneralCategories.Type::Category1);
+                    rL_GeneralCategories.SetRange(Description, Colmn7_Valid);
+                    if not rL_GeneralCategories.FindSet then begin
+                        Clear(rL_GeneralCategories);
+                        rL_GeneralCategories.Reset;
+                        rL_GeneralCategories.SetRange("Table No.", Database::Vendor);
+                        rL_GeneralCategories.SetRange(Type, rL_GeneralCategories.Type::Category1);
+                        if rL_GeneralCategories.FindSet then;
+                        rL_RowCount := rL_GeneralCategories.Count + 1;
 
-                        CLEAR(rL_GeneralCategories);
-                        rL_GeneralCategories.VALIDATE("Table No.", DATABASE::Vendor);
-                        rL_GeneralCategories.VALIDATE(Type, rL_GeneralCategories.Type::Category1);
-                        rL_GeneralCategories.VALIDATE(Code, FORMAT(rL_RowCount));
-                        rL_GeneralCategories.VALIDATE(Description, Colmn7_Valid);
-                        rL_GeneralCategories.INSERT(true);
-                        rL_Vendor.VALIDATE("Category 1", rL_GeneralCategories.Code);
+                        Clear(rL_GeneralCategories);
+                        rL_GeneralCategories.Validate("Table No.", Database::Vendor);
+                        rL_GeneralCategories.Validate(Type, rL_GeneralCategories.Type::Category1);
+                        rL_GeneralCategories.Validate(Code, Format(rL_RowCount));
+                        rL_GeneralCategories.Validate(Description, Colmn7_Valid);
+                        rL_GeneralCategories.Insert(true);
+                        rL_Vendor.Validate("Category 1", rL_GeneralCategories.Code);
 
                     end else begin
-                        rL_Vendor.VALIDATE("Category 1", rL_GeneralCategories.Code);
+                        rL_Vendor.Validate("Category 1", rL_GeneralCategories.Code);
                     end;
 
 
@@ -3237,7 +3214,7 @@ codeunit 50000 "General Mgt."
                     //rL_Vendor.VALIDATE("Grower Vendor No.",Colmn6_Valid);
                 end;
 
-                rL_Vendor.MODIFY(true);
+                rL_Vendor.Modify(true);
 
             end;
 
@@ -3245,9 +3222,9 @@ codeunit 50000 "General Mgt."
 
 
         end; //end for 1
-        Window.CLOSE;
+        Window.Close;
 
-        MESSAGE('Import Vendor Completed');
+        Message('Import Vendor Completed');
     end;
 
     procedure ImportItemsW07();
@@ -3278,26 +3255,31 @@ codeunit 50000 "General Mgt."
         Colmn14_Valid: Text;
         tmp_Decimal: Decimal;
         rL_GeneralCategories: Record "General Categories";
+        Instream: InStream;
     begin
         //open the file
-        vL_FileName := cu_FileMgt.UploadFile(Text50000, ExcelFileExtensionTok);
+        /* vL_FileName := cu_FileMgt.UploadFile(Text50000, ExcelFileExtensionTok);
         SheetName := ExcelBuffer.SelectSheetsName(vL_FileName);
         if SheetName = '' then
             exit;
 
         ExcelBuffer.OpenBook(vL_FileName, SheetName);
-        ExcelBuffer.ReadSheet;
+        ExcelBuffer.ReadSheet; */
+        IF UploadIntoStream(Text50000, 'C:\TEMP', 'All Files (*.*)|*.*', vL_FileName, Instream) then begin
+            ExcelBuffer.OpenBookStream(Instream, ExcelBuffer.SelectSheetsNameStream(Instream));
+            ExcelBuffer.ReadSheet;
+        end;
         RowNo := 0;
         ColumnNo := 0;
 
-        ExcelBuffer.RESET;
-        ExcelBuffer.FINDLAST;
+        ExcelBuffer.Reset;
+        ExcelBuffer.FindLast;
         RowNoMax := ExcelBuffer."Row No.";
         ColumnNoMax := 14; //ExcelBuffer."Column No."; //NOD0.2;
 
         vL_RowNo := 0;
 
-        Window.OPEN('Record Processing #1###############');
+        Window.Open('Record Processing #1###############');
         WindowTotalCount := RowNoMax;
         WindowLineCount := 0;
 
@@ -3305,10 +3287,10 @@ codeunit 50000 "General Mgt."
 
 
         for RowNo := 3 to RowNoMax do begin
-            ExcelBuffer.SETRANGE("Row No.", RowNo);
+            ExcelBuffer.SetRange("Row No.", RowNo);
 
             WindowLineCount += 1;
-            Window.UPDATE(1, FORMAT(WindowLineCount) + '/' + FORMAT(WindowTotalCount));
+            Window.Update(1, Format(WindowLineCount) + '/' + Format(WindowTotalCount));
 
             Colmn1_Valid := '';
             Colmn2_Valid := '';
@@ -3327,79 +3309,79 @@ codeunit 50000 "General Mgt."
 
 
             for ColumnNo := 1 to ColumnNoMax do begin
-                ExcelBuffer.SETRANGE("Column No.", ColumnNo);
-                if ExcelBuffer.FINDFIRST then begin
+                ExcelBuffer.SetRange("Column No.", ColumnNo);
+                if ExcelBuffer.FindFirst then begin
                     case ColumnNo of
                         1:
                             begin
-                                EVALUATE(Colmn1_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                                Evaluate(Colmn1_Valid, Trim(ExcelBuffer."Cell Value as Text"));
                             end;
 
                         2:
                             begin
-                                EVALUATE(Colmn2_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                                Evaluate(Colmn2_Valid, Trim(ExcelBuffer."Cell Value as Text"));
                             end;
 
 
                         3:
                             begin
-                                EVALUATE(Colmn3_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                                Evaluate(Colmn3_Valid, Trim(ExcelBuffer."Cell Value as Text"));
                             end;
 
                         4:
                             begin
-                                EVALUATE(Colmn4_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                                Evaluate(Colmn4_Valid, Trim(ExcelBuffer."Cell Value as Text"));
                             end;
 
                         5:
                             begin
-                                EVALUATE(Colmn5_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                                Evaluate(Colmn5_Valid, Trim(ExcelBuffer."Cell Value as Text"));
                             end;
 
                         6:
                             begin
-                                EVALUATE(Colmn6_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                                Evaluate(Colmn6_Valid, Trim(ExcelBuffer."Cell Value as Text"));
                             end;
 
                         7:
                             begin
-                                EVALUATE(Colmn7_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                                Evaluate(Colmn7_Valid, Trim(ExcelBuffer."Cell Value as Text"));
                             end;
 
                         8:
                             begin
-                                EVALUATE(Colmn8_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                                Evaluate(Colmn8_Valid, Trim(ExcelBuffer."Cell Value as Text"));
                             end;
 
                         9:
                             begin
-                                EVALUATE(Colmn9_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                                Evaluate(Colmn9_Valid, Trim(ExcelBuffer."Cell Value as Text"));
                             end;
 
 
                         10:
                             begin
-                                EVALUATE(Colmn10_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                                Evaluate(Colmn10_Valid, Trim(ExcelBuffer."Cell Value as Text"));
                             end;
 
                         11:
                             begin
-                                EVALUATE(Colmn11_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                                Evaluate(Colmn11_Valid, Trim(ExcelBuffer."Cell Value as Text"));
                             end;
 
                         12:
                             begin
-                                EVALUATE(Colmn12_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                                Evaluate(Colmn12_Valid, Trim(ExcelBuffer."Cell Value as Text"));
                             end;
 
                         13:
                             begin
-                                EVALUATE(Colmn13_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                                Evaluate(Colmn13_Valid, Trim(ExcelBuffer."Cell Value as Text"));
                             end;
 
                         14:
                             begin
-                                EVALUATE(Colmn14_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                                Evaluate(Colmn14_Valid, Trim(ExcelBuffer."Cell Value as Text"));
                             end;
 
                     end; //end case
@@ -3409,12 +3391,12 @@ codeunit 50000 "General Mgt."
 
             //update item
             if Colmn1_Valid <> '' then begin
-                CLEAR(rL_LidlItem);
-                rL_LidlItem.SETRANGE("Table No.", DATABASE::Item);
-                rL_LidlItem.SETRANGE(Type, rL_LidlItem.Type::Category2);
-                rL_LidlItem.SETFILTER(Code, Colmn1_Valid);
-                if rL_LidlItem.FINDFIRST then begin
-                    rL_LidlItem.VALIDATE("Ship-to Description", Colmn2_Valid);
+                Clear(rL_LidlItem);
+                rL_LidlItem.SetRange("Table No.", Database::Item);
+                rL_LidlItem.SetRange(Type, rL_LidlItem.Type::Category2);
+                rL_LidlItem.SetFilter(Code, Colmn1_Valid);
+                if rL_LidlItem.FindFirst then begin
+                    rL_LidlItem.Validate("Ship-to Description", Colmn2_Valid);
 
 
                     if Colmn4_Valid = 'GR' then begin
@@ -3422,108 +3404,108 @@ codeunit 50000 "General Mgt."
                     end;
 
                     if rL_LidlItem."Country/Region Purchased Code" <> Colmn4_Valid then begin
-                        rL_LidlItem.VALIDATE("Country/Region Purchased Code", Colmn4_Valid);
+                        rL_LidlItem.Validate("Country/Region Purchased Code", Colmn4_Valid);
                     end;
                     //rL_Item.TESTFIELD("Country/Region of Origin Code",Colmn4_Valid);
 
-                    EVALUATE(tmp_Decimal, Colmn3_Valid);
-                    rL_LidlItem.VALIDATE("Pallet Qty", tmp_Decimal);
-                    rL_LidlItem.VALIDATE("Category 3", Colmn5_Valid);
+                    Evaluate(tmp_Decimal, Colmn3_Valid);
+                    rL_LidlItem.Validate("Pallet Qty", tmp_Decimal);
+                    rL_LidlItem.Validate("Category 3", Colmn5_Valid);
 
                     if rL_LidlItem."Package Qty" = 0 then begin
-                        EVALUATE(tmp_Decimal, Colmn6_Valid);
-                        rL_LidlItem.VALIDATE("Package Qty", tmp_Decimal);
+                        Evaluate(tmp_Decimal, Colmn6_Valid);
+                        rL_LidlItem.Validate("Package Qty", tmp_Decimal);
                     end;
 
 
 
                     //Cat 4
                     if Colmn7_Valid <> '' then begin
-                        rL_GeneralCategories.RESET;
-                        rL_GeneralCategories.SETRANGE("Table No.", DATABASE::Item);
-                        rL_GeneralCategories.SETRANGE(Type, rL_GeneralCategories.Type::Category4);
-                        rL_GeneralCategories.SETRANGE(Code, Colmn7_Valid);
-                        if not rL_GeneralCategories.FINDSET then begin
+                        rL_GeneralCategories.Reset;
+                        rL_GeneralCategories.SetRange("Table No.", Database::Item);
+                        rL_GeneralCategories.SetRange(Type, rL_GeneralCategories.Type::Category4);
+                        rL_GeneralCategories.SetRange(Code, Colmn7_Valid);
+                        if not rL_GeneralCategories.FindSet then begin
 
-                            CLEAR(rL_GeneralCategories);
-                            rL_GeneralCategories.VALIDATE("Table No.", DATABASE::Item);
-                            rL_GeneralCategories.VALIDATE(Type, rL_GeneralCategories.Type::Category4);
-                            rL_GeneralCategories.VALIDATE(Code, Colmn7_Valid);
-                            rL_GeneralCategories.VALIDATE(Description, Colmn7_Valid);
-                            rL_GeneralCategories.INSERT(true);
+                            Clear(rL_GeneralCategories);
+                            rL_GeneralCategories.Validate("Table No.", Database::Item);
+                            rL_GeneralCategories.Validate(Type, rL_GeneralCategories.Type::Category4);
+                            rL_GeneralCategories.Validate(Code, Colmn7_Valid);
+                            rL_GeneralCategories.Validate(Description, Colmn7_Valid);
+                            rL_GeneralCategories.Insert(true);
                         end;
 
-                        rL_LidlItem.VALIDATE("Category 4", rL_GeneralCategories.Code);
+                        rL_LidlItem.Validate("Category 4", rL_GeneralCategories.Code);
                     end;
 
 
                     //Cat 5
                     if Colmn8_Valid <> '' then begin
-                        rL_GeneralCategories.RESET;
-                        rL_GeneralCategories.SETRANGE("Table No.", DATABASE::Item);
-                        rL_GeneralCategories.SETRANGE(Type, rL_GeneralCategories.Type::Category5);
-                        rL_GeneralCategories.SETRANGE(Code, Colmn8_Valid);
-                        if not rL_GeneralCategories.FINDSET then begin
+                        rL_GeneralCategories.Reset;
+                        rL_GeneralCategories.SetRange("Table No.", Database::Item);
+                        rL_GeneralCategories.SetRange(Type, rL_GeneralCategories.Type::Category5);
+                        rL_GeneralCategories.SetRange(Code, Colmn8_Valid);
+                        if not rL_GeneralCategories.FindSet then begin
 
-                            CLEAR(rL_GeneralCategories);
-                            rL_GeneralCategories.VALIDATE("Table No.", DATABASE::Item);
-                            rL_GeneralCategories.VALIDATE(Type, rL_GeneralCategories.Type::Category5);
-                            rL_GeneralCategories.VALIDATE(Code, Colmn8_Valid);
-                            rL_GeneralCategories.VALIDATE(Description, Colmn8_Valid);
-                            rL_GeneralCategories.INSERT(true);
+                            Clear(rL_GeneralCategories);
+                            rL_GeneralCategories.Validate("Table No.", Database::Item);
+                            rL_GeneralCategories.Validate(Type, rL_GeneralCategories.Type::Category5);
+                            rL_GeneralCategories.Validate(Code, Colmn8_Valid);
+                            rL_GeneralCategories.Validate(Description, Colmn8_Valid);
+                            rL_GeneralCategories.Insert(true);
                         end;
 
-                        rL_LidlItem.VALIDATE("Category 5", rL_GeneralCategories.Code);
+                        rL_LidlItem.Validate("Category 5", rL_GeneralCategories.Code);
                     end;
 
                     //Cat 6
                     if Colmn9_Valid <> '' then begin
-                        rL_GeneralCategories.RESET;
-                        rL_GeneralCategories.SETRANGE("Table No.", DATABASE::Item);
-                        rL_GeneralCategories.SETRANGE(Type, rL_GeneralCategories.Type::Category6);
-                        rL_GeneralCategories.SETRANGE(Code, Colmn9_Valid);
-                        if not rL_GeneralCategories.FINDSET then begin
+                        rL_GeneralCategories.Reset;
+                        rL_GeneralCategories.SetRange("Table No.", Database::Item);
+                        rL_GeneralCategories.SetRange(Type, rL_GeneralCategories.Type::Category6);
+                        rL_GeneralCategories.SetRange(Code, Colmn9_Valid);
+                        if not rL_GeneralCategories.FindSet then begin
 
-                            CLEAR(rL_GeneralCategories);
-                            rL_GeneralCategories.VALIDATE("Table No.", DATABASE::Item);
-                            rL_GeneralCategories.VALIDATE(Type, rL_GeneralCategories.Type::Category6);
-                            rL_GeneralCategories.VALIDATE(Code, Colmn9_Valid);
-                            rL_GeneralCategories.VALIDATE(Description, Colmn9_Valid);
-                            rL_GeneralCategories.INSERT(true);
+                            Clear(rL_GeneralCategories);
+                            rL_GeneralCategories.Validate("Table No.", Database::Item);
+                            rL_GeneralCategories.Validate(Type, rL_GeneralCategories.Type::Category6);
+                            rL_GeneralCategories.Validate(Code, Colmn9_Valid);
+                            rL_GeneralCategories.Validate(Description, Colmn9_Valid);
+                            rL_GeneralCategories.Insert(true);
                         end;
 
-                        rL_LidlItem.VALIDATE("Category 6", rL_GeneralCategories.Code);
+                        rL_LidlItem.Validate("Category 6", rL_GeneralCategories.Code);
                     end;
 
                     //Cat 7
                     if Colmn10_Valid <> '' then begin
-                        rL_GeneralCategories.RESET;
-                        rL_GeneralCategories.SETRANGE("Table No.", DATABASE::Item);
-                        rL_GeneralCategories.SETRANGE(Type, rL_GeneralCategories.Type::Category7);
-                        rL_GeneralCategories.SETRANGE(Code, Colmn10_Valid);
-                        if not rL_GeneralCategories.FINDSET then begin
+                        rL_GeneralCategories.Reset;
+                        rL_GeneralCategories.SetRange("Table No.", Database::Item);
+                        rL_GeneralCategories.SetRange(Type, rL_GeneralCategories.Type::Category7);
+                        rL_GeneralCategories.SetRange(Code, Colmn10_Valid);
+                        if not rL_GeneralCategories.FindSet then begin
 
-                            CLEAR(rL_GeneralCategories);
-                            rL_GeneralCategories.VALIDATE("Table No.", DATABASE::Item);
-                            rL_GeneralCategories.VALIDATE(Type, rL_GeneralCategories.Type::Category7);
-                            rL_GeneralCategories.VALIDATE(Code, Colmn10_Valid);
-                            rL_GeneralCategories.VALIDATE(Description, Colmn10_Valid);
-                            rL_GeneralCategories.INSERT(true);
+                            Clear(rL_GeneralCategories);
+                            rL_GeneralCategories.Validate("Table No.", Database::Item);
+                            rL_GeneralCategories.Validate(Type, rL_GeneralCategories.Type::Category7);
+                            rL_GeneralCategories.Validate(Code, Colmn10_Valid);
+                            rL_GeneralCategories.Validate(Description, Colmn10_Valid);
+                            rL_GeneralCategories.Insert(true);
                         end;
 
-                        rL_LidlItem.VALIDATE("Category 7", rL_GeneralCategories.Code);
+                        rL_LidlItem.Validate("Category 7", rL_GeneralCategories.Code);
                     end;
 
 
                     //rL_Item.TESTFIELD("Sales Unit of Measure",UPPERCASE(Colmn11_Valid));
-                    rL_LidlItem.VALIDATE("Unit of Measure", Colmn11_Valid);
+                    rL_LidlItem.Validate("Unit of Measure", Colmn11_Valid);
                     //IF UPPERCASE(rL_LidlItem."Unit of Measure")<>UPPERCASE(Colmn11_Valid) THEN BEGIN
                     //  MESSAGE(rL_LidlItem.Code+' Sales UOM'+ rL_LidlItem."Unit of Measure" +' <> '+Colmn11_Valid);
                     //END;
 
 
 
-                    rL_LidlItem.MODIFY(true);
+                    rL_LidlItem.Modify(true);
 
                 end;
 
@@ -3539,7 +3521,7 @@ codeunit 50000 "General Mgt."
 
 
         end; //end for 1
-        Window.CLOSE;
+        Window.Close;
     end;
 
     procedure ImportLidlCrossReference();
@@ -3559,26 +3541,31 @@ codeunit 50000 "General Mgt."
         Colmn1_Valid: Text;
         Colmn2_Valid: Text;
         Colmn3_Valid: Text;
+        Instream: InStream;
     begin
         //open the file
-        vL_FileName := cu_FileMgt.UploadFile(Text50000, ExcelFileExtensionTok);
+        /* vL_FileName := cu_FileMgt.UploadFile(Text50000, ExcelFileExtensionTok);
         SheetName := ExcelBuffer.SelectSheetsName(vL_FileName);
         if SheetName = '' then
             exit;
 
         ExcelBuffer.OpenBook(vL_FileName, SheetName);
-        ExcelBuffer.ReadSheet;
+        ExcelBuffer.ReadSheet; */
+        IF UploadIntoStream(Text50000, 'C:\TEMP', 'All Files (*.*)|*.*', vL_FileName, Instream) then begin
+            ExcelBuffer.OpenBookStream(Instream, ExcelBuffer.SelectSheetsNameStream(Instream));
+            ExcelBuffer.ReadSheet;
+        end;
         RowNo := 0;
         ColumnNo := 0;
 
-        ExcelBuffer.RESET;
-        ExcelBuffer.FINDLAST;
+        ExcelBuffer.Reset;
+        ExcelBuffer.FindLast;
         RowNoMax := ExcelBuffer."Row No.";
         ColumnNoMax := 3; //ExcelBuffer."Column No."; //NOD0.2;
 
         vL_RowNo := 0;
 
-        Window.OPEN('Record Processing #1###############');
+        Window.Open('Record Processing #1###############');
         WindowTotalCount := RowNoMax;
         WindowLineCount := 0;
 
@@ -3586,10 +3573,10 @@ codeunit 50000 "General Mgt."
 
 
         for RowNo := 2 to RowNoMax do begin
-            ExcelBuffer.SETRANGE("Row No.", RowNo);
+            ExcelBuffer.SetRange("Row No.", RowNo);
 
             WindowLineCount += 1;
-            Window.UPDATE(1, FORMAT(WindowLineCount) + '/' + FORMAT(WindowTotalCount));
+            Window.Update(1, Format(WindowLineCount) + '/' + Format(WindowTotalCount));
 
             Colmn1_Valid := '';
             Colmn2_Valid := '';
@@ -3598,22 +3585,22 @@ codeunit 50000 "General Mgt."
 
 
             for ColumnNo := 1 to ColumnNoMax do begin
-                ExcelBuffer.SETRANGE("Column No.", ColumnNo);
-                if ExcelBuffer.FINDFIRST then begin
+                ExcelBuffer.SetRange("Column No.", ColumnNo);
+                if ExcelBuffer.FindFirst then begin
                     case ColumnNo of
                         1:
                             begin
-                                EVALUATE(Colmn1_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                                Evaluate(Colmn1_Valid, Trim(ExcelBuffer."Cell Value as Text"));
                             end;
 
                         2:
                             begin
-                                EVALUATE(Colmn2_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                                Evaluate(Colmn2_Valid, Trim(ExcelBuffer."Cell Value as Text"));
                             end;
 
                         3:
                             begin
-                                EVALUATE(Colmn3_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                                Evaluate(Colmn3_Valid, Trim(ExcelBuffer."Cell Value as Text"));
                             end;
 
                     end; //end case
@@ -3624,29 +3611,29 @@ codeunit 50000 "General Mgt."
             //update item
             if Colmn1_Valid <> '' then begin
 
-                rL_Item.RESET;
-                rL_Item.SETFILTER("Shelf No.", Colmn1_Valid);
-                if rL_Item.FINDSET then begin
-                    CLEAR(rL_ItemCrossReference);
-                    rL_ItemCrossReference.SETFILTER("Item No.", rL_Item."No.");
+                rL_Item.Reset;
+                rL_Item.SetFilter("Shelf No.", Colmn1_Valid);
+                if rL_Item.FindSet then begin
+                    Clear(rL_ItemCrossReference);
+                    rL_ItemCrossReference.SetFilter("Item No.", rL_Item."No.");
                     /* rL_ItemCrossReference.SETRANGE("Cross-Reference Type", rL_ItemCrossReference."Cross-Reference Type"::Customer);
                     rL_ItemCrossReference.SETFILTER("Cross-Reference Type No.", 'CUST00032');
                     rL_ItemCrossReference.SETFILTER("Cross-Reference No.", rL_Item."Shelf No."); */
-                    rL_ItemCrossReference.SETRANGE("Reference Type", rL_ItemCrossReference."Reference Type"::Customer);
-                    rL_ItemCrossReference.SETFILTER("Reference Type No.", 'CUST00032');
-                    rL_ItemCrossReference.SETFILTER("Reference No.", rL_Item."Shelf No.");
-                    if not rL_ItemCrossReference.FINDSET then begin
-                        CLEAR(rL_ItemCrossReference);
-                        rL_ItemCrossReference.VALIDATE("Item No.", rL_Item."No.");
+                    rL_ItemCrossReference.SetRange("Reference Type", rL_ItemCrossReference."Reference Type"::Customer);
+                    rL_ItemCrossReference.SetFilter("Reference Type No.", 'CUST00032');
+                    rL_ItemCrossReference.SetFilter("Reference No.", rL_Item."Shelf No.");
+                    if not rL_ItemCrossReference.FindSet then begin
+                        Clear(rL_ItemCrossReference);
+                        rL_ItemCrossReference.Validate("Item No.", rL_Item."No.");
                         /* rL_ItemCrossReference.VALIDATE("Cross-Reference Type", rL_ItemCrossReference."Cross-Reference Type"::Customer);
                         rL_ItemCrossReference.VALIDATE("Cross-Reference Type No.", 'CUST00032');
                         rL_ItemCrossReference.VALIDATE("Cross-Reference No.", rL_Item."Shelf No."); */
-                        rL_ItemCrossReference.VALIDATE("Reference Type", rL_ItemCrossReference."Reference Type"::Customer);
-                        rL_ItemCrossReference.VALIDATE("Reference Type No.", 'CUST00032');
-                        rL_ItemCrossReference.VALIDATE("Reference No.", rL_Item."Shelf No.");
-                        rL_ItemCrossReference.VALIDATE(Description, Colmn2_Valid);
-                        rL_ItemCrossReference.VALIDATE("Description 2", Colmn3_Valid);
-                        rL_ItemCrossReference.INSERT(true);
+                        rL_ItemCrossReference.Validate("Reference Type", rL_ItemCrossReference."Reference Type"::Customer);
+                        rL_ItemCrossReference.Validate("Reference Type No.", 'CUST00032');
+                        rL_ItemCrossReference.Validate("Reference No.", rL_Item."Shelf No.");
+                        rL_ItemCrossReference.Validate(Description, Colmn2_Valid);
+                        rL_ItemCrossReference.Validate("Description 2", Colmn3_Valid);
+                        rL_ItemCrossReference.Insert(true);
 
                     end;
 
@@ -3656,9 +3643,9 @@ codeunit 50000 "General Mgt."
 
 
         end; //end for 1
-        Window.CLOSE;
+        Window.Close;
 
-        MESSAGE('Import Item Cross Reference completed');
+        Message('Import Item Cross Reference completed');
     end;
 
     procedure ImportLidlProductNo();
@@ -3676,26 +3663,31 @@ codeunit 50000 "General Mgt."
         Colmn1_Valid: Text;
         Colmn2_Valid: Text;
         Colmn3_Valid: Text;
+        Instream: InStream;
     begin
         //open the file
-        vL_FileName := cu_FileMgt.UploadFile(Text50000, ExcelFileExtensionTok);
+        /* vL_FileName := cu_FileMgt.UploadFile(Text50000, ExcelFileExtensionTok);
         SheetName := ExcelBuffer.SelectSheetsName(vL_FileName);
         if SheetName = '' then
             exit;
 
         ExcelBuffer.OpenBook(vL_FileName, SheetName);
-        ExcelBuffer.ReadSheet;
+        ExcelBuffer.ReadSheet; */
+        IF UploadIntoStream(Text50000, 'C:\TEMP', 'All Files (*.*)|*.*', vL_FileName, Instream) then begin
+            ExcelBuffer.OpenBookStream(Instream, ExcelBuffer.SelectSheetsNameStream(Instream));
+            ExcelBuffer.ReadSheet;
+        end;
         RowNo := 0;
         ColumnNo := 0;
 
-        ExcelBuffer.RESET;
-        ExcelBuffer.FINDLAST;
+        ExcelBuffer.Reset;
+        ExcelBuffer.FindLast;
         RowNoMax := ExcelBuffer."Row No.";
         ColumnNoMax := 3; //ExcelBuffer."Column No."; //NOD0.2;
 
         vL_RowNo := 0;
 
-        Window.OPEN('Record Processing #1###############');
+        Window.Open('Record Processing #1###############');
         WindowTotalCount := RowNoMax;
         WindowLineCount := 0;
 
@@ -3709,10 +3701,10 @@ codeunit 50000 "General Mgt."
 
 
         for RowNo := 2 to RowNoMax do begin
-            ExcelBuffer.SETRANGE("Row No.", RowNo);
+            ExcelBuffer.SetRange("Row No.", RowNo);
 
             WindowLineCount += 1;
-            Window.UPDATE(1, FORMAT(WindowLineCount) + '/' + FORMAT(WindowTotalCount));
+            Window.Update(1, Format(WindowLineCount) + '/' + Format(WindowTotalCount));
 
             Colmn1_Valid := '';
             Colmn2_Valid := '';
@@ -3721,22 +3713,22 @@ codeunit 50000 "General Mgt."
 
 
             for ColumnNo := 1 to ColumnNoMax do begin
-                ExcelBuffer.SETRANGE("Column No.", ColumnNo);
-                if ExcelBuffer.FINDFIRST then begin
+                ExcelBuffer.SetRange("Column No.", ColumnNo);
+                if ExcelBuffer.FindFirst then begin
                     case ColumnNo of
                         1:
                             begin
-                                EVALUATE(Colmn1_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                                Evaluate(Colmn1_Valid, Trim(ExcelBuffer."Cell Value as Text"));
                             end;
 
                         2:
                             begin
-                                EVALUATE(Colmn2_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                                Evaluate(Colmn2_Valid, Trim(ExcelBuffer."Cell Value as Text"));
                             end;
 
                         3:
                             begin
-                                EVALUATE(Colmn3_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                                Evaluate(Colmn3_Valid, Trim(ExcelBuffer."Cell Value as Text"));
                             end;
 
                     end; //end case
@@ -3747,27 +3739,27 @@ codeunit 50000 "General Mgt."
             //update item
             if Colmn1_Valid <> '' then begin
 
-                rL_GeneralCategories.RESET;
-                rL_GeneralCategories.SETRANGE("Table No.", DATABASE::Item);
-                rL_GeneralCategories.SETRANGE(Type, rL_GeneralCategories.Type::Category2);
-                rL_GeneralCategories.SETRANGE(Code, Colmn1_Valid);
-                if not rL_GeneralCategories.FINDSET then begin
+                rL_GeneralCategories.Reset;
+                rL_GeneralCategories.SetRange("Table No.", Database::Item);
+                rL_GeneralCategories.SetRange(Type, rL_GeneralCategories.Type::Category2);
+                rL_GeneralCategories.SetRange(Code, Colmn1_Valid);
+                if not rL_GeneralCategories.FindSet then begin
 
-                    CLEAR(rL_GeneralCategories);
-                    rL_GeneralCategories.VALIDATE("Table No.", DATABASE::Item);
-                    rL_GeneralCategories.VALIDATE(Type, rL_GeneralCategories.Type::Category2);
-                    rL_GeneralCategories.VALIDATE(Code, Colmn1_Valid);
-                    rL_GeneralCategories.VALIDATE(Description, Colmn2_Valid);
-                    rL_GeneralCategories.VALIDATE("Description 2", Colmn3_Valid);
-                    rL_GeneralCategories.INSERT(true);
+                    Clear(rL_GeneralCategories);
+                    rL_GeneralCategories.Validate("Table No.", Database::Item);
+                    rL_GeneralCategories.Validate(Type, rL_GeneralCategories.Type::Category2);
+                    rL_GeneralCategories.Validate(Code, Colmn1_Valid);
+                    rL_GeneralCategories.Validate(Description, Colmn2_Valid);
+                    rL_GeneralCategories.Validate("Description 2", Colmn3_Valid);
+                    rL_GeneralCategories.Insert(true);
                 end;
             end;
 
 
         end; //end for 1
-        Window.CLOSE;
+        Window.Close;
 
-        MESSAGE('ImportLidlProductNo completed');
+        Message('ImportLidlProductNo completed');
     end;
 
     procedure ValidateCustomerCross();
@@ -3780,78 +3772,78 @@ codeunit 50000 "General Mgt."
     begin
         vL_CustCode := 'CUST00032';
 
-        rL_Item.RESET;
-        rL_Item.SETFILTER("Shelf No.", '<>%1', '');
-        if rL_Item.FINDSET then begin
-            Window.OPEN('Record Processing #1###############');
-            WindowTotalCount := rL_Item.COUNT;
+        rL_Item.Reset;
+        rL_Item.SetFilter("Shelf No.", '<>%1', '');
+        if rL_Item.FindSet then begin
+            Window.Open('Record Processing #1###############');
+            WindowTotalCount := rL_Item.Count;
             WindowLineCount := 0;
 
             repeat
                 WindowLineCount += 1;
-                Window.UPDATE(1, FORMAT(WindowLineCount) + '/' + FORMAT(WindowTotalCount));
+                Window.Update(1, Format(WindowLineCount) + '/' + Format(WindowTotalCount));
 
 
                 //check if the Shelf No exists in item categories
-                rL_GeneralCategories.RESET;
-                rL_GeneralCategories.SETRANGE("Table No.", DATABASE::Item);
-                rL_GeneralCategories.SETRANGE(Type, rL_GeneralCategories.Type::Category2);
-                rL_GeneralCategories.SETFILTER(Code, rL_Item."Shelf No.");
-                if rL_GeneralCategories.FINDSET then begin
-                    CLEAR(rL_ItemCrossReference);
-                    rL_ItemCrossReference.RESET;
-                    rL_ItemCrossReference.SETFILTER("Item No.", rL_Item."No.");
+                rL_GeneralCategories.Reset;
+                rL_GeneralCategories.SetRange("Table No.", Database::Item);
+                rL_GeneralCategories.SetRange(Type, rL_GeneralCategories.Type::Category2);
+                rL_GeneralCategories.SetFilter(Code, rL_Item."Shelf No.");
+                if rL_GeneralCategories.FindSet then begin
+                    Clear(rL_ItemCrossReference);
+                    rL_ItemCrossReference.Reset;
+                    rL_ItemCrossReference.SetFilter("Item No.", rL_Item."No.");
                     /* rL_ItemCrossReference.SETRANGE("Cross-Reference Type", rL_ItemCrossReference."Cross-Reference Type"::Customer);
                     rL_ItemCrossReference.SETFILTER("Cross-Reference Type No.", vL_CustCode); */
-                    rL_ItemCrossReference.SETRANGE("Reference Type", rL_ItemCrossReference."Reference Type"::Customer);
-                    rL_ItemCrossReference.SETFILTER("Reference Type No.", vL_CustCode);
-                    if not rL_ItemCrossReference.FINDSET then begin
-                        CLEAR(rL_ItemCrossReference);
-                        rL_ItemCrossReference.VALIDATE("Item No.", rL_Item."No.");
+                    rL_ItemCrossReference.SetRange("Reference Type", rL_ItemCrossReference."Reference Type"::Customer);
+                    rL_ItemCrossReference.SetFilter("Reference Type No.", vL_CustCode);
+                    if not rL_ItemCrossReference.FindSet then begin
+                        Clear(rL_ItemCrossReference);
+                        rL_ItemCrossReference.Validate("Item No.", rL_Item."No.");
                         /* rL_ItemCrossReference.VALIDATE("Cross-Reference Type", rL_ItemCrossReference."Cross-Reference Type"::Customer);
                         rL_ItemCrossReference.VALIDATE("Cross-Reference Type No.", vL_CustCode); */
-                        rL_ItemCrossReference.VALIDATE("Reference Type", rL_ItemCrossReference."Reference Type"::Customer);
-                        rL_ItemCrossReference.VALIDATE("Reference Type No.", vL_CustCode);
-                        rL_ItemCrossReference.VALIDATE("Category 2", rL_Item."Shelf No.");
-                        rL_ItemCrossReference.INSERT(true);
+                        rL_ItemCrossReference.Validate("Reference Type", rL_ItemCrossReference."Reference Type"::Customer);
+                        rL_ItemCrossReference.Validate("Reference Type No.", vL_CustCode);
+                        rL_ItemCrossReference.Validate("Category 2", rL_Item."Shelf No.");
+                        rL_ItemCrossReference.Insert(true);
                     end else begin
-                        rL_ItemCrossReference.VALIDATE("Category 2", rL_Item."Shelf No.");
-                        rL_ItemCrossReference.MODIFY(true);
+                        rL_ItemCrossReference.Validate("Category 2", rL_Item."Shelf No.");
+                        rL_ItemCrossReference.Modify(true);
                     end;
                 end;
             //rL_Item.VALIDATE("Shelf No.");
             //rL_Item.MODIFY;
-            until rL_Item.NEXT = 0;
-            Window.CLOSE;
+            until rL_Item.Next = 0;
+            Window.Close;
         end;
 
 
-        MESSAGE('Validation completed');
+        Message('Validation completed');
     end;
 
     procedure DeleteGrowers();
     var
         rL_Vendor: Record Vendor;
     begin
-        if not CONFIRM(Text50006, false) then begin
+        if not Confirm(Text50006, false) then begin
             exit;
         end;
 
 
-        rL_Vendor.RESET;
-        rL_Vendor.SETFILTER("No. Series", 'VEND-GROW');
-        if rL_Vendor.FINDSET then begin
-            Window.OPEN('Record Processing #1###############');
-            WindowTotalCount := rL_Vendor.COUNT;
+        rL_Vendor.Reset;
+        rL_Vendor.SetFilter("No. Series", 'VEND-GROW');
+        if rL_Vendor.FindSet then begin
+            Window.Open('Record Processing #1###############');
+            WindowTotalCount := rL_Vendor.Count;
             WindowLineCount := 0;
             repeat
                 WindowLineCount += 1;
-                Window.UPDATE(1, FORMAT(WindowLineCount) + '/' + FORMAT(WindowTotalCount));
-                rL_Vendor.DELETE(true);
+                Window.Update(1, Format(WindowLineCount) + '/' + Format(WindowTotalCount));
+                rL_Vendor.Delete(true);
 
 
-            until rL_Vendor.NEXT = 0;
-            Window.CLOSE;
+            until rL_Vendor.Next = 0;
+            Window.Close;
         end;
     end;
 
@@ -3887,34 +3879,39 @@ codeunit 50000 "General Mgt."
         vL_VendorNo: Code[20];
         rL_ItemGrowerVendor: Record "Item Grower Vendor";
         rL_GrowerVendor: Record Vendor;
+        INstream: InStream;
     begin
         //open the file
-        vL_FileName := cu_FileMgt.UploadFile(Text50000, ExcelFileExtensionTok);
+        /* vL_FileName := cu_FileMgt.UploadFile(Text50000, ExcelFileExtensionTok);
         SheetName := ExcelBuffer.SelectSheetsName(vL_FileName);
         if SheetName = '' then
             exit;
 
         ExcelBuffer.OpenBook(vL_FileName, SheetName);
-        ExcelBuffer.ReadSheet;
+        ExcelBuffer.ReadSheet; */
+        IF UploadIntoStream(Text50000, 'C:\TEMP', 'All Files (*.*)|*.*', vL_FileName, Instream) then begin
+            ExcelBuffer.OpenBookStream(Instream, ExcelBuffer.SelectSheetsNameStream(Instream));
+            ExcelBuffer.ReadSheet;
+        end;
         RowNo := 0;
         ColumnNo := 0;
 
-        ExcelBuffer.RESET;
-        ExcelBuffer.FINDLAST;
+        ExcelBuffer.Reset;
+        ExcelBuffer.FindLast;
         RowNoMax := ExcelBuffer."Row No.";
         ColumnNoMax := 15; //ExcelBuffer."Column No."; //NOD0.2;
 
         vL_RowNo := 0;
 
-        Window.OPEN('Record Processing #1###############');
+        Window.Open('Record Processing #1###############');
         WindowTotalCount := RowNoMax;
         WindowLineCount := 0;
 
         for RowNo := 2 to RowNoMax do begin
-            ExcelBuffer.SETRANGE("Row No.", RowNo);
+            ExcelBuffer.SetRange("Row No.", RowNo);
 
             WindowLineCount += 1;
-            Window.UPDATE(1, FORMAT(WindowLineCount) + '/' + FORMAT(WindowTotalCount));
+            Window.Update(1, Format(WindowLineCount) + '/' + Format(WindowTotalCount));
 
             //Grower
             //COUNTRY
@@ -3943,84 +3940,84 @@ codeunit 50000 "General Mgt."
 
 
             for ColumnNo := 1 to ColumnNoMax do begin
-                ExcelBuffer.SETRANGE("Column No.", ColumnNo);
-                if ExcelBuffer.FINDFIRST then begin
+                ExcelBuffer.SetRange("Column No.", ColumnNo);
+                if ExcelBuffer.FindFirst then begin
                     case ColumnNo of
                         1:
                             begin
-                                EVALUATE(Colmn1_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                                Evaluate(Colmn1_Valid, Trim(ExcelBuffer."Cell Value as Text"));
                             end;
 
                         2:
                             begin
-                                EVALUATE(Colmn2_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                                Evaluate(Colmn2_Valid, Trim(ExcelBuffer."Cell Value as Text"));
                             end;
 
 
                         3:
                             begin
-                                EVALUATE(Colmn3_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                                Evaluate(Colmn3_Valid, Trim(ExcelBuffer."Cell Value as Text"));
                             end;
 
                         4:
                             begin
-                                EVALUATE(Colmn4_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                                Evaluate(Colmn4_Valid, Trim(ExcelBuffer."Cell Value as Text"));
                             end;
 
                         5:
                             begin
-                                EVALUATE(Colmn5_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                                Evaluate(Colmn5_Valid, Trim(ExcelBuffer."Cell Value as Text"));
                             end;
 
                         6:
                             begin
-                                EVALUATE(Colmn6_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                                Evaluate(Colmn6_Valid, Trim(ExcelBuffer."Cell Value as Text"));
                             end;
 
                         7:
                             begin
-                                EVALUATE(Colmn7_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                                Evaluate(Colmn7_Valid, Trim(ExcelBuffer."Cell Value as Text"));
                             end;
 
                         8:
                             begin
-                                EVALUATE(Colmn8_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                                Evaluate(Colmn8_Valid, Trim(ExcelBuffer."Cell Value as Text"));
                             end;
 
                         9:
                             begin
-                                EVALUATE(Colmn9_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                                Evaluate(Colmn9_Valid, Trim(ExcelBuffer."Cell Value as Text"));
                             end;
 
                         10:
                             begin
-                                EVALUATE(Colmn10_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                                Evaluate(Colmn10_Valid, Trim(ExcelBuffer."Cell Value as Text"));
                             end;
 
                         11:
                             begin
-                                EVALUATE(Colmn11_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                                Evaluate(Colmn11_Valid, Trim(ExcelBuffer."Cell Value as Text"));
                             end;
 
                         12:
                             begin
-                                EVALUATE(Colmn12_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                                Evaluate(Colmn12_Valid, Trim(ExcelBuffer."Cell Value as Text"));
                             end;
 
 
                         13:
                             begin
-                                EVALUATE(Colmn13_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                                Evaluate(Colmn13_Valid, Trim(ExcelBuffer."Cell Value as Text"));
                             end;
 
                         14:
                             begin
-                                EVALUATE(Colmn14_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                                Evaluate(Colmn14_Valid, Trim(ExcelBuffer."Cell Value as Text"));
                             end;
 
                         15:
                             begin
-                                EVALUATE(Colmn15_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                                Evaluate(Colmn15_Valid, Trim(ExcelBuffer."Cell Value as Text"));
                             end;
 
                     end; //end case
@@ -4048,53 +4045,53 @@ codeunit 50000 "General Mgt."
             //Create or update vendor
             if Colmn1_Valid <> '' then begin
 
-                CLEAR(rL_Vendor);
+                Clear(rL_Vendor);
                 //rL_Vendor.INIT;
                 //rL_Vendor.VALIDATE("No. Series",'VEND-GROW');
 
                 //ZGRO001
-                if STRLEN(Colmn1_Valid) = 1 then begin
+                if StrLen(Colmn1_Valid) = 1 then begin
                     vL_VendorNo := 'ZGRO00' + Colmn1_Valid;
                 end else
-                    if STRLEN(Colmn1_Valid) = 2 then begin
+                    if StrLen(Colmn1_Valid) = 2 then begin
                         vL_VendorNo := 'ZGRO0' + Colmn1_Valid;
                     end;
 
-                rL_Vendor.RESET;
-                rL_Vendor.SETFILTER("No.", vL_VendorNo);
-                if not rL_Vendor.FINDSET then begin
-                    CLEAR(rL_Vendor);
-                    rL_Vendor.INIT;
-                    rL_Vendor.VALIDATE("No.", vL_VendorNo);
-                    rL_Vendor.VALIDATE("No. Series", 'VEND-GROW');
-                    rL_Vendor.INSERT(true);
+                rL_Vendor.Reset;
+                rL_Vendor.SetFilter("No.", vL_VendorNo);
+                if not rL_Vendor.FindSet then begin
+                    Clear(rL_Vendor);
+                    rL_Vendor.Init;
+                    rL_Vendor.Validate("No.", vL_VendorNo);
+                    rL_Vendor.Validate("No. Series", 'VEND-GROW');
+                    rL_Vendor.Insert(true);
 
-                    if STRLEN(Colmn8_Valid) > 50 then begin
+                    if StrLen(Colmn8_Valid) > 50 then begin
 
-                        rL_Vendor.VALIDATE(Name, COPYSTR(Colmn8_Valid, 1, 50));
-                        rL_Vendor.VALIDATE("Name 2", COPYSTR(Colmn8_Valid, 51, STRLEN(Colmn8_Valid) - 50));
+                        rL_Vendor.Validate(Name, CopyStr(Colmn8_Valid, 1, 50));
+                        rL_Vendor.Validate("Name 2", CopyStr(Colmn8_Valid, 51, StrLen(Colmn8_Valid) - 50));
 
                     end else begin
-                        rL_Vendor.VALIDATE(Name, Colmn8_Valid);
+                        rL_Vendor.Validate(Name, Colmn8_Valid);
                     end;
 
 
-                    rL_Vendor.VALIDATE("Vendor Posting Group", 'GROWER');
+                    rL_Vendor.Validate("Vendor Posting Group", 'GROWER');
 
                     rL_Vendor.GGN := Colmn2_Valid;
-                    EVALUATE(TmpDate, Colmn3_Valid);
+                    Evaluate(TmpDate, Colmn3_Valid);
                     rL_Vendor."GGN Expiry Date" := TmpDate;
 
-                    rL_Vendor.VALIDATE("Category 2", Colmn4_Valid);
-                    rL_Vendor.VALIDATE("Category 3", Colmn5_Valid);
+                    rL_Vendor.Validate("Category 2", Colmn4_Valid);
+                    rL_Vendor.Validate("Category 3", Colmn5_Valid);
 
                     if Colmn7_Valid <> '' then begin
-                        rL_GeneralCategories.RESET;
-                        rL_GeneralCategories.SETRANGE("Table No.", DATABASE::Vendor);
-                        rL_GeneralCategories.SETRANGE(Type, rL_GeneralCategories.Type::Category4);
-                        rL_GeneralCategories.SETRANGE(Description, Colmn7_Valid);
-                        if rL_GeneralCategories.FINDSET then begin
-                            rL_Vendor.VALIDATE("Category 4", rL_GeneralCategories.Code);
+                        rL_GeneralCategories.Reset;
+                        rL_GeneralCategories.SetRange("Table No.", Database::Vendor);
+                        rL_GeneralCategories.SetRange(Type, rL_GeneralCategories.Type::Category4);
+                        rL_GeneralCategories.SetRange(Description, Colmn7_Valid);
+                        if rL_GeneralCategories.FindSet then begin
+                            rL_Vendor.Validate("Category 4", rL_GeneralCategories.Code);
                         end;
                     end;
 
@@ -4114,25 +4111,25 @@ codeunit 50000 "General Mgt."
 
 
 
-                    rL_Vendor.VALIDATE(Comments, Colmn15_Valid);
+                    rL_Vendor.Validate(Comments, Colmn15_Valid);
 
-                    rL_Vendor.MODIFY(true);
+                    rL_Vendor.Modify(true);
                 end;
 
                 if Colmn6_Valid <> '' then begin
-                    rL_GeneralCategories.RESET;
-                    rL_GeneralCategories.SETRANGE("Table No.", DATABASE::"Item Grower Vendor");
-                    rL_GeneralCategories.SETRANGE(Type, rL_GeneralCategories.Type::Category1);
-                    rL_GeneralCategories.SETRANGE(Description, Colmn6_Valid);
-                    if rL_GeneralCategories.FINDSET then begin
-                        rL_ItemGrowerVendor.RESET;
-                        rL_ItemGrowerVendor.SETFILTER("Grower No.", rL_Vendor."No.");
-                        rL_ItemGrowerVendor.SETFILTER("Category 1", rL_GeneralCategories.Code);
-                        if not rL_ItemGrowerVendor.FINDSET then begin
-                            CLEAR(rL_ItemGrowerVendor);
-                            rL_ItemGrowerVendor.VALIDATE("Grower No.", rL_Vendor."No.");
-                            rL_ItemGrowerVendor.VALIDATE("Category 1", rL_GeneralCategories.Code);
-                            rL_ItemGrowerVendor.INSERT();
+                    rL_GeneralCategories.Reset;
+                    rL_GeneralCategories.SetRange("Table No.", Database::"Item Grower Vendor");
+                    rL_GeneralCategories.SetRange(Type, rL_GeneralCategories.Type::Category1);
+                    rL_GeneralCategories.SetRange(Description, Colmn6_Valid);
+                    if rL_GeneralCategories.FindSet then begin
+                        rL_ItemGrowerVendor.Reset;
+                        rL_ItemGrowerVendor.SetFilter("Grower No.", rL_Vendor."No.");
+                        rL_ItemGrowerVendor.SetFilter("Category 1", rL_GeneralCategories.Code);
+                        if not rL_ItemGrowerVendor.FindSet then begin
+                            Clear(rL_ItemGrowerVendor);
+                            rL_ItemGrowerVendor.Validate("Grower No.", rL_Vendor."No.");
+                            rL_ItemGrowerVendor.Validate("Category 1", rL_GeneralCategories.Code);
+                            rL_ItemGrowerVendor.Insert();
                         end;
 
                     end;
@@ -4147,9 +4144,9 @@ codeunit 50000 "General Mgt."
 
 
         end; //end for 1
-        Window.CLOSE;
+        Window.Close;
 
-        MESSAGE('Import Vendor Completed');
+        Message('Import Vendor Completed');
 
     end;
 
@@ -4167,26 +4164,31 @@ codeunit 50000 "General Mgt."
         rL_GeneralCategories: Record "General Categories";
         Colmn1_Valid: Text;
         Colmn2_Valid: Text;
+        Instream: InStream;
     begin
         //open the file
-        vL_FileName := cu_FileMgt.UploadFile(Text50000, ExcelFileExtensionTok);
+        /* vL_FileName := cu_FileMgt.UploadFile(Text50000, ExcelFileExtensionTok);
         SheetName := ExcelBuffer.SelectSheetsName(vL_FileName);
         if SheetName = '' then
             exit;
 
         ExcelBuffer.OpenBook(vL_FileName, SheetName);
-        ExcelBuffer.ReadSheet;
+        ExcelBuffer.ReadSheet; */
+        IF UploadIntoStream(Text50000, 'C:\TEMP', 'All Files (*.*)|*.*', vL_FileName, Instream) then begin
+            ExcelBuffer.OpenBookStream(Instream, ExcelBuffer.SelectSheetsNameStream(Instream));
+            ExcelBuffer.ReadSheet;
+        end;
         RowNo := 0;
         ColumnNo := 0;
 
-        ExcelBuffer.RESET;
-        ExcelBuffer.FINDLAST;
+        ExcelBuffer.Reset;
+        ExcelBuffer.FindLast;
         RowNoMax := ExcelBuffer."Row No.";
         ColumnNoMax := 2; //ExcelBuffer."Column No."; //NOD0.2;
 
         vL_RowNo := 0;
 
-        Window.OPEN('Record Processing #1###############');
+        Window.Open('Record Processing #1###############');
         WindowTotalCount := RowNoMax;
         WindowLineCount := 0;
 
@@ -4194,10 +4196,10 @@ codeunit 50000 "General Mgt."
 
 
         for RowNo := 2 to RowNoMax do begin
-            ExcelBuffer.SETRANGE("Row No.", RowNo);
+            ExcelBuffer.SetRange("Row No.", RowNo);
 
             WindowLineCount += 1;
-            Window.UPDATE(1, FORMAT(WindowLineCount) + '/' + FORMAT(WindowTotalCount));
+            Window.Update(1, Format(WindowLineCount) + '/' + Format(WindowTotalCount));
 
             Colmn1_Valid := '';
             Colmn2_Valid := '';
@@ -4206,17 +4208,17 @@ codeunit 50000 "General Mgt."
 
 
             for ColumnNo := 1 to ColumnNoMax do begin
-                ExcelBuffer.SETRANGE("Column No.", ColumnNo);
-                if ExcelBuffer.FINDFIRST then begin
+                ExcelBuffer.SetRange("Column No.", ColumnNo);
+                if ExcelBuffer.FindFirst then begin
                     case ColumnNo of
                         1:
                             begin
-                                EVALUATE(Colmn1_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                                Evaluate(Colmn1_Valid, Trim(ExcelBuffer."Cell Value as Text"));
                             end;
 
                         2:
                             begin
-                                EVALUATE(Colmn2_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                                Evaluate(Colmn2_Valid, Trim(ExcelBuffer."Cell Value as Text"));
                             end;
 
                     end; //end case
@@ -4227,34 +4229,32 @@ codeunit 50000 "General Mgt."
             //update item
             if Colmn1_Valid <> '' then begin
 
-                rL_GeneralCategories.RESET;
-                rL_GeneralCategories.SETRANGE("Table No.", DATABASE::"Item Grower Vendor");
-                rL_GeneralCategories.SETRANGE(Type, rL_GeneralCategories.Type::Category1);
-                rL_GeneralCategories.SETRANGE(Code, Colmn1_Valid);
-                if not rL_GeneralCategories.FINDSET then begin
+                rL_GeneralCategories.Reset;
+                rL_GeneralCategories.SetRange("Table No.", Database::"Item Grower Vendor");
+                rL_GeneralCategories.SetRange(Type, rL_GeneralCategories.Type::Category1);
+                rL_GeneralCategories.SetRange(Code, Colmn1_Valid);
+                if not rL_GeneralCategories.FindSet then begin
 
-                    CLEAR(rL_GeneralCategories);
-                    rL_GeneralCategories.VALIDATE("Table No.", DATABASE::"Item Grower Vendor");
-                    rL_GeneralCategories.VALIDATE(Type, rL_GeneralCategories.Type::Category1);
-                    rL_GeneralCategories.VALIDATE(Code, Colmn1_Valid);
-                    rL_GeneralCategories.VALIDATE(Description, Colmn2_Valid);
-                    rL_GeneralCategories.INSERT(true);
+                    Clear(rL_GeneralCategories);
+                    rL_GeneralCategories.Validate("Table No.", Database::"Item Grower Vendor");
+                    rL_GeneralCategories.Validate(Type, rL_GeneralCategories.Type::Category1);
+                    rL_GeneralCategories.Validate(Code, Colmn1_Valid);
+                    rL_GeneralCategories.Validate(Description, Colmn2_Valid);
+                    rL_GeneralCategories.Insert(true);
                 end;
             end;
 
 
         end; //end for 1
-        Window.CLOSE;
+        Window.Close;
 
-        MESSAGE('Grower Item completed');
+        Message('Grower Item completed');
     end;
 
     procedure ExportGrowersTemplate();
     var
         ExcelBuffer: Record "Excel Buffer" temporary;
     begin
-
-
         ExcelBuffer.NewRow;
         ExcelBuffer.AddColumn('α/α ID', false, '', true, false, true, '', ExcelBuffer."Cell Type"::Text);
         ExcelBuffer.AddColumn('GGN', false, '', true, false, true, '', ExcelBuffer."Cell Type"::Text);
@@ -4268,9 +4268,9 @@ codeunit 50000 "General Mgt."
         ExcelBuffer.AddColumn('Όνομα Προμηθευτή / Related Supplier Name', false, '', true, false, true, '', ExcelBuffer."Cell Type"::Text);
         ExcelBuffer.AddColumn('GGN Προμηθευτή / Related Supplier GGN', false, '', true, false, true, '', ExcelBuffer."Cell Type"::Text);
         ExcelBuffer.AddColumn('Σχόλια / comments', false, '', true, false, true, '', ExcelBuffer."Cell Type"::Text);
-        ExcelBuffer.CreateBookAndOpenExcel('', 'List of Growers', 'List of Growers', COMPANYNAME, USERID);
+        //ExcelBuffer.CreateBookAndOpenExcel('', 'List of Growers', 'List of Growers', CompanyName, UserId);
 
-        ERROR('');
+        Error('');
     end;
 
     procedure ImportItemNetWeight();
@@ -4288,87 +4288,77 @@ codeunit 50000 "General Mgt."
         Colmn1_Valid: Text;
         Colmn2_Valid: Text;
         Colmn3_Valid: Text;
+        Instream: InStream;
     begin
         //open the file
-        vL_FileName := cu_FileMgt.UploadFile(Text50000, ExcelFileExtensionTok);
+        /* vL_FileName := cu_FileMgt.UploadFile(Text50000, ExcelFileExtensionTok);
         SheetName := ExcelBuffer.SelectSheetsName(vL_FileName);
         if SheetName = '' then
             exit;
 
         ExcelBuffer.OpenBook(vL_FileName, SheetName);
-        ExcelBuffer.ReadSheet;
+        ExcelBuffer.ReadSheet; */
+        IF UploadIntoStream(Text50000, 'C:\TEMP', 'All Files (*.*)|*.*', vL_FileName, Instream) then begin
+            ExcelBuffer.OpenBookStream(Instream, ExcelBuffer.SelectSheetsNameStream(Instream));
+            ExcelBuffer.ReadSheet;
+        end;
         RowNo := 0;
         ColumnNo := 0;
 
-        ExcelBuffer.RESET;
-        ExcelBuffer.FINDLAST;
+        ExcelBuffer.Reset;
+        ExcelBuffer.FindLast;
         RowNoMax := ExcelBuffer."Row No.";
         ColumnNoMax := 3; //ExcelBuffer."Column No."; //NOD0.2;
 
         vL_RowNo := 0;
 
-        Window.OPEN('Record Processing #1###############');
+        Window.Open('Record Processing #1###############');
         WindowTotalCount := RowNoMax;
         WindowLineCount := 0;
 
-
-
-
         for RowNo := 2 to RowNoMax do begin
-            ExcelBuffer.SETRANGE("Row No.", RowNo);
+            ExcelBuffer.SetRange("Row No.", RowNo);
 
             WindowLineCount += 1;
-            Window.UPDATE(1, FORMAT(WindowLineCount) + '/' + FORMAT(WindowTotalCount));
+            Window.Update(1, Format(WindowLineCount) + '/' + Format(WindowTotalCount));
 
             Colmn1_Valid := '';
             Colmn2_Valid := '';
             Colmn3_Valid := '';
 
-
-
-
             for ColumnNo := 1 to ColumnNoMax do begin
-                ExcelBuffer.SETRANGE("Column No.", ColumnNo);
-                if ExcelBuffer.FINDFIRST then begin
+                ExcelBuffer.SetRange("Column No.", ColumnNo);
+                if ExcelBuffer.FindFirst then begin
                     case ColumnNo of
                         1:
                             begin
-                                EVALUATE(Colmn1_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                                Evaluate(Colmn1_Valid, Trim(ExcelBuffer."Cell Value as Text"));
                             end;
-
                         2:
                             begin
-                                EVALUATE(Colmn2_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                                Evaluate(Colmn2_Valid, Trim(ExcelBuffer."Cell Value as Text"));
                             end;
-
                         3:
                             begin
-                                EVALUATE(Colmn3_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                                Evaluate(Colmn3_Valid, Trim(ExcelBuffer."Cell Value as Text"));
                             end;
-
                     end; //end case
-
                 end;//end if
             end; //end for 2
 
             //update item
             if Colmn1_Valid <> '' then begin
-                if rL_Item.GET(Colmn1_Valid) then begin
+                if rL_Item.Get(Colmn1_Valid) then begin
                     if Colmn3_Valid <> '' then begin
-                        EVALUATE(TmpDecimal, Colmn3_Valid);
-                        rL_Item.VALIDATE("Net Weight", TmpDecimal);
-                        rL_Item.MODIFY();
+                        Evaluate(TmpDecimal, Colmn3_Valid);
+                        rL_Item.Validate("Net Weight", TmpDecimal);
+                        rL_Item.Modify();
                     end;
-
                 end;
-
             end;
-
-
         end; //end for 1
-        Window.CLOSE;
-
-        MESSAGE('Item Net Weight completed');
+        Window.Close;
+        Message('Item Net Weight completed');
     end;
 
     procedure ImportVendorGrowerYN();
@@ -4387,68 +4377,67 @@ codeunit 50000 "General Mgt."
         Colmn2_Valid: Text;
         Colmn3_Valid: Text;
         Colmn4_Valid: Text;
+        Instream: InStream;
     begin
         //open the file
-        vL_FileName := cu_FileMgt.UploadFile(Text50000, ExcelFileExtensionTok);
+        /* vL_FileName := cu_FileMgt.UploadFile(Text50000, ExcelFileExtensionTok);
         SheetName := ExcelBuffer.SelectSheetsName(vL_FileName);
         if SheetName = '' then
             exit;
 
         ExcelBuffer.OpenBook(vL_FileName, SheetName);
-        ExcelBuffer.ReadSheet;
+        ExcelBuffer.ReadSheet; */
+        IF UploadIntoStream(Text50000, 'C:\TEMP', 'All Files (*.*)|*.*', vL_FileName, Instream) then begin
+            ExcelBuffer.OpenBookStream(Instream, ExcelBuffer.SelectSheetsNameStream(Instream));
+            ExcelBuffer.ReadSheet;
+        end;
         RowNo := 0;
         ColumnNo := 0;
 
-        ExcelBuffer.RESET;
-        ExcelBuffer.FINDLAST;
+        ExcelBuffer.Reset;
+        ExcelBuffer.FindLast;
         RowNoMax := ExcelBuffer."Row No.";
         ColumnNoMax := 4; //ExcelBuffer."Column No."; //NOD0.2;
 
         vL_RowNo := 0;
 
-        Window.OPEN('Record Processing #1###############');
+        Window.Open('Record Processing #1###############');
         WindowTotalCount := RowNoMax;
         WindowLineCount := 0;
 
-
-
-
         for RowNo := 2 to RowNoMax do begin
-            ExcelBuffer.SETRANGE("Row No.", RowNo);
+            ExcelBuffer.SetRange("Row No.", RowNo);
 
             WindowLineCount += 1;
-            Window.UPDATE(1, FORMAT(WindowLineCount) + '/' + FORMAT(WindowTotalCount));
+            Window.Update(1, Format(WindowLineCount) + '/' + Format(WindowTotalCount));
 
             Colmn1_Valid := '';
             Colmn2_Valid := '';
             Colmn3_Valid := '';
             Colmn4_Valid := '';
 
-
-
-
             for ColumnNo := 1 to ColumnNoMax do begin
-                ExcelBuffer.SETRANGE("Column No.", ColumnNo);
-                if ExcelBuffer.FINDFIRST then begin
+                ExcelBuffer.SetRange("Column No.", ColumnNo);
+                if ExcelBuffer.FindFirst then begin
                     case ColumnNo of
                         1:
                             begin
-                                EVALUATE(Colmn1_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                                Evaluate(Colmn1_Valid, Trim(ExcelBuffer."Cell Value as Text"));
                             end;
 
                         2:
                             begin
-                                EVALUATE(Colmn2_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                                Evaluate(Colmn2_Valid, Trim(ExcelBuffer."Cell Value as Text"));
                             end;
 
                         3:
                             begin
-                                EVALUATE(Colmn3_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                                Evaluate(Colmn3_Valid, Trim(ExcelBuffer."Cell Value as Text"));
                             end;
 
                         4:
                             begin
-                                EVALUATE(Colmn4_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                                Evaluate(Colmn4_Valid, Trim(ExcelBuffer."Cell Value as Text"));
                             end;
 
                     end; //end case
@@ -4458,18 +4447,18 @@ codeunit 50000 "General Mgt."
 
             //update item
             if Colmn1_Valid <> '' then begin
-                if rL_Vendor.GET(Colmn1_Valid) then begin
-                    rL_Vendor.VALIDATE("Category 5", Colmn4_Valid);
-                    rL_Vendor.MODIFY;
+                if rL_Vendor.Get(Colmn1_Valid) then begin
+                    rL_Vendor.Validate("Category 5", Colmn4_Valid);
+                    rL_Vendor.Modify;
                 end;
 
             end;
 
 
         end; //end for 1
-        Window.CLOSE;
+        Window.Close;
 
-        MESSAGE('Vendor Grower YN completed');
+        Message('Vendor Grower YN completed');
     end;
 
     procedure TransferVendortoGrower();
@@ -4479,22 +4468,22 @@ codeunit 50000 "General Mgt."
         rL_GrowerSearch: Record Grower;
     begin
 
-        rL_Vendor.RESET;
-        rL_Vendor.SETFILTER("Category 5", 'YES');
-        rL_Vendor.SETFILTER(Name, '<>%1', '');
-        if rL_Vendor.FINDSET then begin
-            if not CONFIRM(Text50007, false, rL_Vendor.COUNT) then begin
+        rL_Vendor.Reset;
+        rL_Vendor.SetFilter("Category 5", 'YES');
+        rL_Vendor.SetFilter(Name, '<>%1', '');
+        if rL_Vendor.FindSet then begin
+            if not Confirm(Text50007, false, rL_Vendor.Count) then begin
                 exit;
             end;
 
             repeat
                 //add filter
-                rL_GrowerSearch.RESET;
-                rL_GrowerSearch.SETFILTER("Grower Vendor No.", rL_Vendor."No.");
-                if not rL_GrowerSearch.FINDSET then begin
-                    CLEAR(rL_Grower);
-                    rL_Grower.INIT;
-                    rL_Grower.INSERT(true);
+                rL_GrowerSearch.Reset;
+                rL_GrowerSearch.SetFilter("Grower Vendor No.", rL_Vendor."No.");
+                if not rL_GrowerSearch.FindSet then begin
+                    Clear(rL_Grower);
+                    rL_Grower.Init;
+                    rL_Grower.Insert(true);
                     //rL_Grower."No.":=rL_Vendor."No.";
                     rL_Grower.Name := rL_Vendor.Name;
                     rL_Grower."Search Name" := rL_Vendor."Search Name";
@@ -4511,36 +4500,36 @@ codeunit 50000 "General Mgt."
                     rL_Grower.Comments := rL_Vendor.Comments;
                     rL_Grower."Grower Certified" := rL_Vendor."Grower Certified";
                     rL_Grower."Phone No." := rL_Vendor."Phone No.";
-                    rL_Grower.MODIFY(true);
+                    rL_Grower.Modify(true);
                 end;
 
 
 
-            until rL_Vendor.NEXT = 0;
+            until rL_Vendor.Next = 0;
         end;
 
 
 
-        MESSAGE('Transfer Vendor Grower completed');
+        Message('Transfer Vendor Grower completed');
     end;
 
     procedure DeleteVendorGrower();
     var
         rL_Vendor: Record Vendor;
     begin
-        rL_Vendor.RESET;
-        rL_Vendor.SETFILTER("Vendor Posting Group", 'GROWER');
-        if rL_Vendor.FINDSET then begin
-            if not CONFIRM(Text50006, false, rL_Vendor.COUNT) then begin
+        rL_Vendor.Reset;
+        rL_Vendor.SetFilter("Vendor Posting Group", 'GROWER');
+        if rL_Vendor.FindSet then begin
+            if not Confirm(Text50006, false, rL_Vendor.Count) then begin
                 exit;
             end;
 
             repeat
-                rL_Vendor.DELETE;
+                rL_Vendor.Delete;
 
-            until rL_Vendor.NEXT = 0;
+            until rL_Vendor.Next = 0;
         end;
-        MESSAGE('Vendor Grower Deleted');
+        Message('Vendor Grower Deleted');
     end;
 
     procedure UpdateGrowerPhone();
@@ -4548,21 +4537,21 @@ codeunit 50000 "General Mgt."
         rL_Vendor: Record Vendor;
         rL_Grower: Record Grower;
     begin
-        if not CONFIRM(Text50008, false) then begin
+        if not Confirm(Text50008, false) then begin
             exit;
         end;
 
-        rL_Grower.RESET;
-        if rL_Grower.FINDSET then begin
+        rL_Grower.Reset;
+        if rL_Grower.FindSet then begin
             repeat
                 if rL_Grower."Grower Vendor No." <> '' then begin
-                    rL_Vendor.GET(rL_Grower."Grower Vendor No.");
+                    rL_Vendor.Get(rL_Grower."Grower Vendor No.");
                     rL_Grower."Phone No." := rL_Vendor."Phone No.";
-                    rL_Grower.MODIFY;
+                    rL_Grower.Modify;
                 end;
-            until rL_Grower.NEXT = 0;
+            until rL_Grower.Next = 0;
         end;
-        MESSAGE('Grower Phone Updated');
+        Message('Grower Phone Updated');
     end;
 
     procedure UpdateShipmentLotNo();
@@ -4574,31 +4563,31 @@ codeunit 50000 "General Mgt."
     begin
 
 
-        rL_SalesShipment.RESET;
-        rL_SalesShipment.SETFILTER("Sell-to Customer No.", 'CUST00032');
-        rL_SalesShipment.SETFILTER("Lot No.", '%1', '');
-        rL_SalesShipment.SETFILTER("Posting Date", '>=%1', DMY2DATE(1, 1, 2021));
-        if rL_SalesShipment.FINDSET then begin
-            if not CONFIRM(Text50009, false, rL_SalesShipment.COUNT) then begin
+        rL_SalesShipment.Reset;
+        rL_SalesShipment.SetFilter("Sell-to Customer No.", 'CUST00032');
+        rL_SalesShipment.SetFilter("Lot No.", '%1', '');
+        rL_SalesShipment.SetFilter("Posting Date", '>=%1', DMY2Date(1, 1, 2021));
+        if rL_SalesShipment.FindSet then begin
+            if not Confirm(Text50009, false, rL_SalesShipment.Count) then begin
                 exit;
             end;
             repeat
-                rL_SalesShipmentLine.RESET;
-                rL_SalesShipmentLine.SETFILTER("Document No.", rL_SalesShipment."No.");
-                rL_SalesShipmentLine.SETRANGE("Line No.", 20000);
-                rL_SalesShipmentLine.SETRANGE(Type, rL_SalesShipmentLine.Type::" ");
-                if rL_SalesShipmentLine.FINDSET then begin
+                rL_SalesShipmentLine.Reset;
+                rL_SalesShipmentLine.SetFilter("Document No.", rL_SalesShipment."No.");
+                rL_SalesShipmentLine.SetRange("Line No.", 20000);
+                rL_SalesShipmentLine.SetRange(Type, rL_SalesShipmentLine.Type::" ");
+                if rL_SalesShipmentLine.FindSet then begin
                     vL_Description := rL_SalesShipmentLine.Description;
 
-                    if COPYSTR(vL_Description, 1, 3) = 'Lot' then begin
+                    if CopyStr(vL_Description, 1, 3) = 'Lot' then begin
                         //MESSAGE('Before:'+vL_Description);
-                        vL_Lot := DELCHR(vL_Description, '=', 'ot No: ');
+                        vL_Lot := DelChr(vL_Description, '=', 'ot No: ');
                         //MESSAGE('After:'+vL_Lot);
                         //Lot No: 09-03
                         //L10-05
                         if rL_SalesShipment."Lot No." = '' then begin
                             rL_SalesShipment."Lot No." := vL_Lot;
-                            rL_SalesShipment.MODIFY;
+                            rL_SalesShipment.Modify;
                         end;
                     end;
 
@@ -4607,10 +4596,10 @@ codeunit 50000 "General Mgt."
 
 
 
-            until rL_SalesShipment.NEXT = 0;
+            until rL_SalesShipment.Next = 0;
         end;
 
-        MESSAGE('Sales Shipment Update Completed');
+        Message('Sales Shipment Update Completed');
     end;
 
     procedure UpdateReturnReceiptstLotNo();
@@ -4622,31 +4611,31 @@ codeunit 50000 "General Mgt."
     begin
 
 
-        rL_ReturnReceiptHeader.RESET;
-        rL_ReturnReceiptHeader.SETFILTER("Sell-to Customer No.", 'CUST00032');
-        rL_ReturnReceiptHeader.SETFILTER("Lot No.", '%1', '');
-        rL_ReturnReceiptHeader.SETFILTER("Posting Date", '>=%1', DMY2DATE(1, 1, 2021));
-        if rL_ReturnReceiptHeader.FINDSET then begin
-            if not CONFIRM(Text50010, false, rL_ReturnReceiptHeader.COUNT) then begin
+        rL_ReturnReceiptHeader.Reset;
+        rL_ReturnReceiptHeader.SetFilter("Sell-to Customer No.", 'CUST00032');
+        rL_ReturnReceiptHeader.SetFilter("Lot No.", '%1', '');
+        rL_ReturnReceiptHeader.SetFilter("Posting Date", '>=%1', DMY2Date(1, 1, 2021));
+        if rL_ReturnReceiptHeader.FindSet then begin
+            if not Confirm(Text50010, false, rL_ReturnReceiptHeader.Count) then begin
                 exit;
             end;
             repeat
-                rL_ReturnReceiptLine.RESET;
-                rL_ReturnReceiptLine.SETFILTER("Document No.", rL_ReturnReceiptHeader."No.");
-                rL_ReturnReceiptLine.SETRANGE("Line No.", 20000);
-                rL_ReturnReceiptLine.SETRANGE(Type, rL_ReturnReceiptLine.Type::" ");
-                if rL_ReturnReceiptLine.FINDSET then begin
+                rL_ReturnReceiptLine.Reset;
+                rL_ReturnReceiptLine.SetFilter("Document No.", rL_ReturnReceiptHeader."No.");
+                rL_ReturnReceiptLine.SetRange("Line No.", 20000);
+                rL_ReturnReceiptLine.SetRange(Type, rL_ReturnReceiptLine.Type::" ");
+                if rL_ReturnReceiptLine.FindSet then begin
                     vL_Description := rL_ReturnReceiptLine.Description;
 
-                    if COPYSTR(vL_Description, 1, 3) = 'Lot' then begin
+                    if CopyStr(vL_Description, 1, 3) = 'Lot' then begin
                         //MESSAGE('Before:'+vL_Description);
-                        vL_Lot := DELCHR(vL_Description, '=', 'ot No: ');
+                        vL_Lot := DelChr(vL_Description, '=', 'ot No: ');
                         //MESSAGE('After:'+vL_Lot);
                         //Lot No: 09-03
                         //L10-05
                         if rL_ReturnReceiptHeader."Lot No." = '' then begin
                             rL_ReturnReceiptHeader."Lot No." := vL_Lot;
-                            rL_ReturnReceiptHeader.MODIFY;
+                            rL_ReturnReceiptHeader.Modify;
                         end;
                     end;
 
@@ -4655,10 +4644,10 @@ codeunit 50000 "General Mgt."
 
 
 
-            until rL_ReturnReceiptHeader.NEXT = 0;
+            until rL_ReturnReceiptHeader.Next = 0;
         end;
 
-        MESSAGE('Return Receipt Update Completed');
+        Message('Return Receipt Update Completed');
     end;
 
     procedure UpdateILELot();
@@ -4671,70 +4660,70 @@ codeunit 50000 "General Mgt."
     begin
 
 
-        rL_ItemLEdgerEntries.RESET;
-        rL_ItemLEdgerEntries.SETFILTER("Posting Date", '>=%1', DMY2DATE(1, 1, 2021));
-        rL_ItemLEdgerEntries.SETRANGE("Source Type", rL_ItemLEdgerEntries."Source Type"::Customer);
-        rL_ItemLEdgerEntries.SETFILTER("Source No.", 'CUST00032');
-        rL_ItemLEdgerEntries.SETFILTER("Gen. Prod. Posting Group", '%1', 'ST-FRVEG');
+        rL_ItemLEdgerEntries.Reset;
+        rL_ItemLEdgerEntries.SetFilter("Posting Date", '>=%1', DMY2Date(1, 1, 2021));
+        rL_ItemLEdgerEntries.SetRange("Source Type", rL_ItemLEdgerEntries."Source Type"::Customer);
+        rL_ItemLEdgerEntries.SetFilter("Source No.", 'CUST00032');
+        rL_ItemLEdgerEntries.SetFilter("Gen. Prod. Posting Group", '%1', 'ST-FRVEG');
 
-        if rL_ItemLEdgerEntries.FINDSET then begin
-            if not CONFIRM(Text50011, false, rL_ItemLEdgerEntries.COUNT) then begin
+        if rL_ItemLEdgerEntries.FindSet then begin
+            if not Confirm(Text50011, false, rL_ItemLEdgerEntries.Count) then begin
                 exit;
             end;
-            Window.OPEN('Record Processing #1###############');
-            WindowTotalCount := rL_ItemLEdgerEntries.COUNT;
+            Window.Open('Record Processing #1###############');
+            WindowTotalCount := rL_ItemLEdgerEntries.Count;
             WindowLineCount := 0;
             repeat
                 WindowLineCount += 1;
-                Window.UPDATE(1, FORMAT(WindowLineCount) + '/' + FORMAT(WindowTotalCount));
+                Window.Update(1, Format(WindowLineCount) + '/' + Format(WindowTotalCount));
 
                 //sales Shipments
                 if rL_ItemLEdgerEntries."Document Type" = rL_ItemLEdgerEntries."Document Type"::"Sales Shipment" then begin
-                    rL_ReturnReceiptHeader.RESET;
+                    rL_ReturnReceiptHeader.Reset;
 
-                    rL_SalesShipment.SETFILTER("No.", rL_ItemLEdgerEntries."Document No.");
-                    if rL_SalesShipment.FINDSET then begin
+                    rL_SalesShipment.SetFilter("No.", rL_ItemLEdgerEntries."Document No.");
+                    if rL_SalesShipment.FindSet then begin
                         rL_ItemLEdgerEntries."Document Lot No." := rL_SalesShipment."Lot No.";
-                        rL_ItemLEdgerEntries.MODIFY;
+                        rL_ItemLEdgerEntries.Modify;
 
-                        rL_SalesShipmentLine.RESET;
-                        rL_SalesShipmentLine.SETFILTER("Document No.", rL_SalesShipment."No.");
-                        rL_SalesShipmentLine.SETRANGE("Line No.", rL_ItemLEdgerEntries."Document Line No.");
-                        rL_SalesShipmentLine.SETRANGE("No.", rL_ItemLEdgerEntries."Item No.");
-                        if rL_SalesShipmentLine.FINDSET then begin
+                        rL_SalesShipmentLine.Reset;
+                        rL_SalesShipmentLine.SetFilter("Document No.", rL_SalesShipment."No.");
+                        rL_SalesShipmentLine.SetRange("Line No.", rL_ItemLEdgerEntries."Document Line No.");
+                        rL_SalesShipmentLine.SetRange("No.", rL_ItemLEdgerEntries."Item No.");
+                        if rL_SalesShipmentLine.FindSet then begin
                             rL_ItemLEdgerEntries."Shelf No." := rL_SalesShipmentLine."Shelf No.";
-                            rL_ItemLEdgerEntries.MODIFY;
+                            rL_ItemLEdgerEntries.Modify;
                         end;
                     end;
                 end;
 
                 //return receipts
                 if rL_ItemLEdgerEntries."Document Type" = rL_ItemLEdgerEntries."Document Type"::"Sales Return Receipt" then begin
-                    rL_ReturnReceiptHeader.RESET;
-                    rL_ReturnReceiptHeader.SETFILTER("No.", rL_ItemLEdgerEntries."Document No.");
-                    if rL_ReturnReceiptHeader.FINDSET then begin
+                    rL_ReturnReceiptHeader.Reset;
+                    rL_ReturnReceiptHeader.SetFilter("No.", rL_ItemLEdgerEntries."Document No.");
+                    if rL_ReturnReceiptHeader.FindSet then begin
                         rL_ItemLEdgerEntries."Document Lot No." := rL_ReturnReceiptHeader."Lot No.";
-                        rL_ItemLEdgerEntries.MODIFY;
+                        rL_ItemLEdgerEntries.Modify;
 
-                        rL_ReturnReceiptLine.RESET;
-                        rL_ReturnReceiptLine.SETFILTER("Document No.", rL_ReturnReceiptHeader."No.");
-                        rL_ReturnReceiptLine.SETRANGE("Line No.", rL_ItemLEdgerEntries."Document Line No.");
-                        rL_ReturnReceiptLine.SETRANGE("No.", rL_ItemLEdgerEntries."Item No.");
-                        if rL_ReturnReceiptLine.FINDSET then begin
-                            rG_Item.GET(rL_ItemLEdgerEntries."Item No.");
+                        rL_ReturnReceiptLine.Reset;
+                        rL_ReturnReceiptLine.SetFilter("Document No.", rL_ReturnReceiptHeader."No.");
+                        rL_ReturnReceiptLine.SetRange("Line No.", rL_ItemLEdgerEntries."Document Line No.");
+                        rL_ReturnReceiptLine.SetRange("No.", rL_ItemLEdgerEntries."Item No.");
+                        if rL_ReturnReceiptLine.FindSet then begin
+                            rG_Item.Get(rL_ItemLEdgerEntries."Item No.");
                             rL_ItemLEdgerEntries."Shelf No." := rG_Item."Shelf No.";
-                            rL_ItemLEdgerEntries.MODIFY;
+                            rL_ItemLEdgerEntries.Modify;
                         end;
                     end;
 
                 end;
 
 
-            until rL_ItemLEdgerEntries.NEXT = 0;
-            Window.CLOSE();
+            until rL_ItemLEdgerEntries.Next = 0;
+            Window.Close();
         end;
 
-        MESSAGE('ILE Update Completed');
+        Message('ILE Update Completed');
     end;
 
     procedure ImportILEGrowerHistory();
@@ -4779,34 +4768,39 @@ codeunit 50000 "General Mgt."
         rL_Item: Record Item;
         rL_ItemLEdgerEntries: Record "Item Ledger Entry";
         CRLF: array[2] of Char;
+        Instream: InStream;
     begin
         //open the file
-        vL_FileName := cu_FileMgt.UploadFile(Text50000, ExcelFileExtensionTok);
+        /* vL_FileName := cu_FileMgt.UploadFile(Text50000, ExcelFileExtensionTok);
         SheetName := ExcelBuffer.SelectSheetsName(vL_FileName);
         if SheetName = '' then
             exit;
 
         ExcelBuffer.OpenBook(vL_FileName, SheetName);
-        ExcelBuffer.ReadSheet;
+        ExcelBuffer.ReadSheet; */
+        IF UploadIntoStream(Text50000, 'C:\TEMP', 'All Files (*.*)|*.*', vL_FileName, Instream) then begin
+            ExcelBuffer.OpenBookStream(Instream, ExcelBuffer.SelectSheetsNameStream(Instream));
+            ExcelBuffer.ReadSheet;
+        end;
         RowNo := 0;
         ColumnNo := 0;
 
-        ExcelBuffer.RESET;
-        ExcelBuffer.FINDLAST;
+        ExcelBuffer.Reset;
+        ExcelBuffer.FindLast;
         RowNoMax := ExcelBuffer."Row No.";
         ColumnNoMax := 27; //ExcelBuffer."Column No."; //NOD0.2;
 
         vL_RowNo := 0;
 
-        Window.OPEN('Record Processing #1###############');
+        Window.Open('Record Processing #1###############');
         WindowTotalCount := RowNoMax;
         WindowLineCount := 0;
 
         for RowNo := 3 to RowNoMax do begin
-            ExcelBuffer.SETRANGE("Row No.", RowNo);
+            ExcelBuffer.SetRange("Row No.", RowNo);
 
             WindowLineCount += 1;
-            Window.UPDATE(1, FORMAT(WindowLineCount) + '/' + FORMAT(WindowTotalCount));
+            Window.Update(1, Format(WindowLineCount) + '/' + Format(WindowTotalCount));
 
             //Grower
             //COUNTRY
@@ -4848,145 +4842,145 @@ codeunit 50000 "General Mgt."
 
 
             for ColumnNo := 1 to ColumnNoMax do begin
-                ExcelBuffer.SETRANGE("Column No.", ColumnNo);
-                if ExcelBuffer.FINDFIRST then begin
+                ExcelBuffer.SetRange("Column No.", ColumnNo);
+                if ExcelBuffer.FindFirst then begin
                     case ColumnNo of
                         1:
                             begin
-                                EVALUATE(Colmn1_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                                Evaluate(Colmn1_Valid, Trim(ExcelBuffer."Cell Value as Text"));
                             end;
 
                         2:
                             begin
-                                EVALUATE(Colmn2_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                                Evaluate(Colmn2_Valid, Trim(ExcelBuffer."Cell Value as Text"));
                             end;
 
 
                         3:
                             begin
-                                EVALUATE(Colmn3_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                                Evaluate(Colmn3_Valid, Trim(ExcelBuffer."Cell Value as Text"));
                             end;
 
                         4:
                             begin
-                                EVALUATE(Colmn4_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                                Evaluate(Colmn4_Valid, Trim(ExcelBuffer."Cell Value as Text"));
                             end;
 
                         5:
                             begin
-                                EVALUATE(Colmn5_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                                Evaluate(Colmn5_Valid, Trim(ExcelBuffer."Cell Value as Text"));
                             end;
 
                         6:
                             begin
-                                EVALUATE(Colmn6_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                                Evaluate(Colmn6_Valid, Trim(ExcelBuffer."Cell Value as Text"));
                             end;
 
                         7:
                             begin
-                                EVALUATE(Colmn7_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                                Evaluate(Colmn7_Valid, Trim(ExcelBuffer."Cell Value as Text"));
                             end;
 
                         8:
                             begin
-                                EVALUATE(Colmn8_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                                Evaluate(Colmn8_Valid, Trim(ExcelBuffer."Cell Value as Text"));
                             end;
 
                         9:
                             begin
-                                EVALUATE(Colmn9_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                                Evaluate(Colmn9_Valid, Trim(ExcelBuffer."Cell Value as Text"));
                             end;
 
                         10:
                             begin
-                                EVALUATE(Colmn10_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                                Evaluate(Colmn10_Valid, Trim(ExcelBuffer."Cell Value as Text"));
                             end;
 
                         11:
                             begin
-                                EVALUATE(Colmn11_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                                Evaluate(Colmn11_Valid, Trim(ExcelBuffer."Cell Value as Text"));
                             end;
 
                         12:
                             begin
-                                EVALUATE(Colmn12_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                                Evaluate(Colmn12_Valid, Trim(ExcelBuffer."Cell Value as Text"));
                             end;
 
 
                         13:
                             begin
-                                EVALUATE(Colmn13_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                                Evaluate(Colmn13_Valid, Trim(ExcelBuffer."Cell Value as Text"));
                             end;
 
                         14:
                             begin
-                                EVALUATE(Colmn14_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                                Evaluate(Colmn14_Valid, Trim(ExcelBuffer."Cell Value as Text"));
                             end;
 
                         15:
                             begin
-                                EVALUATE(Colmn15_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                                Evaluate(Colmn15_Valid, Trim(ExcelBuffer."Cell Value as Text"));
                             end;
 
                         16:
                             begin
-                                EVALUATE(Colmn16_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                                Evaluate(Colmn16_Valid, Trim(ExcelBuffer."Cell Value as Text"));
                             end;
 
                         17:
                             begin
-                                EVALUATE(Colmn17_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                                Evaluate(Colmn17_Valid, Trim(ExcelBuffer."Cell Value as Text"));
                             end;
 
                         18:
                             begin
-                                EVALUATE(Colmn18_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                                Evaluate(Colmn18_Valid, Trim(ExcelBuffer."Cell Value as Text"));
                             end;
 
                         19:
                             begin
-                                EVALUATE(Colmn19_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                                Evaluate(Colmn19_Valid, Trim(ExcelBuffer."Cell Value as Text"));
                             end;
 
                         20:
                             begin
-                                EVALUATE(Colmn20_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                                Evaluate(Colmn20_Valid, Trim(ExcelBuffer."Cell Value as Text"));
                             end;
 
                         21:
                             begin
-                                EVALUATE(Colmn21_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                                Evaluate(Colmn21_Valid, Trim(ExcelBuffer."Cell Value as Text"));
                             end;
 
                         22:
                             begin
-                                EVALUATE(Colmn22_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                                Evaluate(Colmn22_Valid, Trim(ExcelBuffer."Cell Value as Text"));
                             end;
 
 
                         23:
                             begin
-                                EVALUATE(Colmn23_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                                Evaluate(Colmn23_Valid, Trim(ExcelBuffer."Cell Value as Text"));
                             end;
 
                         24:
                             begin
-                                EVALUATE(Colmn24_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                                Evaluate(Colmn24_Valid, Trim(ExcelBuffer."Cell Value as Text"));
                             end;
 
                         25:
                             begin
-                                EVALUATE(Colmn25_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                                Evaluate(Colmn25_Valid, Trim(ExcelBuffer."Cell Value as Text"));
                             end;
 
                         26:
                             begin
-                                EVALUATE(Colmn26_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                                Evaluate(Colmn26_Valid, Trim(ExcelBuffer."Cell Value as Text"));
                             end;
 
                         27:
                             begin
-                                EVALUATE(Colmn27_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                                Evaluate(Colmn27_Valid, Trim(ExcelBuffer."Cell Value as Text"));
                             end;
                     end; //end case
 
@@ -5005,52 +4999,52 @@ codeunit 50000 "General Mgt."
                 //END;
 
                 //check if lot exists
-                rL_ItemLEdgerEntries.RESET;
-                rL_ItemLEdgerEntries.SETFILTER("Posting Date", '>=%1', DMY2DATE(1, 1, 2021));
-                rL_ItemLEdgerEntries.SETRANGE("Source Type", rL_ItemLEdgerEntries."Source Type"::Customer);
-                rL_ItemLEdgerEntries.SETFILTER("Source No.", 'CUST00032');
-                rL_ItemLEdgerEntries.SETFILTER("Gen. Prod. Posting Group", '%1', 'ST-FRVEG');
-                rL_ItemLEdgerEntries.SETFILTER("Document Lot No.", Colmn15_Valid);
-                if not rL_ItemLEdgerEntries.FINDSET then begin
-                    ERROR(Text50013, Colmn15_Valid);
+                rL_ItemLEdgerEntries.Reset;
+                rL_ItemLEdgerEntries.SetFilter("Posting Date", '>=%1', DMY2Date(1, 1, 2021));
+                rL_ItemLEdgerEntries.SetRange("Source Type", rL_ItemLEdgerEntries."Source Type"::Customer);
+                rL_ItemLEdgerEntries.SetFilter("Source No.", 'CUST00032');
+                rL_ItemLEdgerEntries.SetFilter("Gen. Prod. Posting Group", '%1', 'ST-FRVEG');
+                rL_ItemLEdgerEntries.SetFilter("Document Lot No.", Colmn15_Valid);
+                if not rL_ItemLEdgerEntries.FindSet then begin
+                    Error(Text50013, Colmn15_Valid);
                 end;
 
                 //check if shelf and Lot is one row
                 if (Colmn5_Valid <> '') and (Colmn15_Valid <> '') then begin
-                    rL_ItemLEdgerEntries.RESET;
-                    rL_ItemLEdgerEntries.SETFILTER("Posting Date", '>=%1', DMY2DATE(1, 1, 2021));
-                    rL_ItemLEdgerEntries.SETRANGE("Source Type", rL_ItemLEdgerEntries."Source Type"::Customer);
-                    rL_ItemLEdgerEntries.SETFILTER("Source No.", 'CUST00032');
-                    rL_ItemLEdgerEntries.SETFILTER("Gen. Prod. Posting Group", '%1', 'ST-FRVEG');
-                    rL_ItemLEdgerEntries.SETFILTER("Document Lot No.", Colmn15_Valid);
-                    rL_ItemLEdgerEntries.SETFILTER("Shelf No.", Colmn5_Valid);
-                    rL_ItemLEdgerEntries.SETRANGE("Document Type", rL_ItemLEdgerEntries."Document Type"::"Sales Shipment");
-                    rL_ItemLEdgerEntries.SETFILTER("Document Grower Name", '');
-                    if rL_ItemLEdgerEntries.FINDSET then begin
-                        if rL_ItemLEdgerEntries.COUNT > 1 then begin
+                    rL_ItemLEdgerEntries.Reset;
+                    rL_ItemLEdgerEntries.SetFilter("Posting Date", '>=%1', DMY2Date(1, 1, 2021));
+                    rL_ItemLEdgerEntries.SetRange("Source Type", rL_ItemLEdgerEntries."Source Type"::Customer);
+                    rL_ItemLEdgerEntries.SetFilter("Source No.", 'CUST00032');
+                    rL_ItemLEdgerEntries.SetFilter("Gen. Prod. Posting Group", '%1', 'ST-FRVEG');
+                    rL_ItemLEdgerEntries.SetFilter("Document Lot No.", Colmn15_Valid);
+                    rL_ItemLEdgerEntries.SetFilter("Shelf No.", Colmn5_Valid);
+                    rL_ItemLEdgerEntries.SetRange("Document Type", rL_ItemLEdgerEntries."Document Type"::"Sales Shipment");
+                    rL_ItemLEdgerEntries.SetFilter("Document Grower Name", '');
+                    if rL_ItemLEdgerEntries.FindSet then begin
+                        if rL_ItemLEdgerEntries.Count > 1 then begin
                             //ERROR(Text50014,Colmn15_Valid,Colmn5_Valid);
-                            rL_ItemLEdgerEntries."Document No. Multiple" := rL_ItemLEdgerEntries.COUNT;
+                            rL_ItemLEdgerEntries."Document No. Multiple" := rL_ItemLEdgerEntries.Count;
                         end;
                         CRLF[1] := 13;
                         CRLF[2] := 10;
 
-                        Colmn18_Valid := DELCHR(Colmn18_Valid, '=', FORMAT(CRLF[1]));
-                        Colmn18_Valid := DELCHR(Colmn18_Valid, '=', FORMAT(CRLF[2]));
+                        Colmn18_Valid := DelChr(Colmn18_Valid, '=', Format(CRLF[1]));
+                        Colmn18_Valid := DelChr(Colmn18_Valid, '=', Format(CRLF[2]));
 
-                        Colmn22_Valid := DELCHR(Colmn22_Valid, '=', FORMAT(CRLF[1]));
-                        Colmn22_Valid := DELCHR(Colmn22_Valid, '=', FORMAT(CRLF[2]));
+                        Colmn22_Valid := DelChr(Colmn22_Valid, '=', Format(CRLF[1]));
+                        Colmn22_Valid := DelChr(Colmn22_Valid, '=', Format(CRLF[2]));
 
                         rL_ItemLEdgerEntries."Document Vendor GGN" := Colmn18_Valid;
                         rL_ItemLEdgerEntries."Document Vendor Name" := Colmn19_Valid;
                         rL_ItemLEdgerEntries."Document Grower GGN" := Colmn22_Valid;
                         rL_ItemLEdgerEntries."Document Grower Name" := Colmn23_Valid;
-                        EVALUATE(TmpDecimal, Colmn24_Valid);
+                        Evaluate(TmpDecimal, Colmn24_Valid);
                         rL_ItemLEdgerEntries."Document Qty" := TmpDecimal;
                         rL_ItemLEdgerEntries."Document Excel Line No." := RowNo;
-                        rL_ItemLEdgerEntries.MODIFY;
+                        rL_ItemLEdgerEntries.Modify;
 
                     end else begin
-                        MESSAGE(Text50015, Colmn15_Valid, Colmn5_Valid);
+                        Message(Text50015, Colmn15_Valid, Colmn5_Valid);
                     end;
                 end;
 
@@ -5067,8 +5061,8 @@ codeunit 50000 "General Mgt."
 
 
         end; //end for 1
-        Window.CLOSE;
-        MESSAGE('ILE Update Completed');
+        Window.Close;
+        Message('ILE Update Completed');
     end;
 
     procedure UpdateILEDocumentGrowerVendNo();
@@ -5077,46 +5071,46 @@ codeunit 50000 "General Mgt."
         rL_Grower: Record Grower;
         rL_Vendor: Record Vendor;
     begin
-        if not CONFIRM(Text50016, false) then begin
+        if not Confirm(Text50016, false) then begin
             exit;
         end;
 
-        rL_ItemLEdgerEntries.RESET;
-        rL_ItemLEdgerEntries.SETFILTER("Posting Date", '>=%1', DMY2DATE(1, 1, 2021));
-        rL_ItemLEdgerEntries.SETRANGE("Source Type", rL_ItemLEdgerEntries."Source Type"::Customer);
-        rL_ItemLEdgerEntries.SETFILTER("Source No.", 'CUST00032');
-        rL_ItemLEdgerEntries.SETFILTER("Gen. Prod. Posting Group", '%1', 'ST-FRVEG');
-        if rL_ItemLEdgerEntries.FINDSET then begin
-            Window.OPEN('Record Processing #1###############');
-            WindowTotalCount := rL_ItemLEdgerEntries.COUNT;
+        rL_ItemLEdgerEntries.Reset;
+        rL_ItemLEdgerEntries.SetFilter("Posting Date", '>=%1', DMY2Date(1, 1, 2021));
+        rL_ItemLEdgerEntries.SetRange("Source Type", rL_ItemLEdgerEntries."Source Type"::Customer);
+        rL_ItemLEdgerEntries.SetFilter("Source No.", 'CUST00032');
+        rL_ItemLEdgerEntries.SetFilter("Gen. Prod. Posting Group", '%1', 'ST-FRVEG');
+        if rL_ItemLEdgerEntries.FindSet then begin
+            Window.Open('Record Processing #1###############');
+            WindowTotalCount := rL_ItemLEdgerEntries.Count;
             WindowLineCount := 0;
             repeat
                 WindowLineCount += 1;
-                Window.UPDATE(1, FORMAT(WindowLineCount) + '/' + FORMAT(WindowTotalCount));
+                Window.Update(1, Format(WindowLineCount) + '/' + Format(WindowTotalCount));
                 if rL_ItemLEdgerEntries."Document Grower GGN" <> '' then begin
-                    rL_Grower.RESET;
-                    rL_Grower.SETFILTER(GGN, rL_ItemLEdgerEntries."Document Grower GGN");
-                    if rL_Grower.FINDSET then begin
+                    rL_Grower.Reset;
+                    rL_Grower.SetFilter(GGN, rL_ItemLEdgerEntries."Document Grower GGN");
+                    if rL_Grower.FindSet then begin
                         rL_ItemLEdgerEntries."Document Grower No." := rL_Grower."No.";
-                        rL_ItemLEdgerEntries.MODIFY;
+                        rL_ItemLEdgerEntries.Modify;
                     end;
                 end;
 
                 if rL_ItemLEdgerEntries."Document Vendor GGN" <> '' then begin
-                    rL_Vendor.RESET;
-                    rL_Vendor.SETFILTER(GGN, rL_ItemLEdgerEntries."Document Vendor GGN");
-                    if rL_Vendor.FINDSET then begin
+                    rL_Vendor.Reset;
+                    rL_Vendor.SetFilter(GGN, rL_ItemLEdgerEntries."Document Vendor GGN");
+                    if rL_Vendor.FindSet then begin
                         rL_ItemLEdgerEntries."Document Vendor No." := rL_Vendor."No.";
-                        rL_ItemLEdgerEntries.MODIFY;
+                        rL_ItemLEdgerEntries.Modify;
                     end;
                 end;
 
 
-            until rL_ItemLEdgerEntries.NEXT = 0;
-            Window.CLOSE();
+            until rL_ItemLEdgerEntries.Next = 0;
+            Window.Close();
         end;
 
-        MESSAGE('ILE Update Completed');
+        Message('ILE Update Completed');
     end;
 
     /*
@@ -5248,36 +5242,36 @@ codeunit 50000 "General Mgt."
         rL_Grower: Record Grower;
     begin
 
-        rL_ItemLEdgerEntries.RESET;
-        rL_ItemLEdgerEntries.SETFILTER("Document Grower No.", '<>%1', '');
-        if rL_ItemLEdgerEntries.FINDSET then begin
+        rL_ItemLEdgerEntries.Reset;
+        rL_ItemLEdgerEntries.SetFilter("Document Grower No.", '<>%1', '');
+        if rL_ItemLEdgerEntries.FindSet then begin
 
-            if not CONFIRM(Text50020, false, rL_ItemLEdgerEntries.COUNT) then begin
+            if not Confirm(Text50020, false, rL_ItemLEdgerEntries.Count) then begin
                 exit;
             end;
 
 
-            Window.OPEN('Record Processing #1###############');
-            WindowTotalCount := rL_ItemLEdgerEntries.COUNT;
+            Window.Open('Record Processing #1###############');
+            WindowTotalCount := rL_ItemLEdgerEntries.Count;
             WindowLineCount := 0;
             repeat
                 WindowLineCount += 1;
-                Window.UPDATE(1, FORMAT(WindowLineCount) + '/' + FORMAT(WindowTotalCount));
+                Window.Update(1, Format(WindowLineCount) + '/' + Format(WindowTotalCount));
 
-                rL_Grower.GET(rL_ItemLEdgerEntries."Document Grower No.");
+                rL_Grower.Get(rL_ItemLEdgerEntries."Document Grower No.");
                 if rL_Grower."Grower Vendor No." <> '' then begin
                     rL_ItemLEdgerEntries."Document Grower Vendor No." := rL_Grower."Grower Vendor No.";
-                    rL_Grower.CALCFIELDS("Grower Vendor Name");
+                    rL_Grower.CalcFields("Grower Vendor Name");
                     rL_ItemLEdgerEntries."Document Grower Vendor Name" := rL_Grower."Grower Vendor Name";
-                    rL_ItemLEdgerEntries.MODIFY;
+                    rL_ItemLEdgerEntries.Modify;
                 end;
 
 
-            until rL_ItemLEdgerEntries.NEXT = 0;
-            Window.CLOSE();
+            until rL_ItemLEdgerEntries.Next = 0;
+            Window.Close();
         end;
 
-        MESSAGE('ILE Update Completed');
+        Message('ILE Update Completed');
     end;
 
     /*
@@ -5331,36 +5325,36 @@ codeunit 50000 "General Mgt."
     begin
 
 
-        rL_ItemLEdgerEntries.RESET;
-        rL_ItemLEdgerEntries.SETFILTER("Posting Date", '>=%1', DMY2DATE(1, 1, 2021));
-        rL_ItemLEdgerEntries.SETRANGE("Source Type", rL_ItemLEdgerEntries."Source Type"::Customer);
-        rL_ItemLEdgerEntries.SETFILTER("Source No.", 'CUST00032');
-        rL_ItemLEdgerEntries.SETFILTER("Gen. Prod. Posting Group", '%1', 'ST-FRVEG');
-        if rL_ItemLEdgerEntries.FINDSET then begin
-            if not CONFIRM(Text50022, false, rL_ItemLEdgerEntries.COUNT) then begin
+        rL_ItemLEdgerEntries.Reset;
+        rL_ItemLEdgerEntries.SetFilter("Posting Date", '>=%1', DMY2Date(1, 1, 2021));
+        rL_ItemLEdgerEntries.SetRange("Source Type", rL_ItemLEdgerEntries."Source Type"::Customer);
+        rL_ItemLEdgerEntries.SetFilter("Source No.", 'CUST00032');
+        rL_ItemLEdgerEntries.SetFilter("Gen. Prod. Posting Group", '%1', 'ST-FRVEG');
+        if rL_ItemLEdgerEntries.FindSet then begin
+            if not Confirm(Text50022, false, rL_ItemLEdgerEntries.Count) then begin
                 exit;
             end;
 
-            Window.OPEN('Record Processing #1###############');
-            WindowTotalCount := rL_ItemLEdgerEntries.COUNT;
+            Window.Open('Record Processing #1###############');
+            WindowTotalCount := rL_ItemLEdgerEntries.Count;
             WindowLineCount := 0;
             repeat
                 WindowLineCount += 1;
-                Window.UPDATE(1, FORMAT(WindowLineCount) + '/' + FORMAT(WindowTotalCount));
+                Window.Update(1, Format(WindowLineCount) + '/' + Format(WindowTotalCount));
 
                 vL_Filter := '';
                 vL_AppRowCount := 0;
 
                 if rL_ItemLEdgerEntries.Positive then begin
-                    ItemApplnEntry.RESET;
-                    ItemApplnEntry.SETCURRENTKEY("Inbound Item Entry No.", "Outbound Item Entry No.", "Cost Application");
-                    ItemApplnEntry.SETRANGE("Inbound Item Entry No.", rL_ItemLEdgerEntries."Entry No.");
-                    ItemApplnEntry.SETFILTER("Outbound Item Entry No.", '<>%1', 0);
-                    ItemApplnEntry.SETRANGE("Cost Application", true);
-                    if ItemApplnEntry.FINDSET then
+                    ItemApplnEntry.Reset;
+                    ItemApplnEntry.SetCurrentKey("Inbound Item Entry No.", "Outbound Item Entry No.", "Cost Application");
+                    ItemApplnEntry.SetRange("Inbound Item Entry No.", rL_ItemLEdgerEntries."Entry No.");
+                    ItemApplnEntry.SetFilter("Outbound Item Entry No.", '<>%1', 0);
+                    ItemApplnEntry.SetRange("Cost Application", true);
+                    if ItemApplnEntry.FindSet then
                         repeat
 
-                            rL_ILE2.GET(ItemApplnEntry."Outbound Item Entry No.");
+                            rL_ILE2.Get(ItemApplnEntry."Outbound Item Entry No.");
                             if ItemApplnEntry.Quantity * rL_ILE2.Quantity > 0 then begin
                                 if (rL_ILE2."Entry Type" = rL_ILE2."Entry Type"::Purchase) or (rL_ILE2."Entry Type" = rL_ILE2."Entry Type"::Output) then begin
                                     vL_AppRowCount += 1;
@@ -5372,17 +5366,17 @@ codeunit 50000 "General Mgt."
                                     end;
                                 end;
                             end;
-                        until ItemApplnEntry.NEXT = 0;
+                        until ItemApplnEntry.Next = 0;
                 end else begin
-                    ItemApplnEntry.RESET;
-                    ItemApplnEntry.SETCURRENTKEY("Outbound Item Entry No.", "Item Ledger Entry No.", "Cost Application");
-                    ItemApplnEntry.SETRANGE("Outbound Item Entry No.", rL_ItemLEdgerEntries."Entry No.");
-                    ItemApplnEntry.SETRANGE("Item Ledger Entry No.", rL_ItemLEdgerEntries."Entry No.");
-                    ItemApplnEntry.SETRANGE("Cost Application", true);
-                    if ItemApplnEntry.FINDSET then
+                    ItemApplnEntry.Reset;
+                    ItemApplnEntry.SetCurrentKey("Outbound Item Entry No.", "Item Ledger Entry No.", "Cost Application");
+                    ItemApplnEntry.SetRange("Outbound Item Entry No.", rL_ItemLEdgerEntries."Entry No.");
+                    ItemApplnEntry.SetRange("Item Ledger Entry No.", rL_ItemLEdgerEntries."Entry No.");
+                    ItemApplnEntry.SetRange("Cost Application", true);
+                    if ItemApplnEntry.FindSet then
                         repeat
 
-                            rL_ILE2.GET(ItemApplnEntry."Inbound Item Entry No.");
+                            rL_ILE2.Get(ItemApplnEntry."Inbound Item Entry No.");
                             if -ItemApplnEntry.Quantity * rL_ILE2.Quantity > 0 then begin
                                 if (rL_ILE2."Entry Type" = rL_ILE2."Entry Type"::Purchase) or (rL_ILE2."Entry Type" = rL_ILE2."Entry Type"::Output) then begin
                                     vL_AppRowCount += 1;
@@ -5399,18 +5393,18 @@ codeunit 50000 "General Mgt."
 
 
 
-                        until ItemApplnEntry.NEXT = 0;
+                        until ItemApplnEntry.Next = 0;
                 end;
 
 
                 rL_ItemLEdgerEntries."Level 1 Document No. Filter" := vL_Filter;
-                rL_ItemLEdgerEntries.MODIFY;
+                rL_ItemLEdgerEntries.Modify;
 
-            until rL_ItemLEdgerEntries.NEXT = 0;
-            Window.CLOSE();
+            until rL_ItemLEdgerEntries.Next = 0;
+            Window.Close();
         end;
 
-        MESSAGE('ILE Update Completed');
+        Message('ILE Update Completed');
     end;
 
     procedure UpdateLotGrowerNo();
@@ -5419,54 +5413,54 @@ codeunit 50000 "General Mgt."
         rL_ILE: Record "Item Ledger Entry";
     begin
 
-        rL_LotNoInformation.RESET;
-        if rL_LotNoInformation.FINDSET then begin
+        rL_LotNoInformation.Reset;
+        if rL_LotNoInformation.FindSet then begin
 
-            if not CONFIRM(Text50023, false, rL_LotNoInformation.COUNT) then begin
+            if not Confirm(Text50023, false, rL_LotNoInformation.Count) then begin
                 exit;
             end;
 
-            Window.OPEN('Record Processing #1###############');
-            WindowTotalCount := rL_LotNoInformation.COUNT;
+            Window.Open('Record Processing #1###############');
+            WindowTotalCount := rL_LotNoInformation.Count;
             WindowLineCount := 0;
 
             repeat
-                rL_ILE.RESET;
-                rL_ILE.SETFILTER("Item No.", rL_LotNoInformation."Item No.");
-                rL_ILE.SETFILTER("Lot No.", rL_LotNoInformation."Lot No.");
-                if rL_ILE.FINDSET then begin
+                rL_ILE.Reset;
+                rL_ILE.SetFilter("Item No.", rL_LotNoInformation."Item No.");
+                rL_ILE.SetFilter("Lot No.", rL_LotNoInformation."Lot No.");
+                if rL_ILE.FindSet then begin
                     repeat
                         rL_ILE."Lot Grower No." := rL_LotNoInformation."Grower No.";
-                        rL_ILE.MODIFY;
-                    until rL_ILE.NEXT = 0;
+                        rL_ILE.Modify;
+                    until rL_ILE.Next = 0;
                 end;
 
                 WindowLineCount += 1;
-                Window.UPDATE(1, FORMAT(WindowLineCount) + '/' + FORMAT(WindowTotalCount));
+                Window.Update(1, Format(WindowLineCount) + '/' + Format(WindowTotalCount));
 
-            until rL_LotNoInformation.NEXT = 0;
+            until rL_LotNoInformation.Next = 0;
 
-            Window.CLOSE();
+            Window.Close();
 
         end;
-        MESSAGE('ILE Update Completed');
+        Message('ILE Update Completed');
     end;
 
     procedure UpdateProducerGroup();
     var
         rL_LotNoInformation: Record "Lot No. Information";
     begin
-        rL_LotNoInformation.RESET;
-        rL_LotNoInformation.SETFILTER("Category 1", 'PG0012');
-        if rL_LotNoInformation.FINDSET then begin
+        rL_LotNoInformation.Reset;
+        rL_LotNoInformation.SetFilter("Category 1", 'PG0012');
+        if rL_LotNoInformation.FindSet then begin
             repeat
                 rL_LotNoInformation."Category 1" := '';
-                rL_LotNoInformation.MODIFY;
+                rL_LotNoInformation.Modify;
 
-            until rL_LotNoInformation.NEXT = 0;
+            until rL_LotNoInformation.Next = 0;
         end;
 
-        MESSAGE('Process Completed');
+        Message('Process Completed');
     end;
 
     procedure SundryGrowerExistsPO(pDocNo: Code[20]): Boolean;
@@ -5479,22 +5473,22 @@ codeunit 50000 "General Mgt."
             exit(false);
         end;
 
-        rL_SalesRecSetup.GET;
-        rL_SalesRecSetup.TESTFIELD("Lidl Import Sundry Grower");
+        rL_SalesRecSetup.Get;
+        rL_SalesRecSetup.TestField("Lidl Import Sundry Grower");
 
-        rL_ReservationEntry.RESET;
-        rL_ReservationEntry.SETRANGE("Source Type", 39);
-        rL_ReservationEntry.SETFILTER("Source ID", pDocNo);
-        rL_ReservationEntry.SETFILTER("Lot Grower No.", rL_SalesRecSetup."Lidl Import Sundry Grower");
-        if rL_ReservationEntry.FINDSET then begin
+        rL_ReservationEntry.Reset;
+        rL_ReservationEntry.SetRange("Source Type", 39);
+        rL_ReservationEntry.SetFilter("Source ID", pDocNo);
+        rL_ReservationEntry.SetFilter("Lot Grower No.", rL_SalesRecSetup."Lidl Import Sundry Grower");
+        if rL_ReservationEntry.FindSet then begin
             exit(true);
         end;
 
-        rL_TrackingSpecification.RESET;
-        rL_TrackingSpecification.SETRANGE("Source Type", 39);
-        rL_TrackingSpecification.SETFILTER("Source ID", pDocNo);
-        rL_TrackingSpecification.SETFILTER("Lot Grower No.", rL_SalesRecSetup."Lidl Import Sundry Grower");
-        if rL_TrackingSpecification.FINDSET then begin
+        rL_TrackingSpecification.Reset;
+        rL_TrackingSpecification.SetRange("Source Type", 39);
+        rL_TrackingSpecification.SetFilter("Source ID", pDocNo);
+        rL_TrackingSpecification.SetFilter("Lot Grower No.", rL_SalesRecSetup."Lidl Import Sundry Grower");
+        if rL_TrackingSpecification.FindSet then begin
             exit(true);
         end;
 
@@ -5511,23 +5505,23 @@ codeunit 50000 "General Mgt."
             exit(false);
         end;
 
-        rL_SalesRecSetup.GET;
-        rL_SalesRecSetup.TESTFIELD("Lidl Import Sundry Grower");
+        rL_SalesRecSetup.Get;
+        rL_SalesRecSetup.TestField("Lidl Import Sundry Grower");
 
-        rL_ReservationEntry.RESET;
-        rL_ReservationEntry.SETRANGE("Source Type", 37);
-        rL_ReservationEntry.SETFILTER("Source ID", pDocNo);
-        rL_ReservationEntry.SETFILTER("Lot Grower No.", rL_SalesRecSetup."Lidl Import Sundry Grower");
-        if rL_ReservationEntry.FINDSET then begin
+        rL_ReservationEntry.Reset;
+        rL_ReservationEntry.SetRange("Source Type", 37);
+        rL_ReservationEntry.SetFilter("Source ID", pDocNo);
+        rL_ReservationEntry.SetFilter("Lot Grower No.", rL_SalesRecSetup."Lidl Import Sundry Grower");
+        if rL_ReservationEntry.FindSet then begin
             exit(true);
         end;
 
 
-        rL_TrackingSpecification.RESET;
-        rL_TrackingSpecification.SETRANGE("Source Type", 37);
-        rL_TrackingSpecification.SETFILTER("Source ID", pDocNo);
-        rL_TrackingSpecification.SETFILTER("Lot Grower No.", rL_SalesRecSetup."Lidl Import Sundry Grower");
-        if rL_TrackingSpecification.FINDSET then begin
+        rL_TrackingSpecification.Reset;
+        rL_TrackingSpecification.SetRange("Source Type", 37);
+        rL_TrackingSpecification.SetFilter("Source ID", pDocNo);
+        rL_TrackingSpecification.SetFilter("Lot Grower No.", rL_SalesRecSetup."Lidl Import Sundry Grower");
+        if rL_TrackingSpecification.FindSet then begin
             exit(true);
         end;
 
@@ -5550,23 +5544,23 @@ codeunit 50000 "General Mgt."
         vL_ReservationEntryCount := 0;
         vL_TrackingSpecificationCount := 0;
 
-        rL_SalesRecSetup.GET;
-        rL_SalesRecSetup.TESTFIELD("Lidl Import Sundry Grower");
+        rL_SalesRecSetup.Get;
+        rL_SalesRecSetup.TestField("Lidl Import Sundry Grower");
 
         //count no of lines that require tracking
-        rL_PurchaseLine.RESET;
-        rL_PurchaseLine.SETRANGE("Document Type", rL_PurchaseLine."Document Type"::Order);
-        rL_PurchaseLine.SETFILTER("Document No.", pDocNo);
-        rL_PurchaseLine.SETRANGE(Type, rL_PurchaseLine.Type::Item);
-        rL_PurchaseLine.SETFILTER(Quantity, '<>%1', 0);
-        if rL_PurchaseLine.FINDSET then begin
+        rL_PurchaseLine.Reset;
+        rL_PurchaseLine.SetRange("Document Type", rL_PurchaseLine."Document Type"::Order);
+        rL_PurchaseLine.SetFilter("Document No.", pDocNo);
+        rL_PurchaseLine.SetRange(Type, rL_PurchaseLine.Type::Item);
+        rL_PurchaseLine.SetFilter(Quantity, '<>%1', 0);
+        if rL_PurchaseLine.FindSet then begin
             repeat
-                if rL_Item.GET(rL_PurchaseLine."No.") then begin
+                if rL_Item.Get(rL_PurchaseLine."No.") then begin
                     if rL_Item."Item Tracking Code" <> '' then begin
                         vL_LinesWithTracking += 1;
                     end;
                 end;
-            until rL_PurchaseLine.NEXT = 0;
+            until rL_PurchaseLine.Next = 0;
         end;
 
         if vL_LinesWithTracking = 0 then begin
@@ -5574,22 +5568,22 @@ codeunit 50000 "General Mgt."
         end;
 
         //count no of item traacking and Reservation entries
-        rL_ReservationEntry.RESET;
-        rL_ReservationEntry.SETFILTER("Source Type", '39');
-        rL_ReservationEntry.SETFILTER("Source ID", pDocNo);
-        rL_ReservationEntry.SETFILTER("Lot Grower No.", '<>%1', rL_SalesRecSetup."Lidl Import Sundry Grower");
-        if rL_ReservationEntry.FINDSET then begin
-            vL_ReservationEntryCount := rL_ReservationEntry.COUNT;
+        rL_ReservationEntry.Reset;
+        rL_ReservationEntry.SetFilter("Source Type", '39');
+        rL_ReservationEntry.SetFilter("Source ID", pDocNo);
+        rL_ReservationEntry.SetFilter("Lot Grower No.", '<>%1', rL_SalesRecSetup."Lidl Import Sundry Grower");
+        if rL_ReservationEntry.FindSet then begin
+            vL_ReservationEntryCount := rL_ReservationEntry.Count;
         end;
 
 
         //check Posted
-        rL_TrackingSpecification.RESET;
-        rL_TrackingSpecification.SETFILTER("Source Type", '39');
-        rL_TrackingSpecification.SETFILTER("Source ID", pDocNo);
-        rL_TrackingSpecification.SETFILTER("Lot Grower No.", '<>%1', rL_SalesRecSetup."Lidl Import Sundry Grower");
-        if rL_TrackingSpecification.FINDSET then begin
-            vL_TrackingSpecificationCount := rL_TrackingSpecification.COUNT;
+        rL_TrackingSpecification.Reset;
+        rL_TrackingSpecification.SetFilter("Source Type", '39');
+        rL_TrackingSpecification.SetFilter("Source ID", pDocNo);
+        rL_TrackingSpecification.SetFilter("Lot Grower No.", '<>%1', rL_SalesRecSetup."Lidl Import Sundry Grower");
+        if rL_TrackingSpecification.FindSet then begin
+            vL_TrackingSpecificationCount := rL_TrackingSpecification.Count;
         end;
 
         if vL_ReservationEntryCount + vL_TrackingSpecificationCount >= vL_LinesWithTracking then begin
@@ -5609,19 +5603,19 @@ codeunit 50000 "General Mgt."
         vL_LinesWithTracking := 0;
 
         //count no of lines that require tracking
-        rL_PurchaseLine.RESET;
-        rL_PurchaseLine.SETRANGE("Document Type", rL_PurchaseLine."Document Type"::Order);
-        rL_PurchaseLine.SETFILTER("Document No.", pDocNo);
-        rL_PurchaseLine.SETRANGE(Type, rL_PurchaseLine.Type::Item);
-        rL_PurchaseLine.SETFILTER(Quantity, '<>%1', 0);
-        if rL_PurchaseLine.FINDSET then begin
+        rL_PurchaseLine.Reset;
+        rL_PurchaseLine.SetRange("Document Type", rL_PurchaseLine."Document Type"::Order);
+        rL_PurchaseLine.SetFilter("Document No.", pDocNo);
+        rL_PurchaseLine.SetRange(Type, rL_PurchaseLine.Type::Item);
+        rL_PurchaseLine.SetFilter(Quantity, '<>%1', 0);
+        if rL_PurchaseLine.FindSet then begin
             repeat
-                if rL_Item.GET(rL_PurchaseLine."No.") then begin
+                if rL_Item.Get(rL_PurchaseLine."No.") then begin
                     if rL_Item."Item Tracking Code" <> '' then begin
                         vL_LinesWithTracking += 1;
                     end;
                 end;
-            until rL_PurchaseLine.NEXT = 0;
+            until rL_PurchaseLine.Next = 0;
         end;
 
         if vL_LinesWithTracking > 0 then begin
@@ -5673,7 +5667,7 @@ codeunit 50000 "General Mgt."
             ProcessHorecaOrders(vL_FileName, vL_FileNameOnly, pVersion, false, EntryInStream); //TAL0.16
         end else begin
             //+TAL0.15
-            CLEAR(cu_FileManagement);
+            Clear(cu_FileManagement);
             WindowTitle := 'Select HORECA Excel Orders Folder';
             //UseWebclient := true;
             //if UseWebclient then begin
@@ -5689,34 +5683,33 @@ codeunit 50000 "General Mgt."
             //Loop files from the list type
             WindowLineCount := 0;
             WindowTotalCount := EntryList.Count();
-            Window.OPEN('File Processing #1############### #2#####################################');
+            Window.Open('File Processing #1############### #2#####################################');
 
             foreach EntryListKey in EntryList do begin
 
-                clear(TempBlob);
-                clear(EntryOutStream);
-                clear(EntryInStream);
+                Clear(TempBlob);
+                Clear(EntryOutStream);
+                Clear(EntryInStream);
                 Length := 0;
 
                 FileName := CopyStr(FileMgt.GetFileNameWithoutExtension(EntryListKey), 1, MaxStrLen(FileName));
                 FileExtension := CopyStr(FileMgt.GetExtension(EntryListKey), 1, MaxStrLen(FileExtension));
                 TempBlob.CreateOutStream(EntryOutStream);
-                DataCompression.ExtractEntry(EntryListKey, EntryOutStream, Length);
+                DataCompression.ExtractEntry(EntryListKey, EntryOutStream);
                 TempBlob.CreateInStream(EntryInStream);
-
 
                 //UploadIntoStream(UploadExcelMsg, '', '', FromFile, IStream);
 
                 FileCount += 1;
 
-                vL_FileName := FORMAT(EntryListKey);
+                vL_FileName := Format(EntryListKey);
 
                 WindowLineCount += 1;
-                Window.UPDATE(1, FORMAT(WindowLineCount) + '/' + FORMAT(WindowTotalCount));
+                Window.Update(1, Format(WindowLineCount) + '/' + Format(WindowTotalCount));
 
                 vL_FileNameOnly := cu_FileMgt.GetFileName(vL_FileName);
                 if vL_FileNameOnly <> '' then begin
-                    Window.UPDATE(2, vL_FileNameOnly);
+                    Window.Update(2, vL_FileNameOnly);
                     vL_OrdersCounted += 1;
                     vL_OrderProcessed := ProcessHorecaOrders(vL_FileName, vL_FileNameOnly, pVersion, true, EntryInStream); //TAL0.16
                     if vL_OrderProcessed then begin
@@ -5724,16 +5717,12 @@ codeunit 50000 "General Mgt."
                     end;
                 end;
                 //MESSAGE(vL_FileNameOnly);
-
-
-
             end;
 
-            Window.CLOSE();
-            MESSAGE(vL_Text50000, vL_OrderInserted, vL_OrdersCounted);
+            Window.Close();
+            Message(vL_Text50000, vL_OrderInserted, vL_OrdersCounted);
             //Close the zip file
             DataCompression.CloseZipArchive();
-
         end;
         /*
         end else begin
@@ -5783,10 +5772,6 @@ codeunit 50000 "General Mgt."
             end;
         end;
         */
-
-
-
-
         //-TAL0.15
     end;
 
@@ -5828,11 +5813,12 @@ codeunit 50000 "General Mgt."
         cu_FileManagement: Codeunit "File Management";
         HorecaStartDate: Date;
         HorecaEndDate: Date;
+        Instream: InStream;
     begin
         OrderCreated := false;
-        CLEAR(ExcelBuffer);
+        Clear(ExcelBuffer);
 
-        if pUseStream then begin
+        /* if pUseStream then begin
             ExcelBuffer.Reset();
             ExcelBuffer.DeleteAll();
             SheetName := ExcelBuffer.SelectSheetsNameStream(pInStream);
@@ -5840,7 +5826,7 @@ codeunit 50000 "General Mgt."
             //vL_FileName := cu_FileManagement.UploadFileSilent(pFileName); //v19
             vL_FileName := cu_FileManagement.UploadFile('', pFileName); //2017-v21
             SheetName := ExcelBuffer.SelectSheetsName(vL_FileName);
-        end;
+        end; */
 
 
         // vL_FileName := cu_FileManagement.sile()(pFileName);
@@ -5850,7 +5836,7 @@ codeunit 50000 "General Mgt."
         //vL_FileName := pFileName; //cu_FileMgt.UploadFile(Text50000,ExcelFileExtensionTok);
 
 
-        if SheetName = '' then
+        /* if SheetName = '' then
             exit;
 
 
@@ -5863,12 +5849,16 @@ codeunit 50000 "General Mgt."
 
 
 
-        ExcelBuffer.ReadSheet;
+        ExcelBuffer.ReadSheet; */
+        IF UploadIntoStream(Text50000, 'C:\TEMP', 'All Files (*.*)|*.*', vL_FileName, Instream) then begin
+            ExcelBuffer.OpenBookStream(Instream, ExcelBuffer.SelectSheetsNameStream(Instream));
+            ExcelBuffer.ReadSheet;
+        end;
         RowNo := 0;
         ColumnNo := 0;
 
-        ExcelBuffer.RESET;
-        ExcelBuffer.FINDLAST;
+        ExcelBuffer.Reset;
+        ExcelBuffer.FindLast;
         RowNoMax := ExcelBuffer."Row No.";
         ColumnNoMax := 8; //ExcelBuffer."Column No."; //NOD0.2;
 
@@ -5883,74 +5873,74 @@ codeunit 50000 "General Mgt."
         vl_ShiptoCode := '';
 
         //Get Order Date C5
-        ExcelBuffer.RESET;
-        ExcelBuffer.SETRANGE("Row No.", 5);
-        ExcelBuffer.SETRANGE("Column No.", 3);
-        if ExcelBuffer.FINDSET then begin
-            EVALUATE(vl_OrderDate, Trim(ExcelBuffer."Cell Value as Text"));
+        ExcelBuffer.Reset;
+        ExcelBuffer.SetRange("Row No.", 5);
+        ExcelBuffer.SetRange("Column No.", 3);
+        if ExcelBuffer.FindSet then begin
+            Evaluate(vl_OrderDate, Trim(ExcelBuffer."Cell Value as Text"));
         end;
 
         if vl_OrderDate = 0D then begin
-            ERROR(vL_Text50000, pFileNameOnly);
+            Error(vL_Text50000, pFileNameOnly);
         end;
 
         //+1.0.0.247
         //check order date
         //5 Days less 
         //5 Days More
-        SRSetup.GET;
-        if (FORMAT(SRSetup."Horeca Start Date Validation") <> '') and (FORMAT(SRSetup."Horeca End Date Validation") <> '') then begin
-            HorecaStartDate := CalcDate(SRSetup."Horeca Start Date Validation", WORKDATE());
-            HorecaEndDate := CalcDate(SRSetup."Horeca End Date Validation", WORKDATE());
+        SRSetup.Get;
+        if (Format(SRSetup."Horeca Start Date Validation") <> '') and (Format(SRSetup."Horeca End Date Validation") <> '') then begin
+            HorecaStartDate := CalcDate(SRSetup."Horeca Start Date Validation", WorkDate());
+            HorecaEndDate := CalcDate(SRSetup."Horeca End Date Validation", WorkDate());
 
             if vl_OrderDate < HorecaStartDate then begin
-                Error(vL_Text50005, vl_OrderDate, HorecaStartDate, FORMAT(SRSetup."Horeca Start Date Validation"));
+                Error(vL_Text50005, vl_OrderDate, HorecaStartDate, Format(SRSetup."Horeca Start Date Validation"));
             end;
 
             if vl_OrderDate > HorecaEndDate then begin
-                Error(vL_Text50006, vl_OrderDate, HorecaEndDate, FORMAT(SRSetup."Horeca End Date Validation"));
+                Error(vL_Text50006, vl_OrderDate, HorecaEndDate, Format(SRSetup."Horeca End Date Validation"));
             end;
         end;
         //-.0.0.247
 
 
         //Get Expected Delivery Date H5
-        ExcelBuffer.RESET;
-        ExcelBuffer.SETRANGE("Row No.", 5);
-        ExcelBuffer.SETRANGE("Column No.", 8);
-        if ExcelBuffer.FINDSET then begin
-            EVALUATE(vl_ExpectedDeliveryDate, Trim(ExcelBuffer."Cell Value as Text"));
+        ExcelBuffer.Reset;
+        ExcelBuffer.SetRange("Row No.", 5);
+        ExcelBuffer.SetRange("Column No.", 8);
+        if ExcelBuffer.FindSet then begin
+            Evaluate(vl_ExpectedDeliveryDate, Trim(ExcelBuffer."Cell Value as Text"));
         end;
 
         if vl_ExpectedDeliveryDate = 0D then begin
-            ERROR(vL_Text50001, pFileNameOnly);
+            Error(vL_Text50001, pFileNameOnly);
         end;
 
         //+1.0.0.247
-        if (FORMAT(SRSetup."Horeca Start Date Validation") <> '') and (FORMAT(SRSetup."Horeca End Date Validation") <> '') then begin
-            HorecaStartDate := CalcDate(SRSetup."Horeca Start Date Validation", WORKDATE());
-            HorecaEndDate := CalcDate(SRSetup."Horeca End Date Validation", WORKDATE());
+        if (Format(SRSetup."Horeca Start Date Validation") <> '') and (Format(SRSetup."Horeca End Date Validation") <> '') then begin
+            HorecaStartDate := CalcDate(SRSetup."Horeca Start Date Validation", WorkDate());
+            HorecaEndDate := CalcDate(SRSetup."Horeca End Date Validation", WorkDate());
 
             if vl_ExpectedDeliveryDate < HorecaStartDate then begin
-                Error(vL_Text50007, vl_ExpectedDeliveryDate, HorecaStartDate, FORMAT(SRSetup."Horeca Start Date Validation"));
+                Error(vL_Text50007, vl_ExpectedDeliveryDate, HorecaStartDate, Format(SRSetup."Horeca Start Date Validation"));
             end;
 
             if vl_ExpectedDeliveryDate > HorecaEndDate then begin
-                Error(vL_Text50008, vl_ExpectedDeliveryDate, HorecaEndDate, FORMAT(SRSetup."Horeca End Date Validation"));
+                Error(vL_Text50008, vl_ExpectedDeliveryDate, HorecaEndDate, Format(SRSetup."Horeca End Date Validation"));
             end;
         end;
         //-1.0.0.247
 
         //Get Location No.
-        ExcelBuffer.RESET;
-        ExcelBuffer.SETRANGE("Row No.", 4);
-        ExcelBuffer.SETRANGE("Column No.", 4);
-        if ExcelBuffer.FINDSET then begin
-            EVALUATE(vl_ShiptoCode, Trim(ExcelBuffer."Cell Value as Text"));
+        ExcelBuffer.Reset;
+        ExcelBuffer.SetRange("Row No.", 4);
+        ExcelBuffer.SetRange("Column No.", 4);
+        if ExcelBuffer.FindSet then begin
+            Evaluate(vl_ShiptoCode, Trim(ExcelBuffer."Cell Value as Text"));
         end;
 
         if vl_ShiptoCode = '' then begin
-            ERROR(vL_Text50002, pFileNameOnly);
+            Error(vL_Text50002, pFileNameOnly);
         end;
 
         //MESSAGE('Order Date:'+FORMAT(vl_OrderDate));
@@ -5958,36 +5948,36 @@ codeunit 50000 "General Mgt."
         //MESSAGE('Ship-to Code:'+FORMAT(vl_ShiptoCode));
 
         //find the customer
-        rL_ShipToAddress.RESET;
-        rL_ShipToAddress.SETFILTER(Code, vl_ShiptoCode);
-        if rL_ShipToAddress.FINDSET then begin
-            rL_Customer.GET(rL_ShipToAddress."Customer No.");
+        rL_ShipToAddress.Reset;
+        rL_ShipToAddress.SetFilter(Code, vl_ShiptoCode);
+        if rL_ShipToAddress.FindSet then begin
+            rL_Customer.Get(rL_ShipToAddress."Customer No.");
         end else begin
-            ERROR(vL_Text50003, vl_ShiptoCode, pFileNameOnly);
+            Error(vL_Text50003, vl_ShiptoCode, pFileNameOnly);
         end;
 
         //create the header
-        CLEAR(rL_SalesHeader);
-        rL_SalesHeader.RESET;
+        Clear(rL_SalesHeader);
+        rL_SalesHeader.Reset;
         rL_SalesHeader.SetHideValidationDialog(true);
-        rL_SalesHeader.VALIDATE("Document Type", rL_SalesHeader."Document Type"::Order);
-        rL_SalesHeader.VALIDATE("Sell-to Customer No.", rL_Customer."No.");
-        rL_SalesHeader.INSERT(true);
+        rL_SalesHeader.Validate("Document Type", rL_SalesHeader."Document Type"::Order);
+        rL_SalesHeader.Validate("Sell-to Customer No.", rL_Customer."No.");
+        rL_SalesHeader.Insert(true);
 
-        rL_SalesHeader.VALIDATE("Document Date", vl_ExpectedDeliveryDate);
-        rL_SalesHeader.VALIDATE("Order Date", vl_ExpectedDeliveryDate);
-        rL_SalesHeader.VALIDATE("Requested Delivery Date", vl_ExpectedDeliveryDate);
-        rL_SalesHeader.VALIDATE("Ship-to Code", vl_ShiptoCode);
+        rL_SalesHeader.Validate("Document Date", vl_ExpectedDeliveryDate);
+        rL_SalesHeader.Validate("Order Date", vl_ExpectedDeliveryDate);
+        rL_SalesHeader.Validate("Requested Delivery Date", vl_ExpectedDeliveryDate);
+        rL_SalesHeader.Validate("Ship-to Code", vl_ShiptoCode);
         rL_SalesHeader.Validate("Excel Order Date", vl_OrderDate);
-        rL_SalesHeader.MODIFY(true);
+        rL_SalesHeader.Modify(true);
 
         //rL_SalesHeader.ValidateShortcutDimCode(5,rL_SalesHeader."Ship-to Code");
         //rL_SalesHeader.MODIFY(TRUE);
 
 
-        ExcelBuffer.RESET;
+        ExcelBuffer.Reset;
         for RowNo := 9 to RowNoMax do begin //STARTING LINE
-            ExcelBuffer.SETRANGE("Row No.", RowNo);
+            ExcelBuffer.SetRange("Row No.", RowNo);
 
             Colmn1_ItemNo := '';
             Colmn7_Qty := '';
@@ -5995,26 +5985,26 @@ codeunit 50000 "General Mgt."
 
 
             for ColumnNo := 1 to ColumnNoMax do begin
-                ExcelBuffer.SETRANGE("Column No.", ColumnNo);
-                if ExcelBuffer.FINDFIRST then begin
+                ExcelBuffer.SetRange("Column No.", ColumnNo);
+                if ExcelBuffer.FindFirst then begin
 
                     case ColumnNo of
 
                         1:
                             begin
-                                EVALUATE(Colmn1_ItemNo, Trim(ExcelBuffer."Cell Value as Text"));
+                                Evaluate(Colmn1_ItemNo, Trim(ExcelBuffer."Cell Value as Text"));
                             end;
 
 
 
                         7:
                             begin
-                                EVALUATE(Colmn7_Qty, Trim(ExcelBuffer."Cell Value as Text"));
+                                Evaluate(Colmn7_Qty, Trim(ExcelBuffer."Cell Value as Text"));
                             end;
 
                         8:
                             begin
-                                EVALUATE(Colmn8_Qty, Trim(ExcelBuffer."Cell Value as Text"));
+                                Evaluate(Colmn8_Qty, Trim(ExcelBuffer."Cell Value as Text"));
                             end;
 
                     end;// case
@@ -6031,14 +6021,14 @@ codeunit 50000 "General Mgt."
                     1:
                         begin
                             if Colmn8_Qty <> '' then begin
-                                EVALUATE(vL_Qty, Colmn8_Qty);
+                                Evaluate(vL_Qty, Colmn8_Qty);
                             end;
                         end;
 
                     2:
                         begin
                             if Colmn7_Qty <> '' then begin
-                                EVALUATE(vL_Qty, Colmn7_Qty);
+                                Evaluate(vL_Qty, Colmn7_Qty);
                             end;
                         end;
                 end;
@@ -6046,41 +6036,41 @@ codeunit 50000 "General Mgt."
 
 
 
-                if rL_Item.GET(Colmn1_ItemNo) then begin
+                if rL_Item.Get(Colmn1_ItemNo) then begin
                     if (vL_Qty <> 0) then begin
                         vL_LineNo := 0;
-                        CLEAR(rL_SalesLine);
-                        rL_SalesLine.RESET;
-                        rL_SalesLine.SETRANGE("Document Type", rL_SalesHeader."Document Type");
-                        rL_SalesLine.SETFILTER("Document No.", rL_SalesHeader."No.");
-                        if rL_SalesLine.FINDLAST then begin
+                        Clear(rL_SalesLine);
+                        rL_SalesLine.Reset;
+                        rL_SalesLine.SetRange("Document Type", rL_SalesHeader."Document Type");
+                        rL_SalesLine.SetFilter("Document No.", rL_SalesHeader."No.");
+                        if rL_SalesLine.FindLast then begin
                             vL_LineNo := rL_SalesLine."Line No.";
                         end;
 
                         vL_LineNo += 10000;
 
-                        rL_SalesLine.RESET;
+                        rL_SalesLine.Reset;
                         rL_SalesLine.SetHideValidationDialog(true);
-                        rL_SalesLine.VALIDATE("Document Type", rL_SalesHeader."Document Type");
-                        rL_SalesLine.VALIDATE("Document No.", rL_SalesHeader."No.");
+                        rL_SalesLine.Validate("Document Type", rL_SalesHeader."Document Type");
+                        rL_SalesLine.Validate("Document No.", rL_SalesHeader."No.");
                         rL_SalesLine."Line No." := vL_LineNo;
-                        rL_SalesLine.INSERT(true);
+                        rL_SalesLine.Insert(true);
 
-                        rL_SalesLine.VALIDATE(Type, rL_SalesLine.Type::Item);
-                        rL_SalesLine.VALIDATE("No.", rL_Item."No.");
+                        rL_SalesLine.Validate(Type, rL_SalesLine.Type::Item);
+                        rL_SalesLine.Validate("No.", rL_Item."No.");
 
                         if rL_Item."Base Unit of Measure" <> rL_Item."Sales Unit of Measure" then begin
-                            rL_SalesLine.VALIDATE(Quantity, vL_Qty * rL_Item."Package Qty");
+                            rL_SalesLine.Validate(Quantity, vL_Qty * rL_Item."Package Qty");
                         end else begin
-                            rL_SalesLine.VALIDATE(Quantity, vL_Qty);
+                            rL_SalesLine.Validate(Quantity, vL_Qty);
                         end;
 
 
-                        rL_SalesLine.VALIDATE("Qty. Requested", vL_Qty);
+                        rL_SalesLine.Validate("Qty. Requested", vL_Qty);
 
-                        rL_SalesLine.MODIFY;
+                        rL_SalesLine.Modify;
                         rL_SalesLine.ValidateShortcutDimCode(5, rL_SalesHeader."Ship-to Code");
-                        rL_SalesLine.MODIFY;
+                        rL_SalesLine.Modify;
                     end;
                 end else begin
                     //MESSAGE(vL_Text50004,Colmn1_ItemNo,pFileNameOnly);
@@ -6115,14 +6105,14 @@ codeunit 50000 "General Mgt."
     begin
         vL_LinesWithTracking := 0;
 
-        rL_PurchaseHeader.GET(rL_PurchaseHeader."Document Type"::Order, pDocNo);
+        rL_PurchaseHeader.Get(rL_PurchaseHeader."Document Type"::Order, pDocNo);
 
-        rL_Grower.RESET;
-        rL_Grower.SETFILTER("Grower Vendor No.", rL_PurchaseHeader."Buy-from Vendor No.");
-        IF NOT rL_Grower.FINDSET THEN BEGIN
+        rL_Grower.Reset;
+        rL_Grower.SetFilter("Grower Vendor No.", rL_PurchaseHeader."Buy-from Vendor No.");
+        if not rL_Grower.FindSet then begin
             //ERROR(Text50001L,rL_PurchaseHeader."Buy-from Vendor No.");
-            rL_Grower.RESET;
-        END;
+            rL_Grower.Reset;
+        end;
 
 
         //build page
@@ -6130,97 +6120,97 @@ codeunit 50000 "General Mgt."
         //pGrowerList.SETTABLEVIEW(rL_Grower);
         //pGrowerList.LOOKUPMODE(TRUE);
         //IF pGrowerList.RUNMODAL() = ACTION::LookupOK THEN BEGIN
-        IF PAGE.RUNMODAL(PAGE::"Grower List", rL_Grower) = ACTION::LookupOK THEN BEGIN
+        if Page.RunModal(Page::"Grower List", rL_Grower) = Action::LookupOK then begin
 
-        END ELSE BEGIN
-            EXIT;
-        END;
+        end else begin
+            exit;
+        end;
 
 
-        IF NOT CONFIRM(Text50002L, FALSE, rL_Grower.Name) THEN BEGIN
-            EXIT;
-        END;
+        if not Confirm(Text50002L, false, rL_Grower.Name) then begin
+            exit;
+        end;
 
-        rL_PurchaseLine.RESET;
-        rL_PurchaseLine.SETRANGE("Document Type", rL_PurchaseLine."Document Type"::Order);
-        rL_PurchaseLine.SETFILTER("Document No.", pDocNo);
-        rL_PurchaseLine.SETRANGE(Type, rL_PurchaseLine.Type::Item);
-        rL_PurchaseLine.SETFILTER(Quantity, '<>%1', 0);
-        IF rL_PurchaseLine.FINDSET THEN BEGIN
-            Window.OPEN('Record Processing #1###############');
-            WindowTotalCount := rL_PurchaseLine.COUNT;
+        rL_PurchaseLine.Reset;
+        rL_PurchaseLine.SetRange("Document Type", rL_PurchaseLine."Document Type"::Order);
+        rL_PurchaseLine.SetFilter("Document No.", pDocNo);
+        rL_PurchaseLine.SetRange(Type, rL_PurchaseLine.Type::Item);
+        rL_PurchaseLine.SetFilter(Quantity, '<>%1', 0);
+        if rL_PurchaseLine.FindSet then begin
+            Window.Open('Record Processing #1###############');
+            WindowTotalCount := rL_PurchaseLine.Count;
             WindowLineCount := 0;
-            REPEAT
+            repeat
                 WindowLineCount += 1;
-                Window.UPDATE(1, FORMAT(WindowLineCount) + '/' + FORMAT(WindowTotalCount));
+                Window.Update(1, Format(WindowLineCount) + '/' + Format(WindowTotalCount));
 
-                IF rL_Item.GET(rL_PurchaseLine."No.") THEN BEGIN
-                    IF rL_Item."Item Tracking Code" <> '' THEN BEGIN
-                        rL_Item.TESTFIELD("Lot Nos.");
+                if rL_Item.Get(rL_PurchaseLine."No.") then begin
+                    if rL_Item."Item Tracking Code" <> '' then begin
+                        rL_Item.TestField("Lot Nos.");
                         vL_LinesWithTracking += 1;
 
                         //check if not already created
-                        rL_ReservationEntry.RESET;
-                        rL_ReservationEntry.SETFILTER("Item No.", rL_PurchaseLine."No.");
-                        rL_ReservationEntry.SETFILTER("Location Code", rL_PurchaseLine."Location Code");
-                        rL_ReservationEntry.SETFILTER("Source Type", '39');
-                        rL_ReservationEntry.SETFILTER("Source ID", rL_PurchaseLine."Document No.");
-                        rL_ReservationEntry.SETRANGE("Source Ref. No.", rL_PurchaseLine."Line No.");
-                        IF NOT rL_ReservationEntry.FINDSET THEN BEGIN
+                        rL_ReservationEntry.Reset;
+                        rL_ReservationEntry.SetFilter("Item No.", rL_PurchaseLine."No.");
+                        rL_ReservationEntry.SetFilter("Location Code", rL_PurchaseLine."Location Code");
+                        rL_ReservationEntry.SetFilter("Source Type", '39');
+                        rL_ReservationEntry.SetFilter("Source ID", rL_PurchaseLine."Document No.");
+                        rL_ReservationEntry.SetRange("Source Ref. No.", rL_PurchaseLine."Line No.");
+                        if not rL_ReservationEntry.FindSet then begin
                             //create the reservation Entry
-                            CLEAR(ReservationEntry);
-                            ReservationEntry.INIT;
+                            Clear(ReservationEntry);
+                            ReservationEntry.Init;
                             ReservationEntry."Entry No." := 0;
-                            ReservationEntry.VALIDATE("Item No.", rL_PurchaseLine."No.");
-                            ReservationEntry.VALIDATE("Location Code", rL_PurchaseLine."Location Code");
-                            ReservationEntry.VALIDATE("Quantity (Base)", rL_PurchaseLine."Quantity (Base)");
-                            ReservationEntry.VALIDATE(Positive, TRUE);
-                            ReservationEntry.VALIDATE("Reservation Status", ReservationEntry."Reservation Status"::Surplus);
+                            ReservationEntry.Validate("Item No.", rL_PurchaseLine."No.");
+                            ReservationEntry.Validate("Location Code", rL_PurchaseLine."Location Code");
+                            ReservationEntry.Validate("Quantity (Base)", rL_PurchaseLine."Quantity (Base)");
+                            ReservationEntry.Validate(Positive, true);
+                            ReservationEntry.Validate("Reservation Status", ReservationEntry."Reservation Status"::Surplus);
 
-                            ReservationEntry.VALIDATE("Creation Date", TODAY);
-                            ReservationEntry.VALIDATE("Source Type", 39);
-                            ReservationEntry.VALIDATE("Source Subtype", ReservationEntry."Source Subtype"::"1");
-                            ReservationEntry.VALIDATE("Source ID", rL_PurchaseLine."Document No.");
-                            ReservationEntry.VALIDATE("Source Ref. No.", rL_PurchaseLine."Line No.");
+                            ReservationEntry.Validate("Creation Date", Today);
+                            ReservationEntry.Validate("Source Type", 39);
+                            ReservationEntry.Validate("Source Subtype", ReservationEntry."Source Subtype"::"1");
+                            ReservationEntry.Validate("Source ID", rL_PurchaseLine."Document No.");
+                            ReservationEntry.Validate("Source Ref. No.", rL_PurchaseLine."Line No.");
 
-                            ReservationEntry.VALIDATE("Created By", USERID);
-                            ReservationEntry.VALIDATE("Expected Receipt Date", rL_PurchaseLine."Expected Receipt Date");
+                            ReservationEntry.Validate("Created By", UserId);
+                            ReservationEntry.Validate("Expected Receipt Date", rL_PurchaseLine."Expected Receipt Date");
 
                             //ReservationEntry.Quantity := (-1*rL_PurchaseLine.Quantity);
                             //ReservationEntry."Qty. to Handle (Base)" := (-1*rL_PurchaseLine."Quantity (Base)");
                             //ReservationEntry."Qty. to Invoice (Base)" := (-1*rL_PurchaseLine."Quantity (Base)");
-                            ReservationEntry.VALIDATE("Item Tracking", ReservationEntry."Item Tracking"::"Lot No.");
+                            ReservationEntry.Validate("Item Tracking", ReservationEntry."Item Tracking"::"Lot No.");
 
-                            ReservationEntry.VALIDATE("Lot No.", NoSeriesMgt.GetNextNo(rL_Item."Lot Nos.", WORKDATE, TRUE)); //"Item Ledger Entry"."Lot No.";
-                            ReservationEntry.INSERT(TRUE);
+                            ReservationEntry.Validate("Lot No.", NoSeriesMgt.GetNextNo(rL_Item."Lot Nos.", WorkDate, true)); //"Item Ledger Entry"."Lot No.";
+                            ReservationEntry.Insert(true);
 
 
                             //create the lot information card
-                            rL_LotNoInformation.RESET;
-                            rL_LotNoInformation.SETFILTER("Item No.", ReservationEntry."Item No.");
-                            rL_LotNoInformation.SETFILTER("Lot No.", ReservationEntry."Lot No.");
-                            IF NOT rL_LotNoInformation.FINDSET THEN BEGIN
-                                CLEAR(rL_LotNoInformation);
-                                rL_LotNoInformation.INIT;
-                                rL_LotNoInformation.VALIDATE("Item No.", ReservationEntry."Item No.");
-                                rL_LotNoInformation.VALIDATE("Lot No.", ReservationEntry."Lot No.");
-                                rL_LotNoInformation.INSERT(TRUE);
-                                rL_LotNoInformation.VALIDATE("Grower No.", rL_Grower."No.");
-                                rL_LotNoInformation.MODIFY;
-                            END;
-                        END; //  IF NOT rL_ReservationEntry.FINDSET
+                            rL_LotNoInformation.Reset;
+                            rL_LotNoInformation.SetFilter("Item No.", ReservationEntry."Item No.");
+                            rL_LotNoInformation.SetFilter("Lot No.", ReservationEntry."Lot No.");
+                            if not rL_LotNoInformation.FindSet then begin
+                                Clear(rL_LotNoInformation);
+                                rL_LotNoInformation.Init;
+                                rL_LotNoInformation.Validate("Item No.", ReservationEntry."Item No.");
+                                rL_LotNoInformation.Validate("Lot No.", ReservationEntry."Lot No.");
+                                rL_LotNoInformation.Insert(true);
+                                rL_LotNoInformation.Validate("Grower No.", rL_Grower."No.");
+                                rL_LotNoInformation.Modify;
+                            end;
+                        end; //  IF NOT rL_ReservationEntry.FINDSET
 
 
 
 
 
-                    END;// IF rL_Item."Item Tracking Code"<>''
-                END; //IF rL_Item.GET(rL_PurchaseLine."No.") 
-            UNTIL rL_PurchaseLine.NEXT = 0;
-            Window.CLOSE;
-        END;
+                    end;// IF rL_Item."Item Tracking Code"<>''
+                end; //IF rL_Item.GET(rL_PurchaseLine."No.") 
+            until rL_PurchaseLine.Next = 0;
+            Window.Close;
+        end;
 
-        MESSAGE(Text50000L, vL_LinesWithTracking);
+        Message(Text50000L, vL_LinesWithTracking);
     end;
 
     procedure EmailSalesOrder(SalesHeader: Record "Sales Header"; Usage: Option "Order Confirmation","Work Order","Pick Instruction")
@@ -6228,14 +6218,14 @@ codeunit 50000 "General Mgt."
         ReportSelections: Record "Report Selections";
     begin
         //+TAL0.1
-        IF SalesHeader."Document Type" <> SalesHeader."Document Type"::Order THEN
-            EXIT;
+        if SalesHeader."Document Type" <> SalesHeader."Document Type"::Order then
+            exit;
 
-        SalesHeader.SETRANGE("No.", SalesHeader."No.");
+        SalesHeader.SetRange("No.", SalesHeader."No.");
         //CalcSalesDisc(SalesHeader);
 
         ReportSelections.SendEmailToCust(
-          GetSalesOrderUsage(Usage).AsInteger(), SalesHeader, SalesHeader."No.", FORMAT(Usage), TRUE, SalesHeader."Bill-to Customer No.");
+          GetSalesOrderUsage(Usage).AsInteger(), SalesHeader, SalesHeader."No.", Format(Usage), true, SalesHeader."Bill-to Customer No.");
         //-TAL0.1
     end;
 
@@ -6271,17 +6261,17 @@ codeunit 50000 "General Mgt."
         AttachementInstream: InStream;
         AttachementOutStream: OutStream;
         recRef: RecordRef;
-        ReportParameters: text;
+        ReportParameters: Text;
         Text50000: Label '<?xml version="1.0" standalone="yes"?><ReportParameters name="Work Order Lidl" id="50006"><DataItems><DataItem name="Sales Header">VERSION(1) SORTING(Field1,Field3) WHERE(Field1=1(1),Field3=1(%1))</DataItem><DataItem name="PageLoop">VERSION(1) SORTING(Field1)</DataItem><DataItem name="Sales Line">VERSION(1) SORTING(Field1,Field3,Field4) WHERE(Field1=1(1),Field3=1(%1),Field5=1(2),Field7=1(%2))</DataItem><DataItem name="Order Qty">VERSION(1) SORTING(Field40)</DataItem><DataItem name="Sales Comment Line">VERSION(1) SORTING(Field1,Field2,Field7,Field3)</DataItem><DataItem name="Extra Lines">VERSION(1) SORTING(Field1)</DataItem></DataItems></ReportParameters>';
 
     begin
 
-        IF SalesHeader."Document Type" <> SalesHeader."Document Type"::Order THEN
-            EXIT;
+        if SalesHeader."Document Type" <> SalesHeader."Document Type"::Order then
+            exit;
 
-        SalesHeader.SETRANGE("No.", SalesHeader."No.");
+        SalesHeader.SetRange("No.", SalesHeader."No.");
 
-        SalesLine.RESET;
+        SalesLine.Reset;
         SalesLine.SetCurrentKey("Document Type", "Document No.", "Location Code");
         SalesLine.SetRange("Document Type", SalesHeader."Document Type");
         SalesLine.SetFilter("Document No.", SalesHeader."No.");
@@ -6289,18 +6279,18 @@ codeunit 50000 "General Mgt."
         if SalesLine.FindSet() then begin
             repeat
                 if (oldLocationCode = '') or (oldLocationCode <> SalesLine."Location Code") then begin
-                    clear(EmailMessage);
-                    clear(Email);
-                    clear(ToRecipient);
-                    clear(CCRecipient);
-                    clear(AttachementTempBlob);
-                    clear(AttachementOutStream);
-                    clear(AttachementInstream);
+                    Clear(EmailMessage);
+                    Clear(Email);
+                    Clear(ToRecipient);
+                    Clear(CCRecipient);
+                    Clear(AttachementTempBlob);
+                    Clear(AttachementOutStream);
+                    Clear(AttachementInstream);
 
 
                     Location.Get(SalesLine."Location Code");
 
-                    vBody := 'Dear Colleague,<br><br> Please find attached work order for location ' + Location.Code + ' - ' + Location."Name 2" + ' Requested Delivery Date time: <b>' + Format(SalesHeader."Requested Delivery Date") + ' ' + FORMAT(SalesHeader."Requested Delivery Time", 0, '<Hours24,2>:<Minutes,2>') + '</b>' + '</br>' + Format(SalesHeader."Sell-to Customer Name") + '</br></br> Regards, <br>LOGISTICS';// + UserId;
+                    vBody := 'Dear Colleague,<br><br> Please find attached work order for location ' + Location.Code + ' - ' + Location."Name 2" + ' Requested Delivery Date time: <b>' + Format(SalesHeader."Requested Delivery Date") + ' ' + Format(SalesHeader."Requested Delivery Time", 0, '<Hours24,2>:<Minutes,2>') + '</b>' + '</br>' + Format(SalesHeader."Sell-to Customer Name") + '</br></br> Regards, <br>LOGISTICS';// + UserId;
 
                     // EmailMessage.Create(Location."E-Mail", 'Transfer To ' + "Transfer-to Code" + ' ' + "No.", vBody, true);//before
                     //TAL 1.0.0.95 
@@ -6314,14 +6304,14 @@ codeunit 50000 "General Mgt."
                     // CCRecipient.Add(LocationTo."Email CC");
                     EmailMessage.Create(ToRecipient, 'Work Order To ' + Location.Code + ' - ' + Location."Name 2" + ' ' + SalesHeader."No." + ' ' + Format(SalesHeader."Sell-to Customer Name"), vBody, true, CCRecipient, BCCRecipient);
 
-                    ReportSelections.RESET;
+                    ReportSelections.Reset;
                     ReportSelections.SetRange(Usage, ReportSelections.Usage::"S.Work Order");
                     if ReportSelections.FindSet() then begin
                         //Option with parameters
                         //set the xml parameters
                         ReportParameters := StrSubstNo(Text50000, SalesHeader."No.", SalesLine."Location Code");
                         AttachementTempBlob.CreateOutStream(AttachementOutStream);
-                        Report.SaveAs(ReportSelections."Report ID", ReportParameters, REPORTFORMAT::Pdf, AttachementOutStream);
+                        Report.SaveAs(ReportSelections."Report ID", ReportParameters, ReportFormat::Pdf, AttachementOutStream);
 
 
                         //Option with RecRef
@@ -6334,10 +6324,10 @@ codeunit 50000 "General Mgt."
                         Report.SaveAs(ReportSelections."Report ID", '', REPORTFORMAT::Pdf, AttachementOutStream, recRef);
                         */
 
-                    END;
+                    end;
 
                     AttachementTempBlob.CreateInStream(AttachementInstream);
-                    EmailMessage.AddAttachment('Work Order' + FORMAT(SalesHeader."No.") + '_' + Location.code + '.pdf', 'PDF', AttachementInstream);
+                    EmailMessage.AddAttachment('Work Order' + Format(SalesHeader."No.") + '_' + Location.Code + '.pdf', 'PDF', AttachementInstream);
 
                     Email.OpenInEditor(EmailMessage, "Email Scenario"::"Work Order");
 
@@ -6346,7 +6336,7 @@ codeunit 50000 "General Mgt."
 
                 oldLocationCode := SalesLine."Location Code";
 
-            until SalesLine.next = 0;
+            until SalesLine.Next = 0;
         end;
 
     end;
@@ -6356,15 +6346,15 @@ codeunit 50000 "General Mgt."
     var
         rL_ILE: Record "Item Ledger Entry";
     begin
-        rL_ILE.RESET;
-        rL_ILE.SETFILTER("Item No.", pItemNo);
-        rL_ILE.SETFILTER("Lot No.", pLotNo);
-        IF rL_ILE.FINDSET THEN BEGIN
-            REPEAT
+        rL_ILE.Reset;
+        rL_ILE.SetFilter("Item No.", pItemNo);
+        rL_ILE.SetFilter("Lot No.", pLotNo);
+        if rL_ILE.FindSet then begin
+            repeat
                 rL_ILE."Lot Grower No." := pGrowerNo;
-                rL_ILE.MODIFY;
-            UNTIL rL_ILE.NEXT = 0;
-        END;
+                rL_ILE.Modify;
+            until rL_ILE.Next = 0;
+        end;
     end;
     //-1.0.0.48 
 
@@ -6417,7 +6407,7 @@ codeunit 50000 "General Mgt."
 
         BodyRQ := '';
 
-        CLEAR(OrderDetail);
+        Clear(OrderDetail);
         OrderDetail.Add('number', 'JCCTEST7');
         OrderDetail.Add('amount', 13.00);
         OrderDetail.Add('paymentExpiry', '2023/03/25');
@@ -6436,13 +6426,13 @@ codeunit 50000 "General Mgt."
         hmacKey := GetHMACSignature(BodyRQ, APPID, APIKEY, URL);
 
         //new
-        RequestHeaders.clear();
+        RequestHeaders.Clear();
         RequestMessage.GetHeaders(RequestHeaders);
-        RequestHeaders.add('Authorization', hmacKey);
-        RequestHeaders.add('Accept', '*/*'); //);
-        RequestHeaders.add('Accept-Encoding', 'gzip, deflate, br');
-        RequestHeaders.add('Connection', 'keep-alive');
-        RequestHeaders.add('User-Agent', 'Business Central');
+        RequestHeaders.Add('Authorization', hmacKey);
+        RequestHeaders.Add('Accept', '*/*'); //);
+        RequestHeaders.Add('Accept-Encoding', 'gzip, deflate, br');
+        RequestHeaders.Add('Connection', 'keep-alive');
+        RequestHeaders.Add('User-Agent', 'Business Central');
         RequestMessage.SetRequestUri(URL);
         RequestMessage.Content.WriteFrom(BodyRQ); //this makes the Content-Type = text/plain; charset=utf-8
 
@@ -6470,9 +6460,9 @@ codeunit 50000 "General Mgt."
                 ErrorToken.WriteTo(ErrorDescription);
 
             if (ErrorCode <> '') or (ErrorDescription <> '') then
-                error(TokenErr, ErrorCode + ' - ' + ErrorDescription)
+                Error(TokenErr, ErrorCode + ' - ' + ErrorDescription)
             else
-                error(GenericErrorTextErr);
+                Error(GenericErrorTextErr);
         end;
 
         ResponseMessage.Content().ReadAs(Response);
@@ -6494,7 +6484,7 @@ codeunit 50000 "General Mgt."
     var
         myInt: Integer;
         requestContentBase64String: Text;
-        requestUri: TExt;
+        requestUri: Text;
         AppId: Text;
         APIKey: Text;
         base_url: Text;
@@ -6533,7 +6523,7 @@ codeunit 50000 "General Mgt."
 
         base_url := pbase_url;// 'https://v5test.jccsmart.com';
 
-        requestURI := TypeHelper.UrlEncode(base_url);
+        requestUri := TypeHelper.UrlEncode(base_url);
         requestMethod := 'POST';
         nonce := CreateGuid();
         nonce := DelChr(nonce, '=', '{}');
@@ -6583,7 +6573,7 @@ codeunit 50000 "General Mgt."
 
         */
         vl_TimeDuration := 0;            // DECIMAL
-        vL_Seconds := 0;             // DECIMAL
+        vL_seconds := 0;             // DECIMAL
         vL_Minutes := 0;             // DECIMAL
         vL_Hours := 0;               // DECIMAL
         vL_Days := 0;                // DECIMAL
@@ -6630,7 +6620,7 @@ codeunit 50000 "General Mgt."
 
         requestContentBase64String := Crypto.GenerateHashAsBase64String(pBody, HashAlgo::HMACMD5);
 
-        signatureRawData := AppId + requestMethod + requestURI + requestTimeStamp + nonce + requestContentBase64String; //check
+        signatureRawData := AppId + requestMethod + requestUri + requestTimeStamp + nonce + requestContentBase64String; //check
 
         requestSignatureBase64String := Crypto.GenerateBase64KeyedHashAsBase64String(signatureRawData, APIKey, HashAlgo::HMACSHA256);
 
@@ -6828,38 +6818,42 @@ codeunit 50000 "General Mgt."
         Text50000: Label 'Import Excel File';
         ExcelFileExtensionTok: Label '.xlsx';
         ExcelFileExtensionTok2: Label '.xls';
-        vL_LineNo: integer;
+        vL_LineNo: Integer;
         SalesLine: Record "Sales Line";
         ItemReference: Record "Item Reference";
         SKU: Record "Stockkeeping Unit";
         tempDec: Decimal;
-
+        Instream: InStream;
     begin
-        vL_FileName := cu_FileMgt.UploadFile(Text50000, ExcelFileExtensionTok);
+        /* vL_FileName := cu_FileMgt.UploadFile(Text50000, ExcelFileExtensionTok);
         SheetName := ExcelBuffer.SelectSheetsName(vL_FileName);
-        IF SheetName = '' THEN
-            EXIT;
+        if SheetName = '' then
+            exit;
 
         ExcelBuffer.OpenBook(vL_FileName, SheetName);
-        ExcelBuffer.ReadSheet;
+        ExcelBuffer.ReadSheet; */
+        IF UploadIntoStream(Text50000, 'C:\TEMP', 'All Files (*.*)|*.*', vL_FileName, Instream) then begin
+            ExcelBuffer.OpenBookStream(Instream, ExcelBuffer.SelectSheetsNameStream(Instream));
+            ExcelBuffer.ReadSheet;
+        end;
         RowNo := 0;
         ColumnNo := 0;
 
-        ExcelBuffer.RESET;
-        ExcelBuffer.FINDLAST;
+        ExcelBuffer.Reset;
+        ExcelBuffer.FindLast;
         RowNoMax := ExcelBuffer."Row No.";
         ColumnNoMax := 6; //ExcelBuffer."Column No.";
 
         vL_RowNo := 0;
-        CLEAR(Window);
-        Window.OPEN('Record Processing #1###############');
+        Clear(Window);
+        Window.Open('Record Processing #1###############');
         WindowTotalCount := RowNoMax;
         WindowLineCount := 0;
-        FOR RowNo := 2 TO RowNoMax DO BEGIN
-            ExcelBuffer.SETRANGE("Row No.", RowNo);
+        for RowNo := 2 to RowNoMax do begin
+            ExcelBuffer.SetRange("Row No.", RowNo);
 
             WindowLineCount += 1;
-            Window.UPDATE(1, FORMAT(WindowLineCount) + '/' + FORMAT(WindowTotalCount));
+            Window.Update(1, Format(WindowLineCount) + '/' + Format(WindowTotalCount));
 
 
             Colmn1_Valid := '';
@@ -6870,41 +6864,41 @@ codeunit 50000 "General Mgt."
             Colmn6_Valid := '';
 
 
-            FOR ColumnNo := 1 TO ColumnNoMax DO BEGIN
-                ExcelBuffer.SETRANGE("Column No.", ColumnNo);
-                IF ExcelBuffer.FINDFIRST THEN BEGIN
-                    CASE ColumnNo OF
+            for ColumnNo := 1 to ColumnNoMax do begin
+                ExcelBuffer.SetRange("Column No.", ColumnNo);
+                if ExcelBuffer.FindFirst then begin
+                    case ColumnNo of
                         1:
-                            BEGIN
-                                EVALUATE(Colmn1_Valid, Trim(ExcelBuffer."Cell Value as Text"));
-                            END;
+                            begin
+                                Evaluate(Colmn1_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                            end;
 
                         2:
-                            BEGIN
-                                EVALUATE(Colmn2_Valid, Trim(ExcelBuffer."Cell Value as Text"));
-                            END;
+                            begin
+                                Evaluate(Colmn2_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                            end;
                         3:
-                            BEGIN
-                                EVALUATE(Colmn3_Valid, Trim(ExcelBuffer."Cell Value as Text"));
-                            END;
+                            begin
+                                Evaluate(Colmn3_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                            end;
                         4:
-                            BEGIN
-                                EVALUATE(Colmn4_Valid, Trim(ExcelBuffer."Cell Value as Text"));
-                            END;
+                            begin
+                                Evaluate(Colmn4_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                            end;
                         5:
-                            BEGIN
-                                EVALUATE(Colmn5_Valid, Trim(ExcelBuffer."Cell Value as Text"));
-                            END;
+                            begin
+                                Evaluate(Colmn5_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                            end;
 
                         6:
-                            BEGIN
-                                EVALUATE(Colmn6_Valid, Trim(ExcelBuffer."Cell Value as Text"));
-                            END;
+                            begin
+                                Evaluate(Colmn6_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                            end;
 
-                    END; //end case
+                    end; //end case
 
-                END;//end if
-            END; //end for 2
+                end;//end if
+            end; //end for 2
 
 
             //1 po_number	
@@ -6915,7 +6909,7 @@ codeunit 50000 "General Mgt."
             //6 ordered_qty
 
             if Colmn1_Valid <> '' then begin
-                ItemReference.RESET;
+                ItemReference.Reset;
                 ItemReference.SetRange("Reference Type", ItemReference."Reference Type"::Customer);
                 ItemReference.SetFilter("Reference Type No.", SalesHeader."Sell-to Customer No.");
                 ItemReference.SetFilter("Reference No.", Colmn2_Valid);
@@ -6928,7 +6922,7 @@ codeunit 50000 "General Mgt."
 
                     //find the last line No.
                     vL_LineNo := 0;
-                    SalesLine.RESET;
+                    SalesLine.Reset;
                     SalesLine.SetRange("Document Type", SalesHeader."Document Type");
                     SalesLine.SetFilter("Document No.", SalesHeader."No.");
                     if SalesLine.FindLast() then begin
@@ -6947,9 +6941,9 @@ codeunit 50000 "General Mgt."
 
                     SalesLine.Validate(Type, SalesLine.Type::Item);
                     SalesLine.Validate("No.", ItemReference."Item No.");
-                    SalesLine.Description := copystr(Colmn4_Valid, 1, 100);
+                    SalesLine.Description := CopyStr(Colmn4_Valid, 1, 100);
 
-                    SKU.REset;
+                    SKU.Reset;
                     SKU.SetFilter("Item No.", SalesLine."No.");
                     SKU.SetFilter("Location Code", '<>%1', '');
                     if SKU.FindSet() then begin
@@ -6975,7 +6969,7 @@ codeunit 50000 "General Mgt."
 
 
 
-            END; //end for 1
+            end; //end for 1
                  //Window.CLOSE();
 
         end;
@@ -7006,38 +7000,42 @@ codeunit 50000 "General Mgt."
         Text50000: Label 'Import Excel File';
         ExcelFileExtensionTok: Label '.xlsx';
         ExcelFileExtensionTok2: Label '.xls';
-        vL_LineNo: integer;
+        vL_LineNo: Integer;
         SalesLine: Record "Sales Line";
         ItemReference: Record "Item Reference";
         SKU: Record "Stockkeeping Unit";
         tempDec: Decimal;
-
+        Instream: InStream;
     begin
-        vL_FileName := cu_FileMgt.UploadFile(Text50000, ExcelFileExtensionTok);
+        /* vL_FileName := cu_FileMgt.UploadFile(Text50000, ExcelFileExtensionTok);
         SheetName := ExcelBuffer.SelectSheetsName(vL_FileName);
-        IF SheetName = '' THEN
-            EXIT;
+        if SheetName = '' then
+            exit;
 
         ExcelBuffer.OpenBook(vL_FileName, SheetName);
-        ExcelBuffer.ReadSheet;
+        ExcelBuffer.ReadSheet; */
+        IF UploadIntoStream(Text50000, 'C:\TEMP', 'All Files (*.*)|*.*', vL_FileName, Instream) then begin
+            ExcelBuffer.OpenBookStream(Instream, ExcelBuffer.SelectSheetsNameStream(Instream));
+            ExcelBuffer.ReadSheet;
+        end;
         RowNo := 0;
         ColumnNo := 0;
 
-        ExcelBuffer.RESET;
-        ExcelBuffer.FINDLAST;
+        ExcelBuffer.Reset;
+        ExcelBuffer.FindLast;
         RowNoMax := ExcelBuffer."Row No.";
         ColumnNoMax := 3; //ExcelBuffer."Column No.";
 
         vL_RowNo := 0;
-        CLEAR(Window);
-        Window.OPEN('Record Processing #1###############');
+        Clear(Window);
+        Window.Open('Record Processing #1###############');
         WindowTotalCount := RowNoMax;
         WindowLineCount := 0;
-        FOR RowNo := 2 TO RowNoMax DO BEGIN
-            ExcelBuffer.SETRANGE("Row No.", RowNo);
+        for RowNo := 2 to RowNoMax do begin
+            ExcelBuffer.SetRange("Row No.", RowNo);
 
             WindowLineCount += 1;
-            Window.UPDATE(1, FORMAT(WindowLineCount) + '/' + FORMAT(WindowTotalCount));
+            Window.Update(1, Format(WindowLineCount) + '/' + Format(WindowTotalCount));
 
 
             Colmn1_Valid := '';
@@ -7046,29 +7044,29 @@ codeunit 50000 "General Mgt."
 
 
 
-            FOR ColumnNo := 1 TO ColumnNoMax DO BEGIN
-                ExcelBuffer.SETRANGE("Column No.", ColumnNo);
-                IF ExcelBuffer.FINDFIRST THEN BEGIN
-                    CASE ColumnNo OF
+            for ColumnNo := 1 to ColumnNoMax do begin
+                ExcelBuffer.SetRange("Column No.", ColumnNo);
+                if ExcelBuffer.FindFirst then begin
+                    case ColumnNo of
                         1:
-                            BEGIN
-                                EVALUATE(Colmn1_Valid, Trim(ExcelBuffer."Cell Value as Text"));
-                            END;
+                            begin
+                                Evaluate(Colmn1_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                            end;
 
                         2:
-                            BEGIN
-                                EVALUATE(Colmn2_Valid, Trim(ExcelBuffer."Cell Value as Text"));
-                            END;
+                            begin
+                                Evaluate(Colmn2_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                            end;
                         3:
-                            BEGIN
-                                EVALUATE(Colmn3_Valid, Trim(ExcelBuffer."Cell Value as Text"));
-                            END;
+                            begin
+                                Evaluate(Colmn3_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                            end;
 
 
-                    END; //end case
+                    end; //end case
 
-                END;//end if
-            END; //end for 2
+                end;//end if
+            end; //end for 2
 
 
             //1 po_number	
@@ -7079,7 +7077,7 @@ codeunit 50000 "General Mgt."
             //6 ordered_qty
 
             if Colmn1_Valid <> '' then begin
-                ItemReference.RESET;
+                ItemReference.Reset;
                 ItemReference.SetRange("Reference Type", ItemReference."Reference Type"::Customer);
                 ItemReference.SetFilter("Reference Type No.", SalesHeader."Sell-to Customer No.");
                 ItemReference.SetFilter("Reference No.", Colmn1_Valid);
@@ -7092,7 +7090,7 @@ codeunit 50000 "General Mgt."
 
                     //find the last line No.
                     vL_LineNo := 0;
-                    SalesLine.RESET;
+                    SalesLine.Reset;
                     SalesLine.SetRange("Document Type", SalesHeader."Document Type");
                     SalesLine.SetFilter("Document No.", SalesHeader."No.");
                     if SalesLine.FindLast() then begin
@@ -7113,7 +7111,7 @@ codeunit 50000 "General Mgt."
                     SalesLine.Validate("No.", ItemReference."Item No.");
                     //SalesLine.Description := copystr(Colmn4_Valid, 1, 100);
 
-                    SKU.REset;
+                    SKU.Reset;
                     SKU.SetFilter("Item No.", SalesLine."No.");
                     SKU.SetFilter("Location Code", '<>%1', '');
                     if SKU.FindSet() then begin
@@ -7139,7 +7137,7 @@ codeunit 50000 "General Mgt."
 
 
 
-            END; //end for 1
+            end; //end for 1
                  //Window.CLOSE();
 
         end;
@@ -7174,7 +7172,7 @@ codeunit 50000 "General Mgt."
         Text50000: Label 'Import Excel File';
         ExcelFileExtensionTok: Label '.xlsx';
         ExcelFileExtensionTok2: Label '.xls';
-        vL_LineNo: integer;
+        vL_LineNo: Integer;
         SalesLine: Record "Sales Line";
         ItemReference: Record "Item Reference";
         SKU: Record "Stockkeeping Unit";
@@ -7184,39 +7182,43 @@ codeunit 50000 "General Mgt."
         vL_FileNameMapCode: Text;
         CustShipAddress: Record "Ship-to Address";
         vL_HeaderCount: Integer;
-
+        Instream: Instream;
     begin
-        vL_FileName := cu_FileMgt.UploadFile(Text50000, ExcelFileExtensionTok);
+        /* vL_FileName := cu_FileMgt.UploadFile(Text50000, ExcelFileExtensionTok);
         vL_FileNameParse := cu_FileMgt.GetFileName(vL_FileName);
         vL_FileNameParseResult := vL_FileNameParse.Split('_');
         vL_FileNameMapCode := vL_FileNameParseResult.Get(1) + '_' + vL_FileNameParseResult.Get(2);
 
         SheetName := ExcelBuffer.SelectSheetsName(vL_FileName);
-        IF SheetName = '' THEN
-            EXIT;
+        if SheetName = '' then
+            exit;
 
         ExcelBuffer.OpenBook(vL_FileName, SheetName);
-        ExcelBuffer.ReadSheet;
+        ExcelBuffer.ReadSheet; */
+        IF UploadIntoStream(Text50000, 'C:\TEMP', 'All Files (*.*)|*.*', vL_FileName, Instream) then begin
+            ExcelBuffer.OpenBookStream(Instream, ExcelBuffer.SelectSheetsNameStream(Instream));
+            ExcelBuffer.ReadSheet;
+        end;
         RowNo := 0;
         ColumnNo := 0;
 
-        ExcelBuffer.RESET;
-        ExcelBuffer.FINDLAST;
+        ExcelBuffer.Reset;
+        ExcelBuffer.FindLast;
         RowNoMax := ExcelBuffer."Row No.";
         ColumnNoMax := 5; //ExcelBuffer."Column No.";
 
         vL_RowNo := 0;
-        CLEAR(Window);
-        Window.OPEN('Record Processing #1###############');
+        Clear(Window);
+        Window.Open('Record Processing #1###############');
         WindowTotalCount := RowNoMax;
         WindowLineCount := 0;
         vL_HeaderCount := 0;
 
-        FOR RowNo := 2 TO RowNoMax DO BEGIN
-            ExcelBuffer.SETRANGE("Row No.", RowNo);
+        for RowNo := 2 to RowNoMax do begin
+            ExcelBuffer.SetRange("Row No.", RowNo);
 
             WindowLineCount += 1;
-            Window.UPDATE(1, FORMAT(WindowLineCount) + '/' + FORMAT(WindowTotalCount));
+            Window.Update(1, Format(WindowLineCount) + '/' + Format(WindowTotalCount));
 
 
             Colmn1_Valid := '';
@@ -7227,38 +7229,38 @@ codeunit 50000 "General Mgt."
 
 
 
-            FOR ColumnNo := 1 TO ColumnNoMax DO BEGIN
-                ExcelBuffer.SETRANGE("Column No.", ColumnNo);
-                IF ExcelBuffer.FINDFIRST THEN BEGIN
-                    CASE ColumnNo OF
+            for ColumnNo := 1 to ColumnNoMax do begin
+                ExcelBuffer.SetRange("Column No.", ColumnNo);
+                if ExcelBuffer.FindFirst then begin
+                    case ColumnNo of
                         1:
-                            BEGIN
-                                EVALUATE(Colmn1_Valid, Trim(ExcelBuffer."Cell Value as Text"));
-                            END;
+                            begin
+                                Evaluate(Colmn1_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                            end;
 
                         2:
-                            BEGIN
-                                EVALUATE(Colmn2_Valid, Trim(ExcelBuffer."Cell Value as Text"));
-                            END;
+                            begin
+                                Evaluate(Colmn2_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                            end;
                         3:
-                            BEGIN
-                                EVALUATE(Colmn3_Valid, Trim(ExcelBuffer."Cell Value as Text"));
-                            END;
+                            begin
+                                Evaluate(Colmn3_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                            end;
                         4:
-                            BEGIN
-                                EVALUATE(Colmn4_Valid, Trim(ExcelBuffer."Cell Value as Text"));
-                            END;
+                            begin
+                                Evaluate(Colmn4_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                            end;
                         5:
-                            BEGIN
-                                EVALUATE(Colmn5_Valid, Trim(ExcelBuffer."Cell Value as Text"));
-                            END;
+                            begin
+                                Evaluate(Colmn5_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                            end;
 
 
 
-                    END; //end case
+                    end; //end case
 
-                END;//end if
-            END; //end for 2
+                end;//end if
+            end; //end for 2
 
 
             //1 Vendor SKU	
@@ -7269,7 +7271,7 @@ codeunit 50000 "General Mgt."
 
 
             if Colmn1_Valid <> '' then begin
-                ItemReference.RESET;
+                ItemReference.Reset;
                 ItemReference.SetRange("Reference Type", ItemReference."Reference Type"::"Bar Code");
                 //ItemReference.SetFilter("Reference Type No.", SalesHeader."Sell-to Customer No.");
                 ItemReference.SetFilter("Reference No.", Colmn2_Valid);
@@ -7280,18 +7282,18 @@ codeunit 50000 "General Mgt."
                     if vL_HeaderCount = 1 then begin
                         Evaluate(tempDate, Colmn5_Valid);
 
-                        SalesHeader.validate("Document Date", tempDate);
-                        SalesHeader.validate("Posting Date", tempDate);
-                        SalesHeader.validate("Order Date", tempDate);
-                        SalesHeader.validate("Requested Delivery Date", tempDate);
-                        SalesHeader.validate("Shipment Date", tempDate);
+                        SalesHeader.Validate("Document Date", tempDate);
+                        SalesHeader.Validate("Posting Date", tempDate);
+                        SalesHeader.Validate("Order Date", tempDate);
+                        SalesHeader.Validate("Requested Delivery Date", tempDate);
+                        SalesHeader.Validate("Shipment Date", tempDate);
 
                         //if SalesHeader."Ship-to Code" = '' then begin
-                        CustShipAddress.RESET;
+                        CustShipAddress.Reset;
                         CustShipAddress.SetFilter("Customer No.", SalesHeader."Sell-to Customer No.");
                         CustShipAddress.SetFilter("Interface Code", vL_FileNameMapCode);
                         if CustShipAddress.FindSet() then begin
-                            SalesHeader.validate("Ship-to Code", CustShipAddress.Code);
+                            SalesHeader.Validate("Ship-to Code", CustShipAddress.Code);
                         end;
                         //end;
                         SalesHeader.Modify();
@@ -7301,7 +7303,7 @@ codeunit 50000 "General Mgt."
 
                     //find the last line No.
                     vL_LineNo := 0;
-                    SalesLine.RESET;
+                    SalesLine.Reset;
                     SalesLine.SetRange("Document Type", SalesHeader."Document Type");
                     SalesLine.SetFilter("Document No.", SalesHeader."No.");
                     if SalesLine.FindLast() then begin
@@ -7320,9 +7322,9 @@ codeunit 50000 "General Mgt."
 
                     SalesLine.Validate(Type, SalesLine.Type::Item);
                     SalesLine.Validate("No.", ItemReference."Item No.");
-                    SalesLine.Description := copystr(Colmn3_Valid, 1, 100);
+                    SalesLine.Description := CopyStr(Colmn3_Valid, 1, 100);
 
-                    SKU.REset;
+                    SKU.Reset;
                     SKU.SetFilter("Item No.", SalesLine."No.");
                     SKU.SetFilter("Location Code", '<>%1', '');
                     if SKU.FindSet() then begin
@@ -7348,7 +7350,7 @@ codeunit 50000 "General Mgt."
 
 
 
-            END; //end for 1
+            end; //end for 1
                  //Window.CLOSE();
 
         end;
@@ -7433,38 +7435,43 @@ codeunit 50000 "General Mgt."
         Text50000: Label 'Import Excel File';
         ExcelFileExtensionTok: Label '.xlsx';
         ExcelFileExtensionTok2: Label '.xls';
-        vL_LineNo: integer;
+        vL_LineNo: Integer;
         SalesLine: Record "Sales Line";
         tempDec: Decimal;
         tempInt: Integer;
         tempDate: Date;
         enumCalibrationUOM: Enum "Calibration UOM";
+        Instream: InStream;
     begin
-        vL_FileName := cu_FileMgt.UploadFile(Text50000, ExcelFileExtensionTok);
+        /* vL_FileName := cu_FileMgt.UploadFile(Text50000, ExcelFileExtensionTok);
         SheetName := ExcelBuffer.SelectSheetsName(vL_FileName);
-        IF SheetName = '' THEN
-            EXIT;
+        if SheetName = '' then
+            exit;
 
         ExcelBuffer.OpenBook(vL_FileName, SheetName);
-        ExcelBuffer.ReadSheet;
+        ExcelBuffer.ReadSheet; */
+        IF UploadIntoStream(Text50000, 'C:\TEMP', 'All Files (*.*)|*.*', vL_FileName, Instream) then begin
+            ExcelBuffer.OpenBookStream(Instream, ExcelBuffer.SelectSheetsNameStream(Instream));
+            ExcelBuffer.ReadSheet;
+        end;
         RowNo := 0;
         ColumnNo := 0;
 
-        ExcelBuffer.RESET;
-        ExcelBuffer.FINDLAST;
+        ExcelBuffer.Reset;
+        ExcelBuffer.FindLast;
         RowNoMax := ExcelBuffer."Row No.";
         ColumnNoMax := 164; //ExcelBuffer."Column No.";
 
         vL_RowNo := 0;
-        CLEAR(Window);
-        Window.OPEN('Record Processing #1###############');
+        Clear(Window);
+        Window.Open('Record Processing #1###############');
         WindowTotalCount := RowNoMax;
         WindowLineCount := 0;
-        FOR RowNo := 8 TO RowNoMax DO BEGIN
-            ExcelBuffer.SETRANGE("Row No.", RowNo);
+        for RowNo := 8 to RowNoMax do begin
+            ExcelBuffer.SetRange("Row No.", RowNo);
 
             WindowLineCount += 1;
-            Window.UPDATE(1, FORMAT(WindowLineCount) + '/' + FORMAT(WindowTotalCount));
+            Window.Update(1, Format(WindowLineCount) + '/' + Format(WindowTotalCount));
 
 
             Colmn1_Valid := '';
@@ -7522,307 +7529,307 @@ codeunit 50000 "General Mgt."
             Colmn164_Valid := '';
 
 
-            FOR ColumnNo := 1 TO ColumnNoMax DO BEGIN
-                ExcelBuffer.SETRANGE("Column No.", ColumnNo);
-                IF ExcelBuffer.FINDFIRST THEN BEGIN
-                    CASE ColumnNo OF
+            for ColumnNo := 1 to ColumnNoMax do begin
+                ExcelBuffer.SetRange("Column No.", ColumnNo);
+                if ExcelBuffer.FindFirst then begin
+                    case ColumnNo of
                         1:
-                            BEGIN
-                                EVALUATE(Colmn1_Valid, Trim(ExcelBuffer."Cell Value as Text"));
-                            END;
+                            begin
+                                Evaluate(Colmn1_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                            end;
 
                         2:
-                            BEGIN
-                                EVALUATE(Colmn2_Valid, Trim(ExcelBuffer."Cell Value as Text"));
-                            END;
+                            begin
+                                Evaluate(Colmn2_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                            end;
                         3:
-                            BEGIN
-                                EVALUATE(Colmn3_Valid, Trim(ExcelBuffer."Cell Value as Text"));
-                            END;
+                            begin
+                                Evaluate(Colmn3_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                            end;
                         4:
-                            BEGIN
-                                EVALUATE(Colmn4_Valid, Trim(ExcelBuffer."Cell Value as Text"));
-                            END;
+                            begin
+                                Evaluate(Colmn4_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                            end;
                         5:
-                            BEGIN
-                                EVALUATE(Colmn5_Valid, Trim(ExcelBuffer."Cell Value as Text"));
-                            END;
+                            begin
+                                Evaluate(Colmn5_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                            end;
 
                         6:
-                            BEGIN
-                                EVALUATE(Colmn6_Valid, Trim(ExcelBuffer."Cell Value as Text"));
-                            END;
+                            begin
+                                Evaluate(Colmn6_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                            end;
 
                         7:
-                            BEGIN
-                                EVALUATE(Colmn7_Valid, Trim(ExcelBuffer."Cell Value as Text"));
-                            END;
+                            begin
+                                Evaluate(Colmn7_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                            end;
 
                         8:
-                            BEGIN
-                                EVALUATE(Colmn8_Valid, Trim(ExcelBuffer."Cell Value as Text"));
-                            END;
+                            begin
+                                Evaluate(Colmn8_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                            end;
 
                         9:
-                            BEGIN
-                                EVALUATE(Colmn9_Valid, Trim(ExcelBuffer."Cell Value as Text"));
-                            END;
+                            begin
+                                Evaluate(Colmn9_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                            end;
 
                         10:
-                            BEGIN
-                                EVALUATE(Colmn10_Valid, Trim(ExcelBuffer."Cell Value as Text"));
-                            END;
+                            begin
+                                Evaluate(Colmn10_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                            end;
 
                         //10
                         11:
-                            BEGIN
+                            begin
                                 //EVALUATE(Colmn11_Valid, Trim(ExcelBuffer."Cell Value as Text"));
-                            END;
+                            end;
 
                         12:
-                            BEGIN
+                            begin
                                 //EVALUATE(Colmn12_Valid, Trim(ExcelBuffer."Cell Value as Text"));
-                            END;
+                            end;
                         13:
-                            BEGIN
-                                EVALUATE(Colmn13_Valid, Trim(ExcelBuffer."Cell Value as Text"));
-                            END;
+                            begin
+                                Evaluate(Colmn13_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                            end;
                         14:
-                            BEGIN
-                                EVALUATE(Colmn14_Valid, Trim(ExcelBuffer."Cell Value as Text"));
-                            END;
+                            begin
+                                Evaluate(Colmn14_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                            end;
                         15:
-                            BEGIN
-                                EVALUATE(Colmn15_Valid, Trim(ExcelBuffer."Cell Value as Text"));
-                            END;
+                            begin
+                                Evaluate(Colmn15_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                            end;
 
                         16:
-                            BEGIN
-                                EVALUATE(Colmn16_Valid, Trim(ExcelBuffer."Cell Value as Text"));
-                            END;
+                            begin
+                                Evaluate(Colmn16_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                            end;
 
                         17:
-                            BEGIN
-                                EVALUATE(Colmn17_Valid, Trim(ExcelBuffer."Cell Value as Text"));
-                            END;
+                            begin
+                                Evaluate(Colmn17_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                            end;
 
                         18:
-                            BEGIN
-                                EVALUATE(Colmn18_Valid, Trim(ExcelBuffer."Cell Value as Text"));
-                            END;
+                            begin
+                                Evaluate(Colmn18_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                            end;
 
                         19:
-                            BEGIN
-                                EVALUATE(Colmn19_Valid, Trim(ExcelBuffer."Cell Value as Text"));
-                            END;
+                            begin
+                                Evaluate(Colmn19_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                            end;
 
                         20:
-                            BEGIN
-                                EVALUATE(Colmn20_Valid, Trim(ExcelBuffer."Cell Value as Text"));
-                            END;
+                            begin
+                                Evaluate(Colmn20_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                            end;
 
 
                         //20
                         21:
-                            BEGIN
-                                EVALUATE(Colmn21_Valid, Trim(ExcelBuffer."Cell Value as Text"));
-                            END;
+                            begin
+                                Evaluate(Colmn21_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                            end;
 
                         22:
-                            BEGIN
-                                EVALUATE(Colmn22_Valid, Trim(ExcelBuffer."Cell Value as Text"));
-                            END;
+                            begin
+                                Evaluate(Colmn22_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                            end;
                         23:
-                            BEGIN
-                                EVALUATE(Colmn23_Valid, Trim(ExcelBuffer."Cell Value as Text"));
-                            END;
+                            begin
+                                Evaluate(Colmn23_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                            end;
                         24:
-                            BEGIN
-                                EVALUATE(Colmn24_Valid, Trim(ExcelBuffer."Cell Value as Text"));
-                            END;
+                            begin
+                                Evaluate(Colmn24_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                            end;
                         25:
-                            BEGIN
-                                EVALUATE(Colmn25_Valid, Trim(ExcelBuffer."Cell Value as Text"));
-                            END;
+                            begin
+                                Evaluate(Colmn25_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                            end;
 
                         26:
-                            BEGIN
-                                EVALUATE(Colmn26_Valid, Trim(ExcelBuffer."Cell Value as Text"));
-                            END;
+                            begin
+                                Evaluate(Colmn26_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                            end;
 
                         27:
-                            BEGIN
-                                EVALUATE(Colmn27_Valid, Trim(ExcelBuffer."Cell Value as Text"));
-                            END;
+                            begin
+                                Evaluate(Colmn27_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                            end;
 
                         28:
-                            BEGIN
-                                EVALUATE(Colmn28_Valid, Trim(ExcelBuffer."Cell Value as Text"));
-                            END;
+                            begin
+                                Evaluate(Colmn28_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                            end;
 
                         29:
-                            BEGIN
-                                EVALUATE(Colmn29_Valid, Trim(ExcelBuffer."Cell Value as Text"));
-                            END;
+                            begin
+                                Evaluate(Colmn29_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                            end;
 
                         30:
-                            BEGIN
+                            begin
                                 //EVALUATE(Colmn30_Valid, Trim(ExcelBuffer."Cell Value as Text"));
-                            END;
+                            end;
 
 
                         //30
                         31:
-                            BEGIN
+                            begin
                                 //EVALUATE(Colmn31_Valid, Trim(ExcelBuffer."Cell Value as Text"));
-                            END;
+                            end;
 
                         32:
-                            BEGIN
-                                EVALUATE(Colmn32_Valid, Trim(ExcelBuffer."Cell Value as Text"));
-                            END;
+                            begin
+                                Evaluate(Colmn32_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                            end;
                         33:
-                            BEGIN
-                                EVALUATE(Colmn33_Valid, Trim(ExcelBuffer."Cell Value as Text"));
-                            END;
+                            begin
+                                Evaluate(Colmn33_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                            end;
                         34:
-                            BEGIN
-                                EVALUATE(Colmn34_Valid, Trim(ExcelBuffer."Cell Value as Text"));
-                            END;
+                            begin
+                                Evaluate(Colmn34_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                            end;
                         35:
-                            BEGIN
-                                EVALUATE(Colmn35_Valid, Trim(ExcelBuffer."Cell Value as Text"));
-                            END;
+                            begin
+                                Evaluate(Colmn35_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                            end;
 
                         36:
-                            BEGIN
-                                EVALUATE(Colmn36_Valid, Trim(ExcelBuffer."Cell Value as Text"));
-                            END;
+                            begin
+                                Evaluate(Colmn36_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                            end;
 
                         37:
-                            BEGIN
-                                EVALUATE(Colmn37_Valid, Trim(ExcelBuffer."Cell Value as Text"));
-                            END;
+                            begin
+                                Evaluate(Colmn37_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                            end;
 
                         38:
-                            BEGIN
-                                EVALUATE(Colmn38_Valid, Trim(ExcelBuffer."Cell Value as Text"));
-                            END;
+                            begin
+                                Evaluate(Colmn38_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                            end;
 
                         39:
-                            BEGIN
-                                EVALUATE(Colmn39_Valid, Trim(ExcelBuffer."Cell Value as Text"));
-                            END;
+                            begin
+                                Evaluate(Colmn39_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                            end;
 
                         40:
-                            BEGIN
-                                EVALUATE(Colmn40_Valid, Trim(ExcelBuffer."Cell Value as Text"));
-                            END;
+                            begin
+                                Evaluate(Colmn40_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                            end;
 
 
                         //40
                         41:
-                            BEGIN
-                                EVALUATE(Colmn41_Valid, Trim(ExcelBuffer."Cell Value as Text"));
-                            END;
+                            begin
+                                Evaluate(Colmn41_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                            end;
 
                         42:
-                            BEGIN
-                                EVALUATE(Colmn42_Valid, Trim(ExcelBuffer."Cell Value as Text"));
-                            END;
+                            begin
+                                Evaluate(Colmn42_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                            end;
                         43:
-                            BEGIN
+                            begin
                                 //EVALUATE(Colmn43_Valid, Trim(ExcelBuffer."Cell Value as Text"));
-                            END;
+                            end;
                         44:
-                            BEGIN
+                            begin
                                 //EVALUATE(Colmn44_Valid, Trim(ExcelBuffer."Cell Value as Text"));
-                            END;
+                            end;
                         45:
-                            BEGIN
+                            begin
                                 //EVALUATE(Colmn45_Valid, Trim(ExcelBuffer."Cell Value as Text"));
-                            END;
+                            end;
 
                         46:
-                            BEGIN
+                            begin
                                 // EVALUATE(Colmn46_Valid, Trim(ExcelBuffer."Cell Value as Text"));
-                            END;
+                            end;
 
                         47:
-                            BEGIN
+                            begin
                                 // EVALUATE(Colmn47_Valid, Trim(ExcelBuffer."Cell Value as Text"));
-                            END;
+                            end;
 
                         48:
-                            BEGIN
+                            begin
                                 //EVALUATE(Colmn48_Valid, Trim(ExcelBuffer."Cell Value as Text"));
-                            END;
+                            end;
 
                         49:
-                            BEGIN
-                                EVALUATE(Colmn49_Valid, Trim(ExcelBuffer."Cell Value as Text"));
-                            END;
+                            begin
+                                Evaluate(Colmn49_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                            end;
 
                         50:
-                            BEGIN
-                                EVALUATE(Colmn50_Valid, Trim(ExcelBuffer."Cell Value as Text"));
-                            END;
+                            begin
+                                Evaluate(Colmn50_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                            end;
 
 
                         //50
                         51:
-                            BEGIN
-                                EVALUATE(Colmn51_Valid, Trim(ExcelBuffer."Cell Value as Text"));
-                            END;
+                            begin
+                                Evaluate(Colmn51_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                            end;
 
                         52:
-                            BEGIN
-                                EVALUATE(Colmn52_Valid, Trim(ExcelBuffer."Cell Value as Text"));
-                            END;
+                            begin
+                                Evaluate(Colmn52_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                            end;
                         53:
-                            BEGIN
-                                EVALUATE(Colmn53_Valid, Trim(ExcelBuffer."Cell Value as Text"));
-                            END;
+                            begin
+                                Evaluate(Colmn53_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                            end;
 
                         55:
-                            BEGIN
-                                EVALUATE(Colmn55_Valid, Trim(ExcelBuffer."Cell Value as Text"));
-                            END;
+                            begin
+                                Evaluate(Colmn55_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                            end;
                         //155
                         155:
-                            BEGIN
-                                EVALUATE(Colmn155_Valid, Trim(ExcelBuffer."Cell Value as Text"));
-                            END;
+                            begin
+                                Evaluate(Colmn155_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                            end;
 
                         156:
-                            BEGIN
-                                EVALUATE(Colmn156_Valid, Trim(ExcelBuffer."Cell Value as Text"));
-                            END;
+                            begin
+                                Evaluate(Colmn156_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                            end;
 
                         157:
-                            BEGIN
-                                EVALUATE(Colmn157_Valid, Trim(ExcelBuffer."Cell Value as Text"));
-                            END;
+                            begin
+                                Evaluate(Colmn157_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                            end;
                         158:
-                            BEGIN
-                                EVALUATE(Colmn158_Valid, Trim(ExcelBuffer."Cell Value as Text"));
-                            END;
+                            begin
+                                Evaluate(Colmn158_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                            end;
 
                         163:
-                            BEGIN
-                                EVALUATE(Colmn163_Valid, Trim(ExcelBuffer."Cell Value as Text"));
-                            END;
+                            begin
+                                Evaluate(Colmn163_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                            end;
 
                         164:
-                            BEGIN
-                                EVALUATE(Colmn164_Valid, Trim(ExcelBuffer."Cell Value as Text"));
-                            END;
+                            begin
+                                Evaluate(Colmn164_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                            end;
 
 
-                    END; //end case
+                    end; //end case
 
-                END;//end if
-            END; //end for 2
+                end;//end if
+            end; //end for 2
 
 
             //1 IAN	 
@@ -7884,7 +7891,7 @@ codeunit 50000 "General Mgt."
 
                 //find the last line No.
                 vL_LineNo := 0;
-                SalesLine.RESET;
+                SalesLine.Reset;
                 SalesLine.SetRange("Document Type", SalesHeader."Document Type");
                 SalesLine.SetFilter("Document No.", SalesHeader."No.");
                 if SalesLine.FindLast() then begin
@@ -7904,307 +7911,307 @@ codeunit 50000 "General Mgt."
                 SalesLine.Validate(Type, SalesLine.Type::Item);
                 SalesLine."Shelf No." := Colmn1_Valid;
                 ConvertStringtoDesc(tempDec, Colmn6_Valid);
-                SalesLine.validate("Package Qty", tempDec);
+                SalesLine.Validate("Package Qty", tempDec);
                 SalesLine.GetItemFromShelfNo();
 
-                SalesLine.Description := colmn2_Valid;
+                SalesLine.Description := Colmn2_Valid;
                 SalesLine.Modify(true);
 
 
 
                 ConvertStringtoDesc(tempDec, Colmn3_Valid);
-                SalesLine.validate("Pallet Qty", tempDec);
+                SalesLine.Validate("Pallet Qty", tempDec);
 
 
                 SalesLine."Country/Region of Origin Code" := Colmn4_Valid;
 
 
-                SalesLine.validate("Product Class", Colmn5_Valid);
+                SalesLine.Validate("Product Class", Colmn5_Valid);
 
 
                 ConvertStringtoDesc(tempDec, Colmn6_Valid);
-                SalesLine.validate("Package Qty", tempDec);
+                SalesLine.Validate("Package Qty", tempDec);
 
 
                 ConvertStringtoDesc(tempDec, Colmn7_Valid);
-                SalesLine.validate("Calibration Min.", tempDec);
+                SalesLine.Validate("Calibration Min.", tempDec);
 
 
                 ConvertStringtoDesc(tempDec, Colmn8_Valid);
-                SalesLine.validate("Calibration Max.", tempDec);
+                SalesLine.Validate("Calibration Max.", tempDec);
 
 
-                CASE Colmn9_Valid OF
+                case Colmn9_Valid of
 
 
                     ' ':
-                        BEGIN
+                        begin
                             enumCalibrationUOM := enumCalibrationUOM::" ";
-                        END;
+                        end;
                     '-':
-                        BEGIN
+                        begin
                             enumCalibrationUOM := enumCalibrationUOM::"-";
-                        END;
+                        end;
 
                     'cm':
-                        BEGIN
+                        begin
                             enumCalibrationUOM := enumCalibrationUOM::cm;
-                        END;
+                        end;
 
                     'mm':
-                        BEGIN
+                        begin
                             enumCalibrationUOM := enumCalibrationUOM::mm;
-                        END;
+                        end;
 
                     'kg':
-                        BEGIN
+                        begin
                             enumCalibrationUOM := enumCalibrationUOM::kg;
-                        END;
+                        end;
 
                     'g':
-                        BEGIN
+                        begin
                             enumCalibrationUOM := enumCalibrationUOM::g;
-                        END;
+                        end;
                     'Stk.':
-                        BEGIN
+                        begin
                             enumCalibrationUOM := enumCalibrationUOM::"Stk.";
-                        END;
+                        end;
                     'PK':
-                        BEGIN
+                        begin
                             enumCalibrationUOM := enumCalibrationUOM::PK;
-                        END;
+                        end;
                     'Topf':
-                        BEGIN
+                        begin
                             enumCalibrationUOM := enumCalibrationUOM::Topf;
-                        END;
+                        end;
                     'l':
-                        BEGIN
+                        begin
                             enumCalibrationUOM := enumCalibrationUOM::l;
-                        END;
+                        end;
                     'Netz':
-                        BEGIN
+                        begin
                             enumCalibrationUOM := enumCalibrationUOM::Netz;
-                        END;
+                        end;
                     'BTL':
-                        BEGIN
+                        begin
                             enumCalibrationUOM := enumCalibrationUOM::BTL;
-                        END;
+                        end;
                     'BE':
-                        BEGIN
+                        begin
                             enumCalibrationUOM := enumCalibrationUOM::BE;
-                        END;
+                        end;
                     'Stiele':
-                        BEGIN
+                        begin
                             enumCalibrationUOM := enumCalibrationUOM::Stiele;
-                        END;
+                        end;
                     'Bund':
-                        BEGIN
+                        begin
                             enumCalibrationUOM := enumCalibrationUOM::Bund;
-                        END;
+                        end;
                     'KRT':
-                        BEGIN
+                        begin
                             enumCalibrationUOM := enumCalibrationUOM::KRT;
-                        END;
+                        end;
                     'FS':
-                        BEGIN
+                        begin
                             enumCalibrationUOM := enumCalibrationUOM::FS;
-                        END;
+                        end;
                     'STRS':
-                        BEGIN
+                        begin
                             enumCalibrationUOM := enumCalibrationUOM::STRS;
-                        END;
+                        end;
                     'SC':
-                        BEGIN
+                        begin
                             enumCalibrationUOM := enumCalibrationUOM::SC;
-                        END;
+                        end;
                     'EIM':
-                        BEGIN
+                        begin
                             enumCalibrationUOM := enumCalibrationUOM::EIM;
-                        END;
+                        end;
                     'DS':
-                        BEGIN
+                        begin
                             enumCalibrationUOM := enumCalibrationUOM::DS;
-                        END;
+                        end;
                     'ATM-PK':
-                        BEGIN
+                        begin
                             enumCalibrationUOM := enumCalibrationUOM::"ATM-PK";
-                        END;
+                        end;
                     else
-                        Error(Colmn9_Valid + ' Καλιμπράζ Μον. not found. RowNo: ' + FORMAT(RowNo));
-                END;
+                        Error(Colmn9_Valid + ' Καλιμπράζ Μον. not found. RowNo: ' + Format(RowNo));
+                end;
 
-                SalesLine.validate("Calibration UOM", enumCalibrationUOM);
+                SalesLine.Validate("Calibration UOM", enumCalibrationUOM);
 
 
-                SalesLine.validate("Variety", Colmn10_Valid);
+                SalesLine.Validate(Variety, Colmn10_Valid);
 
 
                 if Colmn13_Valid = 'EUR' then begin
                     Colmn13_Valid := '';
                 end;
 
-                SalesLine.validate("Currency Code", Colmn13_Valid);
+                SalesLine.Validate("Currency Code", Colmn13_Valid);
 
 
 
 
                 ConvertStringtoDesc(tempDec, Colmn14_Valid);
-                SalesLine.validate("Price Previous Week Box", tempDec);
+                SalesLine.Validate("Price Previous Week Box", tempDec);
 
 
 
                 ConvertStringtoDesc(tempDec, Colmn15_Valid);
-                SalesLine.validate("Price Previous Week PCS", tempDec);
+                SalesLine.Validate("Price Previous Week PCS", tempDec);
 
 
 
                 ConvertStringtoDesc(tempDec, Colmn16_Valid);
-                SalesLine.validate("Price Previous Week KG", tempDec);
+                SalesLine.Validate("Price Previous Week KG", tempDec);
 
 
 
                 ConvertStringtoDesc(tempDec, Colmn17_Valid);
-                SalesLine.validate("Price Box", tempDec);
+                SalesLine.Validate("Price Box", tempDec);
 
 
                 ConvertStringtoDesc(tempDec, Colmn18_Valid);
-                SalesLine.validate("Price PCS", tempDec);
+                SalesLine.Validate("Price PCS", tempDec);
 
 
                 ConvertStringtoDesc(tempDec, Colmn19_Valid);
-                SalesLine.validate("Price KG", tempDec);
+                SalesLine.Validate("Price KG", tempDec);
 
 
                 ConvertStringtoInt(tempInt, Colmn20_Valid);
-                SalesLine.validate("Row Index", tempInt);
+                SalesLine.Validate("Row Index", tempInt);
 
 
                 ConvertStringtoDesc(tempDec, Colmn21_Valid);
-                SalesLine.validate("Qty Box Date 1", tempDec);
+                SalesLine.Validate("Qty Box Date 1", tempDec);
 
 
                 ConvertStringtoDesc(tempDec, Colmn22_Valid);
-                SalesLine.validate("Qty Box Date 2", tempDec);
+                SalesLine.Validate("Qty Box Date 2", tempDec);
 
 
                 ConvertStringtoDesc(tempDec, Colmn23_Valid);
-                SalesLine.validate("Qty Box Date 3", tempDec);
+                SalesLine.Validate("Qty Box Date 3", tempDec);
 
 
                 ConvertStringtoDesc(tempDec, Colmn24_Valid);
-                SalesLine.validate("Qty Box Date 4", tempDec);
+                SalesLine.Validate("Qty Box Date 4", tempDec);
 
 
                 ConvertStringtoDesc(tempDec, Colmn25_Valid);
-                SalesLine.validate("Qty Box Date 5", tempDec);
+                SalesLine.Validate("Qty Box Date 5", tempDec);
 
 
                 ConvertStringtoDesc(tempDec, Colmn26_Valid);
-                SalesLine.validate("Qty Box Date 6", tempDec);
+                SalesLine.Validate("Qty Box Date 6", tempDec);
 
 
                 ConvertStringtoDesc(tempDec, Colmn27_Valid);
-                SalesLine.validate("Qty Box Date 7", tempDec);
+                SalesLine.Validate("Qty Box Date 7", tempDec);
 
 
                 ConvertStringtoDesc(tempDec, Colmn28_Valid);
-                SalesLine.validate("Qty Box Date 8", tempDec);
+                SalesLine.Validate("Qty Box Date 8", tempDec);
 
 
                 ConvertStringtoDesc(tempDec, Colmn29_Valid);
-                SalesLine.validate("Total Qty on Boxes", tempDec);
+                SalesLine.Validate("Total Qty on Boxes", tempDec);
 
 
-                SalesLine.validate("Additional Information", Colmn32_Valid);
+                SalesLine.Validate("Additional Information", Colmn32_Valid);
 
 
                 ConvertStringtoDesc(tempDec, Colmn33_Valid);
-                SalesLine.validate("Pressure Min.", tempDec);
+                SalesLine.Validate("Pressure Min.", tempDec);
 
 
                 ConvertStringtoDesc(tempDec, Colmn34_Valid);
-                SalesLine.validate("Pressure Max.", tempDec);
+                SalesLine.Validate("Pressure Max.", tempDec);
 
 
                 ConvertStringtoDesc(tempDec, Colmn35_Valid);
-                SalesLine.validate("Brix Min", tempDec);
+                SalesLine.Validate("Brix Min", tempDec);
 
 
-                SalesLine.validate("Vendor Name", Colmn36_Valid);
+                SalesLine.Validate("Vendor Name", Colmn36_Valid);
 
 
                 ConvertStringtoDesc(tempDec, Colmn37_Valid);
-                SalesLine.validate("QC 1 Min", tempDec);
+                SalesLine.Validate("QC 1 Min", tempDec);
 
 
                 ConvertStringtoDesc(tempDec, Colmn38_Valid);
-                SalesLine.validate("QC 1 Max", tempDec);
+                SalesLine.Validate("QC 1 Max", tempDec);
 
 
-                SalesLine.validate("QC 1 Text", Colmn39_Valid);
+                SalesLine.Validate("QC 1 Text", Colmn39_Valid);
 
 
                 ConvertStringtoDesc(tempDec, Colmn40_Valid);
-                SalesLine.validate("QC 2 Min", tempDec);
+                SalesLine.Validate("QC 2 Min", tempDec);
 
 
                 ConvertStringtoDesc(tempDec, Colmn41_Valid);
-                SalesLine.validate("QC 2 Max", tempDec);
+                SalesLine.Validate("QC 2 Max", tempDec);
 
 
-                SalesLine.validate("QC 2 Text", Colmn42_Valid);
+                SalesLine.Validate("QC 2 Text", Colmn42_Valid);
 
 
                 ConvertStringtoDesc(tempDec, Colmn49_Valid);
-                SalesLine.validate("Box Width", tempDec);
+                SalesLine.Validate("Box Width", tempDec);
 
 
-                SalesLine.validate("Box Char 1", Colmn50_Valid);
+                SalesLine.Validate("Box Char 1", Colmn50_Valid);
 
 
                 ConvertStringtoDesc(tempDec, Colmn51_Valid);
-                SalesLine.validate("Box Length", tempDec);
+                SalesLine.Validate("Box Length", tempDec);
 
 
-                SalesLine.validate("Box Char 2", Colmn52_Valid);
+                SalesLine.Validate("Box Char 2", Colmn52_Valid);
 
 
 
                 ConvertStringtoDesc(tempDec, Colmn53_Valid);
-                SalesLine.validate("Box Height", tempDec);
+                SalesLine.Validate("Box Height", tempDec);
 
 
                 //ConvertStringtoDate(tempDate, );
-                SalesLine.validate("Box Changed Date", Colmn55_Valid);
+                SalesLine.Validate("Box Changed Date", Colmn55_Valid);
 
 
                 ConvertStringtoDesc(tempDec, Colmn155_Valid);
-                SalesLine.validate("Harvest Temp. From", tempDec);
+                SalesLine.Validate("Harvest Temp. From", tempDec);
 
 
                 ConvertStringtoDesc(tempDec, Colmn156_Valid);
-                SalesLine.validate("Harvest Temp. To", tempDec);
+                SalesLine.Validate("Harvest Temp. To", tempDec);
 
 
                 ConvertStringtoDesc(tempDec, Colmn157_Valid);
-                SalesLine.validate("Freezer Harvest Temp. From", tempDec);
+                SalesLine.Validate("Freezer Harvest Temp. From", tempDec);
 
 
                 ConvertStringtoDesc(tempDec, Colmn158_Valid);
-                SalesLine.validate("Freezer Harvest Temp. To", tempDec);
+                SalesLine.Validate("Freezer Harvest Temp. To", tempDec);
 
 
                 ConvertStringtoDesc(tempDec, Colmn163_Valid);
-                SalesLine.validate("Transfer Temp. From", tempDec);
+                SalesLine.Validate("Transfer Temp. From", tempDec);
 
 
                 ConvertStringtoDesc(tempDec, Colmn164_Valid);
-                SalesLine.validate("Transfer Temp. To", tempDec);
+                SalesLine.Validate("Transfer Temp. To", tempDec);
 
                 SalesLine.Modify();
 
 
-            END; //end for 1
+            end; //end for 1
                  //Window.CLOSE();
 
         end;
@@ -8244,16 +8251,14 @@ codeunit 50000 "General Mgt."
     end;
 
 
-    procedure LocationAddress(var AddrArray: array[8] of Text[100]; var Location: Record "Location")
+    procedure LocationAddress(var AddrArray: array[8] of Text[100]; var Location: Record Location)
     var
         FormatAddr: Codeunit "Format Address";
     begin
 
-
-        with Location do
-            FormatAddr.FormatAddr(
-              AddrArray, Code, Name, "Name 2", Address, "Address 2",
-              City, "Post Code", County, '');
+        FormatAddr.FormatAddr(
+  AddrArray, Location.Code, Location.Name, Location."Name 2", Location.Address, Location."Address 2",
+  Location.City, Location."Post Code", Location.County, '');
     end;
 
 
@@ -8307,36 +8312,40 @@ codeunit 50000 "General Mgt."
         Text50000: Label 'Import Excel File';
         ExcelFileExtensionTok: Label '.xlsx';
         ExcelFileExtensionTok2: Label '.xls';
-        vL_LineNo: integer;
+        vL_LineNo: Integer;
         rL_Item: Record Item;
         TmpDecimal: Decimal;
-
+        Instream: InStream;
     begin
         //open excel file and process 17 rows
-        vL_FileName := cu_FileMgt.UploadFile(Text50000, ExcelFileExtensionTok);
+        /* vL_FileName := cu_FileMgt.UploadFile(Text50000, ExcelFileExtensionTok);
         SheetName := ExcelBuffer.SelectSheetsName(vL_FileName);
-        IF SheetName = '' THEN
-            EXIT;
+        if SheetName = '' then
+            exit;
 
         ExcelBuffer.OpenBook(vL_FileName, SheetName);
-        ExcelBuffer.ReadSheet;
+        ExcelBuffer.ReadSheet; */
+        IF UploadIntoStream(Text50000, 'C:\TEMP', 'All Files (*.*)|*.*', vL_FileName, Instream) then begin
+            ExcelBuffer.OpenBookStream(Instream, ExcelBuffer.SelectSheetsNameStream(Instream));
+            ExcelBuffer.ReadSheet;
+        end;
         RowNo := 0;
         ColumnNo := 0;
 
-        ExcelBuffer.RESET;
-        ExcelBuffer.FINDLAST;
+        ExcelBuffer.Reset;
+        ExcelBuffer.FindLast;
         RowNoMax := ExcelBuffer."Row No.";
         ColumnNoMax := 15; //ExcelBuffer."Column No.";
 
         vL_RowNo := 0;
-        CLEAR(Window);
+        Clear(Window);
         //Window.OPEN('Record Processing #1###############', MyNext);
         WindowTotalCount := RowNoMax;
         WindowLineCount := 0;
 
 
-        FOR RowNo := 1 TO RowNoMax DO BEGIN
-            ExcelBuffer.SETRANGE("Row No.", RowNo);
+        for RowNo := 1 to RowNoMax do begin
+            ExcelBuffer.SetRange("Row No.", RowNo);
 
             WindowLineCount += 1;
             //Window.UPDATE(1, FORMAT(WindowLineCount) + '/' + FORMAT(WindowTotalCount));
@@ -8361,99 +8370,99 @@ codeunit 50000 "General Mgt."
 
 
 
-            FOR ColumnNo := 1 TO ColumnNoMax DO BEGIN
-                ExcelBuffer.SETRANGE("Column No.", ColumnNo);
-                IF ExcelBuffer.FINDFIRST THEN BEGIN
-                    CASE ColumnNo OF
+            for ColumnNo := 1 to ColumnNoMax do begin
+                ExcelBuffer.SetRange("Column No.", ColumnNo);
+                if ExcelBuffer.FindFirst then begin
+                    case ColumnNo of
                         1:
-                            BEGIN
-                                EVALUATE(Colmn1_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                            begin
+                                Evaluate(Colmn1_Valid, Trim(ExcelBuffer."Cell Value as Text"));
                                 Colmn1_Valid := RemoveDash(Colmn1_Valid);
-                            END;
+                            end;
 
                         2:
-                            BEGIN
-                                EVALUATE(Colmn2_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                            begin
+                                Evaluate(Colmn2_Valid, Trim(ExcelBuffer."Cell Value as Text"));
                                 Colmn2_Valid := RemoveDash(Colmn2_Valid);
-                            END;
+                            end;
 
                         3:
-                            BEGIN
-                                EVALUATE(Colmn3_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                            begin
+                                Evaluate(Colmn3_Valid, Trim(ExcelBuffer."Cell Value as Text"));
                                 Colmn3_Valid := RemoveDash(Colmn3_Valid);
-                            END;
+                            end;
 
                         4:
-                            BEGIN
-                                EVALUATE(Colmn4_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                            begin
+                                Evaluate(Colmn4_Valid, Trim(ExcelBuffer."Cell Value as Text"));
                                 Colmn4_Valid := RemoveDash(Colmn4_Valid);
-                            END;
+                            end;
 
                         5:
-                            BEGIN
-                                EVALUATE(Colmn5_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                            begin
+                                Evaluate(Colmn5_Valid, Trim(ExcelBuffer."Cell Value as Text"));
                                 Colmn5_Valid := RemoveDash(Colmn5_Valid);
-                            END;
+                            end;
 
                         6:
-                            BEGIN
-                                EVALUATE(Colmn6_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                            begin
+                                Evaluate(Colmn6_Valid, Trim(ExcelBuffer."Cell Value as Text"));
                                 Colmn6_Valid := RemoveDash(Colmn6_Valid);
-                            END;
+                            end;
                         7:
-                            BEGIN
-                                EVALUATE(Colmn7_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                            begin
+                                Evaluate(Colmn7_Valid, Trim(ExcelBuffer."Cell Value as Text"));
                                 Colmn7_Valid := RemoveDash(Colmn7_Valid);
-                            END;
+                            end;
                         8:
-                            BEGIN
-                                EVALUATE(Colmn8_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                            begin
+                                Evaluate(Colmn8_Valid, Trim(ExcelBuffer."Cell Value as Text"));
                                 Colmn8_Valid := RemoveDash(Colmn8_Valid);
-                            END;
+                            end;
                         9:
-                            BEGIN
-                                EVALUATE(Colmn9_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                            begin
+                                Evaluate(Colmn9_Valid, Trim(ExcelBuffer."Cell Value as Text"));
                                 Colmn9_Valid := RemoveDash(Colmn9_Valid);
-                            END;
+                            end;
                         10:
-                            BEGIN
-                                EVALUATE(Colmn10_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                            begin
+                                Evaluate(Colmn10_Valid, Trim(ExcelBuffer."Cell Value as Text"));
                                 Colmn10_Valid := RemoveDash(Colmn10_Valid);
-                            END;
+                            end;
 
                         11:
-                            BEGIN
-                                EVALUATE(Colmn11_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                            begin
+                                Evaluate(Colmn11_Valid, Trim(ExcelBuffer."Cell Value as Text"));
                                 Colmn11_Valid := RemoveDash(Colmn11_Valid);
-                            END;
+                            end;
 
                         12:
-                            BEGIN
-                                EVALUATE(Colmn12_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                            begin
+                                Evaluate(Colmn12_Valid, Trim(ExcelBuffer."Cell Value as Text"));
                                 Colmn12_Valid := RemoveDash(Colmn12_Valid);
-                            END;
+                            end;
 
                         13:
-                            BEGIN
-                                EVALUATE(Colmn13_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                            begin
+                                Evaluate(Colmn13_Valid, Trim(ExcelBuffer."Cell Value as Text"));
                                 Colmn13_Valid := RemoveDash(Colmn13_Valid);
-                            END;
+                            end;
 
                         14:
-                            BEGIN
-                                EVALUATE(Colmn14_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                            begin
+                                Evaluate(Colmn14_Valid, Trim(ExcelBuffer."Cell Value as Text"));
                                 Colmn14_Valid := RemoveDash(Colmn14_Valid);
-                            END;
+                            end;
 
                         15:
-                            BEGIN
-                                EVALUATE(Colmn15_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                            begin
+                                Evaluate(Colmn15_Valid, Trim(ExcelBuffer."Cell Value as Text"));
                                 Colmn15_Valid := RemoveDash(Colmn15_Valid);
-                            END;
-                    END; //end case
+                            end;
+                    end; //end case
 
-                END;//end if
-            END; //end for 2
+                end;//end if
+            end; //end for 2
 
 
             //1 Cross Reference	
@@ -8602,14 +8611,14 @@ codeunit 50000 "General Mgt."
                 end;
 
 
-            END; //end for 1
+            end; //end for 1
             //Window.CLOSE();
 
         end;
     end;
 
 
-    local procedure InsertItemSalesBudget(pBudgetName: code[20]; pColmn1_Valid: Text; pColmn2_Valid: Text; pDate: Date; pQty: Decimal)
+    local procedure InsertItemSalesBudget(pBudgetName: Code[20]; pColmn1_Valid: Text; pColmn2_Valid: Text; pDate: Date; pQty: Decimal)
     var
         ItemBudgetEntry: Record "Item Budget Entry";
         Item: Record Item;
@@ -8620,15 +8629,15 @@ codeunit 50000 "General Mgt."
         Evaluate(PackageQty, pColmn2_Valid);
         vL_ItemNo := '';
 
-        Item.RESET;
-        Item.SETFILTER("Shelf No.", pColmn1_Valid);
-        Item.SETRANGE("Package Qty", PackageQty);
-        if Item.FINDSET then begin
+        Item.Reset;
+        Item.SetFilter("Shelf No.", pColmn1_Valid);
+        Item.SetRange("Package Qty", PackageQty);
+        if Item.FindSet then begin
             vL_ItemNo := Item."No.";
         end else begin
-            Item.RESET;
-            Item.SETFILTER("Shelf No.", pColmn1_Valid);
-            if Item.FINDSET then begin
+            Item.Reset;
+            Item.SetFilter("Shelf No.", pColmn1_Valid);
+            if Item.FindSet then begin
                 vL_ItemNo := Item."No.";
             end;
         end;
@@ -8642,11 +8651,11 @@ codeunit 50000 "General Mgt."
             ItemBudgetEntry.SetRange("Item No.", Item."No.");
             ItemBudgetEntry.SetRange("Source Type", ItemBudgetEntry."Source Type"::Customer);
             ItemBudgetEntry.SetFilter("Source No.", 'CUST00032');
-            IF ItemBudgetEntry.FindSet() THEN BEGIN
+            if ItemBudgetEntry.FindSet() then begin
                 Error(Txt50000, pBudgetName, pDate, Item."No.", pColmn1_Valid, PackageQty);
-            END;
+            end;
 
-            clear(ItemBudgetEntry);
+            Clear(ItemBudgetEntry);
             ItemBudgetEntry.Validate("Analysis Area", ItemBudgetEntry."Analysis Area"::Sales);
             ItemBudgetEntry.Validate("Budget Name", pBudgetName);
             ItemBudgetEntry.Validate(Date, pDate);
@@ -8667,28 +8676,28 @@ codeunit 50000 "General Mgt."
         rL_Item: Record Item;
         rL_ItemCrossReference: Record "Item Reference";
     begin
-        rL_Item.RESET;
-        rL_Item.SETFILTER("Shelf No.", '<>%1', '');
+        rL_Item.Reset;
+        rL_Item.SetFilter("Shelf No.", '<>%1', '');
         rL_Item.SetFilter("No.", 'PFV*');
 
-        if rL_Item.FINDSET then begin
+        if rL_Item.FindSet then begin
             repeat
-                CLEAR(rL_ItemCrossReference);
-                rL_ItemCrossReference.SETFILTER("Item No.", rL_Item."No.");
-                rL_ItemCrossReference.SETRANGE("Reference Type", rL_ItemCrossReference."Reference Type"::Customer);
-                rL_ItemCrossReference.SETFILTER("Reference Type No.", 'CUST00032');
-                rL_ItemCrossReference.SETFILTER("Reference No.", rL_Item."Shelf No.");
-                rL_ItemCrossReference.SETFILTER("Unit of Measure", rL_Item."Sales Unit of Measure");
-                if not rL_ItemCrossReference.FINDSET then begin
-                    CLEAR(rL_ItemCrossReference);
-                    rL_ItemCrossReference.VALIDATE("Item No.", rL_Item."No.");
-                    rL_ItemCrossReference.VALIDATE("Reference Type", rL_ItemCrossReference."Reference Type"::Customer);
-                    rL_ItemCrossReference.VALIDATE("Reference Type No.", 'CUST00032');
-                    rL_ItemCrossReference.VALIDATE("Reference No.", rL_Item."Shelf No.");
-                    rL_ItemCrossReference.VALIDATE(Description, rL_Item.Description);
-                    rL_ItemCrossReference.VALIDATE("Description 2", rL_Item."Description 2");
+                Clear(rL_ItemCrossReference);
+                rL_ItemCrossReference.SetFilter("Item No.", rL_Item."No.");
+                rL_ItemCrossReference.SetRange("Reference Type", rL_ItemCrossReference."Reference Type"::Customer);
+                rL_ItemCrossReference.SetFilter("Reference Type No.", 'CUST00032');
+                rL_ItemCrossReference.SetFilter("Reference No.", rL_Item."Shelf No.");
+                rL_ItemCrossReference.SetFilter("Unit of Measure", rL_Item."Sales Unit of Measure");
+                if not rL_ItemCrossReference.FindSet then begin
+                    Clear(rL_ItemCrossReference);
+                    rL_ItemCrossReference.Validate("Item No.", rL_Item."No.");
+                    rL_ItemCrossReference.Validate("Reference Type", rL_ItemCrossReference."Reference Type"::Customer);
+                    rL_ItemCrossReference.Validate("Reference Type No.", 'CUST00032');
+                    rL_ItemCrossReference.Validate("Reference No.", rL_Item."Shelf No.");
+                    rL_ItemCrossReference.Validate(Description, rL_Item.Description);
+                    rL_ItemCrossReference.Validate("Description 2", rL_Item."Description 2");
                     rL_ItemCrossReference.Validate("Unit of Measure", rL_Item."Sales Unit of Measure");
-                    rL_ItemCrossReference.INSERT(true);
+                    rL_ItemCrossReference.Insert(true);
 
                 end;
             until rL_Item.Next() = 0;
@@ -8704,20 +8713,20 @@ codeunit 50000 "General Mgt."
         rL_ItemCrossReference: Record "Item Reference";
         rL_SalesLine: Record "Sales Line";
     begin
-        rL_Item.RESET;
-        rL_Item.SETFILTER("Shelf No.", '<>%1', '');
+        rL_Item.Reset;
+        rL_Item.SetFilter("Shelf No.", '<>%1', '');
         rL_Item.SetFilter("No.", 'PFV*');
 
-        if rL_Item.FINDSET then begin
+        if rL_Item.FindSet then begin
             repeat
-                CLEAR(rL_ItemCrossReference);
-                rL_ItemCrossReference.SETFILTER("Item No.", rL_Item."No.");
-                rL_ItemCrossReference.SETRANGE("Reference Type", rL_ItemCrossReference."Reference Type"::Customer);
-                rL_ItemCrossReference.SETFILTER("Reference Type No.", 'CUST00032');
-                rL_ItemCrossReference.SETFILTER("Reference No.", rL_Item."Shelf No.");
-                rL_ItemCrossReference.SETFILTER("Unit of Measure", rL_Item."Sales Unit of Measure");
-                if rL_ItemCrossReference.FINDSET then begin
-                    rL_SalesLine.RESET;
+                Clear(rL_ItemCrossReference);
+                rL_ItemCrossReference.SetFilter("Item No.", rL_Item."No.");
+                rL_ItemCrossReference.SetRange("Reference Type", rL_ItemCrossReference."Reference Type"::Customer);
+                rL_ItemCrossReference.SetFilter("Reference Type No.", 'CUST00032');
+                rL_ItemCrossReference.SetFilter("Reference No.", rL_Item."Shelf No.");
+                rL_ItemCrossReference.SetFilter("Unit of Measure", rL_Item."Sales Unit of Measure");
+                if rL_ItemCrossReference.FindSet then begin
+                    rL_SalesLine.Reset;
                     rL_SalesLine.SetRange("Document Type", rL_SalesLine."Document Type"::Quote);
                     rL_SalesLine.SetFilter("Bill-to Customer No.", 'CUST00032');
                     rL_SalesLine.SetFilter("No.", rL_Item."No.");
@@ -8740,13 +8749,13 @@ codeunit 50000 "General Mgt."
         rL_ItemCrossReference: Record "Item Reference";
         SaleLine: Record "Sales Line";
     begin
-        rL_ItemCrossReference.RESET;
-        rL_ItemCrossReference.SETRANGE("Reference Type", rL_ItemCrossReference."Reference Type"::Customer);
-        rL_ItemCrossReference.SETFILTER("Reference Type No.", 'CUST00032');
+        rL_ItemCrossReference.Reset;
+        rL_ItemCrossReference.SetRange("Reference Type", rL_ItemCrossReference."Reference Type"::Customer);
+        rL_ItemCrossReference.SetFilter("Reference Type No.", 'CUST00032');
         rL_ItemCrossReference.SetRange("S. Quote Description", '');
         if rL_ItemCrossReference.FindSet() then begin
             repeat
-                SaleLine.RESET;
+                SaleLine.Reset;
                 SaleLine.SetRange("Document Type", SaleLine."Document Type"::Quote);
                 SaleLine.SetFilter("No.", rL_ItemCrossReference."Item No.");
                 SaleLine.SetFilter("Product Class", '<>%1', '');
@@ -8778,9 +8787,9 @@ codeunit 50000 "General Mgt."
         vL_Index: Integer;
     begin
 
-        SalesHeader.GET(SalesHeader."Document Type"::Quote, pDocumentNo);
+        SalesHeader.Get(SalesHeader."Document Type"::Quote, pDocumentNo);
 
-        rL_SalesLine.RESET;
+        rL_SalesLine.Reset;
         rL_SalesLine.SetRange("Document Type", SalesHeader."Document Type");
         rL_SalesLine.SetFilter("Document No.", SalesHeader."No.");
         if rL_SalesLine.FindSet() then begin
@@ -8807,14 +8816,14 @@ codeunit 50000 "General Mgt."
 
 
         if vL_Date1 <> 0D then begin
-            MATRIX_ColumnCaption[1] := FORMAT(vL_Date1, 0, '<Day,2>/<Month,2>/<Year4>');// + BoxLabel;
-            MATRIX_ColumnCaption[2] := FORMAT(vL_Date2, 0, '<Day,2>/<Month,2>/<Year4>');// + BoxLabel;
-            MATRIX_ColumnCaption[3] := FORMAT(vL_Date3, 0, '<Day,2>/<Month,2>/<Year4>');// + BoxLabel;
-            MATRIX_ColumnCaption[4] := FORMAT(vL_Date4, 0, '<Day,2>/<Month,2>/<Year4>');// + BoxLabel;
-            MATRIX_ColumnCaption[5] := FORMAT(vL_Date5, 0, '<Day,2>/<Month,2>/<Year4>');// + BoxLabel;
-            MATRIX_ColumnCaption[6] := FORMAT(vL_Date6, 0, '<Day,2>/<Month,2>/<Year4>');// + BoxLabel;
-            MATRIX_ColumnCaption[7] := FORMAT(vL_Date7, 0, '<Day,2>/<Month,2>/<Year4>');// + BoxLabel;
-            MATRIX_ColumnCaption[8] := FORMAT(vL_Date8, 0, '<Day,2>/<Month,2>/<Year4>');// + BoxLabel;
+            MATRIX_ColumnCaption[1] := Format(vL_Date1, 0, '<Day,2>/<Month,2>/<Year4>');// + BoxLabel;
+            MATRIX_ColumnCaption[2] := Format(vL_Date2, 0, '<Day,2>/<Month,2>/<Year4>');// + BoxLabel;
+            MATRIX_ColumnCaption[3] := Format(vL_Date3, 0, '<Day,2>/<Month,2>/<Year4>');// + BoxLabel;
+            MATRIX_ColumnCaption[4] := Format(vL_Date4, 0, '<Day,2>/<Month,2>/<Year4>');// + BoxLabel;
+            MATRIX_ColumnCaption[5] := Format(vL_Date5, 0, '<Day,2>/<Month,2>/<Year4>');// + BoxLabel;
+            MATRIX_ColumnCaption[6] := Format(vL_Date6, 0, '<Day,2>/<Month,2>/<Year4>');// + BoxLabel;
+            MATRIX_ColumnCaption[7] := Format(vL_Date7, 0, '<Day,2>/<Month,2>/<Year4>');// + BoxLabel;
+            MATRIX_ColumnCaption[8] := Format(vL_Date8, 0, '<Day,2>/<Month,2>/<Year4>');// + BoxLabel;
         end;
         //headers
         ExcelBuffer.NewRow; //1
@@ -9209,7 +9218,7 @@ codeunit 50000 "General Mgt."
         ExcelBuffer.AddColumn('Έως', false, '', true, false, true, '', ExcelBuffer."Cell Type"::Text);//164
 
 
-        rL_SalesLine.RESET;
+        rL_SalesLine.Reset;
         rL_SalesLine.SetRange("Document Type", rL_SalesLine."Document Type"::Quote);
         rL_SalesLine.SetFilter("Document No.", pDocumentNo);
         if rL_SalesLine.FindSet() then begin
@@ -9512,7 +9521,7 @@ codeunit 50000 "General Mgt."
 
         //add 
 
-        rL_SalesLine.RESET;
+        rL_SalesLine.Reset;
         rL_SalesLine.SetRange("Document Type", rL_SalesLine."Document Type"::Quote);
         rL_SalesLine.SetFilter("Document No.", pDocumentNo);
         if rL_SalesLine.FindSet() then begin
@@ -9584,38 +9593,42 @@ codeunit 50000 "General Mgt."
         Text50000: Label 'Import Excel File';
         ExcelFileExtensionTok: Label '.xlsx';
         ExcelFileExtensionTok2: Label '.xls';
-        vL_LineNo: integer;
+        vL_LineNo: Integer;
         rL_Item: Record Item;
         TmpDecimal: Decimal;
         TmpInteger: Decimal;
         rL_SalesLine: Record "Sales Line";
-
+        Instream: InStream;
     begin
         //open excel file and process 17 rows
-        vL_FileName := cu_FileMgt.UploadFile(Text50000, ExcelFileExtensionTok);
+        /* vL_FileName := cu_FileMgt.UploadFile(Text50000, ExcelFileExtensionTok);
         SheetName := ExcelBuffer.SelectSheetsName(vL_FileName);
-        IF SheetName = '' THEN
-            EXIT;
+        if SheetName = '' then
+            exit;
 
         ExcelBuffer.OpenBook(vL_FileName, SheetName);
-        ExcelBuffer.ReadSheet;
+        ExcelBuffer.ReadSheet; */
+        IF UploadIntoStream(Text50000, 'C:\TEMP', 'All Files (*.*)|*.*', vL_FileName, Instream) then begin
+            ExcelBuffer.OpenBookStream(Instream, ExcelBuffer.SelectSheetsNameStream(Instream));
+            ExcelBuffer.ReadSheet;
+        end;
         RowNo := 0;
         ColumnNo := 0;
 
-        ExcelBuffer.RESET;
-        ExcelBuffer.FINDLAST;
+        ExcelBuffer.Reset;
+        ExcelBuffer.FindLast;
         RowNoMax := ExcelBuffer."Row No.";
         ColumnNoMax := 10; //ExcelBuffer."Column No.";
 
         vL_RowNo := 0;
-        CLEAR(Window);
+        Clear(Window);
         //Window.OPEN('Record Processing #1###############', MyNext);
         WindowTotalCount := RowNoMax;
         WindowLineCount := 0;
 
 
-        FOR RowNo := 2 TO RowNoMax DO BEGIN
-            ExcelBuffer.SETRANGE("Row No.", RowNo);
+        for RowNo := 2 to RowNoMax do begin
+            ExcelBuffer.SetRange("Row No.", RowNo);
 
             WindowLineCount += 1;
             //Window.UPDATE(1, FORMAT(WindowLineCount) + '/' + FORMAT(WindowTotalCount));
@@ -9633,74 +9646,74 @@ codeunit 50000 "General Mgt."
             Colmn9_Valid := '';
             Colmn10_Valid := '';
 
-            FOR ColumnNo := 1 TO ColumnNoMax DO BEGIN
-                ExcelBuffer.SETRANGE("Column No.", ColumnNo);
-                IF ExcelBuffer.FINDFIRST THEN BEGIN
-                    CASE ColumnNo OF
+            for ColumnNo := 1 to ColumnNoMax do begin
+                ExcelBuffer.SetRange("Column No.", ColumnNo);
+                if ExcelBuffer.FindFirst then begin
+                    case ColumnNo of
                         1:
-                            BEGIN
-                                EVALUATE(Colmn1_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                            begin
+                                Evaluate(Colmn1_Valid, Trim(ExcelBuffer."Cell Value as Text"));
 
-                            END;
+                            end;
 
                         2:
-                            BEGIN
-                                EVALUATE(Colmn2_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                            begin
+                                Evaluate(Colmn2_Valid, Trim(ExcelBuffer."Cell Value as Text"));
 
-                            END;
+                            end;
 
                         3:
-                            BEGIN
-                                EVALUATE(Colmn3_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                            begin
+                                Evaluate(Colmn3_Valid, Trim(ExcelBuffer."Cell Value as Text"));
 
-                            END;
+                            end;
 
                         4:
-                            BEGIN
-                                EVALUATE(Colmn4_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                            begin
+                                Evaluate(Colmn4_Valid, Trim(ExcelBuffer."Cell Value as Text"));
 
-                            END;
+                            end;
 
                         5:
-                            BEGIN
-                                EVALUATE(Colmn5_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                            begin
+                                Evaluate(Colmn5_Valid, Trim(ExcelBuffer."Cell Value as Text"));
 
-                            END;
+                            end;
 
                         6:
-                            BEGIN
-                                EVALUATE(Colmn6_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                            begin
+                                Evaluate(Colmn6_Valid, Trim(ExcelBuffer."Cell Value as Text"));
 
-                            END;
+                            end;
                         7:
-                            BEGIN
-                                EVALUATE(Colmn7_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                            begin
+                                Evaluate(Colmn7_Valid, Trim(ExcelBuffer."Cell Value as Text"));
 
-                            END;
+                            end;
 
                         8:
-                            BEGIN
-                                EVALUATE(Colmn8_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                            begin
+                                Evaluate(Colmn8_Valid, Trim(ExcelBuffer."Cell Value as Text"));
 
-                            END;
+                            end;
 
                         9:
-                            BEGIN
-                                EVALUATE(Colmn9_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                            begin
+                                Evaluate(Colmn9_Valid, Trim(ExcelBuffer."Cell Value as Text"));
 
-                            END;
+                            end;
                         10:
-                            BEGIN
-                                EVALUATE(Colmn10_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                            begin
+                                Evaluate(Colmn10_Valid, Trim(ExcelBuffer."Cell Value as Text"));
 
-                            END;
+                            end;
 
 
 
-                    END; //end case
+                    end; //end case
 
-                END;//end if
-            END; //end for 2
+                end;//end if
+            end; //end for 2
 
 
             if (Colmn1_Valid <> '') then begin
@@ -9708,7 +9721,7 @@ codeunit 50000 "General Mgt."
                 Evaluate(TmpInteger, Colmn1_Valid);
                 // if rL_Item.get(Colmn1_Valid);
 
-                rL_SalesLine.RESET;
+                rL_SalesLine.Reset;
                 rL_SalesLine.SetRange("Document Type", rL_SalesLine."Document Type"::Quote);
                 rL_SalesLine.SetFilter("Document No.", pDocNo);
                 rL_SalesLine.SetRange("Line No.", TmpInteger);
@@ -9736,7 +9749,7 @@ codeunit 50000 "General Mgt."
 
                 end;
 
-            END; //end for 1
+            end; //end for 1
                  //Window.CLOSE();
 
         end;
@@ -9752,7 +9765,7 @@ codeunit 50000 "General Mgt."
         Txt50000: Label 'Are you sure to update Document No. %1 Prices %2-%3?';
     begin
 
-        SalesHeader.get(SalesHeader."Document Type"::Quote, pDocumentNo);
+        SalesHeader.Get(SalesHeader."Document Type"::Quote, pDocumentNo);
         vL_StartDate := SalesHeader."Price Update Start Date"; //SalesHeader.GetPriceStartDatePreviousWeek();
         vL_EndDate := SalesHeader."Price Update End Date"; //SalesHeader.GetPriceEndDatePreviousWeek();
 
@@ -9760,13 +9773,13 @@ codeunit 50000 "General Mgt."
             exit;
         end;
 
-        SalesLine.RESET;
+        SalesLine.Reset;
         SalesLine.SetRange("Document Type", SalesLine."Document Type"::Quote);
         SalesLine.SetFilter("Document No.", SalesHeader."No.");
         SalesLine.SetFilter("No.", '<>%1', '');
         if SalesLine.FindSet() then begin
             repeat
-                if rL_Item.GET(SalesLine."No.") then begin
+                if rL_Item.Get(SalesLine."No.") then begin
                     if rL_Item."Category 1" = '' then begin
                         exit;
                     end;
@@ -9820,38 +9833,42 @@ codeunit 50000 "General Mgt."
         Text50000: Label 'Import Excel File';
         ExcelFileExtensionTok: Label '.xlsx';
         ExcelFileExtensionTok2: Label '.xls';
-        vL_LineNo: integer;
+        vL_LineNo: Integer;
         rL_Item: Record Item;
         TmpDecimal: Decimal;
         TmpInteger: Decimal;
         ItemReference: Record "Item Reference";
-
+        Instream: InStream;
     begin
         //open excel file and process 17 rows
-        vL_FileName := cu_FileMgt.UploadFile(Text50000, ExcelFileExtensionTok);
+        /* vL_FileName := cu_FileMgt.UploadFile(Text50000, ExcelFileExtensionTok);
         SheetName := ExcelBuffer.SelectSheetsName(vL_FileName);
-        IF SheetName = '' THEN
-            EXIT;
+        if SheetName = '' then
+            exit;
 
         ExcelBuffer.OpenBook(vL_FileName, SheetName);
-        ExcelBuffer.ReadSheet;
+        ExcelBuffer.ReadSheet; */
+        IF UploadIntoStream(Text50000, 'C:\TEMP', 'All Files (*.*)|*.*', vL_FileName, Instream) then begin
+            ExcelBuffer.OpenBookStream(Instream, ExcelBuffer.SelectSheetsNameStream(Instream));
+            ExcelBuffer.ReadSheet;
+        end;
         RowNo := 0;
         ColumnNo := 0;
 
-        ExcelBuffer.RESET;
-        ExcelBuffer.FINDLAST;
+        ExcelBuffer.Reset;
+        ExcelBuffer.FindLast;
         RowNoMax := ExcelBuffer."Row No.";
         ColumnNoMax := 8; //ExcelBuffer."Column No.";
 
         vL_RowNo := 0;
-        CLEAR(Window);
+        Clear(Window);
         //Window.OPEN('Record Processing #1###############', MyNext);
         WindowTotalCount := RowNoMax;
         WindowLineCount := 0;
 
 
-        FOR RowNo := 2 TO RowNoMax DO BEGIN
-            ExcelBuffer.SETRANGE("Row No.", RowNo);
+        for RowNo := 2 to RowNoMax do begin
+            ExcelBuffer.SetRange("Row No.", RowNo);
 
             WindowLineCount += 1;
             //Window.UPDATE(1, FORMAT(WindowLineCount) + '/' + FORMAT(WindowTotalCount));
@@ -9868,81 +9885,81 @@ codeunit 50000 "General Mgt."
             Colmn8_Valid := '';
 
 
-            FOR ColumnNo := 1 TO ColumnNoMax DO BEGIN
-                ExcelBuffer.SETRANGE("Column No.", ColumnNo);
-                IF ExcelBuffer.FINDFIRST THEN BEGIN
-                    CASE ColumnNo OF
+            for ColumnNo := 1 to ColumnNoMax do begin
+                ExcelBuffer.SetRange("Column No.", ColumnNo);
+                if ExcelBuffer.FindFirst then begin
+                    case ColumnNo of
                         1:
-                            BEGIN
-                                EVALUATE(Colmn1_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                            begin
+                                Evaluate(Colmn1_Valid, Trim(ExcelBuffer."Cell Value as Text"));
 
-                            END;
+                            end;
 
                         2:
-                            BEGIN
-                                EVALUATE(Colmn2_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                            begin
+                                Evaluate(Colmn2_Valid, Trim(ExcelBuffer."Cell Value as Text"));
 
-                            END;
+                            end;
 
                         3:
-                            BEGIN
-                                EVALUATE(Colmn3_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                            begin
+                                Evaluate(Colmn3_Valid, Trim(ExcelBuffer."Cell Value as Text"));
 
-                            END;
+                            end;
 
                         4:
-                            BEGIN
-                                EVALUATE(Colmn4_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                            begin
+                                Evaluate(Colmn4_Valid, Trim(ExcelBuffer."Cell Value as Text"));
 
-                            END;
+                            end;
 
                         5:
-                            BEGIN
-                                EVALUATE(Colmn5_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                            begin
+                                Evaluate(Colmn5_Valid, Trim(ExcelBuffer."Cell Value as Text"));
 
-                            END;
+                            end;
 
                         6:
-                            BEGIN
-                                EVALUATE(Colmn6_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                            begin
+                                Evaluate(Colmn6_Valid, Trim(ExcelBuffer."Cell Value as Text"));
 
-                            END;
+                            end;
                         7:
-                            BEGIN
-                                EVALUATE(Colmn7_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                            begin
+                                Evaluate(Colmn7_Valid, Trim(ExcelBuffer."Cell Value as Text"));
 
-                            END;
+                            end;
 
                         8:
-                            BEGIN
-                                EVALUATE(Colmn8_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                            begin
+                                Evaluate(Colmn8_Valid, Trim(ExcelBuffer."Cell Value as Text"));
 
-                            END;
-
-
+                            end;
 
 
 
-                    END; //end case
 
-                END;//end if
-            END; //end for 2
+
+                    end; //end case
+
+                end;//end if
+            end; //end for 2
 
 
             if (Colmn1_Valid <> '') then begin
-                ItemReference.RESET;
-                ItemReference.SETRANGE("Reference Type", ItemReference."Reference Type"::Customer);
-                ItemReference.SETFILTER("Reference Type No.", 'CUST00032');
-                ItemReference.SETFILTER("Reference No.", Colmn1_Valid);
+                ItemReference.Reset;
+                ItemReference.SetRange("Reference Type", ItemReference."Reference Type"::Customer);
+                ItemReference.SetFilter("Reference Type No.", 'CUST00032');
+                ItemReference.SetFilter("Reference No.", Colmn1_Valid);
                 if ItemReference.FindSet() then begin
 
                     ItemReference.Package := Colmn3_Valid;
-                    ItemReference.EAN := copystr(Colmn4_Valid, 1, 100);
+                    ItemReference.EAN := CopyStr(Colmn4_Valid, 1, 100);
                     ItemReference."Family Code" := Colmn5_Valid;
                     ItemReference.Modify();
                 end;
 
-            END; //end for 1
+            end; //end for 1
                  //Window.CLOSE();
 
         end;
@@ -9958,17 +9975,17 @@ codeunit 50000 "General Mgt."
         if not Confirm(TxtLbl50000, false) then begin
             exit;
         end;
-        rL_SalesShipmentLine.RESET;
+        rL_SalesShipmentLine.Reset;
         rL_SalesShipmentLine.SetFilter("Qty. Requested", '<>%1', 0);
         rL_SalesShipmentLine.SetRange(Quantity, 0);
         if rL_SalesShipmentLine.FindSet() then begin
 
-            Window.OPEN('Record Processing #1###############');
+            Window.Open('Record Processing #1###############');
             WindowTotalCount := rL_SalesShipmentLine.Count;
             WindowLineCount := 0;
             repeat
                 WindowLineCount += 1;
-                Window.UPDATE(1, FORMAT(WindowLineCount) + '/' + FORMAT(WindowTotalCount));
+                Window.Update(1, Format(WindowLineCount) + '/' + Format(WindowTotalCount));
                 if rL_SalesShipmentLine.Quantity = 0 then begin
                     rL_SalesShipmentLine."Qty. Requested" := 0;
                     rL_SalesShipmentLine.Modify();
@@ -9981,7 +9998,7 @@ codeunit 50000 "General Mgt."
     end;
 
     //+1.0.0.204
-    procedure UpdateDeletedSOLine(Var SalesLine: Record "Sales Line")
+    procedure UpdateDeletedSOLine(var SalesLine: Record "Sales Line")
     var
         SalesShptLineSearch: Record "Sales Shipment Line";
         vL_SumTotalQty: Decimal;
@@ -9989,7 +10006,7 @@ codeunit 50000 "General Mgt."
 
         if (SalesLine.Type = SalesLine.Type::Item) and (SalesLine.Quantity = 0) then begin
 
-            SalesShptLineSearch.RESET;
+            SalesShptLineSearch.Reset;
             SalesShptLineSearch.SetFilter("Order No.", SalesLine."Document No.");
             SalesShptLineSearch.SetRange("Order Line No.", SalesLine."Line No.");
             SalesShptLineSearch.SetRange("Posting Date", SalesLine."Posting Date");
@@ -10059,39 +10076,43 @@ codeunit 50000 "General Mgt."
         Text50000: Label 'Import Excel File';
         ExcelFileExtensionTok: Label '.xlsx';
         ExcelFileExtensionTok2: Label '.xls';
-        vL_LineNo: integer;
+        vL_LineNo: Integer;
         rL_Item: Record Item;
         TmpDecimal: Decimal;
         TmpInteger: Decimal;
         ItemReference: Record "Item Reference";
         ShiptoAddress: Record "Ship-to Address";
-
+        Instream: InStream;
     begin
         //open excel file and process 17 rows
-        vL_FileName := cu_FileMgt.UploadFile(Text50000, ExcelFileExtensionTok);
+        /* vL_FileName := cu_FileMgt.UploadFile(Text50000, ExcelFileExtensionTok);
         SheetName := ExcelBuffer.SelectSheetsName(vL_FileName);
-        IF SheetName = '' THEN
-            EXIT;
+        if SheetName = '' then
+            exit;
 
         ExcelBuffer.OpenBook(vL_FileName, SheetName);
-        ExcelBuffer.ReadSheet;
+        ExcelBuffer.ReadSheet; */
+        IF UploadIntoStream(Text50000, 'C:\TEMP', 'All Files (*.*)|*.*', vL_FileName, Instream) then begin
+            ExcelBuffer.OpenBookStream(Instream, ExcelBuffer.SelectSheetsNameStream(Instream));
+            ExcelBuffer.ReadSheet;
+        end;
         RowNo := 0;
         ColumnNo := 0;
 
-        ExcelBuffer.RESET;
-        ExcelBuffer.FINDLAST;
+        ExcelBuffer.Reset;
+        ExcelBuffer.FindLast;
         RowNoMax := ExcelBuffer."Row No.";
         ColumnNoMax := 9; //ExcelBuffer."Column No.";
 
         vL_RowNo := 0;
-        CLEAR(Window);
+        Clear(Window);
         //Window.OPEN('Record Processing #1###############', MyNext);
         WindowTotalCount := RowNoMax;
         WindowLineCount := 0;
 
 
-        FOR RowNo := 2 TO RowNoMax DO BEGIN
-            ExcelBuffer.SETRANGE("Row No.", RowNo);
+        for RowNo := 2 to RowNoMax do begin
+            ExcelBuffer.SetRange("Row No.", RowNo);
 
             WindowLineCount += 1;
             //Window.UPDATE(1, FORMAT(WindowLineCount) + '/' + FORMAT(WindowTotalCount));
@@ -10109,79 +10130,79 @@ codeunit 50000 "General Mgt."
             Colmn9_Valid := '';
 
 
-            FOR ColumnNo := 1 TO ColumnNoMax DO BEGIN
-                ExcelBuffer.SETRANGE("Column No.", ColumnNo);
-                IF ExcelBuffer.FINDFIRST THEN BEGIN
-                    CASE ColumnNo OF
+            for ColumnNo := 1 to ColumnNoMax do begin
+                ExcelBuffer.SetRange("Column No.", ColumnNo);
+                if ExcelBuffer.FindFirst then begin
+                    case ColumnNo of
                         1:
-                            BEGIN
-                                EVALUATE(Colmn1_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                            begin
+                                Evaluate(Colmn1_Valid, Trim(ExcelBuffer."Cell Value as Text"));
 
-                            END;
+                            end;
 
                         2:
-                            BEGIN
-                                EVALUATE(Colmn2_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                            begin
+                                Evaluate(Colmn2_Valid, Trim(ExcelBuffer."Cell Value as Text"));
 
-                            END;
+                            end;
 
                         3:
-                            BEGIN
-                                EVALUATE(Colmn3_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                            begin
+                                Evaluate(Colmn3_Valid, Trim(ExcelBuffer."Cell Value as Text"));
 
-                            END;
+                            end;
 
                         4:
-                            BEGIN
-                                EVALUATE(Colmn4_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                            begin
+                                Evaluate(Colmn4_Valid, Trim(ExcelBuffer."Cell Value as Text"));
 
-                            END;
+                            end;
 
                         5:
-                            BEGIN
-                                EVALUATE(Colmn5_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                            begin
+                                Evaluate(Colmn5_Valid, Trim(ExcelBuffer."Cell Value as Text"));
 
-                            END;
+                            end;
 
                         6:
-                            BEGIN
-                                EVALUATE(Colmn6_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                            begin
+                                Evaluate(Colmn6_Valid, Trim(ExcelBuffer."Cell Value as Text"));
 
-                            END;
+                            end;
                         7:
-                            BEGIN
-                                EVALUATE(Colmn7_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                            begin
+                                Evaluate(Colmn7_Valid, Trim(ExcelBuffer."Cell Value as Text"));
 
-                            END;
+                            end;
 
                         8:
-                            BEGIN
-                                EVALUATE(Colmn8_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                            begin
+                                Evaluate(Colmn8_Valid, Trim(ExcelBuffer."Cell Value as Text"));
 
-                            END;
+                            end;
 
                         9:
-                            BEGIN
-                                EVALUATE(Colmn9_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                            begin
+                                Evaluate(Colmn9_Valid, Trim(ExcelBuffer."Cell Value as Text"));
 
-                            END;
-
-
+                            end;
 
 
 
-                    END; //end case
 
-                END;//end if
-            END; //end for 2
+
+                    end; //end case
+
+                end;//end if
+            end; //end for 2
 
 
             if ((Colmn1_Valid <> '') and (StrLen(Colmn1_Valid) <= 10)) then begin
 
-                ShiptoAddress.RESET;
+                ShiptoAddress.Reset;
                 ShiptoAddress.SetFilter("Customer No.", '%1|%2', 'CUST00166', 'CUST00238');
                 ShiptoAddress.SetFilter(Code, Colmn1_Valid);
-                if ShiptoAddress.findfirst then begin
+                if ShiptoAddress.FindFirst then begin
                     case Colmn7_Valid of
                         'TUESDAY / FRIDAY':
                             begin
@@ -10209,12 +10230,12 @@ codeunit 50000 "General Mgt."
 
                     if ShiptoAddress."Phone No." = '' then begin
                         ShiptoAddress."Phone No." := Colmn4_Valid;
-                        ShiptoAddress.modify();
+                        ShiptoAddress.Modify();
                     end;
 
                     if ShiptoAddress."E-Mail" = '' then begin
                         ShiptoAddress."E-Mail" := Colmn5_Valid;
-                        ShiptoAddress.modify();
+                        ShiptoAddress.Modify();
 
                     end;
 
@@ -10223,7 +10244,7 @@ codeunit 50000 "General Mgt."
 
 
 
-            END; //end for 1
+            end; //end for 1
                  //Window.CLOSE();
 
         end;
@@ -10253,7 +10274,7 @@ codeunit 50000 "General Mgt."
         Text50000: Label 'Import Excel File';
         ExcelFileExtensionTok: Label '.xlsx';
         ExcelFileExtensionTok2: Label '.xls';
-        vL_LineNo: integer;
+        vL_LineNo: Integer;
         rL_Item: Record Item;
         TmpDecimal: Decimal;
         TmpInteger: Decimal;
@@ -10261,34 +10282,38 @@ codeunit 50000 "General Mgt."
         StandardSalesLine: Record "Standard Sales Line";
         Item: Record Item;
         LineNo: Integer;
-
+        Instream: InStream;
     begin
         //open excel file and process 17 rows
-        vL_FileName := cu_FileMgt.UploadFile(Text50000, ExcelFileExtensionTok);
+        /* vL_FileName := cu_FileMgt.UploadFile(Text50000, ExcelFileExtensionTok);
         SheetName := ExcelBuffer.SelectSheetsName(vL_FileName);
-        IF SheetName = '' THEN
-            EXIT;
+        if SheetName = '' then
+            exit;
 
         ExcelBuffer.OpenBook(vL_FileName, SheetName);
-        ExcelBuffer.ReadSheet;
+        ExcelBuffer.ReadSheet; */
+        IF UploadIntoStream(Text50000, 'C:\TEMP', 'All Files (*.*)|*.*', vL_FileName, Instream) then begin
+            ExcelBuffer.OpenBookStream(Instream, ExcelBuffer.SelectSheetsNameStream(Instream));
+            ExcelBuffer.ReadSheet;
+        end;
         RowNo := 0;
         ColumnNo := 0;
 
-        ExcelBuffer.RESET;
-        ExcelBuffer.FINDLAST;
+        ExcelBuffer.Reset;
+        ExcelBuffer.FindLast;
         RowNoMax := ExcelBuffer."Row No.";
         ColumnNoMax := 2; //ExcelBuffer."Column No.";
 
         vL_RowNo := 0;
-        CLEAR(Window);
+        Clear(Window);
         //Window.OPEN('Record Processing #1###############', MyNext);
         WindowTotalCount := RowNoMax;
         WindowLineCount := 0;
         LineNo := 0;
 
 
-        FOR RowNo := 3 TO RowNoMax DO BEGIN
-            ExcelBuffer.SETRANGE("Row No.", RowNo);
+        for RowNo := 3 to RowNoMax do begin
+            ExcelBuffer.SetRange("Row No.", RowNo);
 
             WindowLineCount += 1;
             //Window.UPDATE(1, FORMAT(WindowLineCount) + '/' + FORMAT(WindowTotalCount));
@@ -10298,24 +10323,24 @@ codeunit 50000 "General Mgt."
             Colmn1_Valid := '';
             Colmn2_Valid := '';
 
-            FOR ColumnNo := 1 TO ColumnNoMax DO BEGIN
-                ExcelBuffer.SETRANGE("Column No.", ColumnNo);
-                IF ExcelBuffer.FINDFIRST THEN BEGIN
-                    CASE ColumnNo OF
+            for ColumnNo := 1 to ColumnNoMax do begin
+                ExcelBuffer.SetRange("Column No.", ColumnNo);
+                if ExcelBuffer.FindFirst then begin
+                    case ColumnNo of
                         1:
-                            BEGIN
-                                EVALUATE(Colmn1_Valid, Trim(ExcelBuffer."Cell Value as Text"));
-                            END;
+                            begin
+                                Evaluate(Colmn1_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                            end;
 
                         2:
-                            BEGIN
-                                EVALUATE(Colmn2_Valid, Trim(ExcelBuffer."Cell Value as Text"));
-                            END;
+                            begin
+                                Evaluate(Colmn2_Valid, Trim(ExcelBuffer."Cell Value as Text"));
+                            end;
 
-                    END; //end case
+                    end; //end case
 
-                END;//end if
-            END; //end for 2
+                end;//end if
+            end; //end for 2
 
 
             //Recurring Sales Lines
@@ -10325,14 +10350,14 @@ codeunit 50000 "General Mgt."
                         begin
                             //KFC ITEMS
                             LineNo += 10000;
-                            clear(StandardSalesLine);
-                            StandardSalesLine.validate("Standard Sales Code", 'WEB_KFC');
+                            Clear(StandardSalesLine);
+                            StandardSalesLine.Validate("Standard Sales Code", 'WEB_KFC');
                             StandardSalesLine.Validate("Line No.", LineNo);
-                            StandardSalesLine.Validate(Type, StandardSalesLine.type::Item);
-                            if Item.GET(Colmn1_Valid) then begin
+                            StandardSalesLine.Validate(Type, StandardSalesLine.Type::Item);
+                            if Item.Get(Colmn1_Valid) then begin
                                 StandardSalesLine.Validate("No.", Item."No.");
                                 StandardSalesLine.Validate(Description, Colmn2_Valid);
-                                StandardSalesLine.insert(true);
+                                StandardSalesLine.Insert(true);
                             end;
 
 
@@ -10342,14 +10367,14 @@ codeunit 50000 "General Mgt."
                         begin
                             //PIZZA HUT
                             LineNo += 10000;
-                            clear(StandardSalesLine);
-                            StandardSalesLine.validate("Standard Sales Code", 'WEB_PH');
+                            Clear(StandardSalesLine);
+                            StandardSalesLine.Validate("Standard Sales Code", 'WEB_PH');
                             StandardSalesLine.Validate("Line No.", LineNo);
-                            StandardSalesLine.Validate(Type, StandardSalesLine.type::Item);
-                            if Item.GET(Colmn1_Valid) then begin
+                            StandardSalesLine.Validate(Type, StandardSalesLine.Type::Item);
+                            if Item.Get(Colmn1_Valid) then begin
                                 StandardSalesLine.Validate("No.", Item."No.");
                                 StandardSalesLine.Validate(Description, Colmn2_Valid);
-                                StandardSalesLine.insert(true);
+                                StandardSalesLine.Insert(true);
                             end;
 
                         end;
@@ -10358,14 +10383,14 @@ codeunit 50000 "General Mgt."
                         begin
                             //TACO BELL
                             LineNo += 10000;
-                            clear(StandardSalesLine);
-                            StandardSalesLine.validate("Standard Sales Code", 'WEB_TC');
+                            Clear(StandardSalesLine);
+                            StandardSalesLine.Validate("Standard Sales Code", 'WEB_TC');
                             StandardSalesLine.Validate("Line No.", LineNo);
-                            StandardSalesLine.Validate(Type, StandardSalesLine.type::Item);
-                            if Item.GET(Colmn1_Valid) then begin
+                            StandardSalesLine.Validate(Type, StandardSalesLine.Type::Item);
+                            if Item.Get(Colmn1_Valid) then begin
                                 StandardSalesLine.Validate("No.", Item."No.");
                                 StandardSalesLine.Validate(Description, Colmn2_Valid);
-                                StandardSalesLine.insert(true);
+                                StandardSalesLine.Insert(true);
                             end;
 
                         end;
@@ -10374,14 +10399,14 @@ codeunit 50000 "General Mgt."
                         begin
                             //BURGER KI
                             LineNo += 10000;
-                            clear(StandardSalesLine);
-                            StandardSalesLine.validate("Standard Sales Code", 'WEB_BK');
+                            Clear(StandardSalesLine);
+                            StandardSalesLine.Validate("Standard Sales Code", 'WEB_BK');
                             StandardSalesLine.Validate("Line No.", LineNo);
-                            StandardSalesLine.Validate(Type, StandardSalesLine.type::Item);
-                            if Item.GET(Colmn1_Valid) then begin
+                            StandardSalesLine.Validate(Type, StandardSalesLine.Type::Item);
+                            if Item.Get(Colmn1_Valid) then begin
                                 StandardSalesLine.Validate("No.", Item."No.");
                                 StandardSalesLine.Validate(Description, Colmn2_Valid);
-                                StandardSalesLine.insert(true);
+                                StandardSalesLine.Insert(true);
                             end;
 
                         end;
@@ -10389,7 +10414,7 @@ codeunit 50000 "General Mgt."
 
 
 
-            END; //end for 1
+            end; //end for 1
                  //Window.CLOSE();
 
         end;
@@ -10401,7 +10426,7 @@ codeunit 50000 "General Mgt."
     begin
         OnSchedule := '';
 
-        if ShiptoAddress.GET(pCustomerNo, pShiptoAddress) then begin
+        if ShiptoAddress.Get(pCustomerNo, pShiptoAddress) then begin
             if (ShiptoAddress.Monday) then begin
                 if OnSchedule <> '' then begin
                     OnSchedule += 'Monday';
@@ -10483,20 +10508,20 @@ codeunit 50000 "General Mgt."
         SalesLine: Record "Sales Line";
     begin
 
-        SalesHeader.RESET;
+        SalesHeader.Reset;
         SalesHeader.SetRange("Document Type", SalesHeader."Document Type"::Order);
         SalesHeader.SetRange(Status, SalesHeader.Status::Open);
-        SalesHeader.setfilter("Requested Delivery Date", '<>%1', 0D);
-        SalesHeader.setfilter("Ship-to Code", '<>%1', '');
+        SalesHeader.SetFilter("Requested Delivery Date", '<>%1', 0D);
+        SalesHeader.SetFilter("Ship-to Code", '<>%1', '');
 
-        if SalesHeader.findset then begin
+        if SalesHeader.FindSet then begin
             repeat
-                UserSetup.RESET;
+                UserSetup.Reset;
                 UserSetup.SetFilter("HORECA Customer No.", '<>%1', '');
                 if UserSetup.FindSet() then begin
                     repeat
-                        clear(User);
-                        User.RESET;
+                        Clear(User);
+                        User.Reset;
                         User.SetFilter("User Name", UserSetup."User ID");
                         if User.FindSet() then begin
                             //order has been created from the Horeca user
@@ -10506,41 +10531,41 @@ codeunit 50000 "General Mgt."
                                 if numdays <= 1 then begin
 
                                     //delete zero lines
-                                    rL_SalesLine.RESET;
-                                    rL_SalesLine.SETRANGE("Document Type", SalesHeader."Document Type");
-                                    rL_SalesLine.SETRANGE("Document No.", SalesHeader."No.");
+                                    rL_SalesLine.Reset;
+                                    rL_SalesLine.SetRange("Document Type", SalesHeader."Document Type");
+                                    rL_SalesLine.SetRange("Document No.", SalesHeader."No.");
                                     rL_SalesLine.SetRange(Type, rL_SalesLine.Type::Item);
                                     rL_SalesLine.SetRange(Quantity, 0);
-                                    if rL_SalesLine.FINDSET then begin
+                                    if rL_SalesLine.FindSet then begin
                                         repeat
                                             rL_SalesLine.Delete(true);
-                                        until rL_SalesLine.NEXT = 0;
+                                        until rL_SalesLine.Next = 0;
                                     end;
 
 
 
 
-                                    rL_SalesLine.RESET;
+                                    rL_SalesLine.Reset;
                                     rL_SalesLine.SetRange("Document Type", SalesHeader."Document Type");
                                     rL_SalesLine.SetRange("Document No.", SalesHeader."No.");
                                     rL_SalesLine.SetFilter(Type, '>0');
                                     rL_SalesLine.SetFilter(Quantity, '<>0');
-                                    if rL_SalesLine.findset then begin
+                                    if rL_SalesLine.FindSet then begin
 
                                         //+1.0.0.292
                                         //check if store is allowed the package line
                                         if UserSetup."HORECA Package Item No." <> '' then begin
 
                                             //check if package line exist
-                                            rL_SalesLine2.RESET;
-                                            rL_SalesLine2.SETRANGE("Document Type", SalesHeader."Document Type");
-                                            rL_SalesLine2.SETRANGE("Document No.", SalesHeader."No.");
+                                            rL_SalesLine2.Reset;
+                                            rL_SalesLine2.SetRange("Document Type", SalesHeader."Document Type");
+                                            rL_SalesLine2.SetRange("Document No.", SalesHeader."No.");
                                             rL_SalesLine2.SetRange(Type, rL_SalesLine2.Type::Item);
                                             rL_SalesLine2.SetFilter("No.", UserSetup."HORECA Package Item No.");
                                             if not rL_SalesLine2.FindSet() then begin
                                                 //find the last line no.
                                                 LineNo := 0;
-                                                SalesLine.RESET;
+                                                SalesLine.Reset;
                                                 SalesLine.SetRange("Document Type", SalesHeader."Document Type");
                                                 SalesLine.SetFilter("Document No.", SalesHeader."No.");
                                                 if SalesLine.FindLast() then begin
@@ -10548,9 +10573,9 @@ codeunit 50000 "General Mgt."
                                                 end;
 
                                                 LineNo += 10000;
-                                                clear(SalesLine);
+                                                Clear(SalesLine);
                                                 SalesHeader.SetHideValidationDialog(true);
-                                                SalesLine.validate("Document Type", SalesHeader."Document Type");
+                                                SalesLine.Validate("Document Type", SalesHeader."Document Type");
                                                 SalesLine.Validate("Document No.", SalesHeader."No.");
                                                 SalesLine.Validate("Line No.", LineNo);
                                                 SalesLine.Insert(true);
@@ -10567,7 +10592,7 @@ codeunit 50000 "General Mgt."
 
                                         ReleaseSalesDoc.PerformManualRelease(SalesHeader);
                                         SalesHeader."HORECA Status" := SalesHeader."HORECA Status"::Released;
-                                        SalesHeader.modify;
+                                        SalesHeader.Modify;
                                     end;
 
 
@@ -10586,7 +10611,7 @@ codeunit 50000 "General Mgt."
 
 
 
-            until SalesHeader.next = 0;
+            until SalesHeader.Next = 0;
         end;
 
 
@@ -10622,11 +10647,11 @@ codeunit 50000 "General Mgt."
         NextAdminDate: Date;
 
     begin
-        SRSetup.GET;
-        CompanyInfo.GET;
+        SRSetup.Get;
+        CompanyInfo.Get;
         ShipRowCount := 0;
 
-        UserSetup.RESET;
+        UserSetup.Reset;
         UserSetup.SetFilter("HORECA Customer No.", '<>%1', '');
         if UserSetup.FindSet() then begin
 
@@ -10635,7 +10660,7 @@ codeunit 50000 "General Mgt."
 
 
             repeat
-                UserSetup.testfield("HORECA Min. Order Period");
+                UserSetup.TestField("HORECA Min. Order Period");
                 ReminderDate := CalcDate(UserSetup."HORECA Min. Order Period", WorkDate());
                 MinNextDeliveryDate := ReminderDate;
                 WeekDay := Date2DWY(ReminderDate, 1);
@@ -10644,7 +10669,7 @@ codeunit 50000 "General Mgt."
                 WeekDayAdmin := Date2DWY(WorkDate(), 1);
                 NextAdminDate := CalcDate('+1D', WorkDate());
 
-                ShiptoAddress.RESET;
+                ShiptoAddress.Reset;
                 //ShiptoAddress.SetCurrentKey("Customer No.",Code, City, Name);
                 ShiptoAddress.SetFilter("Customer No.", UserSetup."HORECA Customer No.");
                 ShiptoAddress.SetFilter(Code, '%1', UserSetup."HORECA Ship-to Filter");
@@ -10761,10 +10786,10 @@ codeunit 50000 "General Mgt."
 
 
                         if (NextDeliveryDate1 <> 0D) and (EmailDay) then begin
-                            SalesHeaderCheck.RESET;
+                            SalesHeaderCheck.Reset;
                             SalesHeaderCheck.SetRange("Document Type", SalesHeaderCheck."Document Type"::Order);
                             SalesHeaderCheck.SetFilter("Sell-to Customer No.", ShiptoAddress."Customer No.");
-                            SalesHeaderCheck.SetFilter("Ship-to Code", ShiptoAddress.code);
+                            SalesHeaderCheck.SetFilter("Ship-to Code", ShiptoAddress.Code);
                             SalesHeaderCheck.SetFilter("Requested Delivery Date", '%1', NextDeliveryDate1);
                             if SalesHeaderCheck.Count = 0 then begin
 
@@ -10776,10 +10801,10 @@ codeunit 50000 "General Mgt."
                         end;
 
                         if (EmailDayAdmin) then begin
-                            SalesHeaderCheck.RESET;
+                            SalesHeaderCheck.Reset;
                             SalesHeaderCheck.SetRange("Document Type", SalesHeaderCheck."Document Type"::Order);
                             SalesHeaderCheck.SetFilter("Sell-to Customer No.", ShiptoAddress."Customer No.");
-                            SalesHeaderCheck.SetFilter("Ship-to Code", ShiptoAddress.code);
+                            SalesHeaderCheck.SetFilter("Ship-to Code", ShiptoAddress.Code);
                             SalesHeaderCheck.SetFilter("Requested Delivery Date", '%1', NextAdminDate);
                             if SalesHeaderCheck.Count = 0 then begin
 
@@ -10835,11 +10860,11 @@ codeunit 50000 "General Mgt."
 
         // Message(Text50000, pShiptoAddress.Code + ' ' + pShiptoAddress.Name, pShiptoAddress."E-Mail", pDateCaption, pReminderDate);
 
-        clear(EmailMessage);
-        clear(Email);
-        clear(ToRecipient);
-        clear(CCRecipient);
-        CompanyInfo.GET;
+        Clear(EmailMessage);
+        Clear(Email);
+        Clear(ToRecipient);
+        Clear(CCRecipient);
+        CompanyInfo.Get;
 
         vBody := 'Dear ' + pShiptoAddress.Name + ',<br><br> Please place your order to ' + CompanyInfo.Name + ' for ' + pDateCaption + ' ' + Format(pReminderDate) +
         '</br></br><a href=' + CompanyInfo."Web Portal URL" + '></a>' + CompanyInfo."Web Portal URL" + ' ' +
@@ -10897,26 +10922,26 @@ codeunit 50000 "General Mgt."
         CustomReportSelection: Record "Custom Report Selection";
         ReportID: Integer;
     begin
-        SRSetup.GET;
-        CompanyInfo.GET;
+        SRSetup.Get;
+        CompanyInfo.Get;
         ShipRowCount := 0;
 
-        UserSetup.RESET;
+        UserSetup.Reset;
         UserSetup.SetFilter("HORECA Customer No.", '<>%1', '');
         if UserSetup.FindSet() then begin
 
             //create the admin message
             repeat
-                clear(EmailMessage);
+                Clear(EmailMessage);
                 Clear(Email);
-                clear(AttachementTempBlob);
+                Clear(AttachementTempBlob);
                 ShiptoAddressCount := 0;
                 OrdersPlacedCount := 0;
                 vBodyAdmin := '';
                 vBodyAdmin1 := '';
                 vBodyAdmin2 := '';
 
-                UserSetup.testfield("HORECA Min. Order Period");
+                UserSetup.TestField("HORECA Min. Order Period");
                 ReminderDate := CalcDate('+1D', WorkDate());
                 MinNextDeliveryDate := ReminderDate;
                 WeekDay := Date2DWY(ReminderDate, 1);
@@ -10925,7 +10950,7 @@ codeunit 50000 "General Mgt."
                 //WeekDayAdmin := Date2DWY(WorkDate(), 1);
                 NextAdminDate := CalcDate('+1D', WorkDate());
 
-                ShiptoAddress.RESET;
+                ShiptoAddress.Reset;
                 //ShiptoAddress.SetCurrentKey("Customer No.",Code, City, Name);
                 ShiptoAddress.SetFilter("Customer No.", UserSetup."HORECA Customer No.");
                 ShiptoAddress.SetFilter(Code, '%1', UserSetup."HORECA Ship-to Filter");
@@ -11025,10 +11050,10 @@ codeunit 50000 "General Mgt."
                                 EmailMessage.Create(ToRecipient, 'HORECA Reminder for Managers ' + UserSetup."User ID" + ' ' + Format(ReminderDate), vBodyAdmin, true, CCRecipient, BCCRecipient);
                             end;
 
-                            SalesHeaderCheck.RESET;
+                            SalesHeaderCheck.Reset;
                             SalesHeaderCheck.SetRange("Document Type", SalesHeaderCheck."Document Type"::Order);
                             SalesHeaderCheck.SetFilter("Sell-to Customer No.", ShiptoAddress."Customer No.");
-                            SalesHeaderCheck.SetFilter("Ship-to Code", ShiptoAddress.code);
+                            SalesHeaderCheck.SetFilter("Ship-to Code", ShiptoAddress.Code);
                             SalesHeaderCheck.SetFilter("Requested Delivery Date", '%1', ReminderDate);
                             if SalesHeaderCheck.Count = 0 then begin
 
@@ -11051,27 +11076,27 @@ codeunit 50000 "General Mgt."
                                 recRef.SetView(SalesHeaderCheck.GetView());
 
                                 AttachementTempBlob.CreateOutStream(AttachementOutStream);
-                                ReportSelections.RESET;
+                                ReportSelections.Reset;
                                 ReportSelections.SetRange(Usage, ReportSelections.Usage::"S.Order");
                                 if ReportSelections.FindSet() then begin
 
                                     ReportID := ReportSelections."Report ID";
-                                    CustomReportSelection.RESET;
+                                    CustomReportSelection.Reset;
                                     CustomReportSelection.SetRange(Usage, ReportSelections.Usage);
                                     CustomReportSelection.SetRange("Source Type", 18);
                                     CustomReportSelection.SetFilter("Source No.", SalesHeaderCheck."Bill-to Customer No.");
-                                    if CustomReportSelection.findset then begin
+                                    if CustomReportSelection.FindSet then begin
                                         ReportID := CustomReportSelection."Report ID";
                                     end;
 
                                     //ReportSelections.GetCustomReportSelectionByUsageOption(CustomReportSelection, SalesHeaderCheck."Bill-to Customer No.", ReportSelections.Usage, 18);
 
                                     // Message(FORMAT(ReportID));
-                                    Report.SaveAs(ReportID, '', REPORTFORMAT::Pdf, AttachementOutStream, recRef);
-                                END;
+                                    Report.SaveAs(ReportID, '', ReportFormat::Pdf, AttachementOutStream, recRef);
+                                end;
                                 AttachementTempBlob.CreateInStream(AttachementInstream);
                                 //'Sales Order' +
-                                EmailMessage.AddAttachment(SalesHeaderCheck."Ship-to Code" + ' ' + FORMAT(SalesHeaderCheck."No.") + '.pdf', 'PDF', AttachementInstream);
+                                EmailMessage.AddAttachment(SalesHeaderCheck."Ship-to Code" + ' ' + Format(SalesHeaderCheck."No.") + '.pdf', 'PDF', AttachementInstream);
                             end;
                         end;
 
@@ -11112,8 +11137,8 @@ codeunit 50000 "General Mgt."
                         //create the message above to add the attachments in the loop
                         EmailMessage.SetBody(vBodyAdmin);
                         EmailMessage.SetRecipients(RecipientType::"To", ToRecipient);
-                        EmailMessage.SetRecipients(RecipientType::"Cc", CCRecipient);
-                        EmailMessage.SetRecipients(RecipientType::"Bcc", BCCRecipient);
+                        EmailMessage.SetRecipients(RecipientType::Cc, CCRecipient);
+                        EmailMessage.SetRecipients(RecipientType::Bcc, BCCRecipient);
                         Email.Send(EmailMessage, "Email Scenario"::"Work Order");
                     end;
 
@@ -11138,13 +11163,13 @@ codeunit 50000 "General Mgt."
     begin
         rL_ExcelBuf.NewRow;
         //col 1
-        rL_ExcelBuf.AddColumn('Item No.', FALSE, '', TRUE, FALSE, TRUE, '', rL_ExcelBuf."Cell Type"::Text);
+        rL_ExcelBuf.AddColumn('Item No.', false, '', true, false, true, '', rL_ExcelBuf."Cell Type"::Text);
         //col 2
-        rL_ExcelBuf.AddColumn('Description', FALSE, '', TRUE, FALSE, TRUE, '', rL_ExcelBuf."Cell Type"::Text);
+        rL_ExcelBuf.AddColumn('Description', false, '', true, false, true, '', rL_ExcelBuf."Cell Type"::Text);
         //col 3
-        rL_ExcelBuf.AddColumn('Quantity', FALSE, '', TRUE, FALSE, TRUE, '', rL_ExcelBuf."Cell Type"::Text);
+        rL_ExcelBuf.AddColumn('Quantity', false, '', true, false, true, '', rL_ExcelBuf."Cell Type"::Text);
 
-        SheetNameTxt := FORMAT('ProductionOrder_Template');
+        SheetNameTxt := Format('ProductionOrder_Template');
         rL_ExcelBuf.CreateNewBook(SheetNameTxt);   //Which will create a New Excel Book.
         rL_ExcelBuf.WriteSheet(SheetNameTxt, CompanyName, UserId);  //Write Data in Excel Sheet in New Book.
         rL_ExcelBuf.CloseBook();   //As Writing is complete we will close the book.
@@ -11177,14 +11202,19 @@ codeunit 50000 "General Mgt."
         Text50001: Label 'Please Select Location Code.';
         vL_FileName: Text;
         rptRefreshProductionOrder: Report "Refresh Production Order";
+        Instream: InStream;
     begin
-        vL_FileName := cu_FileMgt.UploadFile(Text50000, ExcelFileExtensionTok);
+        /* vL_FileName := cu_FileMgt.UploadFile(Text50000, ExcelFileExtensionTok);
         SheetName := rL_ExcelBuf.SelectSheetsName(vL_FileName);
-        IF SheetName = '' THEN
-            EXIT;
+        if SheetName = '' then
+            exit;
 
         rL_ExcelBuf.OpenBook(vL_FileName, SheetName);
-        rL_ExcelBuf.ReadSheet;
+        rL_ExcelBuf.ReadSheet; */
+        IF UploadIntoStream(Text50000, 'C:\TEMP', 'All Files (*.*)|*.*', vL_FileName, Instream) then begin
+            rL_ExcelBuf.OpenBookStream(Instream, rL_ExcelBuf.SelectSheetsNameStream(Instream));
+            rL_ExcelBuf.ReadSheet;
+        end;
         RowNo := 0;
         ColumnNo := 0;
 
@@ -11211,17 +11241,17 @@ codeunit 50000 "General Mgt."
         RowNo := 0;
         ColumnNo := 0;
 
-        rL_ExcelBuf.RESET;
-        rL_ExcelBuf.FINDLAST;
+        rL_ExcelBuf.Reset;
+        rL_ExcelBuf.FindLast;
         RowNoMax := rL_ExcelBuf."Row No.";
         ColumnNoMax := 3; //ExcelBuffer."Column No."; //NOD0.2;
 
 
         //popup location
-        Location.RESET;
-        Location.setrange("Use As In-Transit", false);
-        Location.setfilter(code, '<>%1', 'V*');
-        if PAGE.RunModal(PAGE::"Location List", Location) = ACTION::LookupOK then begin
+        Location.Reset;
+        Location.SetRange("Use As In-Transit", false);
+        Location.SetFilter(Code, '<>%1', 'V*');
+        if Page.RunModal(Page::"Location List", Location) = Action::LookupOK then begin
             LocationCode := Location.Code;
         end;
 
@@ -11230,8 +11260,8 @@ codeunit 50000 "General Mgt."
         end;
 
 
-        FOR RowNo := 2 TO RowNoMax DO BEGIN
-            rL_ExcelBuf.SETRANGE("Row No.", RowNo);
+        for RowNo := 2 to RowNoMax do begin
+            rL_ExcelBuf.SetRange("Row No.", RowNo);
 
             //Column1 Item No.
             //Column2 Description
@@ -11241,57 +11271,57 @@ codeunit 50000 "General Mgt."
             Colmn2_Valid := '';
             Colmn3_Valid := '';
 
-            FOR ColumnNo := 1 TO ColumnNoMax DO BEGIN
-                rL_ExcelBuf.SETRANGE("Column No.", ColumnNo);
-                IF rL_ExcelBuf.FINDFIRST THEN BEGIN
-                    CASE ColumnNo OF
+            for ColumnNo := 1 to ColumnNoMax do begin
+                rL_ExcelBuf.SetRange("Column No.", ColumnNo);
+                if rL_ExcelBuf.FindFirst then begin
+                    case ColumnNo of
 
                         1:
-                            BEGIN
-                                EVALUATE(Colmn1_Valid, Trim(rL_ExcelBuf."Cell Value as Text"));
-                            END;
+                            begin
+                                Evaluate(Colmn1_Valid, Trim(rL_ExcelBuf."Cell Value as Text"));
+                            end;
 
                         2:
-                            BEGIN
-                                EVALUATE(Colmn2_Valid, Trim(rL_ExcelBuf."Cell Value as Text"));
-                            END;
+                            begin
+                                Evaluate(Colmn2_Valid, Trim(rL_ExcelBuf."Cell Value as Text"));
+                            end;
                         3:
-                            BEGIN
-                                EVALUATE(Colmn3_Valid, Trim(rL_ExcelBuf."Cell Value as Text"));
-                            END;
+                            begin
+                                Evaluate(Colmn3_Valid, Trim(rL_ExcelBuf."Cell Value as Text"));
+                            end;
 
-                    END; //end case
+                    end; //end case
 
-                END;//end if
-            END; //end for 2
+                end;//end if
+            end; //end for 2
 
             if (Colmn1_Valid <> '') and (Colmn3_Valid <> '') then begin
                 //Message(LocationCode);
-                Item.GET(Colmn1_Valid);
+                Item.Get(Colmn1_Valid);
 
                 Evaluate(tmpDec, Colmn3_Valid);
                 //ProductionOrder
-                clear(ProductionOrder);
-                ProductionOrder.validate(Status, ProductionOrder.Status::Released);
-                ProductionOrder.insert(true);
+                Clear(ProductionOrder);
+                ProductionOrder.Validate(Status, ProductionOrder.Status::Released);
+                ProductionOrder.Insert(true);
 
-                ProductionOrder.validate("Source Type", ProductionOrder."Source Type"::Item);
-                ProductionOrder.validate("Source No.", Item."No.");
-                ProductionOrder.validate(Quantity, tmpDec);
+                ProductionOrder.Validate("Source Type", ProductionOrder."Source Type"::Item);
+                ProductionOrder.Validate("Source No.", Item."No.");
+                ProductionOrder.Validate(Quantity, tmpDec);
                 // ProductionOrder.validate("Packing Agent", Item."Packing Agent");
-                ProductionOrder.validate("Location Code", LocationCode);
-                ProductionOrder.modify(true);
+                ProductionOrder.Validate("Location Code", LocationCode);
+                ProductionOrder.Modify(true);
 
-                commit;
+                Commit;
                 //refresh production order
-                ProdOrder.RESET;
+                ProdOrder.Reset;
                 ProdOrder.SetRange(Status, ProductionOrder.Status);
                 ProdOrder.SetRange("No.", ProductionOrder."No.");
-                clear(rptRefreshProductionOrder);
-                rptRefreshProductionOrder.settableview(ProdOrder);
+                Clear(rptRefreshProductionOrder);
+                rptRefreshProductionOrder.SetTableView(ProdOrder);
                 rptRefreshProductionOrder.UseRequestPage(false);
-                rptRefreshProductionOrder.RUN();
-                commit;
+                rptRefreshProductionOrder.Run();
+                Commit;
                 //clear(ProdOrder);
                 //ProdOrder.SetRange(Status, ProductionOrder.Status);
                 //ProdOrder.SetRange("No.", ProductionOrder."No.");
@@ -11299,9 +11329,100 @@ codeunit 50000 "General Mgt."
 
             end;
 
-        END; //end for 1
+        end; //end for 1
              //-1.0.0.292
 
     end;
+
+    /* procedure DeactivateSurvey(): Boolean
+    var
+        [SecurityFiltering(SecurityFilter::Ignored)]
+        NetPromoterScore: Record "Net Promoter Score";
+        NotSupportedTxt: Label 'Survey is not supported.', Locked = true;
+        NoPermissionTxt: Label 'No permission.', Locked = true;
+        AlreadyDeactivatedTxt: Label 'Survey is already deactivated.', Locked = true;
+        DeactivatedTxt: Label 'Survey is deactivated.', Locked = true;
+    begin
+        if not IsSupported() then begin
+            if GuiAllowed() then
+                Session.LogMessage('00009FX', NotSupportedTxt, Verbosity::Normal, DataClassification::SystemMetadata, TelemetryScope::ExtensionPublisher, 'Category', NpsCategoryTxt);
+            exit(false);
+        end;
+
+        if not NetPromoterScore.WritePermission() then begin
+            Session.LogMessage('00009FY', NoPermissionTxt, Verbosity::Warning, DataClassification::SystemMetadata, TelemetryScope::ExtensionPublisher, 'Category', NpsCategoryTxt);
+            exit(false);
+        end;
+
+        if not NetPromoterScore.Get(UserSecurityId()) then begin
+            Session.LogMessage('00009FZ', AlreadyDeactivatedTxt, Verbosity::Normal, DataClassification::SystemMetadata, TelemetryScope::ExtensionPublisher, 'Category', NpsCategoryTxt);
+            exit(false);
+        end;
+
+        if NetPromoterScore."Send Request" then begin
+            NetPromoterScore."Send Request" := false;
+            NetPromoterScore.Modify();
+            Session.LogMessage('00009G0', DeactivatedTxt, Verbosity::Normal, DataClassification::SystemMetadata, TelemetryScope::ExtensionPublisher, 'Category', NpsCategoryTxt);
+            exit(true);
+        end;
+
+        Session.LogMessage('00009G1', AlreadyDeactivatedTxt, Verbosity::Normal, DataClassification::SystemMetadata, TelemetryScope::ExtensionPublisher, 'Category', NpsCategoryTxt);
+        exit(false);
+    end;
+
+    local procedure IsSupported(): Boolean
+    var
+        EnvironmentInformation: Codeunit "Environment Information";
+    begin
+        if not GuiAllowed() then
+            exit(false);
+
+        if not EnvironmentInformation.IsSaaS() then
+            exit(false);
+
+        if EnvironmentInformation.IsSandbox() then
+            exit(false);
+
+        if EnvironmentInformation.IsFinancials() then
+            exit(not IsMobileDevice())
+        else
+            exit(false);
+    end;
+
+    local procedure IsMobileDevice(): Boolean
+    var
+        ClientTypeManagement: Codeunit "Client Type Management";
+    begin
+        exit(ClientTypeManagement.GetCurrentClientType() in [ClientType::Phone, ClientType::Tablet]);
+    end;
+
+    procedure TryGetCheckUrl(var CheckUrl: Text): Boolean
+    var
+        HttpsTxt: Label 'https://', Locked = true;
+        ValidCheckUrlTxt: Label 'Check URL is valid.', Locked = true;
+        InvalidCheckUrlTxt: Label 'Check URL is invalid.', Locked = true;
+    begin
+        CheckUrl := GetDisplayUrl();
+        if CheckUrl.StartsWith(HttpsTxt) then begin
+            Session.LogMessage('00009G2', ValidCheckUrlTxt, Verbosity::Normal, DataClassification::SystemMetadata, TelemetryScope::ExtensionPublisher, 'Category', NpsCategoryTxt);
+            exit(true);
+        end;
+        Session.LogMessage('00009G3', InvalidCheckUrlTxt, Verbosity::Normal, DataClassification::SystemMetadata, TelemetryScope::ExtensionPublisher, 'Category', NpsCategoryTxt);
+        exit(false);
+    end;
+
+    local procedure GetDisplayUrl(): Text
+    var
+        Puid: Text;
+        Data: Text;
+        BaseUrl: Text;
+        FullUrl: Text;
+    begin
+        BaseUrl := GetApiUrl();
+        Puid := GetPuid();
+        Data := GetDisplayData(Puid);
+        FullUrl := GetFullUrl(BaseUrl, Data);
+        exit(FullUrl);
+    end; */
 
 }

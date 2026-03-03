@@ -20,7 +20,7 @@ tableextension 50142 PurchasesPayablesSetupExt extends "Purchases & Payables Set
         field(50002; "Mand. P.O. Expected Recpt Date"; Boolean)
         {
             DataClassification = ToBeClassified;
-            caption = 'Mandatory P.O. Expected Receipt Date';
+            Caption = 'Mandatory P.O. Expected Receipt Date';
         }
     }
 

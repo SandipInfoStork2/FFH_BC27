@@ -8,6 +8,7 @@ page 50076 "Horeca SIH"
     InsertAllowed = false;
     Editable = false;
     DeleteAllowed = false;
+    ApplicationArea = All;
 
     layout
     {
@@ -20,6 +21,7 @@ page 50076 "Horeca SIH"
                     ApplicationArea = All;
                     Editable = false;
                     Visible = DocNoVisible;
+                    ToolTip = 'Specifies the posted invoice number.';
 
 
                 }
@@ -28,29 +30,34 @@ page 50076 "Horeca SIH"
                 {
                     ApplicationArea = All;
                     Editable = false;
+                    ToolTip = 'Specifies the value of the Sell-to Customer No. field.';
                 }
                 field("Sell-to Customer Name"; Rec."Sell-to Customer Name")
                 {
                     ApplicationArea = All;
                     Editable = false;
+                    ToolTip = 'Specifies the name of the customer that you shipped the items on the invoice to.';
                 }
 
                 field("Ship-to Code"; Rec."Ship-to Code")
                 {
                     ApplicationArea = All;
                     Editable = false;
+                    ToolTip = 'Specifies the address on purchase orders shipped with a drop shipment directly from the vendor to a customer.';
                 }
 
                 field("Ship-to Name"; Rec."Ship-to Name")
                 {
                     ApplicationArea = All;
                     Editable = false;
+                    ToolTip = 'Specifies the name of the customer that the items were shipped to.';
                 }
 
                 field("Ship-to City"; Rec."Ship-to City")
                 {
                     ApplicationArea = All;
                     Editable = false;
+                    ToolTip = 'Specifies the city of the customer on the sales document.';
                 }
 
                 /*
@@ -63,12 +70,13 @@ page 50076 "Horeca SIH"
 
                 group(grpDate)
                 {
-                    caption = '';
+                    Caption = '';
 
-                    field(SystemCreatedAt; SystemCreatedAt)
+                    field(SystemCreatedAt; Rec.SystemCreatedAt)
                     {
                         ApplicationArea = All;
                         Editable = false;
+                        ToolTip = 'Specifies the value of the SystemCreatedAt field.';
                     }
 
                     /*
@@ -84,6 +92,7 @@ page 50076 "Horeca SIH"
                         ApplicationArea = All;
                         Caption = 'On Schedule';
                         Editable = false;
+                        ToolTip = 'Specifies the value of the On Schedule field.';
                     }
 
                     /*
@@ -94,10 +103,11 @@ page 50076 "Horeca SIH"
                     }
                     */
 
-                    field("Posting Date"; "Posting Date")
+                    field("Posting Date"; Rec."Posting Date")
                     {
                         ApplicationArea = All;
                         Editable = false;
+                        ToolTip = 'Specifies the date on which the invoice was posted.';
                     }
 
 
@@ -145,7 +155,7 @@ page 50076 "Horeca SIH"
                 ApplicationArea = Basic, Suite;
                 Editable = IsSalesLinesEditable;
                 Enabled = IsSalesLinesEditable;
-                SubPageLink = "Document No." = FIELD("No.");
+                SubPageLink = "Document No." = field("No.");
                 UpdatePropagation = Both;
             }
         }
@@ -178,7 +188,7 @@ page 50076 "Horeca SIH"
                     CurrPage.SetSelectionFilter(SalesInvoiceHeader);
                     //SalesShptHeader.PrintRecords(true);
 
-                    clear(rptSalesInvoice);
+                    Clear(rptSalesInvoice);
                     rptSalesInvoice.SetTableView(SalesInvoiceHeader);
                     rptSalesInvoice.UseRequestPage(false);
                     rptSalesInvoice.Run();
@@ -193,7 +203,7 @@ page 50076 "Horeca SIH"
         //if DocNoVisible then
         //    CheckCreditMaxBeforeInsert();
 
-        if ("Sell-to Customer No." = '') and (GetFilter("Sell-to Customer No.") <> '') then
+        if (Rec."Sell-to Customer No." = '') and (Rec.GetFilter("Sell-to Customer No.") <> '') then
             CurrPage.Update(false);
     end;
 
@@ -218,13 +228,13 @@ page 50076 "Horeca SIH"
         TempDate1: Date;
         TempDate2: Date;
     begin
-        WorkDescription := GetWorkDescription();
-        OnSchedule := cuGeneralMgt.GetScheduleDays("Sell-to Customer No.", "Ship-to Code");
+        WorkDescription := Rec.GetWorkDescription();
+        OnSchedule := cuGeneralMgt.GetScheduleDays(Rec."Sell-to Customer No.", Rec."Ship-to Code");
 
 
 
 
-        if userSetup.get(UserId) then begin
+        if userSetup.Get(UserId) then begin
             if userSetup."HORECA Customer No." <> '' then begin
                 userSetup.TestField("HORECA Min. Order Period");
 
@@ -232,7 +242,7 @@ page 50076 "Horeca SIH"
                 //WD4	The next 4th day of a week (Thursday)
                 //WD4
 
-                if ShiptoAddress.GET("Sell-to Customer No.", "Ship-to Code") then begin
+                if ShiptoAddress.GET(Rec."Sell-to Customer No.", Rec."Ship-to Code") then begin
                 end;
             end;
         end;
@@ -251,12 +261,12 @@ page 50076 "Horeca SIH"
     var
         myInt: Integer;
     begin
-      
+
     end;
 
     trigger OnDeleteRecord(): Boolean
     begin
-       
+
     end;
 
     trigger OnInit()

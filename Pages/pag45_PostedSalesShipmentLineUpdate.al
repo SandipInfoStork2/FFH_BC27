@@ -10,11 +10,12 @@ page 50045 "Posted Sales Ship. L.-Update"
     ShowFilter = false;
     SourceTable = "Sales Shipment Line";
     SourceTableTemporary = true;
-    Permissions = TableData "Sales Shipment Line" = rm;
+    Permissions = tabledata "Sales Shipment Line" = rm;
+    ApplicationArea = All;
 
     layout
     {
-        area(content)
+        area(Content)
         {
             group(General)
             {
@@ -41,6 +42,7 @@ page 50045 "Posted Sales Ship. L.-Update"
                 {
                     ApplicationArea = Basic, Suite;
                     Editable = false;
+                    ToolTip = 'Specifies what you are selling, such as a product or a fixed asset. You’ll see different lists of things to choose from depending on your choice in the Type field.';
                 }
 
                 field(OldDescription; Rec.Description)
@@ -51,10 +53,11 @@ page 50045 "Posted Sales Ship. L.-Update"
                     Editable = false;
                     Visible = true;
                 }
-                field("Order No."; "Order No.")
+                field("Order No."; Rec."Order No.")
                 {
                     ApplicationArea = Suite;
                     Editable = false;
+                    ToolTip = 'Specifies the value of the Order No. field.';
                 }
             }
             group(Lines)
@@ -101,17 +104,17 @@ page 50045 "Posted Sales Ship. L.-Update"
     trigger OnOpenPage()
     begin
         xSalesShipmentLine := Rec;
-        rG_SalesShipmentHeader.GET(xSalesShipmentLine."Document No.");
+        rG_SalesShipmentHeader.Get(xSalesShipmentLine."Document No.");
     end;
 
     trigger OnQueryClosePage(CloseAction: Action): Boolean
     var
         rL_SalesShipmentine: Record "Sales Shipment Line";
     begin
-        if CloseAction = ACTION::LookupOK then
+        if CloseAction = Action::LookupOK then
             if RecordChanged then begin
                 //CODEUNIT.Run(CODEUNIT::"Shipment Header - Edit", Rec);
-                rL_SalesShipmentine.GET(Rec."Document No.", Rec."Line No.");
+                rL_SalesShipmentine.Get(Rec."Document No.", Rec."Line No.");
                 //rL_SalesShipmentine.Description := Rec.Description;
                 rL_SalesShipmentine."Qty. Requested" := Rec."Qty. Requested";
                 rL_SalesShipmentine.Modify();

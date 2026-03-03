@@ -30,7 +30,7 @@ table 50010 "Lidl Order Archive"
         field(20; "Order Time"; DateTime)
         {
             DataClassification = ToBeClassified;
-            CAption = 'Import DateTime';
+            Caption = 'Import DateTime';
         }
 
         field(30; "Customer No."; Code[20])

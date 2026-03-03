@@ -39,17 +39,17 @@ tableextension 50107 SalesHeaderExt extends "Sales Header"
                 NoValidDays: Integer;
                 MinRequestDate: Date;
             begin
-                if userSetup.get(UserId) then begin
+                if userSetup.Get(UserId) then begin
                     if userSetup."HORECA Customer No." <> '' then begin
                         userSetup.TestField("HORECA Min. Order Period");
                         if "Requested Delivery Date" <> 0D then begin
 
 
-                            MinRequestDate := calcdate(userSetup."HORECA Min. Order Period", WorkDate());
+                            MinRequestDate := CalcDate(userSetup."HORECA Min. Order Period", WorkDate());
 
-                            IF "Requested Delivery Date" < MinRequestDate THEN BEGIN
+                            if "Requested Delivery Date" < MinRequestDate then begin
                                 Error(Text50001, "Requested Delivery Date", MinRequestDate);
-                            END;
+                            end;
 
 
                             WeekDay := Date2DWY("Requested Delivery Date", 1);
@@ -59,7 +59,7 @@ tableextension 50107 SalesHeaderExt extends "Sales Header"
                             NoValidDays := 0;
                             //Message(FORMAT(WeekDay)); //4
 
-                            if ShiptoAddress.GET("Sell-to Customer No.", "Ship-to Code") then begin
+                            if ShiptoAddress.Get("Sell-to Customer No.", "Ship-to Code") then begin
                                 if (ShiptoAddress.Monday) then begin
                                     NoDeliveryDays += 1;
                                     if WeekDay = 1 then begin
@@ -132,9 +132,9 @@ tableextension 50107 SalesHeaderExt extends "Sales Header"
                                 SetHideValidationDialog(true);
 
                                 Validate("Document Date", "Requested Delivery Date");
-                                validate("Order Date", "Requested Delivery Date");
-                                validate("Shipment Date", "Requested Delivery Date");
-                                validate("Posting Date", "Requested Delivery Date");
+                                Validate("Order Date", "Requested Delivery Date");
+                                Validate("Shipment Date", "Requested Delivery Date");
+                                Validate("Posting Date", "Requested Delivery Date");
                             end;
 
                         end; //end user setup
@@ -148,28 +148,28 @@ tableextension 50107 SalesHeaderExt extends "Sales Header"
 
         field(50000; "Total Qty"; Decimal)
         {
-            CalcFormula = Sum("Sales Line".Quantity WHERE("Document Type" = FIELD("Document Type"), "Document No." = FIELD("No.")));
+            CalcFormula = sum("Sales Line".Quantity where("Document Type" = field("Document Type"), "Document No." = field("No.")));
             DecimalPlaces = 0 : 5;
             Editable = false;
             FieldClass = FlowField;
         }
         field(50001; "Total Qty Shipped"; Decimal)
         {
-            CalcFormula = Sum("Sales Line"."Quantity Shipped" WHERE("Document Type" = FIELD("Document Type"), "Document No." = FIELD("No.")));
+            CalcFormula = sum("Sales Line"."Quantity Shipped" where("Document Type" = field("Document Type"), "Document No." = field("No.")));
             DecimalPlaces = 0 : 5;
             Editable = false;
             FieldClass = FlowField;
         }
         field(50002; "Total Qty Invoiced"; Decimal)
         {
-            CalcFormula = Sum("Sales Line"."Quantity Invoiced" WHERE("Document Type" = FIELD("Document Type"), "Document No." = FIELD("No.")));
+            CalcFormula = sum("Sales Line"."Quantity Invoiced" where("Document Type" = field("Document Type"), "Document No." = field("No.")));
             DecimalPlaces = 0 : 5;
             Editable = false;
             FieldClass = FlowField;
         }
         field(50003; "Total Qty Received"; Decimal)
         {
-            CalcFormula = Sum("Sales Line"."Return Qty. Received" WHERE("Document Type" = FIELD("Document Type"), "Document No." = FIELD("No.")));
+            CalcFormula = sum("Sales Line"."Return Qty. Received" where("Document Type" = field("Document Type"), "Document No." = field("No.")));
             DecimalPlaces = 0 : 5;
             Editable = false;
             FieldClass = FlowField;
@@ -229,14 +229,14 @@ tableextension 50107 SalesHeaderExt extends "Sales Header"
 
         field(50018; "No. of Lines"; Integer)
         {
-            CalcFormula = Count("Sales Line" WHERE("Document Type" = field("Document Type"), "Document No." = FIELD("No.")));
+            CalcFormula = count("Sales Line" where("Document Type" = field("Document Type"), "Document No." = field("No.")));
             Editable = false;
             FieldClass = FlowField;
         }
 
         field(50019; "No. of New Lines"; Integer)
         {
-            CalcFormula = Count("Sales Line" WHERE("Document Type" = field("Document Type"), "Document No." = FIELD("No."), "Line Source" = filter('<>''''')));
+            CalcFormula = count("Sales Line" where("Document Type" = field("Document Type"), "Document No." = field("No."), "Line Source" = filter('<>''''')));
             Editable = false;
             FieldClass = FlowField;
         }
@@ -275,7 +275,7 @@ tableextension 50107 SalesHeaderExt extends "Sales Header"
         field(50099; "Delivery No."; Code[20])
         {
             DataClassification = ToBeClassified;
-            TableRelation = "Delivery Schedule" WHERE(Status = FILTER(' '));
+            TableRelation = "Delivery Schedule" where(Status = filter(' '));
         }
         field(50100; "Delivery Sequence"; Integer)
         {
@@ -288,7 +288,7 @@ tableextension 50107 SalesHeaderExt extends "Sales Header"
         field(50102; "Transfer-from Code"; Code[10])
         {
             Caption = 'Transfer-from Code';
-            TableRelation = Location WHERE("Use As In-Transit" = CONST(false));
+            TableRelation = Location where("Use As In-Transit" = const(false));
 
             //TAL 1.0.0.201 >>
             trigger OnValidate()
@@ -310,7 +310,7 @@ tableextension 50107 SalesHeaderExt extends "Sales Header"
         field(50103; "Transfer-to Code"; Code[10])
         {
             Caption = 'Transfer-to Code';
-            TableRelation = Location WHERE("Use As In-Transit" = CONST(false));
+            TableRelation = Location where("Use As In-Transit" = const(false));
 
             //TAL 1.0.0.201 >>
             trigger OnValidate()
@@ -374,21 +374,21 @@ tableextension 50107 SalesHeaderExt extends "Sales Header"
         rL_Customer: Record Customer;
     begin
         //+TAL0.3 
-        "Created By" := USERID;
-        "Create Date" := CURRENTDATETIME;
+        "Created By" := UserId;
+        "Create Date" := CurrentDateTime;
         //-TAL0.3 
 
         //+TAL0.3 
-        IF "Sell-to Customer No." = '' THEN BEGIN
-            IF rG_UserSetup.GET(USERID) THEN;
-            IF rG_UserSetup."User Department" = rG_UserSetup."User Department"::"Web Order" THEN BEGIN
-                rL_Customer.RESET;
-                rL_Customer.SETFILTER("Responsibility Center", rG_UserSetup."User ID");
-                IF rL_Customer.FINDSET THEN BEGIN
-                    VALIDATE("Sell-to Customer No.", rG_UserSetup."User ID");
-                END;
-            END;
-        END;
+        if "Sell-to Customer No." = '' then begin
+            if rG_UserSetup.Get(UserId) then;
+            if rG_UserSetup."User Department" = rG_UserSetup."User Department"::"Web Order" then begin
+                rL_Customer.Reset;
+                rL_Customer.SetFilter("Responsibility Center", rG_UserSetup."User ID");
+                if rL_Customer.FindSet then begin
+                    Validate("Sell-to Customer No.", rG_UserSetup."User ID");
+                end;
+            end;
+        end;
         //-TAL0.3 
     end;
 
@@ -399,27 +399,27 @@ tableextension 50107 SalesHeaderExt extends "Sales Header"
         UpdateAmendDate; //TAL0.3 
     end;
 
-    PROCEDURE UpdateAmendDate();
-    BEGIN
-        "Last Modified Date" := CURRENTDATETIME;
-        "Last Modified By" := USERID;
-    END;
+    procedure UpdateAmendDate();
+    begin
+        "Last Modified Date" := CurrentDateTime;
+        "Last Modified By" := UserId;
+    end;
 
-    PROCEDURE PrintAppendixRecords(VAR pSalesHeader: Record 36);
-    VAR
+    procedure PrintAppendixRecords(var pSalesHeader: Record "Sales Header");
+    var
         ReportSelection: Record "Report Selections";
         rpt_ItemTrackingAppendix: Report "Item Tracking Appendix FFH";
         rpt_GrowerReceipt: Report "Grower Receipt";
-        rL_ILE: Record 32;
-    BEGIN
-        IF pSalesHeader.FINDSET THEN BEGIN
-            REPEAT
-                CLEAR(rpt_ItemTrackingAppendix);
+        rL_ILE: Record "Item Ledger Entry";
+    begin
+        if pSalesHeader.FindSet then begin
+            repeat
+                Clear(rpt_ItemTrackingAppendix);
                 rpt_ItemTrackingAppendix.SetSalesOrder("No.");
-                rpt_ItemTrackingAppendix.RUNMODAL;
-            UNTIL pSalesHeader.NEXT = 0;
-        END;
-    END;
+                rpt_ItemTrackingAppendix.RunModal;
+            until pSalesHeader.Next = 0;
+        end;
+    end;
 
     procedure f_CreatePurchaseOrder(SalesHeader: Record "Sales Header"; var SelectedSalesLine: Record "Sales Line")
     var
@@ -430,7 +430,7 @@ tableextension 50107 SalesHeaderExt extends "Sales Header"
         CreatePurchInvOptionQst: Label 'All Lines,Selected Lines';
         CreatePurchInvInstructionTxt: Label 'A purchase order will be created. Select which sales invoice lines to use.';
     begin
-        OptionNumber := DIALOG.StrMenu(CreatePurchInvOptionQst, 1, CreatePurchInvInstructionTxt);
+        OptionNumber := Dialog.StrMenu(CreatePurchInvOptionQst, 1, CreatePurchInvInstructionTxt);
 
         if OptionNumber = 0 then
             exit;
@@ -451,7 +451,7 @@ tableextension 50107 SalesHeaderExt extends "Sales Header"
 
             CreatePurchaseHeader(PurchaseHeader, SalesHeader, Vendor);
             CopySalesLinesToPurchaseLines(PurchaseHeader, SalesLine);
-            PAGE.Run(PAGE::"Purchase Order", PurchaseHeader);
+            Page.Run(Page::"Purchase Order", PurchaseHeader);
         end;
     end;
 
@@ -486,7 +486,7 @@ tableextension 50107 SalesHeaderExt extends "Sales Header"
 
         VendorList.LookupMode(true);
         VendorList.Caption(SelectVentorTxt);
-        if VendorList.RunModal = ACTION::LookupOK then begin
+        if VendorList.RunModal = Action::LookupOK then begin
             VendorList.GetRecord(Vendor);
             exit(true);
         end;
@@ -607,7 +607,7 @@ tableextension 50107 SalesHeaderExt extends "Sales Header"
     var
         SRSetup: Record "Sales & Receivables Setup";
     begin
-        SRSetup.GET;
+        SRSetup.Get;
         "Price Start Date" := 0D;
         "Price End Date" := 0D;
 
@@ -645,7 +645,7 @@ tableextension 50107 SalesHeaderExt extends "Sales Header"
     var
         UserSetup: Record "User Setup";
     begin
-        UserSetup.GET(UserId);
+        UserSetup.Get(UserId);
         UserSetup.TestField("HORECA Customer No.");
         UserSetup.TestField("HORECA Ship-to Filter");
 
@@ -680,7 +680,7 @@ tableextension 50107 SalesHeaderExt extends "Sales Header"
 
     procedure GetHorecaStatusStyleText() StatusStyleText: Text
     begin
-        if "Horeca Status" = "Horeca Status"::Open then
+        if "HORECA Status" = "HORECA Status"::Open then
             StatusStyleText := 'Favorable'
         else
             StatusStyleText := 'Strong';

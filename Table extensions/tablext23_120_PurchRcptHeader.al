@@ -41,12 +41,12 @@ tableextension 50123 PurchRcptHeaderExt extends "Purch. Rcpt. Header"
         field(50102; "Transfer-from Code"; Code[10])
         {
             Caption = 'Transfer-from Code';
-            TableRelation = Location WHERE("Use As In-Transit" = CONST(false));
+            TableRelation = Location where("Use As In-Transit" = const(false));
         }
         field(50103; "Transfer-to Code"; Code[10])
         {
             Caption = 'Transfer-to Code';
-            TableRelation = Location WHERE("Use As In-Transit" = CONST(false));
+            TableRelation = Location where("Use As In-Transit" = const(false));
         }
 
         field(50146; "Receiving Temperature"; Decimal)
@@ -62,7 +62,7 @@ tableextension 50123 PurchRcptHeaderExt extends "Purch. Rcpt. Header"
         }
     }
 
-    procedure PrintGrowerReceiptRecords(VAR pReceiptHeader: Record "Purch. Rcpt. Header")
+    procedure PrintGrowerReceiptRecords(var pReceiptHeader: Record "Purch. Rcpt. Header")
     var
 
         ReportSelection: Record "Report Selections";
@@ -70,23 +70,23 @@ tableextension 50123 PurchRcptHeaderExt extends "Purch. Rcpt. Header"
         rpt_GrowerReceipt: Report "Grower Receipt";
         rL_ILE: Record "Item Ledger Entry";
     begin
-        IF pReceiptHeader.FINDSET THEN BEGIN
-            REPEAT
-                rL_ILE.RESET;
-                rL_ILE.SETRANGE("Document Type", rL_ILE."Document Type"::"Purchase Receipt");
-                rL_ILE.SETFILTER("Document No.", pReceiptHeader."No.");
-                IF rL_ILE.FINDSET THEN BEGIN
-                    CLEAR(rpt_GrowerReceipt);
-                    rpt_GrowerReceipt.SETTABLEVIEW(rL_ILE);
-                    rpt_GrowerReceipt.RUNMODAL;
-                END;
+        if pReceiptHeader.FindSet then begin
+            repeat
+                rL_ILE.Reset;
+                rL_ILE.SetRange("Document Type", rL_ILE."Document Type"::"Purchase Receipt");
+                rL_ILE.SetFilter("Document No.", pReceiptHeader."No.");
+                if rL_ILE.FindSet then begin
+                    Clear(rpt_GrowerReceipt);
+                    rpt_GrowerReceipt.SetTableView(rL_ILE);
+                    rpt_GrowerReceipt.RunModal;
+                end;
 
 
-            UNTIL pReceiptHeader.NEXT = 0;
-        END;
+            until pReceiptHeader.Next = 0;
+        end;
     end;
 
-    procedure PrintAppendixRecords(VAR pReceiptHeader: Record "Purch. Rcpt. Header")
+    procedure PrintAppendixRecords(var pReceiptHeader: Record "Purch. Rcpt. Header")
     var
 
         ReportSelection: Record "Report Selections";
@@ -94,16 +94,16 @@ tableextension 50123 PurchRcptHeaderExt extends "Purch. Rcpt. Header"
         rpt_GrowerReceipt: Report "Grower Receipt";
         rL_ILE: Record "Item Ledger Entry";
     begin
-        IF pReceiptHeader.FINDSET THEN BEGIN
-            REPEAT
-                CLEAR(rpt_ItemTrackingAppendix);
+        if pReceiptHeader.FindSet then begin
+            repeat
+                Clear(rpt_ItemTrackingAppendix);
                 rpt_ItemTrackingAppendix.SetPurchPostReceipt("No.");
-                rpt_ItemTrackingAppendix.RUNMODAL;
-            UNTIL pReceiptHeader.NEXT = 0;
-        END;
+                rpt_ItemTrackingAppendix.RunModal;
+            until pReceiptHeader.Next = 0;
+        end;
     end;
 
-    procedure PrintAppendixRecordsQuality(VAR pReceiptHeader: Record "Purch. Rcpt. Header")
+    procedure PrintAppendixRecordsQuality(var pReceiptHeader: Record "Purch. Rcpt. Header")
     var
 
         ReportSelection: Record "Report Selections";
@@ -111,13 +111,13 @@ tableextension 50123 PurchRcptHeaderExt extends "Purch. Rcpt. Header"
         rpt_GrowerReceipt: Report "Grower Receipt";
         rL_ILE: Record "Item Ledger Entry";
     begin
-        IF pReceiptHeader.FINDSET THEN BEGIN
-            REPEAT
-                CLEAR(rpt_ItemTrackingAppendix);
+        if pReceiptHeader.FindSet then begin
+            repeat
+                Clear(rpt_ItemTrackingAppendix);
                 rpt_ItemTrackingAppendix.SetPurchPostReceipt("No.");
-                rpt_ItemTrackingAppendix.RUNMODAL;
-            UNTIL pReceiptHeader.NEXT = 0;
-        END;
+                rpt_ItemTrackingAppendix.RunModal;
+            until pReceiptHeader.Next = 0;
+        end;
     end;
 
     trigger OnDelete()

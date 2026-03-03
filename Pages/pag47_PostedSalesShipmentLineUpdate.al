@@ -10,11 +10,12 @@ page 50047 "Posted Sales Line S - Update"
     ShowFilter = false;
     SourceTable = "Sales Shipment Line";
     SourceTableTemporary = true;
-    Permissions = TableData "Sales Shipment Line" = m;
+    Permissions = tabledata "Sales Shipment Line" = m;
+    ApplicationArea = All;
 
     layout
     {
-        area(content)
+        area(Content)
         {
             group(General)
             {
@@ -31,16 +32,17 @@ page 50047 "Posted Sales Line S - Update"
                     Editable = false;
                     ToolTip = 'Specifies the name of customer at the sell-to address.';
                 }
-                field("Posting Date"; rec."Posting Date")
+                field("Posting Date"; Rec."Posting Date")
                 {
                     ApplicationArea = Basic, Suite;
                     Editable = false;
                     ToolTip = 'Specifies the posting date for the entry.';
                 }
-                field("No."; rec."No.")
+                field("No."; Rec."No.")
                 {
                     ApplicationArea = Basic, Suite;
                     Editable = false;
+                    ToolTip = 'Specifies what you are selling, such as a product or a fixed asset. You’ll see different lists of things to choose from depending on your choice in the Type field.';
                 }
             }
             group(Lines)
@@ -58,7 +60,7 @@ page 50047 "Posted Sales Line S - Update"
                 }
 
 
-                field(Description; rec.Description)
+                field(Description; Rec.Description)
                 {
                     ApplicationArea = Suite;
                     Caption = 'Description';
@@ -69,7 +71,7 @@ page 50047 "Posted Sales Line S - Update"
                 //2
                 group(GrpReqCountry)
                 {
-                    caption = '';
+                    Caption = '';
                     field(OldCountryRegionofOriginCode; xSalesShipmentLine."Country/Region of Origin Code")
                     {
                         ApplicationArea = Suite;
@@ -78,7 +80,7 @@ page 50047 "Posted Sales Line S - Update"
                         Editable = false;
                     }
 
-                    field(CountryRegionofOriginCode; rec."Country/Region of Origin Code")
+                    field(CountryRegionofOriginCode; Rec."Country/Region of Origin Code")
                     {
                         ApplicationArea = Suite;
                         Caption = 'Country/Region of Origin Code';
@@ -93,7 +95,7 @@ page 50047 "Posted Sales Line S - Update"
 
                 group(GrpProductClass)
                 {
-                    caption = '';
+                    Caption = '';
                     field(OldProductClass; xSalesShipmentLine."Product Class")
                     {
                         ApplicationArea = Suite;
@@ -102,7 +104,7 @@ page 50047 "Posted Sales Line S - Update"
                         Editable = false;
                     }
 
-                    field(ProductClass; rec."Product Class")
+                    field(ProductClass; Rec."Product Class")
                     {
                         ApplicationArea = Suite;
                         Caption = 'Product Class (Κατηγορία)';
@@ -115,7 +117,7 @@ page 50047 "Posted Sales Line S - Update"
                 //4
                 group(GrpCategory9)
                 {
-                    caption = '';
+                    Caption = '';
 
                     field(OldCategory9; xSalesShipmentLine."Category 9")
                     {
@@ -125,7 +127,7 @@ page 50047 "Posted Sales Line S - Update"
                         Editable = false;
                     }
 
-                    field(Category9; rec."Category 9")
+                    field(Category9; Rec."Category 9")
                     {
                         ApplicationArea = Suite;
                         Caption = 'Potatoes District Region';
@@ -148,17 +150,17 @@ page 50047 "Posted Sales Line S - Update"
     trigger OnOpenPage()
     begin
         xSalesShipmentLine := Rec;
-        rG_SalesShipmentHeader.GET(xSalesShipmentLine."Document No.");
+        rG_SalesShipmentHeader.Get(xSalesShipmentLine."Document No.");
     end;
 
     trigger OnQueryClosePage(CloseAction: Action): Boolean
     var
         rL_SalesShipmentLine: Record "Sales Shipment Line";
     begin
-        if CloseAction = ACTION::LookupOK then
+        if CloseAction = Action::LookupOK then
             if RecordChanged then begin
                 //CODEUNIT.Run(CODEUNIT::"Shipment Header - Edit", Rec);
-                rL_SalesShipmentLine.GET(rec."Document No.", rec."Line No.");
+                rL_SalesShipmentLine.Get(Rec."Document No.", Rec."Line No.");
                 rL_SalesShipmentLine.Description := Rec.Description;
                 rL_SalesShipmentLine."Country/Region of Origin Code" := Rec."Country/Region of Origin Code";
                 rL_SalesShipmentLine."Product Class" := Rec."Product Class";
@@ -175,10 +177,10 @@ page 50047 "Posted Sales Line S - Update"
     local procedure RecordChanged() IsChanged: Boolean
     begin
         IsChanged :=
-         (rec."Description" <> xSalesShipmentLine."Description") or
-          (rec."Country/Region of Origin Code" <> xSalesShipmentLine."Country/Region of Origin Code") or
-          (rec."Product Class" <> xSalesShipmentLine."Product Class") or
-          (rec."Category 9" <> xSalesShipmentLine."Category 9");
+         (Rec.Description <> xSalesShipmentLine.Description) or
+          (Rec."Country/Region of Origin Code" <> xSalesShipmentLine."Country/Region of Origin Code") or
+          (Rec."Product Class" <> xSalesShipmentLine."Product Class") or
+          (Rec."Category 9" <> xSalesShipmentLine."Category 9");
 
         OnAfterRecordChanged(Rec, xSalesShipmentLine, IsChanged);
     end;
@@ -187,7 +189,7 @@ page 50047 "Posted Sales Line S - Update"
     procedure SetRec(SalesShipmentLine: Record "Sales Shipment Line")
     begin
         Rec := SalesShipmentLine;
-        rec.Insert;
+        Rec.Insert;
     end;
 
     [IntegrationEvent(false, false)]

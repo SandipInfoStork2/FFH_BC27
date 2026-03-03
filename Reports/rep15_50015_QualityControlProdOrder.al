@@ -8,6 +8,7 @@ report 50015 "Quality Control Prod. Order"
 
     DefaultLayout = RDLC;
     PreviewMode = PrintLayout;
+    ApplicationArea = All;
 
     dataset
     {
@@ -30,7 +31,7 @@ report 50015 "Quality Control Prod. Order"
             column(UnitofMeasureCode_ItemLedgerEntry; "Item Ledger Entry"."Unit of Measure Code")
             {
             }
-            column(PostingDate_ItemLedgerEntry; FORMAT("Item Ledger Entry"."Posting Date"))
+            column(PostingDate_ItemLedgerEntry; Format("Item Ledger Entry"."Posting Date"))
             {
             }
             column(ItemDescription_ILE; rG_Item.Description)
@@ -51,7 +52,7 @@ report 50015 "Quality Control Prod. Order"
             column(RawGrowerName; "Item Ledger Entry"."Grower Name")
             {
             }
-            column(RawPostingDate; FORMAT(rG_RawPostingDate))
+            column(RawPostingDate; Format(rG_RawPostingDate))
             {
             }
             column(ISOReleaseDate; vG_ISOReleaseDate)
@@ -72,13 +73,13 @@ report 50015 "Quality Control Prod. Order"
                 ItemApplnEntry: Record "Item Application Entry";
             begin
 
-                "Item Ledger Entry".CALCFIELDS("Item Ledger Entry"."Grower Name");
+                "Item Ledger Entry".CalcFields("Item Ledger Entry"."Grower Name");
 
                 //rG_ProductionOrder.GET(rG_ProductionOrder.Status::Finished, "Item Ledger Entry"."Document No.");
-                rG_Item.GET("Item No.");
+                rG_Item.Get("Item No.");
 
                 if LogoOutput then begin
-                    CLEAR(CompanyInfo.Picture);
+                    Clear(CompanyInfo.Picture);
                 end else begin
                     LogoOutput := true;
                 end;
@@ -89,18 +90,18 @@ report 50015 "Quality Control Prod. Order"
                 rG_RawPostingDate := 0D;
 
 
-                ItemApplnEntry.RESET;
-                ItemApplnEntry.SETCURRENTKEY("Outbound Item Entry No.", "Item Ledger Entry No.", "Cost Application");
-                ItemApplnEntry.SETRANGE("Outbound Item Entry No.", "Item Ledger Entry"."Entry No.");
-                ItemApplnEntry.SETRANGE("Item Ledger Entry No.", "Item Ledger Entry"."Entry No.");
-                ItemApplnEntry.SETRANGE("Cost Application", true);
-                if ItemApplnEntry.FIND('-') then
+                ItemApplnEntry.Reset;
+                ItemApplnEntry.SetCurrentKey("Outbound Item Entry No.", "Item Ledger Entry No.", "Cost Application");
+                ItemApplnEntry.SetRange("Outbound Item Entry No.", "Item Ledger Entry"."Entry No.");
+                ItemApplnEntry.SetRange("Item Ledger Entry No.", "Item Ledger Entry"."Entry No.");
+                ItemApplnEntry.SetRange("Cost Application", true);
+                if ItemApplnEntry.Find('-') then
                     repeat
-                        rG_ILE2.GET(ItemApplnEntry."Inbound Item Entry No.");
+                        rG_ILE2.Get(ItemApplnEntry."Inbound Item Entry No.");
                         rG_RawPostingDate := rG_ILE2."Posting Date";
                     //MESSAGE(ItemApplnEntry);
                     //InsertTempEntry(ItemApplnEntry."Inbound Item Entry No.",-ItemApplnEntry.Quantity);
-                    until ItemApplnEntry.NEXT = 0;
+                    until ItemApplnEntry.Next = 0;
 
 
                 /*
@@ -131,11 +132,11 @@ report 50015 "Quality Control Prod. Order"
                 END;
                 */
 
-                vG_Qty := ROUND("Item Ledger Entry".Quantity / "Item Ledger Entry"."Qty. per Unit of Measure", 1);
-                vG_Qty := ABS(vG_Qty);
+                vG_Qty := Round("Item Ledger Entry".Quantity / "Item Ledger Entry"."Qty. per Unit of Measure", 1);
+                vG_Qty := Abs(vG_Qty);
 
                 if vG_Qty = 0 then begin
-                    CurrReport.SKIP();
+                    CurrReport.Skip();
                 end;
                 /*
                 vG_Qty:=0;
@@ -152,12 +153,12 @@ report 50015 "Quality Control Prod. Order"
 
             trigger OnPreDataItem();
             begin
-                CompanyInfo.GET;
-                CompanyInfo.CALCFIELDS(Picture);
+                CompanyInfo.Get;
+                CompanyInfo.CalcFields(Picture);
 
-                vG_ISOReleaseDate := FORMAT(CompanyInfo."ISO Release Date", 0, '<Closing><Day,2>/<Month,2>/<Year4>');
+                vG_ISOReleaseDate := Format(CompanyInfo."ISO Release Date", 0, '<Closing><Day,2>/<Month,2>/<Year4>');
 
-                "Item Ledger Entry".SETCURRENTKEY("Posting Date", "Grower Name", "Item No.");
+                "Item Ledger Entry".SetCurrentKey("Posting Date", "Grower Name", "Item No.");
             end;
         }
     }
@@ -168,7 +169,7 @@ report 50015 "Quality Control Prod. Order"
 
         layout
         {
-            area(content)
+            area(Content)
             {
             }
         }

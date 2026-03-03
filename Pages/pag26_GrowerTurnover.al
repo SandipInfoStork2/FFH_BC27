@@ -10,10 +10,11 @@ page 50026 "Grower Turnover"
     PageType = ListPlus;
     SaveValues = true;
     SourceTable = Grower;
+    ApplicationArea = All;
 
     layout
     {
-        area(content)
+        area(Content)
         {
             group(Options)
             {
@@ -59,10 +60,11 @@ page 50026 "Grower Turnover"
                 field("Customer No. Filter"; vG_CustNoFilter)
                 {
                     DrillDown = false;
-                    DrillDownPageID = "Customer List";
+                    DrillDownPageId = "Customer List";
                     Lookup = true;
-                    LookupPageID = "Customer List";
+                    LookupPageId = "Customer List";
                     TableRelation = Customer;
+                    ToolTip = 'Specifies the value of the vG_CustNoFilter field.';
 
                     trigger OnValidate();
                     begin
@@ -99,7 +101,7 @@ page 50026 "Grower Turnover"
 
     local procedure UpdateSubForm();
     begin
-        CurrPage.GrowerTurnoverLines.PAGE.Set(Rec, PeriodType, AmountType, vG_CustNoFilter);
+        CurrPage.GrowerTurnoverLines.Page.Set(Rec, PeriodType, AmountType, vG_CustNoFilter);
     end;
 
     local procedure DayPeriodTypeOnPush();

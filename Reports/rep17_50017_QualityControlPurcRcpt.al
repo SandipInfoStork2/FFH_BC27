@@ -19,12 +19,13 @@ report 50017 "Quality Control Purc. Rcpt"
 
     DefaultLayout = RDLC;
     PreviewMode = PrintLayout;
+    ApplicationArea = All;
 
     dataset
     {
         dataitem("Item Ledger Entry"; "Item Ledger Entry")
         {
-            DataItemTableView = WHERE("Entry Type" = CONST(Purchase), "Document Type" = CONST("Purchase Receipt"), "Gen. Prod. Posting Group" = FILTER('ST-FRVEG'), "Location Code" = FILTER('ARAD-1|ARAD-5'), Quantity = FILTER(> 0));
+            DataItemTableView = where("Entry Type" = const(Purchase), "Document Type" = const("Purchase Receipt"), "Gen. Prod. Posting Group" = filter('ST-FRVEG'), "Location Code" = filter('ARAD-1|ARAD-5'), Quantity = filter(> 0));
             RequestFilterFields = "Posting Date";
             column(EntryNo_ItemLedgerEntry; "Item Ledger Entry"."Entry No.")
             {
@@ -41,7 +42,7 @@ report 50017 "Quality Control Purc. Rcpt"
             column(UnitofMeasureCode_ItemLedgerEntry; "Item Ledger Entry"."Unit of Measure Code")
             {
             }
-            column(PostingDate_ItemLedgerEntry; FORMAT("Item Ledger Entry"."Posting Date"))
+            column(PostingDate_ItemLedgerEntry; Format("Item Ledger Entry"."Posting Date"))
             {
             }
             column(VendorName_ILE; rG_Vendor.Name)
@@ -59,7 +60,7 @@ report 50017 "Quality Control Purc. Rcpt"
             column(GGN_Grower; rG_Grower.GGN)
             {
             }
-            column(GGNExpireDate_Grower; FORMAT(rG_Grower."GGN Expiry Date"))
+            column(GGNExpireDate_Grower; Format(rG_Grower."GGN Expiry Date"))
             {
             }
             column(PO_OrderNo_PurchaseReceiptHeader; rG_PurchRcptHeader."Order No.")
@@ -81,30 +82,30 @@ report 50017 "Quality Control Purc. Rcpt"
             trigger OnAfterGetRecord();
             begin
 
-                rG_Vendor.GET("Source No.");
-                rG_Item.GET("Item No.");
+                rG_Vendor.Get("Source No.");
+                rG_Item.Get("Item No.");
 
                 if LogoOutput then begin
-                    CLEAR(CompanyInfo.Picture);
+                    Clear(CompanyInfo.Picture);
                 end else begin
                     LogoOutput := true;
                 end;
 
 
-                CLEAR(rG_Grower);
-                if rG_Grower.GET("Item Ledger Entry"."Lot Grower No.") then;
+                Clear(rG_Grower);
+                if rG_Grower.Get("Item Ledger Entry"."Lot Grower No.") then;
 
-                rG_PurchRcptHeader.GET("Item Ledger Entry"."Document No.");
+                rG_PurchRcptHeader.Get("Item Ledger Entry"."Document No.");
             end;
 
             trigger OnPreDataItem();
             begin
-                CompanyInfo.GET;
-                CompanyInfo.CALCFIELDS(Picture);
+                CompanyInfo.Get;
+                CompanyInfo.CalcFields(Picture);
 
 
-                vG_ISOReleaseDate := FORMAT(CompanyInfo."ISO Release Date", 0, '<Closing><Day,2>/<Month,2>/<Year4>');
-                "Item Ledger Entry".SETCURRENTKEY("Posting Date", "Source Type", "Source No.", "Lot Grower No.", "Item No.");
+                vG_ISOReleaseDate := Format(CompanyInfo."ISO Release Date", 0, '<Closing><Day,2>/<Month,2>/<Year4>');
+                "Item Ledger Entry".SetCurrentKey("Posting Date", "Source Type", "Source No.", "Lot Grower No.", "Item No.");
             end;
         }
     }
@@ -115,7 +116,7 @@ report 50017 "Quality Control Purc. Rcpt"
 
         layout
         {
-            area(content)
+            area(Content)
             {
             }
         }

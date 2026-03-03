@@ -10,13 +10,14 @@ report 50063 "Check FFH"
     RDLCLayout = './Layouts/rep63_50063_Check.rdlc';
 
     Caption = 'Check';
-    Permissions = TableData "Bank Account" = m;
+    Permissions = tabledata "Bank Account" = m;
+    ApplicationArea = All;
 
     dataset
     {
         dataitem(VoidGenJnlLine; "Gen. Journal Line")
         {
-            DataItemTableView = SORTING("Journal Template Name", "Journal Batch Name", "Posting Date", "Document No.");
+            DataItemTableView = sorting("Journal Template Name", "Journal Batch Name", "Posting Date", "Document No.");
             RequestFilterFields = "Journal Template Name", "Journal Batch Name", "Posting Date";
 
             trigger OnAfterGetRecord()
@@ -48,7 +49,7 @@ report 50063 "Check FFH"
         }
         dataitem(GenJnlLine; "Gen. Journal Line")
         {
-            DataItemTableView = SORTING("Journal Template Name", "Journal Batch Name", "Posting Date", "Document No.");
+            DataItemTableView = sorting("Journal Template Name", "Journal Batch Name", "Posting Date", "Document No.");
             column(JournalTempName_GenJnlLine; "Journal Template Name")
             {
             }
@@ -63,7 +64,7 @@ report 50063 "Check FFH"
             }
             dataitem(CheckPages; "Integer")
             {
-                DataItemTableView = SORTING(Number);
+                DataItemTableView = sorting(Number);
                 column(CheckToAddr1; CheckToAddr[1])
                 {
                 }
@@ -105,7 +106,7 @@ report 50063 "Check FFH"
                 }
                 dataitem(PrintSettledLoop; "Integer")
                 {
-                    DataItemTableView = SORTING(Number);
+                    DataItemTableView = sorting(Number);
                     MaxIteration = 25;
                     column(NetAmount; NetAmount)
                     {
@@ -425,7 +426,7 @@ report 50063 "Check FFH"
                 }
                 dataitem(PrintCheck; "Integer")
                 {
-                    DataItemTableView = SORTING(Number);
+                    DataItemTableView = sorting(Number);
                     MaxIteration = 1;
                     column(CheckAmountText; CheckAmountText)
                     {
@@ -519,145 +520,142 @@ report 50063 "Check FFH"
                     begin
 
                         if not TestPrint then begin
-                            with GenJnlLine do begin
-                                CheckLedgEntry.Init;
-                                CheckLedgEntry."Bank Account No." := BankAcc2."No.";
-                                CheckLedgEntry."Posting Date" := "Posting Date";
-                                CheckLedgEntry."Document Type" := "Document Type";
-                                CheckLedgEntry."Document No." := UseCheckNo;
-                                CheckLedgEntry.Description := Description;
-                                CheckLedgEntry."Bank Payment Type" := "Bank Payment Type";
-                                CheckLedgEntry."Bal. Account Type" := BalancingType;
-                                CheckLedgEntry."Bal. Account No." := BalancingNo;
-                                if FoundLast then begin
-                                    if TotalLineAmount <= 0 then
-                                        Error(
-                                          Text020,
-                                          UseCheckNo, TotalLineAmount);
-                                    CheckLedgEntry."Entry Status" := CheckLedgEntry."Entry Status"::Printed;
-                                    CheckLedgEntry.Amount := TotalLineAmount;
-                                end else begin
-                                    CheckLedgEntry."Entry Status" := CheckLedgEntry."Entry Status"::Voided;
-                                    CheckLedgEntry.Amount := 0;
-                                end;
-                                CheckLedgEntry."Check Date" := "Posting Date";
-                                CheckLedgEntry."Check No." := UseCheckNo;
-                                CheckManagement.InsertCheck(CheckLedgEntry, RecordId); //VC
+                            CheckLedgEntry.Init;
+                            CheckLedgEntry."Bank Account No." := BankAcc2."No.";
+                            CheckLedgEntry."Posting Date" := GenJnlLine."Posting Date";
+                            CheckLedgEntry."Document Type" := GenJnlLine."Document Type";
+                            CheckLedgEntry."Document No." := UseCheckNo;
+                            CheckLedgEntry.Description := GenJnlLine.Description;
+                            CheckLedgEntry."Bank Payment Type" := GenJnlLine."Bank Payment Type";
+                            CheckLedgEntry."Bal. Account Type" := BalancingType;
+                            CheckLedgEntry."Bal. Account No." := BalancingNo;
+                            if FoundLast then begin
+                                if TotalLineAmount <= 0 then
+                                    Error(
+                                      Text020,
+                                      UseCheckNo, TotalLineAmount);
+                                CheckLedgEntry."Entry Status" := CheckLedgEntry."Entry Status"::Printed;
+                                CheckLedgEntry.Amount := TotalLineAmount;
+                            end else begin
+                                CheckLedgEntry."Entry Status" := CheckLedgEntry."Entry Status"::Voided;
+                                CheckLedgEntry.Amount := 0;
+                            end;
+                            CheckLedgEntry."Check Date" := GenJnlLine."Posting Date";
+                            CheckLedgEntry."Check No." := UseCheckNo;
+                            CheckManagement.InsertCheck(CheckLedgEntry, GenJnlLine.RecordId); //VC
 
-                                if FoundLast then begin
-                                    if BankAcc2."Currency Code" <> '' then
-                                        Currency.Get(BankAcc2."Currency Code")
+                            if FoundLast then begin
+                                if BankAcc2."Currency Code" <> '' then
+                                    Currency.Get(BankAcc2."Currency Code")
+                                else
+                                    Currency.InitRoundingPrecision;
+                                Decimals := CheckLedgEntry.Amount - Round(CheckLedgEntry.Amount, 1, '<');
+                                if StrLen(Format(Decimals)) < StrLen(Format(Currency."Amount Rounding Precision")) then
+                                    if Decimals = 0 then
+                                        CheckAmountText := Format(CheckLedgEntry.Amount, 0, 0) +
+                                          CopyStr(Format(0.01), 2, 1) +
+                                          PadStr('', StrLen(Format(Currency."Amount Rounding Precision")) - 2, '0')
                                     else
-                                        Currency.InitRoundingPrecision;
-                                    Decimals := CheckLedgEntry.Amount - Round(CheckLedgEntry.Amount, 1, '<');
-                                    if StrLen(Format(Decimals)) < StrLen(Format(Currency."Amount Rounding Precision")) then
-                                        if Decimals = 0 then
-                                            CheckAmountText := Format(CheckLedgEntry.Amount, 0, 0) +
-                                              CopyStr(Format(0.01), 2, 1) +
-                                              PadStr('', StrLen(Format(Currency."Amount Rounding Precision")) - 2, '0')
-                                        else
-                                            CheckAmountText := Format(CheckLedgEntry.Amount, 0, 0) +
-                                              PadStr('', StrLen(Format(Currency."Amount Rounding Precision")) - StrLen(Format(Decimals)), '0')
-                                    else
-                                        CheckAmountText := Format(CheckLedgEntry.Amount, 0, 0);
-                                    FormatNoText(DescriptionLine, CheckLedgEntry.Amount, BankAcc2."Currency Code");
-                                    VoidText := '';
+                                        CheckAmountText := Format(CheckLedgEntry.Amount, 0, 0) +
+                                          PadStr('', StrLen(Format(Currency."Amount Rounding Precision")) - StrLen(Format(Decimals)), '0')
+                                else
+                                    CheckAmountText := Format(CheckLedgEntry.Amount, 0, 0);
+                                FormatNoText(DescriptionLine, CheckLedgEntry.Amount, BankAcc2."Currency Code");
+                                VoidText := '';
 
-                                    //GP - 25/08/2014 >>
-                                    Clear(Day);
-                                    Clear(Month);
-                                    Clear(Year);
-                                    Clear(DayText);
-                                    Clear(MonthText);
-                                    Clear(YearText);
+                                //GP - 25/08/2014 >>
+                                Clear(Day);
+                                Clear(Month);
+                                Clear(Year);
+                                Clear(DayText);
+                                Clear(MonthText);
+                                Clear(YearText);
 
-                                    Day := Date2DMY(GenJnlLine."Posting Date", 1);
-                                    Month := Date2DMY(GenJnlLine."Posting Date", 2);
-                                    Year := Date2DMY(GenJnlLine."Posting Date", 3);
+                                Day := Date2DMY(GenJnlLine."Posting Date", 1);
+                                Month := Date2DMY(GenJnlLine."Posting Date", 2);
+                                Year := Date2DMY(GenJnlLine."Posting Date", 3);
 
-                                    if Day < 10 then
-                                        DayText := '0   ' + Format(Day)
-                                    else begin
-                                        DayText := Format(Day);
-                                        DayText := CopyStr(DayText, 1, 1) + '   ' + CopyStr(DayText, 2, 1);
-                                    end;
-
-                                    if Month < 10 then
-                                        MonthText := '0   ' + Format(Month)
-                                    else begin
-                                        MonthText := Format(Month);
-                                        MonthText := CopyStr(MonthText, 1, 1) + '   ' + CopyStr(MonthText, 2, 1);
-                                    end;
-
-                                    YearText := Format(Year);
-                                    YearText := CopyStr(YearText, 1, 1) + '   ' + CopyStr(YearText, 2, 1) + '   ' + CopyStr(YearText, 3, 1) + '   ' + CopyStr(YearText, 4, 1
-                                );
-
-
-                                    TempStr := Format(1.23, 0);
-                                    DecimalPoint := CopyStr(TempStr, 2, 1);
-                                    i := StrPos(CheckAmountText, DecimalPoint); //This will work for all regional settings
-
-                                    if (i <> 0) then begin
-                                        CheckAmt1 := CopyStr(CheckAmountText, 1, i - 1);
-                                        CheckAmt2 := CopyStr(CheckAmountText, i + 1, 2); //CheckAmt2 := COPYSTR(CheckAmountText,i+1,30);
-
-                                        if DelChr(CheckAmt2, '<>', ' ') = '00.00' then CheckAmt2 := '00';
-                                        //IF
-
-                                        CheckAmountText := CheckAmt1 + '   ' + CheckAmt2;
-                                        TestAmt := CheckAmt1 + '.' + CheckAmt2;
-                                    end else begin
-                                        CheckAmountText := CheckAmountText + '   ' + '00';
-                                        TestAmt := TestAmt + '.' + '00';
-                                    end;
-                                    //END /GP - 25/08/2014 >>
-                                    TestAmt1 := CheckAmt1;
-                                    TestAmt2 := CheckAmt2;
-                                    CheckToAddr[1] := vG_CheckToAddress1Temp;
-
-                                end else begin
-                                    Clear(CheckAmountText);
-                                    Clear(DescriptionLine);
-                                    TotalText := Text065;
-                                    DescriptionLine[1] := Text021;
-                                    DescriptionLine[2] := DescriptionLine[1];
-                                    VoidText := Text022;
-                                    //+TAL
-                                    TestAmt := '';
-                                    TestAmt1 := '';
-                                    TestAmt2 := '';
-                                    DayText := '';
-                                    MonthText := '';
-                                    YearText := '';
-
-                                    CheckToAddr[1] := Text066;
-                                    //-TAL
-
+                                if Day < 10 then
+                                    DayText := '0   ' + Format(Day)
+                                else begin
+                                    DayText := Format(Day);
+                                    DayText := CopyStr(DayText, 1, 1) + '   ' + CopyStr(DayText, 2, 1);
                                 end;
+
+                                if Month < 10 then
+                                    MonthText := '0   ' + Format(Month)
+                                else begin
+                                    MonthText := Format(Month);
+                                    MonthText := CopyStr(MonthText, 1, 1) + '   ' + CopyStr(MonthText, 2, 1);
+                                end;
+
+                                YearText := Format(Year);
+                                YearText := CopyStr(YearText, 1, 1) + '   ' + CopyStr(YearText, 2, 1) + '   ' + CopyStr(YearText, 3, 1) + '   ' + CopyStr(YearText, 4, 1
+                            );
+
+
+                                TempStr := Format(1.23, 0);
+                                DecimalPoint := CopyStr(TempStr, 2, 1);
+                                i := StrPos(CheckAmountText, DecimalPoint); //This will work for all regional settings
+
+                                if (i <> 0) then begin
+                                    CheckAmt1 := CopyStr(CheckAmountText, 1, i - 1);
+                                    CheckAmt2 := CopyStr(CheckAmountText, i + 1, 2); //CheckAmt2 := COPYSTR(CheckAmountText,i+1,30);
+
+                                    if DelChr(CheckAmt2, '<>', ' ') = '00.00' then CheckAmt2 := '00';
+                                    //IF
+
+                                    CheckAmountText := CheckAmt1 + '   ' + CheckAmt2;
+                                    TestAmt := CheckAmt1 + '.' + CheckAmt2;
+                                end else begin
+                                    CheckAmountText := CheckAmountText + '   ' + '00';
+                                    TestAmt := TestAmt + '.' + '00';
+                                end;
+                                //END /GP - 25/08/2014 >>
+                                TestAmt1 := CheckAmt1;
+                                TestAmt2 := CheckAmt2;
+                                CheckToAddr[1] := vG_CheckToAddress1Temp;
+
+                            end else begin
+                                Clear(CheckAmountText);
+                                Clear(DescriptionLine);
+                                TotalText := Text065;
+                                DescriptionLine[1] := Text021;
+                                DescriptionLine[2] := DescriptionLine[1];
+                                VoidText := Text022;
+                                //+TAL
+                                TestAmt := '';
+                                TestAmt1 := '';
+                                TestAmt2 := '';
+                                DayText := '';
+                                MonthText := '';
+                                YearText := '';
+
+                                CheckToAddr[1] := Text066;
+                                //-TAL
+
                             end;
 
                             //Move Code above
 
 
-                        end else
-                            with GenJnlLine do begin
-                                CheckLedgEntry.Init;
-                                CheckLedgEntry."Bank Account No." := BankAcc2."No.";
-                                CheckLedgEntry."Posting Date" := "Posting Date";
-                                CheckLedgEntry."Document No." := UseCheckNo;
-                                CheckLedgEntry.Description := Text023;
-                                CheckLedgEntry."Bank Payment Type" := "Bank Payment Type"::"Computer Check";
-                                CheckLedgEntry."Entry Status" := CheckLedgEntry."Entry Status"::"Test Print";
-                                CheckLedgEntry."Check Date" := "Posting Date";
-                                CheckLedgEntry."Check No." := UseCheckNo;
-                                CheckManagement.InsertCheck(CheckLedgEntry, RecordId); //VC
+                        end else begin
+                            CheckLedgEntry.Init;
+                            CheckLedgEntry."Bank Account No." := BankAcc2."No.";
+                            CheckLedgEntry."Posting Date" := GenJnlLine."Posting Date";
+                            CheckLedgEntry."Document No." := UseCheckNo;
+                            CheckLedgEntry.Description := Text023;
+                            CheckLedgEntry."Bank Payment Type" := GenJnlLine."Bank Payment Type"::"Computer Check";
+                            CheckLedgEntry."Entry Status" := CheckLedgEntry."Entry Status"::"Test Print";
+                            CheckLedgEntry."Check Date" := GenJnlLine."Posting Date";
+                            CheckLedgEntry."Check No." := UseCheckNo;
+                            CheckManagement.InsertCheck(CheckLedgEntry, GenJnlLine.RecordId); //VC
 
-                                CheckAmountText := Text024;
-                                DescriptionLine[1] := Text025;
-                                DescriptionLine[2] := DescriptionLine[1];
-                                VoidText := Text022;
-                            end;
+                            CheckAmountText := Text024;
+                            DescriptionLine[1] := Text025;
+                            DescriptionLine[2] := DescriptionLine[1];
+                            VoidText := Text022;
+                        end;
 
                         ChecksPrinted := ChecksPrinted + 1;
                         FirstPage := false;
@@ -991,7 +989,7 @@ report 50063 "Check FFH"
 
         layout
         {
-            area(content)
+            area(Content)
             {
                 group(Options)
                 {
@@ -1000,6 +998,8 @@ report 50063 "Check FFH"
                     {
                         Caption = 'Bank Account';
                         TableRelation = "Bank Account";
+                        ToolTip = 'Specifies the value of the Bank Account field.';
+                        ApplicationArea = All;
 
                         trigger OnValidate()
                         begin
@@ -1009,23 +1009,33 @@ report 50063 "Check FFH"
                     field(LastCheckNo; UseCheckNo)
                     {
                         Caption = 'Last Check No.';
+                        ToolTip = 'Specifies the value of the Last Check No. field.';
+                        ApplicationArea = All;
                     }
                     field(OneCheckPrVendor; OneCheckPrVendor)
                     {
                         Caption = 'One Check per Vendor per Document No.';
                         MultiLine = true;
+                        ToolTip = 'Specifies the value of the One Check per Vendor per Document No. field.';
+                        ApplicationArea = All;
                     }
                     field(ReprintChecks; ReprintChecks)
                     {
                         Caption = 'Reprint Checks';
+                        ToolTip = 'Specifies the value of the Reprint Checks field.';
+                        ApplicationArea = All;
                     }
                     field(TestPrinting; TestPrint)
                     {
                         Caption = 'Test Print';
+                        ToolTip = 'Specifies the value of the Test Print field.';
+                        ApplicationArea = All;
                     }
                     field(PreprintedStub; PreprintedStub)
                     {
                         Caption = 'Preprinted Stub';
+                        ToolTip = 'Specifies the value of the Preprinted Stub field.';
+                        ApplicationArea = All;
                     }
                 }
             }
@@ -1207,7 +1217,6 @@ report 50063 "Check FFH"
         PageCounter: Integer;
         PageSplit: Integer;
 
-    [Scope('Internal')]
     procedure FormatNoText(var NoText: array[2] of Text[80]; No: Decimal; CurrencyCode: Code[10])
     var
         PrintExponent: Boolean;
@@ -1426,7 +1435,7 @@ report 50063 "Check FFH"
         end;
     end;
 
-    [Scope('Internal')]
+
     procedure InitTextVariable()
     begin
         OnesText[1] := Text032;
@@ -1465,7 +1474,7 @@ report 50063 "Check FFH"
         ExponentText[4] := Text061;
     end;
 
-    [Scope('Internal')]
+
     procedure InitializeRequest(BankAcc: Code[20]; LastCheckNo: Code[20]; NewOneCheckPrVend: Boolean; NewReprintChecks: Boolean; NewTestPrint: Boolean; NewPreprintedStub: Boolean)
     begin
         if BankAcc <> '' then
@@ -1478,7 +1487,7 @@ report 50063 "Check FFH"
             end;
     end;
 
-    [Scope('Internal')]
+
     procedure ExchangeAmt(PostingDate: Date; CurrencyCode: Code[10]; CurrencyCode2: Code[10]; Amount: Decimal) Amount2: Decimal
     begin
         if (CurrencyCode <> '') and (CurrencyCode2 = '') then
@@ -1497,7 +1506,6 @@ report 50063 "Check FFH"
                     Amount2 := Amount;
     end;
 
-    [Scope('Internal')]
     procedure ABSMin(Decimal1: Decimal; Decimal2: Decimal): Decimal
     begin
         if Abs(Decimal1) < Abs(Decimal2) then
@@ -1505,7 +1513,6 @@ report 50063 "Check FFH"
         exit(Decimal2);
     end;
 
-    [Scope('Internal')]
     procedure InputBankAccount()
     begin
         if BankAcc2."No." <> '' then begin

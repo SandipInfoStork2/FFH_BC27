@@ -16,9 +16,10 @@ pageextension 50121 SalesCrMemoSubformExt extends "Sales Cr. Memo Subform"
 
         addafter("Description 2")
         {
-            field("Packing Group Description"; "Packing Group Description")
+            field("Packing Group Description"; Rec."Packing Group Description")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Packing Group Description field.';
             }
         }
         modify("Net Weight")
@@ -51,27 +52,30 @@ pageextension 50121 SalesCrMemoSubformExt extends "Sales Cr. Memo Subform"
         {
 
 
-            field("Req. Country"; "Req. Country")
+            field("Req. Country"; Rec."Req. Country")
             {
-                caption = 'Req. Country';
-                ApplicationArea = all;
+                Caption = 'Req. Country';
+                ApplicationArea = All;
                 Visible = false;//TAL 1.0.0.71
                 ToolTip = 'Custom: Req. Country';
             }
 
-            field("Country/Region of Origin Code"; "Country/Region of Origin Code")
+            field("Country/Region of Origin Code"; Rec."Country/Region of Origin Code")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 Visible = true;
+                ToolTip = 'Specifies the value of the Country/Region of Origin Code field.';
             }
 
-            field("Product Class"; "Product Class")
+            field("Product Class"; Rec."Product Class")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Product Class (Κατηγορία) field.';
             }
-            field("Category 9"; "Category 9")
+            field("Category 9"; Rec."Category 9")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Potatoes District Region field.';
             }
         }
 
@@ -89,14 +93,15 @@ pageextension 50121 SalesCrMemoSubformExt extends "Sales Cr. Memo Subform"
         {
             action(ItemTrackingLines2)
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 Caption = 'Item &Tracking Lines';
                 Image = ItemTrackingLines;
-                ShortCutKey = 'Shift+Ctrl+I';
+                ShortcutKey = 'Shift+Ctrl+I';
+                ToolTip = 'Executes the Item &Tracking Lines action.';
 
                 trigger OnAction();
                 begin
-                    OpenItemTrackingLines;
+                    Rec.OpenItemTrackingLines;
                 end;
             }
         }
@@ -107,7 +112,7 @@ pageextension 50121 SalesCrMemoSubformExt extends "Sales Cr. Memo Subform"
     var
         UserSetup: Record "User Setup";
     begin
-        UserSetup.GET(UserId);
+        UserSetup.Get(UserId);
         UnitCostEditable := UserSetup."Unit Cost Editable";
     end;
     //-1.0.0.228

@@ -23,9 +23,10 @@ pageextension 50116 SalesInvoiceSubformExt extends "Sales Invoice Subform"
 
         addafter("Description 2")
         {
-            field("Packing Group Description"; "Packing Group Description")
+            field("Packing Group Description"; Rec."Packing Group Description")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Packing Group Description field.';
             }
         }
 
@@ -46,21 +47,25 @@ pageextension 50116 SalesInvoiceSubformExt extends "Sales Invoice Subform"
 
         addafter("Line No.")
         {
-            field("Quantity (Base)"; "Quantity (Base)")
+            field("Quantity (Base)"; Rec."Quantity (Base)")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Quantity (Base) field.';
             }
-            field("Qty. per Unit of Measure"; "Qty. per Unit of Measure")
+            field("Qty. per Unit of Measure"; Rec."Qty. per Unit of Measure")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies an auto-filled number if you have included Sales Unit of Measure on the item card and a quantity in the Qty. per Unit of Measure field.';
             }
-            field("Unit of Measure (Base)"; "Unit of Measure (Base)")
+            field("Unit of Measure (Base)"; Rec."Unit of Measure (Base)")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Unit of Measure (Base) field.';
             }
-            field("Shelf No."; "Shelf No.")
+            field("Shelf No."; Rec."Shelf No.")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Shelf No. field.';
             }
 
 
@@ -75,13 +80,15 @@ pageextension 50116 SalesInvoiceSubformExt extends "Sales Invoice Subform"
 
         addafter(ShortcutDimCode8)
         {
-            field("Shipping Temperature"; "Shipping Temperature")
+            field("Shipping Temperature"; Rec."Shipping Temperature")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Shipping Temperature °C field.';
             }
-            field("Shipping Quality Control"; "Shipping Quality Control")
+            field("Shipping Quality Control"; Rec."Shipping Quality Control")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Shipping Quality Control field.';
             }
 
             //field("Country/Region of Origin Code"; "Country/Region of Origin Code")
@@ -95,27 +102,30 @@ pageextension 50116 SalesInvoiceSubformExt extends "Sales Invoice Subform"
         {
 
 
-            field("Req. Country"; "Req. Country")
+            field("Req. Country"; Rec."Req. Country")
             {
-                caption = 'Req. Country';
-                ApplicationArea = all;
+                Caption = 'Req. Country';
+                ApplicationArea = All;
                 Visible = false;//TAL 1.0.0.71
                 ToolTip = 'Custom: Req. Country';
             }
 
-            field("Country/Region of Origin Code"; "Country/Region of Origin Code")
+            field("Country/Region of Origin Code"; Rec."Country/Region of Origin Code")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 Visible = true;
+                ToolTip = 'Specifies the value of the Country/Region of Origin Code field.';
             }
 
-            field("Product Class"; "Product Class")
+            field("Product Class"; Rec."Product Class")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Product Class (Κατηγορία) field.';
             }
-            field("Category 9"; "Category 9")
+            field("Category 9"; Rec."Category 9")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Potatoes District Region field.';
             }
         }
     }
@@ -132,17 +142,17 @@ pageextension 50116 SalesInvoiceSubformExt extends "Sales Invoice Subform"
             begin
                 //+TAL0.2
 
-                rL_SalesLine.RESET;
-                rL_SalesLine.SETRANGE("Document Type", "Document Type");
-                rL_SalesLine.SETFILTER("Document No.", "Document No.");
-                rL_SalesLine.SETRANGE(Type, rL_SalesLine.Type::Item);
-                if rL_SalesLine.FINDSET then begin
-                    rL_SalesHeader.GET("Document Type", "Document No.");
-                    rL_SalesHeader.TESTFIELD("Posting Date");
+                rL_SalesLine.Reset;
+                rL_SalesLine.SETRANGE("Document Type", Rec."Document Type");
+                rL_SalesLine.SETFILTER("Document No.", Rec."Document No.");
+                rL_SalesLine.SetRange(Type, rL_SalesLine.Type::Item);
+                if rL_SalesLine.FindSet then begin
+                    rL_SalesHeader.GET(Rec."Document Type", Rec."Document No.");
+                    rL_SalesHeader.TestField("Posting Date");
                     repeat
-                        rL_SalesLine.VALIDATE(Quantity);
-                        rL_SalesLine.MODIFY;
-                    until rL_SalesLine.NEXT = 0;
+                        rL_SalesLine.Validate(Quantity);
+                        rL_SalesLine.Modify;
+                    until rL_SalesLine.Next = 0;
                 end;
 
                 //-TAL0.2
@@ -154,14 +164,15 @@ pageextension 50116 SalesInvoiceSubformExt extends "Sales Invoice Subform"
         {
             action(ItemTrackingLines2)
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 Caption = 'Item &Tracking Lines';
                 Image = ItemTrackingLines;
-                ShortCutKey = 'Shift+Ctrl+I';
+                ShortcutKey = 'Shift+Ctrl+I';
+                ToolTip = 'Executes the Item &Tracking Lines action.';
 
                 trigger OnAction();
                 begin
-                    OpenItemTrackingLines;
+                    Rec.OpenItemTrackingLines;
                 end;
             }
         }
@@ -172,7 +183,7 @@ pageextension 50116 SalesInvoiceSubformExt extends "Sales Invoice Subform"
     var
         UserSetup: Record "User Setup";
     begin
-        UserSetup.GET(UserId);
+        UserSetup.Get(UserId);
         UnitCostEditable := UserSetup."Unit Cost Editable";
     end;
     //-1.0.0.228

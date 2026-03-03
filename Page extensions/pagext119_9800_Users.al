@@ -1,4 +1,4 @@
-pageextension 50219 UsersExt extends "Users"
+pageextension 50219 UsersExt extends Users
 {
     layout
     {

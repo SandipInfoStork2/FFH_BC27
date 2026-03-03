@@ -16,7 +16,7 @@ pageextension 50113 SalesInvoiceExt extends "Sales Invoice"
 
         addafter("Sell-to Customer Name")
         {
-            field("Bill-to Name2"; "Bill-to Name")
+            field("Bill-to Name2"; Rec."Bill-to Name")
             {
                 ApplicationArea = Basic, Suite;
                 Caption = 'Bill-to Name';
@@ -30,9 +30,9 @@ pageextension 50113 SalesInvoiceExt extends "Sales Invoice"
                 var
                     ApplicationAreaMgmtFacade: Codeunit "Application Area Mgmt. Facade";
                 begin
-                    if GetFilter("Bill-to Customer No.") = xRec."Bill-to Customer No." then
-                        if "Bill-to Customer No." <> xRec."Bill-to Customer No." then
-                            SetRange("Bill-to Customer No.");
+                    if Rec.GetFilter("Bill-to Customer No.") = xRec."Bill-to Customer No." then
+                        if Rec."Bill-to Customer No." <> xRec."Bill-to Customer No." then
+                            Rec.SetRange("Bill-to Customer No.");
 
                     CurrPage.SaveRecord;
                     // if ApplicationAreaMgmtFacade.IsFoundationEnabled then
@@ -67,18 +67,20 @@ pageextension 50113 SalesInvoiceExt extends "Sales Invoice"
 
         addafter(BillToContactEmail)
         {
-            field("Sell-to E-Mail"; "Sell-to E-Mail")
+            field("Sell-to E-Mail"; Rec."Sell-to E-Mail")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 Caption = 'Sell-to E-Mail';
+                ToolTip = 'Specifies the email address of the contact person that the sales document will be sent to.';
             }
         }
 
         addafter("Your Reference")
         {
-            field("Customer Reference No."; "Customer Reference No.")
+            field("Customer Reference No."; Rec."Customer Reference No.")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Customer Reference No. field.';
             }
         }
     }
@@ -98,13 +100,14 @@ pageextension 50113 SalesInvoiceExt extends "Sales Invoice"
                 Promoted = true;
                 PromotedCategory = Category6;
                 PromotedIsBig = true;
-                ShortCutKey = 'Shift+F9';
+                ShortcutKey = 'Shift+F9';
+                ToolTip = 'Executes the Post and &Print action.';
 
                 trigger OnAction();
                 begin
 
                     LinesInstructionMgt.SalesCheckAllLinesHaveQuantityAssigned(Rec);
-                    SendToPosting(CODEUNIT::"Sales-Post + Print");
+                    Rec.SendToPosting(Codeunit::"Sales-Post + Print");
                 end;
             }
         }

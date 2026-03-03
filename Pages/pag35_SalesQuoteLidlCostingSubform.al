@@ -7,18 +7,19 @@ page 50035 "S.Q. Lidl Costing Subform"
     MultipleNewLines = true;
     PageType = ListPart;
     SourceTable = "Sales Line";
-    SourceTableView = WHERE("Document Type" = FILTER(Quote));
+    SourceTableView = where("Document Type" = filter(Quote));
+    ApplicationArea = All;
 
 
     layout
     {
-        area(content)
+        area(Content)
         {
             repeater(Control1)
             {
                 ShowCaption = false;
                 FreezeColumn = Description;
-                field(Type; Type)
+                field(Type; Rec.Type)
                 {
                     ApplicationArea = Advanced;
                     ToolTip = 'Specifies the type of entity that will be posted for this sales line, such as Item, Resource, or G/L Account.';
@@ -38,8 +39,8 @@ page 50035 "S.Q. Lidl Costing Subform"
                     ApplicationArea = Basic, Suite;
                     Caption = 'Type';
                     Editable = CurrPageIsEditable;
-                    LookupPageID = "Option Lookup List";
-                    TableRelation = "Option Lookup Buffer"."Option Caption" WHERE("Lookup Type" = CONST(Sales));
+                    LookupPageId = "Option Lookup List";
+                    TableRelation = "Option Lookup Buffer"."Option Caption" where("Lookup Type" = const(Sales));
                     ToolTip = 'Specifies the type of transaction that will be posted with the document line. If you select Comment, then you can enter any text in the Description field, such as a message to a customer. ';
                     Visible = IsFoundation;
 
@@ -57,7 +58,7 @@ page 50035 "S.Q. Lidl Costing Subform"
 
 
 
-                field("Item Reference No."; "Item Reference No.")
+                field("Item Reference No."; Rec."Item Reference No.")
                 {
                     ApplicationArea = Suite, ItemReferences;
                     ToolTip = 'Specifies the referenced item number.';
@@ -82,25 +83,26 @@ page 50035 "S.Q. Lidl Costing Subform"
                     end;
                 }
 
-                field(Checked; Checked)
+                field(Checked; Rec.Checked)
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     Width = 1;
+                    ToolTip = 'Specifies the value of the Checked field.';
                 }
 
 
 
-                field("No."; "No.")
+                field("No."; Rec."No.")
                 {
                     ApplicationArea = Basic, Suite;
-                    ShowMandatory = NOT IsCommentLine;
+                    ShowMandatory = not IsCommentLine;
                     ToolTip = 'Specifies the number of a general ledger account, item, resource, additional cost, or fixed asset, depending on the contents of the Type field.';
                     StyleExpr = vG_Style;
                     Width = 8;
 
                     trigger OnValidate()
                     begin
-                        ShowShortcutDimCode(ShortcutDimCode);
+                        Rec.ShowShortcutDimCode(ShortcutDimCode);
                         NoOnAfterValidate();
                         UpdateEditableOnRow();
                         UpdateTypeText();
@@ -110,143 +112,162 @@ page 50035 "S.Q. Lidl Costing Subform"
                     end;
                 }
 
-                field(Description; Description)
+                field(Description; Rec.Description)
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     Width = 30;
+                    ToolTip = 'Specifies a description of what you’re selling. Based on your choices in the Type and No. fields, the field may show suggested text that you can change it for this document. To add a comment, set the Type field to Comment and write the comment itself here.';
                 }
-                field("Category 1"; "Category 1")
+                field("Category 1"; Rec."Category 1")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     Width = 5;
+                    ToolTip = 'Specifies the value of the Packing Group field.';
                 }
 
-                field("Pallet Qty"; "Pallet Qty")
+                field("Pallet Qty"; Rec."Pallet Qty")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     Width = 5;
+                    ToolTip = 'Specifies the value of the Περιεχ.Παλ. field.';
                 }
 
-                field("Package Qty"; "Package Qty")
+                field("Package Qty"; Rec."Package Qty")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     Caption = 'Κιβώτιο -  Περιεχόμενο';
                     Width = 5;
+                    ToolTip = 'Specifies the value of the Κιβώτιο -  Περιεχόμενο field.';
 
                 }
 
-                field(Variety; Variety)
+                field(Variety; Rec.Variety)
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     Width = 15;
+                    ToolTip = 'Specifies the value of the Ποικιλία field.';
                 }
 
                 //Cost
-                field("Cost Per KG"; "Cost Per KG")
+                field("Cost Per KG"; Rec."Cost Per KG")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     Width = 5;
+                    ToolTip = 'Specifies the value of the Cost Per KG field.';
                 }
-                field("Cost kg/stk"; "Cost kg/stk")
+                field("Cost kg/stk"; Rec."Cost kg/stk")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     Width = 5;
+                    ToolTip = 'Specifies the value of the kg/stk field.';
 
                     trigger OnValidate()
                     begin
-                        "Manual kg/stk" := true;
+                        Rec."Manual kg/stk" := true;
                     end;
                 }
 
-                field("Manual kg/stk"; "Manual kg/stk")
+                field("Manual kg/stk"; Rec."Manual kg/stk")
                 {
-                    ApplicationArea = all;
-                    caption = '';
+                    ApplicationArea = All;
+                    Caption = '';
                     Width = 1;
+                    ToolTip = 'Specifies the value of the Manual kg/stk field.';
                 }
 
-                field("Cost KG/PC"; "Cost KG/PC")
+                field("Cost KG/PC"; Rec."Cost KG/PC")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     Width = 5;
+                    ToolTip = 'Specifies the value of the KG/PC field.';
                 }
-                field("Cost Carton"; "Cost Carton")
+                field("Cost Carton"; Rec."Cost Carton")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     Width = 5;
+                    ToolTip = 'Specifies the value of the Carton >0.10 field.';
 
                     trigger OnValidate()
                     begin
-                        "Manual Cost Carton" := true;
+                        Rec."Manual Cost Carton" := true;
                     end;
                 }
 
-                field("Manual Cost Carton"; "Manual Cost Carton")
+                field("Manual Cost Carton"; Rec."Manual Cost Carton")
                 {
-                    ApplicationArea = all;
-                    caption = '';
+                    ApplicationArea = All;
+                    Caption = '';
                     Width = 1;
+                    ToolTip = 'Specifies the value of the Manual Carton >0.10 field.';
                 }
 
-                field("Cost Cup"; "Cost Cup")
+                field("Cost Cup"; Rec."Cost Cup")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     Width = 5;
+                    ToolTip = 'Specifies the value of the Κουπάκι field.';
 
                     trigger OnValidate()
                     begin
-                        "Manual Cost Cup" := true;
+                        Rec."Manual Cost Cup" := true;
                     end;
                 }
-                field("Manual Cost Cup"; "Manual Cost Cup")
+                field("Manual Cost Cup"; Rec."Manual Cost Cup")
                 {
-                    ApplicationArea = all;
-                    caption = '';
+                    ApplicationArea = All;
+                    Caption = '';
                     Width = 1;
+                    ToolTip = 'Specifies the value of the Manual Κουπάκι field.';
                 }
 
-                field("Cost Other"; "Cost Other")
+                field("Cost Other"; Rec."Cost Other")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     Width = 5;
+                    ToolTip = 'Specifies the value of the Film/Labels/Net field.';
 
                     trigger OnValidate()
                     begin
-                        "Manual Cost Other" := true;
+                        Rec."Manual Cost Other" := true;
                     end;
                 }
-                field("Manual Cost Other"; "Manual Cost Other")
+                field("Manual Cost Other"; Rec."Manual Cost Other")
                 {
-                    ApplicationArea = all;
-                    caption = '';
+                    ApplicationArea = All;
+                    Caption = '';
                     Width = 1;
+                    ToolTip = 'Specifies the value of the Manual Film/Labels/Net field.';
                 }
-                field("Cost Offer"; "Cost Offer")
+                field("Cost Offer"; Rec."Cost Offer")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     Width = 5;
+                    ToolTip = 'Specifies the value of the COST field.';
                 }
-                field("Cost Profit %"; "Cost Profit %")
+                field("Cost Profit %"; Rec."Cost Profit %")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     Visible = false;
                     Width = 5;
+                    ToolTip = 'Specifies the value of the Cost Profit % field.';
                 }
-                field("Cost Offer+GP"; "Cost Offer+GP")
+                field("Cost Offer+GP"; Rec."Cost Offer+GP")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     Style = Favorable;
                     Width = 5;
+                    ToolTip = 'Specifies the value of the COST+GP field.';
                 }
 
-                field("Cost Valuation"; "Cost Valuation")
+                field("Cost Valuation"; Rec."Cost Valuation")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     Width = 5;
+                    ToolTip = 'Specifies the value of the Selling Price - (Cost + GP) field.';
                 }
-                field("Sales Profit %"; "Sales Profit %")
+                field("Sales Profit %"; Rec."Sales Profit %")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     ToolTip = ' "Sales Profit %" := (("Price PCS" - "Cost Offer+GP") / "Cost Offer+GP") * 100';
                     Width = 5;
                 }
@@ -255,85 +276,97 @@ page 50035 "S.Q. Lidl Costing Subform"
 
                 //Cost Lines
 
-                field("Price Previous Week Box"; "Price Previous Week Box")
+                field("Price Previous Week Box"; Rec."Price Previous Week Box")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     BlankZero = true;
                     Width = 5;
+                    ToolTip = 'Specifies the value of the Τιμές προηγούμενης Εβδομάδας ανά  Κιβ. field.';
                 }
-                field("Price Previous Week PCS"; "Price Previous Week PCS")
+                field("Price Previous Week PCS"; Rec."Price Previous Week PCS")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     BlankZero = true;
                     Width = 5;
+                    ToolTip = 'Specifies the value of the Τιμές προηγούμενης Εβδομάδας ανά τεμ/συσκ field.';
                 }
-                field("Price Previous Week KG"; "Price Previous Week KG")
+                field("Price Previous Week KG"; Rec."Price Previous Week KG")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     BlankZero = true;
                     Width = 5;
+                    ToolTip = 'Specifies the value of the Τιμές προηγούμενης Εβδομάδας  ανά kg field.';
                 }
-                field("Price Box"; "Price Box")
+                field("Price Box"; Rec."Price Box")
                 {
-                    ApplicationArea = all;
-                    BlankZero = true;
-                    Style = Strong;
-                    Width = 5;
-                }
-                field("Price PCS"; "Price PCS")
-                {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     BlankZero = true;
                     Style = Strong;
                     Width = 5;
+                    ToolTip = 'Specifies the value of the Τιμές ανά Κιβ. field.';
                 }
-                field("Price KG"; "Price KG")
+                field("Price PCS"; Rec."Price PCS")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     BlankZero = true;
                     Style = Strong;
                     Width = 5;
+                    ToolTip = 'Specifies the value of the Τιμές ανά τεμ/συσκ field.';
+                }
+                field("Price KG"; Rec."Price KG")
+                {
+                    ApplicationArea = All;
+                    BlankZero = true;
+                    Style = Strong;
+                    Width = 5;
+                    ToolTip = 'Specifies the value of the Τιμές ανά kg field.';
                 }
 
-                field("Cost YAM"; "Cost YAM")
+                field("Cost YAM"; Rec."Cost YAM")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     Style = Ambiguous;
                     Width = 5;
+                    ToolTip = 'Specifies the value of the ΥΑΜ field.';
                 }
 
-                field("Cost YS"; "Cost YS")
+                field("Cost YS"; Rec."Cost YS")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     Style = Ambiguous;
                     Width = 5;
+                    ToolTip = 'Specifies the value of the ΥΣ field.';
                 }
 
-                field("Cost YL"; "Cost YL")
+                field("Cost YL"; Rec."Cost YL")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     Style = Ambiguous;
                     Width = 5;
+                    ToolTip = 'Specifies the value of the ΥΛ field.';
                 }
 
-                field("Cost YAM Comment"; "Cost YAM Comment")
+                field("Cost YAM Comment"; Rec."Cost YAM Comment")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     Width = 10;
-
-                }
-
-                field("Cost YS Comment"; "Cost YS Comment")
-                {
-                    ApplicationArea = all;
-                    Width = 10;
+                    ToolTip = 'Specifies the value of the ΥΑΜ Comment field.';
 
                 }
 
-                field("Cost YL Comment"; "Cost YL Comment")
+                field("Cost YS Comment"; Rec."Cost YS Comment")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     Width = 10;
+                    ToolTip = 'Specifies the value of the ΥΣ Comment field.';
+
+                }
+
+                field("Cost YL Comment"; Rec."Cost YL Comment")
+                {
+                    ApplicationArea = All;
+                    Width = 10;
+                    ToolTip = 'Specifies the value of the ΥΛ Comment field.';
 
                 }
 
@@ -345,39 +378,42 @@ page 50035 "S.Q. Lidl Costing Subform"
                 }
                 */
 
-                field("Line No."; "Line No.")
+                field("Line No."; Rec."Line No.")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     Width = 5;
+                    ToolTip = 'Specifies the line number.';
                 }
-                field("Line Source"; "Line Source")
+                field("Line Source"; Rec."Line Source")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     Width = 5;
+                    ToolTip = 'Specifies the value of the Line Source field.';
 
                     trigger OnAssistEdit()
                     var
                         rL_SalesHeader: Record "Sales Header";
                     begin
-                        rL_SalesHeader.RESET;
-                        rL_SalesHeader.SetFilter("External Document No.", "Line Source");
-                        rL_SalesHeader.SetFilter("Sell-to Customer No.", "Sell-to Customer No.");
+                        rL_SalesHeader.Reset;
+                        rL_SalesHeader.SetFilter("External Document No.", Rec."Line Source");
+                        rL_SalesHeader.SetFilter("Sell-to Customer No.", Rec."Sell-to Customer No.");
                         if rL_SalesHeader.FindSet() then begin
-                            page.RunModal(page::"Sales Quote", rL_SalesHeader);
+                            Page.RunModal(Page::"Sales Quote", rL_SalesHeader);
                         end;
 
                     end;
                 }
 
-                field("Shelf No."; "Shelf No.")
+                field("Shelf No."; Rec."Shelf No.")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     Caption = 'IAN/Shelf No.';
                     Width = 5;
+                    ToolTip = 'Specifies the value of the IAN/Shelf No. field.';
 
                     trigger OnValidate();
                     begin
-                        GetItemFromShelfNo();
+                        Rec.GetItemFromShelfNo();
                     end;
                 }
 
@@ -398,11 +434,11 @@ page 50035 "S.Q. Lidl Costing Subform"
 
     actions
     {
-        area(processing)
+        area(Processing)
         {
             action(SelectMultiItems)
             {
-                AccessByPermission = TableData Item = R;
+                AccessByPermission = tabledata Item = R;
                 ApplicationArea = Basic, Suite;
                 Caption = 'Select items';
                 Ellipsis = true;
@@ -411,13 +447,13 @@ page 50035 "S.Q. Lidl Costing Subform"
 
                 trigger OnAction()
                 begin
-                    SelectMultipleItemsPFV();
+                    Rec.SelectMultipleItemsPFV();
                 end;
             }
 
             action("Select Nonstoc&k Items")
             {
-                AccessByPermission = TableData "Nonstock Item" = R;
+                AccessByPermission = tabledata "Nonstock Item" = R;
                 ApplicationArea = Basic, Suite;
                 Caption = 'Select Ca&talog Items';
                 Image = NonStockItem;
@@ -432,30 +468,32 @@ page 50035 "S.Q. Lidl Costing Subform"
             action(ExportCompPrices)
             {
                 ApplicationArea = All;
-                caption = 'Export Competitors Prices Template';
+                Caption = 'Export Competitors Prices Template';
                 Image = ImportExcel;
+                ToolTip = 'Executes the Export Competitors Prices Template action.';
 
                 trigger OnAction()
                 var
                     cu_GeneralMgt: Codeunit "General Mgt.";
                 begin
                     Clear(cu_GeneralMgt);
-                    cu_GeneralMgt.ExportLidlCompetitorsPrices("Document No.");
+                    cu_GeneralMgt.ExportLidlCompetitorsPrices(Rec."Document No.");
                 end;
             }
 
             action(ImportCompPrices)
             {
                 ApplicationArea = All;
-                caption = 'Import Competitors Prices';
+                Caption = 'Import Competitors Prices';
                 Image = ImportExcel;
+                ToolTip = 'Executes the Import Competitors Prices action.';
 
                 trigger OnAction()
                 var
                     cu_GeneralMgt: Codeunit "General Mgt.";
                 begin
                     Clear(cu_GeneralMgt);
-                    cu_GeneralMgt.ImportLidlCompetitorsPrices("Document No.");
+                    cu_GeneralMgt.ImportLidlCompetitorsPrices(Rec."Document No.");
                 end;
             }
 
@@ -463,8 +501,9 @@ page 50035 "S.Q. Lidl Costing Subform"
             action(ItemCard)
             {
                 ApplicationArea = All;
-                caption = 'Item Card';
+                Caption = 'Item Card';
                 Image = Item;
+                ToolTip = 'Executes the Item Card action.';
                 // RunObject = page "Item Card";
                 //RunPageLink = "No." = field("No.");
 
@@ -473,9 +512,9 @@ page 50035 "S.Q. Lidl Costing Subform"
                     Item: Record Item;
 
                 begin
-                    item.Get("No.");
+                    Item.Get(Rec."No.");
 
-                    page.Run(page::"Item Card", item);
+                    Page.Run(Page::"Item Card", Item);
 
                 end;
 
@@ -484,18 +523,19 @@ page 50035 "S.Q. Lidl Costing Subform"
             action(ProductionBOM)
             {
                 ApplicationArea = All;
-                caption = 'Item Production BOM';
+                Caption = 'Item Production BOM';
                 Image = Item;
+                ToolTip = 'Executes the Item Production BOM action.';
                 trigger OnAction()
                 var
                     Item: Record Item;
                     ProductionBOMHeader: Record "Production BOM Header";
                 begin
-                    item.Get("No.");
+                    Item.Get(Rec."No.");
                     Item.TestField("Production BOM No.");
 
-                    ProductionBOMHeader.GET(item."Production BOM No.");
-                    page.Run(page::"Production BOM", ProductionBOMHeader);
+                    ProductionBOMHeader.Get(Item."Production BOM No.");
+                    Page.Run(Page::"Production BOM", ProductionBOMHeader);
 
                 end;
 
@@ -504,22 +544,23 @@ page 50035 "S.Q. Lidl Costing Subform"
             action(History)
             {
                 ApplicationArea = All;
-                caption = 'Previous Offered Prices';
+                Caption = 'Previous Offered Prices';
                 Image = History;
+                ToolTip = 'Executes the Previous Offered Prices action.';
                 trigger OnAction()
                 var
                     SalesLine: Record "Sales Line";
 
                 begin
-                    SalesLine.RESET;
+                    SalesLine.Reset;
 
                     //SalesLine.SetCurrentKey("Posting Date");
                     //SalesLine.SetAscending("Posting Date", true);
                     SalesLine.SetRange("Document Type", SalesLine."Document Type"::Quote);
                     SalesLine.SetRange(Type, SalesLine.Type::Item);
-                    SalesLine.SetFilter("No.", "No.");
+                    SalesLine.SetFilter("No.", Rec."No.");
                     if SalesLine.FindSet() then;
-                    page.Run(page::"Sales Quote Lidl Lines", SalesLine);
+                    Page.Run(Page::"Sales Quote Lidl Lines", SalesLine);
                 end;
 
             }
@@ -553,7 +594,7 @@ page 50035 "S.Q. Lidl Costing Subform"
             }
             */
 
-            Action("Set Special PricesPrevious")
+            action("Set Special PricesPrevious")
             {
                 ApplicationArea = Basic, Suite;
                 Caption = 'Previous Sales Prices';
@@ -567,20 +608,20 @@ page 50035 "S.Q. Lidl Costing Subform"
                     vL_StartDate: Date;
                     vL_EndDate: Date;
                 begin
-                    SalesHeader.get("Document Type", "Document No.");
+                    SalesHeader.get(Rec."Document Type", Rec."Document No.");
 
                     vL_StartDate := SalesHeader."Price Start Date"; //SalesHeader.GetPriceStartDatePreviousWeek();
                     vL_EndDate := SalesHeader."Price End Date";  //SalesHeader.GetPriceEndDatePreviousWeek();
 
                     SalesPrice.SetRange("Sales Type", SalesPrice."Sales Type"::Customer);
-                    SalesPrice.SetFilter("Sales Code", "Bill-to Customer No.");
-                    SalesPrice.SetFilter("Starting Date", FORMAT(vL_StartDate) + '..' + FORMAT(vL_EndDate));
-                    SalesPrice.SetRange("Item No.", "No.");
+                    SalesPrice.SetFilter("Sales Code", Rec."Bill-to Customer No.");
+                    SalesPrice.SetFilter("Starting Date", Format(vL_StartDate) + '..' + Format(vL_EndDate));
+                    SalesPrice.SetRange("Item No.", Rec."No.");
                     Page.Run(Page::"Sales Prices", SalesPrice);
                 end;
             }
 
-            Action("Update Prices Previous Week")
+            action("Update Prices Previous Week")
             {
                 ApplicationArea = Basic, Suite;
                 Caption = 'Update Prices';
@@ -593,7 +634,7 @@ page 50035 "S.Q. Lidl Costing Subform"
                     cu_GeneralMgt: Codeunit "General Mgt.";
                 begin
                     Clear(cu_GeneralMgt);
-                    cu_GeneralMgt.UpdatePrices("Document No.");
+                    cu_GeneralMgt.UpdatePrices(Rec."Document No.");
                 end;
 
             }
@@ -614,10 +655,10 @@ page 50035 "S.Q. Lidl Costing Subform"
                     ItemReference: Record "Item Reference";
 
                 begin
-                    clear(pItemReferenceEnties);
-                    ItemReference.RESET;
+                    Clear(pItemReferenceEnties);
+                    ItemReference.Reset;
                     ItemReference.SetRange("Reference Type", ItemReference."Reference Type"::Customer);
-                    ItemReference.SetFilter("Reference Type No.", "Bill-to Customer No.");
+                    ItemReference.SetFilter("Reference Type No.", Rec."Bill-to Customer No.");
                     if ItemReference.FindSet() then begin
 
                     end;
@@ -640,7 +681,7 @@ page 50035 "S.Q. Lidl Costing Subform"
 
                     Visible = IsSaaSExcelAddinEnabled;
                     ToolTip = 'Send the data in the sub page to an Excel file for analysis or editing';
-                    AccessByPermission = System "Allow Action Export To Excel" = X;
+                    AccessByPermission = system "Allow Action Export To Excel" = X;
 
                     trigger OnAction()
                     var
@@ -686,18 +727,18 @@ page 50035 "S.Q. Lidl Costing Subform"
 
         vG_Style := '';
         vL_StyleIssue := false;
-        if Item.GET("No.") then begin
+        if Item.GET(Rec."No.") then begin
             if Item."Production BOM No." = '' then begin
                 vL_StyleIssue := true;
             end;
 
-            if not ProductionBOMHeader.GET(Item."Production BOM No.") then begin
+            if not ProductionBOMHeader.Get(Item."Production BOM No.") then begin
                 vL_StyleIssue := true;
             end;
 
-            ProductionBOMLine.RESET;
+            ProductionBOMLine.Reset;
             ProductionBOMLine.SetFilter("Production BOM No.", ProductionBOMHeader."No.");
-            ProductionBOMLine.setrange(Type, ProductionBOMLine.type::Item);
+            ProductionBOMLine.SetRange(Type, ProductionBOMLine.Type::Item);
             ProductionBOMLine.SetFilter("Quantity per", '<>%1', 0);
             if not ProductionBOMLine.FindSet() then begin
                 vL_StyleIssue := true;
@@ -713,7 +754,7 @@ page 50035 "S.Q. Lidl Costing Subform"
     var
         SalesLineReserve: Codeunit "Sales Line-Reserve";
     begin
-        if (Quantity <> 0) and ItemExists("No.") then begin
+        if (Rec.Quantity <> 0) and Rec.ItemExists(Rec."No.") then begin
             Commit();
             if not SalesLineReserve.DeleteLineConfirm(Rec) then
                 exit(false);
@@ -725,7 +766,7 @@ page 50035 "S.Q. Lidl Costing Subform"
     trigger OnFindRecord(Which: Text): Boolean
     begin
         DocumentTotals.SalesCheckAndClearTotals(Rec, xRec, TotalSalesLine, VATAmount, InvoiceDiscountAmount, InvoiceDiscountPct);
-        exit(Find(Which));
+        exit(Rec.Find(Which));
     end;
 
     trigger OnInit()
@@ -745,7 +786,7 @@ page 50035 "S.Q. Lidl Costing Subform"
 
     trigger OnNewRecord(BelowxRec: Boolean)
     begin
-        InitType;
+        Rec.InitType;
         OnNewRecordOnAfterInitType(Rec, xRec, BelowxRec);
         SetDefaultType();
 
@@ -823,7 +864,7 @@ page 50035 "S.Q. Lidl Costing Subform"
 
     procedure ApproveCalcInvDisc()
     begin
-        CODEUNIT.Run(CODEUNIT::"Sales-Disc. (Yes/No)", Rec);
+        Codeunit.Run(Codeunit::"Sales-Disc. (Yes/No)", Rec);
         DocumentTotals.SalesDocTotalsNotUpToDate();
     end;
 
@@ -834,7 +875,7 @@ page 50035 "S.Q. Lidl Costing Subform"
         if SuppressTotals then
             exit;
 
-        SalesHeader.Get("Document Type", "Document No.");
+        SalesHeader.Get(Rec."Document Type", Rec."Document No.");
         SalesCalcDiscByType.ApplyInvDiscBasedOnAmt(InvoiceDiscountAmount, SalesHeader);
         DocumentTotals.SalesDocTotalsNotUpToDate();
         CurrPage.Update(false);
@@ -850,7 +891,7 @@ page 50035 "S.Q. Lidl Costing Subform"
 
     local procedure ExplodeBOM()
     begin
-        CODEUNIT.Run(CODEUNIT::"Sales-Explode BOM", Rec);
+        Codeunit.Run(Codeunit::"Sales-Explode BOM", Rec);
         DocumentTotals.SalesDocTotalsNotUpToDate();
     end;
 
@@ -868,17 +909,17 @@ page 50035 "S.Q. Lidl Costing Subform"
 
     local procedure ShowItemSub()
     begin
-        ShowItemSub;
+        Rec.ShowItemSub;
     end;
 
     local procedure ShowNonstockItems()
     begin
-        ShowNonstock;
+        Rec.ShowNonstock;
     end;
 
     local procedure ItemChargeAssgnt()
     begin
-        ShowItemChargeAssgnt();
+        Rec.ShowItemChargeAssgnt();
     end;
 
     procedure UpdateForm(SetSaveRecord: Boolean)
@@ -889,7 +930,7 @@ page 50035 "S.Q. Lidl Costing Subform"
     procedure NoOnAfterValidate()
     begin
         InsertExtendedText(false);
-        if (Type = Type::"Charge (Item)") and ("No." <> xRec."No.") and
+        if (Rec.Type = Rec.Type::"Charge (Item)") and (Rec."No." <> xRec."No.") and
            (xRec."No." <> '')
         then
             CurrPage.SaveRecord();
@@ -911,9 +952,9 @@ page 50035 "S.Q. Lidl Costing Subform"
 
     protected procedure QuantityOnAfterValidate()
     begin
-        if Reserve = Reserve::Always then begin
+        if Rec.Reserve = Rec.Reserve::Always then begin
             CurrPage.SaveRecord();
-            AutoReserve();
+            Rec.AutoReserve();
         end;
         DeltaUpdateTotals();
 
@@ -922,24 +963,24 @@ page 50035 "S.Q. Lidl Costing Subform"
 
     protected procedure UnitofMeasureCodeOnAfterValidate()
     begin
-        if Reserve = Reserve::Always then begin
+        if Rec.Reserve = Rec.Reserve::Always then begin
             CurrPage.SaveRecord();
-            AutoReserve();
+            Rec.AutoReserve();
         end;
         DeltaUpdateTotals();
     end;
 
     local procedure SaveAndAutoAsmToOrder()
     begin
-        if (Type = Type::Item) and IsAsmToOrderRequired then begin
+        if (Rec.Type = Rec.Type::Item) and Rec.IsAsmToOrderRequired then begin
             CurrPage.SaveRecord();
-            AutoAsmToOrder;
+            Rec.AutoAsmToOrder;
         end;
     end;
 
     procedure UpdateEditableOnRow()
     begin
-        IsCommentLine := not HasTypeToFillMandatoryFields;
+        IsCommentLine := not Rec.HasTypeToFillMandatoryFields;
         IsBlankNumber := IsCommentLine;
         UnitofMeasureCodeIsChangeable := not IsCommentLine;
 
@@ -956,7 +997,7 @@ page 50035 "S.Q. Lidl Costing Subform"
         SalesHeader: Record "Sales Header";
     begin
         CurrPage.Update();
-        SalesHeader.Get("Document Type", "Document No.");
+        SalesHeader.Get(Rec."Document Type", Rec."Document No.");
         SalesCalcDiscByType.ApplyDefaultInvoiceDiscount(TotalSalesHeader."Invoice Discount Amount", SalesHeader);
     end;
 
@@ -988,8 +1029,8 @@ page 50035 "S.Q. Lidl Costing Subform"
             exit;
 
         DocumentTotals.SalesDeltaUpdateTotals(Rec, xRec, TotalSalesLine, VATAmount, InvoiceDiscountAmount, InvoiceDiscountPct);
-        if "Line Amount" <> xRec."Line Amount" then
-            SendLineInvoiceDiscountResetNotification();
+        if Rec."Line Amount" <> xRec."Line Amount" then
+            Rec.SendLineInvoiceDiscountResetNotification();
     end;
 
     procedure ForceTotalsCalculation()
@@ -1006,7 +1047,7 @@ page 50035 "S.Q. Lidl Costing Subform"
 
         CurrPage.SaveRecord();
 
-        SalesHeader.Get("Document Type", "Document No.");
+        SalesHeader.Get(Rec."Document Type", Rec."Document No.");
         DocumentTotals.SalesRedistributeInvoiceDiscountAmounts(Rec, VATAmount, TotalSalesLine);
         CurrPage.Update(false);
     end;
@@ -1018,13 +1059,13 @@ page 50035 "S.Q. Lidl Costing Subform"
         OnBeforeUpdateTypeText(Rec);
 
         RecRef.GetTable(Rec);
-        TypeAsText := TempOptionLookupBuffer.FormatOption(RecRef.Field(FieldNo(Type)));
+        TypeAsText := TempOptionLookupBuffer.FormatOption(RecRef.Field(Rec.FieldNo(Type)));
     end;
 
     procedure SetItemChargeFieldsStyle()
     begin
         ItemChargeStyleExpression := '';
-        if AssignedItemCharge then
+        if Rec.AssignedItemCharge then
             ItemChargeStyleExpression := 'Unfavorable';
     end;
 
@@ -1060,7 +1101,7 @@ page 50035 "S.Q. Lidl Costing Subform"
     var
         AssembleToOrderLink: Record "Assemble-to-Order Link";
     begin
-        ValidateShortcutDimCode(DimIndex, ShortcutDimCode[DimIndex]);
+        Rec.ValidateShortcutDimCode(DimIndex, ShortcutDimCode[DimIndex]);
         AssembleToOrderLink.UpdateAsmDimFromSalesLine(Rec);
 
         OnAfterValidateShortcutDimCode(Rec, ShortcutDimCode, DimIndex);
@@ -1076,10 +1117,10 @@ page 50035 "S.Q. Lidl Costing Subform"
             exit;
 
         if xRec."Document No." = '' then
-            Type := GetDefaultLineType();
+            Rec.Type := Rec.GetDefaultLineType();
     end;
 
-    [IntegrationEvent(TRUE, false)]
+    [IntegrationEvent(true, false)]
     local procedure OnAfterNoOnAfterValidate(var SalesLine: Record "Sales Line"; xSalesLine: Record "Sales Line")
     begin
     end;

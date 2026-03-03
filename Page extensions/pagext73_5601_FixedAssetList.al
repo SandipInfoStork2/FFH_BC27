@@ -27,6 +27,7 @@ pageextension 50173 FixedAssetListExt extends "Fixed Asset List"
             field("Location Code89451"; Rec."Location Code")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Location Code field.';
             }
         }
         //TAL 1.0.0.71 <<
@@ -40,9 +41,9 @@ pageextension 50173 FixedAssetListExt extends "Fixed Asset List"
     trigger OnAfterGetRecord();
     begin
         //+TAL0.1
-        CLEAR(FADepreciationBook);
+        Clear(FADepreciationBook);
         LoadDepreciationBooks;
-        FADepreciationBook.COPY(FADepreciationBookOld);
+        FADepreciationBook.Copy(FADepreciationBookOld);
         //-TAL0.1
     end;
 
@@ -50,11 +51,11 @@ pageextension 50173 FixedAssetListExt extends "Fixed Asset List"
     local procedure LoadDepreciationBooks();
     begin
         //+TAL0.1
-        CLEAR(FADepreciationBookOld);
-        FADepreciationBookOld.SETRANGE("FA No.", "No.");
-        if FADepreciationBookOld.COUNT <= 1 then begin
-            if FADepreciationBookOld.FINDFIRST then begin
-                FADepreciationBookOld.CALCFIELDS("Book Value");
+        Clear(FADepreciationBookOld);
+        FADepreciationBookOld.SETRANGE("FA No.", Rec."No.");
+        if FADepreciationBookOld.Count <= 1 then begin
+            if FADepreciationBookOld.FindFirst then begin
+                FADepreciationBookOld.CalcFields("Book Value");
                 ShowAddMoreDeprBooksLbl := true
             end;
             Simple := true;

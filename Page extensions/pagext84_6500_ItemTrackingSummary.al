@@ -14,21 +14,25 @@ pageextension 50184 ItemTrackingSummaryExt extends "Item Tracking Summary"
 
         addafter("Expiration Date")
         {
-            field("Producer Group"; "Producer Group")
+            field("Producer Group"; Rec."Producer Group")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Producer Group field.';
             }
-            field("Grower No."; "Grower No.")
+            field("Grower No."; Rec."Grower No.")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Grower No. field.';
             }
-            field("Grower Name"; "Grower Name")
+            field("Grower Name"; Rec."Grower Name")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Grower Name field.';
             }
-            field("Grower GGN"; "Grower GGN")
+            field("Grower GGN"; Rec."Grower GGN")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Grower GGN field.';
             }
         }
     }

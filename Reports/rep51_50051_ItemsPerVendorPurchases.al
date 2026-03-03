@@ -7,27 +7,28 @@ report 50051 "Items Per Vendor Purchases"
     RDLCLayout = './Layouts/rep51_50051_ItemsPerVendorPurchases.rdlc';
 
     PreviewMode = PrintLayout;
+    ApplicationArea = All;
 
     dataset
     {
         dataitem(Customer; Vendor)
         {
-            DataItemTableView = SORTING("No.") ORDER(Ascending);
+            DataItemTableView = sorting("No.") order(ascending);
             PrintOnlyIfDetail = true;
             RequestFilterFields = "No.", "Search Name", "Vendor Posting Group";
-            column(COMPANYNAME; COMPANYNAME)
+            column(COMPANYNAME; CompanyName)
             {
             }
-            column(USERID; USERID)
+            column(USERID; UserId)
             {
             }
-            column(STRSUBSTNO_Text000_PeriodText_; STRSUBSTNO(Text000, PeriodText))
+            column(STRSUBSTNO_Text000_PeriodText_; StrSubstNo(Text000, PeriodText))
             {
             }
-            column(FORMAT_TODAY_0_4_; FORMAT(TODAY, 0, 4))
+            column(FORMAT_TODAY_0_4_; Format(Today, 0, 4))
             {
             }
-            column(CurrReport_PAGENO; CurrReport.PAGENO)
+            column(CurrReport_PAGENO; CurrReport.PageNo)
             {
             }
             column(Customer_Name; Name)
@@ -101,8 +102,8 @@ report 50051 "Items Per Vendor Purchases"
             }
             dataitem("Value Entry"; "Value Entry")
             {
-                DataItemLink = "Source No." = FIELD("No."), "Posting Date" = FIELD("Date Filter"), "Global Dimension 1 Code" = FIELD("Global Dimension 1 Filter"), "Global Dimension 2 Code" = FIELD("Global Dimension 2 Filter");
-                DataItemTableView = SORTING("Item No.") ORDER(Ascending) WHERE("Source Type" = CONST(Vendor), "Document Type" = CONST("Purchase Invoice"));
+                DataItemLink = "Source No." = field("No."), "Posting Date" = field("Date Filter"), "Global Dimension 1 Code" = field("Global Dimension 1 Filter"), "Global Dimension 2 Code" = field("Global Dimension 2 Filter");
+                DataItemTableView = sorting("Item No.") order(ascending) where("Source Type" = const(Vendor), "Document Type" = const("Purchase Invoice"));
                 RequestFilterFields = "Item No.", "Inventory Posting Group", "Posting Date";
                 column(Item_Description; Item.Description)
                 {
@@ -164,9 +165,9 @@ report 50051 "Items Per Vendor Purchases"
 
                 trigger OnAfterGetRecord();
                 begin
-                    Item.INIT;
-                    Item.RESET;
-                    Item.GET("Value Entry"."Item No.");
+                    Item.Init;
+                    Item.Reset;
+                    Item.Get("Value Entry"."Item No.");
 
                     if "Invoiced Quantity" <> 0 then
                         UnitPrice := "Purchase Amount (Actual)" / "Invoiced Quantity"
@@ -192,7 +193,7 @@ report 50051 "Items Per Vendor Purchases"
 
                 trigger OnPreDataItem();
                 begin
-                    "Value Entry".SETFILTER("Item No.", '<>%1', ''); //TAL0.1
+                    "Value Entry".SetFilter("Item No.", '<>%1', ''); //TAL0.1
                 end;
             }
 
@@ -207,7 +208,7 @@ report 50051 "Items Per Vendor Purchases"
 
             trigger OnPreDataItem();
             begin
-                CurrReport.NEWPAGEPERRECORD := PrintOnlyOnePerPage;
+                CurrReport.NewPagePerRecord := PrintOnlyOnePerPage;
             end;
         }
     }
@@ -218,7 +219,7 @@ report 50051 "Items Per Vendor Purchases"
 
         layout
         {
-            area(content)
+            area(Content)
             {
             }
         }
@@ -234,9 +235,9 @@ report 50051 "Items Per Vendor Purchases"
 
     trigger OnPreReport();
     begin
-        CustFilter := Customer.GETFILTERS;
-        ItemLedgEntryFilter := "Value Entry".GETFILTERS;
-        PeriodText := "Value Entry".GETFILTER("Posting Date");
+        CustFilter := Customer.GetFilters;
+        ItemLedgEntryFilter := "Value Entry".GetFilters;
+        PeriodText := "Value Entry".GetFilter("Posting Date");
     end;
 
     var

@@ -16,16 +16,19 @@ pageextension 50151 CustomerSalesLinesExt extends "Customer Sales Lines"
             {
                 ApplicationArea = All;
                 Caption = 'Original Costs (LCY)';
+                ToolTip = 'Specifies the value of the Original Costs (LCY) field.';
             }
             field(AdjCustProfit; AdjCustProfit)
             {
                 ApplicationArea = All;
                 Caption = 'Adjusted Profit (LCY)';
+                ToolTip = 'Specifies the value of the Adjusted Profit (LCY) field.';
             }
             field("CustSalesLCY - CustProfit- AdjmtCostLCY"; CustSalesLCY - CustProfit - AdjmtCostLCY)
             {
                 ApplicationArea = All;
                 Caption = 'Adjusted Costs (LCY)';
+                ToolTip = 'Specifies the value of the Adjusted Costs (LCY) field.';
             }
         }
     }

@@ -10,9 +10,10 @@ pageextension 50193 GetReturnShipmentLinesExt extends "Get Return Shipment Lines
         // Add changes to page layout here
         addbefore("Document No.")
         {
-            field("Posting Date"; "Posting Date")
+            field("Posting Date"; Rec."Posting Date")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Posting Date field.';
             }
         }
     }

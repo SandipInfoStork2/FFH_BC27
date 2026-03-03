@@ -6,12 +6,13 @@ report 50067 "Purchase - Credit Memo FFH"
 
     Caption = 'Purchase - Credit Memo';
     PreviewMode = PrintLayout;
+    ApplicationArea = All;
 
     dataset
     {
         dataitem("Purch. Cr. Memo Hdr."; "Purch. Cr. Memo Hdr.")
         {
-            DataItemTableView = SORTING("No.");
+            DataItemTableView = sorting("No.");
             RequestFilterFields = "No.", "Buy-from Vendor No.", "No. Printed";
             RequestFilterHeading = 'Posted Purchase Cr. Memo';
             column(No_PurchCrMemoHdr; "No.")
@@ -49,10 +50,10 @@ report 50067 "Purchase - Credit Memo FFH"
             }
             dataitem(CopyLoop; "Integer")
             {
-                DataItemTableView = SORTING(Number);
+                DataItemTableView = sorting(Number);
                 dataitem(PageLoop; "Integer")
                 {
-                    DataItemTableView = SORTING(Number) WHERE(Number = CONST(1));
+                    DataItemTableView = sorting(Number) where(Number = const(1));
                     column(DocumentCaption; StrSubstNo(DocumentCaption, CopyText))
                     {
                     }
@@ -197,7 +198,7 @@ report 50067 "Purchase - Credit Memo FFH"
                     dataitem(DimensionLoop1; "Integer")
                     {
                         DataItemLinkReference = "Purch. Cr. Memo Hdr.";
-                        DataItemTableView = SORTING(Number) WHERE(Number = FILTER(1 ..));
+                        DataItemTableView = sorting(Number) where(Number = filter(1 ..));
                         column(DimText_DimensionLoop1; DimText)
                         {
                         }
@@ -241,9 +242,9 @@ report 50067 "Purchase - Credit Memo FFH"
                     }
                     dataitem("Purch. Cr. Memo Line"; "Purch. Cr. Memo Line")
                     {
-                        DataItemLink = "Document No." = FIELD("No.");
+                        DataItemLink = "Document No." = field("No.");
                         DataItemLinkReference = "Purch. Cr. Memo Hdr.";
-                        DataItemTableView = SORTING("Document No.", "Line No.");
+                        DataItemTableView = sorting("Document No.", "Line No.");
                         column(ShowInternalInfo; ShowInternalInfo)
                         {
                         }
@@ -396,7 +397,7 @@ report 50067 "Purchase - Credit Memo FFH"
                         }
                         dataitem(DimensionLoop2; "Integer")
                         {
-                            DataItemTableView = SORTING(Number) WHERE(Number = FILTER(1 ..));
+                            DataItemTableView = sorting(Number) where(Number = filter(1 ..));
                             column(DimText_DimensionLoop2; DimText)
                             {
                             }
@@ -502,7 +503,7 @@ report 50067 "Purchase - Credit Memo FFH"
                     }
                     dataitem(VATCounter; "Integer")
                     {
-                        DataItemTableView = SORTING(Number);
+                        DataItemTableView = sorting(Number);
                         column(VATAmountLineVATBase; VATAmountLine."VAT Base")
                         {
                             AutoFormatExpression = "Purch. Cr. Memo Hdr."."Currency Code";
@@ -563,7 +564,7 @@ report 50067 "Purchase - Credit Memo FFH"
                     }
                     dataitem(VATCounterLCY; "Integer")
                     {
-                        DataItemTableView = SORTING(Number);
+                        DataItemTableView = sorting(Number);
                         column(VALExchRate; VALExchRate)
                         {
                         }
@@ -621,7 +622,7 @@ report 50067 "Purchase - Credit Memo FFH"
                     }
                     dataitem(Total; "Integer")
                     {
-                        DataItemTableView = SORTING(Number) WHERE(Number = CONST(1));
+                        DataItemTableView = sorting(Number) where(Number = const(1));
                         column(BuyVendNo_PurchCrMemoHdr; "Purch. Cr. Memo Hdr."."Buy-from Vendor No.")
                         {
                         }
@@ -637,7 +638,7 @@ report 50067 "Purchase - Credit Memo FFH"
                     }
                     dataitem(Total2; "Integer")
                     {
-                        DataItemTableView = SORTING(Number) WHERE(Number = CONST(1));
+                        DataItemTableView = sorting(Number) where(Number = const(1));
                         column(ShipToAddr1; ShipToAddr[1])
                         {
                         }
@@ -693,7 +694,7 @@ report 50067 "Purchase - Credit Memo FFH"
                 trigger OnPostDataItem()
                 begin
                     if not CurrReport.Preview then
-                        CODEUNIT.Run(CODEUNIT::"PurchCrMemo-Printed", "Purch. Cr. Memo Hdr.");
+                        Codeunit.Run(Codeunit::"PurchCrMemo-Printed", "Purch. Cr. Memo Hdr.");
                 end;
 
                 trigger OnPreDataItem()
@@ -718,7 +719,7 @@ report 50067 "Purchase - Credit Memo FFH"
                 if LogInteraction then
                     if not CurrReport.Preview then
                         SegManagement.LogDocument(
-                          16, "No.", 0, 0, DATABASE::Vendor, "Buy-from Vendor No.", "Purchaser Code", '', "Posting Description", '');
+                          16, "No.", 0, 0, Database::Vendor, "Buy-from Vendor No.", "Purchaser Code", '', "Posting Description", '');
 
                 PricesIncludingVAT := Format("Prices Including VAT");
             end;
@@ -731,7 +732,7 @@ report 50067 "Purchase - Credit Memo FFH"
 
         layout
         {
-            area(content)
+            area(Content)
             {
                 group(Options)
                 {
@@ -882,7 +883,6 @@ report 50067 "Purchase - Credit Memo FFH"
         DocumentDateCaptionLbl: Label 'Document Date';
         AllowInvoiceDiscountCaptionLbl: Label 'Allow Invoice Discount';
 
-    [Scope('Internal')]
     procedure InitLogInteraction()
     begin
         // LogInteraction := SegManagement.FindInteractTmplCode(16) <> '';
@@ -896,7 +896,7 @@ report 50067 "Purchase - Credit Memo FFH"
         exit(Text005);
     end;
 
-    [Scope('Internal')]
+
     procedure InitializeRequest(NewNoOfCopies: Integer; NewShowInternalInfo: Boolean; NewLogInteraction: Boolean)
     begin
         NoOfCopies := NewNoOfCopies;
@@ -913,17 +913,15 @@ report 50067 "Purchase - Credit Memo FFH"
 
     local procedure FormatDocumentFields(PurchCrMemoHdr: Record "Purch. Cr. Memo Hdr.")
     begin
-        with PurchCrMemoHdr do begin
-            FormatDocument.SetTotalLabels("Currency Code", TotalText, TotalInclVATText, TotalExclVATText);
-            FormatDocument.SetPurchaser(SalesPurchPerson, "Purchaser Code", PurchaserText);
+        FormatDocument.SetTotalLabels(PurchCrMemoHdr."Currency Code", TotalText, TotalInclVATText, TotalExclVATText);
+        FormatDocument.SetPurchaser(SalesPurchPerson, PurchCrMemoHdr."Purchaser Code", PurchaserText);
 
-            ReturnOrderNoText := FormatDocument.SetText("Return Order No." <> '', FieldCaption("Return Order No."));
-            ReferenceText := FormatDocument.SetText("Your Reference" <> '', FieldCaption("Your Reference"));
-            VATNoText := FormatDocument.SetText("VAT Registration No." <> '', FieldCaption("VAT Registration No."));
-            AppliedToText :=
-              FormatDocument.SetText(
-                "Applies-to Doc. No." <> '', Format(StrSubstNo(Text003, Format("Applies-to Doc. Type"), "Applies-to Doc. No.")));
-        end;
+        ReturnOrderNoText := FormatDocument.SetText(PurchCrMemoHdr."Return Order No." <> '', PurchCrMemoHdr.FieldCaption("Return Order No."));
+        ReferenceText := FormatDocument.SetText(PurchCrMemoHdr."Your Reference" <> '', PurchCrMemoHdr.FieldCaption("Your Reference"));
+        VATNoText := FormatDocument.SetText(PurchCrMemoHdr."VAT Registration No." <> '', PurchCrMemoHdr.FieldCaption("VAT Registration No."));
+        AppliedToText :=
+          FormatDocument.SetText(
+            PurchCrMemoHdr."Applies-to Doc. No." <> '', Format(StrSubstNo(Text003, Format(PurchCrMemoHdr."Applies-to Doc. Type"), PurchCrMemoHdr."Applies-to Doc. No.")));
     end;
 }
 

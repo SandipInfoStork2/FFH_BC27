@@ -9,13 +9,15 @@ pageextension 50145 ReasonCodesExt extends "Reason Codes"
         // Add changes to page layout here
         addafter(Description)
         {
-            field("EDI Code"; "EDI Code")
+            field("EDI Code"; Rec."EDI Code")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the EDI Code field.';
             }
-            field("Mark Invoice Entries"; "Mark Invoice Entries")
+            field("Mark Invoice Entries"; Rec."Mark Invoice Entries")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Mark Invoice Entries field.';
             }
         }
     }

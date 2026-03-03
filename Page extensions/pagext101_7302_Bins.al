@@ -1,13 +1,14 @@
-pageextension 50201 BinsExt extends "Bins"
+pageextension 50201 BinsExt extends Bins
 {
     layout
     {
         // Add changes to page layout here
         addafter(Dedicated)
         {
-            field("Hide MN"; "Hide MN")
+            field("Hide MN"; Rec."Hide MN")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Hide MN field.';
             }
         }
     }

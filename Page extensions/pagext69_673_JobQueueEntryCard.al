@@ -9,9 +9,10 @@ pageextension 50169 JobQueueEntryCardExt extends "Job Queue Entry Card"
         // Add changes to page layout here
         addafter(Status)
         {
-            field("Email Result"; "Email Result")
+            field("Email Result"; Rec."Email Result")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Email Result field.';
             }
         }
     }

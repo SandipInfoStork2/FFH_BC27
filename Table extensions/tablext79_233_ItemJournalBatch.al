@@ -16,9 +16,9 @@ tableextension 50179 ItemJournalBatchExt extends "Item Journal Batch"
         field(50002; "Profit Center"; Code[20])
         {
             Caption = 'Profit Center';
-            TableRelation = "Dimension Value".Code WHERE("Global Dimension No." = CONST(4),
-                                                                  "Dimension Value Type" = CONST(Standard),
-                                                                  Blocked = CONST(false));
+            TableRelation = "Dimension Value".Code where("Global Dimension No." = const(4),
+                                                                  "Dimension Value Type" = const(Standard),
+                                                                  Blocked = const(false));
         }
     }
 

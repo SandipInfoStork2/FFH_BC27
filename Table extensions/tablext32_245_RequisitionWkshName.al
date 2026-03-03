@@ -43,7 +43,7 @@ tableextension 50132 RequisitionWkshNameExt extends "Requisition Wksh. Name"
         field(50006; "Vendor Name"; Text[100])
         {
             FieldClass = FlowField;
-            CalcFormula = Lookup(Vendor.Name WHERE("No." = FIELD("Vendor No.")));
+            CalcFormula = lookup(Vendor.Name where("No." = field("Vendor No.")));
             Editable = false;
 
         }
@@ -60,14 +60,14 @@ tableextension 50132 RequisitionWkshNameExt extends "Requisition Wksh. Name"
         field(50009; "No. of Lines"; Integer)
         {
             FieldClass = FlowField;
-            CalcFormula = Count("Requisition Line" WHERE("Worksheet Template Name" = FIELD("Worksheet Template Name"), "Journal Batch Name" = FIELD(Name)));
+            CalcFormula = count("Requisition Line" where("Worksheet Template Name" = field("Worksheet Template Name"), "Journal Batch Name" = field(Name)));
             Editable = false;
 
         }
         field(50014; "No. of Boxes"; Integer)
         {
             FieldClass = FlowField;
-            CalcFormula = Count("Purchase Header Addon" WHERE("Buy-from Vendor No." = FIELD("Vendor No.")));
+            CalcFormula = count("Purchase Header Addon" where("Buy-from Vendor No." = field("Vendor No.")));
             Editable = false;
 
         }
@@ -78,16 +78,16 @@ tableextension 50132 RequisitionWkshNameExt extends "Requisition Wksh. Name"
     var
         myInt: Integer;
     begin
-        "Create Date" := CURRENTDATETIME;
-        "Created By" := USERID;
+        "Create Date" := CurrentDateTime;
+        "Created By" := UserId;
     end;
 
     trigger OnModify()
     var
         myInt: Integer;
     begin
-        "Last Modified By" := USERID;
-        "Last Modified Date" := CURRENTDATETIME;
+        "Last Modified By" := UserId;
+        "Last Modified Date" := CurrentDateTime;
 
     end;
 
@@ -102,137 +102,137 @@ tableextension 50132 RequisitionWkshNameExt extends "Requisition Wksh. Name"
         //Name from Vendor Card is Recurring Purchase Lines    
 
 
-        IF pItemNo = '' THEN BEGIN
-            rL_RequisitionLine.RESET;
-            rL_RequisitionLine.SETRANGE("Worksheet Template Name", "Worksheet Template Name");
-            rL_RequisitionLine.SETFILTER("Journal Batch Name", Name);
-            IF rL_RequisitionLine.FINDSET THEN BEGIN
-                ERROR(Text50000);
-            END;
-        END;
+        if pItemNo = '' then begin
+            rL_RequisitionLine.Reset;
+            rL_RequisitionLine.SetRange("Worksheet Template Name", "Worksheet Template Name");
+            rL_RequisitionLine.SetFilter("Journal Batch Name", Name);
+            if rL_RequisitionLine.FindSet then begin
+                Error(Text50000);
+            end;
+        end;
 
-        rL_RequisitionWkshName.GET("Worksheet Template Name", Name);
+        rL_RequisitionWkshName.Get("Worksheet Template Name", Name);
 
-        rL_StandardPurchaseLine.RESET;
-        rL_StandardPurchaseLine.SETFILTER("Standard Purchase Code", pCode);
-        IF pItemNo <> '' THEN BEGIN
-            rL_StandardPurchaseLine.SETFILTER("No.", pItemNo);
-        END;
+        rL_StandardPurchaseLine.Reset;
+        rL_StandardPurchaseLine.SetFilter("Standard Purchase Code", pCode);
+        if pItemNo <> '' then begin
+            rL_StandardPurchaseLine.SetFilter("No.", pItemNo);
+        end;
 
-        IF rL_StandardPurchaseLine.FINDSET THEN BEGIN
-            REPEAT
+        if rL_StandardPurchaseLine.FindSet then begin
+            repeat
 
-                CLEAR(rL_RequisitionLine);
-                rL_RequisitionLine.RESET;
+                Clear(rL_RequisitionLine);
+                rL_RequisitionLine.Reset;
                 rL_LastLineNo := 0;
 
-                rL_RequisitionLine.SETRANGE("Worksheet Template Name", Rec."Worksheet Template Name");
-                rL_RequisitionLine.SETFILTER("Journal Batch Name", Rec.Name);
-                IF rL_RequisitionLine.FINDLAST THEN BEGIN
+                rL_RequisitionLine.SetRange("Worksheet Template Name", Rec."Worksheet Template Name");
+                rL_RequisitionLine.SetFilter("Journal Batch Name", Rec.Name);
+                if rL_RequisitionLine.FindLast then begin
                     rL_LastLineNo := rL_RequisitionLine."Line No.";
-                END;
+                end;
                 rL_LastLineNo += 10000;
 
-                rL_RequisitionLine.RESET;
-                rL_RequisitionLine.INIT;
-                rL_RequisitionLine.VALIDATE("Worksheet Template Name", Rec."Worksheet Template Name");
-                rL_RequisitionLine.VALIDATE("Journal Batch Name", Rec.Name);
-                rL_RequisitionLine.VALIDATE("Line No.", rL_LastLineNo);
-                rL_RequisitionLine.INSERT(TRUE);
+                rL_RequisitionLine.Reset;
+                rL_RequisitionLine.Init;
+                rL_RequisitionLine.Validate("Worksheet Template Name", Rec."Worksheet Template Name");
+                rL_RequisitionLine.Validate("Journal Batch Name", Rec.Name);
+                rL_RequisitionLine.Validate("Line No.", rL_LastLineNo);
+                rL_RequisitionLine.Insert(true);
 
-                IF rL_StandardPurchaseLine."No." <> '' THEN BEGIN
-                    rL_RequisitionLine.VALIDATE(Type, rL_StandardPurchaseLine.Type);
-                    rL_RequisitionLine.VALIDATE("No.", rL_StandardPurchaseLine."No.");
-                    rL_RequisitionLine.VALIDATE("Action Message", rL_RequisitionLine."Action Message"::New);
-                    rL_RequisitionLine.VALIDATE("Vendor No.", rL_RequisitionWkshName."Vendor No.");
+                if rL_StandardPurchaseLine."No." <> '' then begin
+                    rL_RequisitionLine.Validate(Type, rL_StandardPurchaseLine.Type);
+                    rL_RequisitionLine.Validate("No.", rL_StandardPurchaseLine."No.");
+                    rL_RequisitionLine.Validate("Action Message", rL_RequisitionLine."Action Message"::New);
+                    rL_RequisitionLine.Validate("Vendor No.", rL_RequisitionWkshName."Vendor No.");
                     //rL_RequisitionLine."Extended Description":=rL_StandardPurchaseLine."Extended Description";
 
-                    CASE rL_StandardPurchaseLine."Replenishment System" OF
+                    case rL_StandardPurchaseLine."Replenishment System" of
 
                         rL_StandardPurchaseLine."Replenishment System"::Boxes:
-                            BEGIN
+                            begin
                                 rL_RequisitionLine."Replenishment System" := rL_RequisitionLine."Replenishment System"::Boxes;
-                            END;
+                            end;
 
                         rL_StandardPurchaseLine."Replenishment System"::Sales:
-                            BEGIN
-                                IF rL_RequisitionWkshName."Transaction Type" = rL_RequisitionWkshName."Transaction Type"::Inbound THEN BEGIN
+                            begin
+                                if rL_RequisitionWkshName."Transaction Type" = rL_RequisitionWkshName."Transaction Type"::Inbound then begin
                                     rL_RequisitionLine."Replenishment System" := rL_RequisitionLine."Replenishment System"::"Sales Return Order";
-                                END ELSE
-                                    IF rL_RequisitionWkshName."Transaction Type" = rL_RequisitionWkshName."Transaction Type"::Outbound THEN BEGIN
+                                end else
+                                    if rL_RequisitionWkshName."Transaction Type" = rL_RequisitionWkshName."Transaction Type"::Outbound then begin
                                         rL_RequisitionLine."Replenishment System" := rL_RequisitionLine."Replenishment System"::"Sales Order";
-                                    END;
-                            END;
+                                    end;
+                            end;
 
                         rL_StandardPurchaseLine."Replenishment System"::Transfer:
-                            BEGIN
+                            begin
                                 rL_RequisitionLine."Replenishment System" := rL_RequisitionLine."Replenishment System"::Transfer;
-                            END;
+                            end;
 
                         //+1.0.0.236
                         rL_StandardPurchaseLine."Replenishment System"::Purchase:
-                            BEGIN
+                            begin
                                 rL_RequisitionLine."Replenishment System" := rL_RequisitionLine."Replenishment System"::Purchase;
-                            END;
+                            end;
                     //-1.0.0.236
 
-                    END;
+                    end;
 
 
-                END ELSE BEGIN
+                end else begin
                     rL_RequisitionLine."Replenishment System" := rL_RequisitionLine."Replenishment System"::" ";
-                END;
+                end;
 
 
-                rL_RequisitionLine.MODIFY;
-            UNTIL rL_StandardPurchaseLine.NEXT = 0;
-        END;
+                rL_RequisitionLine.Modify;
+            until rL_StandardPurchaseLine.Next = 0;
+        end;
 
     end;
 
-    procedure UpdateReplenishment(VAR pRequisitionLine: Record "Requisition Line"; pCode: Code[10])
+    procedure UpdateReplenishment(var pRequisitionLine: Record "Requisition Line"; pCode: Code[10])
     var
         myInt: Integer;
         rL_StandardPurchaseLine: Record "Standard Purchase Line";
         rL_RequisitionWkshName: Record "Requisition Wksh. Name";
     begin
-        rL_RequisitionWkshName.GET(pRequisitionLine."Worksheet Template Name", pRequisitionLine."Journal Batch Name");
+        rL_RequisitionWkshName.Get(pRequisitionLine."Worksheet Template Name", pRequisitionLine."Journal Batch Name");
 
-        rL_StandardPurchaseLine.RESET;
-        rL_StandardPurchaseLine.SETFILTER("Standard Purchase Code", pCode);
-        rL_StandardPurchaseLine.SETFILTER("No.", pRequisitionLine."No.");
-        IF rL_StandardPurchaseLine.FINDSET THEN BEGIN
+        rL_StandardPurchaseLine.Reset;
+        rL_StandardPurchaseLine.SetFilter("Standard Purchase Code", pCode);
+        rL_StandardPurchaseLine.SetFilter("No.", pRequisitionLine."No.");
+        if rL_StandardPurchaseLine.FindSet then begin
 
 
 
-            CASE rL_StandardPurchaseLine."Replenishment System" OF
+            case rL_StandardPurchaseLine."Replenishment System" of
 
                 rL_StandardPurchaseLine."Replenishment System"::Boxes:
-                    BEGIN
+                    begin
                         pRequisitionLine."Replenishment System" := pRequisitionLine."Replenishment System"::Boxes;
-                    END;
+                    end;
 
                 rL_StandardPurchaseLine."Replenishment System"::Sales:
-                    BEGIN
-                        IF rL_RequisitionWkshName."Transaction Type" = rL_RequisitionWkshName."Transaction Type"::Inbound THEN BEGIN
+                    begin
+                        if rL_RequisitionWkshName."Transaction Type" = rL_RequisitionWkshName."Transaction Type"::Inbound then begin
                             pRequisitionLine."Replenishment System" := pRequisitionLine."Replenishment System"::"Sales Return Order";
-                        END ELSE
-                            IF rL_RequisitionWkshName."Transaction Type" = rL_RequisitionWkshName."Transaction Type"::Outbound THEN BEGIN
+                        end else
+                            if rL_RequisitionWkshName."Transaction Type" = rL_RequisitionWkshName."Transaction Type"::Outbound then begin
                                 pRequisitionLine."Replenishment System" := pRequisitionLine."Replenishment System"::"Sales Order";
-                            END;
-                    END;
+                            end;
+                    end;
 
                 rL_StandardPurchaseLine."Replenishment System"::Transfer:
-                    BEGIN
+                    begin
                         pRequisitionLine."Replenishment System" := pRequisitionLine."Replenishment System"::Transfer;
-                    END;
+                    end;
 
-            END;
+            end;
 
 
-            pRequisitionLine.MODIFY;
+            pRequisitionLine.Modify;
 
-        END;
+        end;
 
     end;
 

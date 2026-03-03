@@ -11,10 +11,11 @@ pageextension 50196 PostedReturnReceiptExt extends "Posted Return Receipt"
         // Add changes to page layout here
         addafter("No. Printed")
         {
-            field("Lot No."; "Lot No.")
+            field("Lot No."; Rec."Lot No.")
             {
                 Editable = false;
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Lot No. field.';
             }
         }
 
@@ -44,9 +45,9 @@ pageextension 50196 PostedReturnReceiptExt extends "Posted Return Receipt"
                 ApplicationArea = Basic, Suite;
                 Caption = 'Customer';
                 Image = Customer;
-                RunObject = Page "Customer Card";
-                RunPageLink = "No." = FIELD("Sell-to Customer No.");
-                ShortCutKey = 'Shift+F7';
+                RunObject = page "Customer Card";
+                RunPageLink = "No." = field("Sell-to Customer No.");
+                ShortcutKey = 'Shift+F7';
                 ToolTip = 'View or edit detailed information about the customer.';
             }
 

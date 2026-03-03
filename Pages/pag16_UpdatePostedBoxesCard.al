@@ -4,43 +4,51 @@ page 50016 "Update Posted Boxes Card"
 
     DeleteAllowed = false;
     InsertAllowed = false;
-    Permissions = TableData "Purchase Header Addon Posted" = rm;
+    Permissions = tabledata "Purchase Header Addon Posted" = rm;
     SourceTable = "Purchase Line Addon Posted";
+    ApplicationArea = All;
 
     layout
     {
-        area(content)
+        area(Content)
         {
-            field("Document No."; "Document No.")
+            field("Document No."; Rec."Document No.")
             {
                 Editable = false;
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Document No. field.';
             }
-            field("Line No."; "Line No.")
+            field("Line No."; Rec."Line No.")
             {
                 Editable = false;
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Line No. field.';
             }
-            field("No."; "No.")
+            field("No."; Rec."No.")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the No. field.';
             }
-            field(Description; Description)
+            field(Description; Rec.Description)
             {
                 Editable = false;
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Description field.';
             }
-            field("Variant Code"; "Variant Code")
+            field("Variant Code"; Rec."Variant Code")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Variant Code field.';
             }
-            field("Location Code"; "Location Code")
+            field("Location Code"; Rec."Location Code")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Location Code field.';
             }
-            field(Quantity; Quantity)
+            field(Quantity; Rec.Quantity)
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Quantity field.';
             }
         }
     }

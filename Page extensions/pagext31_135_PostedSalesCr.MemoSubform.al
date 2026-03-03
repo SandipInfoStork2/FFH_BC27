@@ -12,9 +12,10 @@ pageextension 50131 PostedSalesCrMemoSubformExt extends "Posted Sales Cr. Memo S
         // Add changes to page layout here
         addafter("No.")
         {
-            field("Shelf No."; "Shelf No.")
+            field("Shelf No."; Rec."Shelf No.")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Shelf No. field.';
             }
         }
 
@@ -24,9 +25,10 @@ pageextension 50131 PostedSalesCrMemoSubformExt extends "Posted Sales Cr. Memo S
         }
         addafter("Description 2")
         {
-            field("Packing Group Description"; "Packing Group Description")
+            field("Packing Group Description"; Rec."Packing Group Description")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Packing Group Description field.';
             }
         }
 
@@ -46,20 +48,23 @@ pageextension 50131 PostedSalesCrMemoSubformExt extends "Posted Sales Cr. Memo S
 
         addafter("Deferral Code")
         {
-            field("Quantity (Base)"; "Quantity (Base)")
+            field("Quantity (Base)"; Rec."Quantity (Base)")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 DecimalPlaces = 0 : 3;
+                ToolTip = 'Specifies the value of the Quantity (Base) field.';
             }
-            field("Unit of Measure (Base)"; "Unit of Measure (Base)")
+            field("Unit of Measure (Base)"; Rec."Unit of Measure (Base)")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Unit of Measure (Base) field.';
             }
 
-            field("Qty. Requested"; "Qty. Requested")
+            field("Qty. Requested"; Rec."Qty. Requested")
             {
                 Visible = false;
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Qty. Requested field.';
             }
         }
 
@@ -68,23 +73,27 @@ pageextension 50131 PostedSalesCrMemoSubformExt extends "Posted Sales Cr. Memo S
 
             field("Req. Country"; Rec."Req. Country")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 Visible = true;
+                ToolTip = 'Specifies the value of the Req. Country field.';
             }
 
             field("Country/Region of Origin Code"; Rec."Country/Region of Origin Code")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 Visible = true;
+                ToolTip = 'Custom: Country/Region of Origin Code';
             }
 
-            field("Product Class"; "Product Class")
+            field("Product Class"; Rec."Product Class")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Custom: Product Class (Κατηγορία)';
             }
-            field("Category 9"; "Category 9")
+            field("Category 9"; Rec."Category 9")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Custom: Potatoes District Region';
             }
         }
 
@@ -97,13 +106,14 @@ pageextension 50131 PostedSalesCrMemoSubformExt extends "Posted Sales Cr. Memo S
         {
             action(ItemTrackingEntries2)
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 Caption = 'Item &Tracking Entries';
                 Image = ItemTrackingLedger;
+                ToolTip = 'Executes the Item &Tracking Entries action.';
 
                 trigger OnAction();
                 begin
-                    ShowItemTrackingLines;
+                    Rec.ShowItemTrackingLines;
                 end;
             }
 

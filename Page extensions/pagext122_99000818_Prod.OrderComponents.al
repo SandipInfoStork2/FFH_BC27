@@ -44,9 +44,10 @@ pageextension 50222 ProdOrderComponentsExt extends "Prod. Order Components"
 
         addafter("Remaining Quantity")
         {
-            field("Requisition Quantity"; "Requisition Quantity")
+            field("Requisition Quantity"; Rec."Requisition Quantity")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Requisition Quantity field.';
             }
         }
 
@@ -65,10 +66,11 @@ pageextension 50222 ProdOrderComponentsExt extends "Prod. Order Components"
 
         addafter("Shortcut Dimension 2 Code")
         {
-            field("Item Category Code"; "Item Category Code")
+            field("Item Category Code"; Rec."Item Category Code")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 Editable = false;
+                ToolTip = 'Specifies the value of the Item Category Code field.';
             }
         }
 
@@ -96,46 +98,54 @@ pageextension 50222 ProdOrderComponentsExt extends "Prod. Order Components"
 
         addafter("Qty. Picked (Base)")
         {
-            field("Last Date Modified"; "Last Date Modified")
+            field("Last Date Modified"; Rec."Last Date Modified")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Last Date Modified field.';
             }
-            field("Created By"; "Created By")
+            field("Created By"; Rec."Created By")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Created By field.';
             }
-            field("Client Computer Name"; "Client Computer Name")
+            field("Client Computer Name"; Rec."Client Computer Name")
             {
-                ApplicationArea = all;
-            }
-
-            field(Status; Status)
-            {
-                ApplicationArea = all;
-                Editable = false;
-            }
-            field("Prod. Order No."; "Prod. Order No.")
-            {
-                ApplicationArea = all;
-                Editable = false;
-            }
-            field("Line No."; "Line No.")
-            {
-                ApplicationArea = all;
-                Editable = false;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Client Computer Name field.';
             }
 
-            field("Quantity per BUOM"; "Quantity per BUOM")
+            field(Status; Rec.Status)
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                Editable = false;
+                ToolTip = 'Specifies the status of the production order to which the component list belongs.';
+            }
+            field("Prod. Order No."; Rec."Prod. Order No.")
+            {
+                ApplicationArea = All;
+                Editable = false;
+                ToolTip = 'Specifies the number of the related production order.';
+            }
+            field("Line No."; Rec."Line No.")
+            {
+                ApplicationArea = All;
+                Editable = false;
+                ToolTip = 'Specifies the value of the Line No. field.';
+            }
+
+            field("Quantity per BUOM"; Rec."Quantity per BUOM")
+            {
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Quantity per BUOM field.';
             }
         }
 
         addafter("Expected Quantity")
         {
-            field("Posted Quantity"; "Posted Quantity")
+            field("Posted Quantity"; Rec."Posted Quantity")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Posted Quantity field.';
             }
         }
 
@@ -162,26 +172,29 @@ pageextension 50222 ProdOrderComponentsExt extends "Prod. Order Components"
         {
             action("Item Card")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 Image = Item;
-                RunObject = Page "Item Card";
-                RunPageLink = "No." = FIELD("Item No.");
+                RunObject = page "Item Card";
+                RunPageLink = "No." = field("Item No.");
+                ToolTip = 'Executes the Item Card action.';
 
             }
             action("Item SKU")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 Image = Item;
-                RunObject = Page "Stockkeeping Unit List";
-                RunPageLink = "Item No." = FIELD("Item No.");
+                RunObject = page "Stockkeeping Unit List";
+                RunPageLink = "Item No." = field("Item No.");
+                ToolTip = 'Executes the Item SKU action.';
 
             }
             action("Finished Production Order ")
             {
-                ApplicationArea = all;
-                RunObject = Page "Finished Production Order";
-                RunPageLink = Status = FIELD(Status),
-                                  "No." = FIELD("Prod. Order No.");
+                ApplicationArea = All;
+                RunObject = page "Finished Production Order";
+                RunPageLink = Status = field(Status),
+                                  "No." = field("Prod. Order No.");
+                ToolTip = 'Executes the Finished Production Order  action.';
 
             }
         }
@@ -208,7 +221,7 @@ pageextension 50222 ProdOrderComponentsExt extends "Prod. Order Components"
     var
         UserSetup: Record "User Setup";
     begin
-        UserSetup.GET(UserId);
+        UserSetup.Get(UserId);
         UnitCostEditable := UserSetup."Unit Cost Editable";
     end;
     //-1.0.0.228

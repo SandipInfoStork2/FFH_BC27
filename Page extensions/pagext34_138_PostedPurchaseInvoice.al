@@ -9,10 +9,11 @@ pageextension 50134 PostedPurchaseInvoiceExt extends "Posted Purchase Invoice"
         // Add changes to page layout here
         addafter(Corrective)
         {
-            field("Posting Description"; "Posting Description")
+            field("Posting Description"; Rec."Posting Description")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 Editable = false;
+                ToolTip = 'Specifies any text that is entered to accompany the posting, for example for information to auditors.';
             }
         }
     }

@@ -10,11 +10,12 @@ page 50049 "Posted Sales Line C- Update"
     ShowFilter = false;
     SourceTable = "Sales Cr.Memo Line";
     SourceTableTemporary = true;
-    Permissions = TableData "Sales Cr.Memo Line" = m;
+    Permissions = tabledata "Sales Cr.Memo Line" = m;
+    ApplicationArea = All;
 
     layout
     {
-        area(content)
+        area(Content)
         {
             group(General)
             {
@@ -31,16 +32,17 @@ page 50049 "Posted Sales Line C- Update"
                     Editable = false;
                     ToolTip = 'Specifies the name of customer at the sell-to address.';
                 }
-                field("Posting Date"; rec."Posting Date")
+                field("Posting Date"; Rec."Posting Date")
                 {
                     ApplicationArea = Basic, Suite;
                     Editable = false;
                     ToolTip = 'Specifies the posting date for the entry.';
                 }
-                field("No."; rec."No.")
+                field("No."; Rec."No.")
                 {
                     ApplicationArea = Basic, Suite;
                     Editable = false;
+                    ToolTip = 'Specifies the number of the involved entry or record, according to the specified number series.';
                 }
             }
             group(Lines)
@@ -58,7 +60,7 @@ page 50049 "Posted Sales Line C- Update"
                 }
 
 
-                field(Description; rec.Description)
+                field(Description; Rec.Description)
                 {
                     ApplicationArea = Suite;
                     Caption = 'Description';
@@ -69,7 +71,7 @@ page 50049 "Posted Sales Line C- Update"
                 //2
                 group(GrpReqCountry)
                 {
-                    caption = '';
+                    Caption = '';
                     field(OldCountryRegionofOriginCode; xSalesCrMemoLine."Country/Region of Origin Code")
                     {
                         ApplicationArea = Suite;
@@ -78,7 +80,7 @@ page 50049 "Posted Sales Line C- Update"
                         Editable = false;
                     }
 
-                    field(CountryRegionofOriginCode; rec."Country/Region of Origin Code")
+                    field(CountryRegionofOriginCode; Rec."Country/Region of Origin Code")
                     {
                         ApplicationArea = Suite;
                         Caption = 'Country/Region of Origin Code';
@@ -93,7 +95,7 @@ page 50049 "Posted Sales Line C- Update"
                 //3
                 group(GrpProductClass)
                 {
-                    caption = '';
+                    Caption = '';
                     field(OldProductClass; xSalesCrMemoLine."Product Class")
                     {
                         ApplicationArea = Suite;
@@ -102,7 +104,7 @@ page 50049 "Posted Sales Line C- Update"
                         Editable = false;
                     }
 
-                    field(ProductClass; rec."Product Class")
+                    field(ProductClass; Rec."Product Class")
                     {
                         ApplicationArea = Suite;
                         Caption = 'Product Class (Κατηγορία)';
@@ -115,7 +117,7 @@ page 50049 "Posted Sales Line C- Update"
                 //4
                 group(GrpCategory9)
                 {
-                    caption = '';
+                    Caption = '';
 
                     field(OldCategory9; xSalesCrMemoLine."Category 9")
                     {
@@ -125,7 +127,7 @@ page 50049 "Posted Sales Line C- Update"
                         Editable = false;
                     }
 
-                    field(Category9; rec."Category 9")
+                    field(Category9; Rec."Category 9")
                     {
                         ApplicationArea = Suite;
                         Caption = 'Potatoes District Region';
@@ -147,23 +149,23 @@ page 50049 "Posted Sales Line C- Update"
     trigger OnOpenPage()
     begin
         xSalesCrMemoLine := Rec;
-        rG_SalesCrMemoHeader.GET(xSalesCrMemoLine."Document No.");
+        rG_SalesCrMemoHeader.Get(xSalesCrMemoLine."Document No.");
     end;
 
     trigger OnQueryClosePage(CloseAction: Action): Boolean
     var
         rL_SalesCrMemoLine: Record "Sales Cr.Memo Line";
     begin
-        if CloseAction = ACTION::LookupOK then
+        if CloseAction = Action::LookupOK then
             if RecordChanged then begin
                 //CODEUNIT.Run(CODEUNIT::"Shipment Header - Edit", Rec);
-                rL_SalesCrMemoLine.GET(rec."Document No.", rec."Line No.");
+                rL_SalesCrMemoLine.Get(Rec."Document No.", Rec."Line No.");
                 rL_SalesCrMemoLine.Description := Rec.Description;
 
                 rL_SalesCrMemoLine."Country/Region of Origin Code" := Rec."Country/Region of Origin Code";
                 rL_SalesCrMemoLine."Product Class" := Rec."Product Class";
                 rL_SalesCrMemoLine."Category 9" := Rec."Category 9";
-                rL_SalesCrMemoLine.Description := rec.Description;
+                rL_SalesCrMemoLine.Description := Rec.Description;
                 rL_SalesCrMemoLine.Modify();
             end;
 
@@ -176,10 +178,10 @@ page 50049 "Posted Sales Line C- Update"
     local procedure RecordChanged() IsChanged: Boolean
     begin
         IsChanged :=
-         (rec."Description" <> xSalesCrMemoLine."Description") or
-          (rec."Country/Region of Origin Code" <> xSalesCrMemoLine."Country/Region of Origin Code") or
-          (rec."Product Class" <> xSalesCrMemoLine."Product Class") or
-          (rec."Category 9" <> xSalesCrMemoLine."Category 9");
+         (Rec.Description <> xSalesCrMemoLine.Description) or
+          (Rec."Country/Region of Origin Code" <> xSalesCrMemoLine."Country/Region of Origin Code") or
+          (Rec."Product Class" <> xSalesCrMemoLine."Product Class") or
+          (Rec."Category 9" <> xSalesCrMemoLine."Category 9");
 
 
         OnAfterRecordChanged(Rec, xSalesCrMemoLine, IsChanged);
@@ -189,7 +191,7 @@ page 50049 "Posted Sales Line C- Update"
     procedure SetRec(SalesCrMemoLine: Record "Sales Cr.Memo Line")
     begin
         Rec := SalesCrMemoLine;
-        rec.Insert;
+        Rec.Insert;
     end;
 
     [IntegrationEvent(false, false)]

@@ -136,7 +136,7 @@ report 50093 "Sales Item Price List FFH"
             dataitem(SalesPrices; "Sales Price")
             {
                 //DataItemTableView = SORTING(Number) WHERE(Number = FILTER(1 ..));
-                
+
                 RequestFilterFields = "Sales Type", "Sales Code";
                 DataItemLink = "Item No." = field("No.");
                 column(VATText_SalesPrices; VATText)
@@ -160,12 +160,12 @@ report 50093 "Sales Item Price List FFH"
                 {
                 }
 
-                column(StartingDate_SalesPrices; FORMAT("Starting Date"))
+                column(StartingDate_SalesPrices; Format("Starting Date"))
                 {
 
                 }
 
-                column(EndingDate_SalesPrices; FORMAT("Ending Date"))
+                column(EndingDate_SalesPrices; Format("Ending Date"))
                 {
 
                 }
@@ -223,9 +223,9 @@ report 50093 "Sales Item Price List FFH"
                     //   itemReference := GetSalesPriceItemReference(vG_SalesCodeFilter, item."No.");
                     case vG_SortBy of
                         vG_SortBy::Description:
-                            sortingField := item.Description;
+                            sortingField := Item.Description;
                         vG_SortBy::"Item No.":
-                            sortingField := Format(item."No.");
+                            sortingField := Format(Item."No.");
                         vG_SortBy::"Item Reference":
                             sortingField := Format(SalesPrices."Item Reference");
                     end;
@@ -296,7 +296,7 @@ report 50093 "Sales Item Price List FFH"
 
         layout
         {
-            area(content)
+            area(Content)
             {
                 group(Options)
                 {
@@ -307,17 +307,20 @@ report 50093 "Sales Item Price List FFH"
                     {
                         ApplicationArea = All;
                         Caption = 'Start Date';
+                        ToolTip = 'Specifies the value of the Start Date field.';
 
                     }
                     field(EndDate; vG_EndDate)
                     {
                         ApplicationArea = All;
                         Caption = 'End Date';
+                        ToolTip = 'Specifies the value of the End Date field.';
                     }
                     field(SortBy; vG_SortBy)
                     {
                         ApplicationArea = All;
                         Caption = 'Sort By';
+                        ToolTip = 'Specifies the value of the Sort By field.';
                     }
                 }
             }
@@ -427,19 +430,19 @@ report 50093 "Sales Item Price List FFH"
         Addr: array[8] of Text;
         rG_Customer: Record Customer;
 
-        vG_SalesCodeFilter: code[20];
+        vG_SalesCodeFilter: Code[20];
         vG_StartDate: Date;
 
         vG_EndDate: Date;
 
-        vG_SortBy: Option "Description","Item No.","Item Reference";
+        vG_SortBy: Option Description,"Item No.","Item Reference";
         itemReference: Code[20];
         sortingField: Text[100];
 
     local procedure GetPriceHandler(Method: Enum "Price Calculation Method"): Enum "Price Calculation Handler";
 
     var
-        PriceCalculationSetup: record "Price Calculation Setup";
+        PriceCalculationSetup: Record "Price Calculation Setup";
     begin
         if PriceCalculationSetup.FindDefault(Method, PriceCalculationSetup.Type::Sale) then
             exit(PriceCalculationSetup.Implementation);

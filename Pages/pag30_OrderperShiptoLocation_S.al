@@ -13,10 +13,11 @@ page 50030 "Order per Ship-to Location (S)"
     RefreshOnActivate = false;
     SaveValues = true;
     SourceTable = "Ship-to Address";
+    ApplicationArea = All;
 
     layout
     {
-        area(content)
+        area(Content)
         {
             group(General)
             {
@@ -24,6 +25,7 @@ page 50030 "Order per Ship-to Location (S)"
                 {
                     Caption = 'Shipment Start Date';
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Shipment Start Date field.';
 
                     trigger OnValidate();
                     begin
@@ -34,6 +36,7 @@ page 50030 "Order per Ship-to Location (S)"
                 {
                     ApplicationArea = All;
                     Caption = 'Shipment End Date';
+                    ToolTip = 'Specifies the value of the Shipment End Date field.';
 
                     trigger OnValidate();
                     begin
@@ -45,17 +48,20 @@ page 50030 "Order per Ship-to Location (S)"
                     ApplicationArea = All;
                     Caption = 'Date Filter';
                     Editable = false;
+                    ToolTip = 'Specifies the value of the Date Filter field.';
                 }
                 field(vG_NoofItems; vG_NoofItems)
                 {
                     ApplicationArea = All;
                     Caption = 'No. of Items';
                     Editable = false;
+                    ToolTip = 'Specifies the value of the No. of Items field.';
                 }
                 field(Show; Show)
                 {
                     ApplicationArea = All;
                     Caption = 'Show Name';
+                    ToolTip = 'Specifies the value of the Show Name field.';
 
                     trigger OnValidate();
                     begin
@@ -67,6 +73,7 @@ page 50030 "Order per Ship-to Location (S)"
                     ApplicationArea = All;
                     Caption = 'Column Set';
                     Editable = false;
+                    ToolTip = 'Specifies the value of the Column Set field.';
                 }
             }
             part(MatrixForm; "Order per Ship-to Loc Lines S")
@@ -74,7 +81,7 @@ page 50030 "Order per Ship-to Location (S)"
                 ApplicationArea = All;
             }
         }
-        area(factboxes)
+        area(FactBoxes)
         {
             systempart(Control1000000005; Links)
             {
@@ -91,7 +98,7 @@ page 50030 "Order per Ship-to Location (S)"
 
     actions
     {
-        area(processing)
+        area(Processing)
         {
             action("Previous Set")
             {
@@ -126,14 +133,15 @@ page 50030 "Order per Ship-to Location (S)"
             action(ShowFilters)
             {
                 ApplicationArea = All;
+                ToolTip = 'Executes the ShowFilters action.';
 
                 trigger OnAction();
                 begin
-                    CurrPage.MatrixForm.PAGE.ShowFilters();
+                    CurrPage.MatrixForm.Page.ShowFilters();
                 end;
             }
         }
-        area(reporting)
+        area(Reporting)
         {
             action("Sales Order Production")
             {
@@ -143,6 +151,7 @@ page 50030 "Order per Ship-to Location (S)"
                 PromotedCategory = "Report";
                 PromotedIsBig = true;
                 PromotedOnly = true;
+                ToolTip = 'Executes the Sales Order Production action.';
 
                 trigger OnAction();
                 var
@@ -150,19 +159,19 @@ page 50030 "Order per Ship-to Location (S)"
                     rpt_SalesOrderProduction: Report "Sales Order Production";
                 begin
                     //Sales Order Production
-                    CLEAR(rL_SalesLine);
-                    rL_SalesLine.RESET;
-                    rL_SalesLine.SETRANGE(Type, rL_SalesLine.Type::Item);
-                    rL_SalesLine.SETFILTER(rL_SalesLine."Shortcut Dimension 2 Code", 'F-CUTS');
+                    Clear(rL_SalesLine);
+                    rL_SalesLine.Reset;
+                    rL_SalesLine.SetRange(Type, rL_SalesLine.Type::Item);
+                    rL_SalesLine.SetFilter(rL_SalesLine."Shortcut Dimension 2 Code", 'F-CUTS');
                     if DateFilter <> '' then begin
-                        rL_SalesLine.SETFILTER("Shipment Date", DateFilter);
+                        rL_SalesLine.SetFilter("Shipment Date", DateFilter);
                     end;
-                    if rL_SalesLine.FINDSET then;
+                    if rL_SalesLine.FindSet then;
 
-                    CLEAR(rpt_SalesOrderProduction);
-                    rpt_SalesOrderProduction.SETTABLEVIEW(rL_SalesLine);
-                    rpt_SalesOrderProduction.USEREQUESTPAGE(true);
-                    rpt_SalesOrderProduction.RUN;
+                    Clear(rpt_SalesOrderProduction);
+                    rpt_SalesOrderProduction.SetTableView(rL_SalesLine);
+                    rpt_SalesOrderProduction.UseRequestPage(true);
+                    rpt_SalesOrderProduction.Run;
                 end;
             }
             action("Sales Order Packing")
@@ -173,6 +182,7 @@ page 50030 "Order per Ship-to Location (S)"
                 PromotedCategory = "Report";
                 PromotedIsBig = true;
                 PromotedOnly = true;
+                ToolTip = 'Executes the Sales Order Packing action.';
 
                 trigger OnAction();
                 var
@@ -180,19 +190,19 @@ page 50030 "Order per Ship-to Location (S)"
                     rpt_SalesOrderPacking: Report "Sales Order Packing";
                 begin
                     //
-                    CLEAR(rL_SalesLine);
-                    rL_SalesLine.RESET;
-                    rL_SalesLine.SETRANGE(Type, rL_SalesLine.Type::Item);
-                    rL_SalesLine.SETFILTER(rL_SalesLine."Shortcut Dimension 2 Code", 'F-CUTS');
+                    Clear(rL_SalesLine);
+                    rL_SalesLine.Reset;
+                    rL_SalesLine.SetRange(Type, rL_SalesLine.Type::Item);
+                    rL_SalesLine.SetFilter(rL_SalesLine."Shortcut Dimension 2 Code", 'F-CUTS');
                     if DateFilter <> '' then begin
-                        rL_SalesLine.SETFILTER("Shipment Date", DateFilter);
+                        rL_SalesLine.SetFilter("Shipment Date", DateFilter);
                     end;
-                    if rL_SalesLine.FINDSET then;
+                    if rL_SalesLine.FindSet then;
 
-                    CLEAR(rpt_SalesOrderPacking);
-                    rpt_SalesOrderPacking.SETTABLEVIEW(rL_SalesLine);
-                    rpt_SalesOrderPacking.USEREQUESTPAGE(true);
-                    rpt_SalesOrderPacking.RUN;
+                    Clear(rpt_SalesOrderPacking);
+                    rpt_SalesOrderPacking.SetTableView(rL_SalesLine);
+                    rpt_SalesOrderPacking.UseRequestPage(true);
+                    rpt_SalesOrderPacking.Run;
                 end;
             }
             action("Sales Order Material Requisition")
@@ -203,6 +213,7 @@ page 50030 "Order per Ship-to Location (S)"
                 PromotedCategory = "Report";
                 PromotedIsBig = true;
                 PromotedOnly = true;
+                ToolTip = 'Executes the Sales Order Material Requisition action.';
 
                 trigger OnAction();
                 var
@@ -211,19 +222,19 @@ page 50030 "Order per Ship-to Location (S)"
                 begin
                     //+TAL0.4
                     //Sales Order Production
-                    CLEAR(rL_SalesLine);
-                    rL_SalesLine.RESET;
-                    rL_SalesLine.SETRANGE(Type, rL_SalesLine.Type::Item);
-                    rL_SalesLine.SETFILTER(rL_SalesLine."Shortcut Dimension 2 Code", 'F-CUTS');
+                    Clear(rL_SalesLine);
+                    rL_SalesLine.Reset;
+                    rL_SalesLine.SetRange(Type, rL_SalesLine.Type::Item);
+                    rL_SalesLine.SetFilter(rL_SalesLine."Shortcut Dimension 2 Code", 'F-CUTS');
                     if DateFilter <> '' then begin
-                        rL_SalesLine.SETFILTER("Shipment Date", DateFilter);
+                        rL_SalesLine.SetFilter("Shipment Date", DateFilter);
                     end;
-                    if rL_SalesLine.FINDSET then;
+                    if rL_SalesLine.FindSet then;
 
-                    CLEAR(rpt_SalesOrderMatReq);
-                    rpt_SalesOrderMatReq.SETTABLEVIEW(rL_SalesLine);
-                    rpt_SalesOrderMatReq.USEREQUESTPAGE(true);
-                    rpt_SalesOrderMatReq.RUN;
+                    Clear(rpt_SalesOrderMatReq);
+                    rpt_SalesOrderMatReq.SetTableView(rL_SalesLine);
+                    rpt_SalesOrderMatReq.UseRequestPage(true);
+                    rpt_SalesOrderMatReq.Run;
                     //-TAL0.4
                 end;
             }
@@ -232,7 +243,7 @@ page 50030 "Order per Ship-to Location (S)"
 
     trigger OnOpenPage();
     begin
-        MATRIX_MatrixRecord.SETFILTER("No. of Orders", '<>%1', 0);
+        MATRIX_MatrixRecord.SetFilter("No. of Orders", '<>%1', 0);
         MATRIX_GenerateColumnCaptions(MATRIX_SetWanted::First);
 
         FormatDateFilter(false);
@@ -259,28 +270,28 @@ page 50030 "Order per Ship-to Location (S)"
         CurrentMatrixRecordOrdinal: Integer;
         CaptionField: Integer;
     begin
-        CLEAR(MATRIX_CaptionSet);
-        CLEAR(MatrixRecords);
+        Clear(MATRIX_CaptionSet);
+        Clear(MatrixRecords);
         CurrentMatrixRecordOrdinal := 1;
 
-        RecRef.GETTABLE(MATRIX_MatrixRecord);
-        RecRef.SETTABLE(MATRIX_MatrixRecord);
+        RecRef.GetTable(MATRIX_MatrixRecord);
+        RecRef.SetTable(MATRIX_MatrixRecord);
 
         if Show then
             CaptionField := 3
         else
             CaptionField := 2;
 
-        MatrixMgt.GenerateMatrixData(RecRef, SetWanted, ARRAYLEN(MatrixRecords), CaptionField, MATRIX_PKFirstRecInCurrSet, MATRIX_CaptionSet
+        MatrixMgt.GenerateMatrixData(RecRef, SetWanted, ArrayLen(MatrixRecords), CaptionField, MATRIX_PKFirstRecInCurrSet, MATRIX_CaptionSet
           , MATRIX_CaptionRange, MATRIX_CurrentNoOfColumns);
 
         if MATRIX_CurrentNoOfColumns > 0 then begin
-            MATRIX_MatrixRecord.SETPOSITION(MATRIX_PKFirstRecInCurrSet);
-            MATRIX_MatrixRecord.FIND;
+            MATRIX_MatrixRecord.SetPosition(MATRIX_PKFirstRecInCurrSet);
+            MATRIX_MatrixRecord.Find;
             repeat
-                MatrixRecords[CurrentMatrixRecordOrdinal].COPY(MATRIX_MatrixRecord);
+                MatrixRecords[CurrentMatrixRecordOrdinal].Copy(MATRIX_MatrixRecord);
                 CurrentMatrixRecordOrdinal := CurrentMatrixRecordOrdinal + 1;
-            until (CurrentMatrixRecordOrdinal > MATRIX_CurrentNoOfColumns) or (MATRIX_MatrixRecord.NEXT <> 1);
+            until (CurrentMatrixRecordOrdinal > MATRIX_CurrentNoOfColumns) or (MATRIX_MatrixRecord.Next <> 1);
         end;
 
         UpdateMatrixSubform;
@@ -293,20 +304,20 @@ page 50030 "Order per Ship-to Location (S)"
 
     local procedure UpdateMatrixSubform();
     begin
-        CurrPage.MatrixForm.PAGE.Load(MATRIX_CaptionSet, MatrixRecords, MATRIX_CurrentNoOfColumns, Show, DateFilter);
+        CurrPage.MatrixForm.Page.Load(MATRIX_CaptionSet, MatrixRecords, MATRIX_CurrentNoOfColumns, Show, DateFilter);
         //CurrPage.MatrixForm.PAGE.SETRECORD(Rec);
-        CurrPage.UPDATE(false);
+        CurrPage.Update(false);
     end;
 
     local procedure FormatDateFilter(pShowMessage: Boolean);
     var
         rL_Item: Record Item;
     begin
-        DateFilter := FORMAT(vG_ShipmentStartDate);
+        DateFilter := Format(vG_ShipmentStartDate);
 
         if (vG_ShipmentEndDate <> 0D) and (vG_ShipmentStartDate <> 0D) then begin
             if vG_ShipmentEndDate >= vG_ShipmentStartDate then begin
-                DateFilter := FORMAT(vG_ShipmentStartDate) + '..' + FORMAT(vG_ShipmentEndDate);
+                DateFilter := Format(vG_ShipmentStartDate) + '..' + Format(vG_ShipmentEndDate);
             end;
         end;
 
@@ -316,17 +327,17 @@ page 50030 "Order per Ship-to Location (S)"
 
 
         vG_NoofItems := 0;
-        CLEAR(rL_Item);
-        rL_Item.RESET;
-        rL_Item.SETFILTER("Date Filter", DateFilter);
-        rL_Item.SETFILTER("Qty. on Sales Order", '<>%1', 0);
-        rL_Item.SETFILTER("Global Dimension 2 Code", 'F-CUTS');
-        if rL_Item.FINDSET then begin
-            vG_NoofItems := rL_Item.COUNT;
+        Clear(rL_Item);
+        rL_Item.Reset;
+        rL_Item.SetFilter("Date Filter", DateFilter);
+        rL_Item.SetFilter("Qty. on Sales Order", '<>%1', 0);
+        rL_Item.SetFilter("Global Dimension 2 Code", 'F-CUTS');
+        if rL_Item.FindSet then begin
+            vG_NoofItems := rL_Item.Count;
         end;
 
         if (DateFilter = '') and (vG_NoofItems <> 0) and (pShowMessage) then begin
-            MESSAGE('Click Refresh');
+            Message('Click Refresh');
         end;
     end;
 }

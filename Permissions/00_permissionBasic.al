@@ -1,21 +1,22 @@
-permissionset 50000 "TAL_BASIC_EXT"
+permissionset 50000 TAL_BASIC_EXT
 {
-    Assignable = True;
+    Assignable = true;
     Access = Public;
 
 
     Permissions =
+        tabledata ExpirationCalculation = RIDM,
         tabledata "General Categories" = RIDM,
         tabledata "Delivery Schedule" = RIDM,
         //tabledata "Chain Of Custody Link" = RIDM,
         tabledata "Order Qty" = RIDM,
         tabledata "Item Grower Vendor" = RIDM,
-        tabledata "Grower" = RIDM,
+        tabledata Grower = RIDM,
         tabledata "Purchase Header Addon" = RIDM,
         tabledata "Purchase Line Addon" = RIDM,
         tabledata "Purchase Header Addon Posted" = RIM,
         tabledata "Purchase Line Addon Posted" = RIDM,
-         tabledata "Lidl Order Archive" = RIDM,
+        tabledata "Lidl Order Archive" = RIDM,
 
 
         tabledata "Manufacturing Setup" = Rimd,

@@ -5,9 +5,10 @@ pageextension 50232 ItemReferenceEntriesExt extends "Item Reference Entries"
         // Add changes to page layout here
         addafter("Unit of Measure")
         {
-            field("Package Qty"; "Package Qty")
+            field("Package Qty"; Rec."Package Qty")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Package Qty field.';
             }
         }
 
@@ -17,43 +18,52 @@ pageextension 50232 ItemReferenceEntriesExt extends "Item Reference Entries"
         }
         addafter("Description 2")
         {
-            field("Description 3"; "Description 3")
+            field("Description 3"; Rec."Description 3")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Description 3 field.';
             }
-            field("Category 2"; "Category 2")
+            field("Category 2"; Rec."Category 2")
             {
-                ApplicationArea = all;
-            }
-
-            field("S. Quote Description"; "S. Quote Description")
-            {
-                ApplicationArea = all;
-            }
-            field("Item Description"; "Item Description")
-            {
-                ApplicationArea = all;
-            }
-            field("Item Description 2 (GR)"; "Item Description 2 (GR)")
-            {
-                ApplicationArea = all;
-            }
-            field(Discontinued; Discontinued)
-            {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Product No. field.';
             }
 
-            field(Package; Package)
+            field("S. Quote Description"; Rec."S. Quote Description")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the S. Quote Description field.';
             }
-            field(EAN; EAN)
+            field("Item Description"; Rec."Item Description")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Item Description field.';
             }
-            field("Family Code"; "Family Code")
+            field("Item Description 2 (GR)"; Rec."Item Description 2 (GR)")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Item Description 2 (GR) field.';
+            }
+            field(Discontinued; Rec.Discontinued)
+            {
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Discontinued field.';
+            }
+
+            field(Package; Rec.Package)
+            {
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Package field.';
+            }
+            field(EAN; Rec.EAN)
+            {
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Barcode field.';
+            }
+            field("Family Code"; Rec."Family Code")
+            {
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Family Code field.';
             }
         }
 
@@ -68,19 +78,20 @@ pageextension 50232 ItemReferenceEntriesExt extends "Item Reference Entries"
             action(History)
             {
                 ApplicationArea = All;
-                caption = 'History';
+                Caption = 'History';
                 Image = History;
+                ToolTip = 'Executes the History action.';
                 trigger OnAction()
                 var
                     SalesLine: Record "Sales Line";
 
                 begin
-                    SalesLine.RESET;
+                    SalesLine.Reset;
                     SalesLine.SetRange("Document Type", SalesLine."Document Type"::Quote);
                     SalesLine.SetRange(Type, SalesLine.Type::Item);
-                    SalesLine.SetFilter("Item Reference No.", "Reference No.");
+                    SalesLine.SetFilter("Item Reference No.", Rec."Reference No.");
                     if SalesLine.FindSet() then;
-                    page.Run(page::"Sales Quote Lidl Lines", SalesLine);
+                    Page.Run(Page::"Sales Quote Lidl Lines", SalesLine);
                 end;
 
             }
@@ -89,10 +100,11 @@ pageextension 50232 ItemReferenceEntriesExt extends "Item Reference Entries"
             {
                 ApplicationArea = All;
                 Caption = '';
+                ToolTip = 'Executes the Recpount action.';
 
                 trigger OnAction()
                 begin
-                    message('# records: ' + Format(count))
+                    message('# records: ' + Format(Rec.count))
                 end;
             }
         }

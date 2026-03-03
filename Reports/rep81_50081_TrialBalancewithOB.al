@@ -12,27 +12,28 @@ report 50081 "Trial Balance with O/B"
     RDLCLayout = './Layouts/rep81_50081_TrialBalancewithOB.rdlc';
 
     Caption = 'Trial Balance with O/B';
+    ApplicationArea = All;
 
     dataset
     {
         dataitem("G/L Account"; "G/L Account")
         {
-            DataItemTableView = SORTING("No.");
+            DataItemTableView = sorting("No.");
             RequestFilterFields = "No.", "Account Type", "Date Filter", "Global Dimension 1 Filter", "Global Dimension 2 Filter";
-            column(STRSUBSTNO_Text000_PeriodText_; STRSUBSTNO(Text000, PeriodText))
+            column(STRSUBSTNO_Text000_PeriodText_; StrSubstNo(Text000, PeriodText))
             {
             }
             column(LCYCode; GeneralLedgerSetup."LCY Code")
             {
             }
 
-            column(COMPANYNAME; COMPANYNAME)
+            column(COMPANYNAME; CompanyName)
             {
             }
             column(PeriodText; PeriodText)
             {
             }
-            column(G_L_Account__TABLECAPTION__________GLFilter; TABLECAPTION + ': ' + GLFilter)
+            column(G_L_Account__TABLECAPTION__________GLFilter; TableCaption + ': ' + GLFilter)
             {
             }
             column(GLFilter; GLFilter)
@@ -53,7 +54,7 @@ report 50081 "Trial Balance with O/B"
             column(BalanceCaption; BalanceCaptionLbl)
             {
             }
-            column(G_L_Account___No__Caption; FIELDCAPTION("No."))
+            column(G_L_Account___No__Caption; FieldCaption("No."))
             {
             }
             column(PADSTR_____G_L_Account__Indentation___2___G_L_Account__NameCaption; PADSTR_____G_L_Account__Indentation___2___G_L_Account__NameCaptionLbl)
@@ -103,11 +104,11 @@ report 50081 "Trial Balance with O/B"
             }
             dataitem("Integer"; "Integer")
             {
-                DataItemTableView = SORTING(Number) WHERE(Number = CONST(1));
+                DataItemTableView = sorting(Number) where(Number = const(1));
                 column(G_L_Account___No__; "G/L Account"."No.")
                 {
                 }
-                column(PADSTR_____G_L_Account__Indentation___2___G_L_Account__Name; PADSTR('', "G/L Account".Indentation * 2) + "G/L Account".Name)
+                column(PADSTR_____G_L_Account__Indentation___2___G_L_Account__Name; PadStr('', "G/L Account".Indentation * 2) + "G/L Account".Name)
                 {
                 }
                 column(G_L_Account___Net_Change_; "G/L Account"."Net Change")
@@ -130,7 +131,7 @@ report 50081 "Trial Balance with O/B"
                 {
                     AutoFormatType = 1;
                 }
-                column(G_L_Account___Account_Type_; FORMAT("G/L Account"."Account Type", 0, 2))
+                column(G_L_Account___Account_Type_; Format("G/L Account"."Account Type", 0, 2))
                 {
                 }
                 column(No__of_Blank_Lines; "G/L Account"."No. of Blank Lines")
@@ -187,8 +188,8 @@ report 50081 "Trial Balance with O/B"
 
                     trigger OnAfterGetRecord()
                     begin
-                        IF BlankLineNo = 0 THEN
-                            CurrReport.BREAK;
+                        if BlankLineNo = 0 then
+                            CurrReport.Break;
 
                         BlankLineNo -= 1;
                     end;
@@ -214,54 +215,54 @@ report 50081 "Trial Balance with O/B"
 
 
                 //PG 19/08/11 Add new variable for G/L account, copy filters, and calculate net change
-                vG_GLAccount.RESET;
-                vG_GLAccount.COPYFILTERS("G/L Account");
-                vG_GLAccount.SETRANGE(vG_GLAccount."No.", "G/L Account"."No.");
-                vG_GLAccount.SETRANGE("Date Filter", 0D, CLOSINGDATE(vG_StartDate - 1));   //PG Using all filters
+                vG_GLAccount.Reset;
+                vG_GLAccount.CopyFilters("G/L Account");
+                vG_GLAccount.SetRange(vG_GLAccount."No.", "G/L Account"."No.");
+                vG_GLAccount.SetRange("Date Filter", 0D, ClosingDate(vG_StartDate - 1));   //PG Using all filters
 
-                IF vG_GLAccount.FINDFIRST THEN BEGIN
-                    vG_GLAccount.CALCFIELDS(vG_GLAccount."Net Change");
+                if vG_GLAccount.FindFirst then begin
+                    vG_GLAccount.CalcFields(vG_GLAccount."Net Change");
 
-                    IF vG_GLAccount."Net Change" > 0 THEN BEGIN          //PG Check for Debit or Credit O/B
-                        vG_OBDebit := ABS(vG_GLAccount."Net Change");
-                    END ELSE BEGIN
-                        vG_OBCredit := ABS(vG_GLAccount."Net Change");
-                    END;
+                    if vG_GLAccount."Net Change" > 0 then begin          //PG Check for Debit or Credit O/B
+                        vG_OBDebit := Abs(vG_GLAccount."Net Change");
+                    end else begin
+                        vG_OBCredit := Abs(vG_GLAccount."Net Change");
+                    end;
 
                     //+NOD0.5
-                    vG_GLAccount.CALCFIELDS(vG_GLAccount."Additional-Currency Net Change");
+                    vG_GLAccount.CalcFields(vG_GLAccount."Additional-Currency Net Change");
 
-                    IF vG_GLAccount."Additional-Currency Net Change" > 0 THEN BEGIN          //PG Check for Debit or Credit O/B
-                        vG_OBDebitACY := ABS(vG_GLAccount."Additional-Currency Net Change");
-                    END ELSE BEGIN
-                        vG_OBCreditACY := ABS(vG_GLAccount."Additional-Currency Net Change");
-                    END;
+                    if vG_GLAccount."Additional-Currency Net Change" > 0 then begin          //PG Check for Debit or Credit O/B
+                        vG_OBDebitACY := Abs(vG_GLAccount."Additional-Currency Net Change");
+                    end else begin
+                        vG_OBCreditACY := Abs(vG_GLAccount."Additional-Currency Net Change");
+                    end;
 
                     //-NOD0.5
 
-                END;
+                end;
                 //-NOD 0.1
 
-                CALCFIELDS("Net Change", "Balance at Date", "Debit Amount", "Credit Amount");
+                CalcFields("Net Change", "Balance at Date", "Debit Amount", "Credit Amount");
 
                 //+NOD0.5
-                CALCFIELDS("Additional-Currency Net Change", "Add.-Currency Balance at Date", "Add.-Currency Debit Amount", "Add.-Currency Credit Amount");
+                CalcFields("Additional-Currency Net Change", "Add.-Currency Balance at Date", "Add.-Currency Debit Amount", "Add.-Currency Credit Amount");
                 //-NOD0.5
 
                 //+NOD0.3
-                IF ExcludeOpeningZeroNoMove THEN BEGIN
-                    IF ((vG_GLAccount."Net Change" = 0) AND ("Debit Amount" = 0) AND ("Credit Amount" = 0)) THEN
-                        CurrReport.SKIP;
-                END;
+                if ExcludeOpeningZeroNoMove then begin
+                    if ((vG_GLAccount."Net Change" = 0) and ("Debit Amount" = 0) and ("Credit Amount" = 0)) then
+                        CurrReport.Skip;
+                end;
                 //-NOD0.3
 
-                IF PrintToExcel THEN
+                if PrintToExcel then
                     MakeExcelDataBody;
 
-                IF ChangeGroupNo THEN BEGIN
+                if ChangeGroupNo then begin
                     PageGroupNo += 1;
-                    ChangeGroupNo := FALSE;
-                END;
+                    ChangeGroupNo := false;
+                end;
 
                 ChangeGroupNo := "New Page";
 
@@ -274,7 +275,7 @@ report 50081 "Trial Balance with O/B"
                 Column[5] := 0;
                 Column[6] := 0;
 
-                IF NOT AddCurr THEN BEGIN
+                if not AddCurr then begin
 
                     Column[1] := vG_OBDebit;
                     Column[2] := vG_OBCredit;
@@ -283,7 +284,7 @@ report 50081 "Trial Balance with O/B"
                     Column[5] := "G/L Account"."Balance at Date";
                     Column[6] := -"G/L Account"."Balance at Date";
 
-                END ELSE BEGIN
+                end else begin
                     Column[1] := vG_OBDebitACY;
                     Column[2] := vG_OBCreditACY;
                     Column[3] := "G/L Account"."Add.-Currency Debit Amount";
@@ -291,22 +292,22 @@ report 50081 "Trial Balance with O/B"
                     Column[5] := "G/L Account"."Add.-Currency Balance at Date";
                     Column[6] := -"G/L Account"."Add.-Currency Balance at Date";
 
-                END;
+                end;
             end;
 
             trigger OnPreDataItem()
             begin
                 PageGroupNo := 0;
-                ChangeGroupNo := FALSE;
+                ChangeGroupNo := false;
 
                 //+NOD0.6
-                GLSetup.GET;
-                IF AddCurr THEN
-                    HeaderText := STRSUBSTNO(Text1450013, GLSetup."Additional Reporting Currency")
-                ELSE BEGIN
-                    GLSetup.TESTFIELD("LCY Code");
-                    HeaderText := STRSUBSTNO(Text1450013, GLSetup."LCY Code");
-                END;
+                GLSetup.Get;
+                if AddCurr then
+                    HeaderText := StrSubstNo(Text1450013, GLSetup."Additional Reporting Currency")
+                else begin
+                    GLSetup.TestField("LCY Code");
+                    HeaderText := StrSubstNo(Text1450013, GLSetup."LCY Code");
+                end;
                 //-NOD0.6
             end;
         }
@@ -317,7 +318,7 @@ report 50081 "Trial Balance with O/B"
 
         layout
         {
-            area(content)
+            area(Content)
             {
                 group(Options)
                 {
@@ -325,17 +326,20 @@ report 50081 "Trial Balance with O/B"
                     field(PrintToExcel; PrintToExcel)
                     {
                         Caption = 'Print to Excel';
-                        ApplicationArea = all;
+                        ApplicationArea = All;
+                        ToolTip = 'Specifies the value of the Print to Excel field.';
                     }
                     field("Exclude No Movement Accounts"; ExcludeOpeningZeroNoMove)
                     {
-                        ApplicationArea = all;
+                        ApplicationArea = All;
+                        ToolTip = 'Specifies the value of the ExcludeOpeningZeroNoMove field.';
                     }
                     field(AddCurr; AddCurr)
                     {
                         Caption = 'Show Amounts in Add. Reporting Currency';
                         MultiLine = true;
-                        ApplicationArea = all;
+                        ApplicationArea = All;
+                        ToolTip = 'Specifies the value of the Show Amounts in Add. Reporting Currency field.';
                     }
                 }
             }
@@ -352,25 +356,25 @@ report 50081 "Trial Balance with O/B"
 
     trigger OnPostReport()
     begin
-        IF PrintToExcel THEN
+        if PrintToExcel then
             CreateExcelbook;
     end;
 
     trigger OnPreReport()
     begin
-        GLFilter := "G/L Account".GETFILTERS;
-        PeriodText := "G/L Account".GETFILTER("Date Filter");
+        GLFilter := "G/L Account".GetFilters;
+        PeriodText := "G/L Account".GetFilter("Date Filter");
         //NOD0.3
-        GeneralLedgerSetup.GET;
+        GeneralLedgerSetup.Get;
         //NOD0.3
 
         //+NOD0.1
-        vG_StartDate := "G/L Account".GETRANGEMIN("Date Filter");
-        vG_EndDate := "G/L Account".GETRANGEMAX("Date Filter");
+        vG_StartDate := "G/L Account".GetRangeMin("Date Filter");
+        vG_EndDate := "G/L Account".GetRangeMax("Date Filter");
         //-NOD0.1
 
 
-        IF NOT AddCurr THEN BEGIN
+        if not AddCurr then begin
 
             ColumnCaption[1] := 'Opening Balance';
             ColumnCaption[2] := 'Net Change';
@@ -378,16 +382,16 @@ report 50081 "Trial Balance with O/B"
             ColumnCaption[4] := 'Debit';
             ColumnCaption[5] := 'Credit';
 
-        END ELSE BEGIN
+        end else begin
             ColumnCaption[1] := 'Opening Balance (ACY)';
             ColumnCaption[2] := 'Net Change (ACY)';
             ColumnCaption[3] := 'Balance (ACY)';
             ColumnCaption[4] := 'Debit (ACY)';
             ColumnCaption[5] := 'Credit (ACY)';
 
-        END;
+        end;
 
-        IF PrintToExcel THEN
+        if PrintToExcel then
             MakeExcelInfo;
     end;
 
@@ -439,160 +443,158 @@ report 50081 "Trial Balance with O/B"
         GLSetup: Record "General Ledger Setup";
         Text1450013: Label 'All amounts are in %1.';
 
-    [Scope('OnPrem')]
     procedure MakeExcelInfo()
     begin
         ExcelBuf.SetUseInfoSheet;
-        ExcelBuf.AddInfoColumn(FORMAT(Text005), FALSE, TRUE, FALSE, FALSE, '', ExcelBuf."Cell Type"::Text);
-        ExcelBuf.AddInfoColumn(COMPANYNAME, FALSE, FALSE, FALSE, FALSE, '', ExcelBuf."Cell Type"::Text);
+        ExcelBuf.AddInfoColumn(Format(Text005), false, true, false, false, '', ExcelBuf."Cell Type"::Text);
+        ExcelBuf.AddInfoColumn(CompanyName, false, false, false, false, '', ExcelBuf."Cell Type"::Text);
         ExcelBuf.NewRow;
-        ExcelBuf.AddInfoColumn(FORMAT(Text007), FALSE, TRUE, FALSE, FALSE, '', ExcelBuf."Cell Type"::Text);
-        ExcelBuf.AddInfoColumn(FORMAT(Text001), FALSE, FALSE, FALSE, FALSE, '', ExcelBuf."Cell Type"::Text);
+        ExcelBuf.AddInfoColumn(Format(Text007), false, true, false, false, '', ExcelBuf."Cell Type"::Text);
+        ExcelBuf.AddInfoColumn(Format(Text001), false, false, false, false, '', ExcelBuf."Cell Type"::Text);
         ExcelBuf.NewRow;
-        ExcelBuf.AddInfoColumn(FORMAT(Text006), FALSE, TRUE, FALSE, FALSE, '', ExcelBuf."Cell Type"::Text);
-        ExcelBuf.AddInfoColumn(REPORT::"Trial Balance", FALSE, FALSE, FALSE, FALSE, '', ExcelBuf."Cell Type"::Number);
+        ExcelBuf.AddInfoColumn(Format(Text006), false, true, false, false, '', ExcelBuf."Cell Type"::Text);
+        ExcelBuf.AddInfoColumn(Report::"Trial Balance", false, false, false, false, '', ExcelBuf."Cell Type"::Number);
         ExcelBuf.NewRow;
-        ExcelBuf.AddInfoColumn(FORMAT(Text008), FALSE, TRUE, FALSE, FALSE, '', ExcelBuf."Cell Type"::Text);
-        ExcelBuf.AddInfoColumn(USERID, FALSE, FALSE, FALSE, FALSE, '', ExcelBuf."Cell Type"::Text);
+        ExcelBuf.AddInfoColumn(Format(Text008), false, true, false, false, '', ExcelBuf."Cell Type"::Text);
+        ExcelBuf.AddInfoColumn(UserId, false, false, false, false, '', ExcelBuf."Cell Type"::Text);
         ExcelBuf.NewRow;
-        ExcelBuf.AddInfoColumn(FORMAT(Text009), FALSE, TRUE, FALSE, FALSE, '', ExcelBuf."Cell Type"::Text);
-        ExcelBuf.AddInfoColumn(TODAY, FALSE, FALSE, FALSE, FALSE, '', ExcelBuf."Cell Type"::Date);
+        ExcelBuf.AddInfoColumn(Format(Text009), false, true, false, false, '', ExcelBuf."Cell Type"::Text);
+        ExcelBuf.AddInfoColumn(Today, false, false, false, false, '', ExcelBuf."Cell Type"::Date);
         ExcelBuf.NewRow;
-        ExcelBuf.AddInfoColumn(FORMAT(Text010), FALSE, TRUE, FALSE, FALSE, '', ExcelBuf."Cell Type"::Text);
-        ExcelBuf.AddInfoColumn("G/L Account".GETFILTER("No."), FALSE, FALSE, FALSE, FALSE, '', ExcelBuf."Cell Type"::Text);
+        ExcelBuf.AddInfoColumn(Format(Text010), false, true, false, false, '', ExcelBuf."Cell Type"::Text);
+        ExcelBuf.AddInfoColumn("G/L Account".GetFilter("No."), false, false, false, false, '', ExcelBuf."Cell Type"::Text);
         ExcelBuf.NewRow;
-        ExcelBuf.AddInfoColumn(FORMAT(Text011), FALSE, TRUE, FALSE, FALSE, '', ExcelBuf."Cell Type"::Text);
-        ExcelBuf.AddInfoColumn("G/L Account".GETFILTER("Date Filter"), FALSE, FALSE, FALSE, FALSE, '', ExcelBuf."Cell Type"::Text);
+        ExcelBuf.AddInfoColumn(Format(Text011), false, true, false, false, '', ExcelBuf."Cell Type"::Text);
+        ExcelBuf.AddInfoColumn("G/L Account".GetFilter("Date Filter"), false, false, false, false, '', ExcelBuf."Cell Type"::Text);
         ExcelBuf.ClearNewRow;
         MakeExcelDataHeader;
     end;
 
     local procedure MakeExcelDataHeader()
     begin
-        ExcelBuf.AddColumn("G/L Account".FIELDCAPTION("No."), FALSE, '', TRUE, FALSE, TRUE, '', ExcelBuf."Cell Type"::Text);
-        ExcelBuf.AddColumn("G/L Account".FIELDCAPTION(Name), FALSE, '', TRUE, FALSE, TRUE, '', ExcelBuf."Cell Type"::Text);
+        ExcelBuf.AddColumn("G/L Account".FieldCaption("No."), false, '', true, false, true, '', ExcelBuf."Cell Type"::Text);
+        ExcelBuf.AddColumn("G/L Account".FieldCaption(Name), false, '', true, false, true, '', ExcelBuf."Cell Type"::Text);
 
-        IF NOT AddCurr THEN BEGIN
+        if not AddCurr then begin
             //PG 19/08/11 + Add opening balance columns on excel export
-            ExcelBuf.AddColumn((ColumnCaption[1] + ' - ' + ColumnCaption[4]), FALSE, '', TRUE, FALSE, TRUE, '', ExcelBuf."Cell Type"::Text);
-            ExcelBuf.AddColumn((ColumnCaption[1] + ' - ' + ColumnCaption[5]), FALSE, '', TRUE, FALSE, TRUE, '', ExcelBuf."Cell Type"::Text);
+            ExcelBuf.AddColumn((ColumnCaption[1] + ' - ' + ColumnCaption[4]), false, '', true, false, true, '', ExcelBuf."Cell Type"::Text);
+            ExcelBuf.AddColumn((ColumnCaption[1] + ' - ' + ColumnCaption[5]), false, '', true, false, true, '', ExcelBuf."Cell Type"::Text);
             //PG 19/08/11 -
 
-            ExcelBuf.AddColumn(FORMAT(ColumnCaption[2] + ' - ' + ColumnCaption[4]), FALSE, '', TRUE, FALSE, TRUE, '', ExcelBuf."Cell Type"::Text);
-            ExcelBuf.AddColumn(FORMAT(ColumnCaption[2] + ' - ' + ColumnCaption[5]), FALSE, '', TRUE, FALSE, TRUE, '', ExcelBuf."Cell Type"::Text);
-            ExcelBuf.AddColumn(FORMAT(ColumnCaption[3] + ' - ' + ColumnCaption[4]), FALSE, '', TRUE, FALSE, TRUE, '', ExcelBuf."Cell Type"::Text);
-            ExcelBuf.AddColumn(FORMAT(ColumnCaption[3] + ' - ' + ColumnCaption[5]), FALSE, '', TRUE, FALSE, TRUE, '', ExcelBuf."Cell Type"::Text);
+            ExcelBuf.AddColumn(Format(ColumnCaption[2] + ' - ' + ColumnCaption[4]), false, '', true, false, true, '', ExcelBuf."Cell Type"::Text);
+            ExcelBuf.AddColumn(Format(ColumnCaption[2] + ' - ' + ColumnCaption[5]), false, '', true, false, true, '', ExcelBuf."Cell Type"::Text);
+            ExcelBuf.AddColumn(Format(ColumnCaption[3] + ' - ' + ColumnCaption[4]), false, '', true, false, true, '', ExcelBuf."Cell Type"::Text);
+            ExcelBuf.AddColumn(Format(ColumnCaption[3] + ' - ' + ColumnCaption[5]), false, '', true, false, true, '', ExcelBuf."Cell Type"::Text);
 
-        END ELSE BEGIN
+        end else begin
             //+NOD0.5
-            ExcelBuf.AddColumn((ColumnCaption[1] + ' - ' + ColumnCaption[4]), FALSE, '', TRUE, FALSE, TRUE, '', ExcelBuf."Cell Type"::Text);
-            ExcelBuf.AddColumn((ColumnCaption[1] + ' - ' + ColumnCaption[5]), FALSE, '', TRUE, FALSE, TRUE, '', ExcelBuf."Cell Type"::Text);
-            ExcelBuf.AddColumn(FORMAT(ColumnCaption[2] + ' - ' + ColumnCaption[4]), FALSE, '', TRUE, FALSE, TRUE, '', ExcelBuf."Cell Type"::Text);
-            ExcelBuf.AddColumn(FORMAT(ColumnCaption[2] + ' - ' + ColumnCaption[5]), FALSE, '', TRUE, FALSE, TRUE, '', ExcelBuf."Cell Type"::Text);
-            ExcelBuf.AddColumn(FORMAT(ColumnCaption[3] + ' - ' + ColumnCaption[4]), FALSE, '', TRUE, FALSE, TRUE, '', ExcelBuf."Cell Type"::Text);
-            ExcelBuf.AddColumn(FORMAT(ColumnCaption[3] + ' - ' + ColumnCaption[5]), FALSE, '', TRUE, FALSE, TRUE, '', ExcelBuf."Cell Type"::Text);
+            ExcelBuf.AddColumn((ColumnCaption[1] + ' - ' + ColumnCaption[4]), false, '', true, false, true, '', ExcelBuf."Cell Type"::Text);
+            ExcelBuf.AddColumn((ColumnCaption[1] + ' - ' + ColumnCaption[5]), false, '', true, false, true, '', ExcelBuf."Cell Type"::Text);
+            ExcelBuf.AddColumn(Format(ColumnCaption[2] + ' - ' + ColumnCaption[4]), false, '', true, false, true, '', ExcelBuf."Cell Type"::Text);
+            ExcelBuf.AddColumn(Format(ColumnCaption[2] + ' - ' + ColumnCaption[5]), false, '', true, false, true, '', ExcelBuf."Cell Type"::Text);
+            ExcelBuf.AddColumn(Format(ColumnCaption[3] + ' - ' + ColumnCaption[4]), false, '', true, false, true, '', ExcelBuf."Cell Type"::Text);
+            ExcelBuf.AddColumn(Format(ColumnCaption[3] + ' - ' + ColumnCaption[5]), false, '', true, false, true, '', ExcelBuf."Cell Type"::Text);
             //-NOD0.5
-        END;
+        end;
     end;
 
-    [Scope('OnPrem')]
     procedure MakeExcelDataBody()
     var
         BlankFiller: Text[250];
     begin
-        BlankFiller := PADSTR(' ', MAXSTRLEN(BlankFiller), ' ');
+        BlankFiller := PadStr(' ', MaxStrLen(BlankFiller), ' ');
         ExcelBuf.NewRow;
         ExcelBuf.AddColumn(
-          "G/L Account"."No.", FALSE, '', "G/L Account"."Account Type" <> "G/L Account"."Account Type"::Posting, FALSE, FALSE, '',
+          "G/L Account"."No.", false, '', "G/L Account"."Account Type" <> "G/L Account"."Account Type"::Posting, false, false, '',
           ExcelBuf."Cell Type"::Text);
-        IF "G/L Account".Indentation = 0 THEN
+        if "G/L Account".Indentation = 0 then
             ExcelBuf.AddColumn(
-              "G/L Account".Name, FALSE, '', "G/L Account"."Account Type" <> "G/L Account"."Account Type"::Posting, FALSE, FALSE, '',
+              "G/L Account".Name, false, '', "G/L Account"."Account Type" <> "G/L Account"."Account Type"::Posting, false, false, '',
               ExcelBuf."Cell Type"::Text)
-        ELSE
+        else
             ExcelBuf.AddColumn(
-              COPYSTR(BlankFiller, 1, 2 * "G/L Account".Indentation) + "G/L Account".Name,
-              FALSE, '', "G/L Account"."Account Type" <> "G/L Account"."Account Type"::Posting, FALSE, FALSE, '', ExcelBuf."Cell Type"::Text);
+              CopyStr(BlankFiller, 1, 2 * "G/L Account".Indentation) + "G/L Account".Name,
+              false, '', "G/L Account"."Account Type" <> "G/L Account"."Account Type"::Posting, false, false, '', ExcelBuf."Cell Type"::Text);
 
 
-        IF NOT AddCurr THEN BEGIN
+        if not AddCurr then begin
             //+NOD0.4
-            IF vG_OBDebit = 0 THEN BEGIN
-                ExcelBuf.AddColumn('', FALSE, '', "G/L Account"."Account Type" <> "G/L Account"."Account Type"::Posting, FALSE, FALSE, '#,##0.00', ExcelBuf."Cell Type"::Number);
-            END ELSE BEGIN
-                ExcelBuf.AddColumn(vG_OBDebit, FALSE, '', "G/L Account"."Account Type" <> "G/L Account"."Account Type"::Posting, FALSE, FALSE, '#,##0.00', ExcelBuf."Cell Type"::Number);
-            END;
+            if vG_OBDebit = 0 then begin
+                ExcelBuf.AddColumn('', false, '', "G/L Account"."Account Type" <> "G/L Account"."Account Type"::Posting, false, false, '#,##0.00', ExcelBuf."Cell Type"::Number);
+            end else begin
+                ExcelBuf.AddColumn(vG_OBDebit, false, '', "G/L Account"."Account Type" <> "G/L Account"."Account Type"::Posting, false, false, '#,##0.00', ExcelBuf."Cell Type"::Number);
+            end;
 
-            IF vG_OBCredit = 0 THEN BEGIN
-                ExcelBuf.AddColumn('', FALSE, '', "G/L Account"."Account Type" <> "G/L Account"."Account Type"::Posting, FALSE, FALSE, '#,##0.00', ExcelBuf."Cell Type"::Number);
-            END ELSE BEGIN
-                ExcelBuf.AddColumn(vG_OBCredit, FALSE, '', "G/L Account"."Account Type" <> "G/L Account"."Account Type"::Posting, FALSE, FALSE, '#,##0.00', ExcelBuf."Cell Type"::Number);
-            END;
+            if vG_OBCredit = 0 then begin
+                ExcelBuf.AddColumn('', false, '', "G/L Account"."Account Type" <> "G/L Account"."Account Type"::Posting, false, false, '#,##0.00', ExcelBuf."Cell Type"::Number);
+            end else begin
+                ExcelBuf.AddColumn(vG_OBCredit, false, '', "G/L Account"."Account Type" <> "G/L Account"."Account Type"::Posting, false, false, '#,##0.00', ExcelBuf."Cell Type"::Number);
+            end;
 
-            IF "G/L Account"."Debit Amount" = 0 THEN BEGIN
-                ExcelBuf.AddColumn('', FALSE, '', "G/L Account"."Account Type" <> "G/L Account"."Account Type"::Posting, FALSE, FALSE, '#,##0.00', ExcelBuf."Cell Type"::Number);
-            END ELSE BEGIN
-                ExcelBuf.AddColumn("G/L Account"."Debit Amount", FALSE, '', "G/L Account"."Account Type" <> "G/L Account"."Account Type"::Posting, FALSE, FALSE, '#,##0.00', ExcelBuf."Cell Type"::Number);
-            END;
+            if "G/L Account"."Debit Amount" = 0 then begin
+                ExcelBuf.AddColumn('', false, '', "G/L Account"."Account Type" <> "G/L Account"."Account Type"::Posting, false, false, '#,##0.00', ExcelBuf."Cell Type"::Number);
+            end else begin
+                ExcelBuf.AddColumn("G/L Account"."Debit Amount", false, '', "G/L Account"."Account Type" <> "G/L Account"."Account Type"::Posting, false, false, '#,##0.00', ExcelBuf."Cell Type"::Number);
+            end;
 
-            IF "G/L Account"."Credit Amount" = 0 THEN BEGIN
-                ExcelBuf.AddColumn('', FALSE, '', "G/L Account"."Account Type" <> "G/L Account"."Account Type"::Posting, FALSE, FALSE, '#,##0.00', ExcelBuf."Cell Type"::Number);
-            END ELSE BEGIN
-                ExcelBuf.AddColumn("G/L Account"."Credit Amount", FALSE, '', "G/L Account"."Account Type" <> "G/L Account"."Account Type"::Posting, FALSE, FALSE, '#,##0.00', ExcelBuf."Cell Type"::Number);
-            END;
+            if "G/L Account"."Credit Amount" = 0 then begin
+                ExcelBuf.AddColumn('', false, '', "G/L Account"."Account Type" <> "G/L Account"."Account Type"::Posting, false, false, '#,##0.00', ExcelBuf."Cell Type"::Number);
+            end else begin
+                ExcelBuf.AddColumn("G/L Account"."Credit Amount", false, '', "G/L Account"."Account Type" <> "G/L Account"."Account Type"::Posting, false, false, '#,##0.00', ExcelBuf."Cell Type"::Number);
+            end;
 
-            IF "G/L Account"."Balance at Date" <= 0 THEN BEGIN
-                ExcelBuf.AddColumn('', FALSE, '', "G/L Account"."Account Type" <> "G/L Account"."Account Type"::Posting, FALSE, FALSE, '#,##0.00', ExcelBuf."Cell Type"::Number);
-            END ELSE BEGIN
-                ExcelBuf.AddColumn("G/L Account"."Balance at Date", FALSE, '', "G/L Account"."Account Type" <> "G/L Account"."Account Type"::Posting, FALSE, FALSE, '#,##0.00', ExcelBuf."Cell Type"::Number);
-            END;
+            if "G/L Account"."Balance at Date" <= 0 then begin
+                ExcelBuf.AddColumn('', false, '', "G/L Account"."Account Type" <> "G/L Account"."Account Type"::Posting, false, false, '#,##0.00', ExcelBuf."Cell Type"::Number);
+            end else begin
+                ExcelBuf.AddColumn("G/L Account"."Balance at Date", false, '', "G/L Account"."Account Type" <> "G/L Account"."Account Type"::Posting, false, false, '#,##0.00', ExcelBuf."Cell Type"::Number);
+            end;
 
-            IF -"G/L Account"."Balance at Date" <= 0 THEN BEGIN
-                ExcelBuf.AddColumn('', FALSE, '', "G/L Account"."Account Type" <> "G/L Account"."Account Type"::Posting, FALSE, FALSE, '#,##0.00', ExcelBuf."Cell Type"::Number);
-            END ELSE BEGIN
-                ExcelBuf.AddColumn(-"G/L Account"."Balance at Date", FALSE, '', "G/L Account"."Account Type" <> "G/L Account"."Account Type"::Posting, FALSE, FALSE, '#,##0.00', ExcelBuf."Cell Type"::Number);
-            END;
+            if -"G/L Account"."Balance at Date" <= 0 then begin
+                ExcelBuf.AddColumn('', false, '', "G/L Account"."Account Type" <> "G/L Account"."Account Type"::Posting, false, false, '#,##0.00', ExcelBuf."Cell Type"::Number);
+            end else begin
+                ExcelBuf.AddColumn(-"G/L Account"."Balance at Date", false, '', "G/L Account"."Account Type" <> "G/L Account"."Account Type"::Posting, false, false, '#,##0.00', ExcelBuf."Cell Type"::Number);
+            end;
             //-NOD0.4
 
-        END ELSE BEGIN
+        end else begin
             //+NOD0.5
-            IF vG_OBDebitACY = 0 THEN BEGIN
-                ExcelBuf.AddColumn('', FALSE, '', "G/L Account"."Account Type" <> "G/L Account"."Account Type"::Posting, FALSE, FALSE, '#,##0.00', ExcelBuf."Cell Type"::Number);
-            END ELSE BEGIN
-                ExcelBuf.AddColumn(vG_OBDebitACY, FALSE, '', "G/L Account"."Account Type" <> "G/L Account"."Account Type"::Posting, FALSE, FALSE, '#,##0.00', ExcelBuf."Cell Type"::Number);
-            END;
+            if vG_OBDebitACY = 0 then begin
+                ExcelBuf.AddColumn('', false, '', "G/L Account"."Account Type" <> "G/L Account"."Account Type"::Posting, false, false, '#,##0.00', ExcelBuf."Cell Type"::Number);
+            end else begin
+                ExcelBuf.AddColumn(vG_OBDebitACY, false, '', "G/L Account"."Account Type" <> "G/L Account"."Account Type"::Posting, false, false, '#,##0.00', ExcelBuf."Cell Type"::Number);
+            end;
 
-            IF vG_OBCreditACY = 0 THEN BEGIN
-                ExcelBuf.AddColumn('', FALSE, '', "G/L Account"."Account Type" <> "G/L Account"."Account Type"::Posting, FALSE, FALSE, '#,##0.00', ExcelBuf."Cell Type"::Number);
-            END ELSE BEGIN
-                ExcelBuf.AddColumn(vG_OBCreditACY, FALSE, '', "G/L Account"."Account Type" <> "G/L Account"."Account Type"::Posting, FALSE, FALSE, '#,##0.00', ExcelBuf."Cell Type"::Number);
-            END;
+            if vG_OBCreditACY = 0 then begin
+                ExcelBuf.AddColumn('', false, '', "G/L Account"."Account Type" <> "G/L Account"."Account Type"::Posting, false, false, '#,##0.00', ExcelBuf."Cell Type"::Number);
+            end else begin
+                ExcelBuf.AddColumn(vG_OBCreditACY, false, '', "G/L Account"."Account Type" <> "G/L Account"."Account Type"::Posting, false, false, '#,##0.00', ExcelBuf."Cell Type"::Number);
+            end;
 
-            IF "G/L Account"."Add.-Currency Debit Amount" = 0 THEN BEGIN
-                ExcelBuf.AddColumn('', FALSE, '', "G/L Account"."Account Type" <> "G/L Account"."Account Type"::Posting, FALSE, FALSE, '#,##0.00', ExcelBuf."Cell Type"::Number);
-            END ELSE BEGIN
-                ExcelBuf.AddColumn("G/L Account"."Add.-Currency Debit Amount", FALSE, '', "G/L Account"."Account Type" <> "G/L Account"."Account Type"::Posting, FALSE, FALSE, '#,##0.00', ExcelBuf."Cell Type"::Number);
-            END;
+            if "G/L Account"."Add.-Currency Debit Amount" = 0 then begin
+                ExcelBuf.AddColumn('', false, '', "G/L Account"."Account Type" <> "G/L Account"."Account Type"::Posting, false, false, '#,##0.00', ExcelBuf."Cell Type"::Number);
+            end else begin
+                ExcelBuf.AddColumn("G/L Account"."Add.-Currency Debit Amount", false, '', "G/L Account"."Account Type" <> "G/L Account"."Account Type"::Posting, false, false, '#,##0.00', ExcelBuf."Cell Type"::Number);
+            end;
 
-            IF "G/L Account"."Add.-Currency Credit Amount" = 0 THEN BEGIN
-                ExcelBuf.AddColumn('', FALSE, '', "G/L Account"."Account Type" <> "G/L Account"."Account Type"::Posting, FALSE, FALSE, '#,##0.00', ExcelBuf."Cell Type"::Number);
-            END ELSE BEGIN
-                ExcelBuf.AddColumn("G/L Account"."Add.-Currency Credit Amount", FALSE, '', "G/L Account"."Account Type" <> "G/L Account"."Account Type"::Posting, FALSE, FALSE, '#,##0.00', ExcelBuf."Cell Type"::Number);
-            END;
+            if "G/L Account"."Add.-Currency Credit Amount" = 0 then begin
+                ExcelBuf.AddColumn('', false, '', "G/L Account"."Account Type" <> "G/L Account"."Account Type"::Posting, false, false, '#,##0.00', ExcelBuf."Cell Type"::Number);
+            end else begin
+                ExcelBuf.AddColumn("G/L Account"."Add.-Currency Credit Amount", false, '', "G/L Account"."Account Type" <> "G/L Account"."Account Type"::Posting, false, false, '#,##0.00', ExcelBuf."Cell Type"::Number);
+            end;
 
-            IF "G/L Account"."Add.-Currency Balance at Date" <= 0 THEN BEGIN
-                ExcelBuf.AddColumn('', FALSE, '', "G/L Account"."Account Type" <> "G/L Account"."Account Type"::Posting, FALSE, FALSE, '#,##0.00', ExcelBuf."Cell Type"::Number);
-            END ELSE BEGIN
-                ExcelBuf.AddColumn("G/L Account"."Add.-Currency Balance at Date", FALSE, '', "G/L Account"."Account Type" <> "G/L Account"."Account Type"::Posting, FALSE, FALSE, '#,##0.00', ExcelBuf."Cell Type"::Number);
-            END;
+            if "G/L Account"."Add.-Currency Balance at Date" <= 0 then begin
+                ExcelBuf.AddColumn('', false, '', "G/L Account"."Account Type" <> "G/L Account"."Account Type"::Posting, false, false, '#,##0.00', ExcelBuf."Cell Type"::Number);
+            end else begin
+                ExcelBuf.AddColumn("G/L Account"."Add.-Currency Balance at Date", false, '', "G/L Account"."Account Type" <> "G/L Account"."Account Type"::Posting, false, false, '#,##0.00', ExcelBuf."Cell Type"::Number);
+            end;
 
-            IF -"G/L Account"."Add.-Currency Balance at Date" <= 0 THEN BEGIN
-                ExcelBuf.AddColumn('', FALSE, '', "G/L Account"."Account Type" <> "G/L Account"."Account Type"::Posting, FALSE, FALSE, '#,##0.00', ExcelBuf."Cell Type"::Number);
-            END ELSE BEGIN
-                ExcelBuf.AddColumn(-"G/L Account"."Add.-Currency Balance at Date", FALSE, '', "G/L Account"."Account Type" <> "G/L Account"."Account Type"::Posting, FALSE, FALSE, '#,##0.00', ExcelBuf."Cell Type"::Number);
-            END;
+            if -"G/L Account"."Add.-Currency Balance at Date" <= 0 then begin
+                ExcelBuf.AddColumn('', false, '', "G/L Account"."Account Type" <> "G/L Account"."Account Type"::Posting, false, false, '#,##0.00', ExcelBuf."Cell Type"::Number);
+            end else begin
+                ExcelBuf.AddColumn(-"G/L Account"."Add.-Currency Balance at Date", false, '', "G/L Account"."Account Type" <> "G/L Account"."Account Type"::Posting, false, false, '#,##0.00', ExcelBuf."Cell Type"::Number);
+            end;
             //-NOD0.5
-        END;
+        end;
 
         //+NOD0.4
         /*
@@ -694,11 +696,14 @@ report 50081 "Trial Balance with O/B"
 
     end;
 
-    [Scope('OnPrem')]
     procedure CreateExcelbook()
     begin
-        ExcelBuf.CreateBookAndOpenExcel('', Text002, Text001, COMPANYNAME, USERID);
-        ERROR('');
+        //ExcelBuf.CreateBookAndOpenExcel('', Text002, Text001, CompanyName, UserId);
+        ExcelBuf.CreateNewBook(Text002);
+        ExcelBuf.WriteSheet(Text001, CompanyName, UserId);
+        ExcelBuf.CloseBook();
+        ExcelBuf.OpenExcel();
+        Error('');
     end;
 }
 

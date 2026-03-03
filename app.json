@@ -2,7 +2,7 @@
   "id": "379d0d49-8018-465d-b72a-cc7b473fa0d4",
   "name": "FFH",
   "publisher": "Talosco Business Solutions Ltd",
-  "version": "1.0.0.334",
+  "version": "1.0.0.336",
   "brief": "",
   "description": "This package contains various changes in objects",
   "privacyStatement": "",
@@ -10,7 +10,6 @@
   "help": "",
   "url": "",
   "logo": "TalosCo.png",
-  "target":"OnPrem",
   "dependencies": [],
   "screenshots": [],
   "platform": "1.0.0.0",
@@ -21,6 +20,9 @@
       "to": 50320
     }
   ],
-  "resourceExposurePolicy": {"allowDebugging": true,"allowDownloadingSource": true},
-  "runtime":"16.0"
+  "resourceExposurePolicy": {"allowDebugging": true,"allowDownloadingSource": true,"includeSourceInSymbolFile": true},
+  "runtime":"16.0",
+  "features": [
+    "NoImplicitWith"
+  ]
 }

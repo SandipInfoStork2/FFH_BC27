@@ -10,10 +10,10 @@ report 50092 "Item Register - Value FFH"
     {
         dataitem("Item Register"; "Item Register")
         {
-            DataItemTableView = SORTING("No.");
+            DataItemTableView = sorting("No.");
             PrintOnlyIfDetail = true;
             RequestFilterFields = "No.";
-            column(CompanyName; COMPANYPROPERTY.DisplayName)
+            column(CompanyName; CompanyProperty.DisplayName)
             {
             }
             column(ItemRegistryCaption; TableCaption + ': ' + ItemRegFilter)
@@ -302,7 +302,7 @@ report 50092 "Item Register - Value FFH"
             }
             dataitem("Value Entry"; "Value Entry")
             {
-                DataItemTableView = SORTING("Entry No.");
+                DataItemTableView = sorting("Entry No.");
                 column(EntryNo_ValueEntry; "Entry No.")
                 {
                     IncludeCaption = true;
@@ -677,7 +677,7 @@ report 50092 "Item Register - Value FFH"
 
         layout
         {
-            area(content)
+            area(Content)
             {
                 group(Options)
                 {
@@ -687,7 +687,7 @@ report 50092 "Item Register - Value FFH"
                     {
                         Caption = 'Standard Decimals';
                         ToolTip = 'Standard Decimals (Invoiced Qty, Cost per Unit)';
-                        ApplicationArea = all;
+                        ApplicationArea = All;
                     }
                 }
             }

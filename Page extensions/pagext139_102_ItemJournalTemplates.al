@@ -18,13 +18,15 @@ pageextension 50239 ItemJournalTemplatesExt extends "Item Journal Templates"
 
         addafter("Posting Report Caption")
         {
-            field("Posting Report ID 2"; "Posting Report ID 2")
+            field("Posting Report ID 2"; Rec."Posting Report ID 2")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Posting Report ID 2 field.';
             }
-            field("Posting Report Caption 2"; "Posting Report Caption 2")
+            field("Posting Report Caption 2"; Rec."Posting Report Caption 2")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Posting Report Caption 2 field.';
             }
         }
     }

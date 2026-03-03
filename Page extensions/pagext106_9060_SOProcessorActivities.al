@@ -8,28 +8,32 @@ pageextension 50206 SOProcessorActivitiesExt extends "SO Processor Activities"
             cuegroup(PO)
             {
                 Caption = 'Purchase Orders';
-                field("Not Invoiced"; "Not Invoiced")
+                field("Not Invoiced"; Rec."Not Invoiced")
                 {
-                    ApplicationArea = all;
-                    DrillDownPageID = "Purchase Order List";
+                    ApplicationArea = All;
+                    DrillDownPageId = "Purchase Order List";
+                    ToolTip = 'Specifies the value of the Not Invoiced field.';
                 }
                 //+1.0.0.286
-                field("Not Invoiced ARAD-3"; "Not Invoiced ARAD-3")
+                field("Not Invoiced ARAD-3"; Rec."Not Invoiced ARAD-3")
                 {
-                    ApplicationArea = all;
-                    DrillDownPageID = "Purchase Order List";
+                    ApplicationArea = All;
+                    DrillDownPageId = "Purchase Order List";
+                    ToolTip = 'Specifies the value of the Not Invoiced ARAD-3 field.';
                 }
-                field("Not Invoiced ARAD-4"; "Not Invoiced ARAD-4")
+                field("Not Invoiced ARAD-4"; Rec."Not Invoiced ARAD-4")
                 {
-                    ApplicationArea = all;
-                    DrillDownPageID = "Purchase Order List";
+                    ApplicationArea = All;
+                    DrillDownPageId = "Purchase Order List";
+                    ToolTip = 'Specifies the value of the Not Invoiced ARAD-4 field.';
                 }
                 //-1.0.0.286
 
-                field("Purchase Orders"; "Purchase Orders")
+                field("Purchase Orders"; Rec."Purchase Orders")
                 {
-                    ApplicationArea = all;
-                    DrillDownPageID = "Purchase Order List";
+                    ApplicationArea = All;
+                    DrillDownPageId = "Purchase Order List";
+                    ToolTip = 'Specifies the value of the Purchase Orders field.';
                 }
             }
         }

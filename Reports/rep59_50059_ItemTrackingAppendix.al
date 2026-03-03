@@ -9,16 +9,17 @@ report 50059 "Item Tracking Appendix FFH"
 
     Caption = 'Item Tracking Appendix FFH';
     PreviewMode = PrintLayout;
+    ApplicationArea = All;
 
     dataset
     {
         dataitem(MainRecord; "Integer")
         {
-            DataItemTableView = SORTING(Number);
+            DataItemTableView = sorting(Number);
             PrintOnlyIfDetail = false;
             dataitem(PageLoop; "Integer")
             {
-                DataItemTableView = SORTING(Number) WHERE(Number = CONST(1));
+                DataItemTableView = sorting(Number) where(Number = const(1));
                 column(Addr1; Addr[1])
                 {
                 }
@@ -34,7 +35,7 @@ report 50059 "Item Tracking Appendix FFH"
                 column(Addr4; Addr[4])
                 {
                 }
-                column(TodayFormatted; FORMAT(TODAY, 0, 4))
+                column(TodayFormatted; Format(Today, 0, 4))
                 {
                 }
                 column(Addr5; Addr[5])
@@ -43,7 +44,7 @@ report 50059 "Item Tracking Appendix FFH"
                 column(Addr6; Addr[6])
                 {
                 }
-                column(DocumentDate; FORMAT(DocumentDate))
+                column(DocumentDate; Format(DocumentDate))
                 {
                 }
                 column(Addr7; Addr[7])
@@ -93,7 +94,7 @@ report 50059 "Item Tracking Appendix FFH"
                 }
                 dataitem(ItemTrackingLine; "Integer")
                 {
-                    DataItemTableView = SORTING(Number);
+                    DataItemTableView = sorting(Number);
                     PrintOnlyIfDetail = false;
                     column(SerialNo_ItemTrackingLine; TrackingSpecBuffer."Serial No.")
                     {
@@ -134,7 +135,7 @@ report 50059 "Item Tracking Appendix FFH"
                     }
                     dataitem(Total; "Integer")
                     {
-                        DataItemTableView = SORTING(Number) WHERE(Number = CONST(1));
+                        DataItemTableView = sorting(Number) where(Number = const(1));
                         column(TotalQuantity; TotalQty)
                         {
                             DecimalPlaces = 0 : 2;
@@ -147,9 +148,9 @@ report 50059 "Item Tracking Appendix FFH"
                     trigger OnAfterGetRecord();
                     begin
                         if Number = 1 then
-                            TrackingSpecBuffer.FINDSET
+                            TrackingSpecBuffer.FindSet
                         else
-                            TrackingSpecBuffer.NEXT;
+                            TrackingSpecBuffer.Next;
 
                         if TrackingSpecBuffer.Correction then
                             TrackingSpecBuffer."Quantity (Base)" := -TrackingSpecBuffer."Quantity (Base)";
@@ -169,7 +170,7 @@ report 50059 "Item Tracking Appendix FFH"
                             ShowGroup := true;
                         TotalQty += TrackingSpecBuffer."Quantity (Base)";
 
-                        TrackingSpecBuffer.CALCFIELDS("Lot Grower No.", "Grower Name");
+                        TrackingSpecBuffer.CalcFields("Lot Grower No.", "Grower Name");
                     end;
 
                     trigger OnPostDataItem();
@@ -180,9 +181,9 @@ report 50059 "Item Tracking Appendix FFH"
                     trigger OnPreDataItem();
                     begin
                         if TrackingSpecCount = 0 then
-                            CurrReport.BREAK;
-                        SETRANGE(Number, 1, TrackingSpecCount);
-                        TrackingSpecBuffer.SETCURRENTKEY("Source ID", "Source Type", "Source Subtype", "Source Batch Name",
+                            CurrReport.Break;
+                        SetRange(Number, 1, TrackingSpecCount);
+                        TrackingSpecBuffer.SetCurrentKey("Source ID", "Source Type", "Source Subtype", "Source Batch Name",
                           "Source Prod. Order Line", "Source Ref. No.");
                     end;
                 }
@@ -192,7 +193,7 @@ report 50059 "Item Tracking Appendix FFH"
                     // exclude documents without Item Tracking
                     if TrackingSpecCount = 0 then begin
                         //CurrReport.PAGENO(0);
-                        CurrReport.BREAK;
+                        CurrReport.Break;
                     end;
                     OldRefNo := 0;
                     ShowGroup := false;
@@ -207,8 +208,8 @@ report 50059 "Item Tracking Appendix FFH"
             trigger OnPreDataItem();
             begin
                 if MainRecCount = 0 then
-                    CurrReport.BREAK;
-                SETRANGE(Number, 1, MainRecCount);
+                    CurrReport.Break;
+                SetRange(Number, 1, MainRecCount);
             end;
         }
     }
@@ -219,7 +220,7 @@ report 50059 "Item Tracking Appendix FFH"
 
         layout
         {
-            area(content)
+            area(Content)
             {
                 group(Options)
                 {
@@ -230,11 +231,13 @@ report 50059 "Item Tracking Appendix FFH"
                         Caption = 'Document';
                         Lookup = false;
                         OptionCaption = 'Sales Quote,Sales Order,Sales Invoice,Sales Credit Memo,Sales Return Order,Sales Post. Shipment,Sales Post. Invoice,Purch. Quote,Purch. Order,Purch. Invoice,Purch. Credit Memo,Purch. Return Order,Purch. Post Receipt';
+                        ToolTip = 'Specifies the value of the Document field.';
                     }
                     field(DocumentNo; DocNo)
                     {
                         ApplicationArea = All;
                         Caption = 'Document No.';
+                        ToolTip = 'Specifies the value of the Document No. field.';
                     }
                 }
             }
@@ -322,34 +325,34 @@ report 50059 "Item Tracking Appendix FFH"
             DocType::"Sales Credit Memo", DocType::"Sales Return Order":
                 begin
                     if Nr = 1 then
-                        SalesHeader.FINDSET
+                        SalesHeader.FindSet
                     else
-                        SalesHeader.NEXT;
+                        SalesHeader.Next;
                     HandleSales;
                 end;
             DocType::"Purch. Quote", DocType::"Purch. Order", DocType::"Purch. Invoice",
             DocType::"Purch. Credit Memo", DocType::"Purch. Return Order":
                 begin
                     if Nr = 1 then
-                        PurchaseHeader.FINDSET
+                        PurchaseHeader.FindSet
                     else
-                        PurchaseHeader.NEXT;
+                        PurchaseHeader.Next;
                     HandlePurchase;
                 end;
             DocType::"Sales Post. Shipment":
                 begin
                     if Nr = 1 then
-                        SalesShipmentHdr.FINDSET
+                        SalesShipmentHdr.FindSet
                     else
-                        SalesShipmentHdr.NEXT;
+                        SalesShipmentHdr.Next;
                     HandleShipment;
                 end;
             DocType::"Sales Post. Invoice":
                 begin
                     if Nr = 1 then
-                        SalesInvoiceHdr.FINDSET
+                        SalesInvoiceHdr.FindSet
                     else
-                        SalesInvoiceHdr.NEXT;
+                        SalesInvoiceHdr.Next;
                     HandleInvoice;
                 end;
 
@@ -357,9 +360,9 @@ report 50059 "Item Tracking Appendix FFH"
             DocType::"Purch. Post Receipt":
                 begin
                     if Nr = 1 then
-                        PurchReceiptHeader.FINDSET
+                        PurchReceiptHeader.FindSet
                     else
-                        PurchReceiptHeader.NEXT;
+                        PurchReceiptHeader.Next;
                     HandlePurchReceipt;
                 end;
         //-TAL0.1
@@ -371,7 +374,7 @@ report 50059 "Item Tracking Appendix FFH"
         AddressSalesHdr(SalesHeader);
         TrackingSpecCount :=
           ItemTrackingDocMgt.RetrieveDocumentItemTracking(TrackingSpecBuffer, SalesHeader."No.",
-            DATABASE::"Sales Header", SalesHeader."Document Type");
+            Database::"Sales Header", SalesHeader."Document Type");
     end;
 
     local procedure HandlePurchase();
@@ -379,7 +382,7 @@ report 50059 "Item Tracking Appendix FFH"
         AddressPurchaseHdr(PurchaseHeader);
         TrackingSpecCount :=
           ItemTrackingDocMgt.RetrieveDocumentItemTracking(TrackingSpecBuffer, PurchaseHeader."No.",
-            DATABASE::"Purchase Header", PurchaseHeader."Document Type");
+            Database::"Purchase Header", PurchaseHeader."Document Type");
     end;
 
     local procedure HandleShipment();
@@ -387,7 +390,7 @@ report 50059 "Item Tracking Appendix FFH"
         AddressShipmentHdr(SalesShipmentHdr);
         TrackingSpecCount :=
           ItemTrackingDocMgt.RetrieveDocumentItemTracking(TrackingSpecBuffer, SalesShipmentHdr."No.",
-            DATABASE::"Sales Shipment Header", 0);
+            Database::"Sales Shipment Header", 0);
     end;
 
     local procedure HandleInvoice();
@@ -395,85 +398,77 @@ report 50059 "Item Tracking Appendix FFH"
         AddressInvoiceHdr(SalesInvoiceHdr);
         TrackingSpecCount :=
           ItemTrackingDocMgt.RetrieveDocumentItemTracking(TrackingSpecBuffer, SalesInvoiceHdr."No.",
-            DATABASE::"Sales Invoice Header", 0);
+            Database::"Sales Invoice Header", 0);
     end;
 
     local procedure AddressSalesHdr(SalesHdr: Record "Sales Header");
     begin
         ShowAddr2 := false;
-        with SalesHdr do begin
-            case "Document Type" of
-                "Document Type"::Invoice, "Document Type"::"Credit Memo":
-                    begin
-                        FormatAddr.SalesHeaderSellTo(Addr, SalesHdr);
-                        if "Bill-to Customer No." <> "Sell-to Customer No." then begin
-                            FormatAddr.SalesHeaderBillTo(Addr2, SalesHdr);
-                            ShowAddr2 := true;
-                        end;
-                    end
-                else
-                    FormatAddr.SalesHeaderBillTo(Addr, SalesHdr);
-            end;
-            DocumentDate := "Document Date";
-            SourceCaption := STRSUBSTNO('%1 %2 %3', Text006, "Document Type", "No.");
-            Addr2Caption := Text003;
+        case SalesHdr."Document Type" of
+            SalesHdr."Document Type"::Invoice, SalesHdr."Document Type"::"Credit Memo":
+                begin
+                    FormatAddr.SalesHeaderSellTo(Addr, SalesHdr);
+                    if SalesHdr."Bill-to Customer No." <> SalesHdr."Sell-to Customer No." then begin
+                        FormatAddr.SalesHeaderBillTo(Addr2, SalesHdr);
+                        ShowAddr2 := true;
+                    end;
+                end
+            else
+                FormatAddr.SalesHeaderBillTo(Addr, SalesHdr);
         end;
+        DocumentDate := SalesHdr."Document Date";
+        SourceCaption := StrSubstNo('%1 %2 %3', Text006, SalesHdr."Document Type", SalesHdr."No.");
+        Addr2Caption := Text003;
     end;
 
     local procedure AddressPurchaseHdr(PurchaseHdr: Record "Purchase Header");
     begin
         ShowAddr2 := false;
-        with PurchaseHdr do begin
-            case "Document Type" of
-                "Document Type"::Quote, "Document Type"::"Blanket Order":
+        case PurchaseHdr."Document Type" of
+            PurchaseHdr."Document Type"::Quote, PurchaseHdr."Document Type"::"Blanket Order":
+                FormatAddr.PurchHeaderPayTo(Addr, PurchaseHdr);
+            PurchaseHdr."Document Type"::Order, PurchaseHdr."Document Type"::"Return Order":
+                begin
+                    FormatAddr.PurchHeaderBuyFrom(Addr, PurchaseHdr);
+                    if PurchaseHdr."Buy-from Vendor No." <> PurchaseHdr."Pay-to Vendor No." then begin
+                        FormatAddr.PurchHeaderPayTo(Addr2, PurchaseHdr);
+                        ShowAddr2 := true;
+                    end;
+                end;
+            PurchaseHdr."Document Type"::Invoice, PurchaseHdr."Document Type"::"Credit Memo":
+                begin
                     FormatAddr.PurchHeaderPayTo(Addr, PurchaseHdr);
-                "Document Type"::Order, "Document Type"::"Return Order":
-                    begin
-                        FormatAddr.PurchHeaderBuyFrom(Addr, PurchaseHdr);
-                        if "Buy-from Vendor No." <> "Pay-to Vendor No." then begin
-                            FormatAddr.PurchHeaderPayTo(Addr2, PurchaseHdr);
-                            ShowAddr2 := true;
-                        end;
+                    if not (PurchaseHdr."Pay-to Vendor No." in ['', PurchaseHdr."Buy-from Vendor No."]) then begin
+                        FormatAddr.PurchHeaderBuyFrom(Addr2, PurchaseHdr);
+                        ShowAddr2 := true;
                     end;
-                "Document Type"::Invoice, "Document Type"::"Credit Memo":
-                    begin
-                        FormatAddr.PurchHeaderPayTo(Addr, PurchaseHdr);
-                        if not ("Pay-to Vendor No." in ['', "Buy-from Vendor No."]) then begin
-                            FormatAddr.PurchHeaderBuyFrom(Addr2, PurchaseHdr);
-                            ShowAddr2 := true;
-                        end;
-                    end;
-            end;
-            DocumentDate := "Document Date";
-            SourceCaption := STRSUBSTNO('%1 %2 %3', Text007, "Document Type", "No.");
-            Addr2Caption := Text002;
+                end;
         end;
+        DocumentDate := PurchaseHdr."Document Date";
+        SourceCaption := StrSubstNo('%1 %2 %3', Text007, PurchaseHdr."Document Type", PurchaseHdr."No.");
+        Addr2Caption := Text002;
     end;
 
     local procedure AddressShipmentHdr(SalesShipHdr: Record "Sales Shipment Header");
     begin
         ShowAddr2 := false;
-        with SalesShipHdr do begin
-            FormatAddr.SalesShptShipTo(Addr, SalesShipHdr);
-            if "Bill-to Customer No." <> "Sell-to Customer No." then begin
-                FormatAddr.SalesShptBillTo(Addr2, Addr2, SalesShipHdr);
-                ShowAddr2 := true;
-            end;
-            DocumentDate := "Document Date";
-            SourceCaption := STRSUBSTNO('%1 %2', Text004, "No.");
-            Addr2Caption := Text003;
+        FormatAddr.SalesShptShipTo(Addr, SalesShipHdr);
+        if SalesShipHdr."Bill-to Customer No." <> SalesShipHdr."Sell-to Customer No." then begin
+            FormatAddr.SalesShptBillTo(Addr2, Addr2, SalesShipHdr);
+            ShowAddr2 := true;
         end;
+        DocumentDate := SalesShipHdr."Document Date";
+        SourceCaption := StrSubstNo('%1 %2', Text004, SalesShipHdr."No.");
+        Addr2Caption := Text003;
     end;
 
     local procedure AddressInvoiceHdr(SalesInvHdr: Record "Sales Invoice Header");
     begin
         ShowAddr2 := false;
-        with SalesInvHdr do begin
-            FormatAddr.SalesInvBillTo(Addr, SalesInvHdr);
-            DocumentDate := "Document Date";
-            SourceCaption := STRSUBSTNO('%1 %2', Text005, "No.");
-            Addr2Caption := Text002;
-        end;
+        FormatAddr.SalesInvBillTo(Addr, SalesInvHdr);
+        DocumentDate := SalesInvHdr."Document Date";
+        SourceCaption := StrSubstNo('%1 %2', Text005, SalesInvHdr."No.");
+        Addr2Caption := Text002;
     end;
 
     procedure IsStartNewGroup(var TrackingSpecBuffer: Record "Tracking Specification" temporary): Boolean;
@@ -483,7 +478,7 @@ report 50059 "Item Tracking Appendix FFH"
     begin
         TrackingSpecBuffer2 := TrackingSpecBuffer;
         SourceRef := TrackingSpecBuffer2."Source Ref. No.";
-        if TrackingSpecBuffer.NEXT = 0 then begin
+        if TrackingSpecBuffer.Next = 0 then begin
             TrackingSpecBuffer := TrackingSpecBuffer2;
             exit(true);
         end;
@@ -499,52 +494,52 @@ report 50059 "Item Tracking Appendix FFH"
     begin
         case DocType of
             DocType::"Sales Quote":
-                SalesHeader.SETRANGE("Document Type", SalesHeader."Document Type"::Quote);
+                SalesHeader.SetRange("Document Type", SalesHeader."Document Type"::Quote);
             DocType::"Sales Order":
-                SalesHeader.SETRANGE("Document Type", SalesHeader."Document Type"::Order);
+                SalesHeader.SetRange("Document Type", SalesHeader."Document Type"::Order);
             DocType::"Sales Invoice":
-                SalesHeader.SETRANGE("Document Type", SalesHeader."Document Type"::Invoice);
+                SalesHeader.SetRange("Document Type", SalesHeader."Document Type"::Invoice);
             DocType::"Sales Credit Memo":
-                SalesHeader.SETRANGE("Document Type", SalesHeader."Document Type"::"Credit Memo");
+                SalesHeader.SetRange("Document Type", SalesHeader."Document Type"::"Credit Memo");
             DocType::"Sales Return Order":
-                SalesHeader.SETRANGE("Document Type", SalesHeader."Document Type"::"Return Order");
+                SalesHeader.SetRange("Document Type", SalesHeader."Document Type"::"Return Order");
         end;
         if DocNo <> '' then
-            SalesHeader.SETFILTER("No.", DocNo);
-        MainRecCount := SalesHeader.COUNT;
+            SalesHeader.SetFilter("No.", DocNo);
+        MainRecCount := SalesHeader.Count;
     end;
 
     local procedure FilterSalesShip();
     begin
         if DocNo <> '' then
-            SalesShipmentHdr.SETRANGE("No.", DocNo);
-        MainRecCount := SalesShipmentHdr.COUNT;
+            SalesShipmentHdr.SetRange("No.", DocNo);
+        MainRecCount := SalesShipmentHdr.Count;
     end;
 
     local procedure FilterSalesInv();
     begin
         if DocNo <> '' then
-            SalesInvoiceHdr.SETRANGE("No.", DocNo);
-        MainRecCount := SalesInvoiceHdr.COUNT;
+            SalesInvoiceHdr.SetRange("No.", DocNo);
+        MainRecCount := SalesInvoiceHdr.Count;
     end;
 
     local procedure FilterPurchHdr();
     begin
         case DocType of
             DocType::"Purch. Quote":
-                PurchaseHeader.SETRANGE("Document Type", PurchaseHeader."Document Type"::Quote);
+                PurchaseHeader.SetRange("Document Type", PurchaseHeader."Document Type"::Quote);
             DocType::"Purch. Order":
-                PurchaseHeader.SETRANGE("Document Type", PurchaseHeader."Document Type"::Order);
+                PurchaseHeader.SetRange("Document Type", PurchaseHeader."Document Type"::Order);
             DocType::"Purch. Invoice":
-                PurchaseHeader.SETRANGE("Document Type", PurchaseHeader."Document Type"::Invoice);
+                PurchaseHeader.SetRange("Document Type", PurchaseHeader."Document Type"::Invoice);
             DocType::"Purch. Credit Memo":
-                PurchaseHeader.SETRANGE("Document Type", PurchaseHeader."Document Type"::"Credit Memo");
+                PurchaseHeader.SetRange("Document Type", PurchaseHeader."Document Type"::"Credit Memo");
             DocType::"Purch. Return Order":
-                PurchaseHeader.SETRANGE("Document Type", PurchaseHeader."Document Type"::"Return Order");
+                PurchaseHeader.SetRange("Document Type", PurchaseHeader."Document Type"::"Return Order");
         end;
         if DocNo <> '' then
-            PurchaseHeader.SETFILTER("No.", DocNo);
-        MainRecCount := PurchaseHeader.COUNT;
+            PurchaseHeader.SetFilter("No.", DocNo);
+        MainRecCount := PurchaseHeader.Count;
     end;
 
     procedure SetPurchPostReceipt(pDocNo: Code[20]);
@@ -557,8 +552,8 @@ report 50059 "Item Tracking Appendix FFH"
     local procedure FilterPurchReceipt();
     begin
         if DocNo <> '' then
-            PurchReceiptHeader.SETRANGE("No.", DocNo);
-        MainRecCount := PurchReceiptHeader.COUNT;
+            PurchReceiptHeader.SetRange("No.", DocNo);
+        MainRecCount := PurchReceiptHeader.Count;
     end;
 
     local procedure HandlePurchReceipt();
@@ -566,18 +561,16 @@ report 50059 "Item Tracking Appendix FFH"
         AddressPostedPurchReceiptHdr(PurchReceiptHeader);
         TrackingSpecCount :=
           ItemTrackingDocMgt.RetrieveDocumentItemTracking(TrackingSpecBuffer, PurchReceiptHeader."No.",
-            DATABASE::"Purch. Rcpt. Header", 0);
+            Database::"Purch. Rcpt. Header", 0);
     end;
 
     local procedure AddressPostedPurchReceiptHdr(PurchaseReceiptHdr: Record "Purch. Rcpt. Header");
     begin
         ShowAddr2 := true;
-        with PurchaseReceiptHdr do begin
-            FormatAddr.PurchRcptBuyFrom(Addr, PurchaseReceiptHdr);
-            DocumentDate := "Document Date";
-            SourceCaption := STRSUBSTNO('%1 %2', Text50005, "No.");
-            Addr2Caption := Text50002;
-        end;
+        FormatAddr.PurchRcptBuyFrom(Addr, PurchaseReceiptHdr);
+        DocumentDate := PurchaseReceiptHdr."Document Date";
+        SourceCaption := StrSubstNo('%1 %2', Text50005, PurchaseReceiptHdr."No.");
+        Addr2Caption := Text50002;
     end;
 
     procedure SetSalesShipment(pDocNo: Code[20]);

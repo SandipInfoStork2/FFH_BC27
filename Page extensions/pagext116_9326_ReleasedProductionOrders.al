@@ -28,26 +28,31 @@ pageextension 50216 ReleasedProductionOrdersExt extends "Released Production Ord
             //     ApplicationArea = All;
             // }
             //TAL 1.0.0.71 <<
-            field("Documents Created By"; "Documents Created By")
+            field("Documents Created By"; Rec."Documents Created By")
             {
                 ApplicationArea = All;
                 Visible = false;
+                ToolTip = 'Specifies the value of the Documents Created By field.';
             }
-            field("Documents Create Date"; "Documents Create Date")
+            field("Documents Create Date"; Rec."Documents Create Date")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Documents Create Date field.';
             }
-            field("Created By"; "Created By")
+            field("Created By"; Rec."Created By")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Created By field.';
             }
-            field("Client Computer Name"; "Client Computer Name")
+            field("Client Computer Name"; Rec."Client Computer Name")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Client Computer Name field.';
             }
-            field("Creation Date"; "Creation Date")
+            field("Creation Date"; Rec."Creation Date")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the date on which you created the production order.';
             }
         }
 
@@ -59,19 +64,22 @@ pageextension 50216 ReleasedProductionOrdersExt extends "Released Production Ord
         //TAL 1.0.0.71 >>
         addafter("Location Code")
         {
-            field("Documents Created"; "Documents Created")
+            field("Documents Created"; Rec."Documents Created")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Documents Created field.';
             }
-            field("Vendor No."; "Vendor No.")
+            field("Vendor No."; Rec."Vendor No.")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Vendor No. field.';
             }
 
             //+1.0.0.229
-            field("Packing Agent"; "Packing Agent")
+            field("Packing Agent"; Rec."Packing Agent")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Packing Agent field.';
             }
             //-1.0.0.229
         }
@@ -91,7 +99,8 @@ pageextension 50216 ReleasedProductionOrdersExt extends "Released Production Ord
                 Promoted = true;
                 PromotedCategory = Process;
                 PromotedIsBig = true;
-                RunObject = Report "Prod. Order - Picking List";
+                RunObject = report "Prod. Order - Picking List";
+                ToolTip = 'Executes the Picking List action.';
             }
 
             action("Raw Material Usage")
@@ -101,6 +110,7 @@ pageextension 50216 ReleasedProductionOrdersExt extends "Released Production Ord
                 Promoted = true;
                 PromotedCategory = Report;
                 PromotedIsBig = true;
+                ToolTip = 'Executes the Raw Material Usage action.';
                 // RunObject = Report "Prod. Order - Picking List";
 
                 trigger OnAction();
@@ -108,13 +118,13 @@ pageextension 50216 ReleasedProductionOrdersExt extends "Released Production Ord
                     rpt_RawMaterialUsage: Report "Raw Material Usage";
                     rL_ILE: Record "Item Ledger Entry";
                 begin
-                    CLEAR(rpt_RawMaterialUsage);
+                    Clear(rpt_RawMaterialUsage);
 
                     //rL_ILE.COPYFILTERS(Rec);
 
                     //DataItemTableView = WHERE("Entry Type" = CONST(Sale), "Location Code" = FILTER('ARAD-1|ARAD-5'), 
                     //"Gen. Prod. Posting Group" = CONST('ST-FRVEG'), Quantity = FILTER(< 0));
-                    rL_ILE.RESET;
+                    rL_ILE.Reset;
                     rL_ILE.SetRange("Posting Date", WorkDate());
                     rL_ILE.SetRange("Entry Type", rL_ILE."Entry Type"::Consumption);
                     rL_ILE.SetFilter("Location Code", 'ARAD-3');
@@ -123,8 +133,8 @@ pageextension 50216 ReleasedProductionOrdersExt extends "Released Production Ord
                     //rL_ILE.SetFilter(Quantity, '<0');
 
 
-                    rpt_RawMaterialUsage.SETTABLEVIEW(rL_ILE);
-                    rpt_RawMaterialUsage.RUN;
+                    rpt_RawMaterialUsage.SetTableView(rL_ILE);
+                    rpt_RawMaterialUsage.Run;
                 end;
             }
 
@@ -137,6 +147,8 @@ pageextension 50216 ReleasedProductionOrdersExt extends "Released Production Ord
                 Image = ImportExcel;
                 Promoted = true;
                 PromotedCategory = Process;
+                ToolTip = 'Executes the Import Excel (Production Order) action.';
+                ApplicationArea = All;
                 //Visible = false;
 
                 trigger OnAction();
@@ -155,6 +167,8 @@ pageextension 50216 ReleasedProductionOrdersExt extends "Released Production Ord
                 Image = ExportToExcel;
                 Promoted = true;
                 PromotedCategory = Process;
+                ToolTip = 'Executes the Export Excel Template action.';
+                ApplicationArea = All;
                 //Visible = false;
 
                 trigger OnAction();
@@ -176,7 +190,10 @@ pageextension 50216 ReleasedProductionOrdersExt extends "Released Production Ord
                 Promoted = true;
                 PromotedCategory = Report;
                 RunObject = page "Prod. Order Components";
-                RunPageView = where(Status = filter('Released'));//, "Location Code" = filter('ARAD-4'));
+                RunPageView = where(Status = filter('Released'));
+                ApplicationArea = All;
+                //, "Location Code" = filter('ARAD-4'));                                           ToolTip = 'Executes the Prod. Order Components action.';
+
                 trigger OnAction()
                 begin
 

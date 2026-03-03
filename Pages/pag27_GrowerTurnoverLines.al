@@ -8,25 +8,28 @@ page 50027 "Grower Turnover Lines"
     LinksAllowed = false;
     PageType = ListPart;
     SourceTable = Date;
-    SourceTableView = WHERE("Period Start" = FILTER('01012021..311225'));
+    SourceTableView = where("Period Start" = filter('01012021..311225'));
+    ApplicationArea = All;
     //FILTER('20210101D .. 19311231D')
 
     layout
     {
-        area(content)
+        area(Content)
         {
             repeater(Control1)
             {
                 Editable = false;
-                field("Period Start"; "Period Start")
+                field("Period Start"; Rec."Period Start")
                 {
                     ApplicationArea = All;
                     Caption = 'Period Start';
+                    ToolTip = 'Specifies the value of the Period Start field.';
                 }
-                field("Period Name"; "Period Name")
+                field("Period Name"; Rec."Period Name")
                 {
                     ApplicationArea = All;
                     Caption = 'Period Name';
+                    ToolTip = 'Specifies the value of the Period Name field.';
                 }
 
                 field(PurchasesQty; Grower.GetPurchasesQty())
@@ -37,6 +40,7 @@ page 50027 "Grower Turnover Lines"
                     DrillDown = true;
                     Editable = false;
                     BlankZero = true;
+                    ToolTip = 'Specifies the value of the Purchases (Qty.) field.';
 
                     trigger OnDrillDown();
                     begin
@@ -54,6 +58,7 @@ page 50027 "Grower Turnover Lines"
                     Editable = false;
                     DecimalPlaces = 0 : 0;
                     BlankZero = true;
+                    ToolTip = 'Specifies the value of the GetPurchasesTotalNetWeight() field.';
 
                     trigger OnDrillDown();
                     begin
@@ -69,6 +74,7 @@ page 50027 "Grower Turnover Lines"
                     DrillDown = true;
                     Editable = false;
                     BlankZero = true;
+                    ToolTip = 'Specifies the value of the Sales (Qty.) field.';
 
                     trigger OnDrillDown();
                     begin
@@ -85,6 +91,7 @@ page 50027 "Grower Turnover Lines"
                     Editable = false;
                     DecimalPlaces = 0 : 0;
                     BlankZero = true;
+                    ToolTip = 'Specifies the value of the GetSalesTotalNetWeight() field.';
 
                     trigger OnDrillDown();
                     begin
@@ -180,7 +187,7 @@ page 50027 "Grower Turnover Lines"
 
     trigger OnOpenPage();
     begin
-        RESET;
+        Rec.RESET;
     end;
 
     var
@@ -195,68 +202,68 @@ page 50027 "Grower Turnover Lines"
 
     procedure Set(var NewGrower: Record Grower; NewPeriodType: Integer; NewAmountType: Option "Net Change","Balance at Date"; NewCustNoFilter: Code[20]);
     begin
-        Grower.COPY(NewGrower);
+        Grower.Copy(NewGrower);
         PeriodType := NewPeriodType;
         AmountType := NewAmountType;
         vG_CustomerNoFilter := NewCustNoFilter;
-        CurrPage.UPDATE(false);
+        CurrPage.Update(false);
     end;
 
     local procedure ShowItemEntries(ShowSales: Boolean);
     begin
         SetDateFilter;
-        ItemLedgEntry.RESET;
+        ItemLedgEntry.Reset;
         //ItemLedgEntry.SETCURRENTKEY("Item No.","Entry Type","Variant Code","Drop Shipment","Location Code","Posting Date");
-        ItemLedgEntry.SETCURRENTKEY("Entry Type", "Document Grower No.", "Posting Date");
-        ItemLedgEntry.SETRANGE(ItemLedgEntry."Lot Grower No.", Grower."No.");
+        ItemLedgEntry.SetCurrentKey("Entry Type", "Document Grower No.", "Posting Date");
+        ItemLedgEntry.SetRange(ItemLedgEntry."Lot Grower No.", Grower."No.");
         //ItemLedgEntry.SETRANGE(ItemLedgEntry."Document Grower No.",Grower."No.");
-        ItemLedgEntry.SETFILTER("Posting Date", Grower.GETFILTER("Date Filter"));
+        ItemLedgEntry.SetFilter("Posting Date", Grower.GetFilter("Date Filter"));
 
 
 
 
         if ShowSales then begin
-            ItemLedgEntry.SETRANGE("Entry Type", ItemLedgEntry."Entry Type"::Sale);
+            ItemLedgEntry.SetRange("Entry Type", ItemLedgEntry."Entry Type"::Sale);
             if vG_CustomerNoFilter <> '' then begin
-                ItemLedgEntry.SETFILTER("Source No.", vG_CustomerNoFilter);
+                ItemLedgEntry.SetFilter("Source No.", vG_CustomerNoFilter);
             end;
         end else begin
-            ItemLedgEntry.SETRANGE("Entry Type", ItemLedgEntry."Entry Type"::Purchase);
+            ItemLedgEntry.SetRange("Entry Type", ItemLedgEntry."Entry Type"::Purchase);
 
         end;
-        PAGE.RUN(0, ItemLedgEntry);
+        Page.Run(0, ItemLedgEntry);
     end;
 
     local procedure SetDateFilter();
     begin
         if AmountType = AmountType::"Net Change" then
-            Grower.SETRANGE("Date Filter", "Period Start", "Period End")
+            Grower.SETRANGE("Date Filter", Rec."Period Start", Rec."Period End")
         else
-            Grower.SETRANGE("Date Filter", 0D, "Period End");
+            Grower.SETRANGE("Date Filter", 0D, Rec."Period End");
     end;
 
     local procedure ShowPurchaseItemEntries(ShowSales: Boolean);
     begin
         SetDateFilter;
-        ItemLedgEntry.RESET;
+        ItemLedgEntry.Reset;
         //ItemLedgEntry.SETCURRENTKEY("Item No.","Entry Type","Variant Code","Drop Shipment","Location Code","Posting Date");
-        ItemLedgEntry.SETCURRENTKEY("Entry Type", "Source Type", "Source No.", "Posting Date");
-        ItemLedgEntry.SETRANGE(ItemLedgEntry."Lot Grower No.", Grower."No.");
+        ItemLedgEntry.SetCurrentKey("Entry Type", "Source Type", "Source No.", "Posting Date");
+        ItemLedgEntry.SetRange(ItemLedgEntry."Lot Grower No.", Grower."No.");
         //ItemLedgEntry.SETRANGE(ItemLedgEntry."Document Grower No.",Grower."No.");
-        ItemLedgEntry.SETRANGE("Source Type", ItemLedgEntry."Source Type"::Vendor);
+        ItemLedgEntry.SetRange("Source Type", ItemLedgEntry."Source Type"::Vendor);
         //ItemLedgEntry.SETFILTER("Source No.",Grower."Grower Vendor No.");
-        ItemLedgEntry.SETFILTER("Posting Date", Grower.GETFILTER("Date Filter"));
+        ItemLedgEntry.SetFilter("Posting Date", Grower.GetFilter("Date Filter"));
         if ShowSales then
-            ItemLedgEntry.SETRANGE("Entry Type", ItemLedgEntry."Entry Type"::Sale)
+            ItemLedgEntry.SetRange("Entry Type", ItemLedgEntry."Entry Type"::Sale)
         else
-            ItemLedgEntry.SETRANGE("Entry Type", ItemLedgEntry."Entry Type"::Purchase);
-        PAGE.RUN(0, ItemLedgEntry);
+            ItemLedgEntry.SetRange("Entry Type", ItemLedgEntry."Entry Type"::Purchase);
+        Page.Run(0, ItemLedgEntry);
     end;
 
     local procedure SetCustNoFilter();
     begin
         if vG_CustomerNoFilter <> '' then begin
-            Grower.SETFILTER("Customer No. Filter", vG_CustomerNoFilter);
+            Grower.SetFilter("Customer No. Filter", vG_CustomerNoFilter);
         end else begin
 
         end;

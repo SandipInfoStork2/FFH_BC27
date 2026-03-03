@@ -2,6 +2,7 @@ report 50002 "Summary Boxes Report"
 {
     DefaultLayout = RDLC;
     RDLCLayout = './Layouts/rep02_50002_SummaryBoxesReport.rdlc';
+    ApplicationArea = All;
 
     dataset
     {
@@ -76,16 +77,16 @@ report 50002 "Summary Boxes Report"
             column(No1_Vend; Vendor."No.")
             {
             }
-            column(TodayFormatted; FORMAT(TODAY, 0, 4))
+            column(TodayFormatted; Format(Today, 0, 4))
             {
             }
-            column(StartDate; FORMAT(StartDate))
+            column(StartDate; Format(StartDate))
             {
             }
-            column(EndDate; FORMAT(EndDate))
+            column(EndDate; Format(EndDate))
             {
             }
-            column(LastStatmntNo_Vend; FORMAT(Vendor."Last Statement No."))
+            column(LastStatmntNo_Vend; Format(Vendor."Last Statement No."))
             {
                 //DecimalPlaces = 0 : 0;
             }
@@ -148,8 +149,8 @@ report 50002 "Summary Boxes Report"
             }
             dataitem("Purchase Line Addon Posted"; "Purchase Line Addon Posted")
             {
-                DataItemLink = "Buy-from Vendor No." = FIELD("No.");
-                DataItemTableView = SORTING("Document Type", "Document No.", "Line No.") ORDER(Ascending);
+                DataItemLink = "Buy-from Vendor No." = field("No.");
+                DataItemTableView = sorting("Document Type", "Document No.", "Line No.") order(ascending);
                 column(LineNo_PurchaseLineAddon; "Purchase Line Addon Posted"."Line No.")
                 {
                 }
@@ -176,8 +177,8 @@ report 50002 "Summary Boxes Report"
                 }
                 dataitem("Purchase Header Addon Posted"; "Purchase Header Addon Posted")
                 {
-                    DataItemLink = "No." = FIELD("Document No.");
-                    DataItemTableView = SORTING("Buy-from Vendor No.") ORDER(Ascending);
+                    DataItemLink = "No." = field("Document No.");
+                    DataItemTableView = sorting("Buy-from Vendor No.") order(ascending);
                     RequestFilterFields = "No.";
                     column(BuyfromVendorNo_PurchaseHeaderAddon; "Purchase Header Addon Posted"."Buy-from Vendor No.")
                     {
@@ -387,7 +388,7 @@ report 50002 "Summary Boxes Report"
             begin
                 //StartDate := GETRANGEMIN("Date Filter");
                 //EndDate := GETRANGEMAX("Date Filter");
-                CompanyInfo.GET;
+                CompanyInfo.Get;
                 FormatAddr.Company(CompanyAddr, CompanyInfo);
             end;
         }
@@ -411,26 +412,26 @@ report 50002 "Summary Boxes Report"
 
     trigger OnInitReport();
     begin
-        GLSetup.GET;
-        SalesSetup.GET;
+        GLSetup.Get;
+        SalesSetup.Get;
 
         case SalesSetup."Logo Position on Documents" of
             SalesSetup."Logo Position on Documents"::"No Logo":
                 ;
             SalesSetup."Logo Position on Documents"::Left:
                 begin
-                    CompanyInfo1.GET;
-                    CompanyInfo1.CALCFIELDS(Picture);
+                    CompanyInfo1.Get;
+                    CompanyInfo1.CalcFields(Picture);
                 end;
             SalesSetup."Logo Position on Documents"::Center:
                 begin
-                    CompanyInfo2.GET;
-                    CompanyInfo2.CALCFIELDS(Picture);
+                    CompanyInfo2.Get;
+                    CompanyInfo2.CalcFields(Picture);
                 end;
             SalesSetup."Logo Position on Documents"::Right:
                 begin
-                    CompanyInfo3.GET;
-                    CompanyInfo3.CALCFIELDS(Picture);
+                    CompanyInfo3.Get;
+                    CompanyInfo3.CalcFields(Picture);
                 end;
         end;
     end;

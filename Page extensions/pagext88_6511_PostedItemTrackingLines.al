@@ -14,50 +14,60 @@ pageextension 50188 PostedItemTrackingLinesExt extends "Posted Item Tracking Lin
 
         addafter(Quantity)
         {
-            field("Producer Group"; "Producer Group")
+            field("Producer Group"; Rec."Producer Group")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Producer Group field.';
             }
-            field("Producer Group Name"; "Producer Group Name")
+            field("Producer Group Name"; Rec."Producer Group Name")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Producer Group Name field.';
             }
-            field("Lot Grower No."; "Lot Grower No.")
+            field("Lot Grower No."; Rec."Lot Grower No.")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Lot Grower No. field.';
             }
-            field("Grower Name"; "Grower Name")
+            field("Grower Name"; Rec."Grower Name")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Grower Name field.';
             }
-            field("Grower GGN"; "Grower GGN")
+            field("Grower GGN"; Rec."Grower GGN")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Grower GGN field.';
             }
-            field("Lot Vendor No."; "Lot Vendor No.")
+            field("Lot Vendor No."; Rec."Lot Vendor No.")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Lot Vendor No. field.';
             }
-            field("Vendor Name"; "Vendor Name")
+            field("Vendor Name"; Rec."Vendor Name")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Vendor Name field.';
             }
-            field("Vendor GLN"; "Vendor GLN")
+            field("Vendor GLN"; Rec."Vendor GLN")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Vendor GLN field.';
             }
-            field("Vendor GGN"; "Vendor GGN")
+            field("Vendor GGN"; Rec."Vendor GGN")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Vendor GGN field.';
             }
 
-            field("Lot Receiving Temperature"; "Lot Receiving Temperature")
+            field("Lot Receiving Temperature"; Rec."Lot Receiving Temperature")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Lot Receiving Temperature field.';
             }
         }
 
-        moveafter("Lot No.";"Expiration Date")
+        moveafter("Lot No."; "Expiration Date")
     }
 
     actions
@@ -81,7 +91,7 @@ pageextension 50188 PostedItemTrackingLinesExt extends "Posted Item Tracking Lin
 
                 begin
                     Clear(pItemTracing);
-                    pItemTracing.SetLotFilter("Lot No.");
+                    pItemTracing.SetLotFilter(Rec."Lot No.");
                     pItemTracing.Run();
 
                 end;

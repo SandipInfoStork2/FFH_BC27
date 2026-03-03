@@ -12,27 +12,28 @@ report 50050 "Items Per Customer Sales"
     RDLCLayout = './Layouts/rep50_50050_ItemsPerCustomerSales.rdlc';
 
     PreviewMode = PrintLayout;
+    ApplicationArea = All;
 
     dataset
     {
         dataitem(Customer; Customer)
         {
-            DataItemTableView = SORTING("No.") ORDER(Ascending);
+            DataItemTableView = sorting("No.") order(ascending);
             PrintOnlyIfDetail = true;
             RequestFilterFields = "No.", "Search Name", "Customer Posting Group";
-            column(COMPANYNAME; COMPANYNAME)
+            column(COMPANYNAME; CompanyName)
             {
             }
-            column(USERID; USERID)
+            column(USERID; UserId)
             {
             }
-            column(STRSUBSTNO_Text000_PeriodText_; STRSUBSTNO(Text000, PeriodText))
+            column(STRSUBSTNO_Text000_PeriodText_; StrSubstNo(Text000, PeriodText))
             {
             }
-            column(FORMAT_TODAY_0_4_; FORMAT(TODAY, 0, 4))
+            column(FORMAT_TODAY_0_4_; Format(Today, 0, 4))
             {
             }
-            column(CurrReport_PAGENO; CurrReport.PAGENO)
+            column(CurrReport_PAGENO; CurrReport.PageNo)
             {
             }
             column(Customer_Name; Name)
@@ -101,16 +102,16 @@ report 50050 "Items Per Customer Sales"
             column(PageGroupNo; PageGroupNo)
             {
             }
-            column(ShowDetails; FORMAT(vG_ShowDetails))
+            column(ShowDetails; Format(vG_ShowDetails))
             {
             }
-            column(ShowAmounts; FORMAT(vG_ShowAmounts))
+            column(ShowAmounts; Format(vG_ShowAmounts))
             {
             }
             dataitem("Value Entry"; "Value Entry")
             {
-                DataItemLink = "Source No." = FIELD("No."), "Posting Date" = FIELD("Date Filter"), "Global Dimension 1 Code" = FIELD("Global Dimension 1 Filter"), "Global Dimension 2 Code" = FIELD("Global Dimension 2 Filter");
-                DataItemTableView = SORTING("Item No.") ORDER(Ascending) WHERE("Source Type" = CONST(Customer), "Document Type" = CONST("Sales Invoice"));
+                DataItemLink = "Source No." = field("No."), "Posting Date" = field("Date Filter"), "Global Dimension 1 Code" = field("Global Dimension 1 Filter"), "Global Dimension 2 Code" = field("Global Dimension 2 Filter");
+                DataItemTableView = sorting("Item No.") order(ascending) where("Source Type" = const(Customer), "Document Type" = const("Sales Invoice"));
                 RequestFilterFields = "Item No.", "Inventory Posting Group", "Posting Date";
                 column(Item_Description; Item.Description)
                 {
@@ -233,12 +234,12 @@ report 50050 "Items Per Customer Sales"
                     END;
                     */
                     //Log.SD---<<
-                    "Invoiced Quantity" := ROUND("Invoiced Quantity", 1); //TAL0.2
+                    "Invoiced Quantity" := Round("Invoiced Quantity", 1); //TAL0.2
 
 
-                    Item.INIT;
-                    Item.RESET;
-                    Item.GET("Value Entry"."Item No.");
+                    Item.Init;
+                    Item.Reset;
+                    Item.Get("Value Entry"."Item No.");
 
                     if "Invoiced Quantity" <> 0 then
                         UnitPrice := "Sales Amount (Actual)" / -"Invoiced Quantity"
@@ -248,7 +249,7 @@ report 50050 "Items Per Customer Sales"
                     Profit := "Sales Amount (Actual)" + "Cost Amount (Actual)" + "Cost Amount (Non-Invtbl.)";
 
                     if "Sales Amount (Actual)" <> 0 then
-                        ProfitPct := ROUND(100 * Profit / "Sales Amount (Actual)", 0.01)
+                        ProfitPct := Round(100 * Profit / "Sales Amount (Actual)", 0.01)
                     else
                         ProfitPct := 0;
 
@@ -262,14 +263,14 @@ report 50050 "Items Per Customer Sales"
                         ProfitPerCustomer += Profit;
 
                         vG_TotalWeight := Item."Net Weight" * -"Value Entry"."Invoiced Quantity";
-                        vG_TotalWeight := ROUND(vG_TotalWeight, 1); //TAL0.2
+                        vG_TotalWeight := Round(vG_TotalWeight, 1); //TAL0.2
                         TotalWeightPerCustomer += vG_TotalWeight;
 
                     end;
 
 
                     if (SalesPerCustomer <> 0) and (ProfitPerCustomer <> 0) then begin
-                        ProfitPctPerCustomer := ROUND(100 * ProfitPerCustomer / SalesPerCustomer, 0.01)
+                        ProfitPctPerCustomer := Round(100 * ProfitPerCustomer / SalesPerCustomer, 0.01)
                     end else begin
                         ProfitPctPerCustomer := 0;
                     end;
@@ -283,7 +284,7 @@ report 50050 "Items Per Customer Sales"
                         SalesPerItem += "Sales Amount (Actual)";
                     end else begin
                         //CurrReport.SHOWOUTPUT(FALSE);
-                        CurrReport.SKIP;
+                        CurrReport.Skip;
                     end;
 
                 end;
@@ -315,7 +316,7 @@ report 50050 "Items Per Customer Sales"
             trigger OnPreDataItem();
             begin
                 PageGroupNo := 1;
-                CurrReport.NEWPAGEPERRECORD := PrintOnlyOnePerPage;
+                CurrReport.NewPagePerRecord := PrintOnlyOnePerPage;
             end;
         }
     }
@@ -326,7 +327,7 @@ report 50050 "Items Per Customer Sales"
 
         layout
         {
-            area(content)
+            area(Content)
             {
                 group(Options)
                 {
@@ -335,18 +336,21 @@ report 50050 "Items Per Customer Sales"
                     {
                         ApplicationArea = All;
                         Caption = 'New Page per Customer';
+                        ToolTip = 'Specifies the value of the New Page per Customer field.';
                     }
                     field(ShowDetails; vG_ShowDetails)
                     {
                         ApplicationArea = All;
                         CaptionML = ELL = 'Show Details',
                                     ENU = 'Show Details';
+                        ToolTip = 'Specifies the value of the vG_ShowDetails field.';
                     }
                     field(ShowAmounts; vG_ShowAmounts)
                     {
                         ApplicationArea = All;
                         CaptionML = ELL = 'Show Amounts',
                                     ENU = 'Show Amounts';
+                        ToolTip = 'Specifies the value of the vG_ShowAmounts field.';
                     }
                 }
             }
@@ -363,9 +367,9 @@ report 50050 "Items Per Customer Sales"
 
     trigger OnPreReport();
     begin
-        CustFilter := Customer.GETFILTERS;
-        ItemLedgEntryFilter := "Value Entry".GETFILTERS;
-        PeriodText := "Value Entry".GETFILTER("Posting Date");
+        CustFilter := Customer.GetFilters;
+        ItemLedgEntryFilter := "Value Entry".GetFilters;
+        PeriodText := "Value Entry".GetFilter("Posting Date");
     end;
 
     var

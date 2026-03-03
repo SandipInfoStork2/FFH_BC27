@@ -10,10 +10,11 @@ page 50073 "Horeca SSH Subform"
     InsertAllowed = false;
     Editable = false;
     DeleteAllowed = false;
+    ApplicationArea = All;
 
     layout
     {
-        area(content)
+        area(Content)
         {
             repeater(Control1)
             {
@@ -39,7 +40,7 @@ page 50073 "Horeca SSH Subform"
                 field("No."; Rec."No.")
                 {
                     ApplicationArea = Basic, Suite;
-                    ShowMandatory = Type <> Type::" ";
+                    ShowMandatory = Rec.Type <> Rec.Type::" ";
                     ToolTip = 'Specifies what you are selling, such as a product or a fixed asset. You’ll see different lists of things to choose from depending on your choice in the Type field.';
                     Editable = false;
                     trigger OnValidate()
@@ -97,13 +98,13 @@ page 50073 "Horeca SSH Subform"
                 }
                 */
 
-                field(Quantity; Quantity)
+                field(Quantity; Rec.Quantity)
                 {
                     ApplicationArea = Basic, Suite;
                     BlankZero = true;
-                    Editable = NOT IsCommentLine;
-                    Enabled = NOT IsCommentLine;
-                    ShowMandatory = (Type <> Type::" ") AND ("No." <> '');
+                    Editable = not IsCommentLine;
+                    Enabled = not IsCommentLine;
+                    ShowMandatory = (Rec.Type <> Rec.Type::" ") and (Rec."No." <> '');
                     ToolTip = 'Specifies how many units are being sold.';
 
                     AboutTitle = 'How much is being ordered';
@@ -130,18 +131,20 @@ page 50073 "Horeca SSH Subform"
                 }
                 */
 
-                field("Quantity (Base)"; "Quantity (Base)")
+                field("Quantity (Base)"; Rec."Quantity (Base)")
                 {
                     ApplicationArea = All;
                     Editable = false;
+                    ToolTip = 'Specifies the value of the Quantity (Base) field.';
                 }
 
 
 
-                field("Unit of Measure (Base)"; "Unit of Measure (Base)")
+                field("Unit of Measure (Base)"; Rec."Unit of Measure (Base)")
                 {
                     ApplicationArea = All;
                     Editable = false;
+                    ToolTip = 'Specifies the value of the Unit of Measure (Base) field.';
                 }
 
                 /*
@@ -214,9 +217,9 @@ page 50073 "Horeca SSH Subform"
     var
         myInt: Integer;
     begin
-        clear(Item);
+        Clear(Item);
 
-        if Item.GET("No.") then begin
+        if Item.GET(Rec."No.") then begin
             Item.CalcFields("Packing Group Description");
         end;
     end;
@@ -231,7 +234,7 @@ page 50073 "Horeca SSH Subform"
 
     procedure UpdateEditableOnRow()
     begin
-        IsCommentLine := not HasTypeToFillMandatoryFields();
+        IsCommentLine := not Rec.HasTypeToFillMandatoryFields();
         IsBlankNumber := IsCommentLine;
         UnitofMeasureCodeIsChangeable := not IsCommentLine;
 

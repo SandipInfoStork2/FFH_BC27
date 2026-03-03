@@ -27,7 +27,7 @@ tableextension 50103 CustomerExt extends Customer
                 GLNCalculator: Codeunit "GLN Calculator";
             begin
                 //+TAL0.2
-                IF "GLN Delivery" <> '' THEN
+                if "GLN Delivery" <> '' then
                     GLNCalculator.AssertValidCheckDigit13("GLN Delivery");
                 //-TAL0.2
             end;
@@ -81,9 +81,9 @@ tableextension 50103 CustomerExt extends Customer
         myInt: Integer;
     begin
         //+TAL0.1
-        IF "No." = '' THEN BEGIN
-            ERROR('Blank No is not allowed');
-        END;
+        if "No." = '' then begin
+            Error('Blank No is not allowed');
+        end;
         //-TAL0.1
 
     end;
@@ -93,9 +93,9 @@ tableextension 50103 CustomerExt extends Customer
         myInt: Integer;
     begin
         //+TAL0.1
-        IF "No." = '' THEN BEGIN
-            ERROR('Blank No is not allowed');
-        END;
+        if "No." = '' then begin
+            Error('Blank No is not allowed');
+        end;
         //-TAL0.1
     end;
 
@@ -115,7 +115,7 @@ tableextension 50103 CustomerExt extends Customer
     var
         UserSetup: Record "User Setup";
     begin
-        UserSetup.GET(UserId);
+        UserSetup.Get(UserId);
         if UserSetup."HORECA Customer No." <> '' then begin
             //UserSetup.TestField("HORECA Customer No.");
             FilterGroup(2);

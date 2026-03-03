@@ -9,7 +9,7 @@ pageextension 50118 PurchaseInvoiceExt extends "Purchase Invoice"
         // Add changes to page layout here
         addafter("Buy-from Vendor Name")
         {
-            field("Pay-to Name2"; "Pay-to Name")
+            field("Pay-to Name2"; Rec."Pay-to Name")
             {
                 ApplicationArea = Basic, Suite;
                 Caption = 'Name';
@@ -23,9 +23,9 @@ pageextension 50118 PurchaseInvoiceExt extends "Purchase Invoice"
                 var
                     ApplicationAreaMgmtFacade: Codeunit "Application Area Mgmt. Facade";
                 begin
-                    if GetFilter("Pay-to Vendor No.") = xRec."Pay-to Vendor No." then
-                        if "Pay-to Vendor No." <> xRec."Pay-to Vendor No." then
-                            SetRange("Pay-to Vendor No.");
+                    if Rec.GetFilter("Pay-to Vendor No.") = xRec."Pay-to Vendor No." then
+                        if Rec."Pay-to Vendor No." <> xRec."Pay-to Vendor No." then
+                            Rec.SetRange("Pay-to Vendor No.");
 
                     CurrPage.SaveRecord;
                     //if ApplicationAreaMgmtFacade.IsFoundationEnabled then

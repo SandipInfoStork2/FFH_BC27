@@ -18,9 +18,10 @@ pageextension 50245 ItemReferencesExt extends "Item References"
 
         addafter("Unit of Measure")
         {
-            field("Package Qty"; "Package Qty")
+            field("Package Qty"; Rec."Package Qty")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Package Qty field.';
             }
         }
 
@@ -30,38 +31,45 @@ pageextension 50245 ItemReferencesExt extends "Item References"
         }
         addafter("Description 2")
         {
-            field("Description 3"; "Description 3")
+            field("Description 3"; Rec."Description 3")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Description 3 field.';
             }
-            field("Category 2"; "Category 2")
+            field("Category 2"; Rec."Category 2")
             {
-                ApplicationArea = all;
-            }
-
-            field("S. Quote Description"; "S. Quote Description")
-            {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Product No. field.';
             }
 
-            field("Item Description"; "Item Description")
+            field("S. Quote Description"; Rec."S. Quote Description")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the S. Quote Description field.';
             }
-            field("Item Description 2 (GR)"; "Item Description 2 (GR)")
+
+            field("Item Description"; Rec."Item Description")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Item Description field.';
             }
-            field(Discontinued; Discontinued)
+            field("Item Description 2 (GR)"; Rec."Item Description 2 (GR)")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Item Description 2 (GR) field.';
+            }
+            field(Discontinued; Rec.Discontinued)
+            {
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Discontinued field.';
             }
 
             field(vG_NoSQLines; vG_NoSQLines)
             {
-                caption = 'No. of S.Q. Lines';
-                ApplicationArea = all;
+                Caption = 'No. of S.Q. Lines';
+                ApplicationArea = All;
                 Editable = false;
+                ToolTip = 'Specifies the value of the No. of S.Q. Lines field.';
 
                 trigger OnDrillDown()
                 var
@@ -71,17 +79,20 @@ pageextension 50245 ItemReferencesExt extends "Item References"
                 end;
             }
 
-            field(Package; Package)
+            field(Package; Rec.Package)
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Package field.';
             }
-            field(EAN; EAN)
+            field(EAN; Rec.EAN)
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Barcode field.';
             }
-            field("Family Code"; "Family Code")
+            field("Family Code"; Rec."Family Code")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Family Code field.';
             }
         }
 
@@ -126,6 +137,7 @@ pageextension 50245 ItemReferencesExt extends "Item References"
                 Promoted = true;
                 PromotedCategory = Process;
                 Image = Item;
+                ToolTip = 'Executes the Item Card action.';
 
             }
         }
@@ -136,9 +148,9 @@ pageextension 50245 ItemReferencesExt extends "Item References"
 
     begin
         vG_NoSQLines := 0;
-        SaleLine.RESET;
+        SaleLine.Reset;
         SaleLine.SetRange("Document Type", SaleLine."Document Type"::Quote);
-        SaleLine.SetFilter("No.", "Item No.");
+        SaleLine.SetFilter("No.", Rec."Item No.");
         if SaleLine.FindSet() then begin
             vG_NoSQLines := SaleLine.Count;
         end;

@@ -23,15 +23,15 @@ codeunit 50005 "Report Management"
             Rounding::" ":
                 exit(Amount);
             Rounding::Tens:
-                exit(ROUND(Amount / 10, 0.1));
+                exit(Round(Amount / 10, 0.1));
             Rounding::Hundreds:
-                exit(ROUND(Amount / 100, 0.1));
+                exit(Round(Amount / 100, 0.1));
             Rounding::Thousands:
-                exit(ROUND(Amount / 1000, 0.1));
+                exit(Round(Amount / 1000, 0.1));
             Rounding::"Hundred Thousands":
-                exit(ROUND(Amount / 100000, 0.1));
+                exit(Round(Amount / 100000, 0.1));
             Rounding::Millions:
-                exit(ROUND(Amount / 1000000, 0.1));
+                exit(Round(Amount / 1000000, 0.1));
         end;
     end;
 

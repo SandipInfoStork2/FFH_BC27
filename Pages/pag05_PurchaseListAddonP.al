@@ -3,157 +3,184 @@ page 50005 "Purchase List Addon P"
     // version NAVW17.00
 
     Caption = 'Purchase List Addon';
-    CardPageID = "Purchase Order Addon P";
+    CardPageId = "Purchase Order Addon P";
     DataCaptionFields = "Document Type";
     Editable = false;
     PageType = List;
     SourceTable = "Purchase Header Addon Posted";
+    ApplicationArea = All;
 
     layout
     {
-        area(content)
+        area(Content)
         {
             repeater(Control1)
             {
-                field("No."; "No.")
+                field("No."; Rec."No.")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the No. field.';
                 }
-                field("Buy-from Vendor No."; "Buy-from Vendor No.")
+                field("Buy-from Vendor No."; Rec."Buy-from Vendor No.")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Buy-from Vendor No. field.';
                 }
-                field("Order Address Code"; "Order Address Code")
-                {
-                    ApplicationArea = All;
-                    Visible = false;
-                }
-                field("Buy-from Vendor Name"; "Buy-from Vendor Name")
-                {
-                    ApplicationArea = All;
-                }
-                field("Vendor Authorization No."; "Vendor Authorization No.")
-                {
-                    ApplicationArea = All;
-                }
-                field("Buy-from Post Code"; "Buy-from Post Code")
+                field("Order Address Code"; Rec."Order Address Code")
                 {
                     ApplicationArea = All;
                     Visible = false;
+                    ToolTip = 'Specifies the value of the Order Address Code field.';
                 }
-                field("Buy-from Country/Region Code"; "Buy-from Country/Region Code")
+                field("Buy-from Vendor Name"; Rec."Buy-from Vendor Name")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Buy-from Vendor Name field.';
+                }
+                field("Vendor Authorization No."; Rec."Vendor Authorization No.")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Vendor Authorization No. field.';
+                }
+                field("Buy-from Post Code"; Rec."Buy-from Post Code")
                 {
                     ApplicationArea = All;
                     Visible = false;
+                    ToolTip = 'Specifies the value of the Buy-from Post Code field.';
                 }
-                field("Buy-from Contact"; "Buy-from Contact")
+                field("Buy-from Country/Region Code"; Rec."Buy-from Country/Region Code")
                 {
                     ApplicationArea = All;
                     Visible = false;
+                    ToolTip = 'Specifies the value of the Buy-from Country/Region Code field.';
                 }
-                field("Pay-to Vendor No."; "Pay-to Vendor No.")
+                field("Buy-from Contact"; Rec."Buy-from Contact")
                 {
                     ApplicationArea = All;
                     Visible = false;
+                    ToolTip = 'Specifies the value of the Buy-from Contact field.';
                 }
-                field("Pay-to Name"; "Pay-to Name")
+                field("Pay-to Vendor No."; Rec."Pay-to Vendor No.")
                 {
                     ApplicationArea = All;
                     Visible = false;
+                    ToolTip = 'Specifies the value of the Pay-to Vendor No. field.';
                 }
-                field("Pay-to Post Code"; "Pay-to Post Code")
+                field("Pay-to Name"; Rec."Pay-to Name")
                 {
                     ApplicationArea = All;
                     Visible = false;
+                    ToolTip = 'Specifies the value of the Pay-to Name field.';
                 }
-                field("Pay-to Country/Region Code"; "Pay-to Country/Region Code")
+                field("Pay-to Post Code"; Rec."Pay-to Post Code")
                 {
                     ApplicationArea = All;
                     Visible = false;
+                    ToolTip = 'Specifies the value of the Pay-to Post Code field.';
                 }
-                field("Pay-to Contact"; "Pay-to Contact")
+                field("Pay-to Country/Region Code"; Rec."Pay-to Country/Region Code")
                 {
                     ApplicationArea = All;
                     Visible = false;
+                    ToolTip = 'Specifies the value of the Pay-to Country/Region Code field.';
                 }
-                field("Ship-to Code"; "Ship-to Code")
+                field("Pay-to Contact"; Rec."Pay-to Contact")
                 {
                     ApplicationArea = All;
                     Visible = false;
+                    ToolTip = 'Specifies the value of the Pay-to Contact field.';
                 }
-                field("Ship-to Name"; "Ship-to Name")
+                field("Ship-to Code"; Rec."Ship-to Code")
                 {
                     ApplicationArea = All;
                     Visible = false;
+                    ToolTip = 'Specifies the value of the Ship-to Code field.';
                 }
-                field("Ship-to Post Code"; "Ship-to Post Code")
+                field("Ship-to Name"; Rec."Ship-to Name")
                 {
                     ApplicationArea = All;
                     Visible = false;
+                    ToolTip = 'Specifies the value of the Ship-to Name field.';
                 }
-                field("Ship-to Country/Region Code"; "Ship-to Country/Region Code")
+                field("Ship-to Post Code"; Rec."Ship-to Post Code")
                 {
                     ApplicationArea = All;
                     Visible = false;
+                    ToolTip = 'Specifies the value of the Ship-to Post Code field.';
                 }
-                field("Ship-to Contact"; "Ship-to Contact")
+                field("Ship-to Country/Region Code"; Rec."Ship-to Country/Region Code")
                 {
                     ApplicationArea = All;
                     Visible = false;
+                    ToolTip = 'Specifies the value of the Ship-to Country/Region Code field.';
                 }
-                field("Posting Date"; "Posting Date")
+                field("Ship-to Contact"; Rec."Ship-to Contact")
+                {
+                    ApplicationArea = All;
+                    Visible = false;
+                    ToolTip = 'Specifies the value of the Ship-to Contact field.';
+                }
+                field("Posting Date"; Rec."Posting Date")
                 {
                     ApplicationArea = All;
                     Visible = true;
+                    ToolTip = 'Specifies the value of the Posting Date field.';
                 }
-                field("Shortcut Dimension 1 Code"; "Shortcut Dimension 1 Code")
+                field("Shortcut Dimension 1 Code"; Rec."Shortcut Dimension 1 Code")
                 {
                     ApplicationArea = All;
                     Visible = false;
+                    ToolTip = 'Specifies the value of the Shortcut Dimension 1 Code field.';
 
                     trigger OnLookup(var Text: Text): Boolean;
                     begin
                         DimMgt.LookupDimValueCodeNoUpdate(1);
                     end;
                 }
-                field("Shortcut Dimension 2 Code"; "Shortcut Dimension 2 Code")
+                field("Shortcut Dimension 2 Code"; Rec."Shortcut Dimension 2 Code")
                 {
                     ApplicationArea = All;
                     Visible = false;
+                    ToolTip = 'Specifies the value of the Shortcut Dimension 2 Code field.';
 
                     trigger OnLookup(var Text: Text): Boolean;
                     begin
                         DimMgt.LookupDimValueCodeNoUpdate(2);
                     end;
                 }
-                field("Location Code"; "Location Code")
+                field("Location Code"; Rec."Location Code")
                 {
                     ApplicationArea = All;
                     Visible = true;
+                    ToolTip = 'Specifies the value of the Location Code field.';
                 }
-                field("Purchaser Code"; "Purchaser Code")
+                field("Purchaser Code"; Rec."Purchaser Code")
                 {
                     ApplicationArea = All;
                     Visible = false;
+                    ToolTip = 'Specifies the value of the Purchaser Code field.';
                 }
-                field("Assigned User ID"; "Assigned User ID")
+                field("Assigned User ID"; Rec."Assigned User ID")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Assigned User ID field.';
                 }
-                field("Currency Code"; "Currency Code")
+                field("Currency Code"; Rec."Currency Code")
                 {
                     ApplicationArea = All;
                     Visible = false;
+                    ToolTip = 'Specifies the value of the Currency Code field.';
                 }
-                field("FORMAT(vG_LineVendorDifferent)"; FORMAT(vG_LineVendorDifferent))
+                field("FORMAT(vG_LineVendorDifferent)"; Format(vG_LineVendorDifferent))
                 {
                     ApplicationArea = All;
                     Caption = 'Line Vendor Different';
                     StyleExpr = vG_Style;
+                    ToolTip = 'Specifies the value of the Line Vendor Different field.';
                 }
             }
         }
-        area(factboxes)
+        area(FactBoxes)
         {
             systempart(Control1900383207; Links)
             {
@@ -170,7 +197,7 @@ page 50005 "Purchase List Addon P"
 
     actions
     {
-        area(navigation)
+        area(Navigation)
         {
             group("&Line")
             {
@@ -181,30 +208,31 @@ page 50005 "Purchase List Addon P"
                     ApplicationArea = All;
                     Caption = 'Card';
                     Image = EditLines;
-                    ShortCutKey = 'Shift+F7';
+                    ShortcutKey = 'Shift+F7';
                     Visible = false;
+                    ToolTip = 'Executes the Card action.';
 
                     trigger OnAction();
                     begin
-                        case "Document Type" of
-                            "Document Type"::Quote:
-                                PAGE.RUN(PAGE::"Purchase Quote", Rec);
-                            "Document Type"::"Blanket Order":
-                                PAGE.RUN(PAGE::"Blanket Purchase Order", Rec);
-                            "Document Type"::Order:
-                                PAGE.RUN(PAGE::"Purchase Order", Rec);
-                            "Document Type"::Invoice:
-                                PAGE.RUN(PAGE::"Purchase Invoice", Rec);
-                            "Document Type"::"Return Order":
-                                PAGE.RUN(PAGE::"Purchase Return Order", Rec);
-                            "Document Type"::"Credit Memo":
-                                PAGE.RUN(PAGE::"Purchase Credit Memo", Rec);
+                        case Rec."Document Type" of
+                            Rec."Document Type"::Quote:
+                                Page.Run(Page::"Purchase Quote", Rec);
+                            Rec."Document Type"::"Blanket Order":
+                                Page.Run(Page::"Blanket Purchase Order", Rec);
+                            Rec."Document Type"::Order:
+                                Page.Run(Page::"Purchase Order", Rec);
+                            Rec."Document Type"::Invoice:
+                                Page.Run(Page::"Purchase Invoice", Rec);
+                            Rec."Document Type"::"Return Order":
+                                Page.Run(Page::"Purchase Return Order", Rec);
+                            Rec."Document Type"::"Credit Memo":
+                                Page.Run(Page::"Purchase Credit Memo", Rec);
                         end;
                     end;
                 }
             }
         }
-        area(reporting)
+        area(Reporting)
         {
             action("Boxes Statement")
             {
@@ -213,17 +241,18 @@ page 50005 "Purchase List Addon P"
                 Promoted = true;
                 PromotedCategory = "Report";
                 PromotedIsBig = true;
+                ToolTip = 'Executes the Boxes Statement action.';
 
                 trigger OnAction();
                 var
                     rL_Vendor: Record Vendor;
                 begin
 
-                    rL_Vendor.RESET;
-                    rL_Vendor.SETFILTER("No.", "Buy-from Vendor No.");
-                    if rL_Vendor.FINDSET then;
-                    rL_Vendor.SETRECFILTER;
-                    REPORT.RUNMODAL(REPORT::"Boxes Statement", true, false, rL_Vendor);
+                    rL_Vendor.Reset;
+                    rL_Vendor.SETFILTER("No.", Rec."Buy-from Vendor No.");
+                    if rL_Vendor.FindSet then;
+                    rL_Vendor.SetRecFilter;
+                    Report.RunModal(Report::"Boxes Statement", true, false, rL_Vendor);
                 end;
             }
             action("Boxes Statement Balances")
@@ -233,17 +262,18 @@ page 50005 "Purchase List Addon P"
                 Promoted = true;
                 PromotedCategory = "Report";
                 PromotedIsBig = true;
+                ToolTip = 'Executes the Boxes Statement Balances action.';
 
                 trigger OnAction();
                 var
                     rL_Vendor: Record Vendor;
                 begin
 
-                    rL_Vendor.RESET;
-                    rL_Vendor.SETFILTER("No.", "Buy-from Vendor No.");
-                    if rL_Vendor.FINDSET then;
-                    rL_Vendor.SETRECFILTER;
-                    REPORT.RUNMODAL(REPORT::"Boxes Statement Balances", true, false, rL_Vendor);
+                    rL_Vendor.Reset;
+                    rL_Vendor.SETFILTER("No.", Rec."Buy-from Vendor No.");
+                    if rL_Vendor.FindSet then;
+                    rL_Vendor.SetRecFilter;
+                    Report.RunModal(Report::"Boxes Statement Balances", true, false, rL_Vendor);
                 end;
             }
             action("Purchase Reservation Avail.")
@@ -254,7 +284,8 @@ page 50005 "Purchase List Addon P"
                 Promoted = false;
                 //The property 'PromotedCategory' can only be set if the property 'Promoted' is set to 'true'
                 //PromotedCategory = "Report";
-                RunObject = Report "Purchase Reservation Avail.";
+                RunObject = report "Purchase Reservation Avail.";
+                ToolTip = 'Executes the Purchase Reservation Avail. action.';
             }
         }
     }
@@ -264,10 +295,10 @@ page 50005 "Purchase List Addon P"
         vG_Style := '';
 
         vG_LineVendorDifferent := false;
-        rG_PurchaseLineAddonPosted.RESET;
-        rG_PurchaseLineAddonPosted.SETFILTER("Document No.", "No.");
-        rG_PurchaseLineAddonPosted.SETFILTER("Buy-from Vendor No.", '<>%1', "Buy-from Vendor No.");
-        if rG_PurchaseLineAddonPosted.FINDSET then begin
+        rG_PurchaseLineAddonPosted.Reset;
+        rG_PurchaseLineAddonPosted.SETFILTER("Document No.", Rec."No.");
+        rG_PurchaseLineAddonPosted.SETFILTER("Buy-from Vendor No.", '<>%1', Rec."Buy-from Vendor No.");
+        if rG_PurchaseLineAddonPosted.FindSet then begin
             vG_LineVendorDifferent := true;
             vG_Style := 'Attention';
         end;

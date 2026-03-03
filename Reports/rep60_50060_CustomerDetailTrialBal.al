@@ -10,7 +10,7 @@ report 50060 "Customer - Detail Trial Bal. F"
     {
         dataitem(Customer; Customer)
         {
-            DataItemTableView = SORTING("No.");
+            DataItemTableView = sorting("No.");
             PrintOnlyIfDetail = true;
             RequestFilterFields = "No.", "Search Name", "Customer Posting Group", "Date Filter";
 
@@ -24,7 +24,7 @@ report 50060 "Customer - Detail Trial Bal. F"
             column(PeriodCustDatetFilter; StrSubstNo(Text000, CustDateFilter))
             {
             }
-            column(CompanyName; COMPANYPROPERTY.DisplayName)
+            column(CompanyName; CompanyProperty.DisplayName)
             {
             }
             column(PrintAmountsInLCY; PrintAmountsInLCY)
@@ -113,8 +113,8 @@ report 50060 "Customer - Detail Trial Bal. F"
             }
             dataitem("Cust. Ledger Entry"; "Cust. Ledger Entry")
             {
-                DataItemLink = "Customer No." = FIELD("No."), "Posting Date" = FIELD("Date Filter"), "Global Dimension 2 Code" = FIELD("Global Dimension 2 Filter"), "Global Dimension 1 Code" = FIELD("Global Dimension 1 Filter"), "Date Filter" = FIELD("Date Filter");
-                DataItemTableView = SORTING("Customer No.", "Posting Date");
+                DataItemLink = "Customer No." = field("No."), "Posting Date" = field("Date Filter"), "Global Dimension 2 Code" = field("Global Dimension 2 Filter"), "Global Dimension 1 Code" = field("Global Dimension 1 Filter"), "Date Filter" = field("Date Filter");
+                DataItemTableView = sorting("Customer No.", "Posting Date");
                 column(PostDate_CustLedgEntry; Format("Posting Date"))
                 {
                 }
@@ -210,7 +210,7 @@ report 50060 "Customer - Detail Trial Bal. F"
             }
             dataitem("Integer"; "Integer")
             {
-                DataItemTableView = SORTING(Number) WHERE(Number = CONST(1));
+                DataItemTableView = sorting(Number) where(Number = const(1));
                 column(Name1_Cust; Customer.Name)
                 {
                 }
@@ -269,7 +269,7 @@ report 50060 "Customer - Detail Trial Bal. F"
 
         layout
         {
-            area(content)
+            area(Content)
             {
                 group(Options)
                 {
@@ -314,14 +314,13 @@ report 50060 "Customer - Detail Trial Bal. F"
         PrintDebitCredit := GeneralLedgerSetup."Show Amounts" = GeneralLedgerSetup."Show Amounts"::"Debit/Credit Only";
         CustFilter := FormatDocument.GetRecordFiltersWithCaptions(Customer);
         CustDateFilter := Customer.GetFilter("Date Filter");
-        with "Cust. Ledger Entry" do
-            if PrintAmountsInLCY then begin
-                AmountCaption := FieldCaption("Amount (LCY)");
-                RemainingAmtCaption := FieldCaption("Remaining Amt. (LCY)");
-            end else begin
-                AmountCaption := FieldCaption(Amount);
-                RemainingAmtCaption := FieldCaption("Remaining Amount");
-            end;
+        if PrintAmountsInLCY then begin
+            AmountCaption := "Cust. Ledger Entry".FieldCaption("Amount (LCY)");
+            RemainingAmtCaption := "Cust. Ledger Entry".FieldCaption("Remaining Amt. (LCY)");
+        end else begin
+            AmountCaption := "Cust. Ledger Entry".FieldCaption(Amount);
+            RemainingAmtCaption := "Cust. Ledger Entry".FieldCaption("Remaining Amount");
+        end;
     end;
 
     var

@@ -11,17 +11,19 @@ pageextension 50192 PurchaseReturnOrderSubformExt extends "Purchase Return Order
         // Add changes to page layout here
         addafter("Bin Code")
         {
-            field("Quantity (Base)"; "Quantity (Base)")
+            field("Quantity (Base)"; Rec."Quantity (Base)")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Quantity (Base) field.';
             }
         }
 
         addafter("Reserved Quantity")
         {
-            field("Unit of Measure (Base)"; "Unit of Measure (Base)")
+            field("Unit of Measure (Base)"; Rec."Unit of Measure (Base)")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Unit of Measure (Base) field.';
             }
         }
 
@@ -40,11 +42,12 @@ pageextension 50192 PurchaseReturnOrderSubformExt extends "Purchase Return Order
         */
 
         //TAL 1.0.0.71 >>
-         addafter("Line Discount %")
+        addafter("Line Discount %")
         {
-            field("VAT Prod. Posting Group90627";Rec."VAT Prod. Posting Group")
+            field("VAT Prod. Posting Group90627"; Rec."VAT Prod. Posting Group")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the VAT product posting group. Links business transactions made for the item, resource, or G/L account with the general ledger, to account for VAT amounts resulting from trade with that record.';
             }
         }
         //TAL 1.0.0.71 <<
@@ -60,11 +63,12 @@ pageextension 50192 PurchaseReturnOrderSubformExt extends "Purchase Return Order
                 ApplicationArea = All;
                 Caption = 'Item &Tracking Lines';
                 Image = ItemTrackingLines;
-                ShortCutKey = 'Shift+Ctrl+I';
+                ShortcutKey = 'Shift+Ctrl+I';
+                ToolTip = 'Executes the Item &Tracking Lines action.';
 
                 trigger OnAction();
                 begin
-                    OpenItemTrackingLines;
+                    Rec.OpenItemTrackingLines;
                 end;
             }
         }

@@ -13,9 +13,10 @@ pageextension 50146 ReqWorksheetExt extends "Req. Worksheet"
         // Add changes to page layout here
         addafter("Description 2")
         {
-            field("Extended Description"; "Extended Description")
+            field("Extended Description"; Rec."Extended Description")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Extended Description field.';
             }
         }
 
@@ -39,19 +40,20 @@ pageextension 50146 ReqWorksheetExt extends "Req. Worksheet"
 
         addafter("Blanket Purch. Order Exists")
         {
-            field("Prod. Order No. Ref"; "Prod. Order No. Ref")
+            field("Prod. Order No. Ref"; Rec."Prod. Order No. Ref")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Prod. Order No. Ref field.';
 
                 trigger OnDrillDown();
                 var
                     rL_ProductionOrder: Record "Production Order";
                 begin
                     //+TAL0.2
-                    rL_ProductionOrder.RESET;
-                    rL_ProductionOrder.SETRANGE(Status, rL_ProductionOrder.Status::Released);
-                    rL_ProductionOrder.SETFILTER("No.", "Prod. Order No. Ref");
-                    PAGE.RUN(PAGE::"Released Production Order", rL_ProductionOrder);
+                    rL_ProductionOrder.Reset;
+                    rL_ProductionOrder.SetRange(Status, rL_ProductionOrder.Status::Released);
+                    rL_ProductionOrder.SETFILTER("No.", Rec."Prod. Order No. Ref");
+                    Page.Run(Page::"Released Production Order", rL_ProductionOrder);
                     //-TAL0.2
                 end;
             }
@@ -60,9 +62,10 @@ pageextension 50146 ReqWorksheetExt extends "Req. Worksheet"
         //+1.0.0.46 
         addafter("Vendor No.")
         {
-            field("Vendor Name"; "Vendor Name")
+            field("Vendor Name"; Rec."Vendor Name")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Vendor Name field.';
             }
         }
 
@@ -75,10 +78,10 @@ pageextension 50146 ReqWorksheetExt extends "Req. Worksheet"
             var
                 Vend: Record Vendor;
             begin
-                Vend.RESET;
+                Vend.Reset;
                 Vend.SetRange(Blocked, Vend.Blocked::" ");
-                if PAGE.RunModal(0, Vend) = ACTION::LookupOK then begin
-                    Validate("Vendor No.", Vend."No.");
+                if Page.RunModal(0, Vend) = Action::LookupOK then begin
+                    Rec.Validate("Vendor No.", Vend."No.");
 
                     //"Vendor No." := Vend."No.";
                 end;
@@ -118,10 +121,11 @@ pageextension 50146 ReqWorksheetExt extends "Req. Worksheet"
                     PromotedCategory = New;
                     PromotedIsBig = true;
                     PromotedOnly = true;
+                    ToolTip = 'Executes the Add Deltio Apostolis action.';
 
                     trigger OnAction();
                     begin
-                        rG_RequisitionWkshName.GET('REQ.', "Journal Batch Name");
+                        rG_RequisitionWkshName.GET('REQ.', Rec."Journal Batch Name");
                         rG_RequisitionWkshName.LoadDeltia('DA', '');
                     end;
                 }
@@ -137,10 +141,11 @@ pageextension 50146 ReqWorksheetExt extends "Req. Worksheet"
                     PromotedIsBig = true;
                     PromotedOnly = true;
                     Scope = Page;
+                    ToolTip = 'Executes the Add Deltio Paralavis action.';
 
                     trigger OnAction();
                     begin
-                        rG_RequisitionWkshName.GET('REQ.', "Journal Batch Name");
+                        rG_RequisitionWkshName.GET('REQ.', Rec."Journal Batch Name");
                         rG_RequisitionWkshName.LoadDeltia('DP', '');
                     end;
                 }
@@ -152,20 +157,21 @@ pageextension 50146 ReqWorksheetExt extends "Req. Worksheet"
                     PromotedCategory = "Report";
                     PromotedIsBig = true;
                     PromotedOnly = true;
+                    ToolTip = 'Executes the Print action.';
 
                     trigger OnAction();
                     var
                         rL_Deltia: Report "Deltia Apostolis - Paralavis";
                     begin
 
-                        CLEAR(rL_Deltia);
-                        rL_Deltia.SetFilters("Worksheet Template Name", "Journal Batch Name");
-                        rL_Deltia.RUN;
+                        Clear(rL_Deltia);
+                        rL_Deltia.SetFilters(Rec."Worksheet Template Name", Rec."Journal Batch Name");
+                        rL_Deltia.Run;
 
-                        rG_RequisitionWkshName.GET("Worksheet Template Name", "Journal Batch Name");
-                        rG_RequisitionWkshName."Print Date Time" := CURRENTDATETIME;
-                        rG_RequisitionWkshName."Print By" := USERID;
-                        rG_RequisitionWkshName.MODIFY;
+                        rG_RequisitionWkshName.GET(Rec."Worksheet Template Name", Rec."Journal Batch Name");
+                        rG_RequisitionWkshName."Print Date Time" := CurrentDateTime;
+                        rG_RequisitionWkshName."Print By" := UserId;
+                        rG_RequisitionWkshName.Modify;
                     end;
                 }
                 action("Create Documents")
@@ -174,14 +180,15 @@ pageextension 50146 ReqWorksheetExt extends "Req. Worksheet"
                     Promoted = true;
                     PromotedIsBig = true;
                     PromotedOnly = true;
+                    ToolTip = 'Executes the Create Documents action.';
 
                     trigger OnAction();
                     var
                         cu_GeneralMgt: Codeunit "General Mgt.";
                     begin
                         //Message;
-                        CLEAR(cu_GeneralMgt);
-                        cu_GeneralMgt.CreateProductionDocuments("Worksheet Template Name", "Journal Batch Name");
+                        Clear(cu_GeneralMgt);
+                        cu_GeneralMgt.CreateProductionDocuments(Rec."Worksheet Template Name", Rec."Journal Batch Name");
                     end;
                 }
                 action("Delete Lines with 0 Qty")
@@ -191,20 +198,21 @@ pageextension 50146 ReqWorksheetExt extends "Req. Worksheet"
                     Promoted = true;
                     PromotedIsBig = true;
                     PromotedOnly = true;
+                    ToolTip = 'Executes the Delete Lines with 0 Qty action.';
 
                     trigger OnAction();
                     begin
 
                         //TAL0.3
-                        rL_ReqLine.RESET;
-                        rL_ReqLine.SETRANGE("Worksheet Template Name", "Worksheet Template Name");
-                        rL_ReqLine.SETRANGE("Journal Batch Name", "Journal Batch Name");
-                        rL_ReqLine.SETFILTER(Quantity, '%1', 0);
-                        rL_ReqLine.SETFILTER(Description, '<>%1', '');
-                        if rL_ReqLine.FINDSET then
+                        rL_ReqLine.Reset;
+                        rL_ReqLine.SETRANGE("Worksheet Template Name", Rec."Worksheet Template Name");
+                        rL_ReqLine.SETRANGE("Journal Batch Name", Rec."Journal Batch Name");
+                        rL_ReqLine.SetFilter(Quantity, '%1', 0);
+                        rL_ReqLine.SetFilter(Description, '<>%1', '');
+                        if rL_ReqLine.FindSet then
                             repeat
-                                rL_ReqLine.DELETE;
-                            until rL_ReqLine.NEXT = 0;
+                                rL_ReqLine.Delete;
+                            until rL_ReqLine.Next = 0;
                         //TAL0.3
                     end;
                 }
@@ -223,7 +231,7 @@ pageextension 50146 ReqWorksheetExt extends "Req. Worksheet"
 
 
         //+TAL0.1
-        if rG_RequisitionWkshName.GET('REQ.', "Journal Batch Name") then;
+        if rG_RequisitionWkshName.GET('REQ.', Rec."Journal Batch Name") then;
         if rG_RequisitionWkshName."Transaction Type" = rG_RequisitionWkshName."Transaction Type"::Inbound then begin
             vG_DeltiaPEditable := true;
         end else

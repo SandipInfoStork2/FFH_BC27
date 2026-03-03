@@ -26,30 +26,37 @@ pageextension 50107 VendorListExt extends "Vendor List"
 
         addafter("Country/Region Code")
         {
-            field("Category 5"; "Category 5")
+            field("Category 5"; Rec."Category 5")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Category 5 field.';
             }
-            field("Grower Certified"; "Grower Certified")
+            field("Grower Certified"; Rec."Grower Certified")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Grower Certified field.';
             }
-            field(GLN; GLN)
+            field(GLN; Rec.GLN)
             {
                 ApplicationArea = All;
-                Visible = false;//TAL 1.0.0.71
+                Visible = false;
+                //TAL 1.0.0.71                ToolTip = 'Specifies the vendor in connection with electronic document receiving.';
+
             }
-            field(GGN; GGN)
+            field(GGN; Rec.GGN)
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the GGN field.';
             }
-            field("GGN Expiry Date"; "GGN Expiry Date")
+            field("GGN Expiry Date"; Rec."GGN Expiry Date")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the GGN Expiry Date field.';
             }
             field("VAT Registration No."; Rec."VAT Registration No.")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the vendor''s VAT registration number.';
             }
         }
         //TAL 1.0.0.71 >>

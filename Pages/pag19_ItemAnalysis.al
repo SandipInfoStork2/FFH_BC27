@@ -9,127 +9,144 @@ page 50019 "Item Analysis"
     // TAL0.7 2021/10/25 VC add Related Information Item Card
     // TAL0.8 2021/10/26 VC add column Transfer (Qty.) ILE
 
-    CardPageID = "Item Card";
+    CardPageId = "Item Card";
     DeleteAllowed = false;
     Editable = false;
     InsertAllowed = false;
     ModifyAllowed = false;
     PageType = List;
     SourceTable = Item;
+    ApplicationArea = All;
 
     layout
     {
-        area(content)
+        area(Content)
         {
             repeater(Group)
             {
-                field("No."; "No.")
+                field("No."; Rec."No.")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the number of the involved entry or record, according to the specified number series.';
                 }
-                field(Description; Description)
+                field(Description; Rec.Description)
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies a description of the item.';
                 }
-                field("Base Unit of Measure"; "Base Unit of Measure")
+                field("Base Unit of Measure"; Rec."Base Unit of Measure")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
+                    ToolTip = 'Base Unit of Measure';
                 }
                 field(vG_Balance_BF; vG_Qty_BF)
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     CaptionClass = '3,' + vG_BalanceCaption_BF;
                     Caption = 'vG_Balance_BF';
                     DecimalPlaces = 0 : 0;
                     Editable = false;
                     Style = Strong;
-                    StyleExpr = TRUE;
+                    StyleExpr = true;
+                    ToolTip = 'Specifies the value of the vG_Balance_BF field.';
 
                     trigger OnDrillDown();
                     begin
-                        PAGE.RUN(PAGE::"Item Ledger Entries", rG_ILE_BF);
+                        Page.Run(Page::"Item Ledger Entries", rG_ILE_BF);
                     end;
                 }
-                field("Purchases (Qty.) ILE"; "Purchases (Qty.) ILE")
+                field("Purchases (Qty.) ILE"; Rec."Purchases (Qty.) ILE")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     CaptionML = ELL = 'Purchases (Qty.)',
                                 ENU = 'Purchases (Qty.)';
+                    ToolTip = 'Specifies the value of the Purchases (Qty.) ILE field.';
                 }
-                field("Sales (Qty.) ILE"; "Sales (Qty.) ILE")
+                field("Sales (Qty.) ILE"; Rec."Sales (Qty.) ILE")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     CaptionML = ELL = 'Sales (Qty.)',
                                 ENU = 'Sales (Qty.)';
+                    ToolTip = 'Specifies the value of the Sales (Qty.) ILE field.';
                 }
-                field("Consumption (Qty.)"; "Consumption (Qty.)")
+                field("Consumption (Qty.)"; Rec."Consumption (Qty.)")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Consumption (Qty.) field.';
                 }
-                field("Output (Qty.)"; "Output (Qty.)")
+                field("Output (Qty.)"; Rec."Output (Qty.)")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Output (Qty.) field.';
                 }
-                field("Positive Adjmt. (Qty.) ILE"; "Positive Adjmt. (Qty.) ILE")
+                field("Positive Adjmt. (Qty.) ILE"; Rec."Positive Adjmt. (Qty.) ILE")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     CaptionML = ELL = 'Positive Adjmt. (Qty.)',
                                 ENU = 'Positive Adjmt. (Qty.)';
+                    ToolTip = 'Specifies the value of the Positive Adjmt. (Qty.) ILE field.';
                 }
-                field("Negative Adjmt. (Qty.) ILE"; "Negative Adjmt. (Qty.) ILE")
+                field("Negative Adjmt. (Qty.) ILE"; Rec."Negative Adjmt. (Qty.) ILE")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     CaptionML = ELL = 'Negative Adjmt. (Qty.)',
                                 ENU = 'Negative Adjmt. (Qty.)';
+                    ToolTip = 'Specifies the value of the Negative Adjmt. (Qty.) ILE field.';
                 }
-                field("Transfer (Qty.) ILE"; "Transfer (Qty.) ILE")
+                field("Transfer (Qty.) ILE"; Rec."Transfer (Qty.) ILE")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     CaptionML = ELL = 'Transfer (Qty.)',
                                 ENU = 'Transfer (Qty.)';
+                    ToolTip = 'Specifies the value of the Transfer (Qty.) ILE field.';
                 }
                 field(vG_Balance_CF; vG_Qty_CF)
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     CaptionClass = '3,' + vG_BalanceCaption_CF;
                     Caption = 'vG_Balance_CF';
                     DecimalPlaces = 0 : 0;
                     Editable = false;
                     Style = Strong;
-                    StyleExpr = TRUE;
+                    StyleExpr = true;
+                    ToolTip = 'Specifies the value of the vG_Balance_CF field.';
 
                     trigger OnDrillDown();
                     begin
-                        PAGE.RUN(PAGE::"Item Ledger Entries", rG_ILE_CF);
+                        Page.Run(Page::"Item Ledger Entries", rG_ILE_CF);
                     end;
                 }
                 field(vG_Qty_NetChange; vG_Qty_NetChange)
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     CaptionClass = '3,' + vG_BalanceCaption_NetChange;
                     Caption = 'vG_Qty_NetChange';
                     DecimalPlaces = 0 : 0;
                     Editable = false;
                     Style = Ambiguous;
-                    StyleExpr = TRUE;
+                    StyleExpr = true;
+                    ToolTip = 'Specifies the value of the vG_Qty_NetChange field.';
 
                     trigger OnDrillDown();
                     begin
-                        PAGE.RUN(PAGE::"Item Ledger Entries", rG_ILE_NetChange);
+                        Page.Run(Page::"Item Ledger Entries", rG_ILE_NetChange);
                     end;
                 }
-                field(Inventory; Inventory)
+                field(Inventory; Rec.Inventory)
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     Visible = false;
+                    ToolTip = 'Specifies the total quantity of the item that is currently in inventory at all locations.';
                 }
-                field("Inventory Posting Group"; "Inventory Posting Group")
+                field("Inventory Posting Group"; Rec."Inventory Posting Group")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies links between business transactions made for the item and an inventory account in the general ledger, to group amounts for that item type.';
                 }
-                field(Blocked; Blocked)
+                field(Blocked; Rec.Blocked)
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies that the related record is blocked from being posted in transactions, for example an item that is placed in quarantine.';
                 }
             }
         }
@@ -137,21 +154,22 @@ page 50019 "Item Analysis"
 
     actions
     {
-        area(navigation)
+        area(Navigation)
         {
             group(Item)
             {
                 Caption = 'Item';
                 action("Item Card ")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     Image = Item;
                     Promoted = true;
                     PromotedCategory = Process;
                     PromotedIsBig = true;
                     PromotedOnly = true;
-                    RunObject = Page "Item Card";
-                    RunPageLink = "No." = FIELD("No.");
+                    RunObject = page "Item Card";
+                    RunPageLink = "No." = field("No.");
+                    ToolTip = 'Executes the Item Card  action.';
                 }
             }
         }
@@ -159,59 +177,59 @@ page 50019 "Item Analysis"
 
     trigger OnAfterGetRecord();
     begin
-        rG_LocationFilter := GETFILTER("Location Filter"); //TAL0.4
+        rG_LocationFilter := Rec.GETFILTER("Location Filter"); //TAL0.4
 
 
-        vG_Date_BF := GETRANGEMIN("Date Filter");
-        vG_Date_BF_Previous := CALCDATE('-1D', vG_Date_BF); //TAL0.3
-        vG_Date_CF := GETRANGEMAX("Date Filter");
+        vG_Date_BF := Rec.GETRANGEMIN("Date Filter");
+        vG_Date_BF_Previous := CalcDate('-1D', vG_Date_BF); //TAL0.3
+        vG_Date_CF := Rec.GETRANGEMAX("Date Filter");
 
-        vG_BalanceCaption_BF := 'Balance B/F ' + FORMAT(vG_Date_BF_Previous); //TAL0.3
-        vG_BalanceCaption_CF := 'Balance C/F ' + FORMAT(vG_Date_CF);
+        vG_BalanceCaption_BF := 'Balance B/F ' + Format(vG_Date_BF_Previous); //TAL0.3
+        vG_BalanceCaption_CF := 'Balance C/F ' + Format(vG_Date_CF);
 
-        vG_BalanceCaption_NetChange := 'Net Change ' + FORMAT(vG_Date_BF) + '..' + FORMAT(vG_Date_CF);
+        vG_BalanceCaption_NetChange := 'Net Change ' + Format(vG_Date_BF) + '..' + Format(vG_Date_CF);
 
         vG_Qty_BF := 0;
-        rG_ILE_BF.RESET;
-        rG_ILE_BF.SETFILTER("Item No.", "No.");
-        rG_ILE_BF.SETFILTER("Posting Date", '..' + FORMAT(vG_Date_BF_Previous)); //TAL0.3
+        rG_ILE_BF.Reset;
+        rG_ILE_BF.SETFILTER("Item No.", Rec."No.");
+        rG_ILE_BF.SetFilter("Posting Date", '..' + Format(vG_Date_BF_Previous)); //TAL0.3
         //+TAL0.4
         if rG_LocationFilter <> '' then begin
-            rG_ILE_BF.SETFILTER("Location Code", rG_LocationFilter);
+            rG_ILE_BF.SetFilter("Location Code", rG_LocationFilter);
         end;
         //-TAL0.4
-        if rG_ILE_BF.FINDSET then begin
-            rG_ILE_BF.CALCSUMS(Quantity);
+        if rG_ILE_BF.FindSet then begin
+            rG_ILE_BF.CalcSums(Quantity);
             vG_Qty_BF := rG_ILE_BF.Quantity;
         end;
 
 
         vG_Qty_CF := 0;
-        rG_ILE_CF.RESET;
-        rG_ILE_CF.SETFILTER("Item No.", "No.");
-        rG_ILE_CF.SETFILTER("Posting Date", '..' + FORMAT(vG_Date_CF));
+        rG_ILE_CF.Reset;
+        rG_ILE_CF.SETFILTER("Item No.", Rec."No.");
+        rG_ILE_CF.SetFilter("Posting Date", '..' + Format(vG_Date_CF));
         //+TAL0.4
         if rG_LocationFilter <> '' then begin
-            rG_ILE_CF.SETFILTER("Location Code", rG_LocationFilter);
+            rG_ILE_CF.SetFilter("Location Code", rG_LocationFilter);
         end;
         //-TAL0.4
-        if rG_ILE_CF.FINDSET then begin
-            rG_ILE_CF.CALCSUMS(Quantity);
+        if rG_ILE_CF.FindSet then begin
+            rG_ILE_CF.CalcSums(Quantity);
             vG_Qty_CF := rG_ILE_CF.Quantity;
         end;
 
 
         vG_Qty_NetChange := 0;
-        rG_ILE_NetChange.RESET;
-        rG_ILE_NetChange.SETFILTER("Item No.", "No.");
-        rG_ILE_NetChange.SETRANGE("Posting Date", vG_Date_BF, vG_Date_CF);
+        rG_ILE_NetChange.Reset;
+        rG_ILE_NetChange.SETFILTER("Item No.", Rec."No.");
+        rG_ILE_NetChange.SetRange("Posting Date", vG_Date_BF, vG_Date_CF);
         //+TAL0.4
         if rG_LocationFilter <> '' then begin
-            rG_ILE_NetChange.SETFILTER("Location Code", rG_LocationFilter);
+            rG_ILE_NetChange.SetFilter("Location Code", rG_LocationFilter);
         end;
         //-TAL0.4
-        if rG_ILE_NetChange.FINDSET then begin
-            rG_ILE_NetChange.CALCSUMS(Quantity);
+        if rG_ILE_NetChange.FindSet then begin
+            rG_ILE_NetChange.CalcSums(Quantity);
             vG_Qty_NetChange := rG_ILE_NetChange.Quantity;
         end;
     end;
@@ -222,18 +240,18 @@ page 50019 "Item Analysis"
         vL_EndYear: Date;
         vL_CurrentYear: Integer;
     begin
-        vL_CurrentYear := DATE2DMY(WORKDATE, 3);
+        vL_CurrentYear := Date2DMY(WorkDate, 3);
 
         //+TAL0.5
         //vL_StartYear:=DMY2DATE(1,1,vL_CurrentYear);
         //vL_EndYear:=DMY2DATE(31,12,vL_CurrentYear);
 
-        vL_StartYear := CALCDATE('<-CM>-1M', WORKDATE); //MY2DATE(1,9,vL_CurrentYear);
-        vL_EndYear := WORKDATE;
+        vL_StartYear := CalcDate('<-CM>-1M', WorkDate); //MY2DATE(1,9,vL_CurrentYear);
+        vL_EndYear := WorkDate;
         //-TAL0.5
 
 
-        SETFILTER("Date Filter", FORMAT(vL_StartYear) + '..' + FORMAT(vL_EndYear));
+        Rec.SETFILTER("Date Filter", Format(vL_StartYear) + '..' + Format(vL_EndYear));
     end;
 
     var
@@ -253,7 +271,7 @@ page 50019 "Item Analysis"
 
     procedure SetAscending();
     begin
-        ASCENDING(false); //TAL0.6
+        Rec.ASCENDING(false); //TAL0.6
     end;
 }
 

@@ -33,41 +33,41 @@ tableextension 50176 ItemReferenceExt extends "Item Reference"
         {
             Caption = 'Product No.';
             DataClassification = ToBeClassified;
-            TableRelation = "General Categories".Code WHERE("Table No." = CONST(27), Type = CONST(Category2));
+            TableRelation = "General Categories".Code where("Table No." = const(27), Type = const(Category2));
 
             trigger OnValidate();
             var
                 rL_GeneralCategories: Record "General Categories";
             begin
 
-                VALIDATE("Reference No.", "Category 2");
+                Validate("Reference No.", "Category 2");
 
-                IF "Category 2" <> '' THEN BEGIN
-                    rL_GeneralCategories.RESET;
-                    rL_GeneralCategories.SETRANGE("Table No.", DATABASE::Item);
-                    rL_GeneralCategories.SETRANGE(Type, rL_GeneralCategories.Type::Category2);
-                    rL_GeneralCategories.SETFILTER(Code, "Category 2");
-                    IF rL_GeneralCategories.FINDSET THEN BEGIN
-                        VALIDATE(Description, rL_GeneralCategories.Description);
-                        VALIDATE("Description 2", rL_GeneralCategories."Description 2");
-                    END;
-                END;
+                if "Category 2" <> '' then begin
+                    rL_GeneralCategories.Reset;
+                    rL_GeneralCategories.SetRange("Table No.", Database::Item);
+                    rL_GeneralCategories.SetRange(Type, rL_GeneralCategories.Type::Category2);
+                    rL_GeneralCategories.SetFilter(Code, "Category 2");
+                    if rL_GeneralCategories.FindSet then begin
+                        Validate(Description, rL_GeneralCategories.Description);
+                        Validate("Description 2", rL_GeneralCategories."Description 2");
+                    end;
+                end;
             end;
         }
 
         field(50012; "Family Code"; Code[20])
         {
             DataClassification = ToBeClassified;
-            TableRelation = "General Categories".Code WHERE("Table No." = CONST(5777), Type = CONST(Category1));
+            TableRelation = "General Categories".Code where("Table No." = const(5777), Type = const(Category1));
         }
 
-        field(50013; "EAN"; Text[100])
+        field(50013; EAN; Text[100])
         {
-            caption = 'Barcode';
+            Caption = 'Barcode';
             DataClassification = ToBeClassified;
         }
 
-        field(50014; "Package"; Text[50])
+        field(50014; Package; Text[50])
         {
             DataClassification = ToBeClassified;
         }

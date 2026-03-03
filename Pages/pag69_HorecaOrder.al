@@ -5,11 +5,14 @@ page 50069 "Horeca Order"
     PageType = Document;
     RefreshOnActivate = true;
     SourceTable = "Sales Header";
-    SourceTableView = WHERE("Document Type" = FILTER(Order));
+    SourceTableView = where("Document Type" = filter(Order));
     InsertAllowed = false;
     //DeleteAllowed = true;
 
-    Permissions = TableData "Sales Line" = rmd; //1.0.0.79
+    Permissions = tabledata "Sales Line" = rmd;
+    ApplicationArea = All;
+    //1.0.0.79    ApplicationArea = All;
+
 
     layout
     {
@@ -22,10 +25,11 @@ page 50069 "Horeca Order"
                     ApplicationArea = All;
                     Editable = false;
                     Visible = DocNoVisible;
+                    ToolTip = 'Specifies the number of the involved entry or record, according to the specified number series.';
 
                     trigger OnAssistEdit()
                     begin
-                        if AssistEdit(xRec) then
+                        if Rec.AssistEdit(xRec) then
                             CurrPage.Update();
                     end;
                 }
@@ -34,29 +38,34 @@ page 50069 "Horeca Order"
                 {
                     ApplicationArea = All;
                     Editable = false;
+                    ToolTip = 'Specifies the number of the customer who will receive the products and be billed by default.';
                 }
                 field("Sell-to Customer Name"; Rec."Sell-to Customer Name")
                 {
                     ApplicationArea = All;
                     Editable = false;
+                    ToolTip = 'Specifies the name of the customer who will receive the products and be billed by default.';
                 }
 
                 field("Ship-to Code"; Rec."Ship-to Code")
                 {
                     ApplicationArea = All;
                     Editable = false;
+                    ToolTip = 'Specifies the code for another shipment address than the customer''s own address, which is entered by default.';
                 }
 
                 field("Ship-to Name"; Rec."Ship-to Name")
                 {
                     ApplicationArea = All;
                     Editable = false;
+                    ToolTip = 'Specifies the name that products on the sales document will be shipped to.';
                 }
 
                 field("Ship-to City"; Rec."Ship-to City")
                 {
                     ApplicationArea = All;
                     Editable = false;
+                    ToolTip = 'Specifies the city of the shipping address.';
                 }
 
                 /*
@@ -72,25 +81,28 @@ page 50069 "Horeca Order"
                     Editable = false;
                     StyleExpr = StatusStyleTxt;
                     Visible = false;
+                    ToolTip = 'Specifies whether the document is open, waiting to be approved, has been invoiced for prepayment, or has been released to the next stage of processing.';
                 }
 
-                field("HORECA Status"; "HORECA Status")
+                field("HORECA Status"; Rec."HORECA Status")
                 {
                     Caption = 'Status';
                     ApplicationArea = All;
                     StyleExpr = HorecaStatusStyleTxt;
                     Editable = false;
+                    ToolTip = 'Specifies the value of the Status field.';
 
                 }
 
                 group(grpDate)
                 {
-                    caption = '';
+                    Caption = '';
 
-                    field(SystemCreatedAt; SystemCreatedAt)
+                    field(SystemCreatedAt; Rec.SystemCreatedAt)
                     {
                         ApplicationArea = All;
                         Editable = false;
+                        ToolTip = 'Specifies the value of the SystemCreatedAt field.';
                     }
 
                     /*
@@ -106,6 +118,7 @@ page 50069 "Horeca Order"
                         ApplicationArea = All;
                         Caption = 'On Schedule';
                         Editable = false;
+                        ToolTip = 'Specifies the value of the On Schedule field.';
                     }
 
                     /*
@@ -116,21 +129,26 @@ page 50069 "Horeca Order"
                     }
                     */
 
-                    field("NextDeliveryDate1"; NextDeliveryDate1)
+                    field(NextDeliveryDate1; NextDeliveryDate1)
                     {
-                        caption = 'Next Delivery Date 1';
+                        ApplicationArea = All;
+                        Caption = 'Next Delivery Date 1';
                         Editable = false;
+                        ToolTip = 'Specifies the value of the Next Delivery Date 1 field.';
                     }
 
-                    field("NextDeliveryDate2"; NextDeliveryDate2)
+                    field(NextDeliveryDate2; NextDeliveryDate2)
                     {
-                        caption = 'Next Delivery Date 2';
+                        ApplicationArea = All;
+                        Caption = 'Next Delivery Date 2';
                         Editable = false;
+                        ToolTip = 'Specifies the value of the Next Delivery Date 2 field.';
                     }
 
                     field("Requested Delivery Date"; Rec."Requested Delivery Date")
                     {
                         ApplicationArea = All;
+                        ToolTip = 'Specifies the date that the customer has asked for the order to be delivered.';
 
                         //+1.0.0.262
                         trigger OnValidate()
@@ -140,7 +158,7 @@ page 50069 "Horeca Order"
                             Text50002: Label 'Only one order should be at a time. Please update Order %1';
                         begin
 
-                            SalesHeaderCheck.RESET;
+                            SalesHeaderCheck.Reset;
                             SalesHeaderCheck.SetRange("Document Type", Rec."Document Type"::Order);
                             SalesHeaderCheck.SetFilter("Sell-to Customer No.", Rec."Sell-to Customer No.");
                             SalesHeaderCheck.SetFilter("Ship-to Code", Rec."Ship-to Code");
@@ -151,7 +169,7 @@ page 50069 "Horeca Order"
                             end;
 
 
-                            SalesHeaderCheck.RESET;
+                            SalesHeaderCheck.Reset;
                             SalesHeaderCheck.SetRange("Document Type", Rec."Document Type"::Order);
                             SalesHeaderCheck.SetFilter("Sell-to Customer No.", Rec."Sell-to Customer No.");
                             SalesHeaderCheck.SetFilter("Ship-to Code", Rec."Ship-to Code");
@@ -187,7 +205,7 @@ page 50069 "Horeca Order"
 
                         trigger OnValidate()
                         begin
-                            SetWorkDescription(WorkDescription);
+                            Rec.SetWorkDescription(WorkDescription);
                         end;
                     }
                 }
@@ -199,7 +217,7 @@ page 50069 "Horeca Order"
                 ApplicationArea = Basic, Suite;
                 Editable = IsSalesLinesEditable;
                 Enabled = IsSalesLinesEditable;
-                SubPageLink = "Document No." = FIELD("No.");
+                SubPageLink = "Document No." = field("No.");
                 UpdatePropagation = Both;
             }
         }
@@ -230,7 +248,7 @@ page 50069 "Horeca Order"
                     salesHeader := Rec;
                     CurrPage.SetSelectionFilter(salesHeader);
 
-                    clear(rptOrderConfirmation);
+                    Clear(rptOrderConfirmation);
                     rptOrderConfirmation.SetTableView(salesHeader);
                     rptOrderConfirmation.UseRequestPage(false);
                     rptOrderConfirmation.Run();
@@ -246,7 +264,7 @@ page 50069 "Horeca Order"
         //if DocNoVisible then
         //    CheckCreditMaxBeforeInsert();
 
-        if ("Sell-to Customer No." = '') and (GetFilter("Sell-to Customer No.") <> '') then
+        if (Rec."Sell-to Customer No." = '') and (Rec.GetFilter("Sell-to Customer No.") <> '') then
             CurrPage.Update(false);
     end;
 
@@ -258,27 +276,27 @@ page 50069 "Horeca Order"
     begin
         xRec.Init();
 
-        UserSetup.GET(UserId);
-        "Sell-to Customer No." := UserSetup."HORECA Customer No.";
+        UserSetup.Get(UserId);
+        Rec."Sell-to Customer No." := UserSetup."HORECA Customer No.";
 
 
 
-        if (not DocNoVisible) and ("No." = '') then
-            SetSellToCustomerFromFilter();
+        if (not DocNoVisible) and (Rec."No." = '') then
+            Rec.SetSellToCustomerFromFilter();
         //Message('select List');
 
         //pop up the ship to address list
-        ShiptoAddress.RESET;
+        ShiptoAddress.Reset;
         //ShiptoAddress.SetCurrentKey("Customer No.",Code, City, Name);
         ShiptoAddress.SetFilter("Customer No.", UserSetup."HORECA Customer No.");
         ShiptoAddress.SetFilter(Code, '%1', UserSetup."HORECA Ship-to Filter");
         if ShiptoAddress.FindSet() then begin
 
-            IF PAGE.RUNMODAL(PAGE::"Ship-to Address List", ShiptoAddress) = ACTION::LookupOK THEN BEGIN
-                Validate("Ship-to Code", ShiptoAddress.Code);
-            END ELSE BEGIN
-                EXIT;
-            END;
+            if Page.RunModal(Page::"Ship-to Address List", ShiptoAddress) = Action::LookupOK then begin
+                Rec.Validate("Ship-to Code", ShiptoAddress.Code);
+            end else begin
+                exit;
+            end;
 
         end;
     end;
@@ -288,7 +306,7 @@ page 50069 "Horeca Order"
     begin
         Rec.SetSecurityFilterOnCustomer(vG_GLOBAL_StoreCode);
 
-        SetRange("Date Filter", 0D, WorkDate());
+        Rec.SetRange("Date Filter", 0D, WorkDate());
 
         SetDocNoVisible();
     end;
@@ -302,19 +320,19 @@ page 50069 "Horeca Order"
         TempDate1: Date;
         TempDate2: Date;
     begin
-        WorkDescription := GetWorkDescription();
-        OnSchedule := cuGeneralMgt.GetScheduleDays("Sell-to Customer No.", "Ship-to Code");
+        WorkDescription := Rec.GetWorkDescription();
+        OnSchedule := cuGeneralMgt.GetScheduleDays(Rec."Sell-to Customer No.", Rec."Ship-to Code");
 
 
         NextDeliveryDate1 := 0D;
         NextDeliveryDate2 := 0D;
         MinNextDeliveryDate := 0D;
 
-        if userSetup.get(UserId) then begin
+        if userSetup.Get(UserId) then begin
             if userSetup."HORECA Customer No." <> '' then begin
                 userSetup.TestField("HORECA Min. Order Period");
 
-                MinNextDeliveryDate := calcdate(userSetup."HORECA Min. Order Period", WorkDate());
+                MinNextDeliveryDate := CalcDate(userSetup."HORECA Min. Order Period", WorkDate());
 
                 //find the next 7 days
                 WeekDay := Date2DWY(MinNextDeliveryDate, 1);
@@ -322,7 +340,7 @@ page 50069 "Horeca Order"
                 //WD4	The next 4th day of a week (Thursday)
                 //WD4
 
-                if ShiptoAddress.GET("Sell-to Customer No.", "Ship-to Code") then begin
+                if ShiptoAddress.GET(Rec."Sell-to Customer No.", Rec."Ship-to Code") then begin
                     if (ShiptoAddress.Monday) then begin
                         NextDeliveryDate1 := CalcDate('WD1', MinNextDeliveryDate);
 
@@ -399,8 +417,8 @@ page 50069 "Horeca Order"
     begin
         if GuiAllowed() then begin
             IsSalesLinesEditable := Rec.SalesLinesEditable();
-            StatusStyleTxt := GetStatusStyleText();
-            HorecaStatusStyleTxt := GetHorecaStatusStyleText();
+            StatusStyleTxt := Rec.GetStatusStyleText();
+            HorecaStatusStyleTxt := Rec.GetHorecaStatusStyleText();
         end;
     end;
 
@@ -408,27 +426,27 @@ page 50069 "Horeca Order"
     var
         myInt: Integer;
     begin
-        TestStatusOpen();
+        Rec.TestStatusOpen();
 
-        TestHORECAStatusOpen();
+        Rec.TestHORECAStatusOpen();
     end;
 
 
 
     trigger OnDeleteRecord(): Boolean
-    Var
+    var
         Text50000: Label 'Are you sure to delete Document No. %1?';
         SalesLine: Record "Sales Line";
     begin
-        TestStatusOpen();
-        TestHORECAStatusOpen();
+        Rec.TestStatusOpen();
+        Rec.TestHORECAStatusOpen();
 
-        if not confirm(Text50000, false, rec."No.") then begin
+        if not Confirm(Text50000, false, Rec."No.") then begin
             Error('');
         end;
 
-        SalesLine.RESET;
-        SalesLine.SetRange("Document Type", rec."Document Type");
+        SalesLine.Reset;
+        SalesLine.SetRange("Document Type", Rec."Document Type");
         SalesLine.SetFilter("Document No.", Rec."No.");
         if SalesLine.FindSet() then begin
             SalesLine.DeleteAll();
@@ -451,7 +469,7 @@ page 50069 "Horeca Order"
         DocumentNoVisibility: Codeunit DocumentNoVisibility;
         DocType: Option Quote,"Order",Invoice,"Credit Memo","Blanket Order","Return Order",Reminder,FinChMemo;
     begin
-        DocNoVisible := DocumentNoVisibility.SalesDocumentNoIsVisible(DocType::Order, "No.");
+        DocNoVisible := DocumentNoVisibility.SalesDocumentNoIsVisible(DocType::Order, Rec."No.");
     end;
 
     procedure SetGLOBALStoreCode(pGLOBALStoreCode: Code[10])
