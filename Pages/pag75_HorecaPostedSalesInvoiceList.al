@@ -4,13 +4,14 @@ page 50075 "Horeca SIH List"
 
     //ApplicationArea = Basic, Suite, Assembly;
     Caption = 'Posted Sales Invoices';
-    CardPageID = "Horeca SIH";
+    CardPageId = "Horeca SIH";
     DataCaptionFields = "Sell-to Customer No.";
     Editable = false;
     PageType = List;
     QueryCategory = 'Horeca Posted Sales Invoices';
     RefreshOnActivate = true;
     SourceTable = "Sales Invoice Header";
+    ApplicationArea = All;
     //UsageCategory = Lists;
 
     layout
@@ -23,26 +24,31 @@ page 50075 "Horeca SIH List"
                 field("No."; Rec."No.")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the posted invoice number.';
                 }
 
                 field("Ship-to Code"; Rec."Ship-to Code")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the address on purchase orders shipped with a drop shipment directly from the vendor to a customer.';
                 }
 
                 field("Ship-to Name"; Rec."Ship-to Name")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the name of the customer that the items were shipped to.';
                 }
 
                 field("Ship-to City"; Rec."Ship-to City")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the city of the customer on the sales document.';
                 }
 
-                field("Posting Date"; "Posting Date")
+                field("Posting Date"; Rec."Posting Date")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the date on which the invoice was posted.';
                 }
 
 
@@ -58,6 +64,7 @@ page 50075 "Horeca SIH List"
                     ApplicationArea = All;
                     Caption = 'On Schedule';
                     Editable = false;
+                    ToolTip = 'Specifies the value of the On Schedule field.';
                 }
 
                 /*
@@ -75,20 +82,23 @@ page 50075 "Horeca SIH List"
                 }
                 */
 
-                field(SystemCreatedAt; SystemCreatedAt)
+                field(SystemCreatedAt; Rec.SystemCreatedAt)
                 {
                     ApplicationArea = All;
                     Editable = false;
+                    ToolTip = 'Specifies the value of the SystemCreatedAt field.';
                 }
 
 
                 field("Sell-to Customer No."; Rec."Sell-to Customer No.")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Sell-to Customer No. field.';
                 }
                 field("Sell-to Customer Name"; Rec."Sell-to Customer Name")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the name of the customer that you shipped the items on the invoice to.';
                 }
 
                 field(UniqueItemsToShip; vG_OrderUniqueItems)
@@ -96,6 +106,7 @@ page 50075 "Horeca SIH List"
                     ApplicationArea = All;
                     Caption = 'Total SKU';
                     Editable = false;
+                    ToolTip = 'Specifies the value of the Total SKU field.';
                 }
 
 
@@ -119,7 +130,7 @@ page 50075 "Horeca SIH List"
                 }
                 */
 
-                field(Amount; Amount)
+                field(Amount; Rec.Amount)
                 {
                     ApplicationArea = Basic, Suite;
                     ToolTip = 'Specifies the total, in the currency of the invoice, of the amounts on all the invoice lines. The amount does not include VAT.';
@@ -148,7 +159,7 @@ page 50075 "Horeca SIH List"
 
             }
         }
-        area(Factboxes)
+        area(FactBoxes)
         {
 
         }
@@ -174,7 +185,7 @@ page 50075 "Horeca SIH List"
         }
         */
 
-        area(processing)
+        area(Processing)
         {
             action("&Print")
             {
@@ -198,7 +209,7 @@ page 50075 "Horeca SIH List"
                     CurrPage.SetSelectionFilter(SalesInvoiceHeader);
                     //SalesShptHeader.PrintRecords(true);
 
-                    clear(rptSalesInvoice);
+                    Clear(rptSalesInvoice);
                     rptSalesInvoice.SetTableView(SalesInvoiceHeader);
                     rptSalesInvoice.UseRequestPage(false);
                     rptSalesInvoice.Run();
@@ -217,7 +228,7 @@ page 50075 "Horeca SIH List"
     var
         cuGeneralMgt: Codeunit "General Mgt.";
     begin
-        OnSchedule := cuGeneralMgt.GetScheduleDays("Sell-to Customer No.", "Ship-to Code");
+        OnSchedule := cuGeneralMgt.GetScheduleDays(Rec."Sell-to Customer No.", Rec."Ship-to Code");
 
 
         GetNetWeight(vG_NetWeight, vG_GrossWeight, vG_OrderUniqueItems);
@@ -253,12 +264,12 @@ page 50075 "Horeca SIH List"
         oldItemNo := '';
 
         //SalesLine.SETRANGE("Document Type","Document Type");
-        SalesLine.RESET;
-        SalesLine.SETCURRENTKEY("Document No.", "No.");
+        SalesLine.Reset;
+        SalesLine.SetCurrentKey("Document No.", "No.");
         SalesLine.SetFilter("Document No.", Rec."No.");
-        SalesLine.SETRANGE(Type, SalesLine.Type::Item);
+        SalesLine.SetRange(Type, SalesLine.Type::Item);
         SalesLine.SetFilter(Quantity, '>%1', 0);
-        if SalesLine.FINDSET then
+        if SalesLine.FindSet then
             repeat
                 pNetWeight += SalesLine."Net Weight" * SalesLine.Quantity;
                 pGrossWeight += SalesLine."Gross Weight" * SalesLine.Quantity;
@@ -268,7 +279,7 @@ page 50075 "Horeca SIH List"
                 end;
 
                 oldItemNo := SalesLine."No.";
-            until SalesLine.NEXT = 0;
+            until SalesLine.Next = 0;
     end;
 
     procedure SetGLOBALStoreCode(pGLOBALStoreCode: Code[10])

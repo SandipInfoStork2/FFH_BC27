@@ -6,13 +6,14 @@ pageextension 50256 ItemLookupExt extends "Item Lookup"
 
         modify("Shelf No.")
         {
-            visible = true;
+            Visible = true;
         }
         addafter("Shelf No.")
         {
-            field("Package Qty"; "Package Qty")
+            field("Package Qty"; Rec."Package Qty")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Package Qty field.';
             }
         }
     }

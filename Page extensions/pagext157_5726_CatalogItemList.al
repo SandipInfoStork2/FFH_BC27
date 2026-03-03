@@ -5,141 +5,172 @@ pageextension 50257 CatalogItemListExt extends "Catalog Item List"
         // Add changes to page layout here
         addbefore(Description)
         {
-            field("Shelf No."; "Shelf No.")
+            field("Shelf No."; Rec."Shelf No.")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Shelf No. field.';
             }
         }
 
         addafter(Description)
         {
-            field("Pallet Qty"; "Pallet Qty")
+            field("Pallet Qty"; Rec."Pallet Qty")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Περιεχ.Παλ. field.';
             }
-            field("Country/Region of Origin Code"; "Country/Region of Origin Code")
+            field("Country/Region of Origin Code"; Rec."Country/Region of Origin Code")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 Caption = 'Προέλευση';
+                ToolTip = 'Specifies the value of the Προέλευση field.';
             }
 
-            field("Product Class"; "Product Class")
+            field("Product Class"; Rec."Product Class")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Κατηγορία field.';
             }
-            field("Package Qty"; "Package Qty")
+            field("Package Qty"; Rec."Package Qty")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 Caption = 'Κιβώτιο -  Περιεχόμενο';
+                ToolTip = 'Specifies the value of the Κιβώτιο -  Περιεχόμενο field.';
 
             }
-            field("Calibration Min."; "Calibration Min.")
+            field("Calibration Min."; Rec."Calibration Min.")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Καλιμπράζ Ελαχ. field.';
             }
-            field("Calibration Max."; "Calibration Max.")
+            field("Calibration Max."; Rec."Calibration Max.")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Καλιμπράζ Μεγ. field.';
             }
-            field("Calibration UOM"; "Calibration UOM")
+            field("Calibration UOM"; Rec."Calibration UOM")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Καλιμπράζ 47 field.';
             }
-            field(Variety; Variety)
+            field(Variety; Rec.Variety)
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Ποικιλία field.';
             }
-            field("Additional Information"; "Additional Information")
+            field("Additional Information"; Rec."Additional Information")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Πρόσθετες πληροφορίες field.';
             }
-            field("Pressure Min."; "Pressure Min.")
+            field("Pressure Min."; Rec."Pressure Min.")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Πίεση kg/cm² Ελαχ. field.';
             }
-            field("Pressure Max."; "Pressure Max.")
+            field("Pressure Max."; Rec."Pressure Max.")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Πίεση kg/cm² Μεγ. field.';
             }
-            field("Brix Min"; "Brix Min")
+            field("Brix Min"; Rec."Brix Min")
             {
-                ApplicationArea = all;
-            }
-
-            field("QC 1 Min"; "QC 1 Min")
-            {
-                ApplicationArea = all;
-            }
-            field("QC 1 Max"; "QC 1 Max")
-            {
-                ApplicationArea = all;
-            }
-            field("QC 1 Text"; "QC 1 Text")
-            {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Brix σε ° Ελαχ. field.';
             }
 
-            field("QC 2 Min"; "QC 2 Min")
+            field("QC 1 Min"; Rec."QC 1 Min")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Πρόσθετα Ποιοτικά Χαρακτηριστικά Ελαχ. field.';
             }
-            field("QC 2 Max"; "QC 2 Max")
+            field("QC 1 Max"; Rec."QC 1 Max")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Πρόσθετα Ποιοτικά Χαρακτηριστικά Μεγ. field.';
             }
-            field("QC 2 Text"; "QC 2 Text")
+            field("QC 1 Text"; Rec."QC 1 Text")
             {
-                ApplicationArea = all;
-            }
-            field("Box Width"; "Box Width")
-            {
-                ApplicationArea = all;
-            }
-            field("Box Char 1"; "Box Char 1")
-            {
-                ApplicationArea = all;
-            }
-            field("Box Length"; "Box Length")
-            {
-                ApplicationArea = all;
-            }
-            field("Box Char 2"; "Box Char 2")
-            {
-                ApplicationArea = all;
-            }
-            field("Box Height"; "Box Height")
-            {
-                ApplicationArea = all;
-            }
-            field("Box Changed Date"; "Box Changed Date")
-            {
-                ApplicationArea = all;
-
-            }
-            field("Harvest Temp. From"; "Harvest Temp. From")
-            {
-                ApplicationArea = all;
-            }
-            field("Harvest Temp. To"; "Harvest Temp. To")
-            {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Πρόσθετα Ποιοτικά Χαρακτηριστικά Μον. field.';
             }
 
-            field("Freezer Harvest Temp. From"; "Freezer Harvest Temp. From")
+            field("QC 2 Min"; Rec."QC 2 Min")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Πρόσθετα Ποιοτικά Χαρακτηριστικά Ελαχ. field.';
             }
-            field("Freezer Harvest Temp. To"; "Freezer Harvest Temp. To")
+            field("QC 2 Max"; Rec."QC 2 Max")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Πρόσθετα Ποιοτικά Χαρακτηριστικά Μεγ. field.';
             }
-            field("Transfer Temp. From"; "Transfer Temp. From")
+            field("QC 2 Text"; Rec."QC 2 Text")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Πρόσθετα Ποιοτικά Χαρακτηριστικά Μον. field.';
             }
-            field("Transfer Temp. To"; "Transfer Temp. To")
+            field("Box Width"; Rec."Box Width")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Κιβώτιο / Στάντζα Πλάτος σε cm field.';
+            }
+            field("Box Char 1"; Rec."Box Char 1")
+            {
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Κιβώτιο / Στάντζα X field.';
+            }
+            field("Box Length"; Rec."Box Length")
+            {
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Κιβώτιο / Στάντζα Μήκος σε cm field.';
+            }
+            field("Box Char 2"; Rec."Box Char 2")
+            {
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Κιβώτιο / Στάντζα X field.';
+            }
+            field("Box Height"; Rec."Box Height")
+            {
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Κιβώτιο / Στάντζα Ύψος σε cm field.';
+            }
+            field("Box Changed Date"; Rec."Box Changed Date")
+            {
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Ημερομηνία ολοκλήρωσης αλλαγής κιβωτίου field.';
+
+            }
+            field("Harvest Temp. From"; Rec."Harvest Temp. From")
+            {
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Θερμοκρασία συγκομιδής σε Cº Από field.';
+            }
+            field("Harvest Temp. To"; Rec."Harvest Temp. To")
+            {
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Θερμοκρασία συγκομιδής σε Cº Έως field.';
+            }
+
+            field("Freezer Harvest Temp. From"; Rec."Freezer Harvest Temp. From")
+            {
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Θερμοκρασία συντήρησης σε θάλαμο μετά την συγκομιδή σε Cº Από field.';
+            }
+            field("Freezer Harvest Temp. To"; Rec."Freezer Harvest Temp. To")
+            {
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Θερμοκρασία συντήρησης σε θάλαμο μετά την συγκομιδή σε Cº Έως field.';
+            }
+            field("Transfer Temp. From"; Rec."Transfer Temp. From")
+            {
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Συμφων. Θερμοκρ.με την μεταφ. κατά την παράδοση στις αποθ.Lidl σε Cº Από field.';
+            }
+            field("Transfer Temp. To"; Rec."Transfer Temp. To")
+            {
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the παράδοση στις αποθ.Lidl σε Cº Έως field.';
             }
 
         }

@@ -5,9 +5,10 @@ pageextension 50235 VendorLedgerEntriesExt extends "Vendor Ledger Entries"
         // Add changes to page layout here
         addafter("Shortcut Dimension 8 Code")
         {
-            field("Journal Batch Name"; "Journal Batch Name")
+            field("Journal Batch Name"; Rec."Journal Batch Name")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Journal Batch Name field.';
             }
         }
 
@@ -28,7 +29,7 @@ pageextension 50235 VendorLedgerEntriesExt extends "Vendor Ledger Entries"
                 PromotedCategory = "Report";
                 PromotedIsBig = true;
                 ToolTip = 'Custom: Print Receipt';
-                trigger onAction()
+                trigger OnAction()
                 begin
                     PrintVendorReceipt(false, true);
                 end;
@@ -45,7 +46,7 @@ pageextension 50235 VendorLedgerEntriesExt extends "Vendor Ledger Entries"
                 PromotedCategory = "Report";
                 PromotedIsBig = true;
                 ToolTip = 'Custom: Email Receipt';
-                trigger onAction()
+                trigger OnAction()
                 begin
                     PrintVendorReceipt(true, true);
                 end;
@@ -96,14 +97,14 @@ pageextension 50235 VendorLedgerEntriesExt extends "Vendor Ledger Entries"
         vL_DocName: Text;
     begin
         VLE.Reset();
-        VLE.SetRange("Entry No.", "Entry No.");
+        VLE.SetRange("Entry No.", Rec."Entry No.");
 
-        IF VLE.FindSet() THEN BEGIN
+        if VLE.FindSet() then begin
             VLE.TestField("Document Type", VLE."Document Type"::Payment);
             VLE.CalcFields(Amount);
         end;
 
-        IF VLE.Amount <= 0 THEN ERROR('You must select a debit Entry');
+        if VLE.Amount <= 0 then Error('You must select a debit Entry');
 
         vL_DocNo := VLE."Document No.";
         vL_DocName := 'Vendor Receipt';

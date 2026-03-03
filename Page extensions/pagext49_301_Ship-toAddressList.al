@@ -13,50 +13,60 @@ pageextension 50149 ShiptoAddressListExt extends "Ship-to Address List"
         }
         addafter("Phone No.")
         {
-            field("E-Mail"; "E-Mail")
+            field("E-Mail"; Rec."E-Mail")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Email field.';
             }
         }
         // Add changes to page layout here
         addafter("Location Code")
         {
-            field("GLN Delivery"; "GLN Delivery")
+            field("GLN Delivery"; Rec."GLN Delivery")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the GLN Delivery field.';
             }
-            field(Monday; Monday)
+            field(Monday; Rec.Monday)
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Monday field.';
             }
-            field(Tuesday; Tuesday)
+            field(Tuesday; Rec.Tuesday)
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Tuesday field.';
             }
-            field(Wednesday; Wednesday)
+            field(Wednesday; Rec.Wednesday)
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Wednesday field.';
             }
-            field(Thursday; Thursday)
+            field(Thursday; Rec.Thursday)
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Thursday field.';
             }
-            field(Friday; Friday)
+            field(Friday; Rec.Friday)
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Friday field.';
             }
-            field(Saturday; Saturday)
+            field(Saturday; Rec.Saturday)
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Saturday field.';
             }
-            field(Sunday; Sunday)
+            field(Sunday; Rec.Sunday)
             {
                 ApplicationArea = All;
                 Visible = false;
+                ToolTip = 'Specifies the value of the Sunday field.';
             }
-            field("Notify Place Order"; "Notify Place Order")
+            field("Notify Place Order"; Rec."Notify Place Order")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Notify Place Order field.';
             }
 
             field(vG_NoOfOrders; vG_NoOfOrders)
@@ -64,6 +74,7 @@ pageextension 50149 ShiptoAddressListExt extends "Ship-to Address List"
                 Caption = 'No. of Orders';
                 ApplicationArea = All;
                 Editable = false;
+                ToolTip = 'Specifies the value of the No. of Orders field.';
             }
 
             field(vG_MinOrderDate; vG_MinOrderDate)
@@ -71,6 +82,7 @@ pageextension 50149 ShiptoAddressListExt extends "Ship-to Address List"
                 Caption = 'First Requested Delivery Date';
                 ApplicationArea = All;
                 Editable = false;
+                ToolTip = 'Specifies the value of the First Requested Delivery Date field.';
             }
 
             field(vG_MaxOrderDate; vG_MaxOrderDate)
@@ -78,6 +90,7 @@ pageextension 50149 ShiptoAddressListExt extends "Ship-to Address List"
                 Caption = 'Last Requested Delivery Date';
                 ApplicationArea = All;
                 Editable = false;
+                ToolTip = 'Specifies the value of the Last Requested Delivery Date field.';
             }
 
 
@@ -105,11 +118,11 @@ pageextension 50149 ShiptoAddressListExt extends "Ship-to Address List"
         SalesHeader: Record "Sales Header";
     begin
 
-        SalesHeader.RESET;
+        SalesHeader.Reset;
         SalesHeader.SetCurrentKey("Document Type", "Sell-to Customer No.", "Ship-to Code", "Requested Delivery Date");
         SalesHeader.SetRange("Document Type", SalesHeader."Document Type"::Order);
-        SalesHeader.SetFilter("Sell-to Customer No.", "Customer No.");
-        SalesHeader.SetFilter("Ship-to Code", rec.Code);
+        SalesHeader.SetFilter("Sell-to Customer No.", Rec."Customer No.");
+        SalesHeader.SetFilter("Ship-to Code", Rec.Code);
 
         vG_NoOfOrders := SalesHeader.Count;
         vG_MinOrderDate := 0D;

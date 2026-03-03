@@ -14,6 +14,7 @@ report 50039 "Grower Receipt"
     RDLCLayout = './Layouts/rep39_50039_GrowerReceipt.rdlc';
 
     PreviewMode = PrintLayout;
+    ApplicationArea = All;
 
     dataset
     {
@@ -86,7 +87,7 @@ report 50039 "Grower Receipt"
             column(CompanyPicture; CompanyInfo.Picture)
             {
             }
-            column(ILE_DocumentDate; FORMAT("Item Ledger Entry"."Document Date"))
+            column(ILE_DocumentDate; Format("Item Ledger Entry"."Document Date"))
             {
             }
             column(ILE_POOrderNo; vG_OrderNo)
@@ -99,28 +100,28 @@ report 50039 "Grower Receipt"
             trigger OnAfterGetRecord();
             begin
                 //CALCFIELDS("Lot Grower No.");
-                CALCFIELDS("Grower Name");
-                CALCFIELDS("Grower GGN");
+                CalcFields("Grower Name");
+                CalcFields("Grower GGN");
                 vG_ProducerGroupName := '';
-                rG_Item.GET("Item Ledger Entry"."Item No."); //TAL0.3
-                rL_Grower.GET("Item Ledger Entry"."Lot Grower No.");
+                rG_Item.Get("Item Ledger Entry"."Item No."); //TAL0.3
+                rL_Grower.Get("Item Ledger Entry"."Lot Grower No.");
 
                 if rL_Grower."Category 1" <> '' then begin
-                    rG_GeneralCategories.RESET;
-                    rG_GeneralCategories.SETRANGE("Table No.", DATABASE::Vendor);
-                    rG_GeneralCategories.SETRANGE(Type, rG_GeneralCategories.Type::Category1);
-                    rG_GeneralCategories.SETFILTER(Code, rL_Grower."Category 1");
-                    rG_GeneralCategories.SETRANGE("Print Receipt", true); //TAL0.3
-                    if rG_GeneralCategories.FINDSET then begin
+                    rG_GeneralCategories.Reset;
+                    rG_GeneralCategories.SetRange("Table No.", Database::Vendor);
+                    rG_GeneralCategories.SetRange(Type, rG_GeneralCategories.Type::Category1);
+                    rG_GeneralCategories.SetFilter(Code, rL_Grower."Category 1");
+                    rG_GeneralCategories.SetRange("Print Receipt", true); //TAL0.3
+                    if rG_GeneralCategories.FindSet then begin
                         vG_ProducerGroupName := rG_GeneralCategories.Description;
                     end;
 
                 end;
 
                 //+TAL0.2
-                rG_PurchRcptHeader.GET("Item Ledger Entry"."Document No.");
+                rG_PurchRcptHeader.Get("Item Ledger Entry"."Document No.");
                 vG_OrderNo := rG_PurchRcptHeader."Order No.";
-                vG_ReceiptNo := DELCHR("Item Ledger Entry"."Document No.", '=', 'PREC-');
+                vG_ReceiptNo := DelChr("Item Ledger Entry"."Document No.", '=', 'PREC-');
                 //-TAL0.2
             end;
 
@@ -130,32 +131,32 @@ report 50039 "Grower Receipt"
                 vL_DocTypeFilter: Text;
                 rL_ILE2: Record "Item Ledger Entry";
             begin
-                "Item Ledger Entry".SETFILTER("Lot Grower No.", '<>%1', ''); //TAL0.4
+                "Item Ledger Entry".SetFilter("Lot Grower No.", '<>%1', ''); //TAL0.4
 
-                CompanyInfo.GET;
-                CompanyInfo.CALCFIELDS(Picture);
+                CompanyInfo.Get;
+                CompanyInfo.CalcFields(Picture);
                 FormatAddr.GetCompanyAddr('', RespCenter, CompanyInfo, CompanyAddr);
 
                 vL_DocNoFilter := '';
                 vL_DocTypeFilter := '';
-                if "Item Ledger Entry".GETFILTER("Document No.") <> '' then begin
-                    vL_DocNoFilter := "Item Ledger Entry".GETFILTER("Document No.")
+                if "Item Ledger Entry".GetFilter("Document No.") <> '' then begin
+                    vL_DocNoFilter := "Item Ledger Entry".GetFilter("Document No.")
                 end;
 
-                if "Item Ledger Entry".GETFILTER("Document Type") <> '' then begin
-                    vL_DocTypeFilter := "Item Ledger Entry".GETFILTER("Document Type");
+                if "Item Ledger Entry".GetFilter("Document Type") <> '' then begin
+                    vL_DocTypeFilter := "Item Ledger Entry".GetFilter("Document Type");
                 end;
 
                 if (vL_DocNoFilter = '') or (vL_DocTypeFilter = '') then begin
-                    ERROR('Filter not set correct');
+                    Error('Filter not set correct');
                 end;
 
-                rL_ILE2.RESET;
-                rL_ILE2.SETRANGE("Document Type", rL_ILE2."Document Type"::"Purchase Receipt");
-                rL_ILE2.SETFILTER("Document No.", vL_DocNoFilter);
-                rL_ILE2.SETFILTER("Receipt Doc. No.", '%1', '');
-                rL_ILE2.SETFILTER("Lot Grower No.", '<>%1', ''); //TAL0.4 //to exclude the blank
-                if rL_ILE2.FINDSET then begin
+                rL_ILE2.Reset;
+                rL_ILE2.SetRange("Document Type", rL_ILE2."Document Type"::"Purchase Receipt");
+                rL_ILE2.SetFilter("Document No.", vL_DocNoFilter);
+                rL_ILE2.SetFilter("Receipt Doc. No.", '%1', '');
+                rL_ILE2.SetFilter("Lot Grower No.", '<>%1', ''); //TAL0.4 //to exclude the blank
+                if rL_ILE2.FindSet then begin
                     cu_GeneralMgt.GrowerReceiptNos(rL_ILE2."Document No.");
                 end;
             end;

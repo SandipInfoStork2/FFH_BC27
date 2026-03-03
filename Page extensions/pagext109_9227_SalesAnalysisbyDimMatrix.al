@@ -7,8 +7,9 @@ pageextension 50209 SalesAnalysisbyDimMatrixExt extends "Sales Analysis by Dim M
         {
             field("rG_Item.""Shelf No."""; rG_Item."Shelf No.")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 Caption = 'Shelf No.';
+                ToolTip = 'Specifies the value of the Shelf No. field.';
             }
         }
     }
@@ -21,8 +22,8 @@ pageextension 50209 SalesAnalysisbyDimMatrixExt extends "Sales Analysis by Dim M
     trigger OnAfterGetRecord();
     begin
 
-        CLEAR(rG_Item);
-        if rG_Item.GET(Code) then;
+        Clear(rG_Item);
+        if rG_Item.GET(Rec.Code) then;
     end;
 
 

@@ -9,9 +9,10 @@ pageextension 50190 SalesReturnOrderExt extends "Sales Return Order"
         // Add changes to page layout here
         addafter(Status)
         {
-            field("Lot No."; "Lot No.")
+            field("Lot No."; Rec."Lot No.")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Lot No. field.';
             }
         }
     }

@@ -20,17 +20,17 @@ codeunit 50001 "Adjust Cost Scheduler"
         */
 
         //Post Cost to GL
-        vL_DateText := FORMAT(TODAY, 0, '<Day,2><Month,2><Year4>');
+        vL_DateText := Format(Today, 0, '<Day,2><Month,2><Year4>');
         //vL_StartDate:=DMY2DATE(1,1,DATE2DMY(TODAY, 3)); //01/01/2017
         //vL_EndDate:=TODAY; //DMY2DATE(25,1,2018); //TODAY;
         //rL_PostValueEntrytoGL.RESET;
         //rL_PostValueEntrytoGL.SETRANGE("Posting Date",vL_StartDate,vL_EndDate);
         //IF rL_PostValueEntrytoGL.FINDSET THEN BEGIN
-        CLEAR(rpt_PostInventoryCosttoGL);
-        rpt_PostInventoryCosttoGL.InitializeRequest(PostMethod::"per Posting Group", 'ADJ' + FORMAT(vL_DateText), true);
+        Clear(rpt_PostInventoryCosttoGL);
+        rpt_PostInventoryCosttoGL.InitializeRequest(PostMethod::"per Posting Group", 'ADJ' + Format(vL_DateText), true);
         //rpt_PostInventoryCosttoGL.SETTABLEVIEW(rL_PostValueEntrytoGL);
-        rpt_PostInventoryCosttoGL.USEREQUESTPAGE(false);
-        rpt_PostInventoryCosttoGL.RUN;
+        rpt_PostInventoryCosttoGL.UseRequestPage(false);
+        rpt_PostInventoryCosttoGL.Run;
         //END;
 
 

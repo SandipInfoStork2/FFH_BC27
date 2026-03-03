@@ -9,10 +9,11 @@ pageextension 50136 PostedPurchaseCreditMemoExt extends "Posted Purchase Credit 
         // Add changes to page layout here
         addafter("No. Printed")
         {
-            field("Posting Description"; "Posting Description")
+            field("Posting Description"; Rec."Posting Description")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 Editable = false;
+                ToolTip = 'Specifies any text that is entered to accompany the posting, for example for information to auditors.';
             }
         }
 

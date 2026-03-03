@@ -33,10 +33,11 @@ pageextension 50195 PostedReturnShipmentSubformExt extends "Posted Return Shipme
                 ApplicationArea = All;
                 Caption = 'Item &Tracking Entries';
                 Image = ItemTrackingLedger;
+                ToolTip = 'Executes the Item &Tracking Entries action.';
 
                 trigger OnAction();
                 begin
-                    ShowItemTrackingLines;
+                    Rec.ShowItemTrackingLines;
                 end;
             }
         }

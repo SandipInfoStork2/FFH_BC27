@@ -3,12 +3,13 @@ report 50078 "Inventory Posting - Test FFH"
     DefaultLayout = RDLC;
     RDLCLayout = './Layouts/rep78_50078_InventoryPostingTest.rdlc';
     Caption = 'Inventory Posting - Test';
+    ApplicationArea = All;
 
     dataset
     {
         dataitem("Item Journal Batch"; "Item Journal Batch")
         {
-            DataItemTableView = SORTING("Journal Template Name", Name);
+            DataItemTableView = sorting("Journal Template Name", Name);
             RequestFilterFields = "Journal Template Name", Name;
             column(Item_Journal_Batch_Journal_Template_Name; "Journal Template Name")
             {
@@ -18,10 +19,10 @@ report 50078 "Inventory Posting - Test FFH"
             }
             dataitem("Item Journal Line"; "Item Journal Line")
             {
-                DataItemLink = "Journal Template Name" = FIELD("Journal Template Name"), "Journal Batch Name" = FIELD(Name);
-                DataItemTableView = SORTING("Journal Template Name", "Journal Batch Name", "Line No.");
+                DataItemLink = "Journal Template Name" = field("Journal Template Name"), "Journal Batch Name" = field(Name);
+                DataItemTableView = sorting("Journal Template Name", "Journal Batch Name", "Line No.");
                 RequestFilterFields = "Posting Date";
-                column(COMPANYNAME; COMPANYPROPERTY.DisplayName)
+                column(COMPANYNAME; CompanyProperty.DisplayName)
                 {
                 }
                 column(Item_Journal_Line__Journal_Template_Name_; "Journal Template Name")
@@ -318,7 +319,7 @@ report 50078 "Inventory Posting - Test FFH"
 
                 dataitem(DimensionLoop; "Integer")
                 {
-                    DataItemTableView = SORTING(Number) WHERE(Number = FILTER(1 ..));
+                    DataItemTableView = sorting(Number) where(Number = filter(1 ..));
                     column(DimText; DimText)
                     {
                     }
@@ -365,7 +366,7 @@ report 50078 "Inventory Posting - Test FFH"
                 }
                 dataitem(ErrorLoop; "Integer")
                 {
-                    DataItemTableView = SORTING(Number);
+                    DataItemTableView = sorting(Number);
                     column(ErrorText_Number_; ErrorText[Number])
                     {
                     }
@@ -623,9 +624,9 @@ report 50078 "Inventory Posting - Test FFH"
 
                     OnAfterCheckDimension("Item Journal Line", ItemJnlTemplate, QtyError);
 
-                    TableID[1] := DATABASE::Item;
+                    TableID[1] := Database::Item;
                     No[1] := "Item No.";
-                    TableID[2] := DATABASE::"Salesperson/Purchaser";
+                    TableID[2] := Database::"Salesperson/Purchaser";
                     No[2] := "Salespers./Purch. Code";
                     if not DimMgt.CheckDimValuePosting(TableID, No, "Dimension Set ID") then
                         AddError(DimMgt.GetDimValuePostingErr);
@@ -769,7 +770,7 @@ report 50078 "Inventory Posting - Test FFH"
 
         layout
         {
-            area(content)
+            area(Content)
             {
                 group(Options)
                 {
@@ -873,28 +874,26 @@ report 50078 "Inventory Posting - Test FFH"
 
     local procedure CheckRecurringLine(ItemJnlLine2: Record "Item Journal Line")
     begin
-        with ItemJnlLine2 do
-            if ItemJnlTemplate.Recurring then begin
-                if "Recurring Method" = 0 then
-                    AddError(StrSubstNo(Text001, FieldCaption("Recurring Method")));
-                if Format("Recurring Frequency") = '' then
-                    AddError(StrSubstNo(Text001, FieldCaption("Recurring Frequency")));
-                if "Recurring Method" = "Recurring Method"::Variable then
-                    if Quantity = 0 then
-                        AddError(StrSubstNo(Text001, FieldCaption(Quantity)));
-            end else begin
-                if "Recurring Method" <> 0 then
-                    AddError(StrSubstNo(Text016, FieldCaption("Recurring Method")));
-                if Format("Recurring Frequency") <> '' then
-                    AddError(StrSubstNo(Text016, FieldCaption("Recurring Frequency")));
-            end;
+        if ItemJnlTemplate.Recurring then begin
+            if ItemJnlLine2."Recurring Method" = 0 then
+                AddError(StrSubstNo(Text001, ItemJnlLine2.FieldCaption("Recurring Method")));
+            if Format(ItemJnlLine2."Recurring Frequency") = '' then
+                AddError(StrSubstNo(Text001, ItemJnlLine2.FieldCaption("Recurring Frequency")));
+            if ItemJnlLine2."Recurring Method" = ItemJnlLine2."Recurring Method"::Variable then
+                if ItemJnlLine2.Quantity = 0 then
+                    AddError(StrSubstNo(Text001, ItemJnlLine2.FieldCaption(Quantity)));
+        end else begin
+            if ItemJnlLine2."Recurring Method" <> 0 then
+                AddError(StrSubstNo(Text016, ItemJnlLine2.FieldCaption("Recurring Method")));
+            if Format(ItemJnlLine2."Recurring Frequency") <> '' then
+                AddError(StrSubstNo(Text016, ItemJnlLine2.FieldCaption("Recurring Frequency")));
+        end;
     end;
 
     local procedure MakeRecurringTexts(var ItemJnlLine2: Record "Item Journal Line")
     begin
-        with ItemJnlLine2 do
-            if ("Posting Date" <> 0D) and ("Item No." <> '') and ("Recurring Method" <> 0) then
-                AccountingPeriod.MakeRecurringTexts("Posting Date", "Document No.", Description);
+        if (ItemJnlLine2."Posting Date" <> 0D) and (ItemJnlLine2."Item No." <> '') and (ItemJnlLine2."Recurring Method" <> 0) then
+            AccountingPeriod.MakeRecurringTexts(ItemJnlLine2."Posting Date", ItemJnlLine2."Document No.", ItemJnlLine2.Description);
     end;
 
     procedure AddError(Text: Text[250])

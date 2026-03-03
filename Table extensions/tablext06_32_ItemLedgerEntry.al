@@ -14,7 +14,7 @@ tableextension 50106 ItemLedgerEntryExt extends "Item Ledger Entry"
         field(50000; "Reason Code"; Code[10])
         {
             AutoFormatType = 1;
-            CalcFormula = lookup("Value Entry"."Reason Code" WHERE("Item Ledger Entry No." = FIELD("Entry No.")));
+            CalcFormula = lookup("Value Entry"."Reason Code" where("Item Ledger Entry No." = field("Entry No.")));
             Caption = 'Reason Code';
             Editable = false;
             FieldClass = FlowField;
@@ -34,27 +34,27 @@ tableextension 50106 ItemLedgerEntryExt extends "Item Ledger Entry"
         field(50008; "Grower Name"; Text[50])
         {
             FieldClass = FlowField;
-            CalcFormula = Lookup(Grower.Name WHERE("No." = FIELD("Lot Grower No.")));
+            CalcFormula = lookup(Grower.Name where("No." = field("Lot Grower No.")));
             Editable = false;
 
         }
         field(50009; "Grower GGN"; Code[14])
         {
-            CalcFormula = Lookup(Grower.GGN WHERE("No." = FIELD("Lot Grower No.")));
+            CalcFormula = lookup(Grower.GGN where("No." = field("Lot Grower No.")));
             Editable = false;
             FieldClass = FlowField;
         }
         field(50010; "Producer Group"; Code[20])
         {
-            CalcFormula = Lookup(Grower."Category 1" WHERE("No." = FIELD("Lot Grower No.")));
+            CalcFormula = lookup(Grower."Category 1" where("No." = field("Lot Grower No.")));
             Caption = 'Producer Group';
             Editable = false;
             FieldClass = FlowField;
-            TableRelation = "General Categories".Code WHERE("Table No." = CONST(23), Type = CONST(Category1));
+            TableRelation = "General Categories".Code where("Table No." = const(23), Type = const(Category1));
         }
         field(50011; "Lot Vendor No."; Code[20])
         {
-            CalcFormula = Lookup("Lot No. Information"."Vendor No." WHERE("Item No." = FIELD("Item No."), "Lot No." = FIELD("Lot No.")));
+            CalcFormula = lookup("Lot No. Information"."Vendor No." where("Item No." = field("Item No."), "Lot No." = field("Lot No.")));
             Editable = false;
             FieldClass = FlowField;
             TableRelation = Vendor;
@@ -67,20 +67,20 @@ tableextension 50106 ItemLedgerEntryExt extends "Item Ledger Entry"
         }
         field(50012; "Vendor Name"; Text[100])
         {
-            CalcFormula = Lookup(Vendor.Name WHERE("No." = FIELD("Lot Vendor No.")));
+            CalcFormula = lookup(Vendor.Name where("No." = field("Lot Vendor No.")));
             Editable = false;
             FieldClass = FlowField;
         }
         field(50013; "Vendor GLN"; Code[14])
         {
-            CalcFormula = Lookup(Vendor.GLN WHERE("No." = FIELD("Lot Vendor No.")));
+            CalcFormula = lookup(Vendor.GLN where("No." = field("Lot Vendor No.")));
             Editable = false;
             FieldClass = FlowField;
         }
         field(50014; "Vendor GGN"; Code[14])
         {
             FieldClass = FlowField;
-            CalcFormula = Lookup(Vendor.GGN WHERE("No." = FIELD("Lot Vendor No.")));
+            CalcFormula = lookup(Vendor.GGN where("No." = field("Lot Vendor No.")));
             CaptionML = ELL = 'Vendor GGN',
                         ENU = 'Vendor GGN';
             Editable = false;
@@ -95,7 +95,7 @@ tableextension 50106 ItemLedgerEntryExt extends "Item Ledger Entry"
         }
         field(50027; "Producer Group Name"; Text[100])
         {
-            CalcFormula = Lookup("General Categories".Description WHERE("Table No." = FILTER(23), Type = FILTER(Category1), Code = FIELD("Producer Group")));
+            CalcFormula = lookup("General Categories".Description where("Table No." = filter(23), Type = filter(Category1), Code = field("Producer Group")));
             Editable = false;
             FieldClass = FlowField;
         }
@@ -111,15 +111,15 @@ tableextension 50106 ItemLedgerEntryExt extends "Item Ledger Entry"
             DecimalPlaces = 0 : 0;
             Editable = false;
         }
-        field(50056; "Item Description"; Text[100])
+        /* field(50056; "Item Description"; Text[100])
         {
             CalcFormula = Lookup(Item.Description WHERE("No." = FIELD("Item No.")));
             Editable = false;
             FieldClass = FlowField;
-        }
+        } */
         field(50057; "Gen. Prod. Posting Group"; Code[20])
         {
-            CalcFormula = Lookup(Item."Gen. Prod. Posting Group" WHERE("No." = FIELD("Item No.")));
+            CalcFormula = lookup(Item."Gen. Prod. Posting Group" where("No." = field("Item No.")));
             Caption = 'Gen. Prod. Posting Group';
             Editable = false;
             FieldClass = FlowField;
@@ -197,7 +197,7 @@ tableextension 50106 ItemLedgerEntryExt extends "Item Ledger Entry"
         {
             DataClassification = ToBeClassified;
         }
-        field(50092; "QC Comments"; BLOB)
+        field(50092; "QC Comments"; Blob)
         {
             DataClassification = ToBeClassified;
         }
@@ -223,13 +223,13 @@ tableextension 50106 ItemLedgerEntryExt extends "Item Ledger Entry"
         {
             Caption = 'Packing Agent';
             DataClassification = ToBeClassified;
-            TableRelation = "General Categories".Code WHERE("Table No." = CONST(5404), Type = CONST(Category1));
+            TableRelation = "General Categories".Code where("Table No." = const(5404), Type = const(Category1));
         }
         //-1.0.0.229
 
         field(50102; "Lot Receiving Temperature"; Decimal)
         {
-            CalcFormula = Lookup("Lot No. Information"."Receiving Temperature Celsius" WHERE("Item No." = FIELD("Item No."), "Lot No." = FIELD("Lot No.")));
+            CalcFormula = lookup("Lot No. Information"."Receiving Temperature Celsius" where("Item No." = field("Item No."), "Lot No." = field("Lot No.")));
             Editable = false;
             FieldClass = FlowField;
 
@@ -254,12 +254,12 @@ tableextension 50106 ItemLedgerEntryExt extends "Item Ledger Entry"
         rL_Item: Record Item;
     begin
         //+TAL0.1
-        IF "Item No." <> '' THEN BEGIN
-            IF rL_Item.GET("Item No.") THEN BEGIN
+        if "Item No." <> '' then begin
+            if rL_Item.Get("Item No.") then begin
                 "Net Weight" := rL_Item."Net Weight";
                 "Total Net Weight" := "Net Weight" * Quantity;
-            END;
-        END;
+            end;
+        end;
         //-TAL0.1
     end;
 

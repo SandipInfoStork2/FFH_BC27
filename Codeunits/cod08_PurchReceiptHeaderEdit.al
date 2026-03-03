@@ -1,6 +1,6 @@
 codeunit 50008 "Purch. Rcpt. Header - Edit"
 {
-    Permissions = TableData "Purch. Rcpt. Header" = rm;
+    Permissions = tabledata "Purch. Rcpt. Header" = rm;
     TableNo = "Purch. Rcpt. Header";
 
     trigger OnRun()
@@ -14,10 +14,10 @@ codeunit 50008 "Purch. Rcpt. Header - Edit"
         //PurchRcptHeader."Payment Method Code" := "Payment Method Code";
         //PurchRcptHeader."Creditor No." := "Creditor No.";
         //PurchRcptHeader."Ship-to Code" := "Ship-to Code";
-        PurchRcptHeader."Receiving Temperature" := "Receiving Temperature";
-        PurchRcptHeader."Receiving Quality Control" := "Receiving Quality Control";
+        PurchRcptHeader."Receiving Temperature" := Rec."Receiving Temperature";
+        PurchRcptHeader."Receiving Quality Control" := Rec."Receiving Quality Control";
         OnBeforePurchInvHeaderModify(PurchRcptHeader, Rec);
-        PurchRcptHeader.TestField("No.", "No.");
+        PurchRcptHeader.TestField("No.", Rec."No.");
         PurchRcptHeader.Modify();
         Rec := PurchRcptHeader;
     end;

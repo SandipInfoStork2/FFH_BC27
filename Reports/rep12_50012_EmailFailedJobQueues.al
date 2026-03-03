@@ -25,16 +25,16 @@ report 50012 "Email Failed Job Queues"
                 Body: Text;
             begin
 
-                rL_UserSetup.RESET;
-                rL_UserSetup.SETRANGE(rL_UserSetup."Job Queue Email", TRUE);
-                rL_UserSetup.SETFILTER(rL_UserSetup."E-Mail", '<>%1', '');
-                IF rL_UserSetup.FINDFIRST THEN BEGIN
-                    REPEAT
-                        clear(EmailMessage);
-                        clear(Email);
+                rL_UserSetup.Reset;
+                rL_UserSetup.SetRange(rL_UserSetup."Job Queue Email", true);
+                rL_UserSetup.SetFilter(rL_UserSetup."E-Mail", '<>%1', '');
+                if rL_UserSetup.FindFirst then begin
+                    repeat
+                        Clear(EmailMessage);
+                        Clear(Email);
 
 
-                        Body := 'Description: ' + FORMAT(JobQueueEntry.Description) + ' <b>Status: ' + FORMAT(JobQueueEntry.Status) + '</b></br>';
+                        Body := 'Description: ' + Format(JobQueueEntry.Description) + ' <b>Status: ' + Format(JobQueueEntry.Status) + '</b></br>';
                         if JobQueueEntry."Error Message" <> '' then begin
                             Body += ' - ' + JobQueueEntry."Error Message";
                         end;
@@ -42,8 +42,8 @@ report 50012 "Email Failed Job Queues"
                         EmailMessage.Create(rL_UserSetup."E-Mail", 'Error Job Queue Entry  ' + JobQueueEntry.Description + ' - ' + CompanyProperty.DisplayName(), Body, true);
                         Email.Send(EmailMessage, Enum::"Email Scenario"::Default);
 
-                    UNTIL rL_UserSetup.NEXT = 0;
-                END;
+                    until rL_UserSetup.Next = 0;
+                end;
 
             end;
         }
@@ -64,11 +64,12 @@ report 50012 "Email Failed Job Queues"
 
         actions
         {
-            area(processing)
+            area(Processing)
             {
                 action(ActionName)
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Executes the ActionName action.';
 
                 }
             }

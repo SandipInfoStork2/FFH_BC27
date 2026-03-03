@@ -6,24 +6,24 @@ tableextension 50138 CustomerBankAccountExt extends "Customer Bank Account"
         field(50000; "Reference Code"; Code[20])
         {
             DataClassification = ToBeClassified;
-            TableRelation = "General Categories".Code WHERE("Table No." = FILTER(288), Type = FILTER(Category1));
+            TableRelation = "General Categories".Code where("Table No." = filter(288), Type = filter(Category1));
 
             trigger OnValidate();
             var
                 rL_GeneralCategory: Record "General Categories";
             begin
 
-                IF "Reference Code" <> '' THEN BEGIN
-                    rL_GeneralCategory.RESET;
-                    rL_GeneralCategory.SETRANGE("Table No.", 288);
-                    rL_GeneralCategory.SETRANGE(Type, rL_GeneralCategory.Type::Category1);
-                    rL_GeneralCategory.SETFILTER(Code, "Reference Code");
-                    IF rL_GeneralCategory.FINDSET THEN BEGIN
+                if "Reference Code" <> '' then begin
+                    rL_GeneralCategory.Reset;
+                    rL_GeneralCategory.SetRange("Table No.", 288);
+                    rL_GeneralCategory.SetRange(Type, rL_GeneralCategory.Type::Category1);
+                    rL_GeneralCategory.SetFilter(Code, "Reference Code");
+                    if rL_GeneralCategory.FindSet then begin
                         Name := rL_GeneralCategory.Description;
                         "SWIFT Code" := rL_GeneralCategory."Reference No.";
                         "Country/Region Code" := rL_GeneralCategory."Country Code";
-                    END;
-                END;
+                    end;
+                end;
             end;
         }
         field(50009; "Intermediary Bank Swift Code"; Code[11])

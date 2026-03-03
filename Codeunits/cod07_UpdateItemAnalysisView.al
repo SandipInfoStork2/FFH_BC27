@@ -9,7 +9,7 @@ codeunit 50007 "TAL Update Item Analysis View"
         cu_UpdateItemAnalysisView: Codeunit "Update Item Analysis View";
 
     begin
-        rl_ItemAnalysisView.RESET;
+        rl_ItemAnalysisView.Reset;
         rl_ItemAnalysisView.SetRange("Analysis Area", rl_ItemAnalysisView."Analysis Area"::Sales);
         rl_ItemAnalysisView.SetRange(Blocked, false);
         if rl_ItemAnalysisView.FindSet() then begin

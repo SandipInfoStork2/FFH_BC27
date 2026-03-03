@@ -9,14 +9,14 @@ tableextension 50101 LocationExt extends Location
         field(50000; "Inbound Req. Wksh"; Boolean)
         {
             FieldClass = FlowField;
-            CalcFormula = Exist("Requisition Wksh. Name" WHERE("Vendor No." = FIELD(Code), "Transaction Type" = FILTER(Inbound)));
+            CalcFormula = exist("Requisition Wksh. Name" where("Vendor No." = field(Code), "Transaction Type" = filter(Inbound)));
             Editable = false;
 
         }
         field(50001; "Outbound Req. Wksh"; Boolean)
         {
             FieldClass = FlowField;
-            CalcFormula = Exist("Requisition Wksh. Name" WHERE("Vendor No." = FIELD(Code), "Transaction Type" = FILTER(Outbound)));
+            CalcFormula = exist("Requisition Wksh. Name" where("Vendor No." = field(Code), "Transaction Type" = filter(Outbound)));
             Editable = false;
 
         }
@@ -133,7 +133,7 @@ tableextension 50101 LocationExt extends Location
         {
             Caption = 'Packing Agent';
             DataClassification = ToBeClassified;
-            TableRelation = "General Categories".Code WHERE("Table No." = CONST(5404), Type = CONST(Category1));
+            TableRelation = "General Categories".Code where("Table No." = const(5404), Type = const(Category1));
         }
         //-1.0.0.293
     }

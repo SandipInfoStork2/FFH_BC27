@@ -9,9 +9,10 @@ pageextension 50154 CheckLedgerEntriesExt extends "Check Ledger Entries"
         // Add changes to page layout here
         addafter("Check No.")
         {
-            field("External Document No."; "External Document No.")
+            field("External Document No."; Rec."External Document No.")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies a document number that refers to the customer''s or vendor''s numbering system.';
             }
         }
     }

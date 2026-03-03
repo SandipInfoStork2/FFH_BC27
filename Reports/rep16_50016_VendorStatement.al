@@ -11,7 +11,7 @@ report 50016 "Vendor Statement"
     {
         dataitem(Vendor; Vendor)
         {
-            DataItemTableView = SORTING("No.");
+            DataItemTableView = sorting("No.");
             PrintOnlyIfDetail = true;
             RequestFilterFields = "No.", "Search Name", "Print Statements", "Date Filter", "Currency Filter";
             column(No_Vend; "No.")
@@ -19,7 +19,7 @@ report 50016 "Vendor Statement"
             }
             dataitem("Integer"; "Integer")
             {
-                DataItemTableView = SORTING(Number) WHERE(Number = CONST(1));
+                DataItemTableView = sorting(Number) where(Number = const(1));
                 PrintOnlyIfDetail = true;
                 column(CompanyInfo1Picture; CompanyInfo1.Picture)
                 {
@@ -84,16 +84,16 @@ report 50016 "Vendor Statement"
                 column(No1_Vend; Vendor."No.")
                 {
                 }
-                column(TodayFormatted; FORMAT(TODAY, 0, 4))
+                column(TodayFormatted; Format(Today, 0, 4))
                 {
                 }
-                column(StartDate; FORMAT(StartDate))
+                column(StartDate; Format(StartDate))
                 {
                 }
-                column(EndDate; FORMAT(EndDate))
+                column(EndDate; Format(EndDate))
                 {
                 }
-                column(LastStatmntNo_Vend; FORMAT(Vendor."Last Statement No."))
+                column(LastStatmntNo_Vend; Format(Vendor."Last Statement No."))
                 {
                     //DecimalPlaces = 0 : 0;
                 }
@@ -142,22 +142,22 @@ report 50016 "Vendor Statement"
                 column(PostDate_DtldVendLedgEntriesCaption; PostDate_DtldVendLedgEntriesCaptionLbl)
                 {
                 }
-                column(DocNo_DtldVendLedgEntriesCaption; DtldVendLedgEntries.FIELDCAPTION("Document No."))
+                column(DocNo_DtldVendLedgEntriesCaption; DtldVendLedgEntries.FieldCaption("Document No."))
                 {
                 }
-                column(Desc_VendLedgEntry2Caption; VendLedgEntry2.FIELDCAPTION(Description))
+                column(Desc_VendLedgEntry2Caption; VendLedgEntry2.FieldCaption(Description))
                 {
                 }
                 column(DueDate_VendLedgEntry2Caption; DueDate_VendLedgEntry2CaptionLbl)
                 {
                 }
-                column(RemainAmtVendLedgEntry2Caption; VendLedgEntry2.FIELDCAPTION("Remaining Amount"))
+                column(RemainAmtVendLedgEntry2Caption; VendLedgEntry2.FieldCaption("Remaining Amount"))
                 {
                 }
                 column(VendBalanceCaption; VendBalanceCaptionLbl)
                 {
                 }
-                column(OriginalAmt_VendLedgEntry2Caption; VendLedgEntry2.FIELDCAPTION("Original Amount"))
+                column(OriginalAmt_VendLedgEntry2Caption; VendLedgEntry2.FieldCaption("Original Amount"))
                 {
                 }
                 column(CompanyInfoHomepageCaption; CompanyInfoHomepageCaptionLbl)
@@ -180,12 +180,12 @@ report 50016 "Vendor Statement"
                 }
                 dataitem(CurrencyLoop; "Integer")
                 {
-                    DataItemTableView = SORTING(Number) WHERE(Number = FILTER(1 ..));
+                    DataItemTableView = sorting(Number) where(Number = filter(1 ..));
                     PrintOnlyIfDetail = true;
                     dataitem(VendLedgEntryHdr; "Integer")
                     {
-                        DataItemTableView = SORTING(Number) WHERE(Number = CONST(1));
-                        column(Currency2Code_VendLedgEntryHdr; STRSUBSTNO(Text001, Currency2.Code))
+                        DataItemTableView = sorting(Number) where(Number = const(1));
+                        column(Currency2Code_VendLedgEntryHdr; StrSubstNo(Text001, Currency2.Code))
                         {
                         }
                         column(StartBalance; StartBalance)
@@ -202,7 +202,7 @@ report 50016 "Vendor Statement"
                         column(PrintLine; PrintLine)
                         {
                         }
-                        column(DtldVendLedgEntryType; FORMAT(DtldVendLedgEntries."Entry Type", 0, 2))
+                        column(DtldVendLedgEntryType; Format(DtldVendLedgEntries."Entry Type", 0, 2))
                         {
                         }
                         column(EntriesExists; EntriesExists)
@@ -210,8 +210,8 @@ report 50016 "Vendor Statement"
                         }
                         dataitem(DtldVendLedgEntries; "Detailed Vendor Ledg. Entry")
                         {
-                            DataItemTableView = SORTING("Vendor No.", "Posting Date", "Entry Type", "Currency Code");
-                            column(PostDate_DtldVendLedgEntries; FORMAT("Posting Date"))
+                            DataItemTableView = sorting("Vendor No.", "Posting Date", "Entry Type", "Currency Code");
+                            column(PostDate_DtldVendLedgEntries; Format("Posting Date"))
                             {
                             }
                             column(DocNo_DtldVendLedgEntries; "Document No.")
@@ -220,7 +220,7 @@ report 50016 "Vendor Statement"
                             column(Description; Description)
                             {
                             }
-                            column(DueDate_DtldVendLedgEntries; FORMAT("Due Date"))
+                            column(DueDate_DtldVendLedgEntries; Format("Due Date"))
                             {
                             }
                             column(CurrCode_DtldVendLedgEntries; "Currency Code")
@@ -248,29 +248,29 @@ report 50016 "Vendor Statement"
                             trigger OnAfterGetRecord();
                             begin
                                 if SkipReversedUnapplied(DtldVendLedgEntries) or (Amount = 0) then
-                                    CurrReport.SKIP;
+                                    CurrReport.Skip;
                                 "Remaining Amount" := 0;
                                 PrintLine := true;
                                 case "Entry Type" of
                                     "Entry Type"::"Initial Entry":
                                         begin
-                                            "Vendor Ledger Entry".GET("Vendor Ledger Entry No.");
+                                            "Vendor Ledger Entry".Get("Vendor Ledger Entry No.");
                                             Description := "Vendor Ledger Entry".Description;
                                             "Due Date" := "Vendor Ledger Entry"."Due Date";
-                                            "Vendor Ledger Entry".SETRANGE("Date Filter", 0D, EndDate);
-                                            "Vendor Ledger Entry".CALCFIELDS("Remaining Amount");
+                                            "Vendor Ledger Entry".SetRange("Date Filter", 0D, EndDate);
+                                            "Vendor Ledger Entry".CalcFields("Remaining Amount");
                                             "Remaining Amount" := "Vendor Ledger Entry"."Remaining Amount";
-                                            "Vendor Ledger Entry".SETRANGE("Date Filter");
+                                            "Vendor Ledger Entry".SetRange("Date Filter");
                                         end;
                                     "Entry Type"::Application:
                                         begin
-                                            DtldVendLedgEntries2.SETCURRENTKEY("Vendor No.", "Posting Date", "Entry Type");
-                                            DtldVendLedgEntries2.SETRANGE("Vendor No.", "Vendor No.");
-                                            DtldVendLedgEntries2.SETRANGE("Posting Date", "Posting Date");
-                                            DtldVendLedgEntries2.SETRANGE("Entry Type", "Entry Type"::Application);
-                                            DtldVendLedgEntries2.SETRANGE("Transaction No.", "Transaction No.");
-                                            DtldVendLedgEntries2.SETFILTER("Currency Code", '<>%1', "Currency Code");
-                                            if DtldVendLedgEntries2.FINDFIRST then begin
+                                            DtldVendLedgEntries2.SetCurrentKey("Vendor No.", "Posting Date", "Entry Type");
+                                            DtldVendLedgEntries2.SetRange("Vendor No.", "Vendor No.");
+                                            DtldVendLedgEntries2.SetRange("Posting Date", "Posting Date");
+                                            DtldVendLedgEntries2.SetRange("Entry Type", "Entry Type"::Application);
+                                            DtldVendLedgEntries2.SetRange("Transaction No.", "Transaction No.");
+                                            DtldVendLedgEntries2.SetFilter("Currency Code", '<>%1', "Currency Code");
+                                            if DtldVendLedgEntries2.FindFirst then begin
                                                 Description := Text005;
                                                 "Due Date" := 0D;
                                             end else
@@ -307,12 +307,12 @@ report 50016 "Vendor Statement"
 
                             trigger OnPreDataItem();
                             begin
-                                SETRANGE("Vendor No.", Vendor."No.");
-                                SETRANGE("Posting Date", StartDate, EndDate);
-                                SETRANGE("Currency Code", Currency2.Code);
+                                SetRange("Vendor No.", Vendor."No.");
+                                SetRange("Posting Date", StartDate, EndDate);
+                                SetRange("Currency Code", Currency2.Code);
 
                                 if Currency2.Code = '' then begin
-                                    GLSetup.TESTFIELD("LCY Code");
+                                    GLSetup.TestField("LCY Code");
                                     CurrencyCode3 := GLSetup."LCY Code"
                                 end else
                                     CurrencyCode3 := Currency2.Code;
@@ -321,7 +321,7 @@ report 50016 "Vendor Statement"
                     }
                     dataitem(VendLedgEntryFooter; "Integer")
                     {
-                        DataItemTableView = SORTING(Number) WHERE(Number = CONST(1));
+                        DataItemTableView = sorting(Number) where(Number = const(1));
                         column(CurrencyCode3_VendLedgEntryFooter; CurrencyCode3)
                         {
                         }
@@ -339,10 +339,10 @@ report 50016 "Vendor Statement"
                     }
                     dataitem(VendLedgEntry2; "Vendor Ledger Entry")
                     {
-                        DataItemLink = "Vendor No." = FIELD("No.");
+                        DataItemLink = "Vendor No." = field("No.");
                         DataItemLinkReference = Vendor;
-                        DataItemTableView = SORTING("Vendor No.", Open, Positive, "Due Date");
-                        column(OverDueEntries; STRSUBSTNO(Text002, Currency2.Code))
+                        DataItemTableView = sorting("Vendor No.", Open, Positive, "Due Date");
+                        column(OverDueEntries; StrSubstNo(Text002, Currency2.Code))
                         {
                         }
                         column(RemainAmt_VendLedgEntry2; "Remaining Amount")
@@ -350,7 +350,7 @@ report 50016 "Vendor Statement"
                             AutoFormatExpression = "Currency Code";
                             AutoFormatType = 1;
                         }
-                        column(PostDate_VendLedgEntry2; FORMAT("Posting Date"))
+                        column(PostDate_VendLedgEntry2; Format("Posting Date"))
                         {
                         }
                         column(DocNo_VendLedgEntry2; "Document No.")
@@ -359,7 +359,7 @@ report 50016 "Vendor Statement"
                         column(Desc_VendLedgEntry2; Description)
                         {
                         }
-                        column(DueDate_VendLedgEntry2; FORMAT("Due Date"))
+                        column(DueDate_VendLedgEntry2; Format("Due Date"))
                         {
                         }
                         column(OriginalAmt_VendLedgEntry2; "Original Amount")
@@ -388,88 +388,88 @@ report 50016 "Vendor Statement"
                         begin
                             if IncludeAgingBand then
                                 if ("Posting Date" > EndDate) and ("Due Date" >= EndDate) then
-                                    CurrReport.SKIP;
+                                    CurrReport.Skip;
                             VendLedgEntry := VendLedgEntry2;
-                            VendLedgEntry.SETRANGE("Date Filter", 0D, EndDate);
-                            VendLedgEntry.CALCFIELDS("Remaining Amount");
+                            VendLedgEntry.SetRange("Date Filter", 0D, EndDate);
+                            VendLedgEntry.CalcFields("Remaining Amount");
                             "Remaining Amount" := VendLedgEntry."Remaining Amount";
                             if VendLedgEntry."Remaining Amount" = 0 then
-                                CurrReport.SKIP;
+                                CurrReport.Skip;
 
                             if IncludeAgingBand and ("Posting Date" <= EndDate) then
                                 UpdateBuffer(Currency2.Code, GetDate("Posting Date", "Due Date"), "Remaining Amount");
                             if "Due Date" >= EndDate then
-                                CurrReport.SKIP;
+                                CurrReport.Skip;
                         end;
 
                         trigger OnPreDataItem();
                         begin
-                            CurrReport.CREATETOTALS("Remaining Amount");
+                            CurrReport.CreateTotals("Remaining Amount");
                             if not IncludeAgingBand then
-                                SETRANGE("Due Date", 0D, EndDate - 1);
-                            SETRANGE("Currency Code", Currency2.Code);
+                                SetRange("Due Date", 0D, EndDate - 1);
+                            SetRange("Currency Code", Currency2.Code);
                             if (not PrintEntriesDue) and (not IncludeAgingBand) then
-                                CurrReport.BREAK;
+                                CurrReport.Break;
                         end;
                     }
 
                     trigger OnAfterGetRecord();
                     begin
                         if Number = 1 then
-                            Currency2.FIND('-')
+                            Currency2.Find('-')
                         else
-                            if Currency2.NEXT = 0 then
-                                CurrReport.BREAK;
+                            if Currency2.Next = 0 then
+                                CurrReport.Break;
 
                         Vend2 := Vendor;
-                        Vend2.SETRANGE("Date Filter", 0D, StartDate - 1);
-                        Vend2.SETRANGE("Currency Filter", Currency2.Code);
-                        Vend2.CALCFIELDS("Net Change");
+                        Vend2.SetRange("Date Filter", 0D, StartDate - 1);
+                        Vend2.SetRange("Currency Filter", Currency2.Code);
+                        Vend2.CalcFields("Net Change");
                         //TJE Changed sign (-1*)
                         StartBalance := -1 * Vend2."Net Change";
                         VendBalance := -1 * Vend2."Net Change";
-                        "Vendor Ledger Entry".SETCURRENTKEY("Vendor No.", "Posting Date", "Currency Code");
-                        "Vendor Ledger Entry".SETRANGE("Vendor No.", Vendor."No.");
-                        "Vendor Ledger Entry".SETRANGE("Posting Date", StartDate, EndDate);
-                        "Vendor Ledger Entry".SETRANGE("Currency Code", Currency2.Code);
-                        EntriesExists := "Vendor Ledger Entry".FINDFIRST;
+                        "Vendor Ledger Entry".SetCurrentKey("Vendor No.", "Posting Date", "Currency Code");
+                        "Vendor Ledger Entry".SetRange("Vendor No.", Vendor."No.");
+                        "Vendor Ledger Entry".SetRange("Posting Date", StartDate, EndDate);
+                        "Vendor Ledger Entry".SetRange("Currency Code", Currency2.Code);
+                        EntriesExists := "Vendor Ledger Entry".FindFirst;
                         if not EntriesExists then
-                            CurrReport.SKIP;
+                            CurrReport.Skip;
                     end;
 
                     trigger OnPreDataItem();
                     begin
-                        Vendor.COPYFILTER("Currency Filter", Currency2.Code);
+                        Vendor.CopyFilter("Currency Filter", Currency2.Code);
                     end;
                 }
                 dataitem(AgingBandLoop; "Integer")
                 {
-                    DataItemTableView = SORTING(Number) WHERE(Number = FILTER(1 ..));
-                    column(AgingDate1; FORMAT(AgingDate[1] + 1))
+                    DataItemTableView = sorting(Number) where(Number = filter(1 ..));
+                    column(AgingDate1; Format(AgingDate[1] + 1))
                     {
                     }
-                    column(AgingDate2; FORMAT(AgingDate[2]))
+                    column(AgingDate2; Format(AgingDate[2]))
                     {
                     }
-                    column(AgingDate21; FORMAT(AgingDate[2] + 1))
+                    column(AgingDate21; Format(AgingDate[2] + 1))
                     {
                     }
-                    column(AgingDate3; FORMAT(AgingDate[3]))
+                    column(AgingDate3; Format(AgingDate[3]))
                     {
                     }
-                    column(AgingDate31; FORMAT(AgingDate[3] + 1))
+                    column(AgingDate31; Format(AgingDate[3] + 1))
                     {
                     }
-                    column(AgingDate4; FORMAT(AgingDate[4]))
+                    column(AgingDate4; Format(AgingDate[4]))
                     {
                     }
-                    column(AgingBandEndingDate; STRSUBSTNO(Text011, AgingBandEndingDate, PeriodLength, SELECTSTR(DateChoice + 1, Text013)))
+                    column(AgingBandEndingDate; StrSubstNo(Text011, AgingBandEndingDate, PeriodLength, SelectStr(DateChoice + 1, Text013)))
                     {
                     }
-                    column(AgingDate41; FORMAT(AgingDate[4] + 1))
+                    column(AgingDate41; Format(AgingDate[4] + 1))
                     {
                     }
-                    column(AgingDate5; FORMAT(AgingDate[5]))
+                    column(AgingDate5; Format(AgingDate[5]))
                     {
                     }
                     column(AgingBandBufCol1Amt; AgingBandBuf."Column 1 Amt.")
@@ -507,11 +507,11 @@ report 50016 "Vendor Statement"
                     trigger OnAfterGetRecord();
                     begin
                         if Number = 1 then begin
-                            if not AgingBandBuf.FIND('-') then
-                                CurrReport.BREAK;
+                            if not AgingBandBuf.Find('-') then
+                                CurrReport.Break;
                         end else
-                            if AgingBandBuf.NEXT = 0 then
-                                CurrReport.BREAK;
+                            if AgingBandBuf.Next = 0 then
+                                CurrReport.Break;
                         AgingBandCurrencyCode := AgingBandBuf."Currency Code";
                         if AgingBandCurrencyCode = '' then
                             AgingBandCurrencyCode := GLSetup."LCY Code";
@@ -520,76 +520,76 @@ report 50016 "Vendor Statement"
                     trigger OnPreDataItem();
                     begin
                         if not IncludeAgingBand then
-                            CurrReport.BREAK;
+                            CurrReport.Break;
                     end;
                 }
             }
 
             trigger OnAfterGetRecord();
             begin
-                AgingBandBuf.DELETEALL;
-                CurrReport.LANGUAGE := LanguageMgt.GetLanguageIdOrDefault("Language Code");
+                AgingBandBuf.DeleteAll;
+                CurrReport.Language := LanguageMgt.GetLanguageIdOrDefault("Language Code");
                 PrintLine := false;
                 Vend2 := Vendor;
-                COPYFILTER("Currency Filter", Currency2.Code);
+                CopyFilter("Currency Filter", Currency2.Code);
                 if PrintAllHavingBal then begin
-                    if Currency2.FIND('-') then
+                    if Currency2.Find('-') then
                         repeat
-                            Vend2.SETRANGE("Date Filter", 0D, EndDate);
-                            Vend2.SETRANGE("Currency Filter", Currency2.Code);
-                            Vend2.CALCFIELDS("Net Change");
+                            Vend2.SetRange("Date Filter", 0D, EndDate);
+                            Vend2.SetRange("Currency Filter", Currency2.Code);
+                            Vend2.CalcFields("Net Change");
                             PrintLine := Vend2."Net Change" <> 0;
-                        until (Currency2.NEXT = 0) or PrintLine;
+                        until (Currency2.Next = 0) or PrintLine;
                 end;
                 if (not PrintLine) and PrintAllHavingEntry then begin
-                    "Vendor Ledger Entry".RESET;
-                    "Vendor Ledger Entry".SETCURRENTKEY("Vendor No.", "Posting Date");
-                    "Vendor Ledger Entry".SETRANGE("Vendor No.", "No.");
-                    "Vendor Ledger Entry".SETRANGE("Posting Date", StartDate, EndDate);
-                    COPYFILTER("Currency Filter", "Vendor Ledger Entry"."Currency Code");
-                    PrintLine := "Vendor Ledger Entry".FINDFIRST;
+                    "Vendor Ledger Entry".Reset;
+                    "Vendor Ledger Entry".SetCurrentKey("Vendor No.", "Posting Date");
+                    "Vendor Ledger Entry".SetRange("Vendor No.", "No.");
+                    "Vendor Ledger Entry".SetRange("Posting Date", StartDate, EndDate);
+                    CopyFilter("Currency Filter", "Vendor Ledger Entry"."Currency Code");
+                    PrintLine := "Vendor Ledger Entry".FindFirst;
                 end;
                 if not PrintLine then
-                    CurrReport.SKIP;
+                    CurrReport.Skip;
 
                 FormatAddr.Vendor(VendAddr, Vendor);
-                CurrReport.PAGENO := 1;
+                CurrReport.PageNo := 1;
 
-                if not CurrReport.PREVIEW then begin
-                    LOCKTABLE;
-                    FIND;
+                if not CurrReport.Preview then begin
+                    LockTable;
+                    Find;
                     "Last Statement No." := "Last Statement No." + 1;
-                    MODIFY;
-                    COMMIT;
+                    Modify;
+                    Commit;
                 end else
                     "Last Statement No." := "Last Statement No." + 1;
 
                 if LogInteraction then
-                    if not CurrReport.PREVIEW then
+                    if not CurrReport.Preview then
                         SegManagement.LogDocument(
-                          7, FORMAT("Last Statement No."), 0, 0, DATABASE::Vendor, "No.", "Salesperson Code", '',
-                          Text003 + FORMAT("Last Statement No."), '');
+                          7, Format("Last Statement No."), 0, 0, Database::Vendor, "No.", "Salesperson Code", '',
+                          Text003 + Format("Last Statement No."), '');
             end;
 
             trigger OnPreDataItem();
             begin
-                StartDate := GETRANGEMIN("Date Filter");
-                EndDate := GETRANGEMAX("Date Filter");
+                StartDate := GetRangeMin("Date Filter");
+                EndDate := GetRangeMax("Date Filter");
 
                 AgingBandEndingDate := EndDate;
                 CalcAgingBandDates;
 
-                CompanyInfo.GET;
+                CompanyInfo.Get;
                 FormatAddr.Company(CompanyAddr, CompanyInfo);
 
                 Currency2.Code := '';
-                Currency2.INSERT;
-                COPYFILTER("Currency Filter", Currency.Code);
-                if Currency.FIND('-') then
+                Currency2.Insert;
+                CopyFilter("Currency Filter", Currency.Code);
+                if Currency.Find('-') then
                     repeat
                         Currency2 := Currency;
-                        Currency2.INSERT;
-                    until Currency.NEXT = 0;
+                        Currency2.Insert;
+                    until Currency.Next = 0;
             end;
         }
     }
@@ -600,7 +600,7 @@ report 50016 "Vendor Statement"
 
         layout
         {
-            area(content)
+            area(Content)
             {
                 group(Options)
                 {
@@ -609,12 +609,14 @@ report 50016 "Vendor Statement"
                     {
                         ApplicationArea = All;
                         Caption = 'Show Overdue Entries';
+                        ToolTip = 'Specifies the value of the Show Overdue Entries field.';
                     }
                     field(IncludeAllVendorswithLE; PrintAllHavingEntry)
                     {
                         ApplicationArea = All;
                         Caption = 'Include All Vendors with Ledger Entries';
                         MultiLine = true;
+                        ToolTip = 'Specifies the value of the Include All Vendors with Ledger Entries field.';
 
                         trigger OnValidate();
                         begin
@@ -627,6 +629,7 @@ report 50016 "Vendor Statement"
                         ApplicationArea = All;
                         Caption = 'Include All Vendors with a Balance';
                         MultiLine = true;
+                        ToolTip = 'Specifies the value of the Include All Vendors with a Balance field.';
 
                         trigger OnValidate();
                         begin
@@ -638,33 +641,39 @@ report 50016 "Vendor Statement"
                     {
                         ApplicationArea = All;
                         Caption = 'Include Reversed Entries';
+                        ToolTip = 'Specifies the value of the Include Reversed Entries field.';
                     }
                     field(IncludeUnappliedEntries; PrintUnappliedEntries)
                     {
                         ApplicationArea = All;
                         Caption = 'Include Unapplied Entries';
+                        ToolTip = 'Specifies the value of the Include Unapplied Entries field.';
                     }
                     field(IncludeAgingBand; IncludeAgingBand)
                     {
                         ApplicationArea = All;
                         Caption = 'Include Aging Band';
+                        ToolTip = 'Specifies the value of the Include Aging Band field.';
                     }
                     field(AgingBandPeriodLengt; PeriodLength)
                     {
                         ApplicationArea = All;
                         Caption = 'Aging Band Period Length';
+                        ToolTip = 'Specifies the value of the Aging Band Period Length field.';
                     }
                     field(AgingBandby; DateChoice)
                     {
                         ApplicationArea = All;
                         Caption = 'Aging Band by';
                         OptionCaption = 'Due Date,Posting Date';
+                        ToolTip = 'Specifies the value of the Aging Band by field.';
                     }
                     field(LogInteraction; LogInteraction)
                     {
                         ApplicationArea = All;
                         Caption = 'Log Interaction';
                         Enabled = LogInteractionEnable;
+                        ToolTip = 'Specifies the value of the Log Interaction field.';
                     }
                 }
             }
@@ -686,26 +695,26 @@ report 50016 "Vendor Statement"
 
     trigger OnInitReport();
     begin
-        GLSetup.GET;
-        SalesSetup.GET;
+        GLSetup.Get;
+        SalesSetup.Get;
 
         case SalesSetup."Logo Position on Documents" of
             SalesSetup."Logo Position on Documents"::"No Logo":
                 ;
             SalesSetup."Logo Position on Documents"::Left:
                 begin
-                    CompanyInfo1.GET;
-                    CompanyInfo1.CALCFIELDS(Picture);
+                    CompanyInfo1.Get;
+                    CompanyInfo1.CalcFields(Picture);
                 end;
             SalesSetup."Logo Position on Documents"::Center:
                 begin
-                    CompanyInfo2.GET;
-                    CompanyInfo2.CALCFIELDS(Picture);
+                    CompanyInfo2.Get;
+                    CompanyInfo2.CalcFields(Picture);
                 end;
             SalesSetup."Logo Position on Documents"::Right:
                 begin
-                    CompanyInfo3.GET;
-                    CompanyInfo3.CALCFIELDS(Picture);
+                    CompanyInfo3.Get;
+                    CompanyInfo3.CalcFields(Picture);
                 end;
         end;
 
@@ -806,17 +815,17 @@ report 50016 "Vendor Statement"
         if not IncludeAgingBand then
             exit;
         if AgingBandEndingDate = 0D then
-            ERROR(Text010);
-        if FORMAT(PeriodLength) = '' then
-            ERROR(Text008);
-        EVALUATE(PeriodLength2, STRSUBSTNO(Text036, PeriodLength));
+            Error(Text010);
+        if Format(PeriodLength) = '' then
+            Error(Text008);
+        Evaluate(PeriodLength2, StrSubstNo(Text036, PeriodLength));
         AgingDate[5] := AgingBandEndingDate;
-        AgingDate[4] := CALCDATE(PeriodLength2, AgingDate[5]);
-        AgingDate[3] := CALCDATE(PeriodLength2, AgingDate[4]);
-        AgingDate[2] := CALCDATE(PeriodLength2, AgingDate[3]);
-        AgingDate[1] := CALCDATE(PeriodLength2, AgingDate[2]);
+        AgingDate[4] := CalcDate(PeriodLength2, AgingDate[5]);
+        AgingDate[3] := CalcDate(PeriodLength2, AgingDate[4]);
+        AgingDate[2] := CalcDate(PeriodLength2, AgingDate[3]);
+        AgingDate[1] := CalcDate(PeriodLength2, AgingDate[2]);
         if AgingDate[2] <= AgingDate[1] then
-            ERROR(Text012);
+            Error(Text012);
     end;
 
     local procedure UpdateBuffer(CurrencyCode: Code[10]; Date: Date; Amount: Decimal);
@@ -824,10 +833,10 @@ report 50016 "Vendor Statement"
         I: Integer;
         GoOn: Boolean;
     begin
-        AgingBandBuf.INIT;
+        AgingBandBuf.Init;
         AgingBandBuf."Currency Code" := CurrencyCode;
-        if not AgingBandBuf.FIND then
-            AgingBandBuf.INSERT;
+        if not AgingBandBuf.Find then
+            AgingBandBuf.Insert;
         I := 1;
         GoOn := true;
         while (I <= 5) and GoOn do begin
@@ -858,7 +867,7 @@ report 50016 "Vendor Statement"
                 end;
             I := I + 1;
         end;
-        AgingBandBuf.MODIFY;
+        AgingBandBuf.Modify;
     end;
 
     procedure SkipReversedUnapplied(var DtldVendLedgEntries: Record "Detailed Vendor Ledg. Entry"): Boolean;
@@ -871,7 +880,7 @@ report 50016 "Vendor Statement"
             if DtldVendLedgEntries.Unapplied then
                 exit(true);
         if not PrintReversedEntries then begin
-            VendLedgEntry.GET(DtldVendLedgEntries."Vendor Ledger Entry No.");
+            VendLedgEntry.Get(DtldVendLedgEntries."Vendor Ledger Entry No.");
             if VendLedgEntry.Reversed then
                 exit(true);
         end;
@@ -888,7 +897,7 @@ report 50016 "Vendor Statement"
         PrintReversedEntries := NewPrintReversedEntries;
         PrintUnappliedEntries := NewPrintUnappliedEntries;
         IncludeAgingBand := NewIncludeAgingBand;
-        EVALUATE(PeriodLength, NewPeriodLength);
+        Evaluate(PeriodLength, NewPeriodLength);
         DateChoice := NewDateChoice;
         LogInteraction := NewLogInteraction;
     end;
@@ -907,8 +916,8 @@ report 50016 "Vendor Statement"
         LogInteraction := SegManagement.FindInteractionTemplateCode(7) <> '';
         LogInteractionEnable := LogInteraction;
 
-        if FORMAT(PeriodLength) = '' then
-            EVALUATE(PeriodLength, '<1M+CM>');
+        if Format(PeriodLength) = '' then
+            Evaluate(PeriodLength, '<1M+CM>');
     end;
 }
 

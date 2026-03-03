@@ -5,8 +5,8 @@ table 50009 "Purchase Line Addon Posted"
     // TAL0.1 2019/03/05 VC change Document No. Relation to Posted Boxes Header
 
     Caption = 'Purchase Line';
-    DrillDownPageID = "Purchase Lines";
-    LookupPageID = "Purchase Lines";
+    DrillDownPageId = "Purchase Lines";
+    LookupPageId = "Purchase Lines";
     PasteIsValid = false;
 
     fields
@@ -26,7 +26,7 @@ table 50009 "Purchase Line Addon Posted"
         field(3; "Document No."; Code[20])
         {
             Caption = 'Document No.';
-            TableRelation = "Purchase Header Addon Posted"."No." WHERE("Document Type" = FIELD("Document Type"));
+            TableRelation = "Purchase Header Addon Posted"."No." where("Document Type" = field("Document Type"));
         }
         field(4; "Line No."; Integer)
         {
@@ -40,17 +40,17 @@ table 50009 "Purchase Line Addon Posted"
         field(6; "No."; Code[20])
         {
             Caption = 'No.';
-            TableRelation = IF (Type = CONST(" ")) "Standard Text"
-            ELSE
-            IF (Type = CONST("G/L Account")) "G/L Account"
-            ELSE
-            IF (Type = CONST(Item)) Item
-            ELSE
-            IF (Type = CONST("Resource")) Resource
-            ELSE
-            IF (Type = CONST("Fixed Asset")) "Fixed Asset"
-            ELSE
-            IF (Type = CONST("Charge (Item)")) "Item Charge";
+            TableRelation = if (Type = const(" ")) "Standard Text"
+            else
+            if (Type = const("G/L Account")) "G/L Account"
+            else
+            if (Type = const(Item)) Item
+            else
+            if (Type = const(Resource)) Resource
+            else
+            if (Type = const("Fixed Asset")) "Fixed Asset"
+            else
+            if (Type = const("Charge (Item)")) "Item Charge";
 
             trigger OnValidate();
             var
@@ -67,9 +67,9 @@ table 50009 "Purchase Line Addon Posted"
 
                 if Type = Type::Item then begin
                     GetItem;
-                    Item.TESTFIELD(Blocked, false);
-                    Item.TESTFIELD("Inventory Posting Group");
-                    Item.TESTFIELD("Gen. Prod. Posting Group");
+                    Item.TestField(Blocked, false);
+                    Item.TestField("Inventory Posting Group");
+                    Item.TestField("Gen. Prod. Posting Group");
                     "Posting Group" := Item."Inventory Posting Group";
                     Description := Item.Description;
                     "Description 2" := Item."Description 2";
@@ -91,15 +91,15 @@ table 50009 "Purchase Line Addon Posted"
         field(7; "Location Code"; Code[10])
         {
             Caption = 'Location Code';
-            TableRelation = Location WHERE("Use As In-Transit" = CONST(false));
+            TableRelation = Location where("Use As In-Transit" = const(false));
         }
         field(8; "Posting Group"; Code[10])
         {
             Caption = 'Posting Group';
             Editable = false;
-            TableRelation = IF (Type = CONST(Item)) "Inventory Posting Group"
-            ELSE
-            IF (Type = CONST("Fixed Asset")) "FA Posting Group";
+            TableRelation = if (Type = const(Item)) "Inventory Posting Group"
+            else
+            if (Type = const("Fixed Asset")) "FA Posting Group";
         }
         field(10; "Expected Receipt Date"; Date)
         {
@@ -142,7 +142,7 @@ table 50009 "Purchase Line Addon Posted"
         {
             AutoFormatExpression = "Currency Code";
             AutoFormatType = 2;
-            CaptionClass = GetCaptionClass(FIELDNO("Direct Unit Cost"));
+            CaptionClass = GetCaptionClass(FieldNo("Direct Unit Cost"));
             Caption = 'Direct Unit Cost';
         }
         field(23; "Unit Cost (LCY)"; Decimal)
@@ -221,13 +221,13 @@ table 50009 "Purchase Line Addon Posted"
         {
             CaptionClass = '1,2,1';
             Caption = 'Shortcut Dimension 1 Code';
-            TableRelation = "Dimension Value".Code WHERE("Global Dimension No." = CONST(1));
+            TableRelation = "Dimension Value".Code where("Global Dimension No." = const(1));
         }
         field(41; "Shortcut Dimension 2 Code"; Code[20])
         {
             CaptionClass = '1,2,2';
             Caption = 'Shortcut Dimension 2 Code';
-            TableRelation = "Dimension Value".Code WHERE("Global Dimension No." = CONST(2));
+            TableRelation = "Dimension Value".Code where("Global Dimension No." = const(2));
         }
         field(45; "Job No."; Code[20])
         {
@@ -327,14 +327,14 @@ table 50009 "Purchase Line Addon Posted"
         {
             Caption = 'Sales Order No.';
             Editable = false;
-            TableRelation = IF ("Drop Shipment" = CONST(true)) "Sales Header"."No." WHERE("Document Type" = CONST(Order));
+            TableRelation = if ("Drop Shipment" = const(true)) "Sales Header"."No." where("Document Type" = const(Order));
         }
         field(72; "Sales Order Line No."; Integer)
         {
             Caption = 'Sales Order Line No.';
             Editable = false;
-            TableRelation = IF ("Drop Shipment" = CONST(true)) "Sales Line"."Line No." WHERE("Document Type" = CONST(Order),
-                                                                                            "Document No." = FIELD("Sales Order No."));
+            TableRelation = if ("Drop Shipment" = const(true)) "Sales Line"."Line No." where("Document Type" = const(Order),
+                                                                                            "Document No." = field("Sales Order No."));
         }
         field(73; "Drop Shipment"; Boolean)
         {
@@ -372,8 +372,8 @@ table 50009 "Purchase Line Addon Posted"
         {
             Caption = 'Attached to Line No.';
             Editable = false;
-            TableRelation = "Purchase Line"."Line No." WHERE("Document Type" = FIELD("Document Type"),
-                                                              "Document No." = FIELD("Document No."));
+            TableRelation = "Purchase Line"."Line No." where("Document Type" = field("Document Type"),
+                                                              "Document No." = field("Document No."));
         }
         field(81; "Entry Point"; Code[10])
         {
@@ -438,11 +438,11 @@ table 50009 "Purchase Line Addon Posted"
         }
         field(95; "Reserved Quantity"; Decimal)
         {
-            CalcFormula = Sum("Reservation Entry".Quantity WHERE("Source ID" = FIELD("Document No."),
-                                                                  "Source Ref. No." = FIELD("Line No."),
-                                                                  "Source Type" = CONST(39),
-                                                                  "Source Subtype" = FIELD("Document Type"),
-                                                                  "Reservation Status" = CONST(Reservation)));
+            CalcFormula = sum("Reservation Entry".Quantity where("Source ID" = field("Document No."),
+                                                                  "Source Ref. No." = field("Line No."),
+                                                                  "Source Type" = const(39),
+                                                                  "Source Subtype" = field("Document Type"),
+                                                                  "Reservation Status" = const(Reservation)));
             Caption = 'Reserved Quantity';
             DecimalPlaces = 0 : 5;
             Editable = false;
@@ -451,15 +451,15 @@ table 50009 "Purchase Line Addon Posted"
         field(97; "Blanket Order No."; Code[20])
         {
             Caption = 'Blanket Order No.';
-            TableRelation = "Purchase Header"."No." WHERE("Document Type" = CONST("Blanket Order"));
+            TableRelation = "Purchase Header"."No." where("Document Type" = const("Blanket Order"));
             //This property is currently not supported
             //TestTableRelation = false;
         }
         field(98; "Blanket Order Line No."; Integer)
         {
             Caption = 'Blanket Order Line No.';
-            TableRelation = "Purchase Line"."Line No." WHERE("Document Type" = CONST("Blanket Order"),
-                                                              "Document No." = FIELD("Blanket Order No."));
+            TableRelation = "Purchase Line"."Line No." where("Document Type" = const("Blanket Order"),
+                                                              "Document No." = field("Blanket Order No."));
             //This property is currently not supported
             //TestTableRelation = false;
         }
@@ -486,7 +486,7 @@ table 50009 "Purchase Line Addon Posted"
         {
             AutoFormatExpression = "Currency Code";
             AutoFormatType = 1;
-            CaptionClass = GetCaptionClass(FIELDNO("Line Amount"));
+            CaptionClass = GetCaptionClass(FieldNo("Line Amount"));
             Caption = 'Line Amount';
         }
         field(104; "VAT Difference"; Decimal)
@@ -544,7 +544,7 @@ table 50009 "Purchase Line Addon Posted"
         {
             AutoFormatExpression = "Currency Code";
             AutoFormatType = 1;
-            CaptionClass = GetCaptionClass(FIELDNO("Prepmt. Line Amount"));
+            CaptionClass = GetCaptionClass(FieldNo("Prepmt. Line Amount"));
             Caption = 'Prepmt. Line Amount';
             MinValue = 0;
         }
@@ -552,7 +552,7 @@ table 50009 "Purchase Line Addon Posted"
         {
             AutoFormatExpression = "Currency Code";
             AutoFormatType = 1;
-            CaptionClass = GetCaptionClass(FIELDNO("Prepmt. Amt. Inv."));
+            CaptionClass = GetCaptionClass(FieldNo("Prepmt. Amt. Inv."));
             Caption = 'Prepmt. Amt. Inv.';
             Editable = false;
         }
@@ -614,7 +614,7 @@ table 50009 "Purchase Line Addon Posted"
         {
             AutoFormatExpression = "Currency Code";
             AutoFormatType = 1;
-            CaptionClass = GetCaptionClass(FIELDNO("Prepmt Amt to Deduct"));
+            CaptionClass = GetCaptionClass(FieldNo("Prepmt Amt to Deduct"));
             Caption = 'Prepmt Amt to Deduct';
             MinValue = 0;
         }
@@ -622,7 +622,7 @@ table 50009 "Purchase Line Addon Posted"
         {
             AutoFormatExpression = "Currency Code";
             AutoFormatType = 1;
-            CaptionClass = GetCaptionClass(FIELDNO("Prepmt Amt Deducted"));
+            CaptionClass = GetCaptionClass(FieldNo("Prepmt Amt Deducted"));
             Caption = 'Prepmt Amt Deducted';
             Editable = false;
         }
@@ -692,7 +692,7 @@ table 50009 "Purchase Line Addon Posted"
         field(1001; "Job Task No."; Code[20])
         {
             Caption = 'Job Task No.';
-            TableRelation = "Job Task"."Job Task No." WHERE("Job No." = FIELD("Job No."));
+            TableRelation = "Job Task"."Job Task No." where("Job No." = field("Job No."));
         }
         field(1002; "Job Line Type"; Option)
         {
@@ -804,7 +804,7 @@ table 50009 "Purchase Line Addon Posted"
         {
             Caption = 'Prod. Order No.';
             Editable = false;
-            TableRelation = "Production Order"."No." WHERE(Status = CONST(Released));
+            TableRelation = "Production Order"."No." where(Status = const(Released));
             //This property is currently not supported
             //TestTableRelation = false;
             ValidateTableRelation = false;
@@ -812,22 +812,22 @@ table 50009 "Purchase Line Addon Posted"
         field(5402; "Variant Code"; Code[10])
         {
             Caption = 'Variant Code';
-            TableRelation = IF (Type = CONST(Item)) "Item Variant".Code WHERE("Item No." = FIELD("No."));
+            TableRelation = if (Type = const(Item)) "Item Variant".Code where("Item No." = field("No."));
         }
         field(5403; "Bin Code"; Code[20])
         {
             Caption = 'Bin Code';
-            TableRelation = IF ("Document Type" = FILTER(Order | Invoice),
-                                Quantity = FILTER(< 0)) "Bin Content"."Bin Code" WHERE("Location Code" = FIELD("Location Code"),
-                                                                                     "Item No." = FIELD("No."),
-                                                                                     "Variant Code" = FIELD("Variant Code"))
-            ELSE
-            IF ("Document Type" = FILTER("Return Order" | "Credit Memo"),
-                                                                                              Quantity = FILTER(>= 0)) "Bin Content"."Bin Code" WHERE("Location Code" = FIELD("Location Code"),
-                                                                                                                                                    "Item No." = FIELD("No."),
-                                                                                                                                                    "Variant Code" = FIELD("Variant Code"))
-            ELSE
-            Bin.Code WHERE("Location Code" = FIELD("Location Code"));
+            TableRelation = if ("Document Type" = filter(Order | Invoice),
+                                Quantity = filter(< 0)) "Bin Content"."Bin Code" where("Location Code" = field("Location Code"),
+                                                                                     "Item No." = field("No."),
+                                                                                     "Variant Code" = field("Variant Code"))
+            else
+            if ("Document Type" = filter("Return Order" | "Credit Memo"),
+                                                                                              Quantity = filter(>= 0)) "Bin Content"."Bin Code" where("Location Code" = field("Location Code"),
+                                                                                                                                                    "Item No." = field("No."),
+                                                                                                                                                    "Variant Code" = field("Variant Code"))
+            else
+            Bin.Code where("Location Code" = field("Location Code"));
 
             trigger OnLookup();
             var
@@ -852,8 +852,8 @@ table 50009 "Purchase Line Addon Posted"
         field(5407; "Unit of Measure Code"; Code[10])
         {
             Caption = 'Unit of Measure Code';
-            TableRelation = IF (Type = CONST(Item)) "Item Unit of Measure".Code WHERE("Item No." = FIELD("No."))
-            ELSE
+            TableRelation = if (Type = const(Item)) "Item Unit of Measure".Code where("Item No." = field("No."))
+            else
             "Unit of Measure";
 
             trigger OnValidate();
@@ -903,11 +903,11 @@ table 50009 "Purchase Line Addon Posted"
         }
         field(5495; "Reserved Qty. (Base)"; Decimal)
         {
-            CalcFormula = Sum("Reservation Entry"."Quantity (Base)" WHERE("Source Type" = CONST(39),
-                                                                           "Source Subtype" = FIELD("Document Type"),
-                                                                           "Source ID" = FIELD("Document No."),
-                                                                           "Source Ref. No." = FIELD("Line No."),
-                                                                           "Reservation Status" = CONST(Reservation)));
+            CalcFormula = sum("Reservation Entry"."Quantity (Base)" where("Source Type" = const(39),
+                                                                           "Source Subtype" = field("Document Type"),
+                                                                           "Source ID" = field("Document No."),
+                                                                           "Source Ref. No." = field("Line No."),
+                                                                           "Reservation Status" = const(Reservation)));
             Caption = 'Reserved Qty. (Base)';
             DecimalPlaces = 0 : 5;
             Editable = false;
@@ -978,7 +978,7 @@ table 50009 "Purchase Line Addon Posted"
         field(5706; "Unit of Measure (Cross Ref.)"; Code[10])
         {
             Caption = 'Unit of Measure (Cross Ref.)';
-            TableRelation = IF (Type = CONST(Item)) "Item Unit of Measure".Code WHERE("Item No." = FIELD("No."));
+            TableRelation = if (Type = const(Item)) "Item Unit of Measure".Code where("Item No." = field("No."));
         }
         field(5707; "Cross-Reference Type"; Option)
         {
@@ -1016,21 +1016,21 @@ table 50009 "Purchase Line Addon Posted"
         field(5714; "Special Order Sales No."; Code[20])
         {
             Caption = 'Special Order Sales No.';
-            TableRelation = IF ("Special Order" = CONST(true)) "Sales Header"."No." WHERE("Document Type" = CONST(Order));
+            TableRelation = if ("Special Order" = const(true)) "Sales Header"."No." where("Document Type" = const(Order));
         }
         field(5715; "Special Order Sales Line No."; Integer)
         {
             Caption = 'Special Order Sales Line No.';
-            TableRelation = IF ("Special Order" = CONST(true)) "Sales Line"."Line No." WHERE("Document Type" = CONST(Order),
-                                                                                            "Document No." = FIELD("Special Order Sales No."));
+            TableRelation = if ("Special Order" = const(true)) "Sales Line"."Line No." where("Document Type" = const(Order),
+                                                                                            "Document No." = field("Special Order Sales No."));
         }
         field(5750; "Whse. Outstanding Qty. (Base)"; Decimal)
         {
             BlankZero = true;
-            CalcFormula = Sum("Warehouse Receipt Line"."Qty. Outstanding (Base)" WHERE("Source Type" = CONST(39),
-                                                                                        "Source Subtype" = FIELD("Document Type"),
-                                                                                        "Source No." = FIELD("Document No."),
-                                                                                        "Source Line No." = FIELD("Line No.")));
+            CalcFormula = sum("Warehouse Receipt Line"."Qty. Outstanding (Base)" where("Source Type" = const(39),
+                                                                                        "Source Subtype" = field("Document Type"),
+                                                                                        "Source No." = field("Document No."),
+                                                                                        "Source Line No." = field("Line No.")));
             Caption = 'Whse. Outstanding Qty. (Base)';
             DecimalPlaces = 0 : 5;
             Editable = false;
@@ -1072,9 +1072,9 @@ table 50009 "Purchase Line Addon Posted"
         }
         field(5801; "Qty. to Assign"; Decimal)
         {
-            CalcFormula = Sum("Item Charge Assignment (Purch)"."Qty. to Assign" WHERE("Document Type" = FIELD("Document Type"),
-                                                                                       "Document No." = FIELD("Document No."),
-                                                                                       "Document Line No." = FIELD("Line No.")));
+            CalcFormula = sum("Item Charge Assignment (Purch)"."Qty. to Assign" where("Document Type" = field("Document Type"),
+                                                                                       "Document No." = field("Document No."),
+                                                                                       "Document Line No." = field("Line No.")));
             Caption = 'Qty. to Assign';
             DecimalPlaces = 0 : 5;
             Editable = false;
@@ -1082,9 +1082,9 @@ table 50009 "Purchase Line Addon Posted"
         }
         field(5802; "Qty. Assigned"; Decimal)
         {
-            CalcFormula = Sum("Item Charge Assignment (Purch)"."Qty. Assigned" WHERE("Document Type" = FIELD("Document Type"),
-                                                                                      "Document No." = FIELD("Document No."),
-                                                                                      "Document Line No." = FIELD("Line No.")));
+            CalcFormula = sum("Item Charge Assignment (Purch)"."Qty. Assigned" where("Document Type" = field("Document Type"),
+                                                                                      "Document No." = field("Document No."),
+                                                                                      "Document Line No." = field("Line No.")));
             Caption = 'Qty. Assigned';
             DecimalPlaces = 0 : 5;
             Editable = false;
@@ -1167,13 +1167,13 @@ table 50009 "Purchase Line Addon Posted"
         }
         field(50002; "Posted Date"; Date)
         {
-            CalcFormula = Lookup("Purchase Header Addon Posted"."Posting Date" WHERE("No." = FIELD("Document No.")));
+            CalcFormula = lookup("Purchase Header Addon Posted"."Posting Date" where("No." = field("Document No.")));
             FieldClass = FlowField;
         }
         field(50003; "Variant Text"; Text[100])
         {
-            CalcFormula = Lookup("Item Variant".Description WHERE("Item No." = FIELD("No."),
-                                                                   Code = FIELD("Variant Code")));
+            CalcFormula = lookup("Item Variant".Description where("Item No." = field("No."),
+                                                                   Code = field("Variant Code")));
             FieldClass = FlowField;
         }
         field(99000750; "Routing No."; Code[20])
@@ -1185,9 +1185,9 @@ table 50009 "Purchase Line Addon Posted"
         {
             Caption = 'Operation No.';
             Editable = false;
-            TableRelation = "Prod. Order Routing Line"."Operation No." WHERE(Status = CONST(Released),
-                                                                              "Prod. Order No." = FIELD("Prod. Order No."),
-                                                                              "Routing No." = FIELD("Routing No."));
+            TableRelation = "Prod. Order Routing Line"."Operation No." where(Status = const(Released),
+                                                                              "Prod. Order No." = field("Prod. Order No."),
+                                                                              "Routing No." = field("Routing No."));
 
             trigger OnValidate();
             var
@@ -1209,8 +1209,8 @@ table 50009 "Purchase Line Addon Posted"
         {
             Caption = 'Prod. Order Line No.';
             Editable = false;
-            TableRelation = "Prod. Order Line"."Line No." WHERE(Status = FILTER(Released ..),
-                                                                 "Prod. Order No." = FIELD("Prod. Order No."));
+            TableRelation = "Prod. Order Line"."Line No." where(Status = filter(Released ..),
+                                                                 "Prod. Order No." = field("Prod. Order No."));
         }
         field(99000755; "Overhead Rate"; Decimal)
         {
@@ -1225,7 +1225,7 @@ table 50009 "Purchase Line Addon Posted"
         {
             Caption = 'Planning Flexibility';
             OptionCaption = 'Unlimited,None';
-            OptionMembers = Unlimited,"None";
+            OptionMembers = Unlimited,None;
         }
         field(99000758; "Safety Lead Time"; DateFormula)
         {
@@ -1241,7 +1241,7 @@ table 50009 "Purchase Line Addon Posted"
     {
         key(Key1; "Document Type", "Document No.", "Line No.")
         {
-            MaintainSIFTIndex = false;
+            MaintainSiftIndex = false;
             SumIndexFields = Amount, "Amount Including VAT";
         }
         key(Key2; "Document No.", "Line No.", "Document Type")
@@ -1249,26 +1249,26 @@ table 50009 "Purchase Line Addon Posted"
         }
         key(Key3; "Document Type", Type, "No.", "Variant Code", "Drop Shipment", "Location Code", "Expected Receipt Date")
         {
-            MaintainSIFTIndex = false;
+            MaintainSiftIndex = false;
             SumIndexFields = "Outstanding Qty. (Base)";
         }
         key(Key4; "Document Type", "Pay-to Vendor No.", "Currency Code")
         {
-            MaintainSIFTIndex = false;
+            MaintainSiftIndex = false;
             SumIndexFields = "Outstanding Amount", "Amt. Rcd. Not Invoiced", "Outstanding Amount (LCY)", "Amt. Rcd. Not Invoiced (LCY)";
         }
         key(Key5; "Document Type", Type, "No.", "Variant Code", "Drop Shipment", "Shortcut Dimension 1 Code", "Shortcut Dimension 2 Code", "Location Code", "Expected Receipt Date")
         {
             Enabled = false;
-            MaintainSIFTIndex = false;
-            MaintainSQLIndex = false;
+            MaintainSiftIndex = false;
+            MaintainSqlIndex = false;
             SumIndexFields = "Outstanding Qty. (Base)";
         }
         key(Key6; "Document Type", "Pay-to Vendor No.", "Shortcut Dimension 1 Code", "Shortcut Dimension 2 Code", "Currency Code")
         {
             Enabled = false;
-            MaintainSIFTIndex = false;
-            MaintainSQLIndex = false;
+            MaintainSiftIndex = false;
+            MaintainSqlIndex = false;
             SumIndexFields = "Outstanding Amount", "Amt. Rcd. Not Invoiced", "Outstanding Amount (LCY)", "Amt. Rcd. Not Invoiced (LCY)";
         }
         key(Key7; "Document Type", "Blanket Order No.", "Blanket Order Line No.")
@@ -1285,7 +1285,7 @@ table 50009 "Purchase Line Addon Posted"
         }
         key(Key11; Type, "No.", "Variant Code", "Drop Shipment", "Location Code", "Document Type", "Expected Receipt Date")
         {
-            MaintainSQLIndex = false;
+            MaintainSqlIndex = false;
         }
         key(Key12; "Document Type", "Buy-from Vendor No.")
         {
@@ -1311,7 +1311,7 @@ table 50009 "Purchase Line Addon Posted"
         PurchCommentLine: Record "Purch. Comment Line";
     begin
         if Posted then begin
-            MESSAGE('You cannot modify posted record');
+            Message('You cannot modify posted record');
             Rec := xRec;
         end;
     end;
@@ -1320,7 +1320,7 @@ table 50009 "Purchase Line Addon Posted"
     begin
 
         if PurchHeader.bPosted then begin
-            MESSAGE('You cannot modify posted record');
+            Message('You cannot modify posted record');
             Rec := xRec;
         end;
 
@@ -1330,7 +1330,7 @@ table 50009 "Purchase Line Addon Posted"
     trigger OnModify();
     begin
         if Posted then begin
-            MESSAGE('You cannot modify posted record');
+            Message('You cannot modify posted record');
             Rec := xRec;
         end;
     end;
@@ -1492,9 +1492,9 @@ table 50009 "Purchase Line Addon Posted"
 
     local procedure GetItem();
     begin
-        TESTFIELD("No.");
+        TestField("No.");
         if Item."No." <> "No." then
-            Item.GET("No.");
+            Item.Get("No.");
     end;
 
     local procedure UpdateDirectUnitCost(CalledByFieldNo: Integer);

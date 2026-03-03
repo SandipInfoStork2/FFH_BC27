@@ -28,7 +28,7 @@ tableextension 50150 ProductionOrderExt extends "Production Order"
             begin
                 //+1.0.0.293
                 if "Packing Agent" = '' then begin
-                    if Location.GET("Location Code") then begin
+                    if Location.Get("Location Code") then begin
                         if Location."Packing Agent" <> '' then begin
                             "Packing Agent" := Location."Packing Agent";
                         end;
@@ -40,13 +40,13 @@ tableextension 50150 ProductionOrderExt extends "Production Order"
         }
         field(50000; "No. Carton Lines"; Integer)
         {
-            CalcFormula = Count("Prod. Order Component" WHERE("Item Category Code" = FILTER('CARTONS|RBAG|VERTBAG|POTBAGS|CLIPMACH'), "Prod. Order No." = FIELD("No.")));
+            CalcFormula = count("Prod. Order Component" where("Item Category Code" = filter('CARTONS|RBAG|VERTBAG|POTBAGS|CLIPMACH'), "Prod. Order No." = field("No.")));
             Editable = false;
             FieldClass = FlowField;
         }
         field(50001; "Νο. Prod. Order Line"; Integer)
         {
-            CalcFormula = Count("Prod. Order Line" WHERE("Prod. Order No." = FIELD("No.")));
+            CalcFormula = count("Prod. Order Line" where("Prod. Order No." = field("No.")));
             Editable = false;
             FieldClass = FlowField;
         }
@@ -62,13 +62,13 @@ tableextension 50150 ProductionOrderExt extends "Production Order"
             trigger OnValidate();
             begin
                 //+TAL0.3
-                IF "Documents Created" THEN BEGIN
-                    "Documents Created By" := USERID;
-                    "Documents Create Date" := CURRENTDATETIME;
-                END ELSE BEGIN
+                if "Documents Created" then begin
+                    "Documents Created By" := UserId;
+                    "Documents Create Date" := CurrentDateTime;
+                end else begin
                     "Documents Created By" := '';
                     "Documents Create Date" := 0DT;
-                END;
+                end;
                 //-TAL0.3
             end;
         }
@@ -99,7 +99,7 @@ tableextension 50150 ProductionOrderExt extends "Production Order"
         {
             Caption = 'Packing Agent';
             DataClassification = ToBeClassified;
-            TableRelation = "General Categories".Code WHERE("Table No." = CONST(5404), Type = CONST(Category1));
+            TableRelation = "General Categories".Code where("Table No." = const(5404), Type = const(Category1));
         }
         //-1.0.0.229
 
@@ -111,10 +111,10 @@ tableextension 50150 ProductionOrderExt extends "Production Order"
         myInt: Integer;
     begin
         //+TAL0.4
-        "Created By" := USERID;
-        IF ActiveSession.GET(SERVICEINSTANCEID, SESSIONID) THEN BEGIN
+        "Created By" := UserId;
+        if ActiveSession.Get(ServiceInstanceId, SessionId) then begin
             "Client Computer Name" := ActiveSession."Client Computer Name";
-        END;
+        end;
         //-TAL0.4
     end;
 

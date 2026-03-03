@@ -2,6 +2,7 @@ page 50067 "HORECA RC"
 {
     PageType = RoleCenter;
     Caption = 'HORECA RC';
+    ApplicationArea = All;
 
     layout
     {
@@ -48,7 +49,8 @@ page 50067 "HORECA RC"
             action(SectionsAction)
             {
                 Caption = 'Orders';
-                RunObject = Page "Horeca Order List";
+                RunObject = page "Horeca Order List";
+                ToolTip = 'Executes the Orders action.';
             }
         }
 

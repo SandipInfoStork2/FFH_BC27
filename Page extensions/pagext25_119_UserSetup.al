@@ -16,42 +16,47 @@ pageextension 50125 UserSetupExt extends "User Setup"
 
         addafter("Time Sheet Admin.")
         {
-            field("Job Queue Email"; "Job Queue Email")
+            field("Job Queue Email"; Rec."Job Queue Email")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Job Queue Email field.';
             }
-            field("User Department"; "User Department")
+            field("User Department"; Rec."User Department")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the User Department field.';
             }
-            field("Close Inventory Period"; "Close Inventory Period")
+            field("Close Inventory Period"; Rec."Close Inventory Period")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Close Inventory Period field.';
             }
         }
         //TAL 1.0.0.69 >>
         addafter(Email)
         {
-            field(Name; Name)
+            field(Name; Rec.Name)
             {
                 ApplicationArea = All;
-                Tooltip = 'Custom: Name';
+                ToolTip = 'Custom: Name';
             }
             //+1.0.0.228
-            field("Unit Cost Editable"; "Unit Cost Editable")
+            field("Unit Cost Editable"; Rec."Unit Cost Editable")
             {
                 ApplicationArea = All;
                 ToolTip = 'Custom: Unit Cost Editable/Visible';
             }
             //-1.0.0.228
 
-            field("HORECA Customer No."; "HORECA Customer No.")
+            field("HORECA Customer No."; Rec."HORECA Customer No.")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the HORECA Customer No. field.';
             }
-            field("HORECA Ship-to Filter"; "HORECA Ship-to Filter")
+            field("HORECA Ship-to Filter"; Rec."HORECA Ship-to Filter")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the HORECA Ship-to Filter field.';
 
                 trigger OnLookup(var Text: Text): Boolean
 
@@ -59,46 +64,52 @@ pageextension 50125 UserSetupExt extends "User Setup"
                     ShiptoAddress: Record "Ship-to Address";
                 begin
 
-                    ShiptoAddress.RESET;
+                    ShiptoAddress.Reset;
                     ShiptoAddress.SetFilter("Customer No.", Rec."HORECA Customer No.");
                     ShiptoAddress.SetFilter(Code, '%1', Rec."HORECA Ship-to Filter");
                     ShiptoAddress.SetRange(Blocked, false);
                     if ShiptoAddress.FindSet() then begin
-                        PAGE.RUN(PAGE::"Ship-to Address List", ShiptoAddress);
+                        Page.Run(Page::"Ship-to Address List", ShiptoAddress);
                     end;
 
                 end;
             }
-            field("HORECA Items"; "HORECA Items")
+            field("HORECA Items"; Rec."HORECA Items")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the HORECA Items field.';
 
             }
 
-            field("HORECA Min. Order Period"; "HORECA Min. Order Period")
+            field("HORECA Min. Order Period"; Rec."HORECA Min. Order Period")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the HORECA Min. Order Period field.';
             }
 
-            field("HORECA Manager Email 1"; "HORECA Manager Email 1")
+            field("HORECA Manager Email 1"; Rec."HORECA Manager Email 1")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the HORECA Manager Email 1 field.';
             }
 
-            field("HORECA Manager Email 2"; "HORECA Manager Email 2")
+            field("HORECA Manager Email 2"; Rec."HORECA Manager Email 2")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the HORECA Manager Email 2 field.';
             }
 
-            field("HORECA Manager Email 3"; "HORECA Manager Email 3")
+            field("HORECA Manager Email 3"; Rec."HORECA Manager Email 3")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the HORECA Manager Email 3 field.';
             }
 
             //+1.0.0.292
-            field("HORECA Package Item No."; "HORECA Package Item No.")
+            field("HORECA Package Item No."; Rec."HORECA Package Item No.")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the HORECA Package Item No. field.';
             }
             //-1.0.0.292
         }
@@ -119,6 +130,7 @@ pageextension 50125 UserSetupExt extends "User Setup"
                 RunPageLink = "User ID" = field("User ID");
                 Promoted = true;
                 PromotedCategory = Process;
+                ToolTip = 'Executes the User Setup Card action.';
 
             }
         }

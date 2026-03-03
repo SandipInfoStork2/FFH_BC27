@@ -15,12 +15,13 @@ report 50009 "Sales - Shipment Lidl"
 
     Caption = 'Sales - Shipment';
     PreviewMode = PrintLayout;
+    ApplicationArea = All;
 
     dataset
     {
         dataitem("Sales Shipment Header"; "Sales Shipment Header")
         {
-            DataItemTableView = SORTING("No.");
+            DataItemTableView = sorting("No.");
             RequestFilterFields = "No.", "Sell-to Customer No.", "No. Printed";
             RequestFilterHeading = 'Posted Sales Shipment';
             column(No_SalesShptHeader; "No.")
@@ -28,10 +29,10 @@ report 50009 "Sales - Shipment Lidl"
             }
             dataitem(CopyLoop; "Integer")
             {
-                DataItemTableView = SORTING(Number);
+                DataItemTableView = sorting(Number);
                 dataitem(PageLoop; "Integer")
                 {
-                    DataItemTableView = SORTING(Number) WHERE(Number = CONST(1));
+                    DataItemTableView = sorting(Number) where(Number = const(1));
                     column(CompanyInfo2Picture; CompanyInfo2.Picture)
                     {
                     }
@@ -193,7 +194,7 @@ report 50009 "Sales - Shipment Lidl"
                     dataitem(DimensionLoop1; "Integer")
                     {
                         DataItemLinkReference = "Sales Shipment Header";
-                        DataItemTableView = SORTING(Number) WHERE(Number = FILTER(1 ..));
+                        DataItemTableView = sorting(Number) where(Number = filter(1 ..));
                         column(DimText; DimText)
                         {
                         }
@@ -237,9 +238,9 @@ report 50009 "Sales - Shipment Lidl"
                     }
                     dataitem("Sales Shipment Line"; "Sales Shipment Line")
                     {
-                        DataItemLink = "Document No." = FIELD("No.");
+                        DataItemLink = "Document No." = field("No.");
                         DataItemLinkReference = "Sales Shipment Header";
-                        DataItemTableView = SORTING("Document No.", "Line No.");
+                        DataItemTableView = sorting("Document No.", "Line No.");
                         column(Description_SalesShptLine; Description)
                         {
                         }
@@ -331,7 +332,7 @@ report 50009 "Sales - Shipment Lidl"
                         //-1.0.0.297
                         dataitem(DimensionLoop2; "Integer")
                         {
-                            DataItemTableView = SORTING(Number) WHERE(Number = FILTER(1 ..));
+                            DataItemTableView = sorting(Number) where(Number = filter(1 ..));
                             column(DimText1; DimText)
                             {
                             }
@@ -375,7 +376,7 @@ report 50009 "Sales - Shipment Lidl"
                         }
                         dataitem(DisplayAsmInfo; "Integer")
                         {
-                            DataItemTableView = SORTING(Number);
+                            DataItemTableView = sorting(Number);
                             column(PostedAsmLineItemNo; BlanksForIndent + PostedAsmLine."No.")
                             {
                             }
@@ -476,18 +477,18 @@ report 50009 "Sales - Shipment Lidl"
                                 ClassCaption := 'Class';
                                 ProductClass := "Sales Shipment Line"."Product Class";
 
-                                if Country.get("Sales Shipment Line"."Country/Region of Origin Code") then begin
+                                if Country.Get("Sales Shipment Line"."Country/Region of Origin Code") then begin
                                     CountryofOriginName := Country.Name;
                                 end;
 
                                 if "Sales Shipment Line"."Country/Region of Origin Code" <> '' then begin
-                                    if not Country.get("Sales Shipment Line"."Country/Region of Origin Code") then begin
+                                    if not Country.Get("Sales Shipment Line"."Country/Region of Origin Code") then begin
                                         Message(Txt50010, "Sales Shipment Line"."Country/Region of Origin Code");
                                     end;
                                 end;
 
 
-                                if GenCat.GET(27, GenCat.Type::Category9, "Sales Shipment Line"."Category 9") then begin
+                                if GenCat.Get(27, GenCat.Type::Category9, "Sales Shipment Line"."Category 9") then begin
                                     PotatoesDesc := GenCat.Description;
                                     "Sales Shipment Line".Description += ' (' + PotatoesDesc + ')';
                                 end;
@@ -510,7 +511,7 @@ report 50009 "Sales - Shipment Lidl"
                                 ItemTrackingDocMgt.SetRetrieveAsmItemTracking(true);
                                 TrackingSpecCount :=
                                   ItemTrackingDocMgt.RetrieveDocumentItemTracking(TrackingSpecBuffer,
-                                    "Sales Shipment Header"."No.", DATABASE::"Sales Shipment Header", 0);
+                                    "Sales Shipment Header"."No.", Database::"Sales Shipment Header", 0);
                                 ItemTrackingDocMgt.SetRetrieveAsmItemTracking(false);
                                 //-VC
                             end;
@@ -536,11 +537,11 @@ report 50009 "Sales - Shipment Lidl"
                     }
                     dataitem(Total; "Integer")
                     {
-                        DataItemTableView = SORTING(Number) WHERE(Number = CONST(1));
+                        DataItemTableView = sorting(Number) where(Number = const(1));
                     }
                     dataitem(Total2; "Integer")
                     {
-                        DataItemTableView = SORTING(Number) WHERE(Number = CONST(1));
+                        DataItemTableView = sorting(Number) where(Number = const(1));
                         column(BilltoCustNo_SalesShptHeader; "Sales Shipment Header"."Bill-to Customer No.")
                         {
                         }
@@ -583,16 +584,16 @@ report 50009 "Sales - Shipment Lidl"
                     }
                     dataitem("Sales Comment Line"; "Sales Comment Line")
                     {
-                        DataItemLink = "No." = FIELD("No.");
+                        DataItemLink = "No." = field("No.");
                         DataItemLinkReference = "Sales Shipment Header";
-                        DataItemTableView = SORTING("No.") WHERE("Document Type" = FILTER(Shipment));
+                        DataItemTableView = sorting("No.") where("Document Type" = filter(Shipment));
                         column(Comment; "Sales Comment Line".Comment)
                         {
                         }
                     }
                     dataitem(ItemTrackingLine; "Integer")
                     {
-                        DataItemTableView = SORTING(Number);
+                        DataItemTableView = sorting(Number);
                         column(TrackingSpecBufferNo; TrackingSpecBuffer."Item No.")
                         {
                         }
@@ -631,7 +632,7 @@ report 50009 "Sales - Shipment Lidl"
                         }
                         dataitem(TotalItemTracking; "Integer")
                         {
-                            DataItemTableView = SORTING(Number) WHERE(Number = CONST(1));
+                            DataItemTableView = sorting(Number) where(Number = const(1));
                             column(Quantity1; TotalQty)
                             {
                             }
@@ -742,7 +743,7 @@ report 50009 "Sales - Shipment Lidl"
                 if LogInteraction then
                     if not CurrReport.Preview then
                         SegManagement.LogDocument(
-                          5, "No.", 0, 0, DATABASE::Customer, "Sell-to Customer No.", "Salesperson Code",
+                          5, "No.", 0, 0, Database::Customer, "Sell-to Customer No.", "Salesperson Code",
                           "Campaign No.", "Posting Description", '');
 
                 rG_Customer.Get("Sell-to Customer No."); //TAL0.2
@@ -770,50 +771,58 @@ report 50009 "Sales - Shipment Lidl"
 
         layout
         {
-            area(content)
+            area(Content)
             {
                 group(Options)
                 {
                     Caption = 'Options';
                     field(NoOfCopies; NoOfCopies)
                     {
-                        ApplicationArea = all;
+                        ApplicationArea = All;
                         Caption = 'No. of Copies';
+                        ToolTip = 'Specifies the value of the No. of Copies field.';
                     }
                     field(ShowInternalInfo; ShowInternalInfo)
                     {
-                        ApplicationArea = all;
+                        ApplicationArea = All;
                         Caption = 'Show Internal Information';
+                        ToolTip = 'Specifies the value of the Show Internal Information field.';
                     }
                     field(LogInteraction; LogInteraction)
                     {
-                        ApplicationArea = all;
+                        ApplicationArea = All;
                         Caption = 'Log Interaction';
                         Enabled = LogInteractionEnable;
+                        ToolTip = 'Specifies the value of the Log Interaction field.';
                     }
                     field("Show Correction Lines"; ShowCorrectionLines)
                     {
-                        ApplicationArea = all;
+                        ApplicationArea = All;
                         Caption = 'Show Correction Lines';
+                        ToolTip = 'Specifies the value of the Show Correction Lines field.';
                     }
                     field(ShowLotSN; ShowLotSN)
                     {
-                        ApplicationArea = all;
+                        ApplicationArea = All;
                         Caption = 'Show Serial/Lot Number Appendix';
+                        ToolTip = 'Specifies the value of the Show Serial/Lot Number Appendix field.';
                     }
                     field(DisplayAsmInfo; DisplayAssemblyInformation)
                     {
-                        ApplicationArea = all;
+                        ApplicationArea = All;
                         Caption = 'Show Assembly Components';
+                        ToolTip = 'Specifies the value of the Show Assembly Components field.';
                     }
                     field(ShowZeroQtyLines; vG_ShowZeroQtyLines)
                     {
-                        ApplicationArea = all;
+                        ApplicationArea = All;
                         Caption = 'Show Zero Qty Lines';
+                        ToolTip = 'Specifies the value of the Show Zero Qty Lines field.';
                     }
                     field("Hide GlobalGAP COC"; vG_HideGlobalGapCOC)
                     {
-                        ApplicationArea = all;
+                        ApplicationArea = All;
+                        ToolTip = 'Specifies the value of the vG_HideGlobalGapCOC field.';
                     }
                 }
             }

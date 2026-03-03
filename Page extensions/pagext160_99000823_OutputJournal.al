@@ -22,7 +22,7 @@ pageextension 50260 OutputJournalExt extends "Output Journal"
     var
         UserSetup: Record "User Setup";
     begin
-        UserSetup.GET(UserId);
+        UserSetup.Get(UserId);
         UnitCostEditable := UserSetup."Unit Cost Editable";
     end;
     //-1.0.0.228

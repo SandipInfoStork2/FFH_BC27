@@ -2,6 +2,7 @@ report 50003 "Simple Boxes Posted Report"
 {
     DefaultLayout = RDLC;
     RDLCLayout = './Layouts/rep03_50003_SimpleBoxesPostedReport.rdlc';
+    ApplicationArea = All;
 
     dataset
     {
@@ -205,8 +206,8 @@ report 50003 "Simple Boxes Posted Report"
             }
             dataitem("Purchase Line Addon Posted"; "Purchase Line Addon Posted")
             {
-                DataItemLink = "Document No." = FIELD("No.");
-                DataItemTableView = SORTING("Document Type", "Document No.", "Line No.") ORDER(Ascending);
+                DataItemLink = "Document No." = field("No.");
+                DataItemTableView = sorting("Document Type", "Document No.", "Line No.") order(ascending);
                 column(LineNo_PurchaseLineAddon; "Purchase Line Addon Posted"."Line No.")
                 {
                 }

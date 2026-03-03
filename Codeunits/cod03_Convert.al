@@ -16,7 +16,7 @@ codeunit 50003 Convert
         Text003: Label 'No Data To Send';
         Text004: Label 'Exporting #4######.......\';
         Text005: Label 'Total #1####of#2######\\';
-       
+
         Junk: Label '000000000000000500000';
         Text50001: Label '"The length of the Barcode can not be more than 13 - Barcode No.-''%1'',Item No.-''%2'' "';
         Text50002: Label '"The length of the Barcode is more than 13 - Barcode No.-''%1'',Item No.-''%2''. Do you want to skip the record? "';
@@ -30,7 +30,7 @@ codeunit 50003 Convert
         PCTable := 'ϊϋάέήίύώόαβγδεζηθικλμνξοπρστυφχψωςΆΈΉΊΎΏΌΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ&''"%';
         ElotTable := 'iyaeiiyooabgdeziuiklmnjoprstyfxcosAEIIYOOABGDEZIUIKLMNJOPRSTYFXCO    ';
 
-        exit(CONVERTSTR(InString, PCTable, ElotTable));
+        exit(ConvertStr(InString, PCTable, ElotTable));
     end;
 
     procedure Pc2ElotHB(InString: Text[250]): Text[250];
@@ -42,7 +42,7 @@ codeunit 50003 Convert
         PCTable := '.,';
         ElotTable := ',.';
 
-        exit(CONVERTSTR(InString, PCTable, ElotTable));
+        exit(ConvertStr(InString, PCTable, ElotTable));
     end;
 }
 

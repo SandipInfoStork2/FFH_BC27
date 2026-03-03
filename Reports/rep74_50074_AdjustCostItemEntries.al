@@ -4,10 +4,10 @@ report 50074 "Adjust Cost - Item Entries FFH"
     AdditionalSearchTerms = 'cost forwarding';
     ApplicationArea = Basic, Suite;
     Caption = 'Adjust Cost - Item Entries';
-    Permissions = TableData "Item Ledger Entry" = rimd,
-                  TableData "Item Application Entry" = r,
-                  TableData "Value Entry" = rimd,
-                  TableData "Avg. Cost Adjmt. Entry Point" = rimd;
+    Permissions = tabledata "Item Ledger Entry" = rimd,
+                  tabledata "Item Application Entry" = r,
+                  tabledata "Value Entry" = rimd,
+                  tabledata "Avg. Cost Adjmt. Entry Point" = rimd;
     ProcessingOnly = true;
     UsageCategory = Tasks;
 
@@ -21,7 +21,7 @@ report 50074 "Adjust Cost - Item Entries FFH"
 
         layout
         {
-            area(content)
+            area(Content)
             {
                 group(Options)
                 {
@@ -38,7 +38,7 @@ report 50074 "Adjust Cost - Item Entries FFH"
                             ItemList: Page "Item List";
                         begin
                             ItemList.LookupMode := true;
-                            if ItemList.RunModal() = ACTION::LookupOK then
+                            if ItemList.RunModal() = Action::LookupOK then
                                 Text := ItemList.GetSelectionFilter()
                             else
                                 exit(false);
@@ -68,7 +68,7 @@ report 50074 "Adjust Cost - Item Entries FFH"
                             if not PostToGL then
                                 Message(
                                   ResynchronizeInfoMsg,
-                                  ObjTransl.TranslateObject(ObjTransl."Object Type"::Report, REPORT::"Post Inventory Cost to G/L"));
+                                  ObjTransl.TranslateObject(ObjTransl."Object Type"::Report, Report::"Post Inventory Cost to G/L"));
                         end;
                     }
                 }
@@ -107,13 +107,13 @@ report 50074 "Adjust Cost - Item Entries FFH"
         Item: Record Item;
         UpdateItemAnalysisView: Codeunit "Update Item Analysis View";
     begin
-       
-       //+TAL0.1 
-        IF CURRENTCLIENTTYPE = CLIENTTYPE::Background THEN BEGIN
-            PostToGL:=FALSE;
-        END;
+
+        //+TAL0.1 
+        if CurrentClientType = ClientType::Background then begin
+            PostToGL := false;
+        end;
         //-TAL0.1 
-       
+
         OnBeforePreReport(ItemNoFilter, ItemCategoryFilter, PostToGL, Item);
 
         ItemApplnEntry.LockTable();
@@ -172,12 +172,12 @@ report 50074 "Adjust Cost - Item Entries FFH"
         PostToGL := NewPostToGL;
     end;
 
-    [IntegrationEvent(TRUE, false)]
+    [IntegrationEvent(true, false)]
     local procedure OnAfterPreReport()
     begin
     end;
 
-    [IntegrationEvent(TRUE, false)]
+    [IntegrationEvent(true, false)]
     local procedure OnBeforePreReport(ItemNoFilter: Text[250]; ItemCategoryFilter: Text[250]; PostToGL: Boolean; var Item: Record Item)
     begin
     end;

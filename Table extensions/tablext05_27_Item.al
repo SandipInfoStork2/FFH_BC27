@@ -26,7 +26,7 @@ tableextension 50105 ItemExt extends Item
 
         modify("Description 2")
         {
-            caption = 'Description 2 (GR)';
+            Caption = 'Description 2 (GR)';
         }
 
         modify("Shelf No.")
@@ -38,15 +38,15 @@ tableextension 50105 ItemExt extends Item
             begin
 
                 //+TAL0.6
-                IF "Shelf No." <> '' THEN BEGIN
-                    rL_GeneralCategories.RESET;
-                    rL_GeneralCategories.SETRANGE("Table No.", DATABASE::Item);
-                    rL_GeneralCategories.SETRANGE(Type, rL_GeneralCategories.Type::Category2);
-                    rL_GeneralCategories.SETFILTER(Code, "Shelf No.");
-                    IF rL_GeneralCategories.FINDSET THEN BEGIN
-                        VALIDATE("Category 2", "Shelf No.");
-                    END;
-                END;
+                if "Shelf No." <> '' then begin
+                    rL_GeneralCategories.Reset;
+                    rL_GeneralCategories.SetRange("Table No.", Database::Item);
+                    rL_GeneralCategories.SetRange(Type, rL_GeneralCategories.Type::Category2);
+                    rL_GeneralCategories.SetFilter(Code, "Shelf No.");
+                    if rL_GeneralCategories.FindSet then begin
+                        Validate("Category 2", "Shelf No.");
+                    end;
+                end;
                 //-TAL0.6
             end;
         }
@@ -70,43 +70,43 @@ tableextension 50105 ItemExt extends Item
         {
             Caption = 'Packing Group';
             DataClassification = ToBeClassified;
-            TableRelation = "General Categories".Code WHERE("Table No." = CONST(27), Type = CONST(Category1));
+            TableRelation = "General Categories".Code where("Table No." = const(27), Type = const(Category1));
         }
         field(50011; "Category 2"; Code[20])
         {
             Caption = 'Product No.';
             DataClassification = ToBeClassified;
-            TableRelation = "General Categories".Code WHERE("Table No." = CONST(27), Type = CONST(Category2));
+            TableRelation = "General Categories".Code where("Table No." = const(27), Type = const(Category2));
         }
         field(50012; "Category 3"; Code[20])
         {
             Caption = 'Class';
             DataClassification = ToBeClassified;
-            TableRelation = "General Categories".Code WHERE("Table No." = CONST(27), Type = CONST(Category3));
+            TableRelation = "General Categories".Code where("Table No." = const(27), Type = const(Category3));
         }
         field(50013; "Category 4"; Code[20])
         {
             Caption = 'Caliber Min';
             DataClassification = ToBeClassified;
-            TableRelation = "General Categories".Code WHERE("Table No." = CONST(27), Type = CONST(Category4));
+            TableRelation = "General Categories".Code where("Table No." = const(27), Type = const(Category4));
         }
         field(50014; "Category 5"; Code[20])
         {
             Caption = 'Caliber Max';
             DataClassification = ToBeClassified;
-            TableRelation = "General Categories".Code WHERE("Table No." = CONST(27), Type = CONST(Category5));
+            TableRelation = "General Categories".Code where("Table No." = const(27), Type = const(Category5));
         }
         field(50015; "Category 6"; Code[20])
         {
             Caption = 'Caliber UOM';
             DataClassification = ToBeClassified;
-            TableRelation = "General Categories".Code WHERE("Table No." = CONST(27), Type = CONST(Category6));
+            TableRelation = "General Categories".Code where("Table No." = const(27), Type = const(Category6));
         }
         field(50016; "Category 7"; Code[20])
         {
             Caption = 'Variety';
             DataClassification = ToBeClassified;
-            TableRelation = "General Categories".Code WHERE("Table No." = CONST(27), Type = CONST(Category7));
+            TableRelation = "General Categories".Code where("Table No." = const(27), Type = const(Category7));
         }
 
         //+1.0.0.291
@@ -114,7 +114,7 @@ tableextension 50105 ItemExt extends Item
         {
             Caption = 'Product Class (Κατηγορία)';
             DataClassification = ToBeClassified;
-            TableRelation = "General Categories".Code WHERE("Table No." = CONST(27), Type = CONST(Category8));
+            TableRelation = "General Categories".Code where("Table No." = const(27), Type = const(Category8));
             // ToolTip = 'Κατηγορία';
         }
 
@@ -122,7 +122,7 @@ tableextension 50105 ItemExt extends Item
         {
             Caption = 'Potatoes District Region';
             DataClassification = ToBeClassified;
-            TableRelation = "General Categories".Code WHERE("Table No." = CONST(27), Type = CONST(Category9));
+            TableRelation = "General Categories".Code where("Table No." = const(27), Type = const(Category9));
         }
         //-1.0.0.291
 
@@ -130,13 +130,13 @@ tableextension 50105 ItemExt extends Item
         {
             Caption = 'Category 10';
             DataClassification = ToBeClassified;
-            TableRelation = "General Categories".Code WHERE("Table No." = CONST(27), Type = CONST(Category10));
+            TableRelation = "General Categories".Code where("Table No." = const(27), Type = const(Category10));
         }
 
         field(50020; "Packing Group Description"; Text[100])
         {
             FieldClass = FlowField;
-            CalcFormula = Lookup("General Categories".Description WHERE("Table No." = CONST(27), Type = CONST(Category1), Code = FIELD("Category 1")));
+            CalcFormula = lookup("General Categories".Description where("Table No." = const(27), Type = const(Category1), Code = field("Category 1")));
             Editable = false;
 
         }
@@ -149,10 +149,10 @@ tableextension 50105 ItemExt extends Item
 
         field(50022; "No. of Sales Quotes"; Integer)
         {
-            AccessByPermission = TableData "Sales Shipment Header" = R;
-            CalcFormula = Count("Sales Line" WHERE("Document Type" = CONST(Quote),
-                                                                            Type = CONST(Item),
-                                                                            "No." = FIELD("No.")
+            AccessByPermission = tabledata "Sales Shipment Header" = R;
+            CalcFormula = count("Sales Line" where("Document Type" = const(Quote),
+                                                                            Type = const(Item),
+                                                                            "No." = field("No.")
                                                                             ));
             Caption = 'No. of Sales Quotes';
             Editable = false;
@@ -166,7 +166,7 @@ tableextension 50105 ItemExt extends Item
         field(50031; "Ship-to Product Name"; Text[50])
         {
             FieldClass = FlowField;
-            CalcFormula = Lookup("General Categories"."Description 2" WHERE("Table No." = FILTER(27), Type = FILTER(Category2), Code = FIELD("Category 2")));
+            CalcFormula = lookup("General Categories"."Description 2" where("Table No." = filter(27), Type = filter(Category2), Code = field("Category 2")));
             Editable = false;
 
         }
@@ -180,7 +180,7 @@ tableextension 50105 ItemExt extends Item
         field(50033; "Consumption (Qty.)"; Decimal)
         {
             FieldClass = FlowField;
-            CalcFormula = Sum("Item Ledger Entry".Quantity WHERE("Entry Type" = CONST(Consumption), "Item No." = FIELD("No."), "Global Dimension 1 Code" = FIELD("Global Dimension 1 Filter"), "Global Dimension 2 Code" = FIELD("Global Dimension 2 Filter"), "Location Code" = FIELD("Location Filter"), "Drop Shipment" = FIELD("Drop Shipment Filter"), "Variant Code" = FIELD("Variant Filter"), "Posting Date" = FIELD("Date Filter"), "Lot No." = FIELD("Lot No. Filter"), "Serial No." = FIELD("Serial No. Filter")));
+            CalcFormula = sum("Item Ledger Entry".Quantity where("Entry Type" = const(Consumption), "Item No." = field("No."), "Global Dimension 1 Code" = field("Global Dimension 1 Filter"), "Global Dimension 2 Code" = field("Global Dimension 2 Filter"), "Location Code" = field("Location Filter"), "Drop Shipment" = field("Drop Shipment Filter"), "Variant Code" = field("Variant Filter"), "Posting Date" = field("Date Filter"), "Lot No." = field("Lot No. Filter"), "Serial No." = field("Serial No. Filter")));
             CaptionML = ELL = 'Consumption (Qty.)',
                         ENU = 'Consumption (Qty.)';
             DecimalPlaces = 0 : 0;
@@ -190,7 +190,7 @@ tableextension 50105 ItemExt extends Item
         field(50034; "Output (Qty.)"; Decimal)
         {
             FieldClass = FlowField;
-            CalcFormula = Sum("Item Ledger Entry".Quantity WHERE("Entry Type" = CONST(Output), "Item No." = FIELD("No."), "Global Dimension 1 Code" = FIELD("Global Dimension 1 Filter"), "Global Dimension 2 Code" = FIELD("Global Dimension 2 Filter"), "Location Code" = FIELD("Location Filter"), "Drop Shipment" = FIELD("Drop Shipment Filter"), "Variant Code" = FIELD("Variant Filter"), "Posting Date" = FIELD("Date Filter"), "Lot No." = FIELD("Lot No. Filter"), "Serial No." = FIELD("Serial No. Filter")));
+            CalcFormula = sum("Item Ledger Entry".Quantity where("Entry Type" = const(Output), "Item No." = field("No."), "Global Dimension 1 Code" = field("Global Dimension 1 Filter"), "Global Dimension 2 Code" = field("Global Dimension 2 Filter"), "Location Code" = field("Location Filter"), "Drop Shipment" = field("Drop Shipment Filter"), "Variant Code" = field("Variant Filter"), "Posting Date" = field("Date Filter"), "Lot No." = field("Lot No. Filter"), "Serial No." = field("Serial No. Filter")));
             CaptionML = ELL = 'Output (Qty.)',
                         ENU = 'Output (Qty.)';
             DecimalPlaces = 0 : 0;
@@ -200,7 +200,7 @@ tableextension 50105 ItemExt extends Item
         field(50035; "Purchases (Qty.) ILE"; Decimal)
         {
             FieldClass = FlowField;
-            CalcFormula = Sum("Item Ledger Entry".Quantity WHERE("Entry Type" = CONST(Purchase), "Item No." = FIELD("No."), "Global Dimension 1 Code" = FIELD("Global Dimension 1 Filter"), "Global Dimension 2 Code" = FIELD("Global Dimension 2 Filter"), "Location Code" = FIELD("Location Filter"), "Drop Shipment" = FIELD("Drop Shipment Filter"), "Variant Code" = FIELD("Variant Filter"), "Posting Date" = FIELD("Date Filter"), "Lot No." = FIELD("Lot No. Filter"), "Serial No." = FIELD("Serial No. Filter")));
+            CalcFormula = sum("Item Ledger Entry".Quantity where("Entry Type" = const(Purchase), "Item No." = field("No."), "Global Dimension 1 Code" = field("Global Dimension 1 Filter"), "Global Dimension 2 Code" = field("Global Dimension 2 Filter"), "Location Code" = field("Location Filter"), "Drop Shipment" = field("Drop Shipment Filter"), "Variant Code" = field("Variant Filter"), "Posting Date" = field("Date Filter"), "Lot No." = field("Lot No. Filter"), "Serial No." = field("Serial No. Filter")));
             CaptionML = ELL = 'Purchases (Qty.) ILE',
                         ENU = 'Purchases (Qty.) ILE';
             DecimalPlaces = 0 : 0;
@@ -210,7 +210,7 @@ tableextension 50105 ItemExt extends Item
         field(50036; "Sales (Qty.) ILE"; Decimal)
         {
             FieldClass = FlowField;
-            CalcFormula = Sum("Item Ledger Entry".Quantity WHERE("Entry Type" = CONST(Sale), "Item No." = FIELD("No."), "Global Dimension 1 Code" = FIELD("Global Dimension 1 Filter"), "Global Dimension 2 Code" = FIELD("Global Dimension 2 Filter"), "Location Code" = FIELD("Location Filter"), "Drop Shipment" = FIELD("Drop Shipment Filter"), "Variant Code" = FIELD("Variant Filter"), "Posting Date" = FIELD("Date Filter"), "Lot No." = FIELD("Lot No. Filter"), "Serial No." = FIELD("Serial No. Filter")));
+            CalcFormula = sum("Item Ledger Entry".Quantity where("Entry Type" = const(Sale), "Item No." = field("No."), "Global Dimension 1 Code" = field("Global Dimension 1 Filter"), "Global Dimension 2 Code" = field("Global Dimension 2 Filter"), "Location Code" = field("Location Filter"), "Drop Shipment" = field("Drop Shipment Filter"), "Variant Code" = field("Variant Filter"), "Posting Date" = field("Date Filter"), "Lot No." = field("Lot No. Filter"), "Serial No." = field("Serial No. Filter")));
             CaptionML = ELL = 'Sales (Qty.) ILE',
                         ENU = 'Sales (Qty.) ILE';
             DecimalPlaces = 0 : 0;
@@ -220,7 +220,7 @@ tableextension 50105 ItemExt extends Item
         field(50037; "Positive Adjmt. (Qty.) ILE"; Decimal)
         {
             FieldClass = FlowField;
-            CalcFormula = Sum("Item Ledger Entry".Quantity WHERE("Entry Type" = CONST("Positive Adjmt."), "Item No." = FIELD("No."), "Global Dimension 1 Code" = FIELD("Global Dimension 1 Filter"), "Global Dimension 2 Code" = FIELD("Global Dimension 2 Filter"), "Location Code" = FIELD("Location Filter"), "Drop Shipment" = FIELD("Drop Shipment Filter"), "Variant Code" = FIELD("Variant Filter"), "Posting Date" = FIELD("Date Filter"), "Lot No." = FIELD("Lot No. Filter"), "Serial No." = FIELD("Serial No. Filter")));
+            CalcFormula = sum("Item Ledger Entry".Quantity where("Entry Type" = const("Positive Adjmt."), "Item No." = field("No."), "Global Dimension 1 Code" = field("Global Dimension 1 Filter"), "Global Dimension 2 Code" = field("Global Dimension 2 Filter"), "Location Code" = field("Location Filter"), "Drop Shipment" = field("Drop Shipment Filter"), "Variant Code" = field("Variant Filter"), "Posting Date" = field("Date Filter"), "Lot No." = field("Lot No. Filter"), "Serial No." = field("Serial No. Filter")));
             CaptionML = ELL = 'Positive Adjmt. (Qty.) ILE',
                         ENU = 'Positive Adjmt. (Qty.) ILE';
             DecimalPlaces = 0 : 0;
@@ -230,7 +230,7 @@ tableextension 50105 ItemExt extends Item
         field(50038; "Negative Adjmt. (Qty.) ILE"; Decimal)
         {
             FieldClass = FlowField;
-            CalcFormula = Sum("Item Ledger Entry".Quantity WHERE("Entry Type" = CONST("Negative Adjmt."), "Item No." = FIELD("No."), "Global Dimension 1 Code" = FIELD("Global Dimension 1 Filter"), "Global Dimension 2 Code" = FIELD("Global Dimension 2 Filter"), "Location Code" = FIELD("Location Filter"), "Drop Shipment" = FIELD("Drop Shipment Filter"), "Variant Code" = FIELD("Variant Filter"), "Posting Date" = FIELD("Date Filter"), "Lot No." = FIELD("Lot No. Filter"), "Serial No." = FIELD("Serial No. Filter")));
+            CalcFormula = sum("Item Ledger Entry".Quantity where("Entry Type" = const("Negative Adjmt."), "Item No." = field("No."), "Global Dimension 1 Code" = field("Global Dimension 1 Filter"), "Global Dimension 2 Code" = field("Global Dimension 2 Filter"), "Location Code" = field("Location Filter"), "Drop Shipment" = field("Drop Shipment Filter"), "Variant Code" = field("Variant Filter"), "Posting Date" = field("Date Filter"), "Lot No." = field("Lot No. Filter"), "Serial No." = field("Serial No. Filter")));
             CaptionML = ELL = 'Negative Adjmt. (Qty.) ILE',
                         ENU = 'Negative Adjmt. (Qty.) ILE';
             DecimalPlaces = 0 : 0;
@@ -240,7 +240,7 @@ tableextension 50105 ItemExt extends Item
         field(50039; "Transfer (Qty.) ILE"; Decimal)
         {
             FieldClass = FlowField;
-            CalcFormula = Sum("Item Ledger Entry".Quantity WHERE("Entry Type" = CONST(Transfer), "Item No." = FIELD("No."), "Global Dimension 1 Code" = FIELD("Global Dimension 1 Filter"), "Global Dimension 2 Code" = FIELD("Global Dimension 2 Filter"), "Location Code" = FIELD("Location Filter"), "Drop Shipment" = FIELD("Drop Shipment Filter"), "Variant Code" = FIELD("Variant Filter"), "Posting Date" = FIELD("Date Filter"), "Lot No." = FIELD("Lot No. Filter"), "Serial No." = FIELD("Serial No. Filter")));
+            CalcFormula = sum("Item Ledger Entry".Quantity where("Entry Type" = const(Transfer), "Item No." = field("No."), "Global Dimension 1 Code" = field("Global Dimension 1 Filter"), "Global Dimension 2 Code" = field("Global Dimension 2 Filter"), "Location Code" = field("Location Filter"), "Drop Shipment" = field("Drop Shipment Filter"), "Variant Code" = field("Variant Filter"), "Posting Date" = field("Date Filter"), "Lot No." = field("Lot No. Filter"), "Serial No." = field("Serial No. Filter")));
             CaptionML = ELL = 'Transfer (Qty.) ILE',
                         ENU = 'Transfer (Qty.) ILE';
             DecimalPlaces = 0 : 0;
@@ -254,28 +254,28 @@ tableextension 50105 ItemExt extends Item
         {
             Caption = 'Category 11';
             DataClassification = ToBeClassified;
-            TableRelation = "General Categories".Code WHERE("Table No." = CONST(27), Type = CONST(Category11));
+            TableRelation = "General Categories".Code where("Table No." = const(27), Type = const(Category11));
         }
 
         field(50041; "Category 12"; Code[20])
         {
             Caption = 'Category 12';
             DataClassification = ToBeClassified;
-            TableRelation = "General Categories".Code WHERE("Table No." = CONST(27), Type = CONST(Category12));
+            TableRelation = "General Categories".Code where("Table No." = const(27), Type = const(Category12));
         }
 
         field(50042; "Category 13"; Code[20])
         {
             Caption = 'Category 13';
             DataClassification = ToBeClassified;
-            TableRelation = "General Categories".Code WHERE("Table No." = CONST(27), Type = CONST(Category13));
+            TableRelation = "General Categories".Code where("Table No." = const(27), Type = const(Category13));
         }
 
         field(50043; "Category 14"; Code[20])
         {
             Caption = 'Category 14';
             DataClassification = ToBeClassified;
-            TableRelation = "General Categories".Code WHERE("Table No." = CONST(27), Type = CONST(Category14));
+            TableRelation = "General Categories".Code where("Table No." = const(27), Type = const(Category14));
         }
 
 
@@ -283,42 +283,42 @@ tableextension 50105 ItemExt extends Item
         {
             Caption = 'Category 15';
             DataClassification = ToBeClassified;
-            TableRelation = "General Categories".Code WHERE("Table No." = CONST(27), Type = CONST(Category15));
+            TableRelation = "General Categories".Code where("Table No." = const(27), Type = const(Category15));
         }
 
         field(50045; "Category 16"; Code[20])
         {
             Caption = 'Category 16';
             DataClassification = ToBeClassified;
-            TableRelation = "General Categories".Code WHERE("Table No." = CONST(27), Type = CONST(Category16));
+            TableRelation = "General Categories".Code where("Table No." = const(27), Type = const(Category16));
         }
 
         field(50046; "Category 17"; Code[20])
         {
             Caption = 'Category 17';
             DataClassification = ToBeClassified;
-            TableRelation = "General Categories".Code WHERE("Table No." = CONST(27), Type = CONST(Category17));
+            TableRelation = "General Categories".Code where("Table No." = const(27), Type = const(Category17));
         }
 
         field(50047; "Category 18"; Code[20])
         {
             Caption = 'Category 18';
             DataClassification = ToBeClassified;
-            TableRelation = "General Categories".Code WHERE("Table No." = CONST(27), Type = CONST(Category18));
+            TableRelation = "General Categories".Code where("Table No." = const(27), Type = const(Category18));
         }
 
         field(50048; "Category 19"; Code[20])
         {
             Caption = 'Category 19';
             DataClassification = ToBeClassified;
-            TableRelation = "General Categories".Code WHERE("Table No." = CONST(27), Type = CONST(Category19));
+            TableRelation = "General Categories".Code where("Table No." = const(27), Type = const(Category19));
         }
 
         field(50049; "Category 20"; Code[20])
         {
             Caption = 'Category 20';
             DataClassification = ToBeClassified;
-            TableRelation = "General Categories".Code WHERE("Table No." = CONST(27), Type = CONST(Category20));
+            TableRelation = "General Categories".Code where("Table No." = const(27), Type = const(Category20));
         }
 
 
@@ -326,8 +326,8 @@ tableextension 50105 ItemExt extends Item
         field(50050; "Qty. Out on Sales Order"; Decimal)
         {
             FieldClass = FlowField;
-            AccessByPermission = TableData "Sales Shipment Header" = R;
-            CalcFormula = Sum("Sales Line"."Outstanding Quantity" WHERE("Document Type" = CONST(Order), Type = CONST(Item), "No." = FIELD("No."), "Shortcut Dimension 1 Code" = FIELD("Global Dimension 1 Filter"), "Shortcut Dimension 2 Code" = FIELD("Global Dimension 2 Filter"), "Location Code" = FIELD("Location Filter"), "Drop Shipment" = FIELD("Drop Shipment Filter"), "Variant Code" = FIELD("Variant Filter"), "Shipment Date" = FIELD("Date Filter")));
+            AccessByPermission = tabledata "Sales Shipment Header" = R;
+            CalcFormula = sum("Sales Line"."Outstanding Quantity" where("Document Type" = const(Order), Type = const(Item), "No." = field("No."), "Shortcut Dimension 1 Code" = field("Global Dimension 1 Filter"), "Shortcut Dimension 2 Code" = field("Global Dimension 2 Filter"), "Location Code" = field("Location Filter"), "Drop Shipment" = field("Drop Shipment Filter"), "Variant Code" = field("Variant Filter"), "Shipment Date" = field("Date Filter")));
             Caption = 'Qty. Oustanding on Sales Order';
             DecimalPlaces = 0 : 5;
             Editable = false;
@@ -354,7 +354,7 @@ tableextension 50105 ItemExt extends Item
         {
             Caption = 'Packing Agent';
             DataClassification = ToBeClassified;
-            TableRelation = "General Categories".Code WHERE("Table No." = CONST(5404), Type = CONST(Category1));
+            TableRelation = "General Categories".Code where("Table No." = const(5404), Type = const(Category1));
         }
         //-1.0.0.232
 
@@ -382,21 +382,21 @@ tableextension 50105 ItemExt extends Item
         rL_SalesRecSetup: Record "Sales & Receivables Setup";
     begin
         //+TAL0.2
-        IF "No." = '' THEN BEGIN
-            ERROR('Blank No is not allowed');
-        END;
+        if "No." = '' then begin
+            Error('Blank No is not allowed');
+        end;
         //-TAL0.2
 
-        VALIDATE("Category 3", 'I'); //TAL0.5 
+        Validate("Category 3", 'I'); //TAL0.5 
 
         //+TAL0.7
-        IF rL_NoSeries.GET("No. Series") THEN BEGIN
-            IF rL_NoSeries."Item Tracking" THEN BEGIN
-                rL_SalesRecSetup.GET;
-                VALIDATE("Item Tracking Code", rL_SalesRecSetup."Default Item Tracking Code");
-                VALIDATE("Lot Nos.", rL_SalesRecSetup."Default Lot Nos.");
-            END;
-        END;
+        if rL_NoSeries.Get("No. Series") then begin
+            if rL_NoSeries."Item Tracking" then begin
+                rL_SalesRecSetup.Get;
+                Validate("Item Tracking Code", rL_SalesRecSetup."Default Item Tracking Code");
+                Validate("Lot Nos.", rL_SalesRecSetup."Default Lot Nos.");
+            end;
+        end;
         //-TAL0.7
 
     end;
@@ -406,9 +406,9 @@ tableextension 50105 ItemExt extends Item
         myInt: Integer;
     begin
         //+TAL0.2
-        IF "No." = '' THEN BEGIN
-            ERROR('Blank No is not allowed');
-        END;
+        if "No." = '' then begin
+            Error('Blank No is not allowed');
+        end;
         //-TAL0.2
     end;
 
@@ -418,14 +418,14 @@ tableextension 50105 ItemExt extends Item
         rL_LastILE: Record "Item Ledger Entry";
     begin
         LastLandedUnitCost := 0;
-        rL_LastILE.RESET;
+        rL_LastILE.Reset;
         rL_LastILE.SetRange("Entry Type", rL_LastILE."Entry Type"::Purchase);
         rL_LastILE.SetRange("Document Type", rL_LastILE."Document Type"::"Purchase Receipt");
         rL_LastILE.SetFilter("Item No.", "No.");
         if rL_LastILE.FindLast() then begin
-            rL_LastILE.calcfields("Cost Amount (Actual)", "Cost Amount (Expected)");
+            rL_LastILE.CalcFields("Cost Amount (Actual)", "Cost Amount (Expected)");
             LastLandedUnitCost := (rL_LastILE."Cost Amount (Actual)" + rL_LastILE."Cost Amount (Expected)") / rL_LastILE.Quantity;
-            LastLandedUnitCost := ROUND(LastLandedUnitCost, 0.01, '=');
+            LastLandedUnitCost := Round(LastLandedUnitCost, 0.01, '=');
         end;
     end;
 
@@ -433,14 +433,14 @@ tableextension 50105 ItemExt extends Item
     var
         rL_LastILE: Record "Item Ledger Entry";
     begin
-        rL_LastILE.RESET;
+        rL_LastILE.Reset;
         rL_LastILE.SetRange("Entry Type", rL_LastILE."Entry Type"::Purchase);
         rL_LastILE.SetRange("Document Type", rL_LastILE."Document Type"::"Purchase Receipt");
         rL_LastILE.SetFilter("Item No.", "No.");
         if rL_LastILE.FindLast() then begin
 
         end;
-        Page.Run(page::"Item Ledger Entries", rL_LastILE);
+        Page.Run(Page::"Item Ledger Entries", rL_LastILE);
     end;
 
     var

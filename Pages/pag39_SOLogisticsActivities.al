@@ -5,35 +5,40 @@ page 50039 "SO Logistics Activities"
     PageType = CardPart;
     RefreshOnActivate = true;
     SourceTable = "Sales Cue";
+    ApplicationArea = All;
 
     layout
     {
-        area(content)
+        area(Content)
         {
-            cuegroup("Location")
+            cuegroup(Location)
             {
                 Caption = 'Ship Today';
                 field("Aradipou - Main Orders"; Rec."Aradipou - Main Orders")
                 {
                     ApplicationArea = Basic, Suite;
-                    DrillDownPageID = "Sales Order List";
+                    DrillDownPageId = "Sales Order List";
+                    ToolTip = 'Specifies the value of the Aradipou - Main Sales Orders field.';
                 }
 
                 field("Fresh Cut Orders"; Rec."Fresh Cut Orders")
                 {
                     ApplicationArea = Basic, Suite;
-                    DrillDownPageID = "Sales Order List";
+                    DrillDownPageId = "Sales Order List";
+                    ToolTip = 'Specifies the value of the Fresh Cut Sales Orders field.';
                 }
                 field("Kitchen Orders"; Rec."Kitchen Orders")
                 {
                     ApplicationArea = Basic, Suite;
-                    DrillDownPageID = "Sales Order List";
+                    DrillDownPageId = "Sales Order List";
+                    ToolTip = 'Specifies the value of the Kitchen Sales Orders field.';
                 }
 
                 field("Potatoes Orders"; Rec."Potatoes Orders")
                 {
                     ApplicationArea = Basic, Suite;
-                    DrillDownPageID = "Sales Order List";
+                    DrillDownPageId = "Sales Order List";
+                    ToolTip = 'Specifies the value of the Potatoes Sales Orders field.';
                 }
 
             }
@@ -44,14 +49,14 @@ page 50039 "SO Logistics Activities"
                 field("Sales Orders - Open"; Rec."Sales Orders - Open")
                 {
                     ApplicationArea = Basic, Suite;
-                    DrillDownPageID = "Sales Order List";
+                    DrillDownPageId = "Sales Order List";
                     ToolTip = 'Specifies the number of sales orders that are not fully posted.';
                 }
 
                 field("Upcoming Orders"; Rec."Upcoming Orders")
                 {
                     ApplicationArea = Suite;
-                    DrillDownPageID = "Sales Order List";
+                    DrillDownPageId = "Sales Order List";
                     ToolTip = 'Specifies the number of upcoming orders that are displayed in the Purchase Cue on the Role Center. The documents are filtered by today''s date.';
                 }
 
@@ -62,7 +67,7 @@ page 50039 "SO Logistics Activities"
                     {
                         ApplicationArea = Basic, Suite;
                         Caption = 'New Sales Order';
-                        RunObject = Page "Sales Order";
+                        RunObject = page "Sales Order";
                         RunPageMode = Create;
                         ToolTip = 'Create a new sales order for items or services that require partial posting.';
                     }
@@ -76,7 +81,7 @@ page 50039 "SO Logistics Activities"
                 {
                     ApplicationArea = Basic, Suite;
                     Caption = 'Outstanding Sales Orders';
-                    DrillDownPageID = "Sales Order List";
+                    DrillDownPageId = "Sales Order List";
                     ToolTip = 'Specifies the number of outstanding sales orders that are displayed in the sales Cue on the Role Center.';
 
                     trigger OnDrillDown()
@@ -154,7 +159,7 @@ page 50039 "SO Logistics Activities"
                 {
                     ApplicationArea = Suite;
                     Caption = 'Shipped, Not Invoiced';
-                    DrillDownPageID = "Sales Order List";
+                    DrillDownPageId = "Sales Order List";
                     ToolTip = 'Specifies Shipped orders that are not invoiced. The orders are displayed in the Sales Cue on the Logistics role center.';
 
                     //trigger OnDrillDown()
@@ -166,7 +171,7 @@ page 50039 "SO Logistics Activities"
                 {
                     ApplicationArea = Suite;
                     Caption = 'Partially Invoiced';
-                    DrillDownPageID = "Sales Order List";
+                    DrillDownPageId = "Sales Order List";
                     ToolTip = 'Specifies the number of partially invoiced orders that are displayed in the Sales Cue on the Role Center.';
 
                     //trigger OnDrillDown()
@@ -181,8 +186,9 @@ page 50039 "SO Logistics Activities"
                 field("Count Sales Orders"; Rec."Count Sales Orders")
                 {
                     Caption = 'Sales Orders';
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     DrillDownPageId = "Sales Order List";
+                    ToolTip = 'Specifies the value of the Sales Orders field.';
                 }
             }
 
@@ -192,7 +198,8 @@ page 50039 "SO Logistics Activities"
                 field("Sales Invoices"; Rec."Sales Invoices")
                 {
                     ApplicationArea = All;
-                    DrillDownPageID = "Sales Invoice List";
+                    DrillDownPageId = "Sales Invoice List";
+                    ToolTip = 'Specifies the value of the Sales Invoices field.';
                 }
 
             }
@@ -202,13 +209,13 @@ page 50039 "SO Logistics Activities"
                 field("Sales Return Orders - Open"; Rec."Sales Return Orders - Open")
                 {
                     ApplicationArea = SalesReturnOrder;
-                    DrillDownPageID = "Sales Return Order List";
+                    DrillDownPageId = "Sales Return Order List";
                     ToolTip = 'Specifies the number of sales return orders documents that are displayed in the Sales Cue on the Role Center. The documents are filtered by today''s date.';
                 }
                 field("Sales Credit Memos - Open"; Rec."Sales Credit Memos - Open")
                 {
                     ApplicationArea = Basic, Suite;
-                    DrillDownPageID = "Sales Credit Memos";
+                    DrillDownPageId = "Sales Credit Memos";
                     ToolTip = 'Specifies the number of sales credit memos that are not yet posted.';
                 }
 
@@ -218,7 +225,7 @@ page 50039 "SO Logistics Activities"
                     {
                         ApplicationArea = SalesReturnOrder;
                         Caption = 'New Sales Return Order';
-                        RunObject = Page "Sales Return Order";
+                        RunObject = page "Sales Return Order";
                         RunPageMode = Create;
                         ToolTip = 'Process a return or refund that requires inventory handling by creating a new sales return order.';
                     }
@@ -226,7 +233,7 @@ page 50039 "SO Logistics Activities"
                     {
                         ApplicationArea = Basic, Suite;
                         Caption = 'New Sales Credit Memo';
-                        RunObject = Page "Sales Credit Memo";
+                        RunObject = page "Sales Credit Memo";
                         RunPageMode = Create;
                         ToolTip = 'Process a return or refund by creating a new sales credit memo.';
                     }
@@ -235,7 +242,7 @@ page 50039 "SO Logistics Activities"
 
 
 
-            usercontrol(SATAsyncLoader; SatisfactionSurveyAsync)
+            /* usercontrol(SATAsyncLoader; SatisfactionSurveyAsync)
             {
                 ApplicationArea = Basic, Suite;
                 trigger ResponseReceived(Status: Integer; Response: Text)
@@ -250,7 +257,7 @@ page 50039 "SO Logistics Activities"
                     IsAddInReady := true;
                     CheckIfSurveyEnabled();
                 end;
-            }
+            } */
 
 
         }
@@ -258,7 +265,7 @@ page 50039 "SO Logistics Activities"
 
     actions
     {
-        area(processing)
+        area(Processing)
         {
             action("Set Up Cues")
             {
@@ -319,7 +326,7 @@ page 50039 "SO Logistics Activities"
             PageNotifier := PageNotifier.Create;
             PageNotifier.NotifyPageReady;
         end; */ //BC21
-        CheckIfSurveyEnabled();
+        //CheckIfSurveyEnabled();
     end;
 
     var
@@ -353,9 +360,9 @@ page 50039 "SO Logistics Activities"
         CheckIfSurveyEnabled();
     end; */ //BC21
 
-    local procedure CheckIfSurveyEnabled()
+    /* local procedure CheckIfSurveyEnabled()
     var
-        SatisfactionSurveyMgt: Codeunit "Satisfaction Survey Mgt.";
+        SatisfactionSurveyMgt: Codeunit"Satisfaction Survey Mgt.";
         CheckUrl: Text;
     begin
         if not IsAddInReady then
@@ -367,7 +374,7 @@ page 50039 "SO Logistics Activities"
         if not SatisfactionSurveyMgt.TryGetCheckUrl(CheckUrl) then
             exit;
         CurrPage.SATAsyncLoader.SendRequest(CheckUrl, SatisfactionSurveyMgt.GetRequestTimeoutAsync());
-    end;
+    end; */
 
 
 }

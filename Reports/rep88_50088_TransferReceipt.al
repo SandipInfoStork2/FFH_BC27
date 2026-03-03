@@ -6,12 +6,13 @@ report 50088 "Transfer Receipt FFH"
     RDLCLayout = './Layouts/rep88_50088_TransferReceipt.rdlc';
 
     Caption = 'Transfer Receipt';
+    ApplicationArea = All;
 
     dataset
     {
         dataitem("Transfer Receipt Header"; "Transfer Receipt Header")
         {
-            DataItemTableView = SORTING("No.");
+            DataItemTableView = sorting("No.");
             RequestFilterFields = "No.", "Transfer-from Code";
             RequestFilterHeading = 'Posted Transfer Receipt';
             column(No_TransRcptHdr; "No.")
@@ -19,10 +20,10 @@ report 50088 "Transfer Receipt FFH"
             }
             dataitem(CopyLoop; "Integer")
             {
-                DataItemTableView = SORTING(Number);
+                DataItemTableView = sorting(Number);
                 dataitem(PageLoop; "Integer")
                 {
-                    DataItemTableView = SORTING(Number) WHERE(Number = CONST(1));
+                    DataItemTableView = sorting(Number) where(Number = const(1));
                     column(CopyText; StrSubstNo(Text001, CopyText))
                     {
                     }
@@ -112,7 +113,7 @@ report 50088 "Transfer Receipt FFH"
                     dataitem(DimensionLoop1; "Integer")
                     {
                         DataItemLinkReference = "Transfer Receipt Header";
-                        DataItemTableView = SORTING(Number) WHERE(Number = FILTER(1 ..));
+                        DataItemTableView = sorting(Number) where(Number = filter(1 ..));
                         column(DimText; DimText)
                         {
                         }
@@ -159,9 +160,9 @@ report 50088 "Transfer Receipt FFH"
                     }
                     dataitem("Transfer Receipt Line"; "Transfer Receipt Line")
                     {
-                        DataItemLink = "Document No." = FIELD("No.");
+                        DataItemLink = "Document No." = field("No.");
                         DataItemLinkReference = "Transfer Receipt Header";
-                        DataItemTableView = SORTING("Document No.", "Line No.");
+                        DataItemTableView = sorting("Document No.", "Line No.");
                         column(ShowInternalInfo; ShowInternalInfo)
                         {
                         }
@@ -186,7 +187,7 @@ report 50088 "Transfer Receipt FFH"
                         }
                         dataitem(DimensionLoop2; "Integer")
                         {
-                            DataItemTableView = SORTING(Number) WHERE(Number = FILTER(1 ..));
+                            DataItemTableView = sorting(Number) where(Number = filter(1 ..));
                             column(DimText2; DimText)
                             {
                             }
@@ -283,7 +284,7 @@ report 50088 "Transfer Receipt FFH"
 
         layout
         {
-            area(content)
+            area(Content)
             {
                 group(Options)
                 {
@@ -291,10 +292,14 @@ report 50088 "Transfer Receipt FFH"
                     field(NoOfCopies; NoOfCopies)
                     {
                         Caption = 'No. of Copies';
+                        ToolTip = 'Specifies the value of the No. of Copies field.';
+                        ApplicationArea = All;
                     }
                     field(ShowInternalInfo; ShowInternalInfo)
                     {
                         Caption = 'Show Internal Information';
+                        ToolTip = 'Specifies the value of the Show Internal Information field.';
+                        ApplicationArea = All;
                     }
                 }
             }

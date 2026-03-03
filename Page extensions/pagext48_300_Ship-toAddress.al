@@ -11,19 +11,22 @@ pageextension 50148 ShiptoAddressExt extends "Ship-to Address"
 
         addafter("Customer No.")
         {
-            field("GLN Delivery"; "GLN Delivery")
+            field("GLN Delivery"; Rec."GLN Delivery")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 ShowMandatory = true;
+                ToolTip = 'Specifies the value of the GLN Delivery field.';
             }
-            field("Interface Code"; "Interface Code")
+            field("Interface Code"; Rec."Interface Code")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Interface Code field.';
             }
 
-            field(Blocked; Blocked)
+            field(Blocked; Rec.Blocked)
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Blocked field.';
             }
         }
 
@@ -31,45 +34,54 @@ pageextension 50148 ShiptoAddressExt extends "Ship-to Address"
         {
             group(DD)
             {
-                caption = 'Delivery Days';
-                field(Monday; Monday)
+                Caption = 'Delivery Days';
+                field(Monday; Rec.Monday)
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Monday field.';
                 }
-                field(Tuesday; Tuesday)
+                field(Tuesday; Rec.Tuesday)
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Tuesday field.';
                 }
-                field(Wednesday; Wednesday)
+                field(Wednesday; Rec.Wednesday)
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Wednesday field.';
                 }
-                field(Thursday; Thursday)
+                field(Thursday; Rec.Thursday)
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Thursday field.';
                 }
-                field(Friday; Friday)
+                field(Friday; Rec.Friday)
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Friday field.';
                 }
-                field(Saturday; Saturday)
+                field(Saturday; Rec.Saturday)
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Saturday field.';
                 }
-                field(Sunday; Sunday)
+                field(Sunday; Rec.Sunday)
                 {
                     ApplicationArea = All;
                     Visible = false;
+                    ToolTip = 'Specifies the value of the Sunday field.';
                 }
             }
-            field("Notify Place Order"; "Notify Place Order")
+            field("Notify Place Order"; Rec."Notify Place Order")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Notify Place Order field.';
             }
 
-            field("Shop Password"; "Shop Password")
+            field("Shop Password"; Rec."Shop Password")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Shop Password field.';
             }
         }
     }

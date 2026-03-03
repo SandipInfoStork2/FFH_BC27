@@ -10,8 +10,8 @@ report 50080 "Phys. Inventory List FFH"
     {
         dataitem(PageLoop; "Integer")
         {
-            DataItemTableView = SORTING(Number) WHERE(Number = CONST(1));
-            column(CompanyName; COMPANYPROPERTY.DisplayName)
+            DataItemTableView = sorting(Number) where(Number = const(1));
+            column(CompanyName; CompanyProperty.DisplayName)
             {
             }
             column(ShowLotSN; ShowLotSN)
@@ -70,8 +70,8 @@ report 50080 "Phys. Inventory List FFH"
                 }
                 dataitem("Item Journal Line"; "Item Journal Line")
                 {
-                    DataItemLink = "Journal Template Name" = FIELD("Journal Template Name"), "Journal Batch Name" = FIELD(Name);
-                    DataItemTableView = SORTING("Journal Template Name", "Journal Batch Name", "Line No.");
+                    DataItemLink = "Journal Template Name" = field("Journal Template Name"), "Journal Batch Name" = field(Name);
+                    DataItemTableView = sorting("Journal Template Name", "Journal Batch Name", "Line No.");
                     RequestFilterFields = "Shortcut Dimension 1 Code", "Shortcut Dimension 2 Code", "Location Code", "Bin Code";
                     column(PostingDt_ItemJournalLine; Format("Posting Date"))
                     {
@@ -117,7 +117,7 @@ report 50080 "Phys. Inventory List FFH"
                     }
                     dataitem(ItemTrackingSpecification; "Integer")
                     {
-                        DataItemTableView = SORTING(Number);
+                        DataItemTableView = sorting(Number);
                         column(LotNoCaption; GetLotNoCaption)
                         {
                         }
@@ -131,7 +131,7 @@ report 50080 "Phys. Inventory List FFH"
                         {
                         }
 
-                        column(ReservEntryBufferExpirationDate; FORMAT(ReservEntryBuffer."Expiration Date"))
+                        column(ReservEntryBufferExpirationDate; Format(ReservEntryBuffer."Expiration Date"))
                         {
                         }
                         column(ReservEntryBufferSerialNo; ReservEntryBuffer."Serial No.")
@@ -158,7 +158,7 @@ report 50080 "Phys. Inventory List FFH"
                             ReservEntryBuffer.SetCurrentKey("Source ID", "Source Ref. No.", "Source Type", "Source Subtype", "Source Batch Name");
                             ReservEntryBuffer.SetRange("Source ID", "Item Journal Line"."Journal Template Name");
                             ReservEntryBuffer.SetRange("Source Ref. No.", "Item Journal Line"."Line No.");
-                            ReservEntryBuffer.SetRange("Source Type", DATABASE::"Item Journal Line");
+                            ReservEntryBuffer.SetRange("Source Type", Database::"Item Journal Line");
                             ReservEntryBuffer.SetFilter("Source Subtype", '=%1', ReservEntryBuffer."Source Subtype"::"0");
                             ReservEntryBuffer.SetRange("Source Batch Name", "Item Journal Line"."Journal Batch Name");
 
@@ -202,7 +202,7 @@ report 50080 "Phys. Inventory List FFH"
 
         layout
         {
-            area(content)
+            area(Content)
             {
                 group(Options)
                 {
@@ -382,7 +382,7 @@ report 50080 "Phys. Inventory List FFH"
             ReservEntryBuffer."Variant Code" := ItemJournalLine."Variant Code";
             ReservEntryBuffer."Reservation Status" := ReservEntryBuffer."Reservation Status"::Prospect;
             ReservEntryBuffer."Creation Date" := WorkDate;
-            ReservEntryBuffer."Source Type" := DATABASE::"Item Journal Line";
+            ReservEntryBuffer."Source Type" := Database::"Item Journal Line";
             ReservEntryBuffer."Source ID" := ItemJournalLine."Journal Template Name";
             ReservEntryBuffer."Source Batch Name" := ItemJournalLine."Journal Batch Name";
             ReservEntryBuffer."Source Ref. No." := ItemJournalLine."Line No.";

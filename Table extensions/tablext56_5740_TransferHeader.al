@@ -19,13 +19,13 @@ tableextension 50156 TransferHeaderExt extends "Transfer Header"
                 vl_salesperson: Record "Salesperson/Purchaser";
             begin
                 //TAL 0.1 ANP
-                IF vl_salesperson.GET("Salesperson Code") THEN BEGIN
+                if vl_salesperson.Get("Salesperson Code") then begin
                     "Salesperson Name" := vl_salesperson.Name;
-                END
-                ELSE
+                end
+                else
                     "Salesperson Name" := '';
-                BEGIN
-                END;
+                begin
+                end;
                 //TAL 0.1 ANP
             end;
         }
@@ -70,7 +70,7 @@ tableextension 50156 TransferHeaderExt extends "Transfer Header"
 
         TestField("Shipment/Delivery Time");
 
-        vBody := 'Dear Colleague,<br><br> Please send the attached Items to ' + LocationTo."Name 2" + '. Shipment/Delivery Date time: <b>' + Format("Shipment Date") + ' ' + FORMAT("Shipment/Delivery Time", 0, '<Hours24,2>:<Minutes,2>') + '</b></br></br> Regards, ' + LocationTo.Contact;
+        vBody := 'Dear Colleague,<br><br> Please send the attached Items to ' + LocationTo."Name 2" + '. Shipment/Delivery Date time: <b>' + Format("Shipment Date") + ' ' + Format("Shipment/Delivery Time", 0, '<Hours24,2>:<Minutes,2>') + '</b></br></br> Regards, ' + LocationTo.Contact;
 
         // EmailMessage.Create(Location."E-Mail", 'Transfer To ' + "Transfer-to Code" + ' ' + "No.", vBody, true);//before
         //TAL 1.0.0.95 >>
@@ -80,7 +80,7 @@ tableextension 50156 TransferHeaderExt extends "Transfer Header"
         EmailMessage.Create(ToRecipient, 'Transfer To ' + LocationTo."Name 2" + ' ' + "No.", vBody, true, CCRecipient, BCCRecipient);
         //TAL 1.0.0.95 <<
 
-        TransferHeader.RESET;
+        TransferHeader.Reset;
         TransferHeader.SetFilter("No.", "No.");
         if TransferHeader.FindSet() then;
 
@@ -98,16 +98,16 @@ tableextension 50156 TransferHeaderExt extends "Transfer Header"
         rpt_50048.SaveAs('', REPORTFORMAT::Pdf, AttachementOutStream, recRef);
         */
 
-        ReportSelections.RESET;
+        ReportSelections.Reset;
         ReportSelections.SetRange(Usage, ReportSelections.Usage::Inv1);
         if ReportSelections.FindSet() then begin
-            Report.SaveAs(ReportSelections."Report ID", '', REPORTFORMAT::Pdf, AttachementOutStream, recRef);
-        END;
+            Report.SaveAs(ReportSelections."Report ID", '', ReportFormat::Pdf, AttachementOutStream, recRef);
+        end;
 
 
         AttachementTempBlob.CreateInStream(AttachementInstream);
 
-        EmailMessage.AddAttachment('TransferOrder' + FORMAT(TransferHeader."No.") + '.pdf', 'PDF', AttachementInstream);
+        EmailMessage.AddAttachment('TransferOrder' + Format(TransferHeader."No.") + '.pdf', 'PDF', AttachementInstream);
 
         //if SendAsEmail then begin
         //    Email.Send(EmailMessage);

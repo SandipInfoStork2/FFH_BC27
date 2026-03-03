@@ -12,34 +12,35 @@ report 50053 "Item Sales Det/Customer period"
     CaptionML = ELL = 'Item Sales Detailed/Customer period',
                 ENU = 'Item Sales Detailed/Customer period';
     PreviewMode = PrintLayout;
+    ApplicationArea = All;
 
     dataset
     {
         dataitem(Item; Item)
         {
             RequestFilterFields = "No.", "Global Dimension 1 Filter", "Item Category Code", "Statistics Group";
-            column(PeriodStartDate_1_; FORMAT(PeriodStartDate[1]))
+            column(PeriodStartDate_1_; Format(PeriodStartDate[1]))
             {
             }
-            column(PeriodEndDate; FORMAT(PeriodEndDate))
+            column(PeriodEndDate; Format(PeriodEndDate))
             {
             }
             column(PeriodLength; PeriodLength)
             {
             }
-            column(FORMAT_TODAY_0_4_; FORMAT(TODAY, 0, 4))
+            column(FORMAT_TODAY_0_4_; Format(Today, 0, 4))
             {
             }
-            column(USERID; USERID)
+            column(USERID; UserId)
             {
             }
-            column(CurrReport_PAGENO; CurrReport.PAGENO)
+            column(CurrReport_PAGENO; CurrReport.PageNo)
             {
             }
-            column(PeriodStartDate_1__Control1000000097; FORMAT(PeriodStartDate[1]))
+            column(PeriodStartDate_1__Control1000000097; Format(PeriodStartDate[1]))
             {
             }
-            column(PeriodTodate_1_; FORMAT(PeriodTodate[1]))
+            column(PeriodTodate_1_; Format(PeriodTodate[1]))
             {
 
             }
@@ -47,10 +48,10 @@ report 50053 "Item Sales Det/Customer period"
             {
 
             }
-            column(PeriodStartDate_2_; FORMAT(PeriodStartDate[2]))
+            column(PeriodStartDate_2_; Format(PeriodStartDate[2]))
             {
             }
-            column(PeriodTodate_2_; FORMAT(PeriodTodate[2]))
+            column(PeriodTodate_2_; Format(PeriodTodate[2]))
             {
 
             }
@@ -58,10 +59,10 @@ report 50053 "Item Sales Det/Customer period"
             {
 
             }
-            column(PeriodStartDate_3_; FORMAT(PeriodStartDate[3]))
+            column(PeriodStartDate_3_; Format(PeriodStartDate[3]))
             {
             }
-            column(PeriodTodate_3_; FORMAT(PeriodTodate[3]))
+            column(PeriodTodate_3_; Format(PeriodTodate[3]))
             {
 
             }
@@ -69,10 +70,10 @@ report 50053 "Item Sales Det/Customer period"
             {
 
             }
-            column(PeriodStartDate_4_; FORMAT(PeriodStartDate[4]))
+            column(PeriodStartDate_4_; Format(PeriodStartDate[4]))
             {
             }
-            column(PeriodTodate_4_; FORMAT(PeriodTodate[4]))
+            column(PeriodTodate_4_; Format(PeriodTodate[4]))
             {
 
             }
@@ -80,10 +81,10 @@ report 50053 "Item Sales Det/Customer period"
             {
 
             }
-            column(PeriodStartDate_5_; FORMAT(PeriodStartDate[5]))
+            column(PeriodStartDate_5_; Format(PeriodStartDate[5]))
             {
             }
-            column(PeriodTodate_5_; FORMAT(PeriodTodate[5]))
+            column(PeriodTodate_5_; Format(PeriodTodate[5]))
             {
 
             }
@@ -91,10 +92,10 @@ report 50053 "Item Sales Det/Customer period"
             {
 
             }
-            column(PeriodStartDate_6_; FORMAT(PeriodStartDate[6]))
+            column(PeriodStartDate_6_; Format(PeriodStartDate[6]))
             {
             }
-            column(PeriodTodate_6_; FORMAT(PeriodTodate[6]))
+            column(PeriodTodate_6_; Format(PeriodTodate[6]))
             {
 
             }
@@ -102,10 +103,10 @@ report 50053 "Item Sales Det/Customer period"
             {
 
             }
-            column(PeriodStartDate_7_; FORMAT(PeriodStartDate[7]))
+            column(PeriodStartDate_7_; Format(PeriodStartDate[7]))
             {
             }
-            column(PeriodTodate_7_; FORMAT(PeriodTodate[7]))
+            column(PeriodTodate_7_; Format(PeriodTodate[7]))
             {
 
             }
@@ -113,10 +114,10 @@ report 50053 "Item Sales Det/Customer period"
             {
 
             }
-            column(PeriodStartDate_8_; FORMAT(PeriodStartDate[8]))
+            column(PeriodStartDate_8_; Format(PeriodStartDate[8]))
             {
             }
-            column(PeriodTodate_8_; FORMAT(PeriodTodate[8]))
+            column(PeriodTodate_8_; Format(PeriodTodate[8]))
             {
 
             }
@@ -124,10 +125,10 @@ report 50053 "Item Sales Det/Customer period"
             {
 
             }
-            column(PeriodStartDate_9_; FORMAT(PeriodStartDate[9]))
+            column(PeriodStartDate_9_; Format(PeriodStartDate[9]))
             {
             }
-            column(PeriodTodate_9_; FORMAT(PeriodTodate[9]))
+            column(PeriodTodate_9_; Format(PeriodTodate[9]))
             {
 
             }
@@ -135,10 +136,10 @@ report 50053 "Item Sales Det/Customer period"
             {
 
             }
-            column(PeriodStartDate_10_; FORMAT(PeriodStartDate[10]))
+            column(PeriodStartDate_10_; Format(PeriodStartDate[10]))
             {
             }
-            column(PeriodTodate_10_; FORMAT(PeriodTodate[10]))
+            column(PeriodTodate_10_; Format(PeriodTodate[10]))
             {
 
             }
@@ -146,10 +147,10 @@ report 50053 "Item Sales Det/Customer period"
             {
 
             }
-            column(PeriodStartDate_11_; FORMAT(PeriodStartDate[11]))
+            column(PeriodStartDate_11_; Format(PeriodStartDate[11]))
             {
             }
-            column(PeriodTodate_11_; FORMAT(PeriodTodate[11]))
+            column(PeriodTodate_11_; Format(PeriodTodate[11]))
             {
 
             }
@@ -157,10 +158,10 @@ report 50053 "Item Sales Det/Customer period"
             {
 
             }
-            column(PeriodStartDate_12_; FORMAT(PeriodStartDate[12]))
+            column(PeriodStartDate_12_; Format(PeriodStartDate[12]))
             {
             }
-            column(PeriodTodate_12_; FORMAT(PeriodTodate[12]))
+            column(PeriodTodate_12_; Format(PeriodTodate[12]))
             {
 
             }
@@ -249,8 +250,8 @@ report 50053 "Item Sales Det/Customer period"
             }
             dataitem("Item Ledger Entry"; "Item Ledger Entry")
             {
-                DataItemLink = "Item No." = FIELD("No."), "Location Code" = FIELD("Location Filter"), "Variant Code" = FIELD("Variant Filter"), "Global Dimension 1 Code" = FIELD("Global Dimension 1 Filter"), "Global Dimension 2 Code" = FIELD("Global Dimension 2 Filter");
-                DataItemTableView = SORTING("Source Type", "Source No.", "Item No.", "Variant Code", "Posting Date") WHERE("Entry Type" = CONST(Sale), "Source Type" = CONST(Customer));
+                DataItemLink = "Item No." = field("No."), "Location Code" = field("Location Filter"), "Variant Code" = field("Variant Filter"), "Global Dimension 1 Code" = field("Global Dimension 1 Filter"), "Global Dimension 2 Code" = field("Global Dimension 2 Filter");
+                DataItemTableView = sorting("Source Type", "Source No.", "Item No.", "Variant Code", "Posting Date") where("Entry Type" = const(Sale), "Source Type" = const(Customer));
                 RequestFilterFields = "Source Type", "Source No.";
                 column(Value_Entry__Value_Entry___Source_No__; "Item Ledger Entry"."Source No.")
                 {
@@ -858,8 +859,8 @@ report 50053 "Item Sales Det/Customer period"
                     r_ReturnReceiptLine: Record "Return Receipt Line";
                 begin
 
-                    Cust.RESET;
-                    if Cust.GET("Item Ledger Entry"."Source No.") then;
+                    Cust.Reset;
+                    if Cust.Get("Item Ledger Entry"."Source No.") then;
 
                     if vG_OldCust <> Cust."No." then begin
                         vG_CustCount += 1;
@@ -878,25 +879,25 @@ report 50053 "Item Sales Det/Customer period"
                         end;
 
                         for j := 1 to PeriodCount do begin
-                            rL_ILE.RESET;
+                            rL_ILE.Reset;
                             //rL_ILE.SETCURRENTKEY("Source Type","Source No.","Item No.","Posting Date","Entry Type",Adjustment);
-                            rL_ILE.SETRANGE("Item No.", Item."No.");
-                            rL_ILE.SETRANGE("Entry Type", rL_ILE."Entry Type"::Sale);
-                            rL_ILE.SETRANGE("Source Type", rL_ILE."Source Type"::Customer);
-                            rL_ILE.SETRANGE("Source No.", "Item Ledger Entry"."Source No.");
-                            rL_ILE.SETRANGE("Posting Date", PeriodStartDate[j], PeriodTodate[j]);
-                            if Item.GETFILTER(Item."Global Dimension 1 Filter") <> '' then
-                                rL_ILE.SETRANGE(rL_ILE."Global Dimension 1 Code", Item.GETFILTER(Item."Global Dimension 1 Filter"));
-                            if rL_ILE.FINDSET then
+                            rL_ILE.SetRange("Item No.", Item."No.");
+                            rL_ILE.SetRange("Entry Type", rL_ILE."Entry Type"::Sale);
+                            rL_ILE.SetRange("Source Type", rL_ILE."Source Type"::Customer);
+                            rL_ILE.SetRange("Source No.", "Item Ledger Entry"."Source No.");
+                            rL_ILE.SetRange("Posting Date", PeriodStartDate[j], PeriodTodate[j]);
+                            if Item.GetFilter(Item."Global Dimension 1 Filter") <> '' then
+                                rL_ILE.SetRange(rL_ILE."Global Dimension 1 Code", Item.GetFilter(Item."Global Dimension 1 Filter"));
+                            if rL_ILE.FindSet then
                                 repeat
 
                                     case rL_ILE."Document Type" of
                                         rL_ILE."Document Type"::"Sales Shipment":
                                             begin
-                                                rL_SalesShipmentLine.RESET;
-                                                rL_SalesShipmentLine.SETFILTER("Document No.", rL_ILE."Document No.");
-                                                rL_SalesShipmentLine.SETRANGE("Line No.", rL_ILE."Document Line No.");
-                                                if rL_SalesShipmentLine.FINDSET then begin
+                                                rL_SalesShipmentLine.Reset;
+                                                rL_SalesShipmentLine.SetFilter("Document No.", rL_ILE."Document No.");
+                                                rL_SalesShipmentLine.SetRange("Line No.", rL_ILE."Document Line No.");
+                                                if rL_SalesShipmentLine.FindSet then begin
                                                     SalesQty[j] += rL_SalesShipmentLine.Quantity;
                                                     SalesQtyBase[j] += rL_SalesShipmentLine."Quantity (Base)";
                                                     SalesNetWeight[j] += rL_SalesShipmentLine."Net Weight";
@@ -909,10 +910,10 @@ report 50053 "Item Sales Det/Customer period"
 
                                         rL_ILE."Document Type"::"Sales Return Receipt":
                                             begin
-                                                r_ReturnReceiptLine.RESET;
-                                                r_ReturnReceiptLine.SETFILTER("Document No.", rL_ILE."Document No.");
-                                                r_ReturnReceiptLine.SETRANGE("Line No.", rL_ILE."Document Line No.");
-                                                if r_ReturnReceiptLine.FINDSET then begin
+                                                r_ReturnReceiptLine.Reset;
+                                                r_ReturnReceiptLine.SetFilter("Document No.", rL_ILE."Document No.");
+                                                r_ReturnReceiptLine.SetRange("Line No.", rL_ILE."Document Line No.");
+                                                if r_ReturnReceiptLine.FindSet then begin
                                                     SalesReturnQty[j] += r_ReturnReceiptLine.Quantity * -1;
                                                     SalesReturnQtyBase[j] += r_ReturnReceiptLine."Quantity (Base)" * -1;
                                                     SalesReturnNetWeight[j] += r_ReturnReceiptLine."Net Weight" * -1;
@@ -928,7 +929,7 @@ report 50053 "Item Sales Det/Customer period"
 
 
 
-                                until rL_ILE.NEXT = 0;
+                                until rL_ILE.Next = 0;
                             //SalesQty[j] := ABS(SalesQty[j]);
                             CustomerTotalSalesQty += SalesQty[j];
                             CustomerTotalSalesQtyBase += SalesQtyBase[j];
@@ -965,7 +966,7 @@ report 50053 "Item Sales Det/Customer period"
                         //IF ShowNonzeroCustomers THEN
                         //  CurrReport.SHOWOUTPUT(CustomerTotalSalesQty <> 0 );
                         if (ShowNonzeroCustomers) and (CustomerTotalSalesQty = 0) then begin
-                            CurrReport.SKIP;
+                            CurrReport.Skip;
                         end;
 
                         if (PeriodCount <> 0) and (PeriodCount < 12) then begin
@@ -973,7 +974,7 @@ report 50053 "Item Sales Det/Customer period"
                             CustomerTotalSalesQty := 0;
                         end;
                     end else begin
-                        CurrReport.SKIP;
+                        CurrReport.Skip;
                     end;
 
 
@@ -986,7 +987,7 @@ report 50053 "Item Sales Det/Customer period"
                     vG_OldCust := '';
                     vG_CustCount := 0;
 
-                    "Item Ledger Entry".SETRANGE("Posting Date", PeriodStartDate[1], PeriodEndDate);
+                    "Item Ledger Entry".SetRange("Posting Date", PeriodStartDate[1], PeriodEndDate);
                 end;
             }
 
@@ -1008,14 +1009,14 @@ report 50053 "Item Sales Det/Customer period"
 
                 ItemSalesQty := 0;
                 if ShowNonzeroItem then begin
-                    ValueEntry1.RESET;
-                    ValueEntry1.SETCURRENTKEY("Source Type", "Source No.", "Item No.", "Posting Date", "Entry Type", Adjustment);
-                    ValueEntry1.SETRANGE(ValueEntry1."Item No.", Item."No.");
-                    ValueEntry1.SETRANGE(ValueEntry1."Posting Date", PeriodStartDate[1], PeriodEndDate);
-                    ValueEntry1.SETRANGE(ValueEntry1."Item Ledger Entry Type", ValueEntry1."Item Ledger Entry Type"::Sale);
+                    ValueEntry1.Reset;
+                    ValueEntry1.SetCurrentKey("Source Type", "Source No.", "Item No.", "Posting Date", "Entry Type", Adjustment);
+                    ValueEntry1.SetRange(ValueEntry1."Item No.", Item."No.");
+                    ValueEntry1.SetRange(ValueEntry1."Posting Date", PeriodStartDate[1], PeriodEndDate);
+                    ValueEntry1.SetRange(ValueEntry1."Item Ledger Entry Type", ValueEntry1."Item Ledger Entry Type"::Sale);
                     if SourceNofilter <> '' then
-                        ValueEntry1.SETFILTER(ValueEntry1."Source No.", '%1', SourceNofilter);
-                    if ValueEntry1.FINDSET then
+                        ValueEntry1.SetFilter(ValueEntry1."Source No.", '%1', SourceNofilter);
+                    if ValueEntry1.FindSet then
                         repeat
 
                             //IF vG_MenuOption =vG_MenuOption::"Net Weight" THEN BEGIN
@@ -1027,10 +1028,10 @@ report 50053 "Item Sales Det/Customer period"
                         //END;
 
 
-                        until ValueEntry1.NEXT = 0;
+                        until ValueEntry1.Next = 0;
 
                     if ItemSalesQty = 0 then
-                        CurrReport.SKIP;
+                        CurrReport.Skip;
                 end;
 
 
@@ -1045,7 +1046,7 @@ report 50053 "Item Sales Det/Customer period"
                 TotalItemCustomerSalesQty := 0;
 
                 if NewPagePerItem then
-                    CurrReport.NEWPAGE;
+                    CurrReport.NewPage;
 
             end;
 
@@ -1057,7 +1058,11 @@ report 50053 "Item Sales Det/Customer period"
                     MakeLineGrandQtyBase();
                     MakeLineGrandReturnQty();
                     MakeLineGrandReturnQtyBase();
-                    ExcelBuf.CreateBookAndOpenExcel('', 'Sales', 'Sales', COMPANYNAME, USERID);
+                    /*ExcelBuf.CreateBookAndOpenExcel('', 'Sales', 'Sales', CompanyName, UserId); */
+                    ExcelBuf.CreateNewBook('Sales');
+                    ExcelBuf.WriteSheet('Sales', CompanyName, UserId);
+                    ExcelBuf.CloseBook();
+                    ExcelBuf.OpenExcel();
                 end;
             end;
 
@@ -1066,15 +1071,15 @@ report 50053 "Item Sales Det/Customer period"
                 PageGroupNo := 1;
                 //MESSAGE(FORMAT(PeriodCount));
                 ChangeTotalsPosition(PeriodCount); //TAL0.3
-                CustomerFilter := "Item Ledger Entry".GETFILTERS;
+                CustomerFilter := "Item Ledger Entry".GetFilters;
 
                 if vG_ExportToExcel then begin
                     ExcelBuf.SetUseInfoSheet;
-                    ExcelBuf.AddInfoColumn(FORMAT('Company Name'), false, true, false, false, '', ExcelBuf."Cell Type"::Text);
-                    ExcelBuf.AddInfoColumn(COMPANYNAME, false, false, false, false, '', ExcelBuf."Cell Type"::Text);
+                    ExcelBuf.AddInfoColumn(Format('Company Name'), false, true, false, false, '', ExcelBuf."Cell Type"::Text);
+                    ExcelBuf.AddInfoColumn(CompanyName, false, false, false, false, '', ExcelBuf."Cell Type"::Text);
                     ExcelBuf.NewRow;
-                    ExcelBuf.AddInfoColumn(FORMAT('Date'), false, true, false, false, '', ExcelBuf."Cell Type"::Text);
-                    ExcelBuf.AddInfoColumn(TODAY, false, false, false, false, '', ExcelBuf."Cell Type"::Text);
+                    ExcelBuf.AddInfoColumn(Format('Date'), false, true, false, false, '', ExcelBuf."Cell Type"::Text);
+                    ExcelBuf.AddInfoColumn(Today, false, false, false, false, '', ExcelBuf."Cell Type"::Text);
 
                     ExcelBuf.ClearNewRow;
 
@@ -1090,7 +1095,7 @@ report 50053 "Item Sales Det/Customer period"
 
         layout
         {
-            area(content)
+            area(Content)
             {
                 group(Options)
                 {
@@ -1099,37 +1104,44 @@ report 50053 "Item Sales Det/Customer period"
                     {
                         ApplicationArea = All;
                         Caption = 'Starting Date';
+                        ToolTip = 'Specifies the value of the Starting Date field.';
                     }
                     field(PeriodEndDate; PeriodEndDate)
                     {
                         ApplicationArea = All;
                         Caption = 'Ending Date';
+                        ToolTip = 'Specifies the value of the Ending Date field.';
                     }
                     field(PeriodLength; PeriodLength)
                     {
                         ApplicationArea = All;
                         Caption = 'Period Length';
+                        ToolTip = 'Specifies the value of the Period Length field.';
                     }
                     field(NewPagePerItem; NewPagePerItem)
                     {
                         ApplicationArea = All;
                         Caption = 'New page per item';
+                        ToolTip = 'Specifies the value of the New page per item field.';
                     }
                     field(ShowNonzeroItem; ShowNonzeroItem)
                     {
                         ApplicationArea = All;
                         Caption = 'Show non zero items';
+                        ToolTip = 'Specifies the value of the Show non zero items field.';
                     }
                     field(ShowNonzeroCustomers; ShowNonzeroCustomers)
                     {
                         ApplicationArea = All;
                         Caption = 'Show non zero customers';
+                        ToolTip = 'Specifies the value of the Show non zero customers field.';
                     }
                     field(ExportToExcel; vG_ExportToExcel)
                     {
                         ApplicationArea = All;
                         CaptionML = ELL = 'Export To Excel',
                                     ENU = 'Export To Excel';
+                        ToolTip = 'Specifies the value of the vG_ExportToExcel field.';
                     }
                 }
             }
@@ -1152,17 +1164,17 @@ report 50053 "Item Sales Det/Customer period"
     trigger OnPreReport();
     begin
         if PeriodStartDate[1] = 0D then
-            ERROR('Please enter period start date');
+            Error('Please enter period start date');
         if PeriodEndDate = 0D then
-            ERROR('Please enter period end date');
+            Error('Please enter period end date');
 
-        SourceNofilter := "Item Ledger Entry".GETFILTER("Item Ledger Entry"."Source No.");
+        SourceNofilter := "Item Ledger Entry".GetFilter("Item Ledger Entry"."Source No.");
 
 
 
         TempPeriodStartDate[1] := PeriodStartDate[1];
         for i := 1 to 12 do begin
-            TempPeriodStartDate[i + 1] := CALCDATE(PeriodLength, TempPeriodStartDate[i]);
+            TempPeriodStartDate[i + 1] := CalcDate(PeriodLength, TempPeriodStartDate[i]);
 
             if TempPeriodStartDate[i] > PeriodEndDate then
                 exit;
@@ -1172,7 +1184,7 @@ report 50053 "Item Sales Det/Customer period"
             else
                 PeriodStartDate[i] := 0D;
 
-            PeriodTodate[i] := CALCDATE(PeriodLength, TempPeriodStartDate[i]) - 1;
+            PeriodTodate[i] := CalcDate(PeriodLength, TempPeriodStartDate[i]) - 1;
 
             if PeriodTodate[i] >= PeriodEndDate then
                 PeriodTodate[i] := PeriodEndDate;
@@ -1260,18 +1272,18 @@ report 50053 "Item Sales Det/Customer period"
         ExcelBuf.NewRow;
         ExcelBuf.AddColumn('Item No.', false, '', true, false, false, '', ExcelBuf."Cell Type"::Text);
         ExcelBuf.AddColumn('Item Name', false, '', true, false, false, '', ExcelBuf."Cell Type"::Text);
-        ExcelBuf.AddColumn(FORMAT(PeriodStartDate[1]) + '..' + FORMAT(PeriodTodate[1]), false, '', true, false, false, '', ExcelBuf."Cell Type"::Text);
-        ExcelBuf.AddColumn(FORMAT(PeriodStartDate[2]) + '..' + FORMAT(PeriodTodate[2]), false, '', true, false, false, '', ExcelBuf."Cell Type"::Text);
-        ExcelBuf.AddColumn(FORMAT(PeriodStartDate[3]) + '..' + FORMAT(PeriodTodate[3]), false, '', true, false, false, '', ExcelBuf."Cell Type"::Text);
-        ExcelBuf.AddColumn(FORMAT(PeriodStartDate[4]) + '..' + FORMAT(PeriodTodate[4]), false, '', true, false, false, '', ExcelBuf."Cell Type"::Text);
-        ExcelBuf.AddColumn(FORMAT(PeriodStartDate[5]) + '..' + FORMAT(PeriodTodate[5]), false, '', true, false, false, '', ExcelBuf."Cell Type"::Text);
-        ExcelBuf.AddColumn(FORMAT(PeriodStartDate[6]) + '..' + FORMAT(PeriodTodate[6]), false, '', true, false, false, '', ExcelBuf."Cell Type"::Text);
-        ExcelBuf.AddColumn(FORMAT(PeriodStartDate[7]) + '..' + FORMAT(PeriodTodate[7]), false, '', true, false, false, '', ExcelBuf."Cell Type"::Text);
-        ExcelBuf.AddColumn(FORMAT(PeriodStartDate[8]) + '..' + FORMAT(PeriodTodate[8]), false, '', true, false, false, '', ExcelBuf."Cell Type"::Text);
-        ExcelBuf.AddColumn(FORMAT(PeriodStartDate[9]) + '..' + FORMAT(PeriodTodate[9]), false, '', true, false, false, '', ExcelBuf."Cell Type"::Text);
-        ExcelBuf.AddColumn(FORMAT(PeriodStartDate[10]) + '..' + FORMAT(PeriodTodate[10]), false, '', true, false, false, '', ExcelBuf."Cell Type"::Text);
-        ExcelBuf.AddColumn(FORMAT(PeriodStartDate[11]) + '..' + FORMAT(PeriodTodate[11]), false, '', true, false, false, '', ExcelBuf."Cell Type"::Text);
-        ExcelBuf.AddColumn(FORMAT(PeriodStartDate[12]) + '..' + FORMAT(PeriodTodate[12]), false, '', true, false, false, '', ExcelBuf."Cell Type"::Text);
+        ExcelBuf.AddColumn(Format(PeriodStartDate[1]) + '..' + Format(PeriodTodate[1]), false, '', true, false, false, '', ExcelBuf."Cell Type"::Text);
+        ExcelBuf.AddColumn(Format(PeriodStartDate[2]) + '..' + Format(PeriodTodate[2]), false, '', true, false, false, '', ExcelBuf."Cell Type"::Text);
+        ExcelBuf.AddColumn(Format(PeriodStartDate[3]) + '..' + Format(PeriodTodate[3]), false, '', true, false, false, '', ExcelBuf."Cell Type"::Text);
+        ExcelBuf.AddColumn(Format(PeriodStartDate[4]) + '..' + Format(PeriodTodate[4]), false, '', true, false, false, '', ExcelBuf."Cell Type"::Text);
+        ExcelBuf.AddColumn(Format(PeriodStartDate[5]) + '..' + Format(PeriodTodate[5]), false, '', true, false, false, '', ExcelBuf."Cell Type"::Text);
+        ExcelBuf.AddColumn(Format(PeriodStartDate[6]) + '..' + Format(PeriodTodate[6]), false, '', true, false, false, '', ExcelBuf."Cell Type"::Text);
+        ExcelBuf.AddColumn(Format(PeriodStartDate[7]) + '..' + Format(PeriodTodate[7]), false, '', true, false, false, '', ExcelBuf."Cell Type"::Text);
+        ExcelBuf.AddColumn(Format(PeriodStartDate[8]) + '..' + Format(PeriodTodate[8]), false, '', true, false, false, '', ExcelBuf."Cell Type"::Text);
+        ExcelBuf.AddColumn(Format(PeriodStartDate[9]) + '..' + Format(PeriodTodate[9]), false, '', true, false, false, '', ExcelBuf."Cell Type"::Text);
+        ExcelBuf.AddColumn(Format(PeriodStartDate[10]) + '..' + Format(PeriodTodate[10]), false, '', true, false, false, '', ExcelBuf."Cell Type"::Text);
+        ExcelBuf.AddColumn(Format(PeriodStartDate[11]) + '..' + Format(PeriodTodate[11]), false, '', true, false, false, '', ExcelBuf."Cell Type"::Text);
+        ExcelBuf.AddColumn(Format(PeriodStartDate[12]) + '..' + Format(PeriodTodate[12]), false, '', true, false, false, '', ExcelBuf."Cell Type"::Text);
         ExcelBuf.AddColumn('Total', false, '', true, false, false, '', ExcelBuf."Cell Type"::Text);
     end;
 

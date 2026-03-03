@@ -8,6 +8,7 @@ page 50072 "Horeca SSH"
     InsertAllowed = false;
     Editable = false;
     DeleteAllowed = false;
+    ApplicationArea = All;
 
     layout
     {
@@ -20,6 +21,7 @@ page 50072 "Horeca SSH"
                     ApplicationArea = All;
                     Editable = false;
                     Visible = DocNoVisible;
+                    ToolTip = 'Specifies the number of the record.';
 
 
                 }
@@ -28,29 +30,34 @@ page 50072 "Horeca SSH"
                 {
                     ApplicationArea = All;
                     Editable = false;
+                    ToolTip = 'Specifies the value of the Sell-to Customer No. field.';
                 }
                 field("Sell-to Customer Name"; Rec."Sell-to Customer Name")
                 {
                     ApplicationArea = All;
                     Editable = false;
+                    ToolTip = 'Specifies the name of customer at the sell-to address.';
                 }
 
                 field("Ship-to Code"; Rec."Ship-to Code")
                 {
                     ApplicationArea = All;
                     Editable = false;
+                    ToolTip = 'Specifies the code for the customer''s additional shipment address.';
                 }
 
                 field("Ship-to Name"; Rec."Ship-to Name")
                 {
                     ApplicationArea = All;
                     Editable = false;
+                    ToolTip = 'Specifies the name of the customer that you delivered the items to.';
                 }
 
                 field("Ship-to City"; Rec."Ship-to City")
                 {
                     ApplicationArea = All;
                     Editable = false;
+                    ToolTip = 'Specifies the city of the customer on the sales document.';
                 }
 
                 /*
@@ -63,12 +70,13 @@ page 50072 "Horeca SSH"
 
                 group(grpDate)
                 {
-                    caption = '';
+                    Caption = '';
 
-                    field(SystemCreatedAt; SystemCreatedAt)
+                    field(SystemCreatedAt; Rec.SystemCreatedAt)
                     {
                         ApplicationArea = All;
                         Editable = false;
+                        ToolTip = 'Specifies the value of the SystemCreatedAt field.';
                     }
 
                     /*
@@ -84,6 +92,7 @@ page 50072 "Horeca SSH"
                         ApplicationArea = All;
                         Caption = 'On Schedule';
                         Editable = false;
+                        ToolTip = 'Specifies the value of the On Schedule field.';
                     }
 
                     /*
@@ -94,10 +103,11 @@ page 50072 "Horeca SSH"
                     }
                     */
 
-                    field("Posting Date"; "Posting Date")
+                    field("Posting Date"; Rec."Posting Date")
                     {
                         ApplicationArea = All;
                         Editable = false;
+                        ToolTip = 'Specifies the posting date for the entry.';
                     }
 
 
@@ -106,6 +116,7 @@ page 50072 "Horeca SSH"
                     {
                         ApplicationArea = All;
                         Editable = false;
+                        ToolTip = 'Specifies the date that the customer has asked for the order to be delivered.';
 
                     }
                     /*
@@ -143,7 +154,7 @@ page 50072 "Horeca SSH"
                 ApplicationArea = Basic, Suite;
                 Editable = IsSalesLinesEditable;
                 Enabled = IsSalesLinesEditable;
-                SubPageLink = "Document No." = FIELD("No.");
+                SubPageLink = "Document No." = field("No.");
                 UpdatePropagation = Both;
             }
         }
@@ -176,7 +187,7 @@ page 50072 "Horeca SSH"
                     CurrPage.SetSelectionFilter(SalesShptHeader);
                     //SalesShptHeader.PrintRecords(true);
 
-                    clear(rptSalesShipment);
+                    Clear(rptSalesShipment);
                     rptSalesShipment.SetTableView(SalesShptHeader);
                     rptSalesShipment.UseRequestPage(false);
                     rptSalesShipment.Run();
@@ -191,7 +202,7 @@ page 50072 "Horeca SSH"
         //if DocNoVisible then
         //    CheckCreditMaxBeforeInsert();
 
-        if ("Sell-to Customer No." = '') and (GetFilter("Sell-to Customer No.") <> '') then
+        if (Rec."Sell-to Customer No." = '') and (Rec.GetFilter("Sell-to Customer No.") <> '') then
             CurrPage.Update(false);
     end;
 
@@ -216,13 +227,13 @@ page 50072 "Horeca SSH"
         TempDate1: Date;
         TempDate2: Date;
     begin
-        WorkDescription := GetWorkDescription();
-        OnSchedule := cuGeneralMgt.GetScheduleDays("Sell-to Customer No.", "Ship-to Code");
+        WorkDescription := Rec.GetWorkDescription();
+        OnSchedule := cuGeneralMgt.GetScheduleDays(Rec."Sell-to Customer No.", Rec."Ship-to Code");
 
 
 
 
-        if userSetup.get(UserId) then begin
+        if userSetup.Get(UserId) then begin
             if userSetup."HORECA Customer No." <> '' then begin
                 userSetup.TestField("HORECA Min. Order Period");
 
@@ -230,7 +241,7 @@ page 50072 "Horeca SSH"
                 //WD4	The next 4th day of a week (Thursday)
                 //WD4
 
-                if ShiptoAddress.GET("Sell-to Customer No.", "Ship-to Code") then begin
+                if ShiptoAddress.GET(Rec."Sell-to Customer No.", Rec."Ship-to Code") then begin
                 end;
             end;
         end;
@@ -249,12 +260,12 @@ page 50072 "Horeca SSH"
     var
         myInt: Integer;
     begin
-       
+
     end;
 
     trigger OnDeleteRecord(): Boolean
     begin
-      
+
     end;
 
     trigger OnInit()

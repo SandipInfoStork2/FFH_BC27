@@ -10,21 +10,25 @@ pageextension 50101 LocationListExt extends "Location List"
         // Add changes to page layout here
         addafter(Name)
         {
-            field("Name 2"; "Name 2")
+            field("Name 2"; Rec."Name 2")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Name 2 field.';
             }
-            field("Inbound Req. Wksh"; "Inbound Req. Wksh")
+            field("Inbound Req. Wksh"; Rec."Inbound Req. Wksh")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Inbound Req. Wksh field.';
             }
-            field("Outbound Req. Wksh"; "Outbound Req. Wksh")
+            field("Outbound Req. Wksh"; Rec."Outbound Req. Wksh")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Outbound Req. Wksh field.';
             }
-            field("Last Posting Date"; "Last Posting Date")
+            field("Last Posting Date"; Rec."Last Posting Date")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Last Posting Date field.';
             }
         }
     }
@@ -46,11 +50,11 @@ pageextension 50101 LocationListExt extends "Location List"
                 //PromotedCategory = Category5;
                 //The property 'PromotedIsBig' can only be set if the property 'Promoted' is set to 'true'
                 //PromotedIsBig = true;
-                RunObject = Page "Item Ledger Entries";
-                RunPageLink = "Location Code" = FIELD("Code");
-                RunPageView = SORTING("Item No.")
-                                      ORDER(Descending);
-                ShortCutKey = 'Ctrl+F7';
+                RunObject = page "Item Ledger Entries";
+                RunPageLink = "Location Code" = field("Code");
+                RunPageView = sorting("Item No.")
+                                      order(descending);
+                ShortcutKey = 'Ctrl+F7';
                 ToolTip = 'View the history of transactions that have been posted for the selected record.';
             }
 
@@ -59,17 +63,18 @@ pageextension 50101 LocationListExt extends "Location List"
                 ApplicationArea = All;
                 Promoted = true;
                 PromotedCategory = Category4;
-                caption = 'Update Last Posting Date';
+                Caption = 'Update Last Posting Date';
+                ToolTip = 'Executes the Update Last Posting Date action.';
 
                 trigger OnAction()
                 var
                     rL_ILE: Record "Item Ledger Entry";
                     rL_Location: Record Location;
                 begin
-                    rL_Location.RESET;
+                    rL_Location.Reset;
                     if rL_Location.FindSet() then begin
                         repeat
-                            rL_ILE.RESET;
+                            rL_ILE.Reset;
                             rL_ILE.SetFilter("Location Code", rL_Location.Code);
                             if rL_ILE.FindLast() then begin
 

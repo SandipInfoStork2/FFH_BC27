@@ -6,9 +6,10 @@ pageextension 50183 InventoryPostingSetupExt extends "Inventory Posting Setup"
         // Add changes to page layout here
         addafter("Invt. Posting Group Code")
         {
-            field("Location Name"; "Location Name")
+            field("Location Name"; Rec."Location Name")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Location Name field.';
             }
         }
     }

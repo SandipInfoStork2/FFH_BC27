@@ -31,21 +31,21 @@ tableextension 50121 SalesCrMemoHeaderExt extends "Sales Cr.Memo Header"
 
         field(50200; "Total Qty"; Decimal)
         {
-            CalcFormula = Sum("Sales Cr.Memo Line".Quantity WHERE("Document No." = FIELD("No.")));
+            CalcFormula = sum("Sales Cr.Memo Line".Quantity where("Document No." = field("No.")));
             DecimalPlaces = 0 : 5;
             Editable = false;
             FieldClass = FlowField;
         }
         field(50201; "Total Weight"; Decimal)
         {
-            CalcFormula = Sum("Sales Cr.Memo Line"."Net Weight" WHERE("Document No." = FIELD("No.")));
+            CalcFormula = sum("Sales Cr.Memo Line"."Net Weight" where("Document No." = field("No.")));
             DecimalPlaces = 0 : 0;
             Editable = false;
             FieldClass = FlowField;
         }
         field(50202; "Total Qty (Base)"; Decimal)
         {
-            CalcFormula = Sum("Sales Cr.Memo Line"."Quantity (Base)" WHERE("Document No." = FIELD("No.")));
+            CalcFormula = sum("Sales Cr.Memo Line"."Quantity (Base)" where("Document No." = field("No.")));
             DecimalPlaces = 0 : 0;
             Editable = false;
             FieldClass = FlowField;

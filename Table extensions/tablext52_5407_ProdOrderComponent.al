@@ -23,41 +23,41 @@ tableextension 50152 ProdOrderComponentExt extends "Prod. Order Component"
             begin
                 //+TAL0.2 
                 GetPlanningParameters.AtSKU(SKU, "Item No.", "Variant Code", "Location Code");
-                IF "Location Code" <> '' THEN BEGIN
-                    CASE SKU."Replenishment System" OF
+                if "Location Code" <> '' then begin
+                    case SKU."Replenishment System" of
 
                         SKU."Replenishment System"::Purchase:
-                            BEGIN
-                                VALIDATE("Action Type", "Action Type"::"Purchase Order");
-                            END;
+                            begin
+                                Validate("Action Type", "Action Type"::"Purchase Order");
+                            end;
 
                         SKU."Replenishment System"::"Prod. Order":
-                            BEGIN
+                            begin
 
-                            END;
+                            end;
 
                         SKU."Replenishment System"::Transfer:
-                            BEGIN
-                                VALIDATE("Action Type", "Action Type"::Transfer);
-                            END;
+                            begin
+                                Validate("Action Type", "Action Type"::Transfer);
+                            end;
 
                         SKU."Replenishment System"::Assembly:
-                            BEGIN
+                            begin
 
-                            END;
+                            end;
 
                         SKU."Replenishment System"::Box:
-                            BEGIN
-                                VALIDATE("Action Type", "Action Type"::"Plastic Box");
-                            END;
+                            begin
+                                Validate("Action Type", "Action Type"::"Plastic Box");
+                            end;
 
                         SKU."Replenishment System"::Sale:
-                            BEGIN
-                                VALIDATE("Action Type", "Action Type"::"Sales Return Order");
-                            END;
+                            begin
+                                Validate("Action Type", "Action Type"::"Sales Return Order");
+                            end;
 
-                    END;
-                END;
+                    end;
+                end;
                 //-TAL0.2 
             end;
         }
@@ -75,27 +75,27 @@ tableextension 50152 ProdOrderComponentExt extends "Prod. Order Component"
         }
         field(50002; "Requisition Quantity"; Decimal)
         {
-            CalcFormula = Sum("Requisition Line".Quantity WHERE("Prod. Order No. Ref" = FIELD("Prod. Order No."), "No." = FIELD("Item No.")));
+            CalcFormula = sum("Requisition Line".Quantity where("Prod. Order No. Ref" = field("Prod. Order No."), "No." = field("Item No.")));
             DecimalPlaces = 0 : 5;
             Editable = false;
             FieldClass = FlowField;
         }
         field(50003; "Last Date Modified"; Date)
         {
-            CalcFormula = Lookup("Production Order"."Last Date Modified" WHERE(Status = FIELD(Status), "No." = FIELD("Prod. Order No.")));
+            CalcFormula = lookup("Production Order"."Last Date Modified" where(Status = field(Status), "No." = field("Prod. Order No.")));
             Caption = 'Last Date Modified';
             Editable = false;
             FieldClass = FlowField;
         }
         field(50006; "Created By"; Code[50])
         {
-            CalcFormula = Lookup("Production Order"."Created By" WHERE(Status = FIELD(Status), "No." = FIELD("Prod. Order No.")));
+            CalcFormula = lookup("Production Order"."Created By" where(Status = field(Status), "No." = field("Prod. Order No.")));
             Editable = false;
             FieldClass = FlowField;
         }
         field(50007; "Client Computer Name"; Text[250])
         {
-            CalcFormula = Lookup("Production Order"."Client Computer Name" WHERE(Status = FIELD(Status), "No." = FIELD("Prod. Order No.")));
+            CalcFormula = lookup("Production Order"."Client Computer Name" where(Status = field(Status), "No." = field("Prod. Order No.")));
             Caption = 'Client Computer Name';
             Editable = false;
             FieldClass = FlowField;
@@ -104,9 +104,9 @@ tableextension 50152 ProdOrderComponentExt extends "Prod. Order Component"
         //+1.0.0.57
         field(50008; "Posted Quantity"; Decimal)
         {
-            CalcFormula = - Sum("Item Ledger Entry".Quantity WHERE("Order No." = FIELD("Prod. Order No."),
+            CalcFormula = - sum("Item Ledger Entry".Quantity where("Order No." = field("Prod. Order No."),
                                 "Order Type" = filter('Production'),
-                                "Prod. Order Comp. Line No." = FIELD("Line No.")
+                                "Prod. Order Comp. Line No." = field("Line No.")
                                 )
                                 );
             DecimalPlaces = 0 : 5;

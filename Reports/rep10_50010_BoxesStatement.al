@@ -6,6 +6,7 @@ report 50010 "Boxes Statement"
     RDLCLayout = './Layouts/rep10_50010_BoxesStatement.rdlc';
 
     PreviewMode = PrintLayout;
+    ApplicationArea = All;
 
     dataset
     {
@@ -81,16 +82,16 @@ report 50010 "Boxes Statement"
             column(No1_Vend; Vendor."No.")
             {
             }
-            column(TodayFormatted; FORMAT(TODAY, 0, 4))
+            column(TodayFormatted; Format(Today, 0, 4))
             {
             }
-            column(StartDate; FORMAT(StartDate))
+            column(StartDate; Format(StartDate))
             {
             }
-            column(EndDate; FORMAT(EndDate))
+            column(EndDate; Format(EndDate))
             {
             }
-            column(LastStatmntNo_Vend; FORMAT(Vendor."Last Statement No."))
+            column(LastStatmntNo_Vend; Format(Vendor."Last Statement No."))
             {
                 // DecimalPlaces = 0 : 0;
             }
@@ -165,8 +166,8 @@ report 50010 "Boxes Statement"
             }
             dataitem("Purchase Line Addon Posted"; "Purchase Line Addon Posted")
             {
-                DataItemLink = "Buy-from Vendor No." = FIELD("No.");
-                DataItemTableView = SORTING("No.", "Variant Code") ORDER(Ascending);
+                DataItemLink = "Buy-from Vendor No." = field("No.");
+                DataItemTableView = sorting("No.", "Variant Code") order(ascending);
                 column(LineNo_PurchaseLineAddon; "Purchase Line Addon Posted"."Line No.")
                 {
                 }
@@ -199,8 +200,8 @@ report 50010 "Boxes Statement"
                 }
                 dataitem("Purchase Header Addon Posted"; "Purchase Header Addon Posted")
                 {
-                    DataItemLink = "No." = FIELD("Document No.");
-                    DataItemTableView = SORTING("Buy-from Vendor No.") ORDER(Ascending);
+                    DataItemLink = "No." = field("Document No.");
+                    DataItemTableView = sorting("Buy-from Vendor No.") order(ascending);
                     column(BuyfromVendorNo_PurchaseHeaderAddon; "Purchase Header Addon Posted"."Buy-from Vendor No.")
                     {
                     }
@@ -400,24 +401,24 @@ report 50010 "Boxes Statement"
 
                 trigger OnAfterGetRecord();
                 begin
-                    obPurchaseLineAddonPosted.CALCFIELDS(obPurchaseLineAddonPosted."Posted Date");
-                    obPurchaseLineAddonPosted.RESET;
-                    obPurchaseLineAddonPosted.SETRANGE(obPurchaseLineAddonPosted."Buy-from Vendor No.", "Buy-from Vendor No.");
-                    obPurchaseLineAddonPosted.SETRANGE(obPurchaseLineAddonPosted."No.", "No.");
-                    obPurchaseLineAddonPosted.SETRANGE(obPurchaseLineAddonPosted."Variant Code", "Variant Code");
+                    obPurchaseLineAddonPosted.CalcFields(obPurchaseLineAddonPosted."Posted Date");
+                    obPurchaseLineAddonPosted.Reset;
+                    obPurchaseLineAddonPosted.SetRange(obPurchaseLineAddonPosted."Buy-from Vendor No.", "Buy-from Vendor No.");
+                    obPurchaseLineAddonPosted.SetRange(obPurchaseLineAddonPosted."No.", "No.");
+                    obPurchaseLineAddonPosted.SetRange(obPurchaseLineAddonPosted."Variant Code", "Variant Code");
                     //TAL0.2
-                    obPurchaseLineAddonPosted.SETRANGE(obPurchaseLineAddonPosted."Posted Date", 0D, requeststartdate);
+                    obPurchaseLineAddonPosted.SetRange(obPurchaseLineAddonPosted."Posted Date", 0D, requeststartdate);
                     obqty := 0;
-                    if obPurchaseLineAddonPosted.FIND('-') then
+                    if obPurchaseLineAddonPosted.Find('-') then
                         repeat
                             obqty := obqty + obPurchaseLineAddonPosted.Quantity;
-                        until obPurchaseLineAddonPosted.NEXT = 0;
+                        until obPurchaseLineAddonPosted.Next = 0;
                 end;
 
                 trigger OnPreDataItem();
                 begin
                     //TAL0.2
-                    "Purchase Line Addon Posted".SETRANGE("Purchase Line Addon Posted"."Posted Date", requeststartdate, (requestenddate));
+                    "Purchase Line Addon Posted".SetRange("Purchase Line Addon Posted"."Posted Date", requeststartdate, (requestenddate));
                 end;
             }
 
@@ -432,7 +433,7 @@ report 50010 "Boxes Statement"
                 //StartDate := GETRANGEMIN("Purchase Header Addon Posted"."Posting Date");
                 //EndDate := GETRANGEMAX("Purchase Header Addon Posted"."Posting Date");
 
-                CompanyInfo.GET;
+                CompanyInfo.Get;
                 FormatAddr.Company(CompanyAddr, CompanyInfo);
             end;
         }
@@ -444,7 +445,7 @@ report 50010 "Boxes Statement"
 
         layout
         {
-            area(content)
+            area(Content)
             {
                 group(Options)
                 {
@@ -452,14 +453,20 @@ report 50010 "Boxes Statement"
                     field(requeststartdate; requeststartdate)
                     {
                         Caption = 'Start Date';
+                        ToolTip = 'Specifies the value of the Start Date field.';
+                        ApplicationArea = All;
                     }
                     field(requestenddate; requestenddate)
                     {
                         Caption = 'End Date';
+                        ToolTip = 'Specifies the value of the End Date field.';
+                        ApplicationArea = All;
                     }
                     field(hidedetails; hidedetails)
                     {
                         Caption = 'Hide Details';
+                        ToolTip = 'Specifies the value of the Hide Details field.';
+                        ApplicationArea = All;
                     }
                 }
             }
@@ -476,26 +483,26 @@ report 50010 "Boxes Statement"
 
     trigger OnInitReport();
     begin
-        GLSetup.GET;
-        SalesSetup.GET;
+        GLSetup.Get;
+        SalesSetup.Get;
 
         case SalesSetup."Logo Position on Documents" of
             SalesSetup."Logo Position on Documents"::"No Logo":
                 ;
             SalesSetup."Logo Position on Documents"::Left:
                 begin
-                    CompanyInfo1.GET;
-                    CompanyInfo1.CALCFIELDS(Picture);
+                    CompanyInfo1.Get;
+                    CompanyInfo1.CalcFields(Picture);
                 end;
             SalesSetup."Logo Position on Documents"::Center:
                 begin
-                    CompanyInfo2.GET;
-                    CompanyInfo2.CALCFIELDS(Picture);
+                    CompanyInfo2.Get;
+                    CompanyInfo2.CalcFields(Picture);
                 end;
             SalesSetup."Logo Position on Documents"::Right:
                 begin
-                    CompanyInfo3.GET;
-                    CompanyInfo3.CALCFIELDS(Picture);
+                    CompanyInfo3.Get;
+                    CompanyInfo3.CalcFields(Picture);
                 end;
         end;
         "Purchase Header Addon Posted"."Posting Date" := 0D;
@@ -503,7 +510,7 @@ report 50010 "Boxes Statement"
 
     trigger OnPreReport();
     begin
-        postedfilters := "Purchase Header Addon Posted".GETFILTERS;
+        postedfilters := "Purchase Header Addon Posted".GetFilters;
     end;
 
     var

@@ -5,9 +5,10 @@ pageextension 50181 WarehouseSetupExt extends "Warehouse Setup"
         // Add changes to page layout here
         addafter("Registered Whse. Movement Nos.")
         {
-            field("Delivery Nos."; "Delivery Nos.")
+            field("Delivery Nos."; Rec."Delivery Nos.")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Delivery Nos. field.';
             }
         }
     }

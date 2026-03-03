@@ -32,23 +32,27 @@ pageextension 50133 PostedPurchaseRcptSubformExt extends "Posted Purchase Rcpt. 
             field("Transfer-from Code"; Rec."Transfer-from Code")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Transfer-from Code field.';
             }
             field("Transfer-to Code"; Rec."Transfer-to Code")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Transfer-to Code field.';
             }
         }
         //TAL 1.0.0.201 <<
 
         addafter("ShortcutDimCode[8]")
         {
-            field("Receiving Temperature"; "Receiving Temperature")
+            field("Receiving Temperature"; Rec."Receiving Temperature")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Receiving Temperature °C field.';
             }
-            field("Receiving Quality Control"; "Receiving Quality Control")
+            field("Receiving Quality Control"; Rec."Receiving Quality Control")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Receiving Quality Control field.';
             }
         }
     }
@@ -63,10 +67,11 @@ pageextension 50133 PostedPurchaseRcptSubformExt extends "Posted Purchase Rcpt. 
                 ApplicationArea = All;
                 Caption = 'Item &Tracking Entries';
                 Image = ItemTrackingLedger;
+                ToolTip = 'Executes the Item &Tracking Entries action.';
 
                 trigger OnAction();
                 begin
-                    ShowItemTrackingLines;
+                    Rec.ShowItemTrackingLines;
                 end;
             }
         }

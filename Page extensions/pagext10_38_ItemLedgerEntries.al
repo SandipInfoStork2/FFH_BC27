@@ -17,38 +17,43 @@ pageextension 50110 ItemLedgerEntriesExt extends "Item Ledger Entries"
 
         addafter("Location Code")
         {
-            field("Reason Code"; "Reason Code")
+            field("Reason Code"; Rec."Reason Code")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Reason Code field.';
             }
         }
 
         addafter("Item No.")
         {
-            field("Item Description"; "Item Description")
+            /* field("Item Description"; "Item Description")
             {
                 ApplicationArea = all;
                 Editable = false;
                 ToolTip = 'Specifies the variant code for the items.';
                 Visible = false;
-            }
-            field("Gen. Prod. Posting Group"; "Gen. Prod. Posting Group")
+            } */
+            field("Gen. Prod. Posting Group"; Rec."Gen. Prod. Posting Group")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Gen. Prod. Posting Group field.';
             }
-            field("Item Category Code"; "Item Category Code")
+            field("Item Category Code"; Rec."Item Category Code")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Item Category Code field.';
             }
-            field("Shelf No."; "Shelf No.")
+            field("Shelf No."; Rec."Shelf No.")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 Editable = false;
+                ToolTip = 'Specifies the value of the Shelf No. field.';
             }
-            field("Document Lot No."; "Document Lot No.")
+            field("Document Lot No."; Rec."Document Lot No.")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 Editable = false;
+                ToolTip = 'Specifies the value of the Document Lot No. field.';
             }
         }
 
@@ -76,150 +81,176 @@ pageextension 50110 ItemLedgerEntriesExt extends "Item Ledger Entries"
                 ApplicationArea = all;
                 Editable = false;
             } */
-            field("Receipt Doc. No."; "Receipt Doc. No.")
+            field("Receipt Doc. No."; Rec."Receipt Doc. No.")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 Editable = false;
+                ToolTip = 'Specifies the value of the Receipt Doc. No. field.';
             }
-            field("Producer Group"; "Producer Group")
+            field("Producer Group"; Rec."Producer Group")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 Editable = false;
+                ToolTip = 'Specifies the value of the Producer Group field.';
             }
-            field("Producer Group Name"; "Producer Group Name")
+            field("Producer Group Name"; Rec."Producer Group Name")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 Editable = false;
+                ToolTip = 'Specifies the value of the Producer Group Name field.';
             }
-            field("Lot Grower No."; "Lot Grower No.")
+            field("Lot Grower No."; Rec."Lot Grower No.")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 Editable = false;
+                ToolTip = 'Specifies the value of the Lot Grower No. field.';
             }
-            field("Grower Name"; "Grower Name")
+            field("Grower Name"; Rec."Grower Name")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 Editable = false;
+                ToolTip = 'Specifies the value of the Grower Name field.';
             }
-            field("Grower GGN"; "Grower GGN")
+            field("Grower GGN"; Rec."Grower GGN")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 Editable = false;
+                ToolTip = 'Specifies the value of the Grower GGN field.';
             }
-            field("Lot Vendor No."; "Lot Vendor No.")
+            field("Lot Vendor No."; Rec."Lot Vendor No.")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 Editable = false;
+                ToolTip = 'Specifies the value of the Lot Vendor No. field.';
             }
-            field("Vendor Name"; "Vendor Name")
+            field("Vendor Name"; Rec."Vendor Name")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 Editable = false;
+                ToolTip = 'Specifies the value of the Vendor Name field.';
             }
-            field("Vendor GLN"; "Vendor GLN")
+            field("Vendor GLN"; Rec."Vendor GLN")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 Editable = false;
                 Visible = false;
+                ToolTip = 'Specifies the value of the Vendor GLN field.';
             }
-            field("Vendor GGN"; "Vendor GGN")
+            field("Vendor GGN"; Rec."Vendor GGN")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 Editable = false;
+                ToolTip = 'Specifies the value of the Vendor GGN field.';
             }
-            field("Net Weight"; "Net Weight")
+            field("Net Weight"; Rec."Net Weight")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 Editable = false;
+                ToolTip = 'Specifies the value of the Net Weight field.';
             }
-            field("Total Net Weight"; "Total Net Weight")
+            field("Total Net Weight"; Rec."Total Net Weight")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 Editable = false;
+                ToolTip = 'Specifies the value of the Total Net Weight field.';
             }
-            field("Document Grower No."; "Document Grower No.")
+            field("Document Grower No."; Rec."Document Grower No.")
             {
-                ApplicationArea = all;
-                Editable = false;
-                Visible = false;
-            }
-            field("Document Grower Name"; "Document Grower Name")
-            {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 Editable = false;
                 Visible = false;
+                ToolTip = 'Specifies the value of the Document Grower No. field.';
             }
-            field("Document Grower GGN"; "Document Grower GGN")
+            field("Document Grower Name"; Rec."Document Grower Name")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 Editable = false;
                 Visible = false;
+                ToolTip = 'Specifies the value of the Document Grower Name field.';
             }
-            field("Document Grower Vendor No."; "Document Grower Vendor No.")
+            field("Document Grower GGN"; Rec."Document Grower GGN")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 Editable = false;
                 Visible = false;
+                ToolTip = 'Specifies the value of the Document Grower GGN field.';
             }
-            field("Document Grower Vendor Name"; "Document Grower Vendor Name")
+            field("Document Grower Vendor No."; Rec."Document Grower Vendor No.")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 Editable = false;
                 Visible = false;
+                ToolTip = 'Specifies the value of the Document Grower Vendor No. field.';
             }
-            field("Document Vendor No."; "Document Vendor No.")
+            field("Document Grower Vendor Name"; Rec."Document Grower Vendor Name")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 Editable = false;
                 Visible = false;
+                ToolTip = 'Specifies the value of the Document Grower Vendor Name field.';
             }
-            field("Document Vendor Name"; "Document Vendor Name")
+            field("Document Vendor No."; Rec."Document Vendor No.")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 Editable = false;
                 Visible = false;
+                ToolTip = 'Specifies the value of the Document Vendor No. field.';
             }
-            field("Document Vendor GGN"; "Document Vendor GGN")
+            field("Document Vendor Name"; Rec."Document Vendor Name")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 Editable = false;
                 Visible = false;
+                ToolTip = 'Specifies the value of the Document Vendor Name field.';
             }
-            field("Document Qty"; "Document Qty")
+            field("Document Vendor GGN"; Rec."Document Vendor GGN")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 Editable = false;
                 Visible = false;
+                ToolTip = 'Specifies the value of the Document Vendor GGN field.';
             }
-            field("Document No. Multiple"; "Document No. Multiple")
+            field("Document Qty"; Rec."Document Qty")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 Editable = false;
                 Visible = false;
+                ToolTip = 'Specifies the value of the Document Qty field.';
             }
-            field("Document Excel Line No."; "Document Excel Line No.")
+            field("Document No. Multiple"; Rec."Document No. Multiple")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 Editable = false;
                 Visible = false;
+                ToolTip = 'Specifies the value of the Document No. Multiple field.';
             }
-            field("Level 1 Document No. Filter"; "Level 1 Document No. Filter")
+            field("Document Excel Line No."; Rec."Document Excel Line No.")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 Editable = false;
                 Visible = false;
+                ToolTip = 'Specifies the value of the Document Excel Line No. field.';
+            }
+            field("Level 1 Document No. Filter"; Rec."Level 1 Document No. Filter")
+            {
+                ApplicationArea = All;
+                Editable = false;
+                Visible = false;
+                ToolTip = 'Specifies the value of the Level 1 Document No. Filter field.';
             }
 
             field(RegisteredVendorNo; Grower."Grower Vendor No.")
             {
-                caption = 'Registered Vendor No.';
-                ApplicationArea = all;
+                Caption = 'Registered Vendor No.';
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Registered Vendor No. field.';
             }
 
             field(RegisteredVendorNname; Grower."Grower Vendor Name")
             {
-                caption = 'Registered Vendor Name';
-                ApplicationArea = all;
+                Caption = 'Registered Vendor Name';
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Registered Vendor Name field.';
             }
         }
 
@@ -240,26 +271,30 @@ pageextension 50110 ItemLedgerEntriesExt extends "Item Ledger Entries"
             field(GenBusPostingGroup; Rec.GenBusPostingGroup)
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Gen. Bus. Posting Group field.';
             }
         }
         //TAL 1.0.0.203 <<
 
         addafter("Prod. Order Comp. Line No.")
         {
-            field(Correction; Correction)
+            field(Correction; Rec.Correction)
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Correction field.';
             }
             //+1.0.0.229
-            field("Packing Agent"; "Packing Agent")
+            field("Packing Agent"; Rec."Packing Agent")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Packing Agent field.';
             }
             //-1.0.0.229
 
-            field("Lot Receiving Temperature"; "Lot Receiving Temperature")
+            field("Lot Receiving Temperature"; Rec."Lot Receiving Temperature")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Lot Receiving Temperature field.';
             }
         }
 
@@ -273,94 +308,101 @@ pageextension 50110 ItemLedgerEntriesExt extends "Item Ledger Entries"
         {
             action("Lot Information Card")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 Image = LotInfo;
                 Promoted = true;
                 PromotedCategory = Process;
                 PromotedIsBig = true;
                 PromotedOnly = true;
-                RunObject = Page "Lot No. Information Card";
-                RunPageLink = "Item No." = FIELD("Item No."),
-                                  "Lot No." = FIELD("Lot No.");
+                RunObject = page "Lot No. Information Card";
+                RunPageLink = "Item No." = field("Item No."),
+                                  "Lot No." = field("Lot No.");
+                ToolTip = 'Executes the Lot Information Card action.';
             }
             action("Item Card ")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 Image = Item;
                 Promoted = true;
                 PromotedCategory = Process;
                 PromotedIsBig = true;
                 PromotedOnly = true;
-                RunObject = Page "Item Card";
-                RunPageLink = "No." = FIELD("Item No.");
+                RunObject = page "Item Card";
+                RunPageLink = "No." = field("Item No.");
+                ToolTip = 'Executes the Item Card  action.';
             }
             action("Item Tracing")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 Caption = 'Item Tracing';
                 Image = ItemTracing;
                 Promoted = true;
                 PromotedCategory = Process;
                 PromotedIsBig = true;
                 PromotedOnly = true;
+                ToolTip = 'Executes the Item Tracing action.';
 
                 trigger OnAction();
                 var
                     pItemTracing: Page "Item Tracing";
                 begin
 
-                    CLEAR(pItemTracing);
-                    pItemTracing.SetLotFilter := "Lot No.";
+                    Clear(pItemTracing);
+                    pItemTracing.SetLotFilter := Rec."Lot No.";
 
                     //pItemTracing.FindRecords;
-                    pItemTracing.RUN;
+                    pItemTracing.Run;
                 end;
             }
             action("Grower Card")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 Image = ContactPerson;
                 Promoted = true;
                 PromotedCategory = Process;
                 PromotedIsBig = true;
                 PromotedOnly = true;
-                RunObject = Page "Grower Card";
-                RunPageLink = "No." = FIELD("Document Grower No.");
+                RunObject = page "Grower Card";
+                RunPageLink = "No." = field("Document Grower No.");
+                ToolTip = 'Executes the Grower Card action.';
             }
             action("Vendor Card")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 Image = Vendor;
                 Promoted = true;
                 PromotedCategory = Process;
                 PromotedIsBig = false;
                 PromotedOnly = true;
-                RunObject = Page "Vendor Card";
-                RunPageLink = "No." = FIELD("Document Grower Vendor No.");
+                RunObject = page "Vendor Card";
+                RunPageLink = "No." = field("Document Grower Vendor No.");
+                ToolTip = 'Executes the Vendor Card action.';
             }
             action("Customer Card")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 Image = Customer;
                 Promoted = true;
                 PromotedCategory = Process;
                 PromotedIsBig = false;
                 PromotedOnly = true;
-                RunObject = Page "Customer Card";
-                RunPageLink = "No." = FIELD("Source No.");
+                RunObject = page "Customer Card";
+                RunPageLink = "No." = field("Source No.");
+                ToolTip = 'Executes the Customer Card action.';
             }
 
             action("Count")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
 
                 Promoted = true;
                 PromotedCategory = Process;
                 PromotedIsBig = false;
                 PromotedOnly = true;
+                ToolTip = 'Executes the Count action.';
                 trigger OnAction()
                 begin
-                    Message('# records: ' + Format(Count));
+                    Message('# records: ' + Format(Rec.Count));
                 end;
             }
 
@@ -370,20 +412,21 @@ pageextension 50110 ItemLedgerEntriesExt extends "Item Ledger Entries"
         {
             action("Calculate Total Weight")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 Visible = false;
+                ToolTip = 'Executes the Calculate Total Weight action.';
 
                 trigger OnAction();
                 var
                     rL_Item: Record Item;
                 begin
 
-                    rL_Item.GET("Item No.");
-                    "Net Weight" := rL_Item."Net Weight";
-                    "Total Net Weight" := "Net Weight" * Quantity;
-                    MODIFY;
+                    rL_Item.GET(Rec."Item No.");
+                    Rec."Net Weight" := rL_Item."Net Weight";
+                    Rec."Total Net Weight" := Rec."Net Weight" * Rec.Quantity;
+                    Rec.MODIFY;
 
-                    MESSAGE('Update Completed');
+                    Message('Update Completed');
                 end;
             }
         }
@@ -396,86 +439,89 @@ pageextension 50110 ItemLedgerEntriesExt extends "Item Ledger Entries"
 
                 action("QC Purchase Receiving")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     Image = Print;
                     Promoted = true;
                     PromotedCategory = "Report";
                     PromotedIsBig = false;
                     PromotedOnly = true;
+                    ToolTip = 'Executes the QC Purchase Receiving action.';
 
                     trigger OnAction();
                     var
                         rpt_QualityControlPurcReceiptv2: Report "Quality Control Purc. Rcpt";
                         rL_ILE: Record "Item Ledger Entry";
                     begin
-                        CLEAR(rpt_QualityControlPurcReceiptv2);
+                        Clear(rpt_QualityControlPurcReceiptv2);
 
-                        rL_ILE.COPYFILTERS(Rec);
-                        rpt_QualityControlPurcReceiptv2.SETTABLEVIEW(rL_ILE);
-                        rpt_QualityControlPurcReceiptv2.RUN;
+                        rL_ILE.CopyFilters(Rec);
+                        rpt_QualityControlPurcReceiptv2.SetTableView(rL_ILE);
+                        rpt_QualityControlPurcReceiptv2.Run;
                     end;
                 }
                 action("QC Production")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     Image = Print;
                     Promoted = true;
                     PromotedCategory = "Report";
                     PromotedIsBig = false;
                     PromotedOnly = true;
                     Caption = 'QC Production ARAD-1,5';
+                    ToolTip = 'Executes the QC Production ARAD-1,5 action.';
 
                     trigger OnAction();
                     var
                         rpt_QualityControlProdOrder: Report "Quality Control Prod. Order";
                         rL_ILE: Record "Item Ledger Entry";
                     begin
-                        CLEAR(rpt_QualityControlProdOrder);
+                        Clear(rpt_QualityControlProdOrder);
 
-                        rL_ILE.COPYFILTERS(Rec);
+                        rL_ILE.CopyFilters(Rec);
 
                         //DataItemTableView = WHERE("Entry Type" = CONST(Sale), "Location Code" = FILTER('ARAD-1|ARAD-5'), 
                         //"Gen. Prod. Posting Group" = CONST('ST-FRVEG'), Quantity = FILTER(< 0));
-                        rL_ILE.SetRange("Entry Type", "Entry Type"::Sale);
+                        rL_ILE.SetRange("Entry Type", Rec."Entry Type"::Sale);
                         rL_ILE.SetFilter("Location Code", 'ARAD-1|ARAD-5');
                         rL_ILE.SetFilter("Gen. Prod. Posting Group", 'ST-FRVEG');
                         rL_ILE.SetFilter(Quantity, '<0');
 
 
-                        rpt_QualityControlProdOrder.SETTABLEVIEW(rL_ILE);
-                        rpt_QualityControlProdOrder.RUN;
+                        rpt_QualityControlProdOrder.SetTableView(rL_ILE);
+                        rpt_QualityControlProdOrder.Run;
                     end;
                 }
 
 
                 action("QC ProductionOther")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     Image = Print;
                     Promoted = true;
                     PromotedCategory = "Report";
                     PromotedIsBig = false;
                     PromotedOnly = true;
                     Caption = 'QC Production Other';
+                    ToolTip = 'Executes the QC Production Other action.';
 
                     trigger OnAction();
                     var
                         rpt_QualityControlProdOrder: Report "Quality Control Prod. Order";
                         rL_ILE: Record "Item Ledger Entry";
                     begin
-                        CLEAR(rpt_QualityControlProdOrder);
+                        Clear(rpt_QualityControlProdOrder);
 
-                        rL_ILE.COPYFILTERS(Rec);
+                        rL_ILE.CopyFilters(Rec);
 
                         //DataItemTableView = WHERE("Entry Type" = CONST(Sale), "Location Code" = FILTER('ARAD-1|ARAD-5'), 
                         //"Gen. Prod. Posting Group" = CONST('ST-FRVEG'), Quantity = FILTER(< 0));
-                        rL_ILE.SetRange("Entry Type", "Entry Type"::Sale);
+                        rL_ILE.SetRange("Entry Type", Rec."Entry Type"::Sale);
                         //rL_ILE.SetFilter("Location Code", 'ARAD-1|ARAD-5');
                         //rL_ILE.SetFilter("Gen. Prod. Posting Group", 'ST-FRVEG');
                         rL_ILE.SetFilter(Quantity, '<0');
 
-                        rpt_QualityControlProdOrder.SETTABLEVIEW(rL_ILE);
-                        rpt_QualityControlProdOrder.RUN;
+                        rpt_QualityControlProdOrder.SetTableView(rL_ILE);
+                        rpt_QualityControlProdOrder.Run;
                     end;
                 }
                 /*
@@ -512,13 +558,14 @@ pageextension 50110 ItemLedgerEntriesExt extends "Item Ledger Entries"
 
                 action("Boxes Statement By Location")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     Image = Print;
                     Promoted = true;
                     PromotedCategory = "Report";
                     PromotedIsBig = false;
                     PromotedOnly = true;
                     Caption = 'Boxes Statement By Location';
+                    ToolTip = 'Executes the Boxes Statement By Location action.';
 
                     trigger OnAction();
                     var
@@ -526,7 +573,7 @@ pageextension 50110 ItemLedgerEntriesExt extends "Item Ledger Entries"
                         rL_ILE: Record "Item Ledger Entry";
                         rL_Location: Record Location;
                     begin
-                        CLEAR(rpt_Boxestatement);
+                        Clear(rpt_Boxestatement);
 
                         //rL_ILE.RESET;
                         //rL_ILE.SetFilter("Location Code", "Location Code");
@@ -536,7 +583,7 @@ pageextension 50110 ItemLedgerEntriesExt extends "Item Ledger Entries"
                         //rL_Location.SetFilter(Code, "Location Code");
                         //if rL_Location.FindSet() then begin
                         //rpt_Boxestatement.SETTABLEVIEW(rL_Location);
-                        rpt_Boxestatement.RUN;
+                        rpt_Boxestatement.Run;
                         //end;
 
                     end;
@@ -545,13 +592,14 @@ pageextension 50110 ItemLedgerEntriesExt extends "Item Ledger Entries"
 
                 action("Boxes Statement Summary")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     Image = Print;
                     Promoted = true;
                     PromotedCategory = "Report";
                     PromotedIsBig = false;
                     PromotedOnly = true;
                     Caption = 'Boxes Statement Summary/Detail';
+                    ToolTip = 'Executes the Boxes Statement Summary/Detail action.';
 
                     trigger OnAction();
                     var
@@ -560,10 +608,10 @@ pageextension 50110 ItemLedgerEntriesExt extends "Item Ledger Entries"
                         rL_Location: Record Location;
                         SRSetup: Record "Sales & Receivables Setup";
                     begin
-                        SRSetup.GET();
-                        CLEAR(rpt_BoxestatementSum);
+                        SRSetup.Get();
+                        Clear(rpt_BoxestatementSum);
 
-                        rL_ILE.RESET;
+                        rL_ILE.Reset;
                         rL_ILE.SetFilter("Entry Type", '%1|%2', rL_ILE."Entry Type"::Sale, rL_ILE."Entry Type"::Purchase);
                         rL_ILE.SetFilter("Item Category Code", SRSetup."Box Stmt Item Category Filter");
                         //rL_ILE.SetFilter("Gen. Prod. Posting Group", 'ST-PACKMAT');
@@ -571,8 +619,8 @@ pageextension 50110 ItemLedgerEntriesExt extends "Item Ledger Entries"
                         //rL_Location.RESET;
                         //rL_Location.SetFilter(Code, "Location Code");
                         //if rL_Location.FindSet() then begin
-                        rpt_BoxestatementSum.SETTABLEVIEW(rL_ILE);
-                        rpt_BoxestatementSum.RUN;
+                        rpt_BoxestatementSum.SetTableView(rL_ILE);
+                        rpt_BoxestatementSum.Run;
                         //end;
 
                     end;
@@ -581,26 +629,27 @@ pageextension 50110 ItemLedgerEntriesExt extends "Item Ledger Entries"
 
                 action("LOT Per Item")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     Image = Print;
                     Promoted = true;
                     PromotedCategory = "Report";
                     PromotedIsBig = false;
                     PromotedOnly = true;
+                    ToolTip = 'Executes the LOT Per Item action.';
 
                     trigger OnAction();
                     var
                         rpt_LOTPerItem: Report "LOT Per Item";
-                        rL_Item: Record "Item";
+                        rL_Item: Record Item;
                     begin
-                        rL_Item.RESET;
+                        rL_Item.Reset;
                         rL_Item.SetFilter("No.", Rec."Item No.");
                         if rL_Item.FindSet() then;
 
-                        CLEAR(rpt_LOTPerItem);
+                        Clear(rpt_LOTPerItem);
 
-                        rpt_LOTPerItem.SETTABLEVIEW(rL_Item);
-                        rpt_LOTPerItem.RUN;
+                        rpt_LOTPerItem.SetTableView(rL_Item);
+                        rpt_LOTPerItem.Run;
                     end;
                 }
 
@@ -652,7 +701,7 @@ pageextension 50110 ItemLedgerEntriesExt extends "Item Ledger Entries"
         myInt: Integer;
     begin
         //CalcFields("Lot Grower No.");
-        if Grower.get("Lot Grower No.") then begin
+        if Grower.get(Rec."Lot Grower No.") then begin
             Grower.CalcFields("Grower Vendor Name");
         end;
     end;

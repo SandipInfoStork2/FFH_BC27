@@ -10,10 +10,10 @@ report 50064 "Item Register - Quantity FFH"
     {
         dataitem("Item Register"; "Item Register")
         {
-            DataItemTableView = SORTING("No.");
+            DataItemTableView = sorting("No.");
             PrintOnlyIfDetail = true;
             RequestFilterFields = "No.";
-            column(CompanyName; COMPANYPROPERTY.DisplayName)
+            column(CompanyName; CompanyProperty.DisplayName)
             {
             }
             column(ItemRegFilterCopyText; TableCaption + ': ' + ItemRegFilter)
@@ -42,7 +42,7 @@ report 50064 "Item Register - Quantity FFH"
             }
             dataitem("Item Ledger Entry"; "Item Ledger Entry")
             {
-                DataItemTableView = SORTING("Entry No.");
+                DataItemTableView = sorting("Entry No.");
                 column(PostingDate_ItemLedgEntry; Format("Posting Date"))
                 {
                 }

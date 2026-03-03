@@ -4,159 +4,192 @@ page 50025 "Grower Card"
     // TAL0.2 2021/11/16 VC add field Country of Destination
 
     SourceTable = Grower;
+    ApplicationArea = All;
 
     layout
     {
-        area(content)
+        area(Content)
         {
             group(General)
             {
-                field("No."; "No.")
+                field("No."; Rec."No.")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the No. field.';
                 }
-                field(Name; Name)
+                field(Name; Rec.Name)
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Name field.';
                 }
-                field("Search Name"; "Search Name")
+                field("Search Name"; Rec."Search Name")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Search Name field.';
                 }
-                field(GGN; GGN)
+                field(GGN; Rec.GGN)
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the GGN field.';
                 }
-                field("Country of Destination"; "Country of Destination")
+                field("Country of Destination"; Rec."Country of Destination")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Country of Destination field.';
                 }
-                field(GLN; GLN)
+                field(GLN; Rec.GLN)
                 {
                     ApplicationArea = All;
                     Visible = false;
+                    ToolTip = 'Specifies the value of the GLN field.';
                 }
-                field("Grower Vendor No."; "Grower Vendor No.")
+                field("Grower Vendor No."; Rec."Grower Vendor No.")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Grower Vendor No. field.';
                 }
-                field("Grower Vendor Name"; "Grower Vendor Name")
+                field("Grower Vendor Name"; Rec."Grower Vendor Name")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Grower Vendor Name field.';
                 }
-                field("Grower Vendor GGN"; "Grower Vendor GGN")
+                field("Grower Vendor GGN"; Rec."Grower Vendor GGN")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Grower Vendor GGN field.';
                 }
-                field("Grower Vendor GLN"; "Grower Vendor GLN")
+                field("Grower Vendor GLN"; Rec."Grower Vendor GLN")
                 {
                     ApplicationArea = All;
                     Visible = false;
+                    ToolTip = 'Specifies the value of the Grower Vendor GLN field.';
                 }
-                field("Category 2"; "Category 2")
+                field("Category 2"; Rec."Category 2")
                 {
                     ApplicationArea = All;
-                }
-
-                field("Category 4"; "Category 4")
-                {
-                    ApplicationArea = All;
-                }
-                field("Grower Certified"; "Grower Certified")
-                {
-                    ApplicationArea = All;
-                }
-                field("GGN Expiry Date"; "GGN Expiry Date")
-                {
-                    ApplicationArea = All;
-                }
-                field("No. of Products"; "No. of Products")
-                {
-                    ApplicationArea = All;
-                    DrillDownPageID = "Grower Item Catalog";
-                }
-                field(Comments; Comments)
-                {
-                    ApplicationArea = All;
-                }
-                field("Category 1"; "Category 1")
-                {
-                    ApplicationArea = All;
-                }
-                field("Producer Group Name"; "Producer Group Name")
-                {
-                    ApplicationArea = All;
-                }
-                field(TC; TC)
-                {
-                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Category 2 field.';
                 }
 
-                field("Category 3"; "Category 3")
+                field("Category 4"; Rec."Category 4")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Category 4 field.';
+                }
+                field("Grower Certified"; Rec."Grower Certified")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Grower Certified field.';
+                }
+                field("GGN Expiry Date"; Rec."GGN Expiry Date")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the GGN Expiry Date field.';
+                }
+                field("No. of Products"; Rec."No. of Products")
+                {
+                    ApplicationArea = All;
+                    DrillDownPageId = "Grower Item Catalog";
+                    ToolTip = 'Specifies the value of the No. of Products field.';
+                }
+                field(Comments; Rec.Comments)
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Comments field.';
+                }
+                field("Category 1"; Rec."Category 1")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Producer Group field.';
+                }
+                field("Producer Group Name"; Rec."Producer Group Name")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Producer Group Name field.';
+                }
+                field(TC; Rec.TC)
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the TC field.';
                 }
 
-                field("GRASP Expiry Date"; "GRASP Expiry Date")
+                field("Category 3"; Rec."Category 3")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Category 3 field.';
                 }
 
-                field("Status Biodiversity"; "Status Biodiversity")
+                field("GRASP Expiry Date"; Rec."GRASP Expiry Date")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the GRASP Expiry Date field.';
                 }
 
-                field("Biodiversity Expiry Date"; "Biodiversity Expiry Date")
+                field("Status Biodiversity"; Rec."Status Biodiversity")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Status Biodiversity field.';
                 }
 
-                field("Status SPRING"; "Status SPRING")
+                field("Biodiversity Expiry Date"; Rec."Biodiversity Expiry Date")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Biodiversity Expiry Date field.';
                 }
-                field("SPRING Expiry Date"; "SPRING Expiry Date")
+
+                field("Status SPRING"; Rec."Status SPRING")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Status SPRING field.';
+                }
+                field("SPRING Expiry Date"; Rec."SPRING Expiry Date")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the SPRING Expiry Date field.';
                 }
             }
             group(Communication)
             {
-                field("Phone No."; "Phone No.")
+                field("Phone No."; Rec."Phone No.")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Phone No. field.';
                 }
-                field("Mobile Phone No."; "Mobile Phone No.")
+                field("Mobile Phone No."; Rec."Mobile Phone No.")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Mobile Phone No. field.';
                 }
             }
             group(Other)
             {
-                field("No. Series"; "No. Series")
+                field("No. Series"; Rec."No. Series")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the No. Series field.';
                 }
-                field("Creation Date"; "Creation Date")
+                field("Creation Date"; Rec."Creation Date")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Creation Date field.';
                 }
-                field("Created By"; "Created By")
+                field("Created By"; Rec."Created By")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Created By field.';
                 }
-                field("Last Modified Date"; "Last Modified Date")
+                field("Last Modified Date"; Rec."Last Modified Date")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Last Modified Date field.';
                 }
-                field("Last Modified By"; "Last Modified By")
+                field("Last Modified By"; Rec."Last Modified By")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Last Modified By field.';
                 }
             }
         }
-        area(factboxes)
+        area(FactBoxes)
         {
             systempart(Control1000000024; Links)
             {
@@ -171,7 +204,7 @@ page 50025 "Grower Card"
 
     actions
     {
-        area(navigation)
+        area(Navigation)
         {
             group(Grower)
             {
@@ -183,9 +216,10 @@ page 50025 "Grower Card"
                     Promoted = true;
                     PromotedCategory = Process;
                     PromotedOnly = true;
-                    RunObject = Page "Grower Item Catalog";
-                    RunPageLink = "Grower No." = FIELD("No.");
-                    RunPageView = SORTING("Grower No.");
+                    RunObject = page "Grower Item Catalog";
+                    RunPageLink = "Grower No." = field("No.");
+                    RunPageView = sorting("Grower No.");
+                    ToolTip = 'Executes the Grower Items action.';
                 }
             }
             group(Statistics)
@@ -201,8 +235,9 @@ page 50025 "Grower Card"
                     PromotedCategory = "Report";
                     PromotedIsBig = true;
                     PromotedOnly = true;
-                    RunObject = Page "Grower Turnover";
-                    RunPageLink = "No." = FIELD("No.");
+                    RunObject = page "Grower Turnover";
+                    RunPageLink = "No." = field("No.");
+                    ToolTip = 'Executes the T&urnover action.';
                 }
             }
         }

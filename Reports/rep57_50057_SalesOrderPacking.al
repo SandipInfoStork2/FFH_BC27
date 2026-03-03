@@ -3,6 +3,7 @@ report 50057 "Sales Order Packing"
     DefaultLayout = RDLC;
     RDLCLayout = './Layouts/rep57_50057_SalesOrderPacking.rdlc';
     PreviewMode = PrintLayout;
+    ApplicationArea = All;
 
     dataset
     {
@@ -35,7 +36,7 @@ report 50057 "Sales Order Packing"
             column(UnitofMeasureCode_SalesLine; "Sales Line"."Unit of Measure Code")
             {
             }
-            column(ShipmentDate_SalesLine; FORMAT("Sales Line"."Shipment Date"))
+            column(ShipmentDate_SalesLine; Format("Sales Line"."Shipment Date"))
             {
             }
             column(ShiptoCode_SalesLine; "Sales Line"."Ship-to Code")
@@ -56,18 +57,18 @@ report 50057 "Sales Order Packing"
 
             trigger OnAfterGetRecord();
             begin
-                rG_SalesHeader.GET("Sales Line"."Document Type", "Sales Line"."Document No.");
-                rG_ShiptoAddress.GET(rG_SalesHeader."Bill-to Customer No.", rG_SalesHeader."Ship-to Code");
+                rG_SalesHeader.Get("Sales Line"."Document Type", "Sales Line"."Document No.");
+                rG_ShiptoAddress.Get(rG_SalesHeader."Bill-to Customer No.", rG_SalesHeader."Ship-to Code");
             end;
 
             trigger OnPreDataItem();
             begin
-                "Sales Line".SETRANGE("Document Type", "Sales Line"."Document Type"::Order);
-                "Sales Line".SETRANGE(Type, "Sales Line".Type::Item);
-                "Sales Line".SETFILTER(Quantity, '<>%1', 0);
-                "Sales Line".SETFILTER("Ship-to Code", '<>%1', '');
+                "Sales Line".SetRange("Document Type", "Sales Line"."Document Type"::Order);
+                "Sales Line".SetRange(Type, "Sales Line".Type::Item);
+                "Sales Line".SetFilter(Quantity, '<>%1', 0);
+                "Sales Line".SetFilter("Ship-to Code", '<>%1', '');
 
-                rG_CompanyInformation.GET;
+                rG_CompanyInformation.Get;
                 DisplayName := rG_CompanyInformation.Name;
             end;
         }

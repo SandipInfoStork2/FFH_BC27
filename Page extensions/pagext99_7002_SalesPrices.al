@@ -11,9 +11,10 @@ pageextension 50199 SalesPricesExt extends "Sales Prices"
         // Add changes to page layout here
         addafter("Item No.")
         {
-            field("Item Description"; "Item Description")
+            field("Item Description"; Rec."Item Description")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Item Description field.';
             }
             field("Item Reference"; Rec."Item Reference")
             {
@@ -26,7 +27,7 @@ pageextension 50199 SalesPricesExt extends "Sales Prices"
                 begin
                     if Rec."Item Reference" = '' then exit;
                     ItemReference.SetFilter("Reference Type", '%1|%2', ItemReference."Reference Type"::"Bar Code", ItemReference."Reference Type"::Customer);
-                    ItemReference.SetFilter("Reference Type No.", '%1|%2', "Sales Code", '');
+                    ItemReference.SetFilter("Reference Type No.", '%1|%2', Rec."Sales Code", '');
                     ItemReference.SetRange("Reference No.", Rec."Item Reference");
 
                     if ItemReference.Count() = 0 then Error('Item Reference %1 not found', Rec."Item Reference");
@@ -37,7 +38,7 @@ pageextension 50199 SalesPricesExt extends "Sales Prices"
                     end;
 
                     if ItemReference.Count() > 1 then begin
-                        if PAGE.RunModal(PAGE::"Item References", ItemReference) = ACTION::LookupOK then begin
+                        if Page.RunModal(Page::"Item References", ItemReference) = Action::LookupOK then begin
                             Rec."Item Reference" := ItemReference."Reference No.";
                             Rec.Validate("Item No.", ItemReference."Item No.");
                         end
@@ -51,21 +52,25 @@ pageextension 50199 SalesPricesExt extends "Sales Prices"
 
         addafter("VAT Bus. Posting Gr. (Price)")
         {
-            field("Item Category Code"; "Item Category Code")
+            field("Item Category Code"; Rec."Item Category Code")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Item Category Code field.';
             }
-            field("Global Dimension 2 Code"; "Global Dimension 2 Code")
+            field("Global Dimension 2 Code"; Rec."Global Dimension 2 Code")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Global Dimension 2 Code field.';
             }
-            field("Last Modified Date"; "Last Modified Date")
+            field("Last Modified Date"; Rec."Last Modified Date")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Last Modified Date field.';
             }
-            field("Last Modified By"; "Last Modified By")
+            field("Last Modified By"; Rec."Last Modified By")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Last Modified By field.';
             }
         }
 
@@ -79,7 +84,7 @@ pageextension 50199 SalesPricesExt extends "Sales Prices"
                 // ItemReference.SetRange("Reference Type", ItemReference."Reference Type"::"Bar Code");
                 // ItemReference.SetRange("Item No.", Rec."Item No.");
                 ItemReference.SetFilter("Reference Type", '%1|%2', ItemReference."Reference Type"::"Bar Code", ItemReference."Reference Type"::Customer);
-                ItemReference.SetFilter("Reference Type No.", '%1|%2', "Sales Code", '');
+                ItemReference.SetFilter("Reference Type No.", '%1|%2', Rec."Sales Code", '');
                 ItemReference.SetRange("Item No.", Rec."Item No.");
 
 
@@ -89,7 +94,7 @@ pageextension 50199 SalesPricesExt extends "Sales Prices"
                 end;
 
                 if ItemReference.Count() > 1 then begin
-                    if PAGE.RunModal(PAGE::"Item References", ItemReference) = ACTION::LookupOK then
+                    if Page.RunModal(Page::"Item References", ItemReference) = Action::LookupOK then
                         Rec."Item Reference" := ItemReference."Reference No."
                     else
                         // Rec."Item Reference" := '';
@@ -104,7 +109,7 @@ pageextension 50199 SalesPricesExt extends "Sales Prices"
     actions
     {
         // Add changes to page actions here
-        addfirst(navigation)
+        addfirst(Navigation)
         {
             action("Item Card")
             {
@@ -114,8 +119,9 @@ pageextension 50199 SalesPricesExt extends "Sales Prices"
                 PromotedCategory = Process;
                 PromotedIsBig = true;
                 PromotedOnly = true;
-                RunObject = Page "Item Card";
-                RunPageLink = "No." = FIELD("Item No.");
+                RunObject = page "Item Card";
+                RunPageLink = "No." = field("Item No.");
+                ToolTip = 'Executes the Item Card action.';
             }
             action("Production BOM")
             {
@@ -134,9 +140,9 @@ pageextension 50199 SalesPricesExt extends "Sales Prices"
                     rL_ProductionBOMHeader: Record "Production BOM Header";
                 begin
 
-                    rL_Item.GET("Item No.");
-                    rL_ProductionBOMHeader.GET(rL_Item."Production BOM No.");
-                    PAGE.RUN(PAGE::"Production BOM", rL_ProductionBOMHeader);
+                    rL_Item.GET(Rec."Item No.");
+                    rL_ProductionBOMHeader.Get(rL_Item."Production BOM No.");
+                    Page.Run(Page::"Production BOM", rL_ProductionBOMHeader);
                 end;
             }
 
@@ -199,8 +205,8 @@ pageextension 50199 SalesPricesExt extends "Sales Prices"
     begin
 
 
-        CALCFIELDS("Item Category Code");
-        CALCFIELDS("Global Dimension 2 Code");
+        Rec.CALCFIELDS("Item Category Code");
+        Rec.CALCFIELDS("Global Dimension 2 Code");
     end;
 
     var

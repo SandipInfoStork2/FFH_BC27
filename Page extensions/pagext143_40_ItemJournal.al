@@ -46,127 +46,127 @@ pageextension 50243 ItemJournalExt extends "Item Journal"
                     ReservationEntry: Record "Reservation Entry";
 
                     DocNo: Code[20];
-                    NoSeriesMgt: Codeunit NoSeriesManagement;
+                    NoSeriesMgt: Codeunit "No. Series";
                     ItemJournalBatch: Record "Item Journal Batch";
                 begin
-                    ItemJournalBatch.GET(Rec."Journal Template Name", rec."Journal Batch Name");
+                    ItemJournalBatch.Get(Rec."Journal Template Name", Rec."Journal Batch Name");
 
                     DocNo := '';
                     if ItemJournalBatch."No. Series" <> '' then begin
                         DocNo := NoSeriesMgt.GetNextNo(ItemJournalBatch."No. Series", WorkDate(), false);
                     end;
 
-                    ProductionOrder.RESET;
+                    ProductionOrder.Reset;
                     ProductionOrder.SetRange(Status, ProductionOrder.Status::Finished);
-                    if PAGE.RunModal(PAGE::"Finished Production Orders", ProductionOrder) = ACTION::LookupOK then begin
+                    if Page.RunModal(Page::"Finished Production Orders", ProductionOrder) = Action::LookupOK then begin
 
-                        ILE.RESET;
+                        ILE.Reset;
                         ILE.SetRange("Order Type", ILE."Order Type"::Production);
                         ILE.SetFilter("Order No.", ProductionOrder."No.");
                         if ILE.FindSet() then begin
                             repeat
-                                CLEAR(rL_ItemJournalLine);
+                                Clear(rL_ItemJournalLine);
 
                                 vL_LineNo := 0;
-                                rL_ItemJournalLine.RESET;
-                                rL_ItemJournalLine.SETFILTER("Journal Template Name", Rec."Journal Template Name");
-                                rL_ItemJournalLine.SETFILTER("Journal Batch Name", Rec."Journal Batch Name");
-                                IF rL_ItemJournalLine.FINDLAST THEN BEGIN
+                                rL_ItemJournalLine.Reset;
+                                rL_ItemJournalLine.SetFilter("Journal Template Name", Rec."Journal Template Name");
+                                rL_ItemJournalLine.SetFilter("Journal Batch Name", Rec."Journal Batch Name");
+                                if rL_ItemJournalLine.FindLast then begin
                                     vL_LineNo := rL_ItemJournalLine."Line No.";
-                                END;
+                                end;
                                 vL_LineNo += 10000;
 
-                                CLEAR(rL_ItemJournalLine);
-                                rL_ItemJournalLine.RESET;
-                                rL_ItemJournalLine.VALIDATE("Journal Template Name", Rec."Journal Template Name");
-                                rL_ItemJournalLine.VALIDATE("Journal Batch Name", Rec."Journal Batch Name");
-                                rL_ItemJournalLine.VALIDATE("Line No.", vL_LineNo);
+                                Clear(rL_ItemJournalLine);
+                                rL_ItemJournalLine.Reset;
+                                rL_ItemJournalLine.Validate("Journal Template Name", Rec."Journal Template Name");
+                                rL_ItemJournalLine.Validate("Journal Batch Name", Rec."Journal Batch Name");
+                                rL_ItemJournalLine.Validate("Line No.", vL_LineNo);
                                 rL_ItemJournalLine.SetUpNewLine(rL_ItemJournalLine);
 
-                                rL_ItemJournalLine.VALIDATE("Posting Date", ILE."Posting Date");
+                                rL_ItemJournalLine.Validate("Posting Date", ILE."Posting Date");
 
                                 if ILE."Entry Type" = ILE."Entry Type"::Consumption then begin
-                                    rL_ItemJournalLine.VALIDATE("Entry Type", rL_ItemJournalLine."Entry Type"::"Positive Adjmt.");
+                                    rL_ItemJournalLine.Validate("Entry Type", rL_ItemJournalLine."Entry Type"::"Positive Adjmt.");
                                 end;
 
                                 if ILE."Entry Type" = ILE."Entry Type"::Output then begin
-                                    rL_ItemJournalLine.VALIDATE("Entry Type", rL_ItemJournalLine."Entry Type"::"Negative Adjmt.");
+                                    rL_ItemJournalLine.Validate("Entry Type", rL_ItemJournalLine."Entry Type"::"Negative Adjmt.");
                                 end;
 
-                                rL_ItemJournalLine.INSERT(TRUE);
+                                rL_ItemJournalLine.Insert(true);
                                 if DocNo <> '' then begin
 
-                                    rL_ItemJournalLine.VALIDATE("Document No.", DocNo);
+                                    rL_ItemJournalLine.Validate("Document No.", DocNo);
 
                                 end else begin
-                                    rL_ItemJournalLine.VALIDATE("Document No.", ILE."Document No." + 'C');
+                                    rL_ItemJournalLine.Validate("Document No.", ILE."Document No." + 'C');
 
                                 end;
 
-                                rL_ItemJournalLine.VALIDATE("External Document No.", ILE."Document No.");
-                                rL_ItemJournalLine.VALIDATE("Item No.", ILE."Item No.");
-                                rL_ItemJournalLine.VALIDATE("Location Code", ILE."Location Code");
-                                rL_ItemJournalLine.VALIDATE("Unit of Measure Code", ILE."Unit of Measure Code");
-                                rL_ItemJournalLine.VALIDATE(Quantity, ABS(ILE.Quantity));
-                                rL_ItemJournalLine.MODIFY(TRUE);
+                                rL_ItemJournalLine.Validate("External Document No.", ILE."Document No.");
+                                rL_ItemJournalLine.Validate("Item No.", ILE."Item No.");
+                                rL_ItemJournalLine.Validate("Location Code", ILE."Location Code");
+                                rL_ItemJournalLine.Validate("Unit of Measure Code", ILE."Unit of Measure Code");
+                                rL_ItemJournalLine.Validate(Quantity, Abs(ILE.Quantity));
+                                rL_ItemJournalLine.Modify(true);
 
                                 if ILE."Lot No." = '' then begin
                                     if rL_ItemJournalLine."Entry Type" = rL_ItemJournalLine."Entry Type"::"Negative Adjmt." then begin
-                                        rL_ItemJournalLine.VALIDATE("Applies-to Entry", ILE."Entry No.");
+                                        rL_ItemJournalLine.Validate("Applies-to Entry", ILE."Entry No.");
                                     end;
 
                                     if rL_ItemJournalLine."Entry Type" = rL_ItemJournalLine."Entry Type"::"Positive Adjmt." then begin
-                                        rL_ItemJournalLine.VALIDATE("Applies-from Entry", ILE."Entry No.");
+                                        rL_ItemJournalLine.Validate("Applies-from Entry", ILE."Entry No.");
                                     end;
 
-                                    rL_ItemJournalLine.MODIFY(TRUE);
+                                    rL_ItemJournalLine.Modify(true);
 
                                 end else begin
-                                    CLEAR(ReservationEntry);
-                                    ReservationEntry.INIT;
+                                    Clear(ReservationEntry);
+                                    ReservationEntry.Init;
                                     ReservationEntry."Entry No." := 0;
-                                    ReservationEntry.VALIDATE("Item No.", rL_ItemJournalLine."Item No.");
-                                    ReservationEntry.VALIDATE("Location Code", rL_ItemJournalLine."Location Code");
-                                    ReservationEntry.VALIDATE("Quantity (Base)", rL_ItemJournalLine.Quantity);
-                                    ReservationEntry.VALIDATE(Positive, TRUE);
-                                    ReservationEntry.VALIDATE("Reservation Status", ReservationEntry."Reservation Status"::Surplus);
+                                    ReservationEntry.Validate("Item No.", rL_ItemJournalLine."Item No.");
+                                    ReservationEntry.Validate("Location Code", rL_ItemJournalLine."Location Code");
+                                    ReservationEntry.Validate("Quantity (Base)", rL_ItemJournalLine.Quantity);
+                                    ReservationEntry.Validate(Positive, true);
+                                    ReservationEntry.Validate("Reservation Status", ReservationEntry."Reservation Status"::Surplus);
 
-                                    ReservationEntry.VALIDATE("Creation Date", TODAY);
-                                    ReservationEntry.VALIDATE("Source Type", 83);
+                                    ReservationEntry.Validate("Creation Date", Today);
+                                    ReservationEntry.Validate("Source Type", 83);
 
                                     if rL_ItemJournalLine."Entry Type" = rL_ItemJournalLine."Entry Type"::"Negative Adjmt." then begin
-                                        ReservationEntry.VALIDATE("Source Subtype", 3);
+                                        ReservationEntry.Validate("Source Subtype", 3);
                                     end;
 
                                     if rL_ItemJournalLine."Entry Type" = rL_ItemJournalLine."Entry Type"::"Positive Adjmt." then begin
-                                        ReservationEntry.VALIDATE("Source Subtype", 2);
+                                        ReservationEntry.Validate("Source Subtype", 2);
                                     end;
 
-                                    ReservationEntry.VALIDATE("Source ID", rL_ItemJournalLine."Journal Template Name");
-                                    ReservationEntry.VALIDATE("Source Batch Name", rL_ItemJournalLine."Journal Batch Name");
-                                    ReservationEntry.VALIDATE("Source Ref. No.", rL_ItemJournalLine."Line No.");
+                                    ReservationEntry.Validate("Source ID", rL_ItemJournalLine."Journal Template Name");
+                                    ReservationEntry.Validate("Source Batch Name", rL_ItemJournalLine."Journal Batch Name");
+                                    ReservationEntry.Validate("Source Ref. No.", rL_ItemJournalLine."Line No.");
 
-                                    ReservationEntry.VALIDATE("Created By", USERID);
+                                    ReservationEntry.Validate("Created By", UserId);
                                     //ReservationEntry.VALIDATE("Expected Receipt Date", rL_WRLSearch."Starting Date");
 
 
-                                    ReservationEntry.VALIDATE("Item Tracking", ReservationEntry."Item Tracking"::"Lot No.");
+                                    ReservationEntry.Validate("Item Tracking", ReservationEntry."Item Tracking"::"Lot No.");
 
-                                    ReservationEntry.VALIDATE("Lot No.", ILE."Lot No.");
+                                    ReservationEntry.Validate("Lot No.", ILE."Lot No.");
 
                                     //Evaluate(TempDate, Colmn4_Valid);
 
-                                    ReservationEntry.VALIDATE("Expiration Date", ILE."Expiration Date");
+                                    ReservationEntry.Validate("Expiration Date", ILE."Expiration Date");
                                     //ReservationEntry.VALIDATE("Serial No.", Colmn5_Valid);
 
                                     if rL_ItemJournalLine."Entry Type" = rL_ItemJournalLine."Entry Type"::"Negative Adjmt." then begin
-                                        ReservationEntry.VALIDATE("Appl.-to Item Entry", ILE."Entry No.");
+                                        ReservationEntry.Validate("Appl.-to Item Entry", ILE."Entry No.");
                                     end else begin
-                                        ReservationEntry.VALIDATE("Appl.-from Item Entry", ILE."Entry No.");
+                                        ReservationEntry.Validate("Appl.-from Item Entry", ILE."Entry No.");
                                     end;
 
 
-                                    ReservationEntry.INSERT(TRUE);
+                                    ReservationEntry.Insert(true);
                                 end;
                             until ILE.Next() = 0;
                         end;
@@ -183,7 +183,7 @@ pageextension 50243 ItemJournalExt extends "Item Journal"
     var
         UserSetup: Record "User Setup";
     begin
-        UserSetup.GET(UserId);
+        UserSetup.Get(UserId);
         UnitCostEditable := UserSetup."Unit Cost Editable";
     end;
     //-1.0.0.228

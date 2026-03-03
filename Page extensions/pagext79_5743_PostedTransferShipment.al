@@ -10,13 +10,15 @@ pageextension 50179 PostedTransferShipmentExt extends "Posted Transfer Shipment"
 
         addafter("In-Transit Code")
         {
-            field("Salesperson Code"; "Salesperson Code")
+            field("Salesperson Code"; Rec."Salesperson Code")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Salesperson Code field.';
             }
-            field("Salesperson Name"; "Salesperson Name")
+            field("Salesperson Name"; Rec."Salesperson Name")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Salesperson Name field.';
             }
         }
     }

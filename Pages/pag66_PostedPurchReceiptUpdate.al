@@ -9,10 +9,11 @@ page 50066 "Posted Purch. Receipt - Update"
     ShowFilter = false;
     SourceTable = "Purch. Rcpt. Header";
     SourceTableTemporary = true;
+    ApplicationArea = All;
 
     layout
     {
-        area(content)
+        area(Content)
         {
             group(General)
             {
@@ -40,15 +41,17 @@ page 50066 "Posted Purch. Receipt - Update"
             group(QC)
             {
                 Caption = 'Quality Control';
-                field("Receiving Temperature"; "Receiving Temperature")
+                field("Receiving Temperature"; Rec."Receiving Temperature")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     Editable = true;
+                    ToolTip = 'Specifies the value of the Receiving Temperature °C field.';
                 }
-                field("Receiving Quality Control"; "Receiving Quality Control")
+                field("Receiving Quality Control"; Rec."Receiving Quality Control")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     Editable = true;
+                    ToolTip = 'Specifies the value of the Receiving Quality Control field.';
                 }
             }
         }
@@ -65,9 +68,9 @@ page 50066 "Posted Purch. Receipt - Update"
 
     trigger OnQueryClosePage(CloseAction: Action): Boolean
     begin
-        if CloseAction = ACTION::LookupOK then
+        if CloseAction = Action::LookupOK then
             if RecordChanged() then
-                CODEUNIT.Run(CODEUNIT::"Purch. Rcpt. Header - Edit", Rec);
+                Codeunit.Run(Codeunit::"Purch. Rcpt. Header - Edit", Rec);
     end;
 
     var
@@ -76,17 +79,16 @@ page 50066 "Posted Purch. Receipt - Update"
     local procedure RecordChanged() IsChanged: Boolean
     begin
         IsChanged :=
-            ("Receiving Temperature" <> xPurchRcptHeader."Receiving Temperature") or
-            ("Receiving Quality Control" <> xPurchRcptHeader."Receiving Quality Control");
+            (Rec."Receiving Temperature" <> xPurchRcptHeader."Receiving Temperature") or
+            (Rec."Receiving Quality Control" <> xPurchRcptHeader."Receiving Quality Control");
 
         OnAfterRecordChanged(Rec, xRec, IsChanged, xPurchRcptHeader);
     end;
 
-    [Scope('OnPrem')]
     procedure SetRec(PurchRcptHeader: Record "Purch. Rcpt. Header")
     begin
         Rec := PurchRcptHeader;
-        Insert();
+        Rec.Insert();
     end;
 
     [IntegrationEvent(false, false)]

@@ -27,33 +27,39 @@ pageextension 50109 ItemListExt extends "Item List"
             {
                 ApplicationArea = All;
             } */
-            field("Extended Description"; "Extended Description")
+            field("Extended Description"; Rec."Extended Description")
             {
                 ApplicationArea = All;
                 Visible = false;
+                ToolTip = 'Specifies the value of the Extended Description field.';
             }
-            field("Package Qty"; "Package Qty")
+            field("Package Qty"; Rec."Package Qty")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Package Qty field.';
             }
-            field("Category 1"; "Category 1")
+            field("Category 1"; Rec."Category 1")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Packing Group field.';
             }
-            field("Packing Group Description"; "Packing Group Description")
+            field("Packing Group Description"; Rec."Packing Group Description")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Packing Group Description field.';
             }
 
             //+1.0.0.232
-            field("Packing Agent"; "Packing Agent")
+            field("Packing Agent"; Rec."Packing Agent")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Packing Agent field.';
             }
             //-1.0.0.232
-            field("Rounding Precision"; "Rounding Precision")
+            field("Rounding Precision"; Rec."Rounding Precision")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies how calculated consumption quantities are rounded when entered on consumption journal lines.';
             }
         }
 
@@ -62,52 +68,60 @@ pageextension 50109 ItemListExt extends "Item List"
 
         addafter("Unit Cost")
         {
-            field("Max Unit Cost"; "Max Unit Cost")
+            field("Max Unit Cost"; Rec."Max Unit Cost")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Max Unit Cost field.';
             }
         }
         addafter("Default Deferral Template Code")
         {
-            field("Global Dimension 1 Code"; "Global Dimension 1 Code")
+            field("Global Dimension 1 Code"; Rec."Global Dimension 1 Code")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Global Dimension 1 Code field.';
             }
-            field("Global Dimension 2 Code"; "Global Dimension 2 Code")
+            field("Global Dimension 2 Code"; Rec."Global Dimension 2 Code")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Global Dimension 2 Code field.';
             }
-            field("Net Weight"; "Net Weight")
+            field("Net Weight"; Rec."Net Weight")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the net weight of the item.';
             }
-            field("Lot Nos."; "Lot Nos.")
+            field("Lot Nos."; Rec."Lot Nos.")
             {
                 ApplicationArea = All;
                 Visible = false;
+                ToolTip = 'Specifies the number series code that will be used when assigning lot numbers.';
             }
         }
 
         addafter("Net Weight")
         {
-            field("Closed Storage Life"; "Closed Storage Life")
+            field("Closed Storage Life"; Rec."Closed Storage Life")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Closed Storage Life field.';
             }
-            field("Fridge Storage Life"; "Fridge Storage Life")
+            field("Fridge Storage Life"; Rec."Fridge Storage Life")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Fridge Storage Life field.';
             }
-            field("Freezer Storage Life"; "Freezer Storage Life")
+            field("Freezer Storage Life"; Rec."Freezer Storage Life")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Freezer Storage Life field.';
 
             }
 
             field("Category 10"; Rec."Category 10")
             {
                 ApplicationArea = All;
-                Tooltip = 'Custom: Category 10';
+                ToolTip = 'Custom: Category 10';
                 CaptionClass = '3,' + vG_Cat10Caption;
                 Visible = vG_Cat10CaptionVisible;
             }
@@ -115,70 +129,70 @@ pageextension 50109 ItemListExt extends "Item List"
             field("Category 11"; Rec."Category 11")
             {
                 ApplicationArea = All;
-                Tooltip = 'Custom: Category 11';
+                ToolTip = 'Custom: Category 11';
                 CaptionClass = '3,' + vG_Cat11Caption;
                 Visible = vG_Cat11CaptionVisible;
             }
             field("Category 12"; Rec."Category 12")
             {
                 ApplicationArea = All;
-                Tooltip = 'Custom: Category 12';
+                ToolTip = 'Custom: Category 12';
                 CaptionClass = '3,' + vG_Cat12Caption;
                 Visible = vG_Cat12CaptionVisible;
             }
             field("Category 13"; Rec."Category 13")
             {
                 ApplicationArea = All;
-                Tooltip = 'Custom: Category 13';
+                ToolTip = 'Custom: Category 13';
                 CaptionClass = '3,' + vG_Cat13Caption;
                 Visible = vG_Cat13CaptionVisible;
             }
             field("Category 14"; Rec."Category 14")
             {
                 ApplicationArea = All;
-                Tooltip = 'Custom: Category 14';
+                ToolTip = 'Custom: Category 14';
                 CaptionClass = '3,' + vG_Cat14Caption;
                 Visible = vG_Cat14CaptionVisible;
             }
             field("Category 15"; Rec."Category 15")
             {
                 ApplicationArea = All;
-                Tooltip = 'Custom: Category 15';
+                ToolTip = 'Custom: Category 15';
                 CaptionClass = '3,' + vG_Cat15Caption;
                 Visible = vG_Cat15CaptionVisible;
             }
             field("Category 16"; Rec."Category 16")
             {
                 ApplicationArea = All;
-                Tooltip = 'Custom: Category 16';
+                ToolTip = 'Custom: Category 16';
                 CaptionClass = '3,' + vG_Cat16Caption;
                 Visible = vG_Cat16CaptionVisible;
             }
             field("Category 17"; Rec."Category 17")
             {
                 ApplicationArea = All;
-                Tooltip = 'Custom: Category 17';
+                ToolTip = 'Custom: Category 17';
                 CaptionClass = '3,' + vG_Cat17Caption;
                 Visible = vG_Cat17CaptionVisible;
             }
             field("Category 18"; Rec."Category 18")
             {
                 ApplicationArea = All;
-                Tooltip = 'Custom: Category 18';
+                ToolTip = 'Custom: Category 18';
                 CaptionClass = '3,' + vG_Cat18Caption;
                 Visible = vG_Cat18CaptionVisible;
             }
             field("Category 19"; Rec."Category 19")
             {
                 ApplicationArea = All;
-                Tooltip = 'Custom: Category 19';
+                ToolTip = 'Custom: Category 19';
                 CaptionClass = '3,' + vG_Cat19Caption;
                 Visible = vG_Cat19CaptionVisible;
             }
             field("Category 20"; Rec."Category 20")
             {
                 ApplicationArea = All;
-                Tooltip = 'Custom: Category 20';
+                ToolTip = 'Custom: Category 20';
                 CaptionClass = '3,' + vG_Cat20Caption;
                 Visible = vG_Cat20CaptionVisible;
             }
@@ -188,16 +202,16 @@ pageextension 50109 ItemListExt extends "Item List"
         {
             field(ItemReferenceNo; ItemReference."Reference No.")
             {
-                caption = 'Customer Reference No.';
+                Caption = 'Customer Reference No.';
                 ApplicationArea = All;
-                Tooltip = 'Custom: Lookup value from Item Refefence.';
+                ToolTip = 'Custom: Lookup value from Item Refefence.';
             }
 
             field(ItemReferenceNoUOM; ItemReferenceUOM."Reference No.")
             {
-                caption = 'Customer Reference No. Same UOM';
+                Caption = 'Customer Reference No. Same UOM';
                 ApplicationArea = All;
-                Tooltip = 'Custom: Lookup value from Item Refefence.';
+                ToolTip = 'Custom: Lookup value from Item Refefence.';
             }
         }
     }
@@ -213,6 +227,8 @@ pageextension 50109 ItemListExt extends "Item List"
                 Promoted = true;
                 PromotedCategory = "Report";
                 PromotedIsBig = true;
+                ToolTip = 'Executes the Item Analysis action.';
+                ApplicationArea = All;
 
                 trigger OnAction();
                 var
@@ -231,17 +247,17 @@ pageextension 50109 ItemListExt extends "Item List"
                     rL_ProductionBOMLine: Record "Production BOM Line";
                 begin
                     //+TAL0.7
-                    rL_Item.RESET;
-                    rL_Item.SETFILTER("No.", "No.");
-                    if rL_Item.FINDSET then;
+                    rL_Item.Reset;
+                    rL_Item.SETFILTER("No.", Rec."No.");
+                    if rL_Item.FindSet then;
 
-                    CalculateDate := WORKDATE;
+                    CalculateDate := WorkDate;
 
                     if rL_Item."Production BOM No." <> '' then begin
 
-                        ProdBOM.RESET;
-                        ProdBOM.SETFILTER("No.", rL_Item."Production BOM No.");
-                        if ProdBOM.FINDSET then;
+                        ProdBOM.Reset;
+                        ProdBOM.SetFilter("No.", rL_Item."Production BOM No.");
+                        if ProdBOM.FindSet then;
 
                         //WhereUsedMgt.WhereUsedFromProdBOM(ProdBOM,CalculateDate,TRUE)
                     end else begin
@@ -252,8 +268,8 @@ pageextension 50109 ItemListExt extends "Item List"
 
 
                     //loop the results
-                    CLEAR(rL_BOMLoop);
-                    rL_BOMLoop.SETCURRENTKEY(Number);
+                    Clear(rL_BOMLoop);
+                    rL_BOMLoop.SetCurrentKey(Number);
 
                     First := true;
                     BomFound := true;
@@ -294,13 +310,13 @@ pageextension 50109 ItemListExt extends "Item List"
                     end;
 
                     if rL_Item."Production BOM No." <> '' then begin
-                        rL_ProductionBOMLine.RESET;
-                        rL_ProductionBOMLine.SETFILTER("Production BOM No.", rL_Item."Production BOM No.");
-                        rL_ProductionBOMLine.SETRANGE(Type, rL_ProductionBOMLine.Type::Item);
-                        if rL_ProductionBOMLine.FINDSET then begin
+                        rL_ProductionBOMLine.Reset;
+                        rL_ProductionBOMLine.SetFilter("Production BOM No.", rL_Item."Production BOM No.");
+                        rL_ProductionBOMLine.SetRange(Type, rL_ProductionBOMLine.Type::Item);
+                        if rL_ProductionBOMLine.FindSet then begin
                             repeat
                                 vL_Filter += '|' + rL_ProductionBOMLine."No.";
-                            until rL_ProductionBOMLine.NEXT = 0;
+                            until rL_ProductionBOMLine.Next = 0;
                         end;
                     end;
 
@@ -309,13 +325,13 @@ pageextension 50109 ItemListExt extends "Item List"
 
 
                     //search again with new filter
-                    rL_Item.RESET;
-                    rL_Item.SETFILTER("No.", vL_Filter);
-                    if rL_Item.FINDSET then;
-                    CLEAR(pItemAnalysis);
-                    pItemAnalysis.SETTABLEVIEW(rL_Item);
+                    rL_Item.Reset;
+                    rL_Item.SetFilter("No.", vL_Filter);
+                    if rL_Item.FindSet then;
+                    Clear(pItemAnalysis);
+                    pItemAnalysis.SetTableView(rL_Item);
                     pItemAnalysis.SetAscending(); //TAL0.8
-                    pItemAnalysis.RUN();
+                    pItemAnalysis.Run();
                     //Page Item Analysis
                     //-TAL0.7
                 end;
@@ -323,7 +339,7 @@ pageextension 50109 ItemListExt extends "Item List"
 
             action("Boxes Statement By Location")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 Image = Print;
                 Promoted = true;
                 PromotedCategory = "Report";
@@ -331,6 +347,7 @@ pageextension 50109 ItemListExt extends "Item List"
                 PromotedOnly = true;
                 Caption = 'Boxes Statement By Location';
                 RunObject = report "Boxes Statement By Location";
+                ToolTip = 'Executes the Boxes Statement By Location action.';
             }
 
 
@@ -341,8 +358,9 @@ pageextension 50109 ItemListExt extends "Item List"
         {
             action("LOT Per Item")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 Image = Report;
+                ToolTip = 'Executes the LOT Per Item action.';
                 //Promoted = true;
                 //PromotedCategory = "Report";
                 //PromotedIsBig = false;
@@ -351,16 +369,16 @@ pageextension 50109 ItemListExt extends "Item List"
                 trigger OnAction();
                 var
                     rpt_LOTPerItem: Report "LOT Per Item";
-                    rL_Item: Record "Item";
+                    rL_Item: Record Item;
                 begin
-                    rL_Item.RESET;
-                    rL_Item.SetFilter("No.", "No.");
+                    rL_Item.Reset;
+                    rL_Item.SetFilter("No.", Rec."No.");
                     if rL_Item.FindSet() then;
 
-                    CLEAR(rpt_LOTPerItem);
+                    Clear(rpt_LOTPerItem);
 
-                    rpt_LOTPerItem.SETTABLEVIEW(rL_Item);
-                    rpt_LOTPerItem.RUN;
+                    rpt_LOTPerItem.SetTableView(rL_Item);
+                    rpt_LOTPerItem.Run;
                 end;
             }
         }
@@ -379,7 +397,7 @@ pageextension 50109 ItemListExt extends "Item List"
     var
         InvSetup: Record "Inventory Setup";
     begin
-        InvSetup.GET;
+        InvSetup.Get;
         vG_Cat10Caption := InvSetup."Item Cat. 10 Caption";
         vG_Cat11Caption := InvSetup."Item Cat. 11 Caption";
         vG_Cat12Caption := InvSetup."Item Cat. 12 Caption";
@@ -410,17 +428,17 @@ pageextension 50109 ItemListExt extends "Item List"
     var
         myInt: Integer;
     begin
-        clear(ItemReference);
+        Clear(ItemReference);
         ItemReference.Reset();
         ItemReference.SetFilter("Item No.", Rec."No.");
         ItemReference.SetRange("Reference Type", ItemReference."Reference Type"::Customer);
         if ItemReference.FindSet() then;
 
-        clear(ItemReferenceUOM);
+        Clear(ItemReferenceUOM);
         ItemReferenceUOM.Reset();
         ItemReferenceUOM.SetFilter("Item No.", Rec."No.");
         ItemReferenceUOM.SetRange("Reference Type", ItemReferenceUOM."Reference Type"::Customer);
-        ItemReferenceUOM.SetFilter("Unit of Measure", rec."Sales Unit of Measure");
+        ItemReferenceUOM.SetFilter("Unit of Measure", Rec."Sales Unit of Measure");
         if ItemReferenceUOM.FindSet() then;
     end;
 

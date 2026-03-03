@@ -5,9 +5,10 @@ pageextension 50221 ProductionOrderListExt extends "Production Order List"
         // Add changes to page layout here
         addafter("Search Description")
         {
-            field("Vendor No."; "Vendor No.")
+            field("Vendor No."; Rec."Vendor No.")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Vendor No. field.';
             }
         }
     }

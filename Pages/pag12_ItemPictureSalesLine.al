@@ -11,10 +11,11 @@ page 50012 "Item Picture - Sales Line"
     ModifyAllowed = false;
     PageType = CardPart;
     SourceTable = "Sales Line";
+    ApplicationArea = All;
 
     layout
     {
-        area(content)
+        area(Content)
         {
             field(rG_Item; rG_Item.Picture)
             {
@@ -31,9 +32,9 @@ page 50012 "Item Picture - Sales Line"
 
     trigger OnAfterGetRecord();
     begin
-        CLEAR(rG_Item);
-        if Type = Type::Item then begin
-            if rG_Item.GET("No.") then begin
+        Clear(rG_Item);
+        if Rec.Type = Rec.Type::Item then begin
+            if rG_Item.GET(Rec."No.") then begin
                 //rG_Item.CALCFIELDS(Picture);
             end;
         end;

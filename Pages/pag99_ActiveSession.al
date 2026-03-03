@@ -12,45 +12,53 @@ page 50099 "Active Session"
         {
             repeater(GroupName)
             {
-                field("User ID"; "User ID")
+                field("User ID"; Rec."User ID")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the User ID field.';
                 }
-                field("Login Datetime"; "Login Datetime")
+                field("Login Datetime"; Rec."Login Datetime")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Login Datetime field.';
                 }
-                field("Client Computer Name"; "Client Computer Name")
+                field("Client Computer Name"; Rec."Client Computer Name")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Client Computer Name field.';
                 }
-                field("Session ID"; "Session ID")
+                field("Session ID"; Rec."Session ID")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Session ID field.';
                 }
-                field("Client Type"; "Client Type")
+                field("Client Type"; Rec."Client Type")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Client Type field.';
                 }
-                field("Server Instance Name"; "Server Instance Name")
+                field("Server Instance Name"; Rec."Server Instance Name")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Server Instance Name field.';
                 }
 
-                field("Server Instance ID"; "Server Instance ID")
+                field("Server Instance ID"; Rec."Server Instance ID")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Server Instance ID field.';
                 }
-                field("Server Computer Name"; "Server Computer Name")
+                field("Server Computer Name"; Rec."Server Computer Name")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Server Computer Name field.';
                 }
 
 
 
             }
         }
-        area(Factboxes)
+        area(FactBoxes)
         {
 
         }
@@ -63,6 +71,7 @@ page 50099 "Active Session"
             action(ActionName)
             {
                 ApplicationArea = All;
+                ToolTip = 'Executes the ActionName action.';
 
                 trigger OnAction();
                 begin

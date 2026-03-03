@@ -5,9 +5,10 @@ pageextension 50247 SalesQuotesExt extends "Sales Quotes"
         // Add changes to page layout here
         addafter("External Document No.")
         {
-            field("Week No."; "Week No.")
+            field("Week No."; Rec."Week No.")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Week No. field.';
             }
 
         }
@@ -27,8 +28,9 @@ pageextension 50247 SalesQuotesExt extends "Sales Quotes"
         {
             field(DocumentDay; vG_DocumentDay)
             {
-                caption = 'Document Day';
-                ApplicationArea = all;
+                Caption = 'Document Day';
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Document Day field.';
             }
             /*
             field("Requested Delivery Date"; "Requested Delivery Date")
@@ -55,8 +57,9 @@ pageextension 50247 SalesQuotesExt extends "Sales Quotes"
         {
             field(RequestedDeliveryDay; vG_RequestedDeliveryDay)
             {
-                caption = 'Requested Delivery Day';
-                ApplicationArea = all;
+                Caption = 'Requested Delivery Day';
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Requested Delivery Day field.';
             }
         }
         modify("Posting Date")
@@ -71,42 +74,49 @@ pageextension 50247 SalesQuotesExt extends "Sales Quotes"
         addafter(Amount)
         {
 
-            field("No. of Lines"; "No. of Lines")
+            field("No. of Lines"; Rec."No. of Lines")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 DrillDownPageId = "Sales Quote Lidl Subform";
+                ToolTip = 'Specifies the value of the No. of Lines field.';
             }
 
-            field("No. of Costing Lines"; "No. of Lines")
+            field("No. of Costing Lines"; Rec."No. of Lines")
             {
-                caption = 'No. of Costing Lines';
-                ApplicationArea = all;
+                Caption = 'No. of Costing Lines';
+                ApplicationArea = All;
                 DrillDownPageId = "S.Q. Lidl Costing Subform";
+                ToolTip = 'Specifies the value of the No. of Costing Lines field.';
             }
-            field("No. of New Lines"; "No. of New Lines")
+            field("No. of New Lines"; Rec."No. of New Lines")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 DrillDownPageId = "Sales Quote Lidl Subform";
+                ToolTip = 'Specifies the value of the No. of New Lines field.';
             }
         }
 
         addafter("Quote Valid Until Date")
         {
-            field("Price Start Date"; "Price Start Date")
+            field("Price Start Date"; Rec."Price Start Date")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Custom: Get Costing Price Previous Week - Start Date';
             }
-            field("Price End Date"; "Price End Date")
+            field("Price End Date"; Rec."Price End Date")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Custom: Get Costing Price Previous Week - End Date';
             }
-            field("Price Update Start Date"; "Price Update Start Date")
+            field("Price Update Start Date"; Rec."Price Update Start Date")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Custom: Update Prices Previous Week - Start Date';
             }
-            field("Price Update End Date"; "Price Update End Date")
+            field("Price Update End Date"; Rec."Price Update End Date")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Custom: Update Prices Previous Week - End Date';
             }
         }
 
@@ -120,18 +130,19 @@ pageextension 50247 SalesQuotesExt extends "Sales Quotes"
             action(pLidldLines)
             {
                 ApplicationArea = All;
-                caption = 'Sales Quote Lidl Lines';
+                Caption = 'Sales Quote Lidl Lines';
+                ToolTip = 'Executes the Sales Quote Lidl Lines action.';
 
                 trigger OnAction()
-                Var
+                var
                     rL_SalesLine: Record "Sales Line";
                     pLidlLine: Page "Sales Quote Lidl Lines";
                 begin
-                    rL_SalesLine.RESET;
-                    rL_SalesLine.SetRange("Document Type", "Document Type");
-                    rL_SalesLine.SetFilter("Document No.", "No.");
+                    rL_SalesLine.Reset;
+                    rL_SalesLine.SetRange("Document Type", Rec."Document Type");
+                    rL_SalesLine.SetFilter("Document No.", Rec."No.");
                     if rL_SalesLine.FindSet() then begin
-                        clear(pLidlLine);
+                        Clear(pLidlLine);
                         pLidlLine.SetTableView(rL_SalesLine);
                         pLidlLine.Run();
                     end;
@@ -147,11 +158,11 @@ pageextension 50247 SalesQuotesExt extends "Sales Quotes"
         myInt: Integer;
         DateforWeek1: Record Date;
     begin
-        if DateforWeek1.GET(DateforWeek1."Period Type"::Date, "Document Date") then begin
+        if DateforWeek1.GET(DateforWeek1."Period Type"::Date, Rec."Document Date") then begin
             vG_DocumentDay := DateforWeek1."Period Name";
         end;
 
-        if DateforWeek1.GET(DateforWeek1."Period Type"::Date, "Requested Delivery Date") then begin
+        if DateforWeek1.GET(DateforWeek1."Period Type"::Date, Rec."Requested Delivery Date") then begin
             vG_RequestedDeliveryDay := DateforWeek1."Period Name";
         end;
     end;

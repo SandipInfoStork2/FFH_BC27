@@ -19,23 +19,23 @@ tableextension 50133 RequisitionLine extends "Requisition Line"
                 ReqWkshName: Record "Requisition Wksh. Name";
             begin
                 //+TAL0.1
-                IF "Vendor No." = '' THEN BEGIN
-                    ReqWkshName.GET("Worksheet Template Name", "Journal Batch Name");
+                if "Vendor No." = '' then begin
+                    ReqWkshName.Get("Worksheet Template Name", "Journal Batch Name");
                     "Vendor No." := ReqWkshName."Vendor No.";
-                END;
+                end;
                 //-TAL0.1
 
                 //+TAL0.2
                 //update replenishment from Standad Sales Lines
-                IF xRec."Replenishment System" <> "Replenishment System" THEN BEGIN
-                    ReqWkshName.GET("Worksheet Template Name", "Journal Batch Name");
-                    IF ReqWkshName."Transaction Type" = ReqWkshName."Transaction Type"::Inbound THEN BEGIN
+                if xRec."Replenishment System" <> "Replenishment System" then begin
+                    ReqWkshName.Get("Worksheet Template Name", "Journal Batch Name");
+                    if ReqWkshName."Transaction Type" = ReqWkshName."Transaction Type"::Inbound then begin
                         ReqWkshName.UpdateReplenishment(Rec, 'DP');
-                    END ELSE
-                        IF ReqWkshName."Transaction Type" = ReqWkshName."Transaction Type"::Outbound THEN BEGIN
+                    end else
+                        if ReqWkshName."Transaction Type" = ReqWkshName."Transaction Type"::Outbound then begin
                             ReqWkshName.UpdateReplenishment(Rec, 'DA');
-                        END;
-                END;
+                        end;
+                end;
                 //-TAL0.2
 
             end;
@@ -55,7 +55,7 @@ tableextension 50133 RequisitionLine extends "Requisition Line"
         field(50001; "Prod. Order No. Ref"; Code[20])
         {
             DataClassification = ToBeClassified;
-            TableRelation = "Production Order" WHERE(Status = FILTER(Released));
+            TableRelation = "Production Order" where(Status = filter(Released));
         }
 
         //+1.0.0.46 

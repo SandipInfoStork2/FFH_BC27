@@ -5,16 +5,18 @@ pageextension 50255 ItemReferenceListExt extends "Item Reference List"
         // Add changes to page layout here
         addafter("Unit of Measure")
         {
-            field("Package Qty"; "Package Qty")
+            field("Package Qty"; Rec."Package Qty")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Package Qty field.';
             }
         }
         addafter(Description)
         {
-            field("S. Quote Description"; "S. Quote Description")
+            field("S. Quote Description"; Rec."S. Quote Description")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the S. Quote Description field.';
             }
         }
     }

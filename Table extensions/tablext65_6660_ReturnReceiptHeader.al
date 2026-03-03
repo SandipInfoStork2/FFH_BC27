@@ -14,21 +14,21 @@ tableextension 50165 ReturnReceiptHeaderExt extends "Return Receipt Header"
         }
         field(50200; "Total Qty"; Decimal)
         {
-            CalcFormula = Sum("Return Receipt Line".Quantity WHERE("Document No." = FIELD("No.")));
+            CalcFormula = sum("Return Receipt Line".Quantity where("Document No." = field("No.")));
             DecimalPlaces = 0 : 5;
             Editable = false;
             FieldClass = FlowField;
         }
         field(50201; "Total Weight"; Decimal)
         {
-            CalcFormula = Sum("Return Receipt Line"."Net Weight" WHERE("Document No." = FIELD("No.")));
+            CalcFormula = sum("Return Receipt Line"."Net Weight" where("Document No." = field("No.")));
             DecimalPlaces = 0 : 0;
             Editable = false;
             FieldClass = FlowField;
         }
         field(50202; "Total Qty (Base)"; Decimal)
         {
-            CalcFormula = Sum("Return Receipt Line"."Quantity (Base)" WHERE("Document No." = FIELD("No.")));
+            CalcFormula = sum("Return Receipt Line"."Quantity (Base)" where("Document No." = field("No.")));
             DecimalPlaces = 0 : 0;
             Editable = false;
             FieldClass = FlowField;

@@ -9,9 +9,10 @@ pageextension 50175 GetShipmentLinesExt extends "Get Shipment Lines"
         // Add changes to page layout here
         addafter("Qty. Shipped Not Invoiced")
         {
-            field("Posting Date"; "Posting Date")
+            field("Posting Date"; Rec."Posting Date")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the posting date for the entry.';
             }
         }
     }

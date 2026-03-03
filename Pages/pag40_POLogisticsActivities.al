@@ -4,54 +4,59 @@ page 50040 "Purchase Logistics Activities"
     PageType = CardPart;
     RefreshOnActivate = true;
     SourceTable = "Purchase Cue";
+    ApplicationArea = All;
 
     layout
     {
-        area(content)
+        area(Content)
         {
 
-            cuegroup("Location")
+            cuegroup(Location)
             {
                 Caption = 'Receive Today';
-                field("Aradipou - Main Orders"; "Aradipou - Main Orders")
+                field("Aradipou - Main Orders"; Rec."Aradipou - Main Orders")
                 {
                     ApplicationArea = Basic, Suite;
-                    DrillDownPageID = "Purchase Order List";
+                    DrillDownPageId = "Purchase Order List";
+                    ToolTip = 'Specifies the value of the Aradipou - Main Purch. Orders field.';
                 }
 
-                field("Fresh Cut Orders"; "Fresh Cut Orders")
+                field("Fresh Cut Orders"; Rec."Fresh Cut Orders")
                 {
                     ApplicationArea = Basic, Suite;
-                    DrillDownPageID = "Purchase Order List";
+                    DrillDownPageId = "Purchase Order List";
+                    ToolTip = 'Specifies the value of the Fresh Cut Purch. Orders field.';
                 }
-                field("Kitchen Orders"; "Kitchen Orders")
+                field("Kitchen Orders"; Rec."Kitchen Orders")
                 {
                     ApplicationArea = Basic, Suite;
-                    DrillDownPageID = "Purchase Order List";
+                    DrillDownPageId = "Purchase Order List";
+                    ToolTip = 'Specifies the value of the Kitchen Purch. Orders field.';
                 }
 
-                field("Potatoes Orders"; "Potatoes Orders")
+                field("Potatoes Orders"; Rec."Potatoes Orders")
                 {
                     ApplicationArea = Basic, Suite;
-                    DrillDownPageID = "Purchase Order List";
+                    DrillDownPageId = "Purchase Order List";
+                    ToolTip = 'Specifies the value of the Potatoes Purch. Orders field.';
                 }
 
             }
             cuegroup("Pre-arrival Follow-up on Purchase Orders")
             {
                 Caption = 'Pre-arrival Follow-up on Purchase Orders';
-                field("To Send or Confirm"; "To Send or Confirm")
+                field("To Send or Confirm"; Rec."To Send or Confirm")
                 {
                     Caption = 'Purchase Order Open';
                     ApplicationArea = Basic, Suite;
-                    DrillDownPageID = "Purchase Order List";
+                    DrillDownPageId = "Purchase Order List";
                     ToolTip = 'Specifies the number of documents to send or confirm that are displayed in the Purchase Cue on the Role Center. The documents are filtered by today''s date.';
                 }
-                field("Total Upcoming Orders"; "Total Upcoming Orders")
+                field("Total Upcoming Orders"; Rec."Total Upcoming Orders")
                 {
                     Caption = 'Total Upcoming Orders';
                     ApplicationArea = Suite;
-                    DrillDownPageID = "Purchase Order List";
+                    DrillDownPageId = "Purchase Order List";
                     ToolTip = 'Specifies the number of upcoming orders that are displayed in the Purchase Cue on the Role Center. The documents are filtered by today''s date.';
                 }
 
@@ -61,7 +66,7 @@ page 50040 "Purchase Logistics Activities"
                     {
                         ApplicationArea = Suite;
                         Caption = 'New Purchase Quote';
-                        RunObject = Page "Purchase Quote";
+                        RunObject = page "Purchase Quote";
                         RunPageMode = Create;
                         ToolTip = 'Prepare a request for quote';
                     }
@@ -69,7 +74,7 @@ page 50040 "Purchase Logistics Activities"
                     {
                         ApplicationArea = Suite;
                         Caption = 'New Purchase Order';
-                        RunObject = Page "Purchase Order";
+                        RunObject = page "Purchase Order";
                         RunPageMode = Create;
                         ToolTip = 'Purchase goods or services from a vendor.';
                     }
@@ -77,7 +82,7 @@ page 50040 "Purchase Logistics Activities"
                     {
                         ApplicationArea = Basic, Suite;
                         Caption = 'Edit Purchase Journal';
-                        RunObject = Page "Purchase Journal";
+                        RunObject = page "Purchase Journal";
                         ToolTip = 'Post purchase invoices in a purchase journal that may already contain journal lines.';
                     }
                 }
@@ -85,22 +90,22 @@ page 50040 "Purchase Logistics Activities"
             cuegroup("Post Arrival Follow-up")
             {
                 Caption = 'Post Arrival Follow-up';
-                field(OutstandingOrders; "Outstanding Purchase Orders")
+                field(OutstandingOrders; Rec."Outstanding Purchase Orders")
                 {
                     ApplicationArea = Basic, Suite;
                     Caption = 'Outstanding Purchase Orders';
-                    DrillDownPageID = "Purchase Order List";
+                    DrillDownPageId = "Purchase Order List";
                     ToolTip = 'Specifies the number of outstanding purchase orders that are displayed in the Purchase Cue on the Role Center. The documents are filtered by today''s date.';
 
                     trigger OnDrillDown()
                     begin
-                        ShowOrders(FieldNo("Outstanding Purchase Orders"));
+                        Rec.ShowOrders(Rec.FieldNo("Outstanding Purchase Orders"));
                     end;
                 }
-                field("Purchase Return Orders - All"; "Purchase Return Orders - All")
+                field("Purchase Return Orders - All"; Rec."Purchase Return Orders - All")
                 {
                     ApplicationArea = PurchReturnOrder;
-                    DrillDownPageID = "Purchase Return Order List";
+                    DrillDownPageId = "Purchase Return Order List";
                     ToolTip = 'Specifies the number of purchase return orders that are displayed in the Purchase Cue on the Role Center. The documents are filtered by today''s date.';
                 }
 
@@ -110,15 +115,15 @@ page 50040 "Purchase Logistics Activities"
                     {
                         ApplicationArea = Basic, Suite;
                         Caption = 'Find entries...';
-                        RunObject = Page Navigate;
-                        ShortCutKey = 'Shift+Ctrl+I';
+                        RunObject = page Navigate;
+                        ShortcutKey = 'Shift+Ctrl+I';
                         ToolTip = 'Find entries and documents that exist for the document number and posting date on the selected document. (Formerly this action was named Navigate.)';
                     }
                     action("New Purchase Return Order")
                     {
                         ApplicationArea = PurchReturnOrder;
                         Caption = 'New Purchase Return Order';
-                        RunObject = Page "Purchase Return Order";
+                        RunObject = page "Purchase Return Order";
                         RunPageMode = Create;
                         ToolTip = 'Process a return or refund that requires inventory handling by creating a new purchase return order.';
                     }
@@ -130,28 +135,28 @@ page 50040 "Purchase Logistics Activities"
             cuegroup("Purchase Orders - Authorize for Payment")
             {
                 Caption = 'Purchase Orders - Authorize for Payment';
-                field(NotInvoiced; "Not Invoiced")
+                field(NotInvoiced; Rec."Not Invoiced")
                 {
                     ApplicationArea = Suite;
                     Caption = 'Received, Not Invoiced';
-                    DrillDownPageID = "Purchase Order List";
+                    DrillDownPageId = "Purchase Order List";
                     ToolTip = 'Specifies received orders that are not invoiced. The orders are displayed in the Purchase Cue on the Purchasing Agent role center, and filtered by today''s date.';
 
                     trigger OnDrillDown()
                     begin
-                        ShowOrders(FieldNo("Not Invoiced"));
+                        Rec.ShowOrders(Rec.FieldNo("Not Invoiced"));
                     end;
                 }
-                field(PartiallyInvoiced; "Partially Invoiced")
+                field(PartiallyInvoiced; Rec."Partially Invoiced")
                 {
                     ApplicationArea = Suite;
                     Caption = 'Partially Invoiced';
-                    DrillDownPageID = "Purchase Order List";
+                    DrillDownPageId = "Purchase Order List";
                     ToolTip = 'Specifies the number of partially invoiced orders that are displayed in the Purchase Cue on the Role Center. The documents are filtered by today''s date.';
 
                     trigger OnDrillDown()
                     begin
-                        ShowOrders(FieldNo("Partially Invoiced"));
+                        Rec.ShowOrders(Rec.FieldNo("Partially Invoiced"));
                     end;
                 }
             }
@@ -159,17 +164,19 @@ page 50040 "Purchase Logistics Activities"
             cuegroup("Purchase Documents")
             {
                 Caption = 'Count';
-                field("Count Orders"; "Count Orders")
+                field("Count Orders"; Rec."Count Orders")
                 {
                     Caption = 'Orders';
-                    ApplicationArea = all;
-                    DrillDownPageID = "Purchase Order List";
+                    ApplicationArea = All;
+                    DrillDownPageId = "Purchase Order List";
+                    ToolTip = 'Specifies the value of the Orders field.';
                 }
-                field("Count Return Orders"; "Count Return Orders")
+                field("Count Return Orders"; Rec."Count Return Orders")
                 {
                     Caption = 'Return Orders';
-                    ApplicationArea = all;
-                    DrillDownPageID = "Purchase Return Order List";
+                    ApplicationArea = All;
+                    DrillDownPageId = "Purchase Return Order List";
+                    ToolTip = 'Specifies the value of the Return Orders field.';
                 }
             }
 
@@ -188,16 +195,16 @@ page 50040 "Purchase Logistics Activities"
 
     trigger OnOpenPage()
     begin
-        Reset;
-        if not Get then begin
-            Init;
-            Insert;
+        Rec.Reset;
+        if not Rec.Get then begin
+            Rec.Init;
+            Rec.Insert;
         end;
 
-        SetRespCenterFilter;
-        SetFilter("Date Filter", '>=%1', WorkDate);
-        SetFilter("Date Filter2", '=%1', WorkDate);
-        SetRange("User ID Filter", UserId);
+        Rec.SetRespCenterFilter;
+        Rec.SetFilter("Date Filter", '>=%1', WorkDate);
+        Rec.SetFilter("Date Filter2", '=%1', WorkDate);
+        Rec.SetRange("User ID Filter", UserId);
     end;
 
     var
@@ -205,13 +212,13 @@ page 50040 "Purchase Logistics Activities"
 
     local procedure CalculateCueFieldValues()
     begin
-        if FieldActive("Outstanding Purchase Orders") then
-            "Outstanding Purchase Orders" := CountOrders(FieldNo("Outstanding Purchase Orders"));
+        if Rec.FieldActive("Outstanding Purchase Orders") then
+            Rec."Outstanding Purchase Orders" := Rec.CountOrders(Rec.FieldNo("Outstanding Purchase Orders"));
 
-        if FieldActive("Not Invoiced") then
-            "Not Invoiced" := CountOrders(FieldNo("Not Invoiced"));
+        if Rec.FieldActive("Not Invoiced") then
+            Rec."Not Invoiced" := Rec.CountOrders(Rec.FieldNo("Not Invoiced"));
 
-        if FieldActive("Partially Invoiced") then
-            "Partially Invoiced" := CountOrders(FieldNo("Partially Invoiced"));
+        if Rec.FieldActive("Partially Invoiced") then
+            Rec."Partially Invoiced" := Rec.CountOrders(Rec.FieldNo("Partially Invoiced"));
     end;
 }

@@ -11,10 +11,11 @@ page 50074 "HORECA Password Dialog"
     Extensible = false;
     Caption = 'Enter Password';
     PageType = StandardDialog;
+    ApplicationArea = All;
 
     layout
     {
-        area(content)
+        area(Content)
         {
 
             field(Password; PasswordValue)
@@ -45,7 +46,7 @@ page 50074 "HORECA Password Dialog"
 
     trigger OnQueryClosePage(CloseAction: Action): Boolean
     begin
-        if CloseAction = ACTION::OK then begin
+        if CloseAction = Action::OK then begin
 
         end;
     end;

@@ -7,23 +7,23 @@ report 50073 "Post Inventory Cost to G/L FFH"
     AdditionalSearchTerms = 'reconcile inventory';
     ApplicationArea = Basic, Suite;
     Caption = 'Post Inventory Cost to G/L';
-    Permissions = TableData "Item Ledger Entry" = r,
-                  TableData "Invt. Posting Buffer" = r,
-                  TableData "Prod. Order Line" = r,
-                  TableData "Value Entry" = rm,
-                  TableData "Post Value Entry to G/L" = rd,
-                  TableData "Capacity Ledger Entry" = rm;
+    Permissions = tabledata "Item Ledger Entry" = r,
+                  tabledata "Invt. Posting Buffer" = r,
+                  tabledata "Prod. Order Line" = r,
+                  tabledata "Value Entry" = rm,
+                  tabledata "Post Value Entry to G/L" = rd,
+                  tabledata "Capacity Ledger Entry" = rm;
     UsageCategory = ReportsAndAnalysis;
 
     dataset
     {
         dataitem(PageLoop; "Integer")
         {
-            DataItemTableView = SORTING(Number) WHERE(Number = CONST(1));
+            DataItemTableView = sorting(Number) where(Number = const(1));
             column(PostedCaption; StrSubstNo(Text002, SelectStr(PostMethod + 1, Text012)))
             {
             }
-            column(CompanyName; COMPANYPROPERTY.DisplayName)
+            column(CompanyName; CompanyProperty.DisplayName)
             {
             }
             column(Post; Post)
@@ -55,7 +55,7 @@ report 50073 "Post Inventory Cost to G/L FFH"
             }
             dataitem(PerEntryLoop; "Integer")
             {
-                DataItemTableView = SORTING(Number) WHERE(Number = CONST(1));
+                DataItemTableView = sorting(Number) where(Number = const(1));
                 PrintOnlyIfDetail = true;
                 column(PerEntryLoopNumber; Number)
                 {
@@ -146,7 +146,7 @@ report 50073 "Post Inventory Cost to G/L FFH"
                 }
                 dataitem(PostValueEntryToGL; "Post Value Entry to G/L")
                 {
-                    DataItemTableView = SORTING("Item No.", "Posting Date");
+                    DataItemTableView = sorting("Item No.", "Posting Date");
                     RequestFilterFields = "Item No.", "Posting Date";
                     column(ItemDescription; Item.Description)
                     {
@@ -218,20 +218,18 @@ report 50073 "Post Inventory Cost to G/L FFH"
                     trigger OnAfterGetRecord()
                     begin
                         ItemValueEntry.Get("Value Entry No.");
-                        with ItemValueEntry do begin
-                            if "Item Ledger Entry No." = 0 then begin
-                                TempCapValueEntry."Entry No." := "Entry No.";
-                                TempCapValueEntry."Order Type" := "Order Type";
-                                TempCapValueEntry."Order No." := "Order No.";
-                                TempCapValueEntry.Insert();
-                            end;
-
-                            if ("Item Ledger Entry No." = 0) or not Inventoriable or
-                               (("Cost Amount (Actual)" = 0) and ("Cost Amount (Expected)" = 0) and
-                                ("Cost Amount (Actual) (ACY)" = 0) and ("Cost Amount (Expected) (ACY)" = 0))
-                            then
-                                CurrReport.Skip();
+                        if ItemValueEntry."Item Ledger Entry No." = 0 then begin
+                            TempCapValueEntry."Entry No." := ItemValueEntry."Entry No.";
+                            TempCapValueEntry."Order Type" := ItemValueEntry."Order Type";
+                            TempCapValueEntry."Order No." := ItemValueEntry."Order No.";
+                            TempCapValueEntry.Insert();
                         end;
+
+                        if (ItemValueEntry."Item Ledger Entry No." = 0) or not ItemValueEntry.Inventoriable or
+                           ((ItemValueEntry."Cost Amount (Actual)" = 0) and (ItemValueEntry."Cost Amount (Expected)" = 0) and
+                            (ItemValueEntry."Cost Amount (Actual) (ACY)" = 0) and (ItemValueEntry."Cost Amount (Expected) (ACY)" = 0))
+                        then
+                            CurrReport.Skip();
 
                         if not InvtPostToGL.BufferInvtPosting(ItemValueEntry) then begin
                             InsertValueEntryNoBuf(ItemValueEntry);
@@ -273,7 +271,7 @@ report 50073 "Post Inventory Cost to G/L FFH"
                 }
                 dataitem(CapValueEntryLoop; "Integer")
                 {
-                    DataItemTableView = SORTING(Number);
+                    DataItemTableView = sorting(Number);
                     column(OrderNo_CapValueEntryProd; CapValueEntry."Order No.")
                     {
                         IncludeCaption = true;
@@ -393,7 +391,7 @@ report 50073 "Post Inventory Cost to G/L FFH"
             }
             dataitem(InvtPostingBufferLoop; "Integer")
             {
-                DataItemTableView = SORTING(Number) WHERE(Number = FILTER(1 ..));
+                DataItemTableView = sorting(Number) where(Number = filter(1 ..));
                 column(InvtPostBufAccTypeFormatted; Format(InvtPostBuf."Account Type"))
                 {
                 }
@@ -466,7 +464,7 @@ report 50073 "Post Inventory Cost to G/L FFH"
             }
             dataitem(SkippedValueEntry; "Value Entry")
             {
-                DataItemTableView = SORTING("Item No.");
+                DataItemTableView = sorting("Item No.");
                 column(ItemNo_SkippedValueEntry; "Item No.")
                 {
                 }
@@ -564,7 +562,7 @@ report 50073 "Post Inventory Cost to G/L FFH"
 
         layout
         {
-            area(content)
+            area(Content)
             {
                 group(Options)
                 {
@@ -600,7 +598,7 @@ report 50073 "Post Inventory Cost to G/L FFH"
         var
             myInt: Integer;
         begin
-            DocNo := 'INV-GL' + ' - ' + FORMAT(TODAY);
+            DocNo := 'INV-GL' + ' - ' + Format(Today);
         end;
     }
 
@@ -628,11 +626,11 @@ report 50073 "Post Inventory Cost to G/L FFH"
         OnBeforePreReport(Item, ItemValueEntry, PostValueEntryToGL);
 
         //+TAL0.1 
-        IF CURRENTCLIENTTYPE = CLIENTTYPE::Background THEN BEGIN
-            DocNo := 'INV-GL' + ' - ' + FORMAT(TODAY);
-            Post := TRUE;
+        if CurrentClientType = ClientType::Background then begin
+            DocNo := 'INV-GL' + ' - ' + Format(Today);
+            Post := true;
             PostMethod := PostMethod::"per Posting Group";
-        END;
+        end;
         //-TAL0.1 
 
         ValueEntryFilter := PostValueEntryToGL.GetFilters;
@@ -787,7 +785,7 @@ report 50073 "Post Inventory Cost to G/L FFH"
     begin
     end;
 
-    [IntegrationEvent(TRUE, false)]
+    [IntegrationEvent(true, false)]
     local procedure OnBeforePreReport(var Item: Record Item; var ItemValueEntry: Record "Value Entry"; var PostValueEntryToGL: Record "Post Value Entry to G/L")
     begin
     end;

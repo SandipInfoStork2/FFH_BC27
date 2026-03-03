@@ -23,36 +23,42 @@ pageextension 50108 ItemCardExt extends "Item Card"
                 CaptionML = ELL = 'Description 2 (GR)',
                                 ENU = 'Description 2 (GR)';
             } */
-            field("Extended Description"; "Extended Description")
+            field("Extended Description"; Rec."Extended Description")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Extended Description field.';
             }
-            field("Package Qty"; "Package Qty")
+            field("Package Qty"; Rec."Package Qty")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Package Qty field.';
             }
-            field("Category 1"; "Category 1")
+            field("Category 1"; Rec."Category 1")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Packing Group field.';
             }
-            field("Packing Group Description"; "Packing Group Description")
+            field("Packing Group Description"; Rec."Packing Group Description")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Packing Group Description field.';
             }
 
             //+1.0.0.232
-            field("Packing Agent"; "Packing Agent")
+            field("Packing Agent"; Rec."Packing Agent")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Packing Agent field.';
             }
             //-1.0.0.232
         }
 
         addafter("Unit Cost")
         {
-            field("Max Unit Cost"; "Max Unit Cost")
+            field("Max Unit Cost"; Rec."Max Unit Cost")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Max Unit Cost field.';
             }
 
         }
@@ -60,26 +66,29 @@ pageextension 50108 ItemCardExt extends "Item Card"
         addafter("Cost is Posted to G/L")
         {
             //+1.0.0.289
-            field("TAL Exclude Item from Adjustme"; "TAL Exclude Item from Adjustme")
+            field("TAL Exclude Item from Adjustme"; Rec."TAL Exclude Item from Adjustme")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Exclude Item from Adjustmet field.';
             }
             //-1.0.0.289
         }
 
         addafter(Inventory)
         {
-            field("No. of Sales Quotes"; "No. of Sales Quotes")
+            field("No. of Sales Quotes"; Rec."No. of Sales Quotes")
             {
                 ApplicationArea = All;
                 DrillDownPageId = "Sales Quote Lidl Lines";
+                ToolTip = 'Specifies the value of the No. of Sales Quotes field.';
             }
         }
         addafter("Purchasing Code")
         {
-            field("Location Code"; "Location Code")
+            field("Location Code"; Rec."Location Code")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Location Code field.';
             }
         }
 
@@ -87,17 +96,20 @@ pageextension 50108 ItemCardExt extends "Item Card"
         {
             group("Storage Life")
             {
-                field("Closed Storage Life"; "Closed Storage Life")
+                field("Closed Storage Life"; Rec."Closed Storage Life")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Closed Storage Life field.';
                 }
-                field("Fridge Storage Life"; "Fridge Storage Life")
+                field("Fridge Storage Life"; Rec."Fridge Storage Life")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Fridge Storage Life field.';
                 }
-                field("Freezer Storage Life"; "Freezer Storage Life")
+                field("Freezer Storage Life"; Rec."Freezer Storage Life")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Freezer Storage Life field.';
 
                 }
             }
@@ -108,37 +120,39 @@ pageextension 50108 ItemCardExt extends "Item Card"
         {
             field(LandedUnitCost; vG_LandedUnitCost)
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 Editable = false;
-                caption = 'Last Landed Unit Cost';
+                Caption = 'Last Landed Unit Cost';
                 ToolTip = 'Custom: Last Landed Unit Cost = Item Ldger Entry Last Purchase Receipt SUM("Cost Amount (Actual)" + "Cost Amount (Expected)")/Quantity';
                 trigger OnDrillDown()
                 begin
-                    DrillDownLandedCost();
+                    Rec.DrillDownLandedCost();
                 end;
             }
         }
 
         addafter(VariantMandatoryDefaultNo)
         {
-            field("Allow Modulus"; "Allow Modulus")
+            field("Allow Modulus"; Rec."Allow Modulus")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Allow Modulus field.';
             }
         }
 
 
         addafter("Item Category Code")
         {
-            field("Category 8"; "Category 8")
+            field("Category 8"; Rec."Category 8")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 ToolTip = 'Κατηγορία';
             }
-            field("Category 9"; "Category 9")
+            field("Category 9"; Rec."Category 9")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 Visible = false;
+                ToolTip = 'Specifies the value of the Potatoes District Region field.';
             }
         }
 
@@ -146,70 +160,70 @@ pageextension 50108 ItemCardExt extends "Item Card"
         {
             group(Categories)
             {
-                field("Category 10"; rec."Category 10")
+                field("Category 10"; Rec."Category 10")
                 {
                     ApplicationArea = All;
-                    Tooltip = 'Custom: Category 10';
+                    ToolTip = 'Custom: Category 10';
                     CaptionClass = '3,' + vG_Cat10Caption;
                 }
-                field("Category 11"; rec."Category 11")
+                field("Category 11"; Rec."Category 11")
                 {
                     ApplicationArea = All;
-                    Tooltip = 'Custom: Category 11';
+                    ToolTip = 'Custom: Category 11';
                     CaptionClass = '3,' + vG_Cat11Caption;
                 }
-                field("Category 12"; rec."Category 12")
+                field("Category 12"; Rec."Category 12")
                 {
                     ApplicationArea = All;
-                    Tooltip = 'Custom: Category 12';
+                    ToolTip = 'Custom: Category 12';
                     CaptionClass = '3,' + vG_Cat12Caption;
                 }
-                field("Category 13"; rec."Category 13")
+                field("Category 13"; Rec."Category 13")
                 {
                     ApplicationArea = All;
-                    Tooltip = 'Custom: Category 13';
+                    ToolTip = 'Custom: Category 13';
                     CaptionClass = '3,' + vG_Cat13Caption;
                 }
-                field("Category 14"; rec."Category 14")
+                field("Category 14"; Rec."Category 14")
                 {
                     ApplicationArea = All;
-                    Tooltip = 'Custom: Category 14';
+                    ToolTip = 'Custom: Category 14';
                     CaptionClass = '3,' + vG_Cat14Caption;
                 }
-                field("Category 15"; rec."Category 15")
+                field("Category 15"; Rec."Category 15")
                 {
                     ApplicationArea = All;
-                    Tooltip = 'Custom: Category 15';
+                    ToolTip = 'Custom: Category 15';
                     CaptionClass = '3,' + vG_Cat15Caption;
                 }
-                field("Category 16"; rec."Category 16")
+                field("Category 16"; Rec."Category 16")
                 {
                     ApplicationArea = All;
-                    Tooltip = 'Custom: Category 16';
+                    ToolTip = 'Custom: Category 16';
                     CaptionClass = '3,' + vG_Cat16Caption;
                 }
-                field("Category 17"; rec."Category 17")
+                field("Category 17"; Rec."Category 17")
                 {
                     ApplicationArea = All;
-                    Tooltip = 'Custom: Category 17';
+                    ToolTip = 'Custom: Category 17';
                     CaptionClass = '3,' + vG_Cat17Caption;
                 }
-                field("Category 18"; rec."Category 18")
+                field("Category 18"; Rec."Category 18")
                 {
                     ApplicationArea = All;
-                    Tooltip = 'Custom: Category 18';
+                    ToolTip = 'Custom: Category 18';
                     CaptionClass = '3,' + vG_Cat18Caption;
                 }
-                field("Category 19"; rec."Category 19")
+                field("Category 19"; Rec."Category 19")
                 {
                     ApplicationArea = All;
-                    Tooltip = 'Custom: Category 19';
+                    ToolTip = 'Custom: Category 19';
                     CaptionClass = '3,' + vG_Cat19Caption;
                 }
-                field("Category 20"; rec."Category 20")
+                field("Category 20"; Rec."Category 20")
                 {
                     ApplicationArea = All;
-                    Tooltip = 'Custom: Category 20';
+                    ToolTip = 'Custom: Category 20';
                     CaptionClass = '3,' + vG_Cat20Caption;
                 }
 
@@ -226,7 +240,7 @@ pageextension 50108 ItemCardExt extends "Item Card"
     var
         InvSetup: Record "Inventory Setup";
     begin
-        InvSetup.GET;
+        InvSetup.Get;
         vG_Cat10Caption := InvSetup."Item Cat. 10 Caption";
         vG_Cat11Caption := InvSetup."Item Cat. 11 Caption";
         vG_Cat12Caption := InvSetup."Item Cat. 12 Caption";
@@ -246,18 +260,18 @@ pageextension 50108 ItemCardExt extends "Item Card"
     begin
         //+TAL0.5
         vG_Pack := '';
-        if "Package Qty" <> 0 then begin
-            vG_Pack := FORMAT("Package Qty") + ' ' + cu_GeneralMgt.Capitalise(FORMAT("Sales Unit of Measure"));
+        if Rec."Package Qty" <> 0 then begin
+            vG_Pack := FORMAT(Rec."Package Qty") + ' ' + cu_GeneralMgt.Capitalise(FORMAT(Rec."Sales Unit of Measure"));
         end;
 
         vG_Caliber := '';
-        if rL_GeneralCategories.GET(27, rL_GeneralCategories.Type::Category6, "Category 6") then begin
-            vG_Caliber := "Category 4" + '-' + "Category 5" + ' ' + rL_GeneralCategories.Description;
+        if rL_GeneralCategories.GET(27, rL_GeneralCategories.Type::Category6, Rec."Category 6") then begin
+            vG_Caliber := Rec."Category 4" + '-' + Rec."Category 5" + ' ' + rL_GeneralCategories.Description;
         end;
         //CALCFIELDS("Ship-to Product Name");
         //-TAL0.5
 
-        vG_LandedUnitCost := GetLandedCost();
+        vG_LandedUnitCost := Rec.GetLandedCost();
     end;
 
     var

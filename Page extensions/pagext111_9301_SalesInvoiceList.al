@@ -9,9 +9,10 @@ pageextension 50211 SalesInvoiceListExt extends "Sales Invoice List"
         // Add changes to page layout here
         addafter(Amount)
         {
-            field("Customer Reference No."; "Customer Reference No.")
+            field("Customer Reference No."; Rec."Customer Reference No.")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Customer Reference No. field.';
             }
         }
     }
@@ -23,7 +24,7 @@ pageextension 50211 SalesInvoiceListExt extends "Sales Invoice List"
         {
             action("Post and &Print")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 Caption = 'Post and &Print';
                 Ellipsis = true;
                 Image = PostPrint;
@@ -35,7 +36,7 @@ pageextension 50211 SalesInvoiceListExt extends "Sales Invoice List"
                 trigger OnAction()
                 begin
                     LinesInstructionMgt.SalesCheckAllLinesHaveQuantityAssigned(Rec);
-                    SendToPosting(CODEUNIT::"Sales-Post + Print");
+                    Rec.SendToPosting(Codeunit::"Sales-Post + Print");
                 end;
             }
 

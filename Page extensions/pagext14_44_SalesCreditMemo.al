@@ -16,7 +16,7 @@ pageextension 50114 SalesCreditMemoExt extends "Sales Credit Memo"
         }
         addafter("Sell-to Customer Name")
         {
-            field("Bill-to Name2"; "Bill-to Name")
+            field("Bill-to Name2"; Rec."Bill-to Name")
             {
                 ApplicationArea = Basic, Suite;
                 Caption = 'Name';
@@ -25,9 +25,9 @@ pageextension 50114 SalesCreditMemoExt extends "Sales Credit Memo"
 
                 trigger OnValidate()
                 begin
-                    if GetFilter("Bill-to Customer No.") = xRec."Bill-to Customer No." then
-                        if "Bill-to Customer No." <> xRec."Bill-to Customer No." then
-                            SetRange("Bill-to Customer No.");
+                    if Rec.GetFilter("Bill-to Customer No.") = xRec."Bill-to Customer No." then
+                        if Rec."Bill-to Customer No." <> xRec."Bill-to Customer No." then
+                            Rec.SetRange("Bill-to Customer No.");
 
                     CurrPage.SaveRecord;
                     //SalesCalcDiscByType.ApplyDefaultInvoiceDiscount(0, Rec);
@@ -67,7 +67,7 @@ pageextension 50114 SalesCreditMemoExt extends "Sales Credit Memo"
 
         addafter("Applies-to ID")
         {
-            field("Reason Code_2"; "Reason Code")
+            field("Reason Code_2"; Rec."Reason Code")
             {
                 ApplicationArea = Basic, Suite;
                 Importance = Additional;
@@ -97,7 +97,7 @@ pageextension 50114 SalesCreditMemoExt extends "Sales Credit Memo"
                 trigger OnAction()
                 begin
                     CheckSalesCheckAllLinesHaveQuantityAssigned(Rec);
-                    SendToPosting(CODEUNIT::"Sales-Post + Print");
+                    Rec.SendToPosting(Codeunit::"Sales-Post + Print");
                 end;
             }
         }

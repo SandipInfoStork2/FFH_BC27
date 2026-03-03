@@ -17,6 +17,7 @@ pageextension 50182 ValueEntriesExt extends "Value Entries"
                 Caption = 'Item. Ledger Entry Posting Date';
                 Editable = false;
                 StyleExpr = StyleTxt;
+                ToolTip = 'Specifies the posting date of this entry.';
             }
         }
 
@@ -27,9 +28,10 @@ pageextension 50182 ValueEntriesExt extends "Value Entries"
 
         addbefore("Return Reason Code")
         {
-            field("Reason Code"; "Reason Code")
+            field("Reason Code"; Rec."Reason Code")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Reason Code field.';
             }
         }
 
@@ -44,11 +46,11 @@ pageextension 50182 ValueEntriesExt extends "Value Entries"
     trigger OnAfterGetRecord();
     begin
         //+TAL0.1
-        CLEAR(rG_ILE);
-        if rG_ILE.GET("Item Ledger Entry No.") then;
+        Clear(rG_ILE);
+        if rG_ILE.GET(Rec."Item Ledger Entry No.") then;
 
         StyleTxt := '';
-        if "Posting Date" <> rG_ILE."Posting Date" then begin
+        if Rec."Posting Date" <> rG_ILE."Posting Date" then begin
             StyleTxt := 'Unfavorable';
         end;
         //-TAL0.1

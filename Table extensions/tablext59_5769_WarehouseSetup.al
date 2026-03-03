@@ -5,12 +5,12 @@ tableextension 50159 WarehouseSetupExt extends "Warehouse Setup"
         // Add changes to table fields here
         field(50005; "Delivery Nos."; Code[20])
         {
-            AccessByPermission = TableData "Warehouse Receipt Header" = R;
+            AccessByPermission = tabledata "Warehouse Receipt Header" = R;
             DataClassification = ToBeClassified;
             TableRelation = "No. Series";
         }
 
-        
+
     }
 
     var

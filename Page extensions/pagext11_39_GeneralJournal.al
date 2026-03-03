@@ -22,26 +22,28 @@ pageextension 50111 GeneralJournalExt extends "General Journal"
         {
             action("Import Transactions Payroll")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 Image = Import;
                 Promoted = true;
                 PromotedCategory = Category6;
                 PromotedIsBig = true;
+                ToolTip = 'Executes the Import Transactions Payroll action.';
 
                 trigger OnAction();
                 begin
 
-                    XMLPORT.RUN(50000); //TAL0.1 will also refresh the journal
+                    Xmlport.Run(50000); //TAL0.1 will also refresh the journal
                 end;
             }
             action("Import Dimensions Payroll")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 Image = Import;
                 Promoted = true;
                 PromotedCategory = Category6;
                 PromotedIsBig = true;
-                RunObject = XMLport "Import Dimens Trans Payroll";
+                RunObject = xmlport "Import Dimens Trans Payroll";
+                ToolTip = 'Executes the Import Dimensions Payroll action.';
             }
         }
     }

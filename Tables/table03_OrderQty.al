@@ -1,8 +1,8 @@
 
 table 50003 "Order Qty"
 {
-    DrillDownPageID = "Order Qty";
-    LookupPageID = "Order Qty";
+    DrillDownPageId = "Order Qty";
+    LookupPageId = "Order Qty";
 
     fields
     {
@@ -35,7 +35,7 @@ table 50003 "Order Qty"
 
         }
 
-        field(7; "Deleted"; Boolean)
+        field(7; Deleted; Boolean)
         {
 
         }
@@ -162,7 +162,7 @@ table 50003 "Order Qty"
     {
     }
 
-    procedure UpdateQty(var pSalesLine: Record "Sales Line"; pOrderQtyDocumentType: enum "Order Qty Document Type")
+    procedure UpdateQty(var pSalesLine: Record "Sales Line"; pOrderQtyDocumentType: Enum "Order Qty Document Type")
     var
         OrderQty: Record "Order Qty";
         SalesHeader: Record "Sales Header";
@@ -184,26 +184,26 @@ table 50003 "Order Qty"
         vL_oldQtyConfirmed := 0;
         DeleteEntryFound := false;
 
-        SalesHeader.GET(pSalesLine."Document Type", pSalesLine."Document No.");
+        SalesHeader.Get(pSalesLine."Document Type", pSalesLine."Document No.");
         pSalesLine.CalcFields("Unit of Measure (Base)");
 
         //update old deleted
-        clear(OrderQty);
-        OrderQty.RESET;
+        Clear(OrderQty);
+        OrderQty.Reset;
         OrderQty.SetFilter("Customer No.", SalesHeader."Sell-to Customer No.");
         OrderQty.SetRange("Order Date", SalesHeader."Order Date");
         OrderQty.SetFilter("Shelf No.", pSalesLine."Shelf No.");
         OrderQty.SetRange(Deleted, true);
         if OrderQty.FindSet() then begin
-            OrderQty.Modifyall("Sales Unit of Measure Code", '');
-            OrderQty.Modifyall("Sales Line Quantity", 0);
-            OrderQty.Modifyall(Deleted, false);
+            OrderQty.ModifyAll("Sales Unit of Measure Code", '');
+            OrderQty.ModifyAll("Sales Line Quantity", 0);
+            OrderQty.ModifyAll(Deleted, false);
 
             DeleteEntryFound := true;
         end;
 
-        clear(OrderQty);
-        OrderQty.RESET;
+        Clear(OrderQty);
+        OrderQty.Reset;
         OrderQty.SetCurrentKey("Document Type", "Customer No.", "Order Date", "Shelf No.", "Version No.");
         OrderQty.SetRange("Document Type", pOrderQtyDocumentType);
         //OrderQty.SetFilter("Document No.", pSalesLine."Document No.");
@@ -212,7 +212,7 @@ table 50003 "Order Qty"
         OrderQty.SetRange("Order Date", SalesHeader."Order Date");
         OrderQty.SetFilter("Shelf No.", pSalesLine."Shelf No.");
         if not OrderQty.FindSet() then begin
-            clear(OrderQty);
+            Clear(OrderQty);
             OrderQty."Document Type" := pOrderQtyDocumentType;
             OrderQty."Document No." := pSalesLine."Document No.";
             OrderQty."Line No." := pSalesLine."Line No.";
@@ -225,7 +225,7 @@ table 50003 "Order Qty"
                 vL_oldQtyRequested := OrderQty."Qty. Requested";
                 vL_oldQtyConfirmed := OrderQty."Qty. Confirmed";
 
-                clear(OrderQty);
+                Clear(OrderQty);
                 OrderQty."Document Type" := pOrderQtyDocumentType;
                 OrderQty."Document No." := pSalesLine."Document No.";
                 OrderQty."Line No." := pSalesLine."Line No.";
@@ -264,7 +264,7 @@ table 50003 "Order Qty"
         if OrderQty."Previous Qty. Requested" <> OrderQty."Qty. Requested" then begin
             OrderQty."Stat. Qty. Requested Change" := true;
 
-            IF OrderQty."Previous Qty. Requested" <> 0 THEN
+            if OrderQty."Previous Qty. Requested" <> 0 then
                 OrderQty."Stat. Qty. Requested Change %" := ((OrderQty."Qty. Requested" / OrderQty."Previous Qty. Requested") * 100) - 100;
         end;
 
@@ -273,7 +273,7 @@ table 50003 "Order Qty"
         if OrderQty."Previous Qty. Confirmed" <> OrderQty."Qty. Confirmed" then begin
             OrderQty."Stat. Qty. Confirmed Change" := true;
 
-            IF OrderQty."Previous Qty. Confirmed" <> 0 THEN
+            if OrderQty."Previous Qty. Confirmed" <> 0 then
                 OrderQty."Stat. Qty. Confirmed Change %" := ((OrderQty."Qty. Confirmed" / OrderQty."Previous Qty. Confirmed") * 100) - 100;
         end;
 
@@ -289,7 +289,7 @@ table 50003 "Order Qty"
     var
         rLOrderQty: Record "Order Qty";
     begin
-        rLOrderQty.RESET;
+        rLOrderQty.Reset;
         rLOrderQty.SetRange("Document Type", pOrderQty."Document Type");
         //rLOrderQty.SetFilter("Document No.", pOrderQty."Document No.");
         //rLOrderQty.SetRange("Line No.", pOrderQty."Line No.");
@@ -297,10 +297,10 @@ table 50003 "Order Qty"
         rLOrderQty.SetRange("Order Date", pOrderQty."Order Date");
         rLOrderQty.SetFilter("Shelf No.", pOrderQty."Shelf No.");
         if rLOrderQty.FindSet() then begin
-            rLOrderQty.Modifyall("Max Version No.", false);
+            rLOrderQty.ModifyAll("Max Version No.", false);
         end;
 
-        rLOrderQty.RESET;
+        rLOrderQty.Reset;
         //rLOrderQty.SetCurrentKey("Document Type", "Document No.", "Line No.", "Version No.");
         rLOrderQty.SetCurrentKey("Document Type", "Customer No.", "Order Date", "Shelf No.", "Version No.");
         //rLOrderQty.SetRange("Document Type", pOrderQty."Document Type");
@@ -330,9 +330,9 @@ table 50003 "Order Qty"
         end;
 
         //find the last line and mark as deleted
-        SalesHeader.GET(pSalesLine."Document Type", pSalesLine."Document No.");
+        SalesHeader.Get(pSalesLine."Document Type", pSalesLine."Document No.");
 
-        rLOrderQty.RESET;
+        rLOrderQty.Reset;
         //rLOrderQty.SetRange("Document Type", pOrderQty."Document Type");
         rLOrderQty.SetFilter("Customer No.", SalesHeader."Sell-to Customer No.");
         rLOrderQty.SetRange("Order Date", SalesHeader."Order Date");

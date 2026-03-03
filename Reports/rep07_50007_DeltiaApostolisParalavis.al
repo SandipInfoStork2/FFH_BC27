@@ -5,6 +5,7 @@ report 50007 "Deltia Apostolis - Paralavis"
     // TAL0.3 2019/11/07 ANP Changed TAL0.2 sorting to Line. No
     DefaultLayout = RDLC;
     RDLCLayout = './Layouts/rep07_50007_DeltiaApostolisParalavis.rdlc';
+    ApplicationArea = All;
 
 
     dataset
@@ -72,7 +73,7 @@ report 50007 "Deltia Apostolis - Paralavis"
             column(No1_Vend; Vendor."No.")
             {
             }
-            column(TodayFormatted; FORMAT(TODAY, 0, 4))
+            column(TodayFormatted; Format(Today, 0, 4))
             {
             }
             column(VendAddr7; VendAddr[7])
@@ -136,13 +137,13 @@ report 50007 "Deltia Apostolis - Paralavis"
             trigger OnPreDataItem();
             begin
 
-                CompanyInfo.GET;
-                CompanyInfo.CALCFIELDS(Picture);
+                CompanyInfo.Get;
+                CompanyInfo.CalcFields(Picture);
                 FormatAddr.Company(CompanyAddr, CompanyInfo);
 
-                rL_RequisitionWkshName.GET(vG_WorksheetName, vG_JournalBatchName);
+                rL_RequisitionWkshName.Get(vG_WorksheetName, vG_JournalBatchName);
 
-                Vendor.GET(rL_RequisitionWkshName."Vendor No.");
+                Vendor.Get(rL_RequisitionWkshName."Vendor No.");
                 FormatAddr.Vendor(VendAddr, Vendor);
 
                 if rL_RequisitionWkshName."Transaction Type" = rL_RequisitionWkshName."Transaction Type"::Inbound then begin
@@ -163,7 +164,7 @@ report 50007 "Deltia Apostolis - Paralavis"
 
         layout
         {
-            area(content)
+            area(Content)
             {
                 group("Actions")
                 {
@@ -177,8 +178,8 @@ report 50007 "Deltia Apostolis - Paralavis"
 
         trigger OnOpenPage();
         begin
-            "Requisition Line".SETFILTER("Worksheet Template Name", vG_WorksheetName);
-            "Requisition Line".SETFILTER("Journal Batch Name", vG_JournalBatchName);
+            "Requisition Line".SetFilter("Worksheet Template Name", vG_WorksheetName);
+            "Requisition Line".SetFilter("Journal Batch Name", vG_JournalBatchName);
         end;
     }
 

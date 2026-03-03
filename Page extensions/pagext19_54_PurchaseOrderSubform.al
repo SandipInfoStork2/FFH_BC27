@@ -23,20 +23,22 @@ pageextension 50119 PurchaseOrderSubformExt extends "Purchase Order Subform"
 
         addafter("Qty. Assigned")
         {
-            field("Auto Tracking Attention"; FORMAT(vG_AutoTrackingAttention))
+            field("Auto Tracking Attention"; Format(vG_AutoTrackingAttention))
             {
                 ApplicationArea = All;
                 Caption = 'Auto Tracking Attention';
                 Editable = false;
                 StyleExpr = StyleTxt;
+                ToolTip = 'Specifies the value of the Auto Tracking Attention field.';
             }
         }
 
         addafter("Bin Code")
         {
-            field("Quantity (Base)"; "Quantity (Base)")
+            field("Quantity (Base)"; Rec."Quantity (Base)")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Quantity (Base) field.';
             }
         }
 
@@ -62,9 +64,10 @@ pageextension 50119 PurchaseOrderSubformExt extends "Purchase Order Subform"
 
         addafter("Line No.")
         {
-            field("Unit of Measure (Base)"; "Unit of Measure (Base)")
+            field("Unit of Measure (Base)"; Rec."Unit of Measure (Base)")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Unit of Measure (Base) field.';
             }
         }
 
@@ -74,6 +77,7 @@ pageextension 50119 PurchaseOrderSubformExt extends "Purchase Order Subform"
             field("Variant Code02056"; Rec."Variant Code")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the variant of the item on the line.';
             }
         }
         addafter("Net Weight")
@@ -81,6 +85,7 @@ pageextension 50119 PurchaseOrderSubformExt extends "Purchase Order Subform"
             field("VAT Prod. Posting Group16759"; Rec."VAT Prod. Posting Group")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the VAT product posting group. Links business transactions made for the item, resource, or G/L account with the general ledger, to account for VAT amounts resulting from trade with that record.';
             }
         }
         //TAL 1.0.0.71 <<
@@ -100,23 +105,27 @@ pageextension 50119 PurchaseOrderSubformExt extends "Purchase Order Subform"
             field("Transfer-from Code"; Rec."Transfer-from Code")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Transfer-from Code field.';
             }
             field("Transfer-to Code"; Rec."Transfer-to Code")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Transfer-to Code field.';
             }
         }
         //TAL 1.0.0.201 <<
 
         addafter(ShortcutDimCode8)
         {
-            field("Receiving Temperature"; "Receiving Temperature")
+            field("Receiving Temperature"; Rec."Receiving Temperature")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Receiving Temperature °C field.';
             }
-            field("Receiving Quality Control"; "Receiving Quality Control")
+            field("Receiving Quality Control"; Rec."Receiving Quality Control")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Receiving Quality Control field.';
             }
         }
     }
@@ -131,11 +140,12 @@ pageextension 50119 PurchaseOrderSubformExt extends "Purchase Order Subform"
                 ApplicationArea = All;
                 Caption = 'Item &Tracking Lines';
                 Image = ItemTrackingLines;
-                ShortCutKey = 'Shift+Ctrl+I';
+                ShortcutKey = 'Shift+Ctrl+I';
+                ToolTip = 'Executes the Item &Tracking Lines action.';
 
                 trigger OnAction();
                 begin
-                    OpenItemTrackingLines;
+                    Rec.OpenItemTrackingLines;
                 end;
             }
         }
@@ -169,10 +179,10 @@ pageextension 50119 PurchaseOrderSubformExt extends "Purchase Order Subform"
         rL_WarehouseSetup: Record "Warehouse Setup";
         rL_Item: Record Item;
     begin
-        if (Type = Type::Item) and ("No." <> '') and (Quantity <> 0) then begin
+        if (Rec.Type = Rec.Type::Item) and (Rec."No." <> '') and (Rec.Quantity <> 0) then begin
 
             //+TAL0.4
-            if rL_Item.GET("No.") then begin
+            if rL_Item.GET(Rec."No.") then begin
                 if rL_Item."Item Tracking Code" = '' then begin
                     exit(false);
                 end;
@@ -192,32 +202,32 @@ pageextension 50119 PurchaseOrderSubformExt extends "Purchase Order Subform"
         rL_WarehouseSetup: Record "Warehouse Setup";
         rL_TrackingSpecification: Record "Tracking Specification";
     begin
-        rL_WarehouseSetup.GET;
+        rL_WarehouseSetup.Get;
 
         //check unposted
-        rL_ReservationEntry.RESET;
-        rL_ReservationEntry.SETFILTER("Item No.", pPurchaseLine."No.");
-        rL_ReservationEntry.SETFILTER("Location Code", pPurchaseLine."Location Code");
-        rL_ReservationEntry.SETFILTER("Source Type", '39');
+        rL_ReservationEntry.Reset;
+        rL_ReservationEntry.SetFilter("Item No.", pPurchaseLine."No.");
+        rL_ReservationEntry.SetFilter("Location Code", pPurchaseLine."Location Code");
+        rL_ReservationEntry.SetFilter("Source Type", '39');
         //rL_ReservationEntry."Source Subtype"
-        rL_ReservationEntry.SETFILTER("Source ID", pPurchaseLine."Document No.");
-        rL_ReservationEntry.SETRANGE("Source Ref. No.", pPurchaseLine."Line No.");
+        rL_ReservationEntry.SetFilter("Source ID", pPurchaseLine."Document No.");
+        rL_ReservationEntry.SetRange("Source Ref. No.", pPurchaseLine."Line No.");
 
         //rL_ReservationEntry.SETRANGE(Quantity,  pPurchaseLine.Quantity);
-        if rL_ReservationEntry.FINDSET then begin
+        if rL_ReservationEntry.FindSet then begin
             exit(true);
         end;
 
 
         //check Posted
-        rL_TrackingSpecification.RESET;
-        rL_TrackingSpecification.SETFILTER("Item No.", pPurchaseLine."No.");
-        rL_TrackingSpecification.SETFILTER("Location Code", pPurchaseLine."Location Code");
-        rL_TrackingSpecification.SETFILTER("Source Type", '39');
-        rL_TrackingSpecification.SETFILTER("Source ID", pPurchaseLine."Document No.");
-        rL_TrackingSpecification.SETRANGE("Source Ref. No.", pPurchaseLine."Line No.");
+        rL_TrackingSpecification.Reset;
+        rL_TrackingSpecification.SetFilter("Item No.", pPurchaseLine."No.");
+        rL_TrackingSpecification.SetFilter("Location Code", pPurchaseLine."Location Code");
+        rL_TrackingSpecification.SetFilter("Source Type", '39');
+        rL_TrackingSpecification.SetFilter("Source ID", pPurchaseLine."Document No.");
+        rL_TrackingSpecification.SetRange("Source Ref. No.", pPurchaseLine."Line No.");
         //rL_TrackingSpecification.SETRANGE("Quantity (Base)",  pPurchaseLine.Quantity);
-        if rL_TrackingSpecification.FINDSET then begin
+        if rL_TrackingSpecification.FindSet then begin
             exit(true);
         end;
 

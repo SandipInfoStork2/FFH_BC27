@@ -18,34 +18,40 @@ pageextension 50139 PostedSalesInvoicesExt extends "Posted Sales Invoices"
         {
             Visible = true;
         }
-        addafter("<Document Exchange Status>")
+        addafter("Document Exchange Status")
         {
 
-            field("Batch No."; "Batch No.")
+            field("Batch No."; Rec."Batch No.")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Batch No. field.';
             }
 
-            field("Export DateTime"; "Export DateTime")
+            field("Export DateTime"; Rec."Export DateTime")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Export DateTime field.';
             }
-            field("Total Qty"; "Total Qty")
+            field("Total Qty"; Rec."Total Qty")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Total Qty field.';
             }
-            field("Total Qty (Base)"; "Total Qty (Base)")
+            field("Total Qty (Base)"; Rec."Total Qty (Base)")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Total Qty (Base) field.';
             }
-            field("Total Weight"; "Total Weight")
+            field("Total Weight"; Rec."Total Weight")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Total Weight field.';
             }
 
-            field("Customer Reference No."; "Customer Reference No.")
+            field("Customer Reference No."; Rec."Customer Reference No.")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Customer Reference No. field.';
             }
         }
 
@@ -60,7 +66,7 @@ pageextension 50139 PostedSalesInvoicesExt extends "Posted Sales Invoices"
         }
 
         //TAL 1.0.0.71 >>
-        moveafter("No.";"Posting Date")
+        moveafter("No."; "Posting Date")
         //TAL 1.0.0.71 <<
     }
 
@@ -71,21 +77,22 @@ pageextension 50139 PostedSalesInvoicesExt extends "Posted Sales Invoices"
         {
             action("Export EDI")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 Image = ExportFile;
                 Promoted = true;
                 PromotedCategory = Process;
                 PromotedIsBig = true;
+                ToolTip = 'Executes the Export EDI action.';
 
                 trigger OnAction();
                 var
                     SalesInvHeader: Record "Sales Invoice Header";
                     SalesCrMemoHeader: Record "Sales Cr.Memo Header";
                 begin
-                    CLEAR(cu_GeneralMgt);
+                    Clear(cu_GeneralMgt);
                     SalesInvHeader := Rec;
                     CurrPage.SetSelectionFilter(SalesInvHeader);
-                    cu_GeneralMgt.ExportRLIDE("No.", true, false, SalesInvHeader, SalesCrMemoHeader); //TAL0.2
+                    cu_GeneralMgt.ExportRLIDE(Rec."No.", true, false, SalesInvHeader, SalesCrMemoHeader); //TAL0.2
                 end;
             }
         }

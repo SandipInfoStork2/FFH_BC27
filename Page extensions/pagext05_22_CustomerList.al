@@ -11,10 +11,11 @@ pageextension 50105 CustomerListExt extends "Customer List"
 
         addafter("Payments (LCY)")
         {
-            field("Mandatory CY Fields"; "Mandatory CY Fields")
+            field("Mandatory CY Fields"; Rec."Mandatory CY Fields")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 Visible = false;
+                ToolTip = 'Specifies the value of the Mandatory CY Fields field.';
             }
         }
     }
@@ -30,6 +31,8 @@ pageextension 50105 CustomerListExt extends "Customer List"
                 Image = "Report";
                 Promoted = true;
                 PromotedCategory = "Report";
+                ToolTip = 'Executes the Statement (Report) action.';
+                ApplicationArea = All;
 
                 trigger OnAction();
                 var
@@ -47,14 +50,14 @@ pageextension 50105 CustomerListExt extends "Customer List"
                     rpt_Statement.RUNMODAL;
                     */
 
-                    rL_ReportSelections.RESET;
-                    rL_ReportSelections.SETRANGE(Usage, rL_ReportSelections.Usage::"C.Statement");
-                    rL_ReportSelections.FINDSET;
-                    rL_ReportSelections.TESTFIELD("Report ID");
+                    rL_ReportSelections.Reset;
+                    rL_ReportSelections.SetRange(Usage, rL_ReportSelections.Usage::"C.Statement");
+                    rL_ReportSelections.FindSet;
+                    rL_ReportSelections.TestField("Report ID");
 
-                    rL_Customer.GET("No.");
-                    rL_Customer.SETRECFILTER;
-                    REPORT.RUNMODAL(rL_ReportSelections."Report ID", true, false, rL_Customer);
+                    rL_Customer.GET(Rec."No.");
+                    rL_Customer.SetRecFilter;
+                    Report.RunModal(rL_ReportSelections."Report ID", true, false, rL_Customer);
                     //-TAL0.1
                 end;
             }
@@ -78,14 +81,14 @@ pageextension 50105 CustomerListExt extends "Customer List"
                 begin
                     //Codeunit Customer Layout - Statement
                     //+NOD0.4
-                    rL_ReportSelections.RESET;
-                    rL_ReportSelections.SETRANGE(Usage, rL_ReportSelections.Usage::"C.Statement");
-                    rL_ReportSelections.FINDSET;
-                    rL_ReportSelections.TESTFIELD("Report ID");
+                    rL_ReportSelections.Reset;
+                    rL_ReportSelections.SetRange(Usage, rL_ReportSelections.Usage::"C.Statement");
+                    rL_ReportSelections.FindSet;
+                    rL_ReportSelections.TestField("Report ID");
 
-                    rL_Customer.GET("No.");
-                    rL_Customer.SETRECFILTER;
-                    REPORT.RUNMODAL(rL_ReportSelections."Report ID", true, false, rL_Customer);
+                    rL_Customer.GET(Rec."No.");
+                    rL_Customer.SetRecFilter;
+                    Report.RunModal(rL_ReportSelections."Report ID", true, false, rL_Customer);
                     //-NOD0.4
                 end;
             }

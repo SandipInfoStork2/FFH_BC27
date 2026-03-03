@@ -8,32 +8,37 @@ pageextension 50265 PostedSalesInvoiceLinesExt extends "Posted Sales Invoice Lin
         {
             field("Req.Country"; Rec."Req. Country")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 Visible = true;
+                ToolTip = 'Specifies the value of the Req. Country field.';
             }
 
             field("Country/Region of Origin Code"; Rec."Country/Region of Origin Code")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 Visible = true;
+                ToolTip = 'Custom: Country/Region of Origin Code';
             }
 
 
-            field("Product Class"; "Product Class")
+            field("Product Class"; Rec."Product Class")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Custom: Product Class (Κατηγορία)';
             }
-            field("Category 9"; "Category 9")
+            field("Category 9"; Rec."Category 9")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Custom: Potatoes District Region';
             }
         }
 
         addafter("Document No.")
         {
-            field("Posting Date"; "Posting Date")
+            field("Posting Date"; Rec."Posting Date")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the posting date for the entry.';
             }
         }
     }

@@ -5,9 +5,10 @@ pageextension 50228 CustomerLedgerEntriesExt extends "Customer Ledger Entries"
         // Add changes to page layout here
         addafter("Direct Debit Mandate ID")
         {
-            field("Journal Batch Name"; "Journal Batch Name")
+            field("Journal Batch Name"; Rec."Journal Batch Name")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Journal Batch Name field.';
             }
         }
 
@@ -28,7 +29,7 @@ pageextension 50228 CustomerLedgerEntriesExt extends "Customer Ledger Entries"
                 PromotedCategory = "Report";
                 PromotedIsBig = true;
                 ToolTip = 'Custom: Print Receipt';
-                trigger onAction()
+                trigger OnAction()
                 begin
                     PrintPaymentReceipt(false, true);
                 end;
@@ -45,7 +46,7 @@ pageextension 50228 CustomerLedgerEntriesExt extends "Customer Ledger Entries"
                 PromotedCategory = "Report";
                 PromotedIsBig = true;
                 ToolTip = 'Custom: Email Receipt';
-                trigger onAction()
+                trigger OnAction()
                 begin
                     PrintPaymentReceipt(true, true);
                 end;
@@ -98,14 +99,14 @@ pageextension 50228 CustomerLedgerEntriesExt extends "Customer Ledger Entries"
         vL_DocName: Text;
     begin
         CLE.Reset();
-        CLE.SetRange("Entry No.", "Entry No.");
+        CLE.SetRange("Entry No.", Rec."Entry No.");
 
-        IF CLE.FindSet() THEN BEGIN
+        if CLE.FindSet() then begin
             CLE.TestField("Document Type", CLE."Document Type"::Payment);
             CLE.CalcFields(Amount);
         end;
 
-        IF CLE.Amount >= 0 THEN ERROR('You must select a credit Entry');
+        if CLE.Amount >= 0 then Error('You must select a credit Entry');
 
         vL_DocNo := CLE."Document No.";
         vL_DocName := 'Payment Receipt';

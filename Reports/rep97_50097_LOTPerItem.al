@@ -6,23 +6,23 @@ report 50097 "LOT Per Item"
     // //
     DefaultLayout = RDLC;
     RDLCLayout = './Layouts/rep97_50097_LOTPerItem.rdlc';
-
     PreviewMode = PrintLayout;
+    ApplicationArea = All;
 
     dataset
     {
         dataitem(Item; Item)
         {
-            DataItemTableView = SORTING("No.") ORDER(Ascending);
+            DataItemTableView = sorting("No.") order(ascending);
             PrintOnlyIfDetail = true;
             RequestFilterFields = "No.";
-            column(Print_Date____FORMAT_TODAY_; 'Print Date: ' + FORMAT(Today))
+            column(Print_Date____FORMAT_TODAY_; 'Print Date: ' + Format(Today))
             {
             }
             column(Company_Name; Company.Name)
             {
             }
-            column(Page___FORMAT_CurrReport_PAGENO_; 'Page ' + FORMAT(CurrReport.PAGENO))
+            column(Page___FORMAT_CurrReport_PAGENO_; 'Page ' + Format(CurrReport.PageNo))
             {
             }
             column(Item__No__; "No.")
@@ -39,8 +39,8 @@ report 50097 "LOT Per Item"
             }
             dataitem("Item Ledger Entry"; "Item Ledger Entry")
             {
-                DataItemLink = "Item No." = FIELD("No.");
-                DataItemTableView = SORTING("Item No.", "Lot No.") ORDER(Ascending);// WHERE("Entry Type" = FILTER(Sale | "Negative Adjmt." | Purchase | "Positive Adjmt."));
+                DataItemLink = "Item No." = field("No.");
+                DataItemTableView = sorting("Item No.", "Lot No.") order(ascending);// WHERE("Entry Type" = FILTER(Sale | "Negative Adjmt." | Purchase | "Positive Adjmt."));
                 RequestFilterFields = "Lot No.";
                 column(Item_Ledger_Entry__Lot_No__; "Lot No.")
                 {
@@ -51,7 +51,7 @@ report 50097 "LOT Per Item"
                 column(Quantity; -Quantity)
                 {
                 }
-                column(Item_Ledger_Entry__Posting_Date_; FORMAT("Posting Date"))
+                column(Item_Ledger_Entry__Posting_Date_; Format("Posting Date"))
                 {
                 }
                 column(Item_Ledger_Entry__Item_Ledger_Entry___Entry_Type_; "Item Ledger Entry"."Entry Type")
@@ -75,7 +75,7 @@ report 50097 "LOT Per Item"
                 column(LOT_No___Caption; LOT_No___CaptionLbl)
                 {
                 }
-                column(Item_Ledger_Entry__Posting_Date_Caption; FIELDCAPTION("Posting Date"))
+                column(Item_Ledger_Entry__Posting_Date_Caption; FieldCaption("Posting Date"))
                 {
                 }
                 column(Entry_TypeCaption; Entry_TypeCaptionLbl)
@@ -113,16 +113,16 @@ report 50097 "LOT Per Item"
                 begin
                     vG_Counter += 1;
                     if vG_Counter = 1 then begin
-                        ItemLedgerEntry.INIT;
-                        ItemLedgerEntry.RESET;
-                        ItemLedgerEntry.SETCURRENTKEY("Item No.", "Lot No.");
-                        ItemLedgerEntry.ASCENDING;
-                        ItemLedgerEntry.SETRANGE("Item No.", "Item Ledger Entry"."Item No.");
-                        ItemLedgerEntry.SETRANGE("Lot No.", "Item Ledger Entry"."Lot No.");
+                        ItemLedgerEntry.Init;
+                        ItemLedgerEntry.Reset;
+                        ItemLedgerEntry.SetCurrentKey("Item No.", "Lot No.");
+                        ItemLedgerEntry.Ascending;
+                        ItemLedgerEntry.SetRange("Item No.", "Item Ledger Entry"."Item No.");
+                        ItemLedgerEntry.SetRange("Lot No.", "Item Ledger Entry"."Lot No.");
                         //for opening Balance
-                        ItemLedgerEntry.SETFILTER("Entry Type", '%1|%2', ItemLedgerEntry."Entry Type"::Purchase,
+                        ItemLedgerEntry.SetFilter("Entry Type", '%1|%2', ItemLedgerEntry."Entry Type"::Purchase,
                                                                        ItemLedgerEntry."Entry Type"::"Positive Adjmt.");
-                        if ItemLedgerEntry.FIND('-') then begin
+                        if ItemLedgerEntry.Find('-') then begin
                             OpeningBalance := ItemLedgerEntry.Quantity;
                             StartingEntryNo := ItemLedgerEntry."Entry No.";
                         end else begin
@@ -136,23 +136,23 @@ report 50097 "LOT Per Item"
                     if "Item Ledger Entry"."Entry No." <> StartingEntryNo then begin
                         SourceName := '';
                         if "Item Ledger Entry"."Source Type" = "Item Ledger Entry"."Source Type"::Customer then begin
-                            Customer.INIT;
-                            Customer.RESET;
-                            if Customer.GET("Item Ledger Entry"."Source No.") then
+                            Customer.Init;
+                            Customer.Reset;
+                            if Customer.Get("Item Ledger Entry"."Source No.") then
                                 SourceName := Customer.Name;
                         end else
                             if "Item Ledger Entry"."Source Type" = "Item Ledger Entry"."Source Type"::Vendor then begin
-                                Vendor.INIT;
-                                Vendor.RESET;
-                                if Vendor.GET("Item Ledger Entry"."Source No.") then
+                                Vendor.Init;
+                                Vendor.Reset;
+                                if Vendor.Get("Item Ledger Entry"."Source No.") then
                                     SourceName := Vendor.Name;
                             end;
 
-                        ValueEntry.INIT;
-                        ValueEntry.RESET;
-                        ValueEntry.SETRANGE("Item Ledger Entry No.", "Item Ledger Entry"."Entry No.");
-                        ValueEntry.SETRANGE("Expected Cost", false);
-                        if ValueEntry.FIND('-') then
+                        ValueEntry.Init;
+                        ValueEntry.Reset;
+                        ValueEntry.SetRange("Item Ledger Entry No.", "Item Ledger Entry"."Entry No.");
+                        ValueEntry.SetRange("Expected Cost", false);
+                        if ValueEntry.Find('-') then
                             DocumentNo := ValueEntry."Document No."
                         else
                             DocumentNo := "Item Ledger Entry"."Document No.";
@@ -161,7 +161,7 @@ report 50097 "LOT Per Item"
 
                         //CurrReport.SHOWOUTPUT(TRUE);
                     end else begin
-                        CurrReport.SKIP;
+                        CurrReport.Skip;
                         // CurrReport.SHOWOUTPUT(FALSE);
                     end;
 
@@ -185,8 +185,8 @@ report 50097 "LOT Per Item"
 
             trigger OnPreDataItem();
             begin
-                Company.GET;
-                CurrReport.NEWPAGEPERRECORD(ChangePagePerItem);
+                Company.Get;
+                CurrReport.NewPagePerRecord(ChangePagePerItem);
             end;
         }
     }
@@ -197,7 +197,7 @@ report 50097 "LOT Per Item"
 
         layout
         {
-            area(content)
+            area(Content)
             {
                 group(Options)
                 {
@@ -205,6 +205,8 @@ report 50097 "LOT Per Item"
                     field(ChangePagePerItem; ChangePagePerItem)
                     {
                         Caption = 'Change Page Per Item';
+                        ApplicationArea = All;
+                        ToolTip = 'Specifies the value of the Change Page Per Item field.';
                     }
                 }
             }

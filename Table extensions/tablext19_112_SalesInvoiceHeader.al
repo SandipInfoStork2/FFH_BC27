@@ -49,21 +49,21 @@ tableextension 50119 SalesInvoiceHeaderExt extends "Sales Invoice Header"
 
         field(50200; "Total Qty"; Decimal)
         {
-            CalcFormula = Sum("Sales Invoice Line".Quantity WHERE("Document No." = FIELD("No.")));
+            CalcFormula = sum("Sales Invoice Line".Quantity where("Document No." = field("No.")));
             DecimalPlaces = 0 : 5;
             Editable = false;
             FieldClass = FlowField;
         }
         field(50201; "Total Weight"; Decimal)
         {
-            CalcFormula = Sum("Sales Invoice Line"."Net Weight" WHERE("Document No." = FIELD("No.")));
+            CalcFormula = sum("Sales Invoice Line"."Net Weight" where("Document No." = field("No.")));
             DecimalPlaces = 0 : 0;
             Editable = false;
             FieldClass = FlowField;
         }
         field(50202; "Total Qty (Base)"; Decimal)
         {
-            CalcFormula = Sum("Sales Invoice Line"."Quantity (Base)" WHERE("Document No." = FIELD("No.")));
+            CalcFormula = sum("Sales Invoice Line"."Quantity (Base)" where("Document No." = field("No.")));
             DecimalPlaces = 0 : 0;
             Editable = false;
             FieldClass = FlowField;
@@ -82,7 +82,7 @@ tableextension 50119 SalesInvoiceHeaderExt extends "Sales Invoice Header"
     var
         UserSetup: Record "User Setup";
     begin
-        UserSetup.GET(UserId);
+        UserSetup.Get(UserId);
         UserSetup.TestField("HORECA Customer No.");
         UserSetup.TestField("HORECA Ship-to Filter");
 

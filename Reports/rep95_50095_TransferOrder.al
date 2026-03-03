@@ -3,12 +3,13 @@ report 50095 "Transfer Order FFH"
     DefaultLayout = RDLC;
     RDLCLayout = './Layouts/rep95_50095_TransferOrder.rdlc';
     Caption = 'Transfer Order';
+    ApplicationArea = All;
 
     dataset
     {
         dataitem("Transfer Header"; "Transfer Header")
         {
-            DataItemTableView = SORTING("No.");
+            DataItemTableView = sorting("No.");
             RequestFilterFields = "No.", "Transfer-from Code", "Transfer-to Code";
             RequestFilterHeading = 'Transfer Order';
             column(No_TransferHdr; "No.")
@@ -19,10 +20,10 @@ report 50095 "Transfer Order FFH"
             }
             dataitem(CopyLoop; "Integer")
             {
-                DataItemTableView = SORTING(Number);
+                DataItemTableView = sorting(Number);
                 dataitem(PageLoop; "Integer")
                 {
-                    DataItemTableView = SORTING(Number) WHERE(Number = CONST(1));
+                    DataItemTableView = sorting(Number) where(Number = const(1));
                     column(CopyCaption; StrSubstNo(Text001, CopyText))
                     {
                     }
@@ -92,19 +93,19 @@ report 50095 "Transfer Order FFH"
                     {
                     }
 
-                    column(ShipmentDate; FORMAT("Transfer Header"."Shipment Date"))
+                    column(ShipmentDate; Format("Transfer Header"."Shipment Date"))
                     {
 
                     }
 
-                    column(ShipmentTime; FORMAT("Transfer Header"."Shipment/Delivery Time", 0, '<Hours24,2>:<Minutes,2>'))
+                    column(ShipmentTime; Format("Transfer Header"."Shipment/Delivery Time", 0, '<Hours24,2>:<Minutes,2>'))
                     {
 
                     }
                     dataitem(DimensionLoop1; "Integer")
                     {
                         DataItemLinkReference = "Transfer Header";
-                        DataItemTableView = SORTING(Number) WHERE(Number = FILTER(1 ..));
+                        DataItemTableView = sorting(Number) where(Number = filter(1 ..));
                         column(DimText; DimText)
                         {
                         }
@@ -151,9 +152,9 @@ report 50095 "Transfer Order FFH"
                     }
                     dataitem("Transfer Line"; "Transfer Line")
                     {
-                        DataItemLink = "Document No." = FIELD("No.");
+                        DataItemLink = "Document No." = field("No.");
                         DataItemLinkReference = "Transfer Header";
-                        DataItemTableView = SORTING("Document No.", "Line No.") WHERE("Derived From Line No." = CONST(0));
+                        DataItemTableView = sorting("Document No.", "Line No.") where("Derived From Line No." = const(0));
                         column(ItemNo_TransLine; "Item No.")
                         {
                             IncludeCaption = true;
@@ -191,7 +192,7 @@ report 50095 "Transfer Order FFH"
                         }
                         dataitem(DimensionLoop2; "Integer")
                         {
-                            DataItemTableView = SORTING(Number) WHERE(Number = FILTER(1 ..));
+                            DataItemTableView = sorting(Number) where(Number = filter(1 ..));
                             column(DimText2; DimText)
                             {
                             }
@@ -283,7 +284,7 @@ report 50095 "Transfer Order FFH"
 
         layout
         {
-            area(content)
+            area(Content)
             {
                 group(Options)
                 {

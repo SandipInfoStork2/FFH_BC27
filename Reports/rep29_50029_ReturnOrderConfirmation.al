@@ -5,12 +5,13 @@ report 50029 "Return Order Confirmation FFH"
     RDLCLayout = './Layouts/rep29_50029_ReturnOrderConfirmation.rdlc';
     Caption = 'Return Order Confirmation';
     PreviewMode = PrintLayout;
+    ApplicationArea = All;
 
     dataset
     {
         dataitem("Sales Header"; "Sales Header")
         {
-            DataItemTableView = SORTING("Document Type", "No.") WHERE("Document Type" = CONST("Return Order"));
+            DataItemTableView = sorting("Document Type", "No.") where("Document Type" = const("Return Order"));
             RequestFilterFields = "No.", "Sell-to Customer No.", "No. Printed";
             RequestFilterHeading = 'Sales Return Order';
             column(DocType_SalesHdr; "Document Type")
@@ -75,10 +76,10 @@ report 50029 "Return Order Confirmation FFH"
             }
             dataitem(CopyLoop; "Integer")
             {
-                DataItemTableView = SORTING(Number);
+                DataItemTableView = sorting(Number);
                 dataitem(PageLoop; "Integer")
                 {
-                    DataItemTableView = SORTING(Number) WHERE(Number = CONST(1));
+                    DataItemTableView = sorting(Number) where(Number = const(1));
                     column(ReportTitleCopyText; StrSubstNo(Text004, CopyText))
                     {
                     }
@@ -277,7 +278,7 @@ report 50029 "Return Order Confirmation FFH"
                     dataitem(DimensionLoop1; "Integer")
                     {
                         DataItemLinkReference = "Sales Header";
-                        DataItemTableView = SORTING(Number) WHERE(Number = FILTER(1 ..));
+                        DataItemTableView = sorting(Number) where(Number = filter(1 ..));
                         column(DimText; DimText)
                         {
                         }
@@ -324,9 +325,9 @@ report 50029 "Return Order Confirmation FFH"
                     }
                     dataitem("Sales Line"; "Sales Line")
                     {
-                        DataItemLink = "Document Type" = FIELD("Document Type"), "Document No." = FIELD("No.");
+                        DataItemLink = "Document Type" = field("Document Type"), "Document No." = field("No.");
                         DataItemLinkReference = "Sales Header";
-                        DataItemTableView = SORTING("Document Type", "Document No.", "Line No.");
+                        DataItemTableView = sorting("Document Type", "Document No.", "Line No.");
 
                         trigger OnPreDataItem()
                         begin
@@ -335,7 +336,7 @@ report 50029 "Return Order Confirmation FFH"
                     }
                     dataitem(RoundLoop; "Integer")
                     {
-                        DataItemTableView = SORTING(Number);
+                        DataItemTableView = sorting(Number);
                         column(TypeInt; TypeInt)
                         {
                         }
@@ -470,7 +471,7 @@ report 50029 "Return Order Confirmation FFH"
                         //-1.0.0.297
                         dataitem(DimensionLoop2; "Integer")
                         {
-                            DataItemTableView = SORTING(Number) WHERE(Number = FILTER(1 ..));
+                            DataItemTableView = sorting(Number) where(Number = filter(1 ..));
                             column(DimText2; DimText)
                             {
                             }
@@ -551,18 +552,18 @@ report 50029 "Return Order Confirmation FFH"
 
                                 ProductClass := "Sales Line"."Product Class";
 
-                                if Country.get("Sales Line"."Country/Region of Origin Code") then begin
+                                if Country.Get("Sales Line"."Country/Region of Origin Code") then begin
                                     CountryofOriginName := Country.Name;
                                 end;
 
                                 if "Sales Line"."Country/Region of Origin Code" <> '' then begin
-                                    if not Country.get("Sales Line"."Country/Region of Origin Code") then begin
+                                    if not Country.Get("Sales Line"."Country/Region of Origin Code") then begin
                                         Message(Txt50010, "Sales Line"."Country/Region of Origin Code");
                                     end;
                                 end;
 
 
-                                if GenCat.GET(27, GenCat.Type::Category9, "Sales Line"."Category 9") then begin
+                                if GenCat.Get(27, GenCat.Type::Category9, "Sales Line"."Category 9") then begin
                                     PotatoesDesc := GenCat.Description;
                                     "Sales Line".Description += ' (' + PotatoesDesc + ')';
                                 end;
@@ -590,7 +591,7 @@ report 50029 "Return Order Confirmation FFH"
                     }
                     dataitem(VATCounter; "Integer")
                     {
-                        DataItemTableView = SORTING(Number);
+                        DataItemTableView = sorting(Number);
                         column(VATAmtLineVATBase; TempVATAmountLine."VAT Base")
                         {
                             AutoFormatExpression = "Sales Header"."Currency Code";
@@ -650,7 +651,7 @@ report 50029 "Return Order Confirmation FFH"
                     }
                     dataitem(VATCounterLCY; "Integer")
                     {
-                        DataItemTableView = SORTING(Number);
+                        DataItemTableView = sorting(Number);
                         column(VALExchRate; VALExchRate)
                         {
                         }
@@ -708,7 +709,7 @@ report 50029 "Return Order Confirmation FFH"
                     }
                     dataitem(Total; "Integer")
                     {
-                        DataItemTableView = SORTING(Number) WHERE(Number = CONST(1));
+                        DataItemTableView = sorting(Number) where(Number = const(1));
                         column(ShipToAddr8; ShipToAddr[8])
                         {
                         }
@@ -774,7 +775,7 @@ report 50029 "Return Order Confirmation FFH"
                 trigger OnPostDataItem()
                 begin
                     if not IsReportInPreviewMode() then
-                        CODEUNIT.Run(CODEUNIT::"Sales-Printed", "Sales Header");
+                        Codeunit.Run(Codeunit::"Sales-Printed", "Sales Header");
                 end;
 
                 trigger OnPreDataItem()
@@ -797,7 +798,7 @@ report 50029 "Return Order Confirmation FFH"
 
                 DimSetEntry1.SetRange("Dimension Set ID", "Dimension Set ID");
 
-                rG_Customer.get("Bill-to Customer No.");
+                rG_Customer.Get("Bill-to Customer No.");
             end;
 
             trigger OnPostDataItem()
@@ -813,7 +814,7 @@ report 50029 "Return Order Confirmation FFH"
 
         layout
         {
-            area(content)
+            area(Content)
             {
                 group(Options)
                 {
@@ -877,11 +878,11 @@ report 50029 "Return Order Confirmation FFH"
             if "Sales Header".FindSet() then
                 repeat
                     if "Sales Header"."Bill-to Contact No." <> '' then
-                        SegManagement.LogDocument(18, "Sales Header"."No.", 0, 0, DATABASE::Contact,
+                        SegManagement.LogDocument(18, "Sales Header"."No.", 0, 0, Database::Contact,
                           "Sales Header"."Bill-to Contact No.", "Sales Header"."Salesperson Code",
                           "Sales Header"."Campaign No.", "Sales Header"."Posting Description", "Sales Header"."Opportunity No.")
                     else
-                        SegManagement.LogDocument(18, "Sales Header"."No.", 0, 0, DATABASE::Customer,
+                        SegManagement.LogDocument(18, "Sales Header"."No.", 0, 0, Database::Customer,
                           "Sales Header"."Bill-to Customer No.", "Sales Header"."Salesperson Code",
                           "Sales Header"."Campaign No.", "Sales Header"."Posting Description", "Sales Header"."Opportunity No.");
                 until "Sales Header".Next() = 0;
@@ -1027,13 +1028,11 @@ report 50029 "Return Order Confirmation FFH"
 
     local procedure FormatDocumentFields(SalesHeader: Record "Sales Header")
     begin
-        with SalesHeader do begin
-            FormatDocument.SetTotalLabels("Currency Code", TotalText, TotalInclVATText, TotalExclVATText);
-            FormatDocument.SetSalesPerson(SalesPurchPerson, "Salesperson Code", SalesPersonText);
+        FormatDocument.SetTotalLabels(SalesHeader."Currency Code", TotalText, TotalInclVATText, TotalExclVATText);
+        FormatDocument.SetSalesPerson(SalesPurchPerson, SalesHeader."Salesperson Code", SalesPersonText);
 
-            ReferenceText := FormatDocument.SetText("Your Reference" <> '', FieldCaption("Your Reference"));
-            VATNoText := FormatDocument.SetText("VAT Registration No." <> '', FieldCaption("VAT Registration No."));
-        end;
+        ReferenceText := FormatDocument.SetText(SalesHeader."Your Reference" <> '', SalesHeader.FieldCaption("Your Reference"));
+        VATNoText := FormatDocument.SetText(SalesHeader."VAT Registration No." <> '', SalesHeader.FieldCaption("VAT Registration No."));
     end;
 
     [IntegrationEvent(true, false)]

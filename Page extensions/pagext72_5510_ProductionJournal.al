@@ -37,10 +37,11 @@ pageextension 50172 ProductionJournalExt extends "Production Journal"
         //+1.0.0.229
         addafter(ShortcutDimCode8)
         {
-            field("Packing Agent"; "Packing Agent")
+            field("Packing Agent"; Rec."Packing Agent")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 Editable = false;
+                ToolTip = 'Specifies the value of the Packing Agent field.';
             }
         }
         //-1.0.0.229

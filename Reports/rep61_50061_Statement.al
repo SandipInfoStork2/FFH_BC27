@@ -3,12 +3,13 @@ report 50061 "Statement FFH"
     DefaultLayout = RDLC;
     RDLCLayout = './Layouts/rep61_50061_Statement.rdlc';
     Caption = 'Statement';
+    ApplicationArea = All;
 
     dataset
     {
         dataitem(Customer; Customer)
         {
-            DataItemTableView = SORTING("No.");
+            DataItemTableView = sorting("No.");
             PrintOnlyIfDetail = true;
             RequestFilterFields = "No.", "Search Name", "Print Statements", "Currency Filter";
             column(No_Cust; "No.")
@@ -16,7 +17,7 @@ report 50061 "Statement FFH"
             }
             dataitem("Integer"; "Integer")
             {
-                DataItemTableView = SORTING(Number) WHERE(Number = CONST(1));
+                DataItemTableView = sorting(Number) where(Number = const(1));
                 PrintOnlyIfDetail = true;
                 column(CompanyInfo1Picture; CompanyInfo1.Picture)
                 {
@@ -173,11 +174,11 @@ report 50061 "Statement FFH"
                 }
                 dataitem(CurrencyLoop; "Integer")
                 {
-                    DataItemTableView = SORTING(Number) WHERE(Number = FILTER(1 ..));
+                    DataItemTableView = sorting(Number) where(Number = filter(1 ..));
                     PrintOnlyIfDetail = true;
                     dataitem(CustLedgEntryHdr; "Integer")
                     {
-                        DataItemTableView = SORTING(Number) WHERE(Number = CONST(1));
+                        DataItemTableView = sorting(Number) where(Number = const(1));
                         column(Currency2Code_CustLedgEntryHdr; StrSubstNo(Text001, CurrencyCode3))
                         {
                         }
@@ -206,7 +207,7 @@ report 50061 "Statement FFH"
                         }
                         dataitem(DtldCustLedgEntries; "Detailed Cust. Ledg. Entry")
                         {
-                            DataItemTableView = SORTING("Customer No.", "Posting Date", "Entry Type", "Currency Code");
+                            DataItemTableView = sorting("Customer No.", "Posting Date", "Entry Type", "Currency Code");
                             column(PostDate_DtldCustLedgEntries; Format("Posting Date"))
                             {
                             }
@@ -324,7 +325,7 @@ report 50061 "Statement FFH"
                     }
                     dataitem(CustLedgEntryFooter; "Integer")
                     {
-                        DataItemTableView = SORTING(Number) WHERE(Number = CONST(1));
+                        DataItemTableView = sorting(Number) where(Number = const(1));
                         column(CurrencyCode3_CustLedgEntryFooter; CurrencyCode3)
                         {
                         }
@@ -347,9 +348,9 @@ report 50061 "Statement FFH"
                     }
                     dataitem(CustLedgEntry2; "Cust. Ledger Entry")
                     {
-                        DataItemLink = "Customer No." = FIELD("No.");
+                        DataItemLink = "Customer No." = field("No.");
                         DataItemLinkReference = Customer;
-                        DataItemTableView = SORTING("Customer No.", Open, Positive, "Due Date");
+                        DataItemTableView = sorting("Customer No.", Open, Positive, "Due Date");
                         column(OverDueEntries; StrSubstNo(Text002, Currency2.Code))
                         {
                         }
@@ -459,7 +460,7 @@ report 50061 "Statement FFH"
                 }
                 dataitem(AgingBandLoop; "Integer")
                 {
-                    DataItemTableView = SORTING(Number) WHERE(Number = FILTER(1 ..));
+                    DataItemTableView = sorting(Number) where(Number = filter(1 ..));
                     column(AgingDate1; Format(AgingDate[1] + 1))
                     {
                     }
@@ -610,7 +611,7 @@ report 50061 "Statement FFH"
 
         layout
         {
-            area(content)
+            area(Content)
             {
                 group(Options)
                 {
@@ -808,7 +809,7 @@ report 50061 "Statement FFH"
             if Customer.FindSet then
                 repeat
                     SegManagement.LogDocument(
-                      7, Format(Customer."Last Statement No."), 0, 0, DATABASE::Customer, Customer."No.", Customer."Salesperson Code", '',
+                      7, Format(Customer."Last Statement No."), 0, 0, Database::Customer, Customer."No.", Customer."Salesperson Code", '',
                       Text003 + Format(Customer."Last Statement No."), '');
                 until Customer.Next = 0;
     end;

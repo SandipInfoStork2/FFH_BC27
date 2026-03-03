@@ -5,9 +5,10 @@ pageextension 50178 TransferListExt extends "Transfer Orders"
         // Add changes to page layout here
         addafter("Receipt Date")
         {
-            field("Req. Vendor No."; "Req. Vendor No.")
+            field("Req. Vendor No."; Rec."Req. Vendor No.")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Req. Vendor No. field.';
             }
         }
 
@@ -18,14 +19,15 @@ pageextension 50178 TransferListExt extends "Transfer Orders"
         modify("Shipment Date")
         {
             Visible = true;
-            caption = 'Shipment/Delivery Date';
+            Caption = 'Shipment/Delivery Date';
         }
 
         addafter("Shipment Date")
         {
-            field("Shipment/Delivery Time"; "Shipment/Delivery Time")
+            field("Shipment/Delivery Time"; Rec."Shipment/Delivery Time")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Shipment/Delivery Time field.';
             }
         }
     }
@@ -36,7 +38,7 @@ pageextension 50178 TransferListExt extends "Transfer Orders"
 
         addafter("&Print")
         {
-            action("Email")
+            action(Email)
             {
 
                 ApplicationArea = Basic, Suite;
@@ -46,9 +48,9 @@ pageextension 50178 TransferListExt extends "Transfer Orders"
                 PromotedCategory = Category8;
                 PromotedIsBig = true;
                 ToolTip = 'Custom: Email Transfer Order';
-                trigger onAction()
+                trigger OnAction()
                 begin
-                    PrintTransferOrder(true);
+                    Rec.PrintTransferOrder(true);
                 end;
 
             }

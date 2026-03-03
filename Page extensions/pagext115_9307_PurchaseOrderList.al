@@ -19,29 +19,35 @@ pageextension 50215 PurchaseOrderListExt extends "Purchase Order List"
 
         addafter("Amount Including VAT")
         {
-            field("Total Qty"; "Total Qty")
+            field("Total Qty"; Rec."Total Qty")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Total Qty field.';
             }
-            field("Total Qty Received"; "Total Qty Received")
+            field("Total Qty Received"; Rec."Total Qty Received")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Total Qty Received field.';
             }
-            field("Total Qty Invoiced"; "Total Qty Invoiced")
+            field("Total Qty Invoiced"; Rec."Total Qty Invoiced")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Total Qty Invoiced field.';
             }
-            field("Deliver-to Vendor No."; "Deliver-to Vendor No.")
+            field("Deliver-to Vendor No."; Rec."Deliver-to Vendor No.")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Deliver-to Vendor No. field.';
             }
-            field("Deliver-to Name"; "Deliver-to Name")
+            field("Deliver-to Name"; Rec."Deliver-to Name")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Deliver-to Name field.';
             }
-            field("Deliver Address Code"; "Deliver Address Code")
+            field("Deliver Address Code"; Rec."Deliver Address Code")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Deliver Address Code field.';
             }
             field(vG_SundryGrowerExists; vG_SundryGrowerExists)
             {
@@ -49,12 +55,14 @@ pageextension 50215 PurchaseOrderListExt extends "Purchase Order List"
                 CaptionML = ELL = 'Sundry Grower Exists',
                                 ENU = 'Sundry Grower Exists';
                 Editable = false;
+                ToolTip = 'Specifies the value of the vG_SundryGrowerExists field.';
             }
             field(vG_TrackingRequired; vG_TrackingRequired)
             {
                 ApplicationArea = All;
                 CaptionML = ELL = 'Tracking Required',
                                 ENU = 'Tracking Required';
+                ToolTip = 'Specifies the value of the vG_TrackingRequired field.';
             }
             field(vG_TrackingCompleted; vG_TrackingCompleted)
             {
@@ -62,18 +70,21 @@ pageextension 50215 PurchaseOrderListExt extends "Purchase Order List"
                 CaptionML = ELL = 'Tracking Completed',
                                 ENU = 'Tracking Completed';
                 Editable = false;
+                ToolTip = 'Specifies the value of the vG_TrackingCompleted field.';
             }
         }
 
         addafter("Document Date")
         {
-            field("Expected Receipt Date"; "Expected Receipt Date")
+            field("Expected Receipt Date"; Rec."Expected Receipt Date")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the date you expect the items to be available in your warehouse. If you leave the field blank, it will be calculated as follows: Planned Receipt Date + Safety Lead Time + Inbound Warehouse Handling Time = Expected Receipt Date.';
             }
-            field("Expected Receipt Time"; "Expected Receipt Time")
+            field("Expected Receipt Time"; Rec."Expected Receipt Time")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Expected Receipt Time field.';
             }
         }
     }
@@ -99,8 +110,8 @@ pageextension 50215 PurchaseOrderListExt extends "Purchase Order List"
                 begin
                     //+TAL0.5
                     PurchaseHeader := Rec;
-                    CurrPage.SETSELECTIONFILTER(PurchaseHeader);
-                    REPORT.RUN(REPORT::"Purchase Delivery Order", true, false, PurchaseHeader);
+                    CurrPage.SetSelectionFilter(PurchaseHeader);
+                    Report.Run(Report::"Purchase Delivery Order", true, false, PurchaseHeader);
                     //-TAL0.5
                 end;
             }
@@ -115,12 +126,13 @@ pageextension 50215 PurchaseOrderListExt extends "Purchase Order List"
                 Promoted = true;
                 PromotedCategory = Process;
                 PromotedOnly = true;
+                ToolTip = 'Executes the Item Tracking Appendix action.';
 
                 trigger OnAction();
                 var
                     vL_PurchaseHeader: Record "Purchase Header";
                 begin
-                    CurrPage.SETSELECTIONFILTER(vL_PurchaseHeader);
+                    CurrPage.SetSelectionFilter(vL_PurchaseHeader);
                     vL_PurchaseHeader.PrintAppendixRecords(vL_PurchaseHeader);
                 end;
             }
@@ -134,7 +146,8 @@ pageextension 50215 PurchaseOrderListExt extends "Purchase Order List"
                 Image = Delete;
                 Promoted = true;
                 PromotedCategory = Process;
-                RunObject = Report "Delete Invoiced Purch. Orders";
+                RunObject = report "Delete Invoiced Purch. Orders";
+                ToolTip = 'Executes the Delete Invoiced P.O. action.';
             }
         }
     }
@@ -142,15 +155,15 @@ pageextension 50215 PurchaseOrderListExt extends "Purchase Order List"
     trigger OnAfterGetRecord();
     begin
         //+TAL0.4
-        vG_SundryGrowerExists := cu_GeneralMgt.SundryGrowerExistsPO("No.");
+        vG_SundryGrowerExists := cu_GeneralMgt.SundryGrowerExistsPO(Rec."No.");
         StyleTxt := '';
         if vG_SundryGrowerExists then begin
             StyleTxt := 'Attention';
         end;
         //-TAL0.4
 
-        vG_TrackingRequired := cu_GeneralMgt.POLotTrackingRequired("No.");
-        vG_TrackingCompleted := cu_GeneralMgt.POLotTrackingCompleted("No.");
+        vG_TrackingRequired := cu_GeneralMgt.POLotTrackingRequired(Rec."No.");
+        vG_TrackingCompleted := cu_GeneralMgt.POLotTrackingCompleted(Rec."No.");
     end;
 
     var

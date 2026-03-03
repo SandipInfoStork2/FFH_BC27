@@ -5,21 +5,21 @@ tableextension 50109 PurchaseHeaderExt extends "Purchase Header"
         // Add changes to table fields here
         field(50000; "Total Qty"; Decimal)
         {
-            CalcFormula = Sum("Purchase Line".Quantity WHERE("Document Type" = FIELD("Document Type"), "Document No." = FIELD("No.")));
+            CalcFormula = sum("Purchase Line".Quantity where("Document Type" = field("Document Type"), "Document No." = field("No.")));
             DecimalPlaces = 0 : 5;
             Editable = false;
             FieldClass = FlowField;
         }
         field(50001; "Total Qty Received"; Decimal)
         {
-            CalcFormula = Sum("Purchase Line"."Quantity Received" WHERE("Document Type" = FIELD("Document Type"), "Document No." = FIELD("No.")));
+            CalcFormula = sum("Purchase Line"."Quantity Received" where("Document Type" = field("Document Type"), "Document No." = field("No.")));
             DecimalPlaces = 0 : 5;
             Editable = false;
             FieldClass = FlowField;
         }
         field(50002; "Total Qty Invoiced"; Decimal)
         {
-            CalcFormula = Sum("Purchase Line"."Quantity Invoiced" WHERE("Document Type" = FIELD("Document Type"), "Document No." = FIELD("No.")));
+            CalcFormula = sum("Purchase Line"."Quantity Invoiced" where("Document Type" = field("Document Type"), "Document No." = field("No.")));
             DecimalPlaces = 0 : 5;
             Editable = false;
             FieldClass = FlowField;
@@ -35,7 +35,7 @@ tableextension 50109 PurchaseHeaderExt extends "Purchase Header"
             var
                 Vend: Record Vendor;
             begin
-                Vend.GET("Deliver-to Vendor No.");
+                Vend.Get("Deliver-to Vendor No.");
                 "Deliver-to Name" := Vend.Name;
             end;
         }
@@ -54,20 +54,20 @@ tableextension 50109 PurchaseHeaderExt extends "Purchase Header"
         field(50005; "Deliver Address Code"; Code[10])
         {
             DataClassification = ToBeClassified;
-            TableRelation = "Order Address".Code WHERE("Vendor No." = FIELD("Deliver-to Vendor No."));
+            TableRelation = "Order Address".Code where("Vendor No." = field("Deliver-to Vendor No."));
 
             trigger OnValidate();
             var
                 OrderAddr: Record "Order Address";
             begin
-                IF "Deliver Address Code" <> '' THEN BEGIN
-                    OrderAddr.GET("Deliver-to Vendor No.", "Deliver Address Code");
+                if "Deliver Address Code" <> '' then begin
+                    OrderAddr.Get("Deliver-to Vendor No.", "Deliver Address Code");
 
                     SetShipToAddress(
                       OrderAddr.Name, OrderAddr."Name 2", OrderAddr.Address, OrderAddr."Address 2",
                       OrderAddr.City, OrderAddr."Post Code", OrderAddr.County, OrderAddr."Country/Region Code");
                     "Ship-to Contact" := OrderAddr.Contact;
-                END;
+                end;
             end;
         }
         field(50006; "Req. Vendor No."; Code[20])
@@ -78,7 +78,7 @@ tableextension 50109 PurchaseHeaderExt extends "Purchase Header"
 
         field(50007; "Total Return Qty Shipped"; Decimal)
         {
-            CalcFormula = Sum("Purchase Line"."Return Qty. Shipped" WHERE("Document Type" = FIELD("Document Type"), "Document No." = FIELD("No.")));
+            CalcFormula = sum("Purchase Line"."Return Qty. Shipped" where("Document Type" = field("Document Type"), "Document No." = field("No.")));
             DecimalPlaces = 0 : 5;
             Editable = false;
             FieldClass = FlowField;
@@ -96,7 +96,7 @@ tableextension 50109 PurchaseHeaderExt extends "Purchase Header"
         field(50102; "Transfer-from Code"; Code[10])
         {
             Caption = 'Transfer-from Code';
-            TableRelation = Location WHERE("Use As In-Transit" = CONST(false));
+            TableRelation = Location where("Use As In-Transit" = const(false));
 
             //TAL 1.0.0.201 >>
             trigger OnValidate()
@@ -118,7 +118,7 @@ tableextension 50109 PurchaseHeaderExt extends "Purchase Header"
         field(50103; "Transfer-to Code"; Code[10])
         {
             Caption = 'Transfer-to Code';
-            TableRelation = Location WHERE("Use As In-Transit" = CONST(false));
+            TableRelation = Location where("Use As In-Transit" = const(false));
 
             //TAL 1.0.0.201 >>
             trigger OnValidate()
@@ -154,17 +154,17 @@ tableextension 50109 PurchaseHeaderExt extends "Purchase Header"
 
 
 
-    procedure PrintAppendixRecords(VAR pPurchaseHeader: Record "Purchase Header")
+    procedure PrintAppendixRecords(var pPurchaseHeader: Record "Purchase Header")
     var
         rpt_ItemTrackingAppendix: Report "Item Tracking Appendix FFH";
     begin
-        IF pPurchaseHeader.FINDSET THEN BEGIN
-            REPEAT
-                CLEAR(rpt_ItemTrackingAppendix);
+        if pPurchaseHeader.FindSet then begin
+            repeat
+                Clear(rpt_ItemTrackingAppendix);
                 rpt_ItemTrackingAppendix.SetPurchaseOrder("No.");
-                rpt_ItemTrackingAppendix.RUNMODAL;
-            UNTIL pPurchaseHeader.NEXT = 0;
-        END;
+                rpt_ItemTrackingAppendix.RunModal;
+            until pPurchaseHeader.Next = 0;
+        end;
     end;
 
     //TAL 1.0.0.201 >>

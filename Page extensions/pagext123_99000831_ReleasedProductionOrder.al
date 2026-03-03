@@ -20,40 +20,48 @@ pageextension 50223 ReleasedProductionOrderExt extends "Released Production Orde
         // Add changes to page layout here
         addafter("Last Date Modified")
         {
-            field("Vendor No."; "Vendor No.")
+            field("Vendor No."; Rec."Vendor No.")
             {
                 ApplicationArea = All;
                 ShowMandatory = true;
+                ToolTip = 'Specifies the value of the Vendor No. field.';
             }
 
-            field("Packing Agent"; "Packing Agent")
+            field("Packing Agent"; Rec."Packing Agent")
             {
                 ApplicationArea = All;
                 ShowMandatory = true;
+                ToolTip = 'Specifies the value of the Packing Agent field.';
             }
-            field("Documents Created"; "Documents Created")
+            field("Documents Created"; Rec."Documents Created")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Documents Created field.';
             }
-            field("Documents Created By"; "Documents Created By")
+            field("Documents Created By"; Rec."Documents Created By")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Documents Created By field.';
             }
-            field("Documents Create Date"; "Documents Create Date")
+            field("Documents Create Date"; Rec."Documents Create Date")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Documents Create Date field.';
             }
-            field("Created By"; "Created By")
+            field("Created By"; Rec."Created By")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Created By field.';
             }
-            field("Client Computer Name"; "Client Computer Name")
+            field("Client Computer Name"; Rec."Client Computer Name")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Client Computer Name field.';
             }
-            field("Creation Date"; "Creation Date")
+            field("Creation Date"; Rec."Creation Date")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the date on which you created the production order.';
             }
         }
 
@@ -78,6 +86,7 @@ pageextension 50223 ReleasedProductionOrderExt extends "Released Production Orde
                 PromotedCategory = Process;
                 PromotedIsBig = true;
                 PromotedOnly = true;
+                ToolTip = 'Executes the UpdateWorksheet action.';
 
                 trigger OnAction();
                 begin
@@ -94,6 +103,7 @@ pageextension 50223 ReleasedProductionOrderExt extends "Released Production Orde
                 PromotedCategory = Process;
                 PromotedIsBig = true;
                 PromotedOnly = true;
+                ToolTip = 'Executes the OpenWorksheet action.';
 
                 trigger OnAction();
                 begin
@@ -104,6 +114,7 @@ pageextension 50223 ReleasedProductionOrderExt extends "Released Production Orde
             {
                 ApplicationArea = All;
                 Image = Journal;
+                ToolTip = 'Executes the Production Journal action.';
 
                 trigger OnAction();
                 begin
@@ -117,12 +128,13 @@ pageextension 50223 ReleasedProductionOrderExt extends "Released Production Orde
             {
                 ApplicationArea = All;
                 Image = Journal;
+                ToolTip = 'Executes the Get Computer Name action.';
 
                 trigger OnAction();
                 var
                     cuMgt: Codeunit "General Mgt.";
                 begin
-                    clear(cuMgt);
+                    Clear(cuMgt);
                     cuMgt.GetComputerName();
                 end;
             }
@@ -136,17 +148,18 @@ pageextension 50223 ReleasedProductionOrderExt extends "Released Production Orde
             action(ItemCard)
             {
                 ApplicationArea = All;
-                caption = 'Item Card';
+                Caption = 'Item Card';
                 Image = Item;
+                ToolTip = 'Executes the Item Card action.';
                 // RunObject = page "Item Card";
                 //RunPageLink = "No." = field("No.");
                 trigger OnAction()
                 var
                     Item: Record Item;
                 begin
-                    if "Source Type" = "Source Type"::Item then begin
-                        item.Get("Source No.");
-                        page.Run(page::"Item Card", item);
+                    if Rec."Source Type" = Rec."Source Type"::Item then begin
+                        Item.Get(Rec."Source No.");
+                        Page.Run(Page::"Item Card", Item);
                     end;
                 end;
             }
@@ -158,9 +171,9 @@ pageextension 50223 ReleasedProductionOrderExt extends "Released Production Orde
             var
                 ManufacturingSetup: Record "Manufacturing Setup";
             begin
-                ManufacturingSetup.GET;
+                ManufacturingSetup.Get;
                 if ManufacturingSetup."Mandatory Packing Agent" then begin
-                    TestField("Packing Agent");
+                    Rec.TestField("Packing Agent");
                 end;
 
             end;
@@ -178,182 +191,182 @@ pageextension 50223 ReleasedProductionOrderExt extends "Released Production Orde
         rL_Item: Record Item;
         rL_LastLineNo: Integer;
     begin
-        TESTFIELD("Documents Created", false);
-        TESTFIELD("Vendor No."); //TAL0.3
+        Rec.TESTFIELD("Documents Created", false);
+        Rec.TESTFIELD("Vendor No."); //TAL0.3
 
         //+TAL0.3
-        rL_ProductionOrderComponents.RESET;
-        rL_ProductionOrderComponents.SETRANGE(Status, rL_ProductionOrderComponents.Status::Released);
-        rL_ProductionOrderComponents.SETFILTER("Prod. Order No.", "No.");
-        if not rL_ProductionOrderComponents.FINDSET then begin
-            if rL_ProductionOrderComponents.COUNT = 0 then begin
-                ERROR(Text50001);
+        rL_ProductionOrderComponents.Reset;
+        rL_ProductionOrderComponents.SetRange(Status, rL_ProductionOrderComponents.Status::Released);
+        rL_ProductionOrderComponents.SETFILTER("Prod. Order No.", Rec."No.");
+        if not rL_ProductionOrderComponents.FindSet then begin
+            if rL_ProductionOrderComponents.Count = 0 then begin
+                Error(Text50001);
             end;
         end;
         //-TAL0.3
 
         //check if
-        rL_RequisitionWkshName.RESET;
-        rL_RequisitionWkshName.SETFILTER("Worksheet Template Name", 'REQ.');
-        rL_RequisitionWkshName.SETFILTER("Vendor No.", "Vendor No.");
-        rL_RequisitionWkshName.SETRANGE("Transaction Type", rL_RequisitionWkshName."Transaction Type"::Inbound);
-        if rL_RequisitionWkshName.FINDSET then begin
+        rL_RequisitionWkshName.Reset;
+        rL_RequisitionWkshName.SetFilter("Worksheet Template Name", 'REQ.');
+        rL_RequisitionWkshName.SETFILTER("Vendor No.", Rec."Vendor No.");
+        rL_RequisitionWkshName.SetRange("Transaction Type", rL_RequisitionWkshName."Transaction Type"::Inbound);
+        if rL_RequisitionWkshName.FindSet then begin
 
 
             //STEP 1 LOAD THE LIST
-            rL_RequisitionLine.RESET;
-            rL_RequisitionLine.SETFILTER("Worksheet Template Name", rL_RequisitionWkshName."Worksheet Template Name");
-            rL_RequisitionLine.SETFILTER("Journal Batch Name", rL_RequisitionWkshName.Name);
-            if not rL_RequisitionLine.FINDSET then begin
+            rL_RequisitionLine.Reset;
+            rL_RequisitionLine.SetFilter("Worksheet Template Name", rL_RequisitionWkshName."Worksheet Template Name");
+            rL_RequisitionLine.SetFilter("Journal Batch Name", rL_RequisitionWkshName.Name);
+            if not rL_RequisitionLine.FindSet then begin
                 //load the data
                 rL_RequisitionWkshName.LoadDeltia('DP', '');
             end;
 
             //STEP 2 match the list and update quantity
-            rL_RequisitionLine.RESET;
-            rL_RequisitionLine.SETFILTER("Worksheet Template Name", rL_RequisitionWkshName."Worksheet Template Name");
-            rL_RequisitionLine.SETFILTER("Journal Batch Name", rL_RequisitionWkshName.Name);
-            rL_RequisitionLine.SETRANGE(Type, rL_RequisitionLine.Type::Item);
-            rL_RequisitionLine.SETFILTER("Prod. Order No. Ref", '%1', '');
-            if rL_RequisitionLine.FINDSET then begin
+            rL_RequisitionLine.Reset;
+            rL_RequisitionLine.SetFilter("Worksheet Template Name", rL_RequisitionWkshName."Worksheet Template Name");
+            rL_RequisitionLine.SetFilter("Journal Batch Name", rL_RequisitionWkshName.Name);
+            rL_RequisitionLine.SetRange(Type, rL_RequisitionLine.Type::Item);
+            rL_RequisitionLine.SetFilter("Prod. Order No. Ref", '%1', '');
+            if rL_RequisitionLine.FindSet then begin
                 repeat
                     //loop the components
                     //if line is found in the requisition update the quantity
-                    rL_ProductionOrderComponents.RESET;
-                    rL_ProductionOrderComponents.SETRANGE(Status, rL_ProductionOrderComponents.Status::Released);
-                    rL_ProductionOrderComponents.SETFILTER("Prod. Order No.", "No.");
-                    rL_ProductionOrderComponents.SETFILTER("Item No.", rL_RequisitionLine."No.");
-                    if rL_ProductionOrderComponents.FINDSET then begin
+                    rL_ProductionOrderComponents.Reset;
+                    rL_ProductionOrderComponents.SetRange(Status, rL_ProductionOrderComponents.Status::Released);
+                    rL_ProductionOrderComponents.SETFILTER("Prod. Order No.", Rec."No.");
+                    rL_ProductionOrderComponents.SetFilter("Item No.", rL_RequisitionLine."No.");
+                    if rL_ProductionOrderComponents.FindSet then begin
                         //REPEAT
                         //rL_Item.GET(rL_ProductionOrderComponents."Item No.");
                         // IF (rL_ProductionOrderComponents."Item No."=rL_RequisitionLine."No.") OR (rL_Item."No. Series"='ITM1-RFV')  THEN BEGIN
-                        rL_RequisitionLine.VALIDATE("Location Code", rL_ProductionOrderComponents."Location Code");
-                        rL_RequisitionLine.VALIDATE(Quantity, rL_ProductionOrderComponents."Expected Quantity" * (1 + (rL_ProductionOrderComponents."Scrap %" / 100)));
+                        rL_RequisitionLine.Validate("Location Code", rL_ProductionOrderComponents."Location Code");
+                        rL_RequisitionLine.Validate(Quantity, rL_ProductionOrderComponents."Expected Quantity" * (1 + (rL_ProductionOrderComponents."Scrap %" / 100)));
                         rL_RequisitionLine."Original Quantity" := rL_ProductionOrderComponents."Expected Quantity" * (1 + (rL_ProductionOrderComponents."Scrap %" / 100));
-                        rL_RequisitionLine.VALIDATE("Vendor No.", rL_RequisitionWkshName."Vendor No.");
-                        rL_RequisitionLine."Prod. Order No. Ref" := "No.";
-                        rL_RequisitionLine.MODIFY;
+                        rL_RequisitionLine.Validate("Vendor No.", rL_RequisitionWkshName."Vendor No.");
+                        rL_RequisitionLine."Prod. Order No. Ref" := Rec."No.";
+                        rL_RequisitionLine.Modify;
                         //END;
                         //UNTIL rL_ProductionOrderComponents.NEXT=0;
                     end;
 
-                until rL_RequisitionLine.NEXT = 0;
+                until rL_RequisitionLine.Next = 0;
             end;
 
             //STEP 3
             //loop the component list and add the Raw material in the requisition worksheet
-            rL_ProductionOrderComponents.RESET;
-            rL_ProductionOrderComponents.SETRANGE(Status, rL_ProductionOrderComponents.Status::Released);
-            rL_ProductionOrderComponents.SETFILTER("Prod. Order No.", "No.");
-            if rL_ProductionOrderComponents.FINDSET then begin
+            rL_ProductionOrderComponents.Reset;
+            rL_ProductionOrderComponents.SetRange(Status, rL_ProductionOrderComponents.Status::Released);
+            rL_ProductionOrderComponents.SETFILTER("Prod. Order No.", Rec."No.");
+            if rL_ProductionOrderComponents.FindSet then begin
                 repeat
-                    rL_Item.GET(rL_ProductionOrderComponents."Item No.");
+                    rL_Item.Get(rL_ProductionOrderComponents."Item No.");
                     if (rL_Item."No. Series" = 'ITM1-RFV') or (rL_Item."No. Series" = 'ITM1-INT') then begin //TAL0.4 added itm1-int
                                                                                                              //create the line if it does not exist
-                        rL_RequisitionLineCheck.RESET;
-                        rL_RequisitionLineCheck.SETFILTER("Worksheet Template Name", rL_RequisitionWkshName."Worksheet Template Name");
-                        rL_RequisitionLineCheck.SETFILTER("Journal Batch Name", rL_RequisitionWkshName.Name);
-                        rL_RequisitionLineCheck.SETRANGE(Type, rL_RequisitionLineCheck.Type::Item);
-                        rL_RequisitionLineCheck.SETFILTER("No.", rL_ProductionOrderComponents."Item No.");
-                        rL_RequisitionLineCheck.SETFILTER("Prod. Order No. Ref", "No.");
-                        if not rL_RequisitionLineCheck.FINDSET then begin
+                        rL_RequisitionLineCheck.Reset;
+                        rL_RequisitionLineCheck.SetFilter("Worksheet Template Name", rL_RequisitionWkshName."Worksheet Template Name");
+                        rL_RequisitionLineCheck.SetFilter("Journal Batch Name", rL_RequisitionWkshName.Name);
+                        rL_RequisitionLineCheck.SetRange(Type, rL_RequisitionLineCheck.Type::Item);
+                        rL_RequisitionLineCheck.SetFilter("No.", rL_ProductionOrderComponents."Item No.");
+                        rL_RequisitionLineCheck.SETFILTER("Prod. Order No. Ref", Rec."No.");
+                        if not rL_RequisitionLineCheck.FindSet then begin
 
-                            CLEAR(rL_RequisitionLine);
-                            rL_RequisitionLine.RESET;
+                            Clear(rL_RequisitionLine);
+                            rL_RequisitionLine.Reset;
                             rL_LastLineNo := 0;
 
-                            rL_RequisitionLine.SETRANGE("Worksheet Template Name", rL_RequisitionWkshName."Worksheet Template Name");
-                            rL_RequisitionLine.SETFILTER("Journal Batch Name", rL_RequisitionWkshName.Name);
-                            if rL_RequisitionLine.FINDLAST then begin
+                            rL_RequisitionLine.SetRange("Worksheet Template Name", rL_RequisitionWkshName."Worksheet Template Name");
+                            rL_RequisitionLine.SetFilter("Journal Batch Name", rL_RequisitionWkshName.Name);
+                            if rL_RequisitionLine.FindLast then begin
                                 rL_LastLineNo := rL_RequisitionLine."Line No.";
                             end;
                             rL_LastLineNo += 10000;
 
-                            rL_RequisitionLine.RESET;
-                            rL_RequisitionLine.INIT;
-                            rL_RequisitionLine.VALIDATE("Worksheet Template Name", rL_RequisitionWkshName."Worksheet Template Name");
-                            rL_RequisitionLine.VALIDATE("Journal Batch Name", rL_RequisitionWkshName.Name);
-                            rL_RequisitionLine.VALIDATE("Line No.", rL_LastLineNo);
-                            rL_RequisitionLine.INSERT(true);
+                            rL_RequisitionLine.Reset;
+                            rL_RequisitionLine.Init;
+                            rL_RequisitionLine.Validate("Worksheet Template Name", rL_RequisitionWkshName."Worksheet Template Name");
+                            rL_RequisitionLine.Validate("Journal Batch Name", rL_RequisitionWkshName.Name);
+                            rL_RequisitionLine.Validate("Line No.", rL_LastLineNo);
+                            rL_RequisitionLine.Insert(true);
 
-                            rL_RequisitionLine.VALIDATE(Type, rL_RequisitionLine.Type::Item);
-                            rL_RequisitionLine.VALIDATE("No.", rL_ProductionOrderComponents."Item No.");
-                            rL_RequisitionLine.VALIDATE("Action Message", rL_RequisitionLine."Action Message"::New);
-                            rL_RequisitionLine.VALIDATE("Vendor No.", rL_RequisitionWkshName."Vendor No.");
+                            rL_RequisitionLine.Validate(Type, rL_RequisitionLine.Type::Item);
+                            rL_RequisitionLine.Validate("No.", rL_ProductionOrderComponents."Item No.");
+                            rL_RequisitionLine.Validate("Action Message", rL_RequisitionLine."Action Message"::New);
+                            rL_RequisitionLine.Validate("Vendor No.", rL_RequisitionWkshName."Vendor No.");
                             rL_RequisitionLine."Replenishment System" := rL_RequisitionLine."Replenishment System"::Purchase;
-                            rL_RequisitionLine.VALIDATE("Location Code", rL_ProductionOrderComponents."Location Code");
+                            rL_RequisitionLine.Validate("Location Code", rL_ProductionOrderComponents."Location Code");
 
-                            rL_RequisitionLine.VALIDATE(Quantity, rL_ProductionOrderComponents."Expected Quantity" / (1 + (rL_ProductionOrderComponents."Scrap %" / 100)));
+                            rL_RequisitionLine.Validate(Quantity, rL_ProductionOrderComponents."Expected Quantity" / (1 + (rL_ProductionOrderComponents."Scrap %" / 100)));
                             rL_RequisitionLine."Original Quantity" := rL_ProductionOrderComponents."Expected Quantity" / (1 + (rL_ProductionOrderComponents."Scrap %" / 100));
-                            rL_RequisitionLine.VALIDATE("Unit of Measure Code", rL_ProductionOrderComponents."Unit of Measure Code");
-                            rL_RequisitionLine."Prod. Order No. Ref" := "No.";
+                            rL_RequisitionLine.Validate("Unit of Measure Code", rL_ProductionOrderComponents."Unit of Measure Code");
+                            rL_RequisitionLine."Prod. Order No. Ref" := Rec."No.";
 
-                            rL_RequisitionLine.MODIFY;
+                            rL_RequisitionLine.Modify;
                         end else
-                            if rL_RequisitionLineCheck.FINDSET then begin
-                                rL_RequisitionLineCheck.VALIDATE(Quantity, rL_ProductionOrderComponents."Expected Quantity" / (1 + (rL_ProductionOrderComponents."Scrap %" / 100)));
+                            if rL_RequisitionLineCheck.FindSet then begin
+                                rL_RequisitionLineCheck.Validate(Quantity, rL_ProductionOrderComponents."Expected Quantity" / (1 + (rL_ProductionOrderComponents."Scrap %" / 100)));
                                 rL_RequisitionLineCheck."Original Quantity" := rL_ProductionOrderComponents."Expected Quantity" / (1 + (rL_ProductionOrderComponents."Scrap %" / 100));
-                                rL_RequisitionLine.MODIFY;
+                                rL_RequisitionLine.Modify;
                             end;
 
                     end;
-                until rL_ProductionOrderComponents.NEXT = 0;
+                until rL_ProductionOrderComponents.Next = 0;
             end;
 
 
             //STEP 4 add line from other released orders
-            rL_RequisitionLine.RESET;
-            rL_RequisitionLine.SETFILTER("Worksheet Template Name", rL_RequisitionWkshName."Worksheet Template Name");
-            rL_RequisitionLine.SETFILTER("Journal Batch Name", rL_RequisitionWkshName.Name);
-            rL_RequisitionLine.SETRANGE(Type, rL_RequisitionLine.Type::Item);
-            if rL_RequisitionLine.FINDSET then begin
+            rL_RequisitionLine.Reset;
+            rL_RequisitionLine.SetFilter("Worksheet Template Name", rL_RequisitionWkshName."Worksheet Template Name");
+            rL_RequisitionLine.SetFilter("Journal Batch Name", rL_RequisitionWkshName.Name);
+            rL_RequisitionLine.SetRange(Type, rL_RequisitionLine.Type::Item);
+            if rL_RequisitionLine.FindSet then begin
                 //MESSAGE(FORMAT(rL_RequisitionLine.COUNT));
                 repeat
                     //loop the components
                     //if line is found in the requisition update the quantity
-                    rL_ProductionOrderComponents.RESET;
-                    rL_ProductionOrderComponents.SETRANGE(Status, rL_ProductionOrderComponents.Status::Released);
-                    rL_ProductionOrderComponents.SETFILTER("Prod. Order No.", "No.");
-                    rL_ProductionOrderComponents.SETFILTER("Item No.", rL_RequisitionLine."No.");
-                    if rL_ProductionOrderComponents.FINDSET then begin
+                    rL_ProductionOrderComponents.Reset;
+                    rL_ProductionOrderComponents.SetRange(Status, rL_ProductionOrderComponents.Status::Released);
+                    rL_ProductionOrderComponents.SETFILTER("Prod. Order No.", Rec."No.");
+                    rL_ProductionOrderComponents.SetFilter("Item No.", rL_RequisitionLine."No.");
+                    if rL_ProductionOrderComponents.FindSet then begin
                         // REPEAT
                         //rL_Item.GET(rL_ProductionOrderComponents."Item No.");
 
                         //IF (rL_ProductionOrderComponents."Item No."=rL_RequisitionLine."No.") OR (rL_Item."No. Series"='ITM1-RFV')  THEN BEGIN
                         //MESSAGE(rL_ProductionOrderComponents."Item No.");
-                        if (rL_RequisitionLine."Prod. Order No. Ref" <> "No.") or (rL_RequisitionLine.Quantity <> rL_ProductionOrderComponents."Expected Quantity") then begin
+                        if (rL_RequisitionLine."Prod. Order No. Ref" <> Rec."No.") or (rL_RequisitionLine.Quantity <> rL_ProductionOrderComponents."Expected Quantity") then begin
                             //insert new line.
                             //find the item with the
-                            rL_RequisitionLineCheck.RESET;
-                            rL_RequisitionLineCheck.SETFILTER("Worksheet Template Name", rL_RequisitionWkshName."Worksheet Template Name");
-                            rL_RequisitionLineCheck.SETFILTER("Journal Batch Name", rL_RequisitionWkshName.Name);
-                            rL_RequisitionLineCheck.SETRANGE(Type, rL_RequisitionLineCheck.Type::Item);
-                            rL_RequisitionLineCheck.SETFILTER("No.", rL_ProductionOrderComponents."Item No.");
-                            rL_RequisitionLineCheck.SETFILTER("Prod. Order No. Ref", "No.");
-                            if not rL_RequisitionLineCheck.FINDSET then begin
+                            rL_RequisitionLineCheck.Reset;
+                            rL_RequisitionLineCheck.SetFilter("Worksheet Template Name", rL_RequisitionWkshName."Worksheet Template Name");
+                            rL_RequisitionLineCheck.SetFilter("Journal Batch Name", rL_RequisitionWkshName.Name);
+                            rL_RequisitionLineCheck.SetRange(Type, rL_RequisitionLineCheck.Type::Item);
+                            rL_RequisitionLineCheck.SetFilter("No.", rL_ProductionOrderComponents."Item No.");
+                            rL_RequisitionLineCheck.SETFILTER("Prod. Order No. Ref", Rec."No.");
+                            if not rL_RequisitionLineCheck.FindSet then begin
 
                                 rL_RequisitionWkshName.LoadDeltia('DP', rL_ProductionOrderComponents."Item No.");
 
-                                rL_RequisitionLineLast.RESET;
-                                rL_RequisitionLineLast.SETFILTER("Worksheet Template Name", rL_RequisitionWkshName."Worksheet Template Name");
-                                rL_RequisitionLineLast.SETFILTER("Journal Batch Name", rL_RequisitionWkshName.Name);
-                                rL_RequisitionLineLast.SETRANGE(Type, rL_RequisitionLineLast.Type::Item);
-                                rL_RequisitionLineLast.SETFILTER("No.", rL_ProductionOrderComponents."Item No.");
+                                rL_RequisitionLineLast.Reset;
+                                rL_RequisitionLineLast.SetFilter("Worksheet Template Name", rL_RequisitionWkshName."Worksheet Template Name");
+                                rL_RequisitionLineLast.SetFilter("Journal Batch Name", rL_RequisitionWkshName.Name);
+                                rL_RequisitionLineLast.SetRange(Type, rL_RequisitionLineLast.Type::Item);
+                                rL_RequisitionLineLast.SetFilter("No.", rL_ProductionOrderComponents."Item No.");
 
-                                if rL_RequisitionLineLast.FINDLAST then begin
-                                    rL_RequisitionLineLast.VALIDATE("Location Code", rL_ProductionOrderComponents."Location Code");
-                                    rL_RequisitionLineLast.VALIDATE(Quantity, rL_ProductionOrderComponents."Expected Quantity" / (1 + (rL_ProductionOrderComponents."Scrap %" / 100)));
+                                if rL_RequisitionLineLast.FindLast then begin
+                                    rL_RequisitionLineLast.Validate("Location Code", rL_ProductionOrderComponents."Location Code");
+                                    rL_RequisitionLineLast.Validate(Quantity, rL_ProductionOrderComponents."Expected Quantity" / (1 + (rL_ProductionOrderComponents."Scrap %" / 100)));
                                     rL_RequisitionLineLast."Original Quantity" := rL_ProductionOrderComponents."Expected Quantity" / (1 + (rL_ProductionOrderComponents."Scrap %" / 100));
-                                    rL_RequisitionLine.VALIDATE("Vendor No.", rL_RequisitionWkshName."Vendor No.");
-                                    rL_RequisitionLineLast."Prod. Order No. Ref" := "No.";
-                                    rL_RequisitionLineLast.MODIFY;
+                                    rL_RequisitionLine.Validate("Vendor No.", rL_RequisitionWkshName."Vendor No.");
+                                    rL_RequisitionLineLast."Prod. Order No. Ref" := Rec."No.";
+                                    rL_RequisitionLineLast.Modify;
                                 end;
                             end else
-                                if rL_RequisitionLineCheck.FINDSET then begin
+                                if rL_RequisitionLineCheck.FindSet then begin
                                     //Update Quantity
-                                    rL_RequisitionLineCheck.VALIDATE(Quantity, rL_ProductionOrderComponents."Expected Quantity" / (1 + (rL_ProductionOrderComponents."Scrap %" / 100)));
+                                    rL_RequisitionLineCheck.Validate(Quantity, rL_ProductionOrderComponents."Expected Quantity" / (1 + (rL_ProductionOrderComponents."Scrap %" / 100)));
                                     rL_RequisitionLineCheck."Original Quantity" := rL_ProductionOrderComponents."Expected Quantity" / (1 + (rL_ProductionOrderComponents."Scrap %" / 100));
-                                    rL_RequisitionLineCheck.MODIFY;
+                                    rL_RequisitionLineCheck.Modify;
                                 end;
 
 
@@ -362,14 +375,14 @@ pageextension 50223 ReleasedProductionOrderExt extends "Released Production Orde
                             //UNTIL rL_ProductionOrderComponents.NEXT=0;
                     end; // IF rL_ProductionOrderComponents.FINDSET
 
-                until rL_RequisitionLine.NEXT = 0;
+                until rL_RequisitionLine.Next = 0;
             end;
 
 
-            MESSAGE('Update Completed.');
+            Message('Update Completed.');
 
         end else begin
-            ERROR(Text50000);
+            Error(Text50000);
         end;
     end;
 
@@ -378,12 +391,12 @@ pageextension 50223 ReleasedProductionOrderExt extends "Released Production Orde
         rL_RequisitionWkshName: Record "Requisition Wksh. Name";
     begin
 
-        rL_RequisitionWkshName.RESET;
-        rL_RequisitionWkshName.SETFILTER("Worksheet Template Name", 'REQ.');
-        rL_RequisitionWkshName.SETFILTER("Vendor No.", "Vendor No.");
-        rL_RequisitionWkshName.SETRANGE("Transaction Type", rL_RequisitionWkshName."Transaction Type"::Inbound);
-        if rL_RequisitionWkshName.FINDSET then begin
-            PAGE.RUN(PAGE::"Req. Wksh. Names", rL_RequisitionWkshName);
+        rL_RequisitionWkshName.Reset;
+        rL_RequisitionWkshName.SetFilter("Worksheet Template Name", 'REQ.');
+        rL_RequisitionWkshName.SETFILTER("Vendor No.", Rec."Vendor No.");
+        rL_RequisitionWkshName.SetRange("Transaction Type", rL_RequisitionWkshName."Transaction Type"::Inbound);
+        if rL_RequisitionWkshName.FindSet then begin
+            Page.Run(Page::"Req. Wksh. Names", rL_RequisitionWkshName);
         end;
     end;
 
@@ -393,11 +406,11 @@ pageextension 50223 ReleasedProductionOrderExt extends "Released Production Orde
         ProductionJrnlMgt: Codeunit "Production Journal Mgt";
         ProdOrderLine: Record "Prod. Order Line";
     begin
-        CurrPage.SAVERECORD;
+        CurrPage.SaveRecord;
 
-        ProdOrder.GET(Status, "No.");
+        ProdOrder.GET(Rec.Status, Rec."No.");
 
-        CLEAR(ProductionJrnlMgt);
+        Clear(ProductionJrnlMgt);
         ProductionJrnlMgt.Handling(ProdOrder, ProdOrderLine."Line No.");
     end;
 

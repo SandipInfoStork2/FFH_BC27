@@ -7,12 +7,13 @@ report 50089 "Prod. Order - Mat.RequisitionF"
 
     Caption = 'Prod. Order - Mat. Requisition';
     PreviewMode = PrintLayout;
+    ApplicationArea = All;
 
     dataset
     {
         dataitem("Production Order"; "Production Order")
         {
-            DataItemTableView = SORTING(Status, "No.");
+            DataItemTableView = sorting(Status, "No.");
             PrintOnlyIfDetail = true;
             RequestFilterFields = Status, "No.", "Source Type", "Source No.";
             column(TodayFormatted; Format(Today, 0, 4))
@@ -52,8 +53,8 @@ report 50089 "Prod. Order - Mat.RequisitionF"
             }
             dataitem("Prod. Order Component"; "Prod. Order Component")
             {
-                DataItemLink = Status = FIELD(Status), "Prod. Order No." = FIELD("No.");
-                DataItemTableView = SORTING(Status, "Prod. Order No.", "Prod. Order Line No.", "Line No.");
+                DataItemLink = Status = field(Status), "Prod. Order No." = field("No.");
+                DataItemTableView = sorting(Status, "Prod. Order No.", "Prod. Order Line No.", "Line No.");
                 column(ItemNo_ProdOrderComp; "Item No.")
                 {
                     IncludeCaption = true;
@@ -90,28 +91,26 @@ report 50089 "Prod. Order - Mat.RequisitionF"
 
                 trigger OnAfterGetRecord()
                 begin
-                    with ReservationEntry do begin
-                        SetCurrentKey("Source ID", "Source Ref. No.", "Source Type", "Source Subtype");
+                    ReservationEntry.SetCurrentKey("Source ID", "Source Ref. No.", "Source Type", "Source Subtype");
 
-                        SetRange("Source Type", DATABASE::"Prod. Order Component");
-                        SetRange("Source ID", "Production Order"."No.");
-                        SetRange("Source Ref. No.", "Line No.");
-                        SetRange("Source Subtype", Status);
-                        SetRange("Source Batch Name", '');
-                        SetRange("Source Prod. Order Line", "Prod. Order Line No.");
+                    ReservationEntry.SetRange("Source Type", Database::"Prod. Order Component");
+                    ReservationEntry.SetRange("Source ID", "Production Order"."No.");
+                    ReservationEntry.SetRange("Source Ref. No.", "Line No.");
+                    ReservationEntry.SetRange("Source Subtype", Status);
+                    ReservationEntry.SetRange("Source Batch Name", '');
+                    ReservationEntry.SetRange("Source Prod. Order Line", "Prod. Order Line No.");
 
-                        if FindSet then begin
-                            RemainingQtyReserved := 0;
-                            repeat
-                                if ReservationEntry2.Get("Entry No.", not Positive) then
-                                    if (ReservationEntry2."Source Type" = DATABASE::"Prod. Order Line") and
-                                       (ReservationEntry2."Source ID" = "Prod. Order Component"."Prod. Order No.")
-                                    then
-                                        RemainingQtyReserved += ReservationEntry2."Quantity (Base)";
-                            until Next = 0;
-                            if "Prod. Order Component"."Remaining Qty. (Base)" = RemainingQtyReserved then
-                                CurrReport.Skip;
-                        end;
+                    if ReservationEntry.FindSet then begin
+                        RemainingQtyReserved := 0;
+                        repeat
+                            if ReservationEntry2.Get(ReservationEntry."Entry No.", not ReservationEntry.Positive) then
+                                if (ReservationEntry2."Source Type" = Database::"Prod. Order Line") and
+                                   (ReservationEntry2."Source ID" = "Prod. Order Component"."Prod. Order No.")
+                                then
+                                    RemainingQtyReserved += ReservationEntry2."Quantity (Base)";
+                        until ReservationEntry.Next = 0;
+                        if "Prod. Order Component"."Remaining Qty. (Base)" = RemainingQtyReserved then
+                            CurrReport.Skip;
                     end;
                 end;
 

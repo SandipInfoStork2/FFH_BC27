@@ -5,9 +5,10 @@ pageextension 50236 SalesAnalysisReportExt extends "Sales Analysis Report"
         // Add changes to page layout here
         addafter(CurrentSourceTypeNoFilter)
         {
-            field("Date Filter"; "Date Filter")
+            field("Date Filter"; Rec."Date Filter")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Date Filter field.';
             }
         }
     }
@@ -22,6 +23,7 @@ pageextension 50236 SalesAnalysisReportExt extends "Sales Analysis Report"
                 Caption = 'Print Landscape';
                 Image = Print;
                 ToolTip = 'Print the information in the window. A print request window opens where you can specify what to include on the print-out.';
+                ApplicationArea = All;
 
                 trigger OnAction()
                 var
@@ -34,13 +36,13 @@ pageextension 50236 SalesAnalysisReportExt extends "Sales Analysis Report"
                     Dim3Filter: Text;
                 begin
 
-                    AnalysisReportLandscape.SetParams(GetRangeMax("Analysis Area"), CurrentReportName, CurrentLineTemplate, CurrentColumnTemplate);
-                    DateFilter := GetFilter("Date Filter");
-                    ItemBudgetFilter := GetFilter("Item Budget Filter");
-                    LocationFilter := GetFilter("Location Filter");
-                    Dim1Filter := GetFilter("Dimension 1 Filter");
-                    Dim2Filter := GetFilter("Dimension 2 Filter");
-                    Dim3Filter := GetFilter("Dimension 3 Filter");
+                    AnalysisReportLandscape.SetParams(Rec.GetRangeMax("Analysis Area"), CurrentReportName, CurrentLineTemplate, CurrentColumnTemplate);
+                    DateFilter := Rec.GetFilter("Date Filter");
+                    ItemBudgetFilter := Rec.GetFilter("Item Budget Filter");
+                    LocationFilter := Rec.GetFilter("Location Filter");
+                    Dim1Filter := Rec.GetFilter("Dimension 1 Filter");
+                    Dim2Filter := Rec.GetFilter("Dimension 2 Filter");
+                    Dim3Filter := Rec.GetFilter("Dimension 3 Filter");
                     AnalysisReportLandscape.SetFilters(
                       DateFilter, ItemBudgetFilter, LocationFilter, Dim1Filter, Dim2Filter, Dim3Filter,
                       CurrentSourceTypeFilter, CurrentSourceTypeNoFilter);

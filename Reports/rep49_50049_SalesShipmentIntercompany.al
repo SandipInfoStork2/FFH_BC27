@@ -15,12 +15,13 @@ report 50049 "Sales - Shipment Intercompany"
 
     Caption = 'Sales - Shipment';
     PreviewMode = PrintLayout;
+    ApplicationArea = All;
 
     dataset
     {
         dataitem("Sales Shipment Header"; "Sales Shipment Header")
         {
-            DataItemTableView = SORTING("No.");
+            DataItemTableView = sorting("No.");
             RequestFilterFields = "No.", "Sell-to Customer No.", "No. Printed";
             RequestFilterHeading = 'Posted Sales Shipment';
             column(No_SalesShptHeader; "No.")
@@ -28,10 +29,10 @@ report 50049 "Sales - Shipment Intercompany"
             }
             dataitem(CopyLoop; "Integer")
             {
-                DataItemTableView = SORTING(Number);
+                DataItemTableView = sorting(Number);
                 dataitem(PageLoop; "Integer")
                 {
-                    DataItemTableView = SORTING(Number) WHERE(Number = CONST(1));
+                    DataItemTableView = sorting(Number) where(Number = const(1));
                     column(CompanyInfo2Picture; CompanyInfo2.Picture)
                     {
                     }
@@ -207,7 +208,7 @@ report 50049 "Sales - Shipment Intercompany"
                     dataitem(DimensionLoop1; "Integer")
                     {
                         DataItemLinkReference = "Sales Shipment Header";
-                        DataItemTableView = SORTING(Number) WHERE(Number = FILTER(1 ..));
+                        DataItemTableView = sorting(Number) where(Number = filter(1 ..));
                         column(DimText; DimText)
                         {
                         }
@@ -251,9 +252,9 @@ report 50049 "Sales - Shipment Intercompany"
                     }
                     dataitem("Sales Shipment Line"; "Sales Shipment Line")
                     {
-                        DataItemLink = "Document No." = FIELD("No.");
+                        DataItemLink = "Document No." = field("No.");
                         DataItemLinkReference = "Sales Shipment Header";
-                        DataItemTableView = SORTING("Document No.", "Line No.");
+                        DataItemTableView = sorting("Document No.", "Line No.");
                         column(Description_SalesShptLine; Description)
                         {
                         }
@@ -334,7 +335,7 @@ report 50049 "Sales - Shipment Intercompany"
                         //TAL 1.0.0.201 <<
                         dataitem(DimensionLoop2; "Integer")
                         {
-                            DataItemTableView = SORTING(Number) WHERE(Number = FILTER(1 ..));
+                            DataItemTableView = sorting(Number) where(Number = filter(1 ..));
                             column(DimText1; DimText)
                             {
                             }
@@ -378,7 +379,7 @@ report 50049 "Sales - Shipment Intercompany"
                         }
                         dataitem(DisplayAsmInfo; "Integer")
                         {
-                            DataItemTableView = SORTING(Number);
+                            DataItemTableView = sorting(Number);
                             column(PostedAsmLineItemNo; BlanksForIndent + PostedAsmLine."No.")
                             {
                             }
@@ -489,7 +490,7 @@ report 50049 "Sales - Shipment Intercompany"
                                 ItemTrackingDocMgt.SetRetrieveAsmItemTracking(true);
                                 TrackingSpecCount :=
                                   ItemTrackingDocMgt.RetrieveDocumentItemTracking(TrackingSpecBuffer,
-                                    "Sales Shipment Header"."No.", DATABASE::"Sales Shipment Header", 0);
+                                    "Sales Shipment Header"."No.", Database::"Sales Shipment Header", 0);
                                 ItemTrackingDocMgt.SetRetrieveAsmItemTracking(false);
                                 //-VC
                             end;
@@ -515,11 +516,11 @@ report 50049 "Sales - Shipment Intercompany"
                     }
                     dataitem(Total; "Integer")
                     {
-                        DataItemTableView = SORTING(Number) WHERE(Number = CONST(1));
+                        DataItemTableView = sorting(Number) where(Number = const(1));
                     }
                     dataitem(Total2; "Integer")
                     {
-                        DataItemTableView = SORTING(Number) WHERE(Number = CONST(1));
+                        DataItemTableView = sorting(Number) where(Number = const(1));
                         column(BilltoCustNo_SalesShptHeader; "Sales Shipment Header"."Bill-to Customer No.")
                         {
                         }
@@ -562,16 +563,16 @@ report 50049 "Sales - Shipment Intercompany"
                     }
                     dataitem("Sales Comment Line"; "Sales Comment Line")
                     {
-                        DataItemLink = "No." = FIELD("No.");
+                        DataItemLink = "No." = field("No.");
                         DataItemLinkReference = "Sales Shipment Header";
-                        DataItemTableView = SORTING("No.") WHERE("Document Type" = FILTER(Shipment));
+                        DataItemTableView = sorting("No.") where("Document Type" = filter(Shipment));
                         column(Comment; "Sales Comment Line".Comment)
                         {
                         }
                     }
                     dataitem(ItemTrackingLine; "Integer")
                     {
-                        DataItemTableView = SORTING(Number);
+                        DataItemTableView = sorting(Number);
                         column(TrackingSpecBufferNo; TrackingSpecBuffer."Item No.")
                         {
                         }
@@ -582,7 +583,7 @@ report 50049 "Sales - Shipment Intercompany"
                         {
                         }
 
-                        column(TrackingSpecBufferExpDate; format(vG_ExpDate))
+                        column(TrackingSpecBufferExpDate; Format(vG_ExpDate))
                         {
                         }
                         column(TrackingSpecBufferSerNo; TrackingSpecBuffer."Serial No.")
@@ -617,7 +618,7 @@ report 50049 "Sales - Shipment Intercompany"
                         }
                         dataitem(TotalItemTracking; "Integer")
                         {
-                            DataItemTableView = SORTING(Number) WHERE(Number = CONST(1));
+                            DataItemTableView = sorting(Number) where(Number = const(1));
                             column(Quantity1; TotalQty)
                             {
                             }
@@ -750,7 +751,7 @@ report 50049 "Sales - Shipment Intercompany"
                 if LogInteraction then
                     if not CurrReport.Preview then
                         SegManagement.LogDocument(
-                          5, "No.", 0, 0, DATABASE::Customer, "Sell-to Customer No.", "Salesperson Code",
+                          5, "No.", 0, 0, Database::Customer, "Sell-to Customer No.", "Salesperson Code",
                           "Campaign No.", "Posting Description", '');
 
                 rG_Customer.Get("Sell-to Customer No."); //TAL0.2
@@ -777,7 +778,7 @@ report 50049 "Sales - Shipment Intercompany"
 
         layout
         {
-            area(content)
+            area(Content)
             {
                 group(Options)
                 {
@@ -785,34 +786,50 @@ report 50049 "Sales - Shipment Intercompany"
                     field(NoOfCopies; NoOfCopies)
                     {
                         Caption = 'No. of Copies';
+                        ToolTip = 'Specifies the value of the No. of Copies field.';
+                        ApplicationArea = All;
                     }
                     field(ShowInternalInfo; ShowInternalInfo)
                     {
                         Caption = 'Show Internal Information';
+                        ToolTip = 'Specifies the value of the Show Internal Information field.';
+                        ApplicationArea = All;
                     }
                     field(LogInteraction; LogInteraction)
                     {
                         Caption = 'Log Interaction';
                         Enabled = LogInteractionEnable;
+                        ToolTip = 'Specifies the value of the Log Interaction field.';
+                        ApplicationArea = All;
                     }
                     field("Show Correction Lines"; ShowCorrectionLines)
                     {
                         Caption = 'Show Correction Lines';
+                        ToolTip = 'Specifies the value of the Show Correction Lines field.';
+                        ApplicationArea = All;
                     }
                     field(ShowLotSN; ShowLotSN)
                     {
                         Caption = 'Show Serial/Lot Number Appendix';
+                        ToolTip = 'Specifies the value of the Show Serial/Lot Number Appendix field.';
+                        ApplicationArea = All;
                     }
                     field(DisplayAsmInfo; DisplayAssemblyInformation)
                     {
                         Caption = 'Show Assembly Components';
+                        ToolTip = 'Specifies the value of the Show Assembly Components field.';
+                        ApplicationArea = All;
                     }
                     field(ShowZeroQtyLines; vG_ShowZeroQtyLines)
                     {
                         Caption = 'Show Zero Qty Lines';
+                        ToolTip = 'Specifies the value of the Show Zero Qty Lines field.';
+                        ApplicationArea = All;
                     }
                     field("Hide GlobalGAP COC"; vG_HideGlobalGapCOC)
                     {
+                        ToolTip = 'Specifies the value of the vG_HideGlobalGapCOC field.';
+                        ApplicationArea = All;
                     }
                 }
             }
@@ -960,12 +977,11 @@ report 50049 "Sales - Shipment Intercompany"
         LogoOutput: Boolean;
         vG_HideGlobalGapCOC: Boolean;
 
-        vG_ItemReferenceNo: code[50];
+        vG_ItemReferenceNo: Code[50];
 
         vG_ExpDate: Date;
         rG_ItemLedgerEntry: Record "Item Ledger Entry";
 
-    [Scope('Internal')]
     procedure InitLogInteraction()
     begin
         // LogInteraction := SegManagement.FindInteractTmplCode(5) <> '';
@@ -983,7 +999,6 @@ report 50049 "Sales - Shipment Intercompany"
         DisplayAssemblyInformation := DisplayAsmInfo;
     end;
 
-    [Scope('Internal')]
     procedure GetUnitOfMeasureDescr(UOMCode: Code[10]): Text[10]
     var
         UnitOfMeasure: Record "Unit of Measure";
@@ -993,7 +1008,6 @@ report 50049 "Sales - Shipment Intercompany"
         exit(UnitOfMeasure.Description);
     end;
 
-    [Scope('Internal')]
     procedure BlanksForIndent(): Text[10]
     begin
         exit(PadStr('', 2, ' '));

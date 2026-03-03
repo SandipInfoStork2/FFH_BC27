@@ -39,7 +39,7 @@ tableextension 50117 SalesShipmentHeaderExt extends "Sales Shipment Header"
         field(50099; "Delivery No."; Code[20])
         {
             DataClassification = ToBeClassified;
-            TableRelation = "Delivery Schedule" WHERE(Status = FILTER(' '));
+            TableRelation = "Delivery Schedule" where(Status = filter(' '));
         }
         field(50100; "Delivery Sequence"; Integer)
         {
@@ -52,12 +52,12 @@ tableextension 50117 SalesShipmentHeaderExt extends "Sales Shipment Header"
         field(50102; "Transfer-from Code"; Code[10])
         {
             Caption = 'Transfer-from Code';
-            TableRelation = Location WHERE("Use As In-Transit" = CONST(false));
+            TableRelation = Location where("Use As In-Transit" = const(false));
         }
         field(50103; "Transfer-to Code"; Code[10])
         {
             Caption = 'Transfer-to Code';
-            TableRelation = Location WHERE("Use As In-Transit" = CONST(false));
+            TableRelation = Location where("Use As In-Transit" = const(false));
         }
 
         field(50146; "Shipping Temperature"; Decimal)
@@ -73,7 +73,7 @@ tableextension 50117 SalesShipmentHeaderExt extends "Sales Shipment Header"
         }
         field(50200; "Total Qty"; Decimal)
         {
-            CalcFormula = Sum("Sales Shipment Line".Quantity WHERE("Document No." = FIELD("No.")));
+            CalcFormula = sum("Sales Shipment Line".Quantity where("Document No." = field("No.")));
             DecimalPlaces = 0 : 5;
             Editable = false;
             FieldClass = FlowField;
@@ -82,14 +82,14 @@ tableextension 50117 SalesShipmentHeaderExt extends "Sales Shipment Header"
 
         field(50201; "Total Weight"; Decimal)
         {
-            CalcFormula = Sum("Sales Shipment Line"."Net Weight" WHERE("Document No." = FIELD("No.")));
+            CalcFormula = sum("Sales Shipment Line"."Net Weight" where("Document No." = field("No.")));
             DecimalPlaces = 0 : 0;
             Editable = false;
             FieldClass = FlowField;
         }
         field(50202; "Total Qty (Base)"; Decimal)
         {
-            CalcFormula = Sum("Sales Shipment Line"."Quantity (Base)" WHERE("Document No." = FIELD("No.")));
+            CalcFormula = sum("Sales Shipment Line"."Quantity (Base)" where("Document No." = field("No.")));
             DecimalPlaces = 0 : 0;
             Editable = false;
             FieldClass = FlowField;
@@ -120,43 +120,43 @@ tableextension 50117 SalesShipmentHeaderExt extends "Sales Shipment Header"
         Error('TalosCo Permissions: Delete is not allowed.');
     end;
 
-    PROCEDURE PrintAppendixRecords(VAR pSalesShipHeader: Record "Sales Shipment Header");
-    VAR
+    procedure PrintAppendixRecords(var pSalesShipHeader: Record "Sales Shipment Header");
+    var
         ReportSelection: Record "Report Selections";
         rpt_ItemTrackingAppendix: Report "Item Tracking Appendix FFH";
         rpt_GrowerReceipt: Report "Grower Receipt";
         rL_ILE: Record "Item Ledger Entry";
-    BEGIN
-        IF pSalesShipHeader.FINDSET THEN BEGIN
-            REPEAT
-                CLEAR(rpt_ItemTrackingAppendix);
+    begin
+        if pSalesShipHeader.FindSet then begin
+            repeat
+                Clear(rpt_ItemTrackingAppendix);
                 rpt_ItemTrackingAppendix.SetSalesShipment("No.");
-                rpt_ItemTrackingAppendix.RUNMODAL;
-            UNTIL pSalesShipHeader.NEXT = 0;
-        END;
-    END;
+                rpt_ItemTrackingAppendix.RunModal;
+            until pSalesShipHeader.Next = 0;
+        end;
+    end;
 
-    PROCEDURE PrintAppendixRecordsQuality(VAR pSalesShipHeader: Record "Sales Shipment Header");
-    VAR
+    procedure PrintAppendixRecordsQuality(var pSalesShipHeader: Record "Sales Shipment Header");
+    var
         ReportSelection: Record "Report Selections";
         rpt_ItemTrackingAppendix: Report "Item Tracking Appendix Quality";
         rpt_GrowerReceipt: Report "Grower Receipt";
         rL_ILE: Record "Item Ledger Entry";
-    BEGIN
-        IF pSalesShipHeader.FINDSET THEN BEGIN
-            REPEAT
-                CLEAR(rpt_ItemTrackingAppendix);
+    begin
+        if pSalesShipHeader.FindSet then begin
+            repeat
+                Clear(rpt_ItemTrackingAppendix);
                 rpt_ItemTrackingAppendix.SetSalesShipment("No.");
-                rpt_ItemTrackingAppendix.RUNMODAL;
-            UNTIL pSalesShipHeader.NEXT = 0;
-        END;
-    END;
+                rpt_ItemTrackingAppendix.RunModal;
+            until pSalesShipHeader.Next = 0;
+        end;
+    end;
 
     procedure SetSecurityFilterOnCustomer(pGlobalCode: Code[10])
     var
         UserSetup: Record "User Setup";
     begin
-        UserSetup.GET(UserId);
+        UserSetup.Get(UserId);
         UserSetup.TestField("HORECA Customer No.");
         UserSetup.TestField("HORECA Ship-to Filter");
 

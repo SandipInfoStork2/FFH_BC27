@@ -13,35 +13,39 @@ pageextension 50128 PostedSalesInvoiceExt extends "Posted Sales Invoice"
 
         addafter("External Document No.")
         {
-            field("Batch No."; "Batch No.")
+            field("Batch No."; Rec."Batch No.")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Batch No. field.';
             }
         }
 
         addafter(BillToContactEmail)
         {
-            field("Sell-to E-Mail"; "Sell-to E-Mail")
+            field("Sell-to E-Mail"; Rec."Sell-to E-Mail")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 Caption = 'Sell-to E-Mail';
+                ToolTip = 'Specifies the value of the Sell-to E-Mail field.';
             }
         }
 
         addafter("Your Reference")
         {
-            field("Customer Reference No."; "Customer Reference No.")
+            field("Customer Reference No."; Rec."Customer Reference No.")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 Editable = false;
+                ToolTip = 'Specifies the value of the Customer Reference No. field.';
             }
         }
 
         addafter("Work Description")
         {
-            field("Reason Code"; "Reason Code")
+            field("Reason Code"; Rec."Reason Code")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Reason Code field.';
             }
         }
     }
@@ -54,21 +58,22 @@ pageextension 50128 PostedSalesInvoiceExt extends "Posted Sales Invoice"
         {
             action("Export EDI")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 Image = ExportFile;
                 Promoted = true;
                 PromotedCategory = Process;
                 PromotedIsBig = true;
+                ToolTip = 'Executes the Export EDI action.';
 
                 trigger OnAction();
                 var
                     SalesInvHeader: Record "Sales Invoice Header";
                     SalesCrMemoHeader: Record "Sales Cr.Memo Header";
                 begin
-                    CLEAR(cu_GeneralMgt);
+                    Clear(cu_GeneralMgt);
                     SalesInvHeader := Rec;
                     CurrPage.SetSelectionFilter(SalesInvHeader);
-                    cu_GeneralMgt.ExportRLIDE("No.", true, false, SalesInvHeader, SalesCrMemoHeader); //TAL0.3
+                    cu_GeneralMgt.ExportRLIDE(Rec."No.", true, false, SalesInvHeader, SalesCrMemoHeader); //TAL0.3
                 end;
             }
         }

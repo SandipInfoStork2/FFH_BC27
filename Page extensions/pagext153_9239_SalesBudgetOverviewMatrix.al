@@ -7,25 +7,28 @@ pageextension 50253 SalesBudgetOverviewMatrixExt extends "Sales Budget Overview 
         {
             field("Shelf No."; rG_Item."Shelf No.")
             {
-                caption = 'Shelf No.';
-                ApplicationArea = all;
+                Caption = 'Shelf No.';
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Shelf No. field.';
 
             }
 
             field("Package Qty"; rG_Item."Package Qty")
             {
-                caption = 'Package Qty';
-                ApplicationArea = all;
+                Caption = 'Package Qty';
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Package Qty field.';
 
             }
 
             field(ItemReference; ItemReference."Reference No.")
             {
-                caption = 'Item Reference';
-                ApplicationArea = all;
+                Caption = 'Item Reference';
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Item Reference field.';
                 trigger OnDrillDown()
                 begin
-                    page.Run(page::"Item Reference Entries", ItemReference);
+                    Page.Run(Page::"Item Reference Entries", ItemReference);
                 end;
             }
         }
@@ -39,10 +42,11 @@ pageextension 50253 SalesBudgetOverviewMatrixExt extends "Sales Budget Overview 
             action(ItemCard)
             {
                 ApplicationArea = All;
-                caption = 'Item Card';
+                Caption = 'Item Card';
                 Image = Item;
                 RunObject = page "Item Card";
                 RunPageLink = "No." = field(Code);
+                ToolTip = 'Executes the Item Card action.';
 
 
                 trigger OnAction()
@@ -55,7 +59,7 @@ pageextension 50253 SalesBudgetOverviewMatrixExt extends "Sales Budget Overview 
             {
                 ApplicationArea = All;
                 Caption = 'Import Lidl Budget';
-                Tooltip = 'Custom: Lidl Budget';
+                ToolTip = 'Custom: Lidl Budget';
                 Image = ImportExcel;
 
                 trigger OnAction()
@@ -77,10 +81,10 @@ pageextension 50253 SalesBudgetOverviewMatrixExt extends "Sales Budget Overview 
         myInt: Integer;
     begin
         Clear(rG_Item);
-        clear(ItemReference);
-        if rG_Item.GET(Code) then begin
-            ItemReference.RESET;
-            ItemReference.SetRange("Reference Type", ItemReference."Reference Type"::"Customer");
+        Clear(ItemReference);
+        if rG_Item.GET(Rec.Code) then begin
+            ItemReference.Reset;
+            ItemReference.SetRange("Reference Type", ItemReference."Reference Type"::Customer);
             ItemReference.SetFilter("Reference Type No.", 'CUST00032');
             ItemReference.SetFilter("Item No.", rG_Item."No.");
             if ItemReference.FindSet() then begin

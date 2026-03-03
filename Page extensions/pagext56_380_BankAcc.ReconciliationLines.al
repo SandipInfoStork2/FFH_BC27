@@ -11,9 +11,10 @@ pageextension 50156 BankAccReconciliationLinesExt extends "Bank Acc. Reconciliat
 
         addafter("Value Date")
         {
-            field(Found; Found)
+            field(Found; Rec.Found)
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Found field.';
             }
         }
     }
@@ -27,16 +28,17 @@ pageextension 50156 BankAccReconciliationLinesExt extends "Bank Acc. Reconciliat
             action("Check No Filter")
             {
                 ApplicationArea = All;
+                ToolTip = 'Executes the Check No Filter action.';
 
                 trigger OnAction();
                 var
                     rL_BankAccLE: Record "Bank Account Ledger Entry";
                 begin
                     //+TAL0.1
-                    rL_BankAccLE.RESET;
-                    rL_BankAccLE.SETFILTER("Bank Account No.", "Bank Account No.");
-                    rL_BankAccLE.SETFILTER("Document No.", '*' + "Check No." + '*');
-                    PAGE.RUN(PAGE::"Bank Account Ledger Entries", rL_BankAccLE);
+                    rL_BankAccLE.Reset;
+                    rL_BankAccLE.SETFILTER("Bank Account No.", Rec."Bank Account No.");
+                    rL_BankAccLE.SETFILTER("Document No.", '*' + Rec."Check No." + '*');
+                    Page.Run(Page::"Bank Account Ledger Entries", rL_BankAccLE);
                     //-TAL0.1
                 end;
             }
@@ -44,38 +46,41 @@ pageextension 50156 BankAccReconciliationLinesExt extends "Bank Acc. Reconciliat
             {
                 ApplicationArea = All;
                 Visible = false;
+                ToolTip = 'Executes the Addtonal Info Filter action.';
 
                 trigger OnAction();
                 var
                     rL_BankAccLE: Record "Bank Account Ledger Entry";
                 begin
                     //+TAL0.1
-                    rL_BankAccLE.RESET;
-                    rL_BankAccLE.SETFILTER("Bank Account No.", "Bank Account No.");
-                    rL_BankAccLE.SETFILTER("External Document No.", '*' + "Additional Transaction Info" + '*');
-                    PAGE.RUN(PAGE::"Bank Account Ledger Entries", rL_BankAccLE);
+                    rL_BankAccLE.Reset;
+                    rL_BankAccLE.SETFILTER("Bank Account No.", Rec."Bank Account No.");
+                    rL_BankAccLE.SETFILTER("External Document No.", '*' + Rec."Additional Transaction Info" + '*');
+                    Page.Run(Page::"Bank Account Ledger Entries", rL_BankAccLE);
                     //-TAL0.1
                 end;
             }
             action("Amount Filter")
             {
                 ApplicationArea = All;
+                ToolTip = 'Executes the Amount Filter action.';
 
                 trigger OnAction();
                 var
                     rL_BankAccLE: Record "Bank Account Ledger Entry";
                 begin
                     //+TAL0.1
-                    rL_BankAccLE.RESET;
-                    rL_BankAccLE.SETFILTER("Bank Account No.", "Bank Account No.");
-                    rL_BankAccLE.SETRANGE(Amount, "Statement Amount");
-                    PAGE.RUN(PAGE::"Bank Account Ledger Entries", rL_BankAccLE);
+                    rL_BankAccLE.Reset;
+                    rL_BankAccLE.SETFILTER("Bank Account No.", Rec."Bank Account No.");
+                    rL_BankAccLE.SETRANGE(Amount, Rec."Statement Amount");
+                    Page.Run(Page::"Bank Account Ledger Entries", rL_BankAccLE);
                     //-TAL0.1
                 end;
             }
             action(Statistics)
             {
                 ApplicationArea = All;
+                ToolTip = 'Executes the Statistics action.';
 
                 trigger OnAction();
                 var
@@ -84,30 +89,31 @@ pageextension 50156 BankAccReconciliationLinesExt extends "Bank Acc. Reconciliat
                 begin
 
                     //+TAL0.1
-                    rL_BankAccRL.RESET;
-                    rL_BankAccRL.SETFILTER("Statement No.", "Statement No.");
+                    rL_BankAccRL.Reset;
+                    rL_BankAccRL.SETFILTER("Statement No.", Rec."Statement No.");
 
-                    rL_BankAccRL2.RESET;
-                    rL_BankAccRL2.SETFILTER("Statement No.", "Statement No.");
-                    rL_BankAccRL2.SETRANGE("Applied Entries", 0);
+                    rL_BankAccRL2.Reset;
+                    rL_BankAccRL2.SETFILTER("Statement No.", Rec."Statement No.");
+                    rL_BankAccRL2.SetRange("Applied Entries", 0);
 
-                    MESSAGE('Total Lines:' + FORMAT(rL_BankAccRL.COUNT) + ' Remaining:' + FORMAT(rL_BankAccRL2.COUNT));
+                    Message('Total Lines:' + Format(rL_BankAccRL.Count) + ' Remaining:' + Format(rL_BankAccRL2.Count));
                 end;
             }
             action("Force Remove")
             {
                 ApplicationArea = All;
                 Image = Delete;
+                ToolTip = 'Executes the Force Remove action.';
 
                 trigger OnAction();
                 begin
                     //+TAL0.2
-                    if ("Applied Amount" <> 0) and ("Applied Entries" > 0) then begin
-                        if CONFIRM(Text50000, false, Description, FORMAT("Transaction Date")) then begin
-                            "Applied Amount" := 0;
-                            "Applied Entries" := 0;
-                            Difference := 0;
-                            MODIFY; //TAL0.3
+                    if (Rec."Applied Amount" <> 0) and (Rec."Applied Entries" > 0) then begin
+                        if CONFIRM(Text50000, false, Rec.Description, FORMAT(Rec."Transaction Date")) then begin
+                            Rec."Applied Amount" := 0;
+                            Rec."Applied Entries" := 0;
+                            Rec.Difference := 0;
+                            Rec.MODIFY; //TAL0.3
                         end;
                     end;
                     //-TAL0.2

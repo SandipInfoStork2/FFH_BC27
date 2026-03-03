@@ -4,10 +4,11 @@ page 50041 "Prod. Logistics Activities"
     PageType = CardPart;
     RefreshOnActivate = true;
     SourceTable = "Manufacturing Cue";
+    ApplicationArea = All;
 
     layout
     {
-        area(content)
+        area(Content)
         {
 #if not CLEAN18
             cuegroup("Intelligent Cloud")
@@ -36,7 +37,8 @@ page 50041 "Prod. Logistics Activities"
                         var
                             IntelligentCloudManagement: Codeunit "Intelligent Cloud Management";
                         begin
-                            HyperLink(IntelligentCloudManagement.GetIntelligentCloudLearnMoreUrl);
+                            //HyperLink(IntelligentCloudManagement.GetIntelligentCloudLearnMoreUrl);
+                            HyperLink('https://go.microsoft.com/fwlink/?linkid=2009848&clcid=0x409');
                         end;
                     }
                     action("Intelligent Cloud Insights")
@@ -55,65 +57,69 @@ page 50041 "Prod. Logistics Activities"
                         var
                             IntelligentCloudManagement: Codeunit "Intelligent Cloud Management";
                         begin
-                            HyperLink(IntelligentCloudManagement.GetIntelligentCloudInsightsUrl);
+                            HyperLink(GetIntelligentCloudInsightsUrl);
                         end;
                     }
                 }
             }
 #endif
 
-            cuegroup("Location")
+            cuegroup(Location)
             {
                 Caption = 'Released Production Orders';
-                field("Aradipou - Main Orders"; "Aradipou - Main Orders")
+                field("Aradipou - Main Orders"; Rec."Aradipou - Main Orders")
                 {
                     ApplicationArea = Basic, Suite;
-                    DrillDownPageID = "Released Production Orders";
+                    DrillDownPageId = "Released Production Orders";
+                    ToolTip = 'Specifies the value of the Aradipou - Main Rel. Production Orders field.';
                 }
 
-                field("Fresh Cut Orders"; "Fresh Cut Orders")
+                field("Fresh Cut Orders"; Rec."Fresh Cut Orders")
                 {
                     ApplicationArea = Basic, Suite;
-                    DrillDownPageID = "Released Production Orders";
+                    DrillDownPageId = "Released Production Orders";
+                    ToolTip = 'Specifies the value of the Fresh Cut Rel. Production Orders field.';
                 }
-                field("Kitchen Orders"; "Kitchen Orders")
+                field("Kitchen Orders"; Rec."Kitchen Orders")
                 {
                     ApplicationArea = Basic, Suite;
-                    DrillDownPageID = "Released Production Orders";
+                    DrillDownPageId = "Released Production Orders";
+                    ToolTip = 'Specifies the value of the Kitchen Rel. Production Orders field.';
                 }
 
-                field("Potatoes Orders"; "Potatoes Orders")
+                field("Potatoes Orders"; Rec."Potatoes Orders")
                 {
                     ApplicationArea = Basic, Suite;
-                    DrillDownPageID = "Released Production Orders";
+                    DrillDownPageId = "Released Production Orders";
+                    ToolTip = 'Specifies the value of the Potatoes Rel. Production Orders field.';
                 }
 
             }
             cuegroup("Production Orders")
             {
                 Caption = 'Production Orders';
-                field("Simulated Prod. Orders"; "Simulated Prod. Orders")
+                field("Simulated Prod. Orders"; Rec."Simulated Prod. Orders")
                 {
                     ApplicationArea = Manufacturing;
-                    DrillDownPageID = "Simulated Production Orders";
+                    DrillDownPageId = "Simulated Production Orders";
                     ToolTip = 'Specifies the number of simulated production orders that are displayed in the Manufacturing Cue on the Role Center. The documents are filtered by today''s date.';
                 }
-                field("Planned Prod. Orders - All"; "Planned Prod. Orders - All")
+                field("Planned Prod. Orders - All"; Rec."Planned Prod. Orders - All")
                 {
                     ApplicationArea = Manufacturing;
-                    DrillDownPageID = "Planned Production Orders";
+                    DrillDownPageId = "Planned Production Orders";
                     ToolTip = 'Specifies the number of planned production orders that are displayed in the Manufacturing Cue on the Role Center. The documents are filtered by today''s date.';
                 }
-                field("Firm Plan. Prod. Orders - All"; "Firm Plan. Prod. Orders - All")
+                field("Firm Plan. Prod. Orders - All"; Rec."Firm Plan. Prod. Orders - All")
                 {
                     ApplicationArea = Manufacturing;
-                    DrillDownPageID = "Firm Planned Prod. Orders";
+                    DrillDownPageId = "Firm Planned Prod. Orders";
                     ToolTip = 'Specifies the number of firm planned production orders that are displayed in the Manufacturing Cue on the Role Center. The documents are filtered by today''s date.';
                 }
-                field("Released Prod. Orders - All"; "Released Prod. Orders - All")
+                field("Released Prod. Orders - All"; Rec."Released Prod. Orders - All")
                 {
                     ApplicationArea = Manufacturing;
-                    DrillDownPageID = "Released Production Orders";
+                    DrillDownPageId = "Released Production Orders";
                     ToolTip = 'Specifies the number of released production orders that are displayed in the Manufacturing Cue on the Role Center. The documents are filtered by today''s date.';
                 }
 
@@ -123,14 +129,14 @@ page 50041 "Prod. Logistics Activities"
                     {
                         ApplicationArea = Manufacturing;
                         Caption = 'Change Production Order Status';
-                        RunObject = Page "Change Production Order Status";
+                        RunObject = page "Change Production Order Status";
                         ToolTip = 'Change the production order to another status, such as Released.';
                     }
                     action("New Production Order")
                     {
                         ApplicationArea = Manufacturing;
                         Caption = 'New Production Order';
-                        RunObject = Page "Planned Production Order";
+                        RunObject = page "Planned Production Order";
                         RunPageMode = Create;
                         ToolTip = 'Prepare to produce an end item. ';
                     }
@@ -138,8 +144,8 @@ page 50041 "Prod. Logistics Activities"
                     {
                         ApplicationArea = Manufacturing;
                         Caption = 'Find entries...';
-                        RunObject = Page Navigate;
-                        ShortCutKey = 'Shift+Ctrl+I';
+                        RunObject = page Navigate;
+                        ShortcutKey = 'Shift+Ctrl+I';
                         ToolTip = 'Find entries and documents that exist for the document number and posting date on the selected document. (Formerly this action was named Navigate.)';
                     }
                 }
@@ -147,12 +153,12 @@ page 50041 "Prod. Logistics Activities"
             cuegroup("Planning - Operations")
             {
                 Caption = 'Planning - Operations';
-                field("Purchase Orders"; "Purchase Orders")
+                field("Purchase Orders"; Rec."Purchase Orders")
                 {
                     ApplicationArea = Basic, Suite;
                     Caption = 'My Purchase Orders';
                     DrillDown = true;
-                    DrillDownPageID = "Purchase Order List";
+                    DrillDownPageId = "Purchase Order List";
                     ToolTip = 'Specifies the number of purchase orders that are displayed in the Manufacturing Cue on the Role Center. The documents are filtered by today''s date.';
                 }
 
@@ -162,7 +168,7 @@ page 50041 "Prod. Logistics Activities"
                     {
                         ApplicationArea = Manufacturing;
                         Caption = 'New Purchase Order';
-                        RunObject = Page "Purchase Order";
+                        RunObject = page "Purchase Order";
                         RunPageMode = Create;
                         ToolTip = 'Purchase goods or services from a vendor.';
                     }
@@ -170,14 +176,14 @@ page 50041 "Prod. Logistics Activities"
                     {
                         ApplicationArea = Manufacturing;
                         Caption = 'Edit Planning Worksheet';
-                        RunObject = Page "Planning Worksheet";
+                        RunObject = page "Planning Worksheet";
                         ToolTip = 'Plan supply orders automatically to fulfill new demand.';
                     }
                     action("Edit Subcontracting Worksheet")
                     {
                         ApplicationArea = Manufacturing;
                         Caption = 'Edit Subcontracting Worksheet';
-                        RunObject = Page "Subcontracting Worksheet";
+                        RunObject = page "Subcontracting Worksheet";
                         ToolTip = 'Plan outsourcing of operation on released production orders.';
                     }
                 }
@@ -185,16 +191,16 @@ page 50041 "Prod. Logistics Activities"
             cuegroup(Design)
             {
                 Caption = 'Design';
-                field("Prod. BOMs under Development"; "Prod. BOMs under Development")
+                field("Prod. BOMs under Development"; Rec."Prod. BOMs under Development")
                 {
                     ApplicationArea = Manufacturing;
-                    DrillDownPageID = "Production BOM List";
+                    DrillDownPageId = "Production BOM List";
                     ToolTip = 'Specifies the number of production BOMs that are under development that are displayed in the Manufacturing Cue on the Role Center. The documents are filtered by today''s date.';
                 }
-                field("Routings under Development"; "Routings under Development")
+                field("Routings under Development"; Rec."Routings under Development")
                 {
                     ApplicationArea = Manufacturing;
-                    DrillDownPageID = "Routing List";
+                    DrillDownPageId = "Routing List";
                     ToolTip = 'Specifies the routings under development that are displayed in the Manufacturing Cue on the Role Center. The documents are filtered by today''s date.';
                 }
 
@@ -204,7 +210,7 @@ page 50041 "Prod. Logistics Activities"
                     {
                         ApplicationArea = Manufacturing;
                         Caption = 'New Item';
-                        RunObject = Page "Item Card";
+                        RunObject = page "Item Card";
                         RunPageMode = Create;
                         ToolTip = 'Create an item card based on the stockkeeping unit.';
                     }
@@ -212,7 +218,7 @@ page 50041 "Prod. Logistics Activities"
                     {
                         ApplicationArea = Manufacturing;
                         Caption = 'New Production BOM';
-                        RunObject = Page "Production BOM";
+                        RunObject = page "Production BOM";
                         RunPageMode = Create;
                         ToolTip = 'Create a bill of material that defines the components in a produced item.';
                     }
@@ -220,7 +226,7 @@ page 50041 "Prod. Logistics Activities"
                     {
                         ApplicationArea = Manufacturing;
                         Caption = 'New Routing';
-                        RunObject = Page Routing;
+                        RunObject = page Routing;
                         RunPageMode = Create;
                         ToolTip = 'Create a routing that defines the operations required to produce an end item.';
                     }
@@ -258,7 +264,7 @@ page 50041 "Prod. Logistics Activities"
 
     actions
     {
-        area(processing)
+        area(Processing)
         {
             action("Set Up Cues")
             {
@@ -280,15 +286,28 @@ page 50041 "Prod. Logistics Activities"
 
     trigger OnOpenPage()
     begin
-        Reset;
-        if not Get then begin
-            Init;
-            Insert;
+        Rec.Reset;
+        if not Rec.Get then begin
+            Rec.Init;
+            Rec.Insert;
         end;
 
-        SetRange("User ID Filter", UserId);
+        Rec.SetRange("User ID Filter", UserId);
 
         ShowIntelligentCloud := not EnvironmentInfo.IsSaaS;
+    end;
+
+    procedure GetIntelligentCloudInsightsUrl(): Text
+    var
+        BaseUrl: Text;
+        ParameterUrl: Text;
+        NoDomainUrl: Text;
+    begin
+        BaseUrl := GetUrl(CLIENTTYPE::Web);
+        ParameterUrl := GetUrl(CLIENTTYPE::Web, CompanyName, OBJECTTYPE::Page, 4013);
+        NoDomainUrl := DelChr(ParameterUrl, '<', BaseUrl);
+
+        exit(StrSubstNo('https://businesscentral.dynamics.com/%1', NoDomainUrl));
     end;
 
     var

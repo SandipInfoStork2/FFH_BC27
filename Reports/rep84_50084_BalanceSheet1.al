@@ -5,30 +5,31 @@ report 50084 "Balance Sheet 1"
     RDLCLayout = './Layouts/rep84_50084_BalanceSheet1.rdlc';
 
     Caption = 'Balance Sheet';
+    ApplicationArea = All;
 
     dataset
     {
         dataitem("G/L Account"; "G/L Account")
         {
-            DataItemTableView = SORTING("No.");
+            DataItemTableView = sorting("No.");
             RequestFilterFields = "No.", "Account Type", "Date Filter", "Budget Filter", "Global Dimension 1 Filter", "Global Dimension 2 Filter";
-            column(FORMAT_TODAY_0_4_; FORMAT(TODAY, 0, 4))
+            column(FORMAT_TODAY_0_4_; Format(Today, 0, 4))
             {
             }
             column(LongText; LongText)
             {
             }
 
-            column(COMPANYNAME; COMPANYNAME)
+            column(COMPANYNAME; CompanyName)
             {
             }
-            column(USERID; USERID)
+            column(USERID; UserId)
             {
             }
             column(ReportName; ReportName)
             {
             }
-            column(G_L_Account__TABLENAME__________GLFilter; "G/L Account".TABLENAME + ': ' + GLFilter)
+            column(G_L_Account__TABLENAME__________GLFilter; "G/L Account".TableName + ': ' + GLFilter)
             {
             }
             column(RoundFactorText; RoundFactorText)
@@ -87,7 +88,7 @@ report 50084 "Balance Sheet 1"
             }
             dataitem(BlankLineCounter; "Integer")
             {
-                DataItemTableView = SORTING(Number);
+                DataItemTableView = sorting(Number);
                 MaxIteration = 1;
                 column(ShowAccType; ShowAccType)
                 {
@@ -98,17 +99,17 @@ report 50084 "Balance Sheet 1"
 
                 trigger OnPreDataItem()
                 begin
-                    SETRANGE(Number, 1, "G/L Account"."No. of Blank Lines");
+                    SetRange(Number, 1, "G/L Account"."No. of Blank Lines");
                 end;
             }
             dataitem("Integer"; "Integer")
             {
-                DataItemTableView = SORTING(Number) WHERE(Number = CONST(1));
+                DataItemTableView = sorting(Number) where(Number = const(1));
                 MaxIteration = 1;
                 column(G_L_Account___No__; "G/L Account"."No.")
                 {
                 }
-                column(PADSTR_____G_L_Account__Indentation___2___G_L_Account__Name; PADSTR('', "G/L Account".Indentation * 2) + "G/L Account".Name)
+                column(PADSTR_____G_L_Account__Indentation___2___G_L_Account__Name; PadStr('', "G/L Account".Indentation * 2) + "G/L Account".Name)
                 {
                 }
                 column(G_L_Account___No__of_Blank_Lines_; "G/L Account"."No. of Blank Lines")
@@ -117,7 +118,7 @@ report 50084 "Balance Sheet 1"
                 column(G_L_Account___No___Control1500024; "G/L Account"."No.")
                 {
                 }
-                column(PADSTR_____G_L_Account__Indentation___2___G_L_Account__Name_Control1500025; PADSTR('', "G/L Account".Indentation * 2) + "G/L Account".Name)
+                column(PADSTR_____G_L_Account__Indentation___2___G_L_Account__Name_Control1500025; PadStr('', "G/L Account".Indentation * 2) + "G/L Account".Name)
                 {
                 }
                 column(ColumnAmountText_1_; ColumnAmountText[1])
@@ -141,7 +142,7 @@ report 50084 "Balance Sheet 1"
                 column(G_L_Account___No___Control1500032; "G/L Account"."No.")
                 {
                 }
-                column(PADSTR_____G_L_Account__Indentation___2___G_L_Account__Name_Control1500033; PADSTR('', "G/L Account".Indentation * 2) + "G/L Account".Name)
+                column(PADSTR_____G_L_Account__Indentation___2___G_L_Account__Name_Control1500033; PadStr('', "G/L Account".Indentation * 2) + "G/L Account".Name)
                 {
                 }
                 column(ColumnAmountText_6__Control1500040; ColumnAmountText[6])
@@ -175,18 +176,18 @@ report 50084 "Balance Sheet 1"
                 CalculateAmount("G/L Account");
 
                 RoundAmount;
-                IF (ColumnAmount[1] = 0) AND (ColumnAmount[2] = 0) AND (ColumnAmount[3] = 0) AND
-                   (ColumnAmount[4] = 0) AND (ColumnAmount[5] = 0) AND (ColumnAmount[6] = 0) AND
+                if (ColumnAmount[1] = 0) and (ColumnAmount[2] = 0) and (ColumnAmount[3] = 0) and
+                   (ColumnAmount[4] = 0) and (ColumnAmount[5] = 0) and (ColumnAmount[6] = 0) and
                    ("G/L Account"."Account Type" = "G/L Account"."Account Type"::Posting)
-                THEN
-                    CurrReport.SKIP
+                then
+                    CurrReport.Skip
                     ;
                 ConvertAmountToText;
                 PageGroupNo := NextPageGroupNo;
                 ShowAccType := "G/L Account"."Account Type";
-                IF "G/L Account"."New Page" THEN
+                if "G/L Account"."New Page" then
                     NextPageGroupNo := PageGroupNo + 1;
-                IF PageGroupNo = NextPageGroupNo THEN
+                if PageGroupNo = NextPageGroupNo then
                     PageGroupNo := NextPageGroupNo - 1;
             end;
 
@@ -200,13 +201,13 @@ report 50084 "Balance Sheet 1"
 
 
 
-                GLSetup.GET;
-                IF AddCurr THEN
-                    HeaderText := STRSUBSTNO(Text1450013, GLSetup."Additional Reporting Currency")
-                ELSE BEGIN
-                    GLSetup.TESTFIELD("LCY Code");
-                    HeaderText := STRSUBSTNO(Text1450013, GLSetup."LCY Code");
-                END;
+                GLSetup.Get;
+                if AddCurr then
+                    HeaderText := StrSubstNo(Text1450013, GLSetup."Additional Reporting Currency")
+                else begin
+                    GLSetup.TestField("LCY Code");
+                    HeaderText := StrSubstNo(Text1450013, GLSetup."LCY Code");
+                end;
             end;
         }
     }
@@ -217,7 +218,7 @@ report 50084 "Balance Sheet 1"
 
         layout
         {
-            area(content)
+            area(Content)
             {
                 group(Options)
                 {
@@ -225,13 +226,15 @@ report 50084 "Balance Sheet 1"
                     field(AmountsInWhole; RoundingFactor)
                     {
                         Caption = 'Amounts in whole';
-                        ApplicationArea = all;
+                        ApplicationArea = All;
+                        ToolTip = 'Specifies the value of the Amounts in whole field.';
                     }
                     field(AddCurr; AddCurr)
                     {
                         Caption = 'Show Amounts in Add. Reporting Currency';
                         MultiLine = true;
-                        ApplicationArea = all;
+                        ApplicationArea = All;
+                        ToolTip = 'Specifies the value of the Show Amounts in Add. Reporting Currency field.';
                     }
                 }
             }
@@ -248,22 +251,22 @@ report 50084 "Balance Sheet 1"
 
     trigger OnPreReport()
     begin
-        GLFilter := "G/L Account".GETFILTERS;
+        GLFilter := "G/L Account".GetFilters;
         RoundFactorText := ReportMngmt.RoundDescription(RoundingFactor);
-        CurrentPeriodEnd := "G/L Account".GETRANGEMAX("Date Filter");
+        CurrentPeriodEnd := "G/L Account".GetRangeMax("Date Filter");
 
-        LastYearCurrentPeriodEnd := CALCDATE('-1Y', NORMALDATE(CurrentPeriodEnd) + 1) - 1;
-        IF CurrentPeriodEnd <> NORMALDATE(CurrentPeriodEnd) THEN
-            LastYearCurrentPeriodEnd := CLOSINGDATE(LastYearCurrentPeriodEnd);
+        LastYearCurrentPeriodEnd := CalcDate('-1Y', NormalDate(CurrentPeriodEnd) + 1) - 1;
+        if CurrentPeriodEnd <> NormalDate(CurrentPeriodEnd) then
+            LastYearCurrentPeriodEnd := ClosingDate(LastYearCurrentPeriodEnd);
 
-        AccPeriod.RESET;
-        AccPeriod.SETRANGE("New Fiscal Year", TRUE, TRUE);
-        AccPeriod.SETFILTER("Starting Date", '..%1', CurrentPeriodEnd);
-        AccPeriod.FINDLAST;
+        AccPeriod.Reset;
+        AccPeriod.SetRange("New Fiscal Year", true, true);
+        AccPeriod.SetFilter("Starting Date", '..%1', CurrentPeriodEnd);
+        AccPeriod.FindLast;
         CurrentYearStart := AccPeriod."Starting Date";
 
-        AccPeriod.SETFILTER("Starting Date", '..%1', LastYearCurrentPeriodEnd);
-        IF AccPeriod.FINDLAST THEN
+        AccPeriod.SetFilter("Starting Date", '..%1', LastYearCurrentPeriodEnd);
+        if AccPeriod.FindLast then
             LastYearStart := AccPeriod."Starting Date";
     end;
 
@@ -315,7 +318,7 @@ report 50084 "Balance Sheet 1"
         ColumnSubHeader[5] := Text1450003;
         ColumnSubHeader[6] := Text1450004;
         LongText :=
-          STRSUBSTNO(
+          StrSubstNo(
             Text1450006,
             CurrentYearStart, CurrentPeriodEnd, LastYearStart, LastYearCurrentPeriodEnd);
     end;
@@ -324,76 +327,76 @@ report 50084 "Balance Sheet 1"
     var
         i: Integer;
     begin
-        FOR i := 1 TO 6 DO BEGIN
-            IF FormatString[i] <> '' THEN
-                ColumnAmountText[i] := FORMAT(ColumnAmount[i], 0, FormatString[i])
-            ELSE
-                ColumnAmountText[i] := FORMAT(ColumnAmount[i]);
-        END;
+        for i := 1 to 6 do begin
+            if FormatString[i] <> '' then
+                ColumnAmountText[i] := Format(ColumnAmount[i], 0, FormatString[i])
+            else
+                ColumnAmountText[i] := Format(ColumnAmount[i]);
+        end;
     end;
 
     local procedure PopulateFormatString()
     var
         i: Integer;
     begin
-        FOR i := 1 TO 6 DO BEGIN
-            IF RoundingFactor = RoundingFactor::" " THEN
+        for i := 1 to 6 do begin
+            if RoundingFactor = RoundingFactor::" " then
                 FormatString[i] := '<Precision,2:><Standard Format,0>'
-            ELSE
+            else
                 FormatString[i] := '<Precision,1:><Standard Format,0>';
-        END;
+        end;
         FormatString[3] := '';
         FormatString[6] := '';
-        DoNotRoundAmount[3] := TRUE;
-        DoNotRoundAmount[6] := TRUE;
+        DoNotRoundAmount[3] := true;
+        DoNotRoundAmount[6] := true;
     end;
 
     local procedure RoundAmount()
     var
         i: Integer;
     begin
-        FOR i := 1 TO 6 DO BEGIN
-            IF NOT DoNotRoundAmount[i] THEN
+        for i := 1 to 6 do begin
+            if not DoNotRoundAmount[i] then
                 ColumnAmount[i] := ReportMngmt.RoundAmount(ColumnAmount[i], RoundingFactor);
-        END;
+        end;
     end;
 
     local procedure FilterGLAccount(var GLAccount: Record "G/L Account")
     begin
-        GLAccount.SETRANGE("Income/Balance", GLAccount."Income/Balance"::"Balance Sheet");
+        GLAccount.SetRange("Income/Balance", GLAccount."Income/Balance"::"Balance Sheet");
     end;
 
     local procedure CalculateAmount(var GLAccount: Record "G/L Account")
     begin
-        GLAccount.SETRANGE("Date Filter", CurrentYearStart, CurrentPeriodEnd);
-        GLAccount.CALCFIELDS("Balance at Date", "Budget at Date", "Add.-Currency Balance at Date");
+        GLAccount.SetRange("Date Filter", CurrentYearStart, CurrentPeriodEnd);
+        GLAccount.CalcFields("Balance at Date", "Budget at Date", "Add.-Currency Balance at Date");
 
 
-        IF AddCurr THEN BEGIN
+        if AddCurr then begin
             ColumnAmount[1] := GLAccount."Add.-Currency Balance at Date";
-        END ELSE BEGIN
+        end else begin
             ColumnAmount[1] := GLAccount."Balance at Date";
-        END;
+        end;
 
         ColumnAmount[2] := GLAccount."Budget at Date";
         ColumnAmount[3] := 0;
-        IF ColumnAmount[2] <> 0 THEN
-            ColumnAmount[3] := ROUND((ColumnAmount[2] - ColumnAmount[1]) / ColumnAmount[2] * 100, 1);
+        if ColumnAmount[2] <> 0 then
+            ColumnAmount[3] := Round((ColumnAmount[2] - ColumnAmount[1]) / ColumnAmount[2] * 100, 1);
 
-        GLAccount.SETRANGE("Date Filter", LastYearStart, LastYearCurrentPeriodEnd);
-        GLAccount.CALCFIELDS("Balance at Date", "Budget at Date", "Add.-Currency Balance at Date");
+        GLAccount.SetRange("Date Filter", LastYearStart, LastYearCurrentPeriodEnd);
+        GLAccount.CalcFields("Balance at Date", "Budget at Date", "Add.-Currency Balance at Date");
 
 
-        IF AddCurr THEN BEGIN
+        if AddCurr then begin
             ColumnAmount[4] := GLAccount."Add.-Currency Balance at Date";
-        END ELSE BEGIN
+        end else begin
             ColumnAmount[4] := GLAccount."Balance at Date";
-        END;
+        end;
 
         ColumnAmount[5] := GLAccount."Budget at Date";
         ColumnAmount[6] := 0;
-        IF ColumnAmount[5] <> 0 THEN
-            ColumnAmount[6] := ROUND((ColumnAmount[5] - ColumnAmount[4]) / ColumnAmount[5] * 100, 1);
+        if ColumnAmount[5] <> 0 then
+            ColumnAmount[6] := Round((ColumnAmount[5] - ColumnAmount[4]) / ColumnAmount[5] * 100, 1);
     end;
 }
 

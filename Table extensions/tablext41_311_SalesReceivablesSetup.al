@@ -125,12 +125,12 @@ tableextension 50141 SalesReceivablesSetupExt extends "Sales & Receivables Setup
                 pItemCategories: Page "Item Categories";
             begin
 
-                clear(pItemCategories);
-                pItemCategories.SETTABLEVIEW(ItemCategory);
-                pItemCategories.LOOKUPMODE(TRUE);
-                IF pItemCategories.RUNMODAL = ACTION::LookupOK THEN BEGIN
+                Clear(pItemCategories);
+                pItemCategories.SetTableView(ItemCategory);
+                pItemCategories.LookupMode(true);
+                if pItemCategories.RunModal = Action::LookupOK then begin
                     "Box Stmt Item Category Filter" := pItemCategories.GetSelectionFilter();
-                END;
+                end;
             end;
         }
         field(50015; "Box Stmt Show Cust. Location"; Boolean)
@@ -141,7 +141,7 @@ tableextension 50141 SalesReceivablesSetupExt extends "Sales & Receivables Setup
         field(50016; "Mand. S.O. Req. Delivery Date"; Boolean)
         {
             DataClassification = ToBeClassified;
-            caption = 'Mandatory S.O. Requested Delivery Date';
+            Caption = 'Mandatory S.O. Requested Delivery Date';
         }
 
         field(50017; "Carton Category Filter"; Text[50])
@@ -163,7 +163,7 @@ tableextension 50141 SalesReceivablesSetupExt extends "Sales & Receivables Setup
         {
             DataClassification = ToBeClassified;
             OptionCaption = 'None,Unit Cost,Last Direct Cost,Last Landed Unit Cost';
-            OptionMembers = "None","Unit Cost","Last Direct Cost","Last Landed Unit Cost";
+            OptionMembers = None,"Unit Cost","Last Direct Cost","Last Landed Unit Cost";
         }
 
         field(50021; "FILM Category Filter"; Text[100])
@@ -214,7 +214,7 @@ tableextension 50141 SalesReceivablesSetupExt extends "Sales & Receivables Setup
             DataClassification = ToBeClassified;
         }
 
-        field(50030; "Lidl Customer No."; code[20])
+        field(50030; "Lidl Customer No."; Code[20])
         {
             DataClassification = ToBeClassified;
             TableRelation = Customer;
@@ -341,7 +341,7 @@ tableextension 50141 SalesReceivablesSetupExt extends "Sales & Receivables Setup
             DataClassification = ToBeClassified;
 
             Caption = 'Default Product Class (Κατηγορία)';
-            TableRelation = "General Categories".Code WHERE("Table No." = CONST(27), Type = CONST(Category8));
+            TableRelation = "General Categories".Code where("Table No." = const(27), Type = const(Category8));
         }
 
 

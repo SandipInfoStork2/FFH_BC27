@@ -32,11 +32,13 @@ pageextension 50122 PurchCrMemoSubformExt extends "Purch. Cr. Memo Subform"
             {
                 Caption = 'Item &Tracking Lines';
                 Image = ItemTrackingLines;
-                ShortCutKey = 'Shift+Ctrl+I';
+                ShortcutKey = 'Shift+Ctrl+I';
+                ToolTip = 'Executes the Item &Tracking Lines action.';
+                ApplicationArea = All;
 
                 trigger OnAction();
                 begin
-                    OpenItemTrackingLines;
+                    Rec.OpenItemTrackingLines;
                 end;
             }
         }

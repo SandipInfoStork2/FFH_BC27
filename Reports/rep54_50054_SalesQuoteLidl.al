@@ -10,12 +10,13 @@ report 50054 "Sales - Quote Lidl"
     DefaultLayout = Excel;
     PreviewMode = PrintLayout;
     WordMergeDataItem = Header;
+    ApplicationArea = All;
 
     dataset
     {
         dataitem(Header; "Sales Header")
         {
-            DataItemTableView = SORTING("Document Type", "No.") WHERE("Document Type" = CONST(Quote));
+            DataItemTableView = sorting("Document Type", "No.") where("Document Type" = const(Quote));
             RequestFilterFields = "No.", "Sell-to Customer No.", "No. Printed";
             RequestFilterHeading = 'Sales Quote Lidl';
             column(CompanyAddress1; CompanyAddr[1])
@@ -114,16 +115,16 @@ report 50054 "Sales - Quote Lidl"
             column(CompanyVATRegistrationNo_Lbl; CompanyInfo.GetVATRegistrationNumberLbl())
             {
             }
-            column(CompanyLegalOffice; CompanyInfo.GetLegalOffice())
+            column(CompanyLegalOffice; '') //CompanyInfo.GetLegalOffice() not used and return Blank in BC25
             {
             }
-            column(CompanyLegalOffice_Lbl; CompanyInfo.GetLegalOfficeLbl())
+            column(CompanyLegalOffice_Lbl; '') //CompanyInfo.GetLegalOfficeLbl() not used and return Blank in BC25
             {
             }
-            column(CompanyCustomGiro; CompanyInfo.GetCustomGiro())
+            column(CompanyCustomGiro; '') //CompanyInfo.GetCustomGiro() not used and return Blank in BC25
             {
             }
-            column(CompanyCustomGiro_Lbl; CompanyInfo.GetCustomGiroLbl())
+            column(CompanyCustomGiro_Lbl; '') //CompanyInfo.GetCustomGiroLbl() not used and return Blank in BC25
             {
             }
             column(CompanyLegalStatement; GetLegalStatement())
@@ -427,51 +428,51 @@ report 50054 "Sales - Quote Lidl"
 
             }
 
-            column(Date1; FORMAT(MATRIX_ColumnCaption[1]))
+            column(Date1; Format(MATRIX_ColumnCaption[1]))
             {
 
             }
 
-            column(Date2; FORMAT(MATRIX_ColumnCaption[2]))
+            column(Date2; Format(MATRIX_ColumnCaption[2]))
             {
 
             }
 
-            column(Date3; FORMAT(MATRIX_ColumnCaption[3]))
+            column(Date3; Format(MATRIX_ColumnCaption[3]))
             {
 
             }
 
-            column(Date4; FORMAT(MATRIX_ColumnCaption[4]))
+            column(Date4; Format(MATRIX_ColumnCaption[4]))
             {
 
             }
 
-            column(Date5; FORMAT(MATRIX_ColumnCaption[5]))
+            column(Date5; Format(MATRIX_ColumnCaption[5]))
             {
 
             }
 
-            column(Date6; FORMAT(MATRIX_ColumnCaption[6]))
+            column(Date6; Format(MATRIX_ColumnCaption[6]))
             {
 
             }
 
-            column(Date7; FORMAT(MATRIX_ColumnCaption[7]))
+            column(Date7; Format(MATRIX_ColumnCaption[7]))
             {
 
             }
 
-            column(Date8; FORMAT(MATRIX_ColumnCaption[8]))
+            column(Date8; Format(MATRIX_ColumnCaption[8]))
             {
 
             }
 
             dataitem(Line; "Sales Line")
             {
-                DataItemLink = "Document No." = FIELD("No.");
+                DataItemLink = "Document No." = field("No.");
                 DataItemLinkReference = Header;
-                DataItemTableView = SORTING("Document No.", "Line No.");
+                DataItemTableView = sorting("Document No.", "Line No.");
                 UseTemporary = true;
                 column(LineNo_Line; "Line No.")
                 {
@@ -843,7 +844,7 @@ report 50054 "Sales - Quote Lidl"
             }
             dataitem(WorkDescriptionLines; "Integer")
             {
-                DataItemTableView = SORTING(Number) WHERE(Number = FILTER(1 .. 99999));
+                DataItemTableView = sorting(Number) where(Number = filter(1 .. 99999));
                 column(WorkDescriptionLineNumber; Number)
                 {
                 }
@@ -868,12 +869,12 @@ report 50054 "Sales - Quote Lidl"
                     if not ShowWorkDescription then
                         CurrReport.Break();
 
-                    Header."Work Description".CreateInStream(WorkDescriptionInstream, TEXTENCODING::UTF8);
+                    Header."Work Description".CreateInStream(WorkDescriptionInstream, TextEncoding::UTF8);
                 end;
             }
             dataitem(VATAmountLine; "VAT Amount Line")
             {
-                DataItemTableView = SORTING("VAT Identifier", "VAT Calculation Type", "Tax Group Code", "Use Tax", Positive);
+                DataItemTableView = sorting("VAT Identifier", "VAT Calculation Type", "Tax Group Code", "Use Tax", Positive);
                 UseTemporary = true;
                 column(InvoiceDiscountAmount_VATAmountLine; "Invoice Discount Amount")
                 {
@@ -970,7 +971,7 @@ report 50054 "Sales - Quote Lidl"
             }
             dataitem(ReportTotalsLine; "Report Totals Buffer")
             {
-                DataItemTableView = SORTING("Line No.");
+                DataItemTableView = sorting("Line No.");
                 UseTemporary = true;
                 column(Description_ReportTotalsLine; Description)
                 {
@@ -995,7 +996,7 @@ report 50054 "Sales - Quote Lidl"
             }
             dataitem(LetterText; "Integer")
             {
-                DataItemTableView = SORTING(Number) WHERE(Number = CONST(1));
+                DataItemTableView = sorting(Number) where(Number = const(1));
                 column(GreetingText; GreetingLbl)
                 {
                 }
@@ -1018,7 +1019,7 @@ report 50054 "Sales - Quote Lidl"
             }
             dataitem(Totals; "Integer")
             {
-                DataItemTableView = SORTING(Number) WHERE(Number = CONST(1));
+                DataItemTableView = sorting(Number) where(Number = const(1));
                 column(TotalNetAmount; TotalAmount)
                 {
                     AutoFormatExpression = Header."Currency Code";
@@ -1104,7 +1105,7 @@ report 50054 "Sales - Quote Lidl"
                 Line.UpdateVATOnLines(0, Header, Line, VATAmountLine);
 
                 if not IsReportInPreviewMode() then
-                    CODEUNIT.Run(CODEUNIT::"Sales-Printed", Header);
+                    Codeunit.Run(Codeunit::"Sales-Printed", Header);
 
                 SetLanguage("Language Code");
 
@@ -1172,14 +1173,14 @@ report 50054 "Sales - Quote Lidl"
 
 
                 if vL_Date1 <> 0D then begin
-                    MATRIX_ColumnCaption[1] := FORMAT(vL_Date1, 0, '<Day,2>/<Month,2>/<Year4>');// + BoxLabel;
-                    MATRIX_ColumnCaption[2] := FORMAT(vL_Date2, 0, '<Day,2>/<Month,2>/<Year4>');// + BoxLabel;
-                    MATRIX_ColumnCaption[3] := FORMAT(vL_Date3, 0, '<Day,2>/<Month,2>/<Year4>');// + BoxLabel;
-                    MATRIX_ColumnCaption[4] := FORMAT(vL_Date4, 0, '<Day,2>/<Month,2>/<Year4>');// + BoxLabel;
-                    MATRIX_ColumnCaption[5] := FORMAT(vL_Date5, 0, '<Day,2>/<Month,2>/<Year4>');// + BoxLabel;
-                    MATRIX_ColumnCaption[6] := FORMAT(vL_Date6, 0, '<Day,2>/<Month,2>/<Year4>');// + BoxLabel;
-                    MATRIX_ColumnCaption[7] := FORMAT(vL_Date7, 0, '<Day,2>/<Month,2>/<Year4>');// + BoxLabel;
-                    MATRIX_ColumnCaption[8] := FORMAT(vL_Date8, 0, '<Day,2>/<Month,2>/<Year4>');// + BoxLabel;
+                    MATRIX_ColumnCaption[1] := Format(vL_Date1, 0, '<Day,2>/<Month,2>/<Year4>');// + BoxLabel;
+                    MATRIX_ColumnCaption[2] := Format(vL_Date2, 0, '<Day,2>/<Month,2>/<Year4>');// + BoxLabel;
+                    MATRIX_ColumnCaption[3] := Format(vL_Date3, 0, '<Day,2>/<Month,2>/<Year4>');// + BoxLabel;
+                    MATRIX_ColumnCaption[4] := Format(vL_Date4, 0, '<Day,2>/<Month,2>/<Year4>');// + BoxLabel;
+                    MATRIX_ColumnCaption[5] := Format(vL_Date5, 0, '<Day,2>/<Month,2>/<Year4>');// + BoxLabel;
+                    MATRIX_ColumnCaption[6] := Format(vL_Date6, 0, '<Day,2>/<Month,2>/<Year4>');// + BoxLabel;
+                    MATRIX_ColumnCaption[7] := Format(vL_Date7, 0, '<Day,2>/<Month,2>/<Year4>');// + BoxLabel;
+                    MATRIX_ColumnCaption[8] := Format(vL_Date8, 0, '<Day,2>/<Month,2>/<Year4>');// + BoxLabel;
                 end else begin
                     MATRIX_ColumnCaption[1] := 'Date 1 Ποσότητα σε κιβώτια';
                     MATRIX_ColumnCaption[2] := 'Date 2 Ποσότητα σε κιβώτια';
@@ -1205,7 +1206,7 @@ report 50054 "Sales - Quote Lidl"
 
         layout
         {
-            area(content)
+            area(Content)
             {
                 group(Options)
                 {
@@ -1272,12 +1273,12 @@ report 50054 "Sales - Quote Lidl"
                     if Header."Bill-to Contact No." <> '' then
                         SegManagement.LogDocument(
                           1, Header."No.", Header."Doc. No. Occurrence",
-                          Header."No. of Archived Versions", DATABASE::Contact, Header."Bill-to Contact No.",
+                          Header."No. of Archived Versions", Database::Contact, Header."Bill-to Contact No.",
                           Header."Salesperson Code", Header."Campaign No.", Header."Posting Description", Header."Opportunity No.")
                     else
                         SegManagement.LogDocument(
                           1, Header."No.", Header."Doc. No. Occurrence",
-                          Header."No. of Archived Versions", DATABASE::Customer, Header."Bill-to Customer No.",
+                          Header."No. of Archived Versions", Database::Customer, Header."Bill-to Customer No.",
                           Header."Salesperson Code", Header."Campaign No.", Header."Posting Description", Header."Opportunity No.");
                 until Header.Next() = 0;
     end;
@@ -1442,13 +1443,11 @@ report 50054 "Sales - Quote Lidl"
 
     local procedure FormatDocumentFields(SalesHeader: Record "Sales Header")
     begin
-        with SalesHeader do begin
-            FormatDocument.SetTotalLabels(GetCurrencySymbol(), TotalText, TotalInclVATText, TotalExclVATText);
-            FormatDocument.SetSalesPerson(SalespersonPurchaser, "Salesperson Code", SalesPersonText);
-            FormatDocument.SetPaymentTerms(PaymentTerms, "Payment Terms Code", "Language Code");
-            FormatDocument.SetPaymentMethod(PaymentMethod, "Payment Method Code", "Language Code");
-            FormatDocument.SetShipmentMethod(ShipmentMethod, "Shipment Method Code", "Language Code");
-        end;
+        FormatDocument.SetTotalLabels(SalesHeader.GetCurrencySymbol(), TotalText, TotalInclVATText, TotalExclVATText);
+        FormatDocument.SetSalesPerson(SalespersonPurchaser, SalesHeader."Salesperson Code", SalesPersonText);
+        FormatDocument.SetPaymentTerms(PaymentTerms, SalesHeader."Payment Terms Code", SalesHeader."Language Code");
+        FormatDocument.SetPaymentMethod(PaymentMethod, SalesHeader."Payment Method Code", SalesHeader."Language Code");
+        FormatDocument.SetShipmentMethod(ShipmentMethod, SalesHeader."Shipment Method Code", SalesHeader."Language Code");
     end;
 
     local procedure CreateReportTotalLines()

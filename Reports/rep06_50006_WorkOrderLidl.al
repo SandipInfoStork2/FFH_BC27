@@ -12,25 +12,26 @@ report 50006 "Work Order Lidl"
 
     Caption = 'Work Order';
     PreviewMode = PrintLayout;
+    ApplicationArea = All;
 
     dataset
     {
         dataitem("Sales Header"; "Sales Header")
         {
-            DataItemTableView = SORTING("Document Type", "No.") WHERE("Document Type" = CONST(Order));
+            DataItemTableView = sorting("Document Type", "No.") where("Document Type" = const(Order));
             RequestFilterFields = "No.", "Sell-to Customer No.";
             RequestFilterHeading = 'Sales Order';
 
             dataitem(PageLoop; "Integer")
             {
-                DataItemTableView = SORTING(Number) WHERE(Number = CONST(1));
+                DataItemTableView = sorting(Number) where(Number = const(1));
                 column(No1_SalesHeader; "Sales Header"."No.")
                 {
                 }
-                column(ShipmentDate_SalesHeader; FORMAT("Sales Header"."Shipment Date"))
+                column(ShipmentDate_SalesHeader; Format("Sales Header"."Shipment Date"))
                 {
                 }
-                column(CompanyName; COMPANYNAME)
+                column(CompanyName; CompanyName)
                 {
                 }
                 column(CustAddr1; CustAddr[1])
@@ -72,7 +73,7 @@ report 50006 "Work Order Lidl"
                 column(vG_DateDesc; vG_DateDesc)
                 {
                 }
-                column(OrderDate_SalesHeader; FORMAT("Sales Header"."Order Date"))
+                column(OrderDate_SalesHeader; Format("Sales Header"."Order Date"))
                 {
                 }
                 column(BatchNo_SalesHeader; "Sales Header"."Batch No.")
@@ -109,7 +110,7 @@ report 50006 "Work Order Lidl"
                 {
                 }
 
-                column(HdrShowShippingAddr; FORMAT(ShowShippingAddr))
+                column(HdrShowShippingAddr; Format(ShowShippingAddr))
                 {
                 }
 
@@ -120,9 +121,9 @@ report 50006 "Work Order Lidl"
 
                 dataitem("Sales Line"; "Sales Line")
                 {
-                    DataItemLink = "Document Type" = FIELD("Document Type"), "Document No." = FIELD("No.");
+                    DataItemLink = "Document Type" = field("Document Type"), "Document No." = field("No.");
                     DataItemLinkReference = "Sales Header";
-                    DataItemTableView = SORTING("Document Type", "Document No.", "Line No.");
+                    DataItemTableView = sorting("Document Type", "Document No.", "Line No.");
                     RequestFilterFields = "Location Code", "Shortcut Dimension 2 Code";
                     column(No_SalesLine; "No.")
                     {
@@ -195,13 +196,13 @@ report 50006 "Work Order Lidl"
 
                         vG_Description2 := "Description 2";
                         if vG_Description2 = '' then begin
-                            vG_Description2 := "Description";
+                            vG_Description2 := Description;
                         end;
 
                         vG_PreviousQtyRequested := 0;
                         //find the Qty. Requested change
                         if "Sales Line"."Shelf No." <> '' then begin
-                            OrderQty.RESET;
+                            OrderQty.Reset;
                             OrderQty.SetCurrentKey("Customer No.", "Order Date", "Shelf No.", "Max Version No.");
                             OrderQty.SetFilter("Customer No.", "Sales Header"."Sell-to Customer No.");
                             OrderQty.SetRange("Order Date", "Sales Header"."Order Date");
@@ -218,9 +219,9 @@ report 50006 "Work Order Lidl"
                 }
                 dataitem("Order Qty"; "Order Qty")
                 {
-                    DataItemLink = "Customer No." = FIELD("Sell-to Customer No."), "Order Date" = FIELD("Order Date");
+                    DataItemLink = "Customer No." = field("Sell-to Customer No."), "Order Date" = field("Order Date");
                     DataItemLinkReference = "Sales Header";
-                    DataItemTableView = SORTING("Shelf No.") where(Deleted = filter(true));
+                    DataItemTableView = sorting("Shelf No.") where(Deleted = filter(true));
 
                     column(ShelfNo_OrderQty; "Shelf No.")
                     {
@@ -277,10 +278,10 @@ report 50006 "Work Order Lidl"
                         rL_Item: Record Item;
                     begin
                         vG_ItemDesc_OrderQty := '';
-                        if rL_Item.GET("Order Qty"."Item No.") then begin
+                        if rL_Item.Get("Order Qty"."Item No.") then begin
                             vG_ItemDesc_OrderQty := rL_Item."Description 2";
 
-                            rL_Item.CALCFIELDS("Packing Group Description");
+                            rL_Item.CalcFields("Packing Group Description");
                             vG_PackingGroupDescription_OrderQty := rL_Item."Packing Group Description";
                             vG_PackageQty_OrderQty := rL_Item."Package Qty";
 
@@ -289,10 +290,10 @@ report 50006 "Work Order Lidl"
                 }
                 dataitem("Sales Comment Line"; "Sales Comment Line")
                 {
-                    DataItemLink = "Document Type" = FIELD("Document Type"), "No." = FIELD("No.");
+                    DataItemLink = "Document Type" = field("Document Type"), "No." = field("No.");
                     DataItemLinkReference = "Sales Header";
-                    DataItemTableView = WHERE("Document Line No." = CONST(0));
-                    column(Date_SalesCommentLine; FORMAT(Date))
+                    DataItemTableView = where("Document Line No." = const(0));
+                    column(Date_SalesCommentLine; Format(Date))
                     {
                     }
                     column(Code_SalesCommentLine; Code)
@@ -312,7 +313,7 @@ report 50006 "Work Order Lidl"
                 }
                 dataitem("Extra Lines"; "Integer")
                 {
-                    DataItemTableView = SORTING(Number) WHERE(Number = CONST(1));
+                    DataItemTableView = sorting(Number) where(Number = const(1));
                     column(NoCaption; NoCaptionLbl)
                     {
                     }
@@ -339,7 +340,7 @@ report 50006 "Work Order Lidl"
 
             trigger OnAfterGetRecord();
             var
-                i: integer;
+                i: Integer;
             begin
                 FormatAddr.SalesHeaderBillTo(CustAddr, "Sales Header");
 
@@ -347,7 +348,7 @@ report 50006 "Work Order Lidl"
 
                 FormatAddr.SalesHeaderShipTo(ShipToAddr, CustAddr, "Sales Header");
                 ShowShippingAddr := "Sell-to Customer No." <> "Bill-to Customer No.";
-                for i := 1 to ARRAYLEN(ShipToAddr) do
+                for i := 1 to ArrayLen(ShipToAddr) do
                     if ShipToAddr[i] <> CustAddr[i] then
                         ShowShippingAddr := true;
 
@@ -367,7 +368,7 @@ report 50006 "Work Order Lidl"
                 //Order Date
                 //Get day of the week
 
-                zday := DATE2DWY("Shipment Date", 1); //GET THE DAY OF THE WEEK //TAL0.4
+                zday := Date2DWY("Shipment Date", 1); //GET THE DAY OF THE WEEK //TAL0.4
 
                 case zday of
                     1:
@@ -387,7 +388,7 @@ report 50006 "Work Order Lidl"
 
                 end;
 
-                vG_DateDesc += ' ' + FORMAT("Shipment Date"); //TAL0.4
+                vG_DateDesc += ' ' + Format("Shipment Date"); //TAL0.4
             end;
         }
     }

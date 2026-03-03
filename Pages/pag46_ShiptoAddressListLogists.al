@@ -1,31 +1,32 @@
 page 50046 "Ship-to Address List HORECA"
 {
     Caption = 'Ship-to Address List';
-    CardPageID = "Ship-to Address";
+    CardPageId = "Ship-to Address";
     //DataCaptionFields = "Customer No.";
     Editable = false;
     PageType = List;
     SourceTable = "Ship-to Address";
+    ApplicationArea = All;
 
     layout
     {
-        area(content)
+        area(Content)
         {
             repeater(Control1)
             {
                 ShowCaption = false;
-                field("Code"; Code)
+                field("Code"; Rec.Code)
                 {
                     ApplicationArea = Basic, Suite;
                     ToolTip = 'Specifies a ship-to address code.';
                 }
-                field(Name; Name)
+                field(Name; Rec.Name)
                 {
                     ApplicationArea = Basic, Suite;
                     ToolTip = 'Specifies the name associated with the ship-to address.';
                     StyleExpr = StyleDescription;
                 }
-                field(Address; Address)
+                field(Address; Rec.Address)
                 {
                     ApplicationArea = Basic, Suite;
                     ToolTip = 'Specifies the ship-to address.';
@@ -43,7 +44,7 @@ page 50046 "Ship-to Address List HORECA"
                     ToolTip = 'Specifies the postal code.';
                     Visible = false;
                 }
-                field(City; City)
+                field(City; Rec.City)
                 {
                     ApplicationArea = Basic, Suite;
                     ToolTip = 'Specifies the city the items are being shipped to.';
@@ -60,9 +61,10 @@ page 50046 "Ship-to Address List HORECA"
                     ToolTip = 'Specifies the recipient''s telephone number.';
                     Visible = false;
                 }
-                field("E-Mail"; "E-Mail")
+                field("E-Mail"; Rec."E-Mail")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Email field.';
                 }
                 field("Fax No."; Rec."Fax No.")
                 {
@@ -70,13 +72,13 @@ page 50046 "Ship-to Address List HORECA"
                     ToolTip = 'Specifies the recipient''s fax number.';
                     Visible = false;
                 }
-                field(Contact; Contact)
+                field(Contact; Rec.Contact)
                 {
                     ApplicationArea = Basic, Suite;
                     ToolTip = 'Specifies the name of the person you contact about orders shipped to this address.';
                     Visible = false;
                 }
-                field(GLN; GLN)
+                field(GLN; Rec.GLN)
                 {
                     ApplicationArea = Basic, Suite;
                     ToolTip = 'Specifies the recipient''s GLN code.';
@@ -89,45 +91,53 @@ page 50046 "Ship-to Address List HORECA"
                     Visible = false;
                 }
 
-                field(Monday; Monday)
+                field(Monday; Rec.Monday)
                 {
                     ApplicationArea = All;
                     Visible = false;
+                    ToolTip = 'Specifies the value of the Monday field.';
                 }
-                field(Tuesday; Tuesday)
+                field(Tuesday; Rec.Tuesday)
                 {
                     ApplicationArea = All;
                     Visible = false;
+                    ToolTip = 'Specifies the value of the Tuesday field.';
                 }
-                field(Wednesday; Wednesday)
+                field(Wednesday; Rec.Wednesday)
                 {
                     ApplicationArea = All;
                     Visible = false;
+                    ToolTip = 'Specifies the value of the Wednesday field.';
                 }
-                field(Thursday; Thursday)
+                field(Thursday; Rec.Thursday)
                 {
                     ApplicationArea = All;
                     Visible = false;
+                    ToolTip = 'Specifies the value of the Thursday field.';
                 }
-                field(Friday; Friday)
+                field(Friday; Rec.Friday)
                 {
                     ApplicationArea = All;
                     Visible = false;
+                    ToolTip = 'Specifies the value of the Friday field.';
                 }
-                field(Saturday; Saturday)
+                field(Saturday; Rec.Saturday)
                 {
                     ApplicationArea = All;
                     Visible = false;
+                    ToolTip = 'Specifies the value of the Saturday field.';
                 }
-                field(Sunday; Sunday)
+                field(Sunday; Rec.Sunday)
                 {
                     ApplicationArea = All;
                     Visible = false;
+                    ToolTip = 'Specifies the value of the Sunday field.';
                 }
-                field("Notify Place Order"; "Notify Place Order")
+                field("Notify Place Order"; Rec."Notify Place Order")
                 {
                     ApplicationArea = All;
                     Visible = false;
+                    ToolTip = 'Specifies the value of the Notify Place Order field.';
                 }
 
                 field(vG_NoOfOrders; vG_NoOfOrders)
@@ -135,6 +145,7 @@ page 50046 "Ship-to Address List HORECA"
                     Caption = 'No. of Orders';
                     ApplicationArea = All;
                     Editable = false;
+                    ToolTip = 'Specifies the value of the No. of Orders field.';
                 }
 
                 field(vG_MinOrderDate; vG_MinOrderDate)
@@ -142,6 +153,7 @@ page 50046 "Ship-to Address List HORECA"
                     Caption = 'First Requested Delivery Date';
                     ApplicationArea = All;
                     Editable = false;
+                    ToolTip = 'Specifies the value of the First Requested Delivery Date field.';
                 }
 
                 field(vG_MaxOrderDate; vG_MaxOrderDate)
@@ -149,10 +161,11 @@ page 50046 "Ship-to Address List HORECA"
                     Caption = 'Last Requested Delivery Date';
                     ApplicationArea = All;
                     Editable = false;
+                    ToolTip = 'Specifies the value of the Last Requested Delivery Date field.';
                 }
             }
         }
-        area(factboxes)
+        area(FactBoxes)
         {
             systempart(Control1900383207; Links)
             {
@@ -169,7 +182,7 @@ page 50046 "Ship-to Address List HORECA"
 
     actions
     {
-        area(navigation)
+        area(Navigation)
         {
             group("&Address")
             {
@@ -184,7 +197,7 @@ page 50046 "Ship-to Address List HORECA"
 
                     trigger OnAction()
                     begin
-                        DisplayMap();
+                        Rec.DisplayMap();
                     end;
                 }
             }
@@ -196,37 +209,37 @@ page 50046 "Ship-to Address List HORECA"
         view(view_Monday)
         {
             Caption = 'Monday';
-            Filters = where("Monday" = const(True), "Blocked" = const(False));
+            Filters = where(Monday = const(true), Blocked = const(false));
         }
 
         view(view_Tuesday)
         {
             Caption = 'Tuesday';
-            Filters = where("Tuesday" = const(True), "Blocked" = const(False));
+            Filters = where(Tuesday = const(true), Blocked = const(false));
         }
 
         view(view_Wednesday)
         {
             Caption = 'Wednesday';
-            Filters = where("Wednesday" = const(True), "Blocked" = const(False));
+            Filters = where(Wednesday = const(true), Blocked = const(false));
         }
 
         view(view_Thursday)
         {
             Caption = 'Thursday';
-            Filters = where("Thursday" = const(True), "Blocked" = const(False));
+            Filters = where(Thursday = const(true), Blocked = const(false));
         }
 
         view(view_Friday)
         {
             Caption = 'Friday';
-            Filters = where("Friday" = const(True), "Blocked" = const(False));
+            Filters = where(Friday = const(true), Blocked = const(false));
         }
 
         view(view_Saturday)
         {
             Caption = 'Saturday';
-            Filters = where("Saturday" = const(True), "Blocked" = const(False));
+            Filters = where(Saturday = const(true), Blocked = const(false));
         }
 
     }
@@ -240,7 +253,7 @@ page 50046 "Ship-to Address List HORECA"
         RowCount: Integer;
     begin
 
-        UserSetup.RESET;
+        UserSetup.Reset;
         UserSetup.SetFilter("HORECA Customer No.", '<>%1', '');
         if UserSetup.FindSet() then begin
             repeat
@@ -256,10 +269,10 @@ page 50046 "Ship-to Address List HORECA"
         end;
 
 
-        FilterGroup(2);
-        SetFilter("Customer No.", CustFilter);
-        SetRange(Blocked, false);
-        FilterGroup(0);
+        Rec.FilterGroup(2);
+        Rec.SetFilter("Customer No.", CustFilter);
+        Rec.SetRange(Blocked, false);
+        Rec.FilterGroup(0);
 
     end;
 
@@ -269,11 +282,11 @@ page 50046 "Ship-to Address List HORECA"
         SalesHeader: Record "Sales Header";
     begin
 
-        SalesHeader.RESET;
+        SalesHeader.Reset;
         SalesHeader.SetCurrentKey("Document Type", "Sell-to Customer No.", "Ship-to Code", "Requested Delivery Date");
         SalesHeader.SetRange("Document Type", SalesHeader."Document Type"::Order);
-        SalesHeader.SetFilter("Sell-to Customer No.", "Customer No.");
-        SalesHeader.SetFilter("Ship-to Code", rec.Code);
+        SalesHeader.SetFilter("Sell-to Customer No.", Rec."Customer No.");
+        SalesHeader.SetFilter("Ship-to Code", Rec.Code);
 
         vG_NoOfOrders := SalesHeader.Count;
         vG_MinOrderDate := 0D;

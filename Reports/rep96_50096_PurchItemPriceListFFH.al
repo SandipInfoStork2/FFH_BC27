@@ -151,12 +151,12 @@ report 50096 "Purch. Item Price List FFH"
                 {
                 }
 
-                column(StartingDate_SalesPrices; FORMAT("Starting Date"))
+                column(StartingDate_SalesPrices; Format("Starting Date"))
                 {
 
                 }
 
-                column(EndingDate_SalesPrices; FORMAT("Ending Date"))
+                column(EndingDate_SalesPrices; Format("Ending Date"))
                 {
 
                 }
@@ -300,7 +300,7 @@ report 50096 "Purch. Item Price List FFH"
 
         layout
         {
-            area(content)
+            area(Content)
             {
                 group(Options)
                 {
@@ -311,17 +311,20 @@ report 50096 "Purch. Item Price List FFH"
                     {
                         ApplicationArea = All;
                         Caption = 'Start Date';
+                        ToolTip = 'Specifies the value of the Start Date field.';
 
                     }
                     field(EndDate; vG_EndDate)
                     {
                         ApplicationArea = All;
                         Caption = 'End Date';
+                        ToolTip = 'Specifies the value of the End Date field.';
                     }
                     field(SortBy; vG_SortBy)
                     {
                         ApplicationArea = All;
                         Caption = 'Sort By';
+                        ToolTip = 'Specifies the value of the Sort By field.';
                     }
                     /*
                     field(Date; DateReq)
@@ -511,12 +514,12 @@ report 50096 "Purch. Item Price List FFH"
         Addr: array[8] of Text;
         rG_Vendor: Record Vendor;
 
-        vG_SalesCodeFilter: code[20];
+        vG_SalesCodeFilter: Code[20];
         vG_StartDate: Date;
 
         vG_EndDate: Date;
 
-        vG_SortBy: Option "Description","Item No.";
+        vG_SortBy: Option Description,"Item No.";
 
     /*
     local procedure FindPriceDiscount(VariantCode: Code[10])
@@ -545,7 +548,7 @@ report 50096 "Purch. Item Price List FFH"
     local procedure GetPriceHandler(Method: Enum "Price Calculation Method"): Enum "Price Calculation Handler";
 
     var
-        PriceCalculationSetup: record "Price Calculation Setup";
+        PriceCalculationSetup: Record "Price Calculation Setup";
     begin
         if PriceCalculationSetup.FindDefault(Method, PriceCalculationSetup.Type::Sale) then
             exit(PriceCalculationSetup.Implementation);

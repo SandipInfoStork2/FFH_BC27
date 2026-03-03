@@ -10,9 +10,10 @@ pageextension 50170 JobQueueLogEntriesExt extends "Job Queue Log Entries"
 
         addbefore(Status)
         {
-            field("Entry No."; "Entry No.")
+            field("Entry No."; Rec."Entry No.")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Entry No. field.';
             }
         }
     }

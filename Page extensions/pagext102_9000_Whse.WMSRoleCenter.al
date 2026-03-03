@@ -15,7 +15,8 @@ pageextension 50202 WhseWMSRoleCenterExt extends "Whse. WMS Role Center"
             action("page Bin Creation Worksheet")
             {
                 ApplicationArea = All;
-                RunObject = Page "Bin Creation Worksheet";
+                RunObject = page "Bin Creation Worksheet";
+                ToolTip = 'Executes the page Bin Creation Worksheet action.';
             }
         }
     }

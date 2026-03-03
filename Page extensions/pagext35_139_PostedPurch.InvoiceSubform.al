@@ -27,9 +27,10 @@ pageextension 50135 PostedPurchInvoiceSubformExt extends "Posted Purch. Invoice 
         */
         addbefore(Quantity)
         {
-            field("Location Code"; "Location Code")
+            field("Location Code"; Rec."Location Code")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the code for the location where the invoice line is registered.';
             }
         }
     }
@@ -45,10 +46,11 @@ pageextension 50135 PostedPurchInvoiceSubformExt extends "Posted Purch. Invoice 
                 ApplicationArea = All;
                 Caption = 'Item &Tracking Entries';
                 Image = ItemTrackingLedger;
+                ToolTip = 'Executes the Item &Tracking Entries action.';
 
                 trigger OnAction();
                 begin
-                    ShowItemTrackingLines;
+                    Rec.ShowItemTrackingLines;
                 end;
             }
             action("Update Line")

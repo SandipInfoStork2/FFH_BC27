@@ -16,9 +16,10 @@ pageextension 50127 PostedSalesShptSubformExt extends "Posted Sales Shpt. Subfor
 
         addafter("No.")
         {
-            field("Shelf No."; "Shelf No.")
+            field("Shelf No."; Rec."Shelf No.")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Shelf No. field.';
             }
         }
 
@@ -28,31 +29,36 @@ pageextension 50127 PostedSalesShptSubformExt extends "Posted Sales Shpt. Subfor
         }
         addafter("Description 2")
         {
-            field("Packing Group Description"; "Packing Group Description")
+            field("Packing Group Description"; Rec."Packing Group Description")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Packing Group Description field.';
             }
         }
 
         addafter(Correction)
         {
-            field("Quantity (Base)"; "Quantity (Base)")
+            field("Quantity (Base)"; Rec."Quantity (Base)")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 DecimalPlaces = 0 : 3;
+                ToolTip = 'Specifies the value of the Quantity (Base) field.';
             }
-            field("Unit of Measure (Base)"; "Unit of Measure (Base)")
+            field("Unit of Measure (Base)"; Rec."Unit of Measure (Base)")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Unit of Measure (Base) field.';
             }
 
-            field("Qty. Requested"; "Qty. Requested")
+            field("Qty. Requested"; Rec."Qty. Requested")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Custom: Qty. Requested';
             }
-            field("Qty. Confirmed"; "Qty. Confirmed")
+            field("Qty. Confirmed"; Rec."Qty. Confirmed")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Qty. Confirmed field.';
             }
         }
 
@@ -84,45 +90,53 @@ pageextension 50127 PostedSalesShptSubformExt extends "Posted Sales Shpt. Subfor
             field("Transfer-from Code"; Rec."Transfer-from Code")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Transfer-from Code field.';
             }
             field("Transfer-to Code"; Rec."Transfer-to Code")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Transfer-to Code field.';
             }
         }
         //TAL 1.0.0.201 <<
 
         addafter("ShortcutDimCode[8]")
         {
-            field("Shipping Temperature"; "Shipping Temperature")
+            field("Shipping Temperature"; Rec."Shipping Temperature")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Shipping Temperature °C field.';
             }
-            field("Shipping Quality Control"; "Shipping Quality Control")
+            field("Shipping Quality Control"; Rec."Shipping Quality Control")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Shipping Quality Control field.';
             }
 
             field("Req. Country"; Rec."Req. Country")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 Visible = true;
+                ToolTip = 'Specifies the value of the Req. Country field.';
             }
 
             field("Country/Region of Origin Code"; Rec."Country/Region of Origin Code")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 Visible = true;
+                ToolTip = 'Custom: Country/Region of Origin Code';
             }
 
 
-            field("Product Class"; "Product Class")
+            field("Product Class"; Rec."Product Class")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Custom: Product Class (Κατηγορία)';
             }
-            field("Category 9"; "Category 9")
+            field("Category 9"; Rec."Category 9")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Custom: Potatoes District Region';
             }
         }
 
@@ -138,12 +152,13 @@ pageextension 50127 PostedSalesShptSubformExt extends "Posted Sales Shpt. Subfor
         {
             action(ItemTrackingEntries2)
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 Caption = 'Item &Tracking Entries';
                 Image = ItemTrackingLedger;
+                ToolTip = 'Executes the Item &Tracking Entries action.';
                 trigger OnAction();
                 begin
-                    ShowItemTrackingLines;
+                    Rec.ShowItemTrackingLines;
                 end;
             }
 

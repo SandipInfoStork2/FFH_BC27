@@ -15,29 +15,33 @@ pageextension 50132 PostedPurchaseReceiptExt extends "Posted Purchase Receipt"
             group("Deliver to Vendor")
             {
                 Caption = 'Deliver to Vendor';
-                field("Deliver-to Vendor No."; "Deliver-to Vendor No.")
+                field("Deliver-to Vendor No."; Rec."Deliver-to Vendor No.")
                 {
                     ApplicationArea = All;
                     Editable = false;
+                    ToolTip = 'Specifies the value of the Deliver-to Vendor No. field.';
                 }
-                field("Deliver-to Name"; "Deliver-to Name")
+                field("Deliver-to Name"; Rec."Deliver-to Name")
                 {
                     ApplicationArea = All;
                     Editable = false;
+                    ToolTip = 'Specifies the value of the Deliver-to Name field.';
                 }
             }
         }
         addafter("Responsibility Center")
         {
-            field("Transfer-from Code"; "Transfer-from Code")
+            field("Transfer-from Code"; Rec."Transfer-from Code")
             {
                 ApplicationArea = All;
-                Editable = False;
+                Editable = false;
+                ToolTip = 'Specifies the value of the Transfer-from Code field.';
             }
-            field("Transfer-to Code"; "Transfer-to Code")
+            field("Transfer-to Code"; Rec."Transfer-to Code")
             {
                 ApplicationArea = All;
-                Editable = False;
+                Editable = false;
+                ToolTip = 'Specifies the value of the Transfer-to Code field.';
             }
         }
 
@@ -46,15 +50,17 @@ pageextension 50132 PostedPurchaseReceiptExt extends "Posted Purchase Receipt"
             group(QC)
             {
                 Caption = 'Quality Control';
-                field("Receiving Temperature"; "Receiving Temperature")
+                field("Receiving Temperature"; Rec."Receiving Temperature")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     Editable = false;
+                    ToolTip = 'Specifies the value of the Receiving Temperature °C field.';
                 }
-                field("Receiving Quality Control"; "Receiving Quality Control")
+                field("Receiving Quality Control"; Rec."Receiving Quality Control")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
                     Editable = false;
+                    ToolTip = 'Specifies the value of the Receiving Quality Control field.';
                 }
             }
         }
@@ -75,11 +81,12 @@ pageextension 50132 PostedPurchaseReceiptExt extends "Posted Purchase Receipt"
                 Promoted = true;
                 PromotedCategory = Process;
                 PromotedOnly = true;
+                ToolTip = 'Executes the Grower Receipt action.';
 
                 trigger OnAction();
                 begin
                     PurchRcptHeader := Rec;
-                    CurrPage.SETSELECTIONFILTER(PurchRcptHeader);
+                    CurrPage.SetSelectionFilter(PurchRcptHeader);
                     PurchRcptHeader.PrintGrowerReceiptRecords(PurchRcptHeader);
                 end;
             }
@@ -93,11 +100,12 @@ pageextension 50132 PostedPurchaseReceiptExt extends "Posted Purchase Receipt"
                 Promoted = true;
                 PromotedCategory = Process;
                 PromotedOnly = true;
+                ToolTip = 'Executes the Item Tracking Appendix action.';
 
                 trigger OnAction();
                 begin
                     PurchRcptHeader := Rec;
-                    CurrPage.SETSELECTIONFILTER(PurchRcptHeader);
+                    CurrPage.SetSelectionFilter(PurchRcptHeader);
                     PurchRcptHeader.PrintAppendixRecords(PurchRcptHeader);
                 end;
             }
@@ -113,11 +121,12 @@ pageextension 50132 PostedPurchaseReceiptExt extends "Posted Purchase Receipt"
                 PromotedCategory = Process;
                 PromotedOnly = true;
                 Visible = true;
+                ToolTip = 'Executes the Item Tracking Appendix Quality action.';
 
                 trigger OnAction();
                 begin
                     PurchRcptHeader := Rec;
-                    CurrPage.SETSELECTIONFILTER(PurchRcptHeader);
+                    CurrPage.SetSelectionFilter(PurchRcptHeader);
                     PurchRcptHeader.PrintAppendixRecordsQuality(PurchRcptHeader);
                 end;
             }
@@ -154,8 +163,8 @@ pageextension 50132 PostedPurchaseReceiptExt extends "Posted Purchase Receipt"
                 var
                     cu_GeneralMgt: Codeunit "General Mgt.";
                 begin
-                    CLEAR(cu_GeneralMgt);
-                    cu_GeneralMgt.GrowerReceiptNos("No.");
+                    Clear(cu_GeneralMgt);
+                    cu_GeneralMgt.GrowerReceiptNos(Rec."No.");
                 end;
             }
         }

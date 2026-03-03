@@ -3,6 +3,7 @@ report 50036 "Grower Certification Validity"
     DefaultLayout = RDLC;
     RDLCLayout = './Layouts/rep36_50036_GrowerCertificationValidity.rdlc';
     PreviewMode = PrintLayout;
+    ApplicationArea = All;
 
     dataset
     {
@@ -15,10 +16,10 @@ report 50036 "Grower Certification Validity"
             column(Name_Vendor; Grower.Name)
             {
             }
-            column(GrowerCertified_Vendor; FORMAT(Grower."Grower Certified"))
+            column(GrowerCertified_Vendor; Format(Grower."Grower Certified"))
             {
             }
-            column(GGNExpiryDate_Vendor; FORMAT(Grower."GGN Expiry Date"))
+            column(GGNExpiryDate_Vendor; Format(Grower."GGN Expiry Date"))
             {
             }
             column(GGN_Vendor; Grower.GGN)
@@ -30,7 +31,7 @@ report 50036 "Grower Certification Validity"
             column(COMPANYNAME; rL_CompanyInfo.Name)
             {
             }
-            column(CurrReport_PAGENO; CurrReport.PAGENO)
+            column(CurrReport_PAGENO; CurrReport.PageNo)
             {
             }
             column(CurrReport_PAGENOCaption; CurrReport_PAGENOCaptionLbl)
@@ -42,13 +43,13 @@ report 50036 "Grower Certification Validity"
 
             trigger OnPreDataItem();
             begin
-                Grower.SETCURRENTKEY("GGN Expiry Date", Name);
-                Grower.SETASCENDING("GGN Expiry Date", false);
+                Grower.SetCurrentKey("GGN Expiry Date", Name);
+                Grower.SetAscending("GGN Expiry Date", false);
 
                 //Grower.SETFILTER("Category 5",'YES');
-                Grower.SETFILTER(Name, '<>%1', '');
+                Grower.SetFilter(Name, '<>%1', '');
 
-                rL_CompanyInfo.GET;
+                rL_CompanyInfo.Get;
             end;
         }
     }

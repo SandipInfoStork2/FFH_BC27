@@ -15,22 +15,26 @@ pageextension 50198 PostedReturnReceiptsExt extends "Posted Return Receipts"
         }
         addafter("Shipment Date")
         {
-            field("Lot No."; "Lot No.")
+            field("Lot No."; Rec."Lot No.")
             {
                 ApplicationArea = All;
                 Editable = false;
+                ToolTip = 'Specifies the value of the Lot No. field.';
             }
-            field("Total Qty"; "Total Qty")
+            field("Total Qty"; Rec."Total Qty")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Total Qty field.';
             }
-            field("Total Qty (Base)"; "Total Qty (Base)")
+            field("Total Qty (Base)"; Rec."Total Qty (Base)")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Total Qty (Base) field.';
             }
-            field("Total Weight"; "Total Weight")
+            field("Total Weight"; Rec."Total Weight")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Total Weight field.';
             }
         }
 

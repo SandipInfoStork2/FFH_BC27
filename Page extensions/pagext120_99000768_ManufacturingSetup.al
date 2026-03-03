@@ -11,18 +11,18 @@ pageextension 50220 ManufacturingSetupExt extends "Manufacturing Setup"
         {
             group(Other)
             {
-                field("Zero Date Component Formula"; "Zero Date Component Formula")
+                field("Zero Date Component Formula"; Rec."Zero Date Component Formula")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Custom: Zero Date Component Formula';
                 }
-                field("Mandatory Output Posting"; "Mandatory Output Posting")
+                field("Mandatory Output Posting"; Rec."Mandatory Output Posting")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Custom: Mandatory Output Posting';
                 }
                 //+1.0.0.229
-                field("Mandatory Packing Agent"; "Mandatory Packing Agent")
+                field("Mandatory Packing Agent"; Rec."Mandatory Packing Agent")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Custom: Mandatory Packing Agent';
@@ -30,7 +30,7 @@ pageextension 50220 ManufacturingSetupExt extends "Manufacturing Setup"
                 //-1.0.0.229
 
                 //+1.0.0.237
-                field("skip MatrOrCapConsumpExists"; "skip MatrOrCapConsumpExists")
+                field("skip MatrOrCapConsumpExists"; Rec."skip MatrOrCapConsumpExists")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Custom: skip MatrOrCapConsumpExists. When Output journal is posted and reversed, allow to change status to finish.';

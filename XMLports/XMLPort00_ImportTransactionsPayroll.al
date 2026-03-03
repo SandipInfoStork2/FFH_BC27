@@ -12,42 +12,42 @@ xmlport 50000 "Import Transactions Payroll"
     {
         textelement(Header)
         {
-            tableelement("Gen. Journal Line";"Gen. Journal Line")
+            tableelement("Gen. Journal Line"; "Gen. Journal Line")
             {
                 XmlName = 'Table';
-                fieldelement(BatchName;"Gen. Journal Line"."Journal Batch Name")
+                fieldelement(BatchName; "Gen. Journal Line"."Journal Batch Name")
                 {
-                    FieldValidate = no;
+                    FieldValidate = No;
                 }
-                fieldelement(LineNo;"Gen. Journal Line"."Line No.")
-                {
-                }
-                fieldelement(AccType;"Gen. Journal Line"."Account Type")
+                fieldelement(LineNo; "Gen. Journal Line"."Line No.")
                 {
                 }
-                fieldelement(AccNo;"Gen. Journal Line"."Account No.")
-                {
-                    FieldValidate = no;
-                }
-                fieldelement(PostDate;"Gen. Journal Line"."Posting Date")
+                fieldelement(AccType; "Gen. Journal Line"."Account Type")
                 {
                 }
-                fieldelement(Currency;"Gen. Journal Line"."Currency Code")
+                fieldelement(AccNo; "Gen. Journal Line"."Account No.")
+                {
+                    FieldValidate = No;
+                }
+                fieldelement(PostDate; "Gen. Journal Line"."Posting Date")
                 {
                 }
-                fieldelement(DocNo;"Gen. Journal Line"."Document No.")
+                fieldelement(Currency; "Gen. Journal Line"."Currency Code")
                 {
                 }
-                fieldelement(ExtDocNo;"Gen. Journal Line"."External Document No.")
+                fieldelement(DocNo; "Gen. Journal Line"."Document No.")
                 {
                 }
-                fieldelement(Description;"Gen. Journal Line".Description)
+                fieldelement(ExtDocNo; "Gen. Journal Line"."External Document No.")
                 {
                 }
-                fieldelement(Amount;"Gen. Journal Line".Amount)
+                fieldelement(Description; "Gen. Journal Line".Description)
                 {
                 }
-                fieldelement(Dim1;"Gen. Journal Line"."Shortcut Dimension 1 Code")
+                fieldelement(Amount; "Gen. Journal Line".Amount)
+                {
+                }
+                fieldelement(Dim1; "Gen. Journal Line"."Shortcut Dimension 1 Code")
                 {
                 }
                 textelement(Dim4)
@@ -55,15 +55,15 @@ xmlport 50000 "Import Transactions Payroll"
 
                     trigger OnAfterAssignVariable();
                     var
-                        rL_GLSetup : Record "General Ledger Setup";
+                        rL_GLSetup: Record "General Ledger Setup";
                     begin
                         //+TAL0.1
                         //rL_GLSetup.GET;
                         //"Gen. Journal Line".ValidateShortcutDimCode(Dim4,rL_GLSetup."Shortcut Dimension 4 Code");
 
-                        if Dim4<>'' then begin
-                          EVALUATE(Dim4Code,Dim4);
-                          "Gen. Journal Line".ValidateShortcutDimCode(4,Dim4Code);
+                        if Dim4 <> '' then begin
+                            Evaluate(Dim4Code, Dim4);
+                            "Gen. Journal Line".ValidateShortcutDimCode(4, Dim4Code);
                         end;
 
                         //-TAL0.1
@@ -82,7 +82,7 @@ xmlport 50000 "Import Transactions Payroll"
                     //   currXMLport.SKIP;
                     //END;
 
-                    "Gen. Journal Line"."Journal Template Name":='GENERAL';
+                    "Gen. Journal Line"."Journal Template Name" := 'GENERAL';
                 end;
             }
         }
@@ -102,12 +102,12 @@ xmlport 50000 "Import Transactions Payroll"
 
     trigger OnPreXmlPort();
     begin
-        "Gen. Journal Line"."Journal Template Name":='GENERAL';
+        "Gen. Journal Line"."Journal Template Name" := 'GENERAL';
 
-        "Gen. Journal Line".VALIDATE("Gen. Journal Line"."Shortcut Dimension 1 Code");
+        "Gen. Journal Line".Validate("Gen. Journal Line"."Shortcut Dimension 1 Code");
     end;
 
     var
-        Dim4Code : Code[20];
+        Dim4Code: Code[20];
 }
 

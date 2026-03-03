@@ -51,15 +51,15 @@ tableextension 50108 SalesLineExt extends "Sales Line"
                 rL_SalesLine: Record "Sales Line";
                 Text50005: Label 'Item %1 has already been entered on Line No. %2. Do you want to continue?';
             begin
-                IF (Type = Type::Item) AND ("No." <> '') and ("Document Type" = "Document Type"::Quote) THEN BEGIN
-                    rL_SalesLine.RESET;
-                    rL_SalesLine.SETRANGE("Document Type", "Document Type");
-                    rL_SalesLine.SETFILTER("Document No.", "Document No.");
-                    rL_SalesLine.SETRANGE(Type, rL_SalesLine.Type::Item);
-                    rL_SalesLine.SETFILTER("No.", "No.");
-                    IF rL_SalesLine.FINDSET THEN BEGIN
-                        IF rL_SalesLine.COUNT > 0 THEN BEGIN //PART OF THE key not yet committed
-                            if not confirm(Text50005, false, "No.", FORMAT(rL_SalesLine."Line No.")) then begin
+                if (Type = Type::Item) and ("No." <> '') and ("Document Type" = "Document Type"::Quote) then begin
+                    rL_SalesLine.Reset;
+                    rL_SalesLine.SetRange("Document Type", "Document Type");
+                    rL_SalesLine.SetFilter("Document No.", "Document No.");
+                    rL_SalesLine.SetRange(Type, rL_SalesLine.Type::Item);
+                    rL_SalesLine.SetFilter("No.", "No.");
+                    if rL_SalesLine.FindSet then begin
+                        if rL_SalesLine.Count > 0 then begin //PART OF THE key not yet committed
+                            if not Confirm(Text50005, false, "No.", Format(rL_SalesLine."Line No.")) then begin
                                 Error('');
                                 //commit;
                                 //Delete();
@@ -67,11 +67,11 @@ tableextension 50108 SalesLineExt extends "Sales Line"
                             end;
 
                             //MESSAGE(STRSUBSTNO(Text50005, "No.", FORMAT(rL_SalesLine."Line No.")));
-                        END;
-                    END;
-                END;
+                        end;
+                    end;
+                end;
 
-                IF (Type = Type::Item) AND ("No." <> '') and ("Document Type" = "Document Type"::Quote) THEN BEGIN
+                if (Type = Type::Item) and ("No." <> '') and ("Document Type" = "Document Type"::Quote) then begin
                     //if "Sell-to Customer No." = 'CUST00032' then begin
                     //    "Currency Code" := 'EUR';
                     //end;
@@ -82,7 +82,7 @@ tableextension 50108 SalesLineExt extends "Sales Line"
         //-1.0.0.113
         field(50000; "Unit of Measure (Base)"; Code[10])
         {
-            CalcFormula = Lookup(Item."Base Unit of Measure" WHERE("No." = FIELD("No.")));
+            CalcFormula = lookup(Item."Base Unit of Measure" where("No." = field("No.")));
             Editable = false;
             FieldClass = FlowField;
         }
@@ -175,7 +175,7 @@ tableextension 50108 SalesLineExt extends "Sales Line"
             trigger OnValidate()
             var
                 OrderQty: Record "Order Qty";
-                eOrderQtyDocumentType: enum "Order Qty Document Type";
+                eOrderQtyDocumentType: Enum "Order Qty Document Type";
             begin
                 eOrderQtyDocumentType := eOrderQtyDocumentType::"Sales Order";
                 OrderQty.UpdateQty(Rec, eOrderQtyDocumentType);
@@ -238,11 +238,11 @@ tableextension 50108 SalesLineExt extends "Sales Line"
         }
         field(50056; "Ship-to Code"; Code[10])
         {
-            CalcFormula = Lookup("Sales Header"."Ship-to Code" WHERE("Document Type" = FIELD("Document Type"), "No." = FIELD("Document No.")));
+            CalcFormula = lookup("Sales Header"."Ship-to Code" where("Document Type" = field("Document Type"), "No." = field("Document No.")));
             Caption = 'Ship-to Code';
             Editable = false;
             FieldClass = FlowField;
-            TableRelation = "Ship-to Address".Code WHERE("Customer No." = FIELD("Sell-to Customer No."));
+            TableRelation = "Ship-to Address".Code where("Customer No." = field("Sell-to Customer No."));
 
             trigger OnValidate();
             var
@@ -260,7 +260,7 @@ tableextension 50108 SalesLineExt extends "Sales Line"
             trigger OnValidate()
             var
                 pOrderQty: Record "Order Qty";
-                eOrderQtyDocumentType: enum "Order Qty Document Type";
+                eOrderQtyDocumentType: Enum "Order Qty Document Type";
             begin
                 eOrderQtyDocumentType := eOrderQtyDocumentType::"Sales Order";
                 pOrderQty.UpdateQty(Rec, eOrderQtyDocumentType);
@@ -279,14 +279,14 @@ tableextension 50108 SalesLineExt extends "Sales Line"
             DataClassification = ToBeClassified;
 
             Caption = 'Product Class (Κατηγορία)';
-            TableRelation = "General Categories".Code WHERE("Table No." = CONST(27), Type = CONST(Category8));
+            TableRelation = "General Categories".Code where("Table No." = const(27), Type = const(Category8));
         }
 
         field(50072; "Category 9"; Code[20])
         {
             Caption = 'Potatoes District Region';
             DataClassification = ToBeClassified;
-            TableRelation = "General Categories".Code WHERE("Table No." = CONST(27), Type = CONST(Category9));
+            TableRelation = "General Categories".Code where("Table No." = const(27), Type = const(Category9));
         }
 
         /*
@@ -317,7 +317,7 @@ tableextension 50108 SalesLineExt extends "Sales Line"
             Caption = 'Καλιμπράζ 47';
         }
 
-        field(50076; "Variety"; Text[50])
+        field(50076; Variety; Text[50])
         {
             DataClassification = ToBeClassified;
             Caption = 'Ποικιλία';
@@ -352,7 +352,7 @@ tableextension 50108 SalesLineExt extends "Sales Line"
             begin
 
                 "Price Previous Week Box" := 0;
-                if rL_Item.GET("No.") then begin
+                if rL_Item.Get("No.") then begin
                     "Price Previous Week Box" := "Price Previous Week KG" * "Package Qty";
                 end;
             end;
@@ -679,17 +679,17 @@ tableextension 50108 SalesLineExt extends "Sales Line"
             Caption = 'παράδοση στις αποθ.Lidl σε Cº Έως';
         }
 
-        field(50117; "Checked"; Boolean)
+        field(50117; Checked; Boolean)
         {
             DataClassification = ToBeClassified;
         }
 
-        field(50118; "Confirmed"; Boolean)
+        field(50118; Confirmed; Boolean)
         {
             DataClassification = ToBeClassified;
         }
 
-        field(50119; "Closed"; Boolean)
+        field(50119; Closed; Boolean)
         {
             DataClassification = ToBeClassified;
         }
@@ -704,7 +704,7 @@ tableextension 50108 SalesLineExt extends "Sales Line"
 
             DataClassification = ToBeClassified;
             DecimalPlaces = 3 : 5;
-            caption = 'kg/stk';
+            Caption = 'kg/stk';
 
             trigger OnValidate()
             begin
@@ -715,7 +715,7 @@ tableextension 50108 SalesLineExt extends "Sales Line"
         {
             DataClassification = ToBeClassified;
             DecimalPlaces = 2 : 5;
-            caption = 'KG/PC';
+            Caption = 'KG/PC';
 
             trigger OnValidate()
             begin
@@ -727,7 +727,7 @@ tableextension 50108 SalesLineExt extends "Sales Line"
         {
             DataClassification = ToBeClassified;
             DecimalPlaces = 2 : 5;
-            caption = 'Carton >0.10';
+            Caption = 'Carton >0.10';
             trigger OnValidate()
             begin
                 CalculateCost();
@@ -738,7 +738,7 @@ tableextension 50108 SalesLineExt extends "Sales Line"
         {
             DataClassification = ToBeClassified;
             DecimalPlaces = 2 : 5;
-            caption = 'Κουπάκι';
+            Caption = 'Κουπάκι';
             BlankZero = true;
             trigger OnValidate()
             begin
@@ -750,7 +750,7 @@ tableextension 50108 SalesLineExt extends "Sales Line"
         {
             DataClassification = ToBeClassified;
             DecimalPlaces = 2 : 5;
-            caption = 'Film/Labels/Net';
+            Caption = 'Film/Labels/Net';
             BlankZero = true;
             trigger OnValidate()
             begin
@@ -762,7 +762,7 @@ tableextension 50108 SalesLineExt extends "Sales Line"
         {
             DataClassification = ToBeClassified;
             DecimalPlaces = 2 : 5;
-            caption = 'COST';
+            Caption = 'COST';
 
             trigger OnValidate()
             var
@@ -777,7 +777,7 @@ tableextension 50108 SalesLineExt extends "Sales Line"
         {
             DataClassification = ToBeClassified;
             DecimalPlaces = 2 : 5;
-            caption = 'COST+GP';
+            Caption = 'COST+GP';
 
             trigger OnValidate()
             var
@@ -794,7 +794,7 @@ tableextension 50108 SalesLineExt extends "Sales Line"
         {
             DataClassification = ToBeClassified;
             DecimalPlaces = 2 : 5;
-            caption = 'Selling Price - (Cost + GP)';
+            Caption = 'Selling Price - (Cost + GP)';
         }
 
 
@@ -802,28 +802,28 @@ tableextension 50108 SalesLineExt extends "Sales Line"
         {
             DataClassification = ToBeClassified;
             DecimalPlaces = 2 : 5;
-            caption = 'ΥΑΜ';
+            Caption = 'ΥΑΜ';
         }
 
         field(50130; "Cost YS"; Decimal)
         {
             DataClassification = ToBeClassified;
             DecimalPlaces = 2 : 5;
-            caption = 'ΥΣ';
+            Caption = 'ΥΣ';
         }
 
         field(50131; "Cost YL"; Decimal)
         {
             DataClassification = ToBeClassified;
             DecimalPlaces = 2 : 5;
-            caption = 'ΥΛ';
+            Caption = 'ΥΛ';
         }
 
         field(50132; "Cost Per KG"; Decimal)
         {
             DataClassification = ToBeClassified;
             DecimalPlaces = 2 : 5;
-            caption = 'Cost Per KG';
+            Caption = 'Cost Per KG';
 
             trigger OnValidate()
             var
@@ -843,7 +843,7 @@ tableextension 50108 SalesLineExt extends "Sales Line"
                 //"Cost kg/stk"
                 SRSetup.Get;
                 if "Cost Profit %" = 0 then begin
-                    "Cost Profit %" := SRsetup."Cost Profit %";
+                    "Cost Profit %" := SRSetup."Cost Profit %";
                 end;
 
 
@@ -857,14 +857,14 @@ tableextension 50108 SalesLineExt extends "Sales Line"
                 TestField("Package Qty");
 
                 if Item."Production BOM No." <> '' then begin
-                    if not ProductionBOMHeader.GET(Item."Production BOM No.") then begin
+                    if not ProductionBOMHeader.Get(Item."Production BOM No.") then begin
                         exit;
                     end;
 
-                    ProductionBOMLine.RESET;
+                    ProductionBOMLine.Reset;
                     ProductionBOMLine.SetFilter("Production BOM No.", ProductionBOMHeader."No.");
                     ProductionBOMLine.SetFilter("No.", 'RFV*');
-                    ProductionBOMLine.setrange(Type, ProductionBOMLine.type::Item);
+                    ProductionBOMLine.SetRange(Type, ProductionBOMLine.Type::Item);
                     ProductionBOMLine.SetFilter("Quantity per", '<>%1', 0);
                     if ProductionBOMLine.FindSet() then begin
                         ProductionBOMLine.TestField("Quantity per");
@@ -881,10 +881,10 @@ tableextension 50108 SalesLineExt extends "Sales Line"
 
                         //Cartons
                         //Carton Category Filter 
-                        ProductionBOMLine.RESET;
+                        ProductionBOMLine.Reset;
                         ProductionBOMLine.SetFilter("Production BOM No.", ProductionBOMHeader."No.");
                         ProductionBOMLine.SetFilter("No.", '<>RFV*');
-                        ProductionBOMLine.setrange(Type, ProductionBOMLine.type::Item);
+                        ProductionBOMLine.SetRange(Type, ProductionBOMLine.Type::Item);
                         //'CARTONS'
                         ProductionBOMLine.SetFilter("Item Category Code", SRSetup."Carton Category Filter");
                         ProductionBOMLine.SetFilter("Quantity per", '<>%1', 0);
@@ -920,15 +920,15 @@ tableextension 50108 SalesLineExt extends "Sales Line"
 
                     //cups
                     if not "Manual Cost Cup" then begin
-                        "cost cup" := 0;
+                        "Cost Cup" := 0;
 
                         //Cup Category Filter
-                        ProductionBOMLine.RESET;
+                        ProductionBOMLine.Reset;
                         ProductionBOMLine.SetFilter("Production BOM No.", ProductionBOMHeader."No.");
                         ProductionBOMLine.SetFilter("No.", '<>RFV*');
                         //'CUPLID|PBAGS|PPUNNET|PUNNETS|TRAYS'
                         ProductionBOMLine.SetFilter("Item Category Code", SRSetup."Cup Category Filter");
-                        ProductionBOMLine.setrange(Type, ProductionBOMLine.type::Item);
+                        ProductionBOMLine.SetRange(Type, ProductionBOMLine.Type::Item);
                         ProductionBOMLine.SetFilter("Quantity per", '<>%1', 0);
                         if ProductionBOMLine.FindSet() then begin
                             if ProductionBOMLine.FindSet() then begin
@@ -951,7 +951,7 @@ tableextension 50108 SalesLineExt extends "Sales Line"
                                                 CompItemCost := CompItem.GetLandedCost();
                                             end;
                                     end;
-                                    "cost cup" += Round((CompItemCost / "Package Qty") * ProductionBOMLine."Quantity per", Currency."Amount Rounding Precision", '>');
+                                    "Cost Cup" += Round((CompItemCost / "Package Qty") * ProductionBOMLine."Quantity per", Currency."Amount Rounding Precision", '>');
                                 until ProductionBOMLine.Next() = 0;
                             end;
 
@@ -965,12 +965,12 @@ tableextension 50108 SalesLineExt extends "Sales Line"
 
                         "Cost Other" := 0;
                         //Other Category Filter
-                        ProductionBOMLine.RESET;
+                        ProductionBOMLine.Reset;
                         ProductionBOMLine.SetFilter("Production BOM No.", ProductionBOMHeader."No.");
                         ProductionBOMLine.SetFilter("No.", '<>RFV*');
                         //'<>CARTONS&<>CUPLID&<>PBAGS&<>PPUNNET&<>PUNNETS&<>TRAYS'
                         ProductionBOMLine.SetFilter("Item Category Code", SRSetup."Other Category Filter");
-                        ProductionBOMLine.setrange(Type, ProductionBOMLine.type::Item);
+                        ProductionBOMLine.SetRange(Type, ProductionBOMLine.Type::Item);
                         ProductionBOMLine.SetFilter("Quantity per", '<>%1', 0);
                         if ProductionBOMLine.FindSet() then begin
                             if ProductionBOMLine.FindSet() then begin
@@ -996,7 +996,7 @@ tableextension 50108 SalesLineExt extends "Sales Line"
 
                                     ProductionBOMLine.CalcFields("Item Category Code");
                                     CostOtherFixed := 0;
-                                    ItemCategory.RESET;
+                                    ItemCategory.Reset;
                                     ItemCategory.SetFilter(Code, SRSetup."FILM Category Filter");
                                     if ItemCategory.FindSet() then begin
                                         repeat
@@ -1047,19 +1047,19 @@ tableextension 50108 SalesLineExt extends "Sales Line"
         field(50134; "Cost YAM Comment"; Text[30])
         {
             DataClassification = ToBeClassified;
-            caption = 'ΥΑΜ Comment';
+            Caption = 'ΥΑΜ Comment';
         }
 
         field(50135; "Cost YS Comment"; Text[30])
         {
             DataClassification = ToBeClassified;
-            caption = 'ΥΣ Comment';
+            Caption = 'ΥΣ Comment';
         }
 
         field(50136; "Cost YL Comment"; Text[30])
         {
             DataClassification = ToBeClassified;
-            caption = 'ΥΛ Comment';
+            Caption = 'ΥΛ Comment';
         }
 
         field(50137; "Sales Profit %"; Decimal)
@@ -1073,7 +1073,7 @@ tableextension 50108 SalesLineExt extends "Sales Line"
         {
             Caption = 'Packing Group';
             //DataClassification = ToBeClassified;
-            TableRelation = "General Categories".Code WHERE("Table No." = CONST(27), Type = CONST(Category1));
+            TableRelation = "General Categories".Code where("Table No." = const(27), Type = const(Category1));
             Editable = false;
             FieldClass = FlowField;
             CalcFormula = lookup(Item."Category 1" where("No." = field("No.")));
@@ -1082,36 +1082,36 @@ tableextension 50108 SalesLineExt extends "Sales Line"
         field(50139; "Manual Cost Carton"; Boolean)
         {
             DataClassification = ToBeClassified;
-            caption = 'Manual Carton >0.10';
+            Caption = 'Manual Carton >0.10';
         }
 
         field(50140; "Manual Cost Cup"; Boolean)
         {
             DataClassification = ToBeClassified;
-            caption = 'Manual Κουπάκι';
+            Caption = 'Manual Κουπάκι';
         }
 
         field(50141; "Manual Cost Other"; Boolean)
         {
             DataClassification = ToBeClassified;
-            caption = 'Manual Film/Labels/Net';
+            Caption = 'Manual Film/Labels/Net';
         }
 
         field(50142; "Manual kg/stk"; Boolean)
         {
             DataClassification = ToBeClassified;
-            caption = 'Manual kg/stk';
+            Caption = 'Manual kg/stk';
         }
         //TAL 1.0.0.201 >>
         field(50143; "Transfer-from Code"; Code[10])
         {
             Caption = 'Transfer-from Code';
-            TableRelation = Location WHERE("Use As In-Transit" = CONST(false));
+            TableRelation = Location where("Use As In-Transit" = const(false));
         }
         field(50144; "Transfer-to Code"; Code[10])
         {
             Caption = 'Transfer-to Code';
-            TableRelation = Location WHERE("Use As In-Transit" = CONST(false));
+            TableRelation = Location where("Use As In-Transit" = const(false));
         }
         //TAL 1.0.0.201 <<
 
@@ -1153,11 +1153,11 @@ tableextension 50108 SalesLineExt extends "Sales Line"
     begin
         GLSetup.Get();
         //+TAL0.2
-        "Created By" := USERID;
-        "Create Date" := CURRENTDATETIME;
+        "Created By" := UserId;
+        "Create Date" := CurrentDateTime;
         //-TAL0.2
 
-        SRsetup.GET;
+        SRsetup.Get;
         if "Document Type" = "Document Type"::Quote then begin
             "Cost Profit %" := SRsetup."Cost Profit %";
             "Currency Code" := GLSetup."LCY Code";
@@ -1165,7 +1165,7 @@ tableextension 50108 SalesLineExt extends "Sales Line"
         end;
 
         if "Document Type" = "Document Type"::Order then begin
-            rL_SalesHeader.RESET;
+            rL_SalesHeader.Reset;
             rL_SalesHeader.SetRange("Document Type", "Document Type");
             rL_SalesHeader.SetFilter("No.", "Document No.");
             if rL_SalesHeader.FindSet() then begin
@@ -1208,8 +1208,8 @@ tableextension 50108 SalesLineExt extends "Sales Line"
     var
         myInt: Integer;
     begin
-        "Last Modified Date" := CURRENTDATETIME;
-        "Last Modified By" := USERID;
+        "Last Modified Date" := CurrentDateTime;
+        "Last Modified By" := UserId;
     end;
 
 
@@ -1268,9 +1268,9 @@ tableextension 50108 SalesLineExt extends "Sales Line"
         end;
 
         if "Shelf No." <> '' then begin
-            rL_Item.RESET;
+            rL_Item.Reset;
             rL_Item.SetFilter("Shelf No.", "Shelf No.");
-            rL_Item.SETRANGE("Package Qty", "Package Qty");
+            rL_Item.SetRange("Package Qty", "Package Qty");
             if rL_Item.FindSet() then begin
                 Validate("No.", rL_Item."No.");
             end;
@@ -1316,7 +1316,7 @@ tableextension 50108 SalesLineExt extends "Sales Line"
     var
         SRsetup: Record "Sales & Receivables Setup";
     begin
-        SRsetup.GET;
+        SRsetup.Get;
         if "Cost Profit %" = 0 then begin
             "Cost Profit %" := SRsetup."Cost Profit %";
         end;
@@ -1386,11 +1386,11 @@ tableextension 50108 SalesLineExt extends "Sales Line"
         rL_SalesLine: Record "Sales Line";
         GLSetup: Record "General Ledger Setup";
     begin
-        GLSetup.GET;
+        GLSetup.Get;
         if "Pallet Qty" <> 0 then begin
             exit;
         end;
-        rL_SalesLine.RESET;
+        rL_SalesLine.Reset;
         rL_SalesLine.SetRange("Document Type", "Document Type"::Quote);
         rL_SalesLine.SetRange(Type, Type::Item);
         rL_SalesLine.SetFilter("No.", "No.");
@@ -1398,15 +1398,15 @@ tableextension 50108 SalesLineExt extends "Sales Line"
         rL_SalesLine.SetFilter("Document No.", '<>%1', "Document No.");
         if rL_SalesLine.FindLast() then begin
 
-            validate("Pallet Qty", rL_SalesLine."Pallet Qty");
+            Validate("Pallet Qty", rL_SalesLine."Pallet Qty");
             "Country/Region of Origin Code" := rL_SalesLine."Country/Region of Origin Code";
-            validate("Product Class", rL_SalesLine."Product Class");
+            Validate("Product Class", rL_SalesLine."Product Class");
             //validate("Package Qty", rL_SalesLine."Package Qty");
-            validate("Calibration Min.", rL_SalesLine."Calibration Min.");
-            validate("Calibration Max.", rL_SalesLine."Calibration Max.");
-            validate("Calibration UOM", rL_SalesLine."Calibration UOM");
-            validate("Variety", rL_SalesLine."Variety");
-            validate("Currency Code", GLSetup."LCY Code"); // rL_SalesLine."Currency Code"
+            Validate("Calibration Min.", rL_SalesLine."Calibration Min.");
+            Validate("Calibration Max.", rL_SalesLine."Calibration Max.");
+            Validate("Calibration UOM", rL_SalesLine."Calibration UOM");
+            Validate(Variety, rL_SalesLine.Variety);
+            Validate("Currency Code", GLSetup."LCY Code"); // rL_SalesLine."Currency Code"
             //validate("Price Previous Week Box", rL_SalesLine."Price Previous Week Box");
             //validate("Price Previous Week PCS", rL_SalesLine."Price Previous Week PCS");
             //validate("Price Previous Week KG", rL_SalesLine."Price Previous Week KG");
@@ -1414,7 +1414,7 @@ tableextension 50108 SalesLineExt extends "Sales Line"
             //validate("Price PCS", rL_SalesLine."Price PCS");
             //validate("Price KG", rL_SalesLine."Price KG");
             CalculateCostingSalesPrice();
-            validate("Row Index", 0);
+            Validate("Row Index", 0);
             /*
             validate("Qty Box Date 1", rL_SalesLine."Qty Box Date 1");
             validate("Qty Box Date 2", rL_SalesLine."Qty Box Date 2");
@@ -1425,33 +1425,33 @@ tableextension 50108 SalesLineExt extends "Sales Line"
             validate("Qty Box Date 7", rL_SalesLine."Qty Box Date 7");
             validate("Qty Box Date 8", rL_SalesLine."Qty Box Date 8");
             */
-            validate("Total Qty on Boxes", rL_SalesLine."Total Qty on Boxes");
-            validate("Additional Information", rL_SalesLine."Additional Information");
-            validate("Pressure Min.", rL_SalesLine."Pressure Min.");
-            validate("Pressure Max.", rL_SalesLine."Pressure Max.");
-            validate("Brix Min", rL_SalesLine."Brix Min");
-            validate("Vendor Name", rL_SalesLine."Vendor Name");
-            validate("QC 1 Min", rL_SalesLine."QC 1 Min");
-            validate("QC 1 Max", rL_SalesLine."QC 1 Max");
-            validate("QC 1 Text", rL_SalesLine."QC 1 Text");
-            validate("QC 2 Min", rL_SalesLine."QC 2 Min");
-            validate("QC 2 Max", rL_SalesLine."QC 2 Max");
-            validate("QC 2 Text", rL_SalesLine."QC 2 Text");
-            validate("Box Width", rL_SalesLine."Box Width");
-            validate("Box Char 1", rL_SalesLine."Box Char 1");
-            validate("Box Length", rL_SalesLine."Box Length");
-            validate("Box Char 2", rL_SalesLine."Box Char 2");
-            validate("Box Height", rL_SalesLine."Box Height");
-            validate("Box Changed Date", rL_SalesLine."Box Changed Date");
-            validate("Harvest Temp. From", rL_SalesLine."Harvest Temp. From");
-            validate("Harvest Temp. To", rL_SalesLine."Harvest Temp. To");
-            validate("Freezer Harvest Temp. From", rL_SalesLine."Freezer Harvest Temp. From");
-            validate("Freezer Harvest Temp. To", rL_SalesLine."Freezer Harvest Temp. To");
-            validate("Transfer Temp. From", rL_SalesLine."Transfer Temp. From");
-            validate("Transfer Temp. To", rL_SalesLine."Transfer Temp. To");
+            Validate("Total Qty on Boxes", rL_SalesLine."Total Qty on Boxes");
+            Validate("Additional Information", rL_SalesLine."Additional Information");
+            Validate("Pressure Min.", rL_SalesLine."Pressure Min.");
+            Validate("Pressure Max.", rL_SalesLine."Pressure Max.");
+            Validate("Brix Min", rL_SalesLine."Brix Min");
+            Validate("Vendor Name", rL_SalesLine."Vendor Name");
+            Validate("QC 1 Min", rL_SalesLine."QC 1 Min");
+            Validate("QC 1 Max", rL_SalesLine."QC 1 Max");
+            Validate("QC 1 Text", rL_SalesLine."QC 1 Text");
+            Validate("QC 2 Min", rL_SalesLine."QC 2 Min");
+            Validate("QC 2 Max", rL_SalesLine."QC 2 Max");
+            Validate("QC 2 Text", rL_SalesLine."QC 2 Text");
+            Validate("Box Width", rL_SalesLine."Box Width");
+            Validate("Box Char 1", rL_SalesLine."Box Char 1");
+            Validate("Box Length", rL_SalesLine."Box Length");
+            Validate("Box Char 2", rL_SalesLine."Box Char 2");
+            Validate("Box Height", rL_SalesLine."Box Height");
+            Validate("Box Changed Date", rL_SalesLine."Box Changed Date");
+            Validate("Harvest Temp. From", rL_SalesLine."Harvest Temp. From");
+            Validate("Harvest Temp. To", rL_SalesLine."Harvest Temp. To");
+            Validate("Freezer Harvest Temp. From", rL_SalesLine."Freezer Harvest Temp. From");
+            Validate("Freezer Harvest Temp. To", rL_SalesLine."Freezer Harvest Temp. To");
+            Validate("Transfer Temp. From", rL_SalesLine."Transfer Temp. From");
+            Validate("Transfer Temp. To", rL_SalesLine."Transfer Temp. To");
 
             //cost
-            validate("Cost Per KG", rL_SalesLine."Cost Per KG");
+            Validate("Cost Per KG", rL_SalesLine."Cost Per KG");
             CalculateSalesProfitPerc();
 
         end;
@@ -1541,34 +1541,34 @@ tableextension 50108 SalesLineExt extends "Sales Line"
         vL_StartDate: Date;
         vL_EndDate: Date;
     begin
-        SalesHeader.get("Document Type", "Document No.");
+        SalesHeader.Get("Document Type", "Document No.");
         //SalesHeader.testfield("Price Start Date");
         //SalesHeader.testfield("Price End Date");
 
         vL_StartDate := SalesHeader."Price Start Date";  //SalesHeader.GetPriceStartDatePreviousWeek();
         vL_EndDate := SalesHeader."Price End Date"; //SalesHeader.GetPriceEndDatePreviousWeek();
 
-        SalesPrice.RESET;
+        SalesPrice.Reset;
         SalesPrice.SetRange("Sales Type", SalesPrice."Sales Type"::Customer);
         SalesPrice.SetFilter("Sales Code", "Bill-to Customer No.");
         SalesPrice.SetRange("Item No.", "No.");
 
         //SalesPrice.SetFilter("Starting Date", FORMAT(vL_StartDate) + '..' + FORMAT(vL_EndDate));
-        SalesPrice.SETFILTER("Ending Date", '%1|>=%2', 0D, vL_EndDate);
-        SalesPrice.SETRANGE("Starting Date", 0D, vL_EndDate);
+        SalesPrice.SetFilter("Ending Date", '%1|>=%2', 0D, vL_EndDate);
+        SalesPrice.SetRange("Starting Date", 0D, vL_EndDate);
         if not SalesPrice.FindLast() then begin
-            SalesPrice.RESET;
+            SalesPrice.Reset;
             SalesPrice.SetRange("Sales Type", SalesPrice."Sales Type"::Customer);
             SalesPrice.SetFilter("Sales Code", "Bill-to Customer No.");
             SalesPrice.SetRange("Item No.", "No.");
-            SalesPrice.SETFILTER("Ending Date", '%1|>=%2', 0D, vL_StartDate);
-            SalesPrice.SETRANGE("Starting Date", 0D, vL_StartDate);
+            SalesPrice.SetFilter("Ending Date", '%1|>=%2', 0D, vL_StartDate);
+            SalesPrice.SetRange("Starting Date", 0D, vL_StartDate);
         end;
 
         if SalesPrice.FindLast() then begin
             exit(true);
         end;
-        exit(False);
+        exit(false);
 
     end;
 
@@ -1579,15 +1579,15 @@ tableextension 50108 SalesLineExt extends "Sales Line"
         vL_StartDate: Date;
         vL_EndDate: Date;
     begin
-        SalesHeader.get("Document Type", "Document No.");
+        SalesHeader.Get("Document Type", "Document No.");
 
-        SalesHeader.testfield("Price Start Date");
-        SalesHeader.testfield("Price End Date");
+        SalesHeader.TestField("Price Start Date");
+        SalesHeader.TestField("Price End Date");
 
         vL_StartDate := SalesHeader."Price Start Date"; // SalesHeader.GetPriceStartDatePreviousWeek();
         vL_EndDate := SalesHeader."Price End Date"; //SalesHeader.GetPriceEndDatePreviousWeek();
 
-        SalesPrice.RESET;
+        SalesPrice.Reset;
         SalesPrice.SetRange("Sales Type", SalesPrice."Sales Type"::Customer);
         SalesPrice.SetFilter("Sales Code", "Bill-to Customer No.");
         SalesPrice.SetRange("Item No.", "No.");
@@ -1596,15 +1596,15 @@ tableextension 50108 SalesLineExt extends "Sales Line"
         //SalesPrice.SetFilter("Starting Date", FORMAT(vL_StartDate) + '..' + FORMAT(vL_EndDate));
 
 
-        SalesPrice.SETFILTER("Ending Date", '%1|>=%2', 0D, vL_EndDate);
-        SalesPrice.SETRANGE("Starting Date", 0D, vL_EndDate);
+        SalesPrice.SetFilter("Ending Date", '%1|>=%2', 0D, vL_EndDate);
+        SalesPrice.SetRange("Starting Date", 0D, vL_EndDate);
         if not SalesPrice.FindLast() then begin
-            SalesPrice.RESET;
+            SalesPrice.Reset;
             SalesPrice.SetRange("Sales Type", SalesPrice."Sales Type"::Customer);
             SalesPrice.SetFilter("Sales Code", "Bill-to Customer No.");
             SalesPrice.SetRange("Item No.", "No.");
-            SalesPrice.SETFILTER("Ending Date", '%1|>=%2', 0D, vL_StartDate);
-            SalesPrice.SETRANGE("Starting Date", 0D, vL_StartDate);
+            SalesPrice.SetFilter("Ending Date", '%1|>=%2', 0D, vL_StartDate);
+            SalesPrice.SetRange("Starting Date", 0D, vL_StartDate);
         end;
 
         if SalesPrice.FindLast() then begin
@@ -1623,15 +1623,15 @@ tableextension 50108 SalesLineExt extends "Sales Line"
         vL_StartDate: Date;
         vL_EndDate: Date;
     begin
-        SalesHeader.get("Document Type", "Document No.");
+        SalesHeader.Get("Document Type", "Document No.");
 
-        SalesHeader.testfield("Price Update Start Date");
-        SalesHeader.testfield("Price Update End Date");
+        SalesHeader.TestField("Price Update Start Date");
+        SalesHeader.TestField("Price Update End Date");
 
         vL_StartDate := SalesHeader."Price Update Start Date"; // SalesHeader.GetPriceStartDatePreviousWeek();
         vL_EndDate := SalesHeader."Price Update End Date"; //SalesHeader.GetPriceEndDatePreviousWeek();
 
-        SalesPrice.RESET;
+        SalesPrice.Reset;
         SalesPrice.SetRange("Sales Type", SalesPrice."Sales Type"::Customer);
         SalesPrice.SetFilter("Sales Code", "Bill-to Customer No.");
         SalesPrice.SetRange("Item No.", "No.");
@@ -1639,15 +1639,15 @@ tableextension 50108 SalesLineExt extends "Sales Line"
         //SETRANGE("Starting Date",0D,StartingDate);
         //SalesPrice.SetFilter("Starting Date", FORMAT(vL_StartDate) + '..' + FORMAT(vL_EndDate));
 
-        SalesPrice.SETFILTER("Ending Date", '%1|>=%2', 0D, vL_EndDate);
-        SalesPrice.SETRANGE("Starting Date", 0D, vL_EndDate);
+        SalesPrice.SetFilter("Ending Date", '%1|>=%2', 0D, vL_EndDate);
+        SalesPrice.SetRange("Starting Date", 0D, vL_EndDate);
         if not SalesPrice.FindLast() then begin
-            SalesPrice.RESET;
+            SalesPrice.Reset;
             SalesPrice.SetRange("Sales Type", SalesPrice."Sales Type"::Customer);
             SalesPrice.SetFilter("Sales Code", "Bill-to Customer No.");
             SalesPrice.SetRange("Item No.", "No.");
-            SalesPrice.SETFILTER("Ending Date", '%1|>=%2', 0D, vL_StartDate);
-            SalesPrice.SETRANGE("Starting Date", 0D, vL_StartDate);
+            SalesPrice.SetFilter("Ending Date", '%1|>=%2', 0D, vL_StartDate);
+            SalesPrice.SetRange("Starting Date", 0D, vL_StartDate);
         end;
 
         if SalesPrice.FindLast() then begin
@@ -1675,7 +1675,7 @@ tableextension 50108 SalesLineExt extends "Sales Line"
             exit;
         end;
 
-        if rL_Item.GET("No.") then begin
+        if rL_Item.Get("No.") then begin
             if rL_Item."Category 1" = '' then begin
                 exit;
             end;

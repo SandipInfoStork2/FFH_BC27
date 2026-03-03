@@ -5,19 +5,20 @@ report 50062 "Customer - Payment Receipt FFH"
     RDLCLayout = './Layouts/rep62_50062_CustomerPaymentReceipt.rdlc';
 
     Caption = 'Customer - Payment Receipt';
+    ApplicationArea = All;
 
     dataset
     {
         dataitem("Cust. Ledger Entry"; "Cust. Ledger Entry")
         {
-            DataItemTableView = SORTING("Document Type", "Customer No.", "Posting Date", "Currency Code") WHERE("Document Type" = FILTER(Payment | Refund | " "));
+            DataItemTableView = sorting("Document Type", "Customer No.", "Posting Date", "Currency Code") where("Document Type" = filter(Payment | Refund | " "));
             RequestFilterFields = "Customer No.", "Posting Date", "Document No.", "Entry No.";
             column(EntryNo_CustLedgEntry; "Entry No.")
             {
             }
             dataitem(PageLoop; "Integer")
             {
-                DataItemTableView = SORTING(Number) WHERE(Number = CONST(1));
+                DataItemTableView = sorting(Number) where(Number = const(1));
                 column(CustAddr6; CustAddr[6])
                 {
                 }
@@ -147,14 +148,14 @@ report 50062 "Customer - Payment Receipt FFH"
                 }
                 dataitem(DetailedCustLedgEntry1; "Detailed Cust. Ledg. Entry")
                 {
-                    DataItemLink = "Applied Cust. Ledger Entry No." = FIELD("Entry No.");
+                    DataItemLink = "Applied Cust. Ledger Entry No." = field("Entry No.");
                     DataItemLinkReference = "Cust. Ledger Entry";
-                    DataItemTableView = SORTING("Applied Cust. Ledger Entry No.", "Entry Type") WHERE(Unapplied = CONST(false));
+                    DataItemTableView = sorting("Applied Cust. Ledger Entry No.", "Entry Type") where(Unapplied = const(false));
                     dataitem(CustLedgEntry1; "Cust. Ledger Entry")
                     {
-                        DataItemLink = "Entry No." = FIELD("Cust. Ledger Entry No.");
+                        DataItemLink = "Entry No." = field("Cust. Ledger Entry No.");
                         DataItemLinkReference = DetailedCustLedgEntry1;
-                        DataItemTableView = SORTING("Entry No.");
+                        DataItemTableView = sorting("Entry No.");
                         column(PostDate_CustLedgEntry1; Format("Posting Date"))
                         {
                         }
@@ -220,14 +221,14 @@ report 50062 "Customer - Payment Receipt FFH"
                 }
                 dataitem(DetailedCustLedgEntry2; "Detailed Cust. Ledg. Entry")
                 {
-                    DataItemLink = "Cust. Ledger Entry No." = FIELD("Entry No.");
+                    DataItemLink = "Cust. Ledger Entry No." = field("Entry No.");
                     DataItemLinkReference = "Cust. Ledger Entry";
-                    DataItemTableView = SORTING("Cust. Ledger Entry No.", "Entry Type", "Posting Date") WHERE(Unapplied = CONST(false));
+                    DataItemTableView = sorting("Cust. Ledger Entry No.", "Entry Type", "Posting Date") where(Unapplied = const(false));
                     dataitem(CustLedgEntry2; "Cust. Ledger Entry")
                     {
-                        DataItemLink = "Entry No." = FIELD("Applied Cust. Ledger Entry No.");
+                        DataItemLink = "Entry No." = field("Applied Cust. Ledger Entry No.");
                         DataItemLinkReference = DetailedCustLedgEntry2;
-                        DataItemTableView = SORTING("Entry No.");
+                        DataItemTableView = sorting("Entry No.");
                         column(AppliedAmount; AppliedAmount)
                         {
                         }
@@ -280,7 +281,7 @@ report 50062 "Customer - Payment Receipt FFH"
                 }
                 dataitem(Total; "Integer")
                 {
-                    DataItemTableView = SORTING(Number) WHERE(Number = CONST(1));
+                    DataItemTableView = sorting(Number) where(Number = const(1));
                     column(RemainingAmount; RemainingAmount)
                     {
                     }

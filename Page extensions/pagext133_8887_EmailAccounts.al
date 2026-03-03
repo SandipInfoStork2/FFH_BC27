@@ -19,6 +19,7 @@ pageextension 50233 EmailAccountsExt extends "Email Accounts"
                 PromotedCategory = Process;
                 PromotedOnly = true;
                 Promoted = true;
+                ToolTip = 'Executes the Add Cc-Bcc action.';
 
                 trigger OnAction()
                 begin

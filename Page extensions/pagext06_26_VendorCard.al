@@ -20,27 +20,32 @@ pageextension 50106 VendorCardExt extends "Vendor Card"
 
         addafter("Responsibility Center")
         {
-            field(Customer; Customer)
+            field(Customer; Rec.Customer)
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Customer field.';
             }
             group(Grower)
             {
-                field("Category 5"; "Category 5")
+                field("Category 5"; Rec."Category 5")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Category 5 field.';
                 }
-                field("Grower Certified"; "Grower Certified")
+                field("Grower Certified"; Rec."Grower Certified")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Grower Certified field.';
                 }
-                field(GGN; GGN)
+                field(GGN; Rec.GGN)
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the GGN field.';
                 }
-                field("GGN Expiry Date"; "GGN Expiry Date")
+                field("GGN Expiry Date"; Rec."GGN Expiry Date")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the GGN Expiry Date field.';
                 }
             }
         }

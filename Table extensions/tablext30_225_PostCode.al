@@ -5,7 +5,7 @@ tableextension 50130 PostCodeExt extends "Post Code"
         // Add changes to table fields here
     }
 
-    procedure ClearFields(VAR City: Text[30]; VAR PostCode: Code[20]; VAR County: Text[30])
+    procedure ClearFields(var City: Text[30]; var PostCode: Code[20]; var County: Text[30])
     var
         myInt: Integer;
     begin

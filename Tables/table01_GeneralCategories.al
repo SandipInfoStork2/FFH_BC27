@@ -5,14 +5,14 @@ table 50001 "General Categories"
     // TAL0.2 2020/03/04 VC add Description 2
     // TAL0.3 2021/04/08 VC delete and rename control
 
-    DrillDownPageID = "General Categories";
-    LookupPageID = "General Categories";
+    DrillDownPageId = "General Categories";
+    LookupPageId = "General Categories";
 
     fields
     {
         field(1; "Table No."; Integer)
         {
-            TableRelation = AllObj."Object ID" WHERE("Object Type" = CONST(Table));
+            TableRelation = AllObj."Object ID" where("Object Type" = const(Table));
         }
         field(2; Type; Option)
         {
@@ -122,36 +122,36 @@ table 50001 "General Categories"
         {
             Caption = 'Class';
             DataClassification = ToBeClassified;
-            TableRelation = "General Categories".Code WHERE("Table No." = CONST(27),
-                                                             Type = CONST(Category3));
+            TableRelation = "General Categories".Code where("Table No." = const(27),
+                                                             Type = const(Category3));
         }
         field(50113; "Category 4"; Code[20])
         {
             Caption = 'Caliber Min';
             DataClassification = ToBeClassified;
-            TableRelation = "General Categories".Code WHERE("Table No." = CONST(27),
-                                                             Type = CONST(Category4));
+            TableRelation = "General Categories".Code where("Table No." = const(27),
+                                                             Type = const(Category4));
         }
         field(50114; "Category 5"; Code[20])
         {
             Caption = 'Caliber Max';
             DataClassification = ToBeClassified;
-            TableRelation = "General Categories".Code WHERE("Table No." = CONST(27),
-                                                             Type = CONST(Category5));
+            TableRelation = "General Categories".Code where("Table No." = const(27),
+                                                             Type = const(Category5));
         }
         field(50115; "Category 6"; Code[20])
         {
             Caption = 'Caliber UOM';
             DataClassification = ToBeClassified;
-            TableRelation = "General Categories".Code WHERE("Table No." = CONST(27),
-                                                             Type = CONST(Category6));
+            TableRelation = "General Categories".Code where("Table No." = const(27),
+                                                             Type = const(Category6));
         }
         field(50116; "Category 7"; Code[20])
         {
             Caption = 'Variety';
             DataClassification = ToBeClassified;
-            TableRelation = "General Categories".Code WHERE("Table No." = CONST(27),
-                                                             Type = CONST(Category7));
+            TableRelation = "General Categories".Code where("Table No." = const(27),
+                                                             Type = const(Category7));
         }
         field(50207; "Created By"; Code[50])
         {
@@ -200,10 +200,10 @@ table 50001 "General Categories"
 
         //+TAL0.3
         if ("Table No." = 23) and (Type = Type::Category1) and (Code <> '') then begin
-            rL_Grower.RESET;
-            rL_Grower.SETRANGE("Category 1", Code);
-            if rL_Grower.FINDSET then begin
-                ERROR(Txt50001, Code, rL_Grower."No.");
+            rL_Grower.Reset;
+            rL_Grower.SetRange("Category 1", Code);
+            if rL_Grower.FindSet then begin
+                Error(Txt50001, Code, rL_Grower."No.");
             end;
 
         end;
@@ -213,21 +213,21 @@ table 50001 "General Categories"
     trigger OnInsert();
     begin
 
-        "Create Date" := CURRENTDATETIME;
-        "Created By" := USERID;
+        "Create Date" := CurrentDateTime;
+        "Created By" := UserId;
     end;
 
     trigger OnModify();
     begin
-        "Last Modified Date" := CURRENTDATETIME;
-        "Last Modified By" := USERID;
+        "Last Modified Date" := CurrentDateTime;
+        "Last Modified By" := UserId;
     end;
 
     trigger OnRename();
     begin
         //+TAL0.3
         if (Code = '') or (Code = ' ') then begin
-            ERROR(Txt50002)
+            Error(Txt50002)
         end;
         //-TAL0.3
     end;

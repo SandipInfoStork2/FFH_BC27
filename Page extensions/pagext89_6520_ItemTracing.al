@@ -33,57 +33,67 @@ pageextension 50189 ItemTracingExt extends "Item Tracing"
 
         addafter("Source Name")
         {
-            field("Lot Grower No."; "Lot Grower No.")
+            field("Lot Grower No."; Rec."Lot Grower No.")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Lot Grower No. field.';
             }
-            field("Grower Name"; "Grower Name")
+            field("Grower Name"; Rec."Grower Name")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Grower Name field.';
             }
-            field("Grower GGN"; "Grower GGN")
+            field("Grower GGN"; Rec."Grower GGN")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Grower GGN field.';
             }
-            field("Lot Vendor No."; "Lot Vendor No.")
+            field("Lot Vendor No."; Rec."Lot Vendor No.")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Lot Vendor No. field.';
             }
-            field("Vendor Name"; "Vendor Name")
+            field("Vendor Name"; Rec."Vendor Name")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Vendor Name field.';
             }
-            field("Vendor GLN"; "Vendor GLN")
+            field("Vendor GLN"; Rec."Vendor GLN")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Vendor GLN field.';
             }
-            field("Vendor GGN"; "Vendor GGN")
+            field("Vendor GGN"; Rec."Vendor GGN")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Vendor GGN field.';
             }
         }
 
         addafter("Location Code")
         {
-            field("Reason Code"; "Reason Code")
+            field("Reason Code"; Rec."Reason Code")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Reason Code field.';
             }
         }
 
         addbefore("Lot No.")
         {
-            field("Line No."; "Line No.")
+            field("Line No."; Rec."Line No.")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Line No. field.';
             }
         }
 
         addafter("Lot No.")
         {
-            field("Expiration Date"; "Expiration Date")
+            field("Expiration Date"; Rec."Expiration Date")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Expiration Date field.';
             }
         }
     }

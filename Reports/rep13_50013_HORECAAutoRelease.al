@@ -9,14 +9,14 @@ report 50013 "HORECA Auto Release"
     {
         dataitem(IntegerDS; Integer)
         {
-            DataItemTableView = SORTING(Number) WHERE(Number = FILTER(1));
+            DataItemTableView = sorting(Number) where(Number = filter(1));
 
             trigger OnAfterGetRecord()
             var
                 cuGeneralMgt: Codeunit "General Mgt.";
             begin
                 //Message(Format(IntegerDS.Number));
-                CLEAR(cuGeneralMgt);
+                Clear(cuGeneralMgt);
                 cuGeneralMgt.HORECAAutoRelease();
             end;
         }

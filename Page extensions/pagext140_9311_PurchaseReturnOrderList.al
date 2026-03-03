@@ -3,21 +3,24 @@ pageextension 50240 PurchaseReturnOrderListExt extends "Purchase Return Order Li
     layout
     {
         // Add changes to page layout here
-        addafter("Status")
+        addafter(Status)
         {
 
-            field("Total Qty"; "Total Qty")
+            field("Total Qty"; Rec."Total Qty")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Total Qty field.';
             }
-            field("Total Return Qty Shipped"; "Total Return Qty Shipped")
+            field("Total Return Qty Shipped"; Rec."Total Return Qty Shipped")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Total Return Qty Shipped field.';
             }
 
-            field("Total Qty Invoiced"; "Total Qty Invoiced")
+            field("Total Qty Invoiced"; Rec."Total Qty Invoiced")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Total Qty Invoiced field.';
             }
         }
 

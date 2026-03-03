@@ -8,34 +8,35 @@ report 50018 "Analysis Report-Landscape"
 
     Caption = 'Analysis Report';
     PreviewMode = PrintLayout;
+    ApplicationArea = All;
 
     dataset
     {
         dataitem(AnalysisLineTemplate; "Analysis Line Template")
         {
-            DataItemTableView = SORTING("Analysis Area", Name);
+            DataItemTableView = sorting("Analysis Area", Name);
             column(TempName_AnlysLine; Name)
             {
             }
             dataitem(Heading; "Integer")
             {
-                DataItemTableView = SORTING(Number) WHERE(Number = CONST(1));
+                DataItemTableView = sorting(Number) where(Number = const(1));
                 column(TemplNameAnalysisColumn; AnalysisColumnTemplName)
                 {
                 }
                 column(TempName_Heading; AnalysisLineTemplate.Name)
                 {
                 }
-                column(FiscalStartDate; FORMAT(FiscalStartDate))
+                column(FiscalStartDate; Format(FiscalStartDate))
                 {
                 }
                 column(PeriodText; PeriodText)
                 {
                 }
-                column(CompanyName; COMPANYNAME)
+                column(CompanyName; CompanyName)
                 {
                 }
-                column(TodayFormatted; FORMAT(TODAY, 0, 4))
+                column(TodayFormatted; Format(Today, 0, 4))
                 {
                 }
                 column(TempDesc_AnlysLine; AnalysisLineTemplate.Description)
@@ -53,7 +54,7 @@ report 50018 "Analysis Report-Landscape"
                 column(NoOfRecords; NoOfRecords)
                 {
                 }
-                column(TblCptnAnalysisLineFilter; "Analysis Line".TABLECAPTION + ': ' + AnalysisLineFilter)
+                column(TblCptnAnalysisLineFilter; "Analysis Line".TableCaption + ': ' + AnalysisLineFilter)
                 {
                 }
                 column(AnalysisLineFilter; AnalysisLineFilter)
@@ -91,22 +92,22 @@ report 50018 "Analysis Report-Landscape"
                 }
                 dataitem(AnalysisLineSpec; "Analysis Line")
                 {
-                    DataItemLink = "Analysis Area" = FIELD("Analysis Area"), "Analysis Line Template Name" = FIELD(Name);
+                    DataItemLink = "Analysis Area" = field("Analysis Area"), "Analysis Line Template Name" = field(Name);
                     DataItemLinkReference = AnalysisLineTemplate;
-                    DataItemTableView = SORTING("Analysis Area", "Analysis Line Template Name", "Line No.");
-                    column(FormatUnderline; FORMAT(Underline))
+                    DataItemTableView = sorting("Analysis Area", "Analysis Line Template Name", "Line No.");
+                    column(FormatUnderline; Format(Underline))
                     {
                     }
-                    column(FormatItalic; FORMAT(Italic))
+                    column(FormatItalic; Format(Italic))
                     {
                     }
-                    column(FormatShowOpposite; FORMAT("Show Opposite Sign"))
+                    column(FormatShowOpposite; Format("Show Opposite Sign"))
                     {
                     }
-                    column(FormatNewPage; FORMAT("New Page"))
+                    column(FormatNewPage; Format("New Page"))
                     {
                     }
-                    column(FormatBold; FORMAT(Bold))
+                    column(FormatBold; Format(Bold))
                     {
                     }
                     column(SpecShowOppSign_AnlysLine; "Show Opposite Sign")
@@ -178,30 +179,30 @@ report 50018 "Analysis Report-Landscape"
                     trigger OnPreDataItem();
                     begin
                         if not ShowAnalysisReportSetup then
-                            CurrReport.BREAK;
+                            CurrReport.Break;
                     end;
                 }
                 dataitem(PageBreak; "Integer")
                 {
-                    DataItemTableView = SORTING(Number) WHERE(Number = CONST(1));
+                    DataItemTableView = sorting(Number) where(Number = const(1));
 
                     trigger OnAfterGetRecord();
                     begin
-                        CurrReport.NEWPAGE;
+                        CurrReport.NewPage;
                         NoOfRecords := NoOfRecords + 1;
                     end;
 
                     trigger OnPreDataItem();
                     begin
                         if not ShowAnalysisReportSetup then
-                            CurrReport.BREAK;
+                            CurrReport.Break;
                     end;
                 }
                 dataitem("Analysis Line"; "Analysis Line")
                 {
-                    DataItemLink = "Analysis Area" = FIELD("Analysis Area"), "Analysis Line Template Name" = FIELD(Name);
+                    DataItemLink = "Analysis Area" = field("Analysis Area"), "Analysis Line Template Name" = field(Name);
                     DataItemLinkReference = AnalysisLineTemplate;
-                    DataItemTableView = SORTING("Analysis Area", "Analysis Line Template Name", "Line No.");
+                    DataItemTableView = sorting("Analysis Area", "Analysis Line Template Name", "Line No.");
                     column(Header1; Header[1])
                     {
                     }
@@ -397,7 +398,7 @@ report 50018 "Analysis Report-Landscape"
                     column(RowRefNo_AnlysLine; "Row Ref. No.")
                     {
                     }
-                    column(RowRefNo_AnlysLineCaption; FIELDCAPTION("Row Ref. No."))
+                    column(RowRefNo_AnlysLineCaption; FieldCaption("Row Ref. No."))
                     {
                     }
                     column(Body4View_AnlysLine; ShowLine(false, false))
@@ -427,15 +428,15 @@ report 50018 "Analysis Report-Landscape"
 
                     trigger OnPreDataItem();
                     begin
-                        SETFILTER("Date Filter", DateFilter);
-                        SETFILTER("Item Budget Filter", ItemBudgetFilter);
-                        SETFILTER("Location Filter", LocationFilter);
-                        SETFILTER("Dimension 1 Filter", Dim1Filter);
-                        SETFILTER("Dimension 2 Filter", Dim2Filter);
-                        SETFILTER("Dimension 3 Filter", Dim3Filter);
+                        SetFilter("Date Filter", DateFilter);
+                        SetFilter("Item Budget Filter", ItemBudgetFilter);
+                        SetFilter("Location Filter", LocationFilter);
+                        SetFilter("Dimension 1 Filter", Dim1Filter);
+                        SetFilter("Dimension 2 Filter", Dim2Filter);
+                        SetFilter("Dimension 3 Filter", Dim3Filter);
                         if SourceTypeFilter <> SourceTypeFilter::" " then
-                            SETRANGE("Source Type Filter", SourceTypeFilter);
-                        SETFILTER("Source No. Filter", SourceNoFilter);
+                            SetRange("Source Type Filter", SourceTypeFilter);
+                        SetFilter("Source No. Filter", SourceNoFilter);
                     end;
                 }
 
@@ -447,26 +448,26 @@ report 50018 "Analysis Report-Landscape"
 
             trigger OnAfterGetRecord();
             begin
-                CurrReport.PAGENO := 1;
-                GLSetup.GET;
+                CurrReport.PageNo := 1;
+                GLSetup.Get;
                 if "Item Analysis View Code" <> '' then
-                    ItemAnalysisView.GET(AnalysisArea, "Item Analysis View Code")
+                    ItemAnalysisView.Get(AnalysisArea, "Item Analysis View Code")
                 else begin
-                    ItemAnalysisView.INIT;
+                    ItemAnalysisView.Init;
                     ItemAnalysisView."Dimension 1 Code" := GLSetup."Global Dimension 1 Code";
                     ItemAnalysisView."Dimension 2 Code" := GLSetup."Global Dimension 2 Code";
                 end;
 
                 if GLSetup."LCY Code" <> '' then
-                    HeaderText := STRSUBSTNO(Text003, GLSetup."LCY Code")
+                    HeaderText := StrSubstNo(Text003, GLSetup."LCY Code")
                 else
                     HeaderText := '';
 
                 //TAL0.1
                 if (SourceTypeFilter = SourceTypeFilter::Vendor) then begin
                     if SourceNoFilter <> '' then begin
-                        vG_Vendor.SETRANGE("No.", SourceNoFilter);
-                        if vG_Vendor.FINDSET then begin
+                        vG_Vendor.SetRange("No.", SourceNoFilter);
+                        if vG_Vendor.FindSet then begin
                             vG_VendorName := vG_Vendor.Name;
                             vG_VendorCode := vG_Vendor."No.";
                         end;
@@ -477,8 +478,8 @@ report 50018 "Analysis Report-Landscape"
 
             trigger OnPreDataItem();
             begin
-                SETRANGE("Analysis Area", AnalysisArea);
-                SETRANGE(Name, AnalysisLineTemplateName);
+                SetRange("Analysis Area", AnalysisArea);
+                SetRange(Name, AnalysisLineTemplateName);
             end;
         }
     }
@@ -489,7 +490,7 @@ report 50018 "Analysis Report-Landscape"
 
         layout
         {
-            area(content)
+            area(Content)
             {
                 group(Options)
                 {
@@ -502,6 +503,7 @@ report 50018 "Analysis Report-Landscape"
                             Caption = 'Analysis Area';
                             OptionCaption = 'Sales,Purchase,Inventory';
                             ToolTip = 'Specifies is the analysis template is set up in the Sales, Purchasing, or Inventory application area.';
+                            ApplicationArea = All;
 
                             trigger OnValidate();
                             begin
@@ -517,6 +519,7 @@ report 50018 "Analysis Report-Landscape"
                         {
                             Caption = 'Analysis Report Name';
                             ToolTip = 'Specifies the report for which analysis figures are shown.';
+                            ApplicationArea = All;
 
                             trigger OnLookup(var Text: Text): Boolean;
                             begin
@@ -528,10 +531,10 @@ report 50018 "Analysis Report-Landscape"
 
                             trigger OnValidate();
                             begin
-                                "Analysis Line".SETRANGE("Analysis Area", AnalysisArea);
+                                "Analysis Line".SetRange("Analysis Area", AnalysisArea);
                                 AnalysisReportManagement.CheckReportName(AnalysisReportName, "Analysis Line");
 
-                                if AnalysisReportNameRec.GET(AnalysisArea, AnalysisReportName) then begin
+                                if AnalysisReportNameRec.Get(AnalysisArea, AnalysisReportName) then begin
                                     if AnalysisReportNameRec."Analysis Line Template Name" <> '' then
                                         AnalysisLineTemplateName := AnalysisReportNameRec."Analysis Line Template Name";
                                     if AnalysisReportNameRec."Analysis Column Template Name" <> '' then
@@ -545,15 +548,16 @@ report 50018 "Analysis Report-Landscape"
                         {
                             Caption = 'Analysis Line Name';
                             ToolTip = 'Specifies the line for which analysis figures are shown.';
+                            ApplicationArea = All;
 
                             trigger OnLookup(var Text: Text): Boolean;
                             var
                                 TmpAnalysisLineTemplate: Record "Analysis Line Template";
                             begin
-                                TmpAnalysisLineTemplate.FILTERGROUP := 2;
-                                TmpAnalysisLineTemplate.SETRANGE("Analysis Area", AnalysisArea);
-                                TmpAnalysisLineTemplate.FILTERGROUP := 0;
-                                if PAGE.RUNMODAL(0, TmpAnalysisLineTemplate) = ACTION::LookupOK then begin
+                                TmpAnalysisLineTemplate.FilterGroup := 2;
+                                TmpAnalysisLineTemplate.SetRange("Analysis Area", AnalysisArea);
+                                TmpAnalysisLineTemplate.FilterGroup := 0;
+                                if Page.RunModal(0, TmpAnalysisLineTemplate) = Action::LookupOK then begin
                                     Text := TmpAnalysisLineTemplate.Name;
                                     exit(true);
                                 end;
@@ -561,7 +565,7 @@ report 50018 "Analysis Report-Landscape"
 
                             trigger OnValidate();
                             begin
-                                "Analysis Line".SETRANGE("Analysis Area", AnalysisArea);
+                                "Analysis Line".SetRange("Analysis Area", AnalysisArea);
                                 AnalysisReportManagement.CheckAnalysisLineTemplName(AnalysisLineTemplateName, "Analysis Line");
 
                                 ValidateAnalysisLineTemplate;
@@ -571,6 +575,7 @@ report 50018 "Analysis Report-Landscape"
                         {
                             Caption = 'Analysis Column Name';
                             ToolTip = 'Specifies the column for which analysis figures are shown.';
+                            ApplicationArea = All;
 
                             trigger OnLookup(var Text: Text): Boolean;
                             begin
@@ -590,24 +595,26 @@ report 50018 "Analysis Report-Landscape"
                         {
                             Caption = 'Date Filter';
                             ToolTip = 'Specifies the period for which the analysis report will show figures based on item ledger entries, value entries, and analysis view entries.';
+                            ApplicationArea = All;
 
                             trigger OnValidate();
                             begin
-                                "Analysis Line".SETFILTER("Date Filter", DateFilter);
-                                DateFilter := "Analysis Line".GETFILTER("Date Filter");
+                                "Analysis Line".SetFilter("Date Filter", DateFilter);
+                                DateFilter := "Analysis Line".GetFilter("Date Filter");
                             end;
                         }
                         field(ItemBudgetFilter; ItemBudgetFilter)
                         {
                             Caption = 'Item Budget Filter';
                             ToolTip = 'Specifies the item budget(s) for which analysis figures are shown.';
+                            ApplicationArea = All;
 
                             trigger OnLookup(var Text: Text): Boolean;
                             var
                                 ItemBudgetName: Record "Item Budget Name";
                             begin
-                                ItemBudgetName.SETRANGE("Analysis Area", AnalysisArea);
-                                if PAGE.RUNMODAL(0, ItemBudgetName) = ACTION::LookupOK then begin
+                                ItemBudgetName.SetRange("Analysis Area", AnalysisArea);
+                                if Page.RunModal(0, ItemBudgetName) = Action::LookupOK then begin
                                     Text := ItemBudgetName.Name;
                                     exit(true);
                                 end;
@@ -615,8 +622,8 @@ report 50018 "Analysis Report-Landscape"
 
                             trigger OnValidate();
                             begin
-                                "Analysis Line".SETFILTER("Item Budget Filter", ItemBudgetFilter);
-                                ItemBudgetFilter := "Analysis Line".GETFILTER("Item Budget Filter");
+                                "Analysis Line".SetFilter("Item Budget Filter", ItemBudgetFilter);
+                                ItemBudgetFilter := "Analysis Line".GetFilter("Item Budget Filter");
                             end;
                         }
                         field(SourceTypeFilter; SourceTypeFilter)
@@ -624,6 +631,7 @@ report 50018 "Analysis Report-Landscape"
                             Caption = 'Source Type Filter';
                             OptionCaption = ' ,Customer,Vendor,Item';
                             ToolTip = 'Specifies if figures in the analysis report are filtered by item number, customer number, or vendor number.';
+                            ApplicationArea = All;
 
                             trigger OnValidate();
                             begin
@@ -634,10 +642,11 @@ report 50018 "Analysis Report-Landscape"
                         {
                             Caption = 'Source No. Filter';
                             ToolTip = 'Specifies the item, customer, or vendor numbers that figures in the analysis report are filtered by.';
+                            ApplicationArea = All;
 
                             trigger OnLookup(var Text: Text): Boolean;
                             begin
-                                AnalysisReportManagement.LookupSourceNo("Analysis Line", SourceTypeFilter, SourceNoFilter);
+                                AnalysisReportManagement.DoLookupSourceNo("Analysis Line", SourceTypeFilter, SourceNoFilter);
                             end;
                         }
                     }
@@ -650,6 +659,7 @@ report 50018 "Analysis Report-Landscape"
                             Caption = 'Dimension 1 Filter';
                             Enabled = Dim1FilterEnable;
                             ToolTip = 'Specifies a filter for dimension values within a dimension. The filter uses the dimension you have defined as dimension 1 for the analysis view selected in the Analysis View Code field.';
+                            ApplicationArea = All;
 
                             trigger OnLookup(var Text: Text): Boolean;
                             begin
@@ -662,6 +672,7 @@ report 50018 "Analysis Report-Landscape"
                             Caption = 'Dimension 2 Filter';
                             Enabled = Dim2FilterEnable;
                             ToolTip = 'Specifies a filter for dimension values within a dimension. The filter uses the dimension you have defined as dimension 2 for the analysis view selected in the Analysis View Code field.';
+                            ApplicationArea = All;
 
                             trigger OnLookup(var Text: Text): Boolean;
                             begin
@@ -674,6 +685,7 @@ report 50018 "Analysis Report-Landscape"
                             Caption = 'Dimension 3 Filter';
                             Enabled = Dim3FilterEnable;
                             ToolTip = 'Specifies a filter for dimension values within a dimension. The filter uses the dimension you have defined as dimension 3 for the analysis view selected in the Analysis View Code field.';
+                            ApplicationArea = All;
 
                             trigger OnLookup(var Text: Text): Boolean;
                             begin
@@ -689,12 +701,14 @@ report 50018 "Analysis Report-Landscape"
                             Caption = 'Show Error';
                             OptionCaption = 'None,Division by Zero,Period Error,Both';
                             ToolTip = 'Specifies if the report shows error information.';
+                            ApplicationArea = All;
                         }
                         field(ShowAnalysisReportSetup; ShowAnalysisReportSetup)
                         {
                             Caption = 'Show Analysis Report Setup';
                             MultiLine = true;
                             ToolTip = 'Specifies if the actual report with the amounts will be preceded by one or more pages that describe the analysis report setup. That is, the first pages of the report show the lines that have been defined in the Analysis Report window.';
+                            ApplicationArea = All;
                         }
                     }
                 }
@@ -714,7 +728,7 @@ report 50018 "Analysis Report-Landscape"
 
         trigger OnOpenPage();
         begin
-            GLSetup.GET;
+            GLSetup.Get;
             if UseHiddenFilters then begin
                 AnalysisArea := AnalysisAreaHidden;
                 AnalysisReportName := AnalysisReportNameHidden;
@@ -723,16 +737,16 @@ report 50018 "Analysis Report-Landscape"
             end;
 
             if AnalysisLineTemplateName <> '' then
-                if not AnalysisLineTemplate.GET(AnalysisArea, AnalysisLineTemplateName) then
+                if not AnalysisLineTemplate.Get(AnalysisArea, AnalysisLineTemplateName) then
                     AnalysisLineTemplateName := '';
             if AnalysisLineTemplateName = '' then begin
-                AnalysisLineTemplate.SETRANGE("Analysis Area", AnalysisArea);
-                if AnalysisLineTemplate.FIND('-') then
+                AnalysisLineTemplate.SetRange("Analysis Area", AnalysisArea);
+                if AnalysisLineTemplate.Find('-') then
                     AnalysisLineTemplateName := AnalysisLineTemplate.Name;
             end;
 
             if AnalysisLineTemplate."Item Analysis View Code" <> '' then
-                ItemAnalysisView.GET(AnalysisArea, AnalysisLineTemplate."Item Analysis View Code")
+                ItemAnalysisView.Get(AnalysisArea, AnalysisLineTemplate."Item Analysis View Code")
             else begin
                 ItemAnalysisView."Dimension 1 Code" := GLSetup."Global Dimension 1 Code";
                 ItemAnalysisView."Dimension 2 Code" := GLSetup."Global Dimension 2 Code";
@@ -782,12 +796,14 @@ report 50018 "Analysis Report-Landscape"
         AnalysisLineTemplateNameHidden: Code[10];
         AnalysisColumnTemplName: Code[10];
         AnalysisColumnTemplNameHidden: Code[10];
-        SourceTypeFilter: Option " ",Customer,Vendor,Item;
-        SourceTypeFilterHidden: Option " ",Customer,Vendor,Item;
+        /* SourceTypeFilter: Option " ",Customer,Vendor,Item;
+        SourceTypeFilterHidden: Option " ",Customer,Vendor,Item; */
+        SourceTypeFilter: Enum "Analysis Source Type";
+        SourceTypeFilterHidden: Enum "Analysis Source Type";
         SourceNoFilter: Text;
         SourceNoFilterHidden: Text;
         EndDate: Date;
-        ShowError: Option "None","Division by Zero","Period Error",Both;
+        ShowError: Option None,"Division by Zero","Period Error",Both;
         DateFilter: Text;
         UseHiddenFilters: Boolean;
         DateFilterHidden: Text;
@@ -837,56 +853,54 @@ report 50018 "Analysis Report-Landscape"
 
     procedure InitAnalysisLine();
     begin
-        AnalysisLineTemplate.SETRANGE("Analysis Area", AnalysisArea);
-        AnalysisLineTemplate.SETRANGE(Name, AnalysisLineTemplateName);
-        "Analysis Line".FILTERGROUP := 2;
-        "Analysis Line".SETRANGE("Analysis Area", AnalysisArea);
-        "Analysis Line".FILTERGROUP := 0;
-        "Analysis Line".SETFILTER(Show, '<>%1', "Analysis Line".Show::No);
-        "Analysis Line".SETFILTER("Date Filter", DateFilter);
-        "Analysis Line".SETFILTER("Item Budget Filter", ItemBudgetFilter);
-        "Analysis Line".SETFILTER("Location Filter", LocationFilter);
-        "Analysis Line".SETFILTER("Dimension 1 Filter", Dim1Filter);
-        "Analysis Line".SETFILTER("Dimension 2 Filter", Dim2Filter);
-        "Analysis Line".SETFILTER("Dimension 3 Filter", Dim3Filter);
+        AnalysisLineTemplate.SetRange("Analysis Area", AnalysisArea);
+        AnalysisLineTemplate.SetRange(Name, AnalysisLineTemplateName);
+        "Analysis Line".FilterGroup := 2;
+        "Analysis Line".SetRange("Analysis Area", AnalysisArea);
+        "Analysis Line".FilterGroup := 0;
+        "Analysis Line".SetFilter(Show, '<>%1', "Analysis Line".Show::No);
+        "Analysis Line".SetFilter("Date Filter", DateFilter);
+        "Analysis Line".SetFilter("Item Budget Filter", ItemBudgetFilter);
+        "Analysis Line".SetFilter("Location Filter", LocationFilter);
+        "Analysis Line".SetFilter("Dimension 1 Filter", Dim1Filter);
+        "Analysis Line".SetFilter("Dimension 2 Filter", Dim2Filter);
+        "Analysis Line".SetFilter("Dimension 3 Filter", Dim3Filter);
         if SourceTypeFilter <> SourceTypeFilter::" " then
-            "Analysis Line".SETRANGE("Source Type Filter", SourceTypeFilter);
-        "Analysis Line".SETFILTER("Source No. Filter", SourceNoFilter);
+            "Analysis Line".SetRange("Source Type Filter", SourceTypeFilter);
+        "Analysis Line".SetFilter("Source No. Filter", SourceNoFilter);
 
-        EndDate := "Analysis Line".GETRANGEMAX("Date Filter");
+        EndDate := "Analysis Line".GetRangeMax("Date Filter");
         //FiscalStartDate := AnalysisReportManagement.FindFiscalYear(EndDate);
         //FiscalStartDate:=AnalysisReportManagement.g
 
-        MaxColumnsDisplayed := ARRAYLEN(ColumnValuesDisplayed);
-        AnalysisLineFilter := "Analysis Line".GETFILTERS;
-        PeriodText := "Analysis Line".GETFILTER("Date Filter");
+        MaxColumnsDisplayed := ArrayLen(ColumnValuesDisplayed);
+        AnalysisLineFilter := "Analysis Line".GetFilters;
+        PeriodText := "Analysis Line".GetFilter("Date Filter");
         HasRounding := false;
         NoOfCols := 0;
         AnalysisReportManagement.CopyColumnsToTemp("Analysis Line", AnalysisColumnTemplName, AnalysisColumnTmp);
-        with AnalysisColumnTmp do begin
-            i := 0;
-            if FIND('-') then begin
-                repeat
-                    if Show <> Show::Never then begin
-                        i := i + 1;
-                        if i <= MaxColumnsDisplayed then begin
-                            Header[i] := "Column Header";
-                            RoundingHeader[i] := '';
-                            if "Rounding Factor" in ["Rounding Factor"::"1000", "Rounding Factor"::"1000000"] then begin
-                                HasRounding := true;
-                                case "Rounding Factor" of
-                                    "Rounding Factor"::"1000":
-                                        RoundingHeader[i] := Text000;
-                                    "Rounding Factor"::"1000000":
-                                        RoundingHeader[i] := Text001;
-                                end;
+        i := 0;
+        if AnalysisColumnTmp.Find('-') then begin
+            repeat
+                if AnalysisColumnTmp.Show <> AnalysisColumnTmp.Show::Never then begin
+                    i := i + 1;
+                    if i <= MaxColumnsDisplayed then begin
+                        Header[i] := AnalysisColumnTmp."Column Header";
+                        RoundingHeader[i] := '';
+                        if AnalysisColumnTmp."Rounding Factor" in [AnalysisColumnTmp."Rounding Factor"::"1000", AnalysisColumnTmp."Rounding Factor"::"1000000"] then begin
+                            HasRounding := true;
+                            case AnalysisColumnTmp."Rounding Factor" of
+                                AnalysisColumnTmp."Rounding Factor"::"1000":
+                                    RoundingHeader[i] := Text000;
+                                AnalysisColumnTmp."Rounding Factor"::"1000000":
+                                    RoundingHeader[i] := Text001;
                             end;
                         end;
                     end;
-                    NoOfCols := NoOfCols + 1;
-                until (i >= MaxColumnsDisplayed) or (NEXT = 0);
-                MaxColumnsDisplayed := i;
-            end;
+                end;
+                NoOfCols := NoOfCols + 1;
+            until (i >= MaxColumnsDisplayed) or (AnalysisColumnTmp.Next = 0);
+            MaxColumnsDisplayed := i;
         end;
     end;
 
@@ -916,36 +930,34 @@ report 50018 "Analysis Report-Landscape"
         NonZero: Boolean;
     begin
         NonZero := false;
-        with AnalysisColumnTmp do begin
-            SETRANGE("Analysis Column Template", AnalysisColumnTemplName);
-            i := 0;
-            if FIND('-') then
-                repeat
-                    if Show <> Show::Never then begin
-                        i := i + 1;
-                        ColumnValuesDisplayed[i] :=
-                          AnalysisReportManagement.CalcCell("Analysis Line", AnalysisColumnTmp, false);
-                        if AnalysisReportManagement.GetDivisionError then
-                            if ShowError in [ShowError::"Division by Zero", ShowError::Both] then
-                                ColumnValuesAsText[i] := Text002
+        AnalysisColumnTmp.SetRange("Analysis Column Template", AnalysisColumnTemplName);
+        i := 0;
+        if AnalysisColumnTmp.Find('-') then
+            repeat
+                if AnalysisColumnTmp.Show <> AnalysisColumnTmp.Show::Never then begin
+                    i := i + 1;
+                    ColumnValuesDisplayed[i] :=
+                      AnalysisReportManagement.CalcCell("Analysis Line", AnalysisColumnTmp, false);
+                    if AnalysisReportManagement.GetDivisionError then
+                        if ShowError in [ShowError::"Division by Zero", ShowError::Both] then
+                            ColumnValuesAsText[i] := Text002
+                        else
+                            ColumnValuesAsText[i] := ''
+                    else
+                        if AnalysisReportManagement.GetPeriodError then
+                            if ShowError in [ShowError::"Period Error", ShowError::Both] then
+                                ColumnValuesAsText[i] := Text004
                             else
                                 ColumnValuesAsText[i] := ''
-                        else
-                            if AnalysisReportManagement.GetPeriodError then
-                                if ShowError in [ShowError::"Period Error", ShowError::Both] then
-                                    ColumnValuesAsText[i] := Text004
-                                else
-                                    ColumnValuesAsText[i] := ''
-                            else begin
-                                NonZero := NonZero or (ColumnValuesDisplayed[i] <> 0);
-                                ColumnValuesAsText[i] :=
-                                  MatrixMgt.FormatAmount(ColumnValuesDisplayed[i], "Rounding Factor", false);
-                                /* ColumnValuesAsText[i] :=
-                                  MatrixMgt.FormatValue(ColumnValuesDisplayed[i], "Rounding Factor", false); */
-                            end;
-                    end;
-                until (i >= MaxColumnsDisplayed) or (NEXT = 0);
-        end;
+                        else begin
+                            NonZero := NonZero or (ColumnValuesDisplayed[i] <> 0);
+                            ColumnValuesAsText[i] :=
+                              MatrixMgt.FormatAmount(ColumnValuesDisplayed[i], AnalysisColumnTmp."Rounding Factor", false);
+                            /* ColumnValuesAsText[i] :=
+                              MatrixMgt.FormatValue(ColumnValuesDisplayed[i], "Rounding Factor", false); */
+                        end;
+                end;
+            until (i >= MaxColumnsDisplayed) or (AnalysisColumnTmp.Next = 0);
         exit(NonZero);
     end;
 
@@ -967,13 +979,13 @@ report 50018 "Analysis Report-Landscape"
 
     local procedure ValidateAnalysisLineTemplate();
     begin
-        if AnalysisLineTemplate.GET(AnalysisArea, AnalysisLineTemplateName) then begin
+        if AnalysisLineTemplate.Get(AnalysisArea, AnalysisLineTemplateName) then begin
             if AnalysisLineTemplate."Default Column Template Name" <> '' then
                 AnalysisColumnTemplName := AnalysisLineTemplate."Default Column Template Name";
             if AnalysisLineTemplate."Item Analysis View Code" <> '' then
-                ItemAnalysisView.GET(AnalysisArea, AnalysisLineTemplate."Item Analysis View Code")
+                ItemAnalysisView.Get(AnalysisArea, AnalysisLineTemplate."Item Analysis View Code")
             else begin
-                CLEAR(ItemAnalysisView);
+                Clear(ItemAnalysisView);
                 ItemAnalysisView."Dimension 1 Code" := GLSetup."Global Dimension 1 Code";
                 ItemAnalysisView."Dimension 2 Code" := GLSetup."Global Dimension 2 Code";
             end;
@@ -987,11 +999,11 @@ report 50018 "Analysis Report-Landscape"
     begin
         if Dim = '' then
             exit(false);
-        DimValList.LOOKUPMODE(true);
-        DimVal.SETRANGE("Dimension Code", Dim);
-        DimValList.SETTABLEVIEW(DimVal);
-        if DimValList.RUNMODAL = ACTION::LookupOK then begin
-            DimValList.GETRECORD(DimVal);
+        DimValList.LookupMode(true);
+        DimVal.SetRange("Dimension Code", Dim);
+        DimValList.SetTableView(DimVal);
+        if DimValList.RunModal = Action::LookupOK then begin
+            DimValList.GetRecord(DimVal);
             Text := DimValList.GetSelectionFilter;
             exit(true);
         end;
@@ -1005,19 +1017,19 @@ report 50018 "Analysis Report-Landscape"
                 begin
                     if ItemAnalysisView."Dimension 1 Code" <> '' then
                         exit('1,6,' + ItemAnalysisView."Dimension 1 Code");
-                    exit(STRSUBSTNO(Text005, DimNo));
+                    exit(StrSubstNo(Text005, DimNo));
                 end;
             2:
                 begin
                     if ItemAnalysisView."Dimension 2 Code" <> '' then
                         exit('1,6,' + ItemAnalysisView."Dimension 2 Code");
-                    exit(STRSUBSTNO(Text005, DimNo));
+                    exit(StrSubstNo(Text005, DimNo));
                 end;
             3:
                 begin
                     if ItemAnalysisView."Dimension 3 Code" <> '' then
                         exit('1,6,' + ItemAnalysisView."Dimension 3 Code");
-                    exit(STRSUBSTNO(Text005, DimNo));
+                    exit(StrSubstNo(Text005, DimNo));
                 end;
         end;
     end;

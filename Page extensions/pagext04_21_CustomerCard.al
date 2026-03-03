@@ -14,58 +14,67 @@ pageextension 50104 CustomerCardExt extends "Customer Card"
         // Add changes to page layout here
         addafter("Last Date Modified")
         {
-            field("Report Decimal Places"; "Report Decimal Places")
+            field("Report Decimal Places"; Rec."Report Decimal Places")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Report Decimal Places field.';
             }
-            field("Show Total Qty"; "Show Total Qty")
+            field("Show Total Qty"; Rec."Show Total Qty")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Show Total Qty field.';
             }
 
-            field("Mandatory CY Fields"; "Mandatory CY Fields")
+            field("Mandatory CY Fields"; Rec."Mandatory CY Fields")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Mandatory CY Fields field.';
             }
         }
 
         addafter("VAT Registration No.")
         {
-            field("T.I.C. Registration No."; "T.I.C. Registration No.")
+            field("T.I.C. Registration No."; Rec."T.I.C. Registration No.")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the T.I.C. Registration No. field.';
             }
         }
 
         addafter(GLN)
         {
-            field("GLN Delivery"; "GLN Delivery")
+            field("GLN Delivery"; Rec."GLN Delivery")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the GLN Delivery field.';
             }
-            field("Show GlobalGab COC No."; "Show GlobalGab COC No.")
+            field("Show GlobalGab COC No."; Rec."Show GlobalGab COC No.")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Show GlobalGab COC No. field.';
             }
         }
 
         addafter("Customized Calendar")
         {
-            field("Ship-to Warehouse Code"; "Ship-to Warehouse Code")
+            field("Ship-to Warehouse Code"; Rec."Ship-to Warehouse Code")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Ship-to Warehouse Code field.';
             }
-            field("Ship-to Warehouse Name"; "Ship-to Warehouse Name")
+            field("Ship-to Warehouse Name"; Rec."Ship-to Warehouse Name")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Ship-to Warehouse Name field.';
             }
         }
 
         addafter("E-Mail")
         {
-            field("E-Mail CC"; "E-Mail CC")
+            field("E-Mail CC"; Rec."E-Mail CC")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Email CC field.';
             }
         }
     }
@@ -98,14 +107,14 @@ pageextension 50104 CustomerCardExt extends "Customer Card"
                     rpt_Statement.RUNMODAL;
                     */
 
-                    rL_ReportSelections.RESET;
-                    rL_ReportSelections.SETRANGE(Usage, rL_ReportSelections.Usage::"C.Statement");
-                    rL_ReportSelections.FINDSET;
-                    rL_ReportSelections.TESTFIELD("Report ID");
+                    rL_ReportSelections.Reset;
+                    rL_ReportSelections.SetRange(Usage, rL_ReportSelections.Usage::"C.Statement");
+                    rL_ReportSelections.FindSet;
+                    rL_ReportSelections.TestField("Report ID");
 
-                    rL_Customer.GET("No.");
-                    rL_Customer.SETRECFILTER;
-                    REPORT.RUNMODAL(rL_ReportSelections."Report ID", true, false, rL_Customer);
+                    rL_Customer.GET(Rec."No.");
+                    rL_Customer.SetRecFilter;
+                    Report.RunModal(rL_ReportSelections."Report ID", true, false, rL_Customer);
                     //-TAL0.1
                 end;
             }
@@ -129,14 +138,14 @@ pageextension 50104 CustomerCardExt extends "Customer Card"
                 begin
                     //Codeunit Customer Layout - Statement
                     //+NOD0.4
-                    rL_ReportSelections.RESET;
-                    rL_ReportSelections.SETRANGE(Usage, rL_ReportSelections.Usage::"C.Statement");
-                    rL_ReportSelections.FINDSET;
-                    rL_ReportSelections.TESTFIELD("Report ID");
+                    rL_ReportSelections.Reset;
+                    rL_ReportSelections.SetRange(Usage, rL_ReportSelections.Usage::"C.Statement");
+                    rL_ReportSelections.FindSet;
+                    rL_ReportSelections.TestField("Report ID");
 
-                    rL_Customer.GET("No.");
-                    rL_Customer.SETRECFILTER;
-                    REPORT.RUNMODAL(rL_ReportSelections."Report ID", true, false, rL_Customer);
+                    rL_Customer.GET(Rec."No.");
+                    rL_Customer.SetRecFilter;
+                    Report.RunModal(rL_ReportSelections."Report ID", true, false, rL_Customer);
                     //-NOD0.4
                 end;
             }

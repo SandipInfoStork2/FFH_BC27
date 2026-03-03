@@ -6,21 +6,24 @@ pageextension 50164 PurchasesPayablesSetupExt extends "Purchases & Payables Setu
 
         addafter("Posted Prepmt. Cr. Memo Nos.")
         {
-            field("Grower Nos."; "Grower Nos.")
+            field("Grower Nos."; Rec."Grower Nos.")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Grower Nos. field.';
             }
-            field("Grower Receipt Nos."; "Grower Receipt Nos.")
+            field("Grower Receipt Nos."; Rec."Grower Receipt Nos.")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Grower Receipt Nos. field.';
             }
         }
 
         addafter("Document Default Line Type")
         {
-            field("Mand. P.O. Expected Recpt Date"; "Mand. P.O. Expected Recpt Date")
+            field("Mand. P.O. Expected Recpt Date"; Rec."Mand. P.O. Expected Recpt Date")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Mandatory P.O. Expected Receipt Date field.';
             }
         }
     }

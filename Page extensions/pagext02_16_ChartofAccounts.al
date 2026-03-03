@@ -13,7 +13,7 @@ pageextension 50102 ChartofAccountsExt extends "Chart of Accounts"
             Promoted = true;
         }
 
-        addlast("reporting")
+        addlast(reporting)
         {
             action("Financial Analysis Report")
             {
@@ -23,7 +23,7 @@ pageextension 50102 ChartofAccountsExt extends "Chart of Accounts"
                 Promoted = true;
                 PromotedCategory = Report;
                 PromotedOnly = true;
-                Tooltip = 'Custom: Financial Analysis Report';
+                ToolTip = 'Custom: Financial Analysis Report';
 
             }
             action("Balance Sheet")
@@ -34,7 +34,7 @@ pageextension 50102 ChartofAccountsExt extends "Chart of Accounts"
                 Promoted = true;
                 PromotedCategory = Report;
                 PromotedOnly = true;
-                Tooltip = 'Custom: Balance Sheet';
+                ToolTip = 'Custom: Balance Sheet';
 
             }
             action("Income Statement")
@@ -45,7 +45,7 @@ pageextension 50102 ChartofAccountsExt extends "Chart of Accounts"
                 Promoted = true;
                 PromotedCategory = Report;
                 PromotedOnly = true;
-                Tooltip = 'Custom: Income Statement';
+                ToolTip = 'Custom: Income Statement';
 
             }
             action("Trial Balance - Full Detail")
@@ -56,7 +56,7 @@ pageextension 50102 ChartofAccountsExt extends "Chart of Accounts"
                 Promoted = true;
                 PromotedCategory = Report;
                 PromotedOnly = true;
-                Tooltip = 'Custom: Trial Balance - Full Detail';
+                ToolTip = 'Custom: Trial Balance - Full Detail';
 
             }
             action("Trial Balance with O/B")
@@ -67,7 +67,7 @@ pageextension 50102 ChartofAccountsExt extends "Chart of Accounts"
                 Promoted = true;
                 PromotedCategory = Report;
                 PromotedOnly = true;
-                Tooltip = 'Custom: Trial Balance with O/B';
+                ToolTip = 'Custom: Trial Balance with O/B';
 
             }
             /*

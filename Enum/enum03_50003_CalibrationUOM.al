@@ -13,25 +13,25 @@ enum 50003 "Calibration UOM"
     }
 
 
-    value(50002; "cm")
+    value(50002; cm)
     {
         Caption = 'cm';
     }
 
 
-    value(50003; "mm")
+    value(50003; mm)
     {
         Caption = 'mm';
     }
 
 
-    value(50004; "kg")
+    value(50004; kg)
     {
         Caption = 'kg';
     }
 
 
-    value(50005; "g")
+    value(50005; g)
     {
         Caption = 'g';
     }
@@ -43,82 +43,82 @@ enum 50003 "Calibration UOM"
     }
 
 
-    value(50007; "PK")
+    value(50007; PK)
     {
         Caption = 'PK';
     }
 
 
-    value(50008; "Topf")
+    value(50008; Topf)
     {
         Caption = 'Topf';
     }
 
 
-    value(50009; "l")
+    value(50009; l)
     {
         Caption = 'l';
     }
 
 
-    value(50010; "Netz")
+    value(50010; Netz)
     {
         Caption = 'Netz';
     }
 
 
 
-    value(50011; "BTL")
+    value(50011; BTL)
     {
         Caption = 'BTL';
     }
 
 
-    value(50012; "BE")
+    value(50012; BE)
     {
         Caption = 'BE';
     }
 
 
-    value(50013; "Stiele")
+    value(50013; Stiele)
     {
         Caption = 'Stiele';
     }
 
-    value(50014; "Bund")
+    value(50014; Bund)
     {
         Caption = 'Bund';
     }
 
-    value(50015; "KRT")
+    value(50015; KRT)
     {
         Caption = 'KRT';
     }
 
-    value(50016; "FS")
+    value(50016; FS)
     {
         Caption = 'FS';
     }
 
 
-    value(50017; "STRS")
+    value(50017; STRS)
     {
         Caption = 'STRS';
     }
 
-    value(50018; "SC")
+    value(50018; SC)
     {
         Caption = 'SC';
     }
 
 
-    value(50019; "EIM")
+    value(50019; EIM)
     {
         Caption = 'EIM';
     }
 
 
-    value(50020; "DS")
+    value(50020; DS)
     {
         Caption = 'DS';
     }

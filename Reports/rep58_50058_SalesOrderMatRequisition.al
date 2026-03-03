@@ -5,6 +5,7 @@ report 50058 "Sales Order Mat. Requisition"
     RDLCLayout = './Layouts/rep58_50058_SalesOrderMatRequisition.rdlc';
 
     PreviewMode = PrintLayout;
+    ApplicationArea = All;
 
     dataset
     {
@@ -37,13 +38,13 @@ report 50058 "Sales Order Mat. Requisition"
             column(UnitofMeasureCode_SalesLine; "Sales Line"."Unit of Measure Code")
             {
             }
-            column(ShipmentDate_SalesLine; FORMAT("Sales Line"."Shipment Date"))
+            column(ShipmentDate_SalesLine; Format("Sales Line"."Shipment Date"))
             {
             }
             column(ShiptoCode_SalesLine; "Sales Line"."Ship-to Code")
             {
             }
-            column(vG_ShowDetails; FORMAT(vG_ShowDetails))
+            column(vG_ShowDetails; Format(vG_ShowDetails))
             {
             }
             column(ItemWithRouting; ItemWithRouting)
@@ -73,7 +74,7 @@ report 50058 "Sales Order Mat. Requisition"
             column(vG_ShipmentDateFilter; vG_ShipmentDateFilter)
             {
             }
-            column(vG_ShowSalesOrder; FORMAT(vG_ShowSalesOrder))
+            column(vG_ShowSalesOrder; Format(vG_ShowSalesOrder))
             {
             }
             dataitem("Production BOM Line"; "Production BOM Line")
@@ -107,8 +108,8 @@ report 50058 "Sales Order Mat. Requisition"
                 trigger OnAfterGetRecord();
                 begin
                     vG_QtytoOrder := 0;
-                    CLEAR(rG_ItemBOMLine);
-                    if rG_ItemBOMLine.GET("Production BOM Line"."No.") then;
+                    Clear(rG_ItemBOMLine);
+                    if rG_ItemBOMLine.Get("Production BOM Line"."No.") then;
 
                     vG_QtytoOrder := "Production BOM Line"."Quantity per" * "Sales Line"."Quantity (Base)";
                 end;
@@ -117,29 +118,29 @@ report 50058 "Sales Order Mat. Requisition"
                 begin
 
                     if rG_Item."Production BOM No." = '' then begin
-                        CurrReport.SKIP;
+                        CurrReport.Skip;
                     end;
 
-                    "Production BOM Line".SETFILTER("Production BOM No.", rG_Item."Production BOM No.");
-                    "Production BOM Line".SETFILTER("Production BOM Line"."Quantity per", '<>%1', 0);
+                    "Production BOM Line".SetFilter("Production BOM No.", rG_Item."Production BOM No.");
+                    "Production BOM Line".SetFilter("Production BOM Line"."Quantity per", '<>%1', 0);
                 end;
             }
 
             trigger OnAfterGetRecord();
             begin
 
-                rG_Item.GET("No.");
+                rG_Item.Get("No.");
                 ItemWithRouting := rG_Item."Routing No." <> '';
 
-                rG_SalesHeader.GET("Sales Line"."Document Type", "Sales Line"."Document No.");
+                rG_SalesHeader.Get("Sales Line"."Document Type", "Sales Line"."Document No.");
                 //rG_ShiptoAddress.GET(rG_SalesHeader."Bill-to Customer No.",rG_SalesHeader."Ship-to Code");
 
                 //TAL0.1+
                 vG_ShiptoName := '';
-                rG_ShiptoAddress.RESET;
-                rG_ShiptoAddress.SETFILTER("Customer No.", rG_SalesHeader."Bill-to Customer No.");
-                rG_ShiptoAddress.SETRANGE(Code, "Sales Line"."Ship-to Code");
-                if rG_ShiptoAddress.FINDSET then begin
+                rG_ShiptoAddress.Reset;
+                rG_ShiptoAddress.SetFilter("Customer No.", rG_SalesHeader."Bill-to Customer No.");
+                rG_ShiptoAddress.SetRange(Code, "Sales Line"."Ship-to Code");
+                if rG_ShiptoAddress.FindSet then begin
                     vG_ShiptoName := rG_ShiptoAddress.Name;
                 end;
 
@@ -147,22 +148,22 @@ report 50058 "Sales Order Mat. Requisition"
 
                 vG_QtytoOrder := 0;
 
-                CLEAR(rG_ProductionBOMHeader);
-                if rG_ProductionBOMHeader.GET(rG_Item."Production BOM No.") then begin
+                Clear(rG_ProductionBOMHeader);
+                if rG_ProductionBOMHeader.Get(rG_Item."Production BOM No.") then begin
 
                 end;
             end;
 
             trigger OnPreDataItem();
             begin
-                "Sales Line".SETRANGE("Document Type", "Sales Line"."Document Type"::Order);
-                "Sales Line".SETRANGE(Type, "Sales Line".Type::Item);
-                "Sales Line".SETFILTER(Quantity, '<>%1', 0);
+                "Sales Line".SetRange("Document Type", "Sales Line"."Document Type"::Order);
+                "Sales Line".SetRange(Type, "Sales Line".Type::Item);
+                "Sales Line".SetFilter(Quantity, '<>%1', 0);
 
-                rG_CompanyInformation.GET;
+                rG_CompanyInformation.Get;
                 DisplayName := rG_CompanyInformation.Name;
 
-                vG_ShipmentDateFilter := "Sales Line".GETFILTER("Shipment Date");
+                vG_ShipmentDateFilter := "Sales Line".GetFilter("Shipment Date");
             end;
         }
     }
@@ -173,7 +174,7 @@ report 50058 "Sales Order Mat. Requisition"
 
         layout
         {
-            area(content)
+            area(Content)
             {
                 group(Options)
                 {
@@ -181,11 +182,15 @@ report 50058 "Sales Order Mat. Requisition"
                     {
                         Caption = 'Show Details';
                         Visible = true;
+                        ToolTip = 'Specifies the value of the Show Details field.';
+                        ApplicationArea = All;
                     }
                     field(vG_ShowSalesOrder; vG_ShowSalesOrder)
                     {
                         Caption = 'Show Sales Order';
                         Visible = false;
+                        ToolTip = 'Specifies the value of the Show Sales Order field.';
+                        ApplicationArea = All;
                     }
                 }
             }

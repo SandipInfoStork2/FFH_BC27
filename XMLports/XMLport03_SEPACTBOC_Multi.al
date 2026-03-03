@@ -50,7 +50,7 @@ xmlport 50003 "SEPA CT pain.001.001.03 BOC Mu"
                     }
                     textelement(InitgPty)
                     {
-                        fieldelement(Nm; CompanyInformation.Name)
+                        fieldelement(Nm; companyinformation.Name)
                         {
                         }
                     }
@@ -59,10 +59,10 @@ xmlport 50003 "SEPA CT pain.001.001.03 BOC Mu"
                 {
                     XmlName = 'PmtInf';
                     UseTemporary = true;
-                    fieldelement(PmtInfId; PaymentExportDataGroup."Payment Information ID")
+                    fieldelement(PmtInfId; paymentexportdatagroup."Payment Information ID")
                     {
                     }
-                    fieldelement(PmtMtd; PaymentExportDataGroup."SEPA Payment Method Text")
+                    fieldelement(PmtMtd; paymentexportdatagroup."SEPA Payment Method Text")
                     {
                     }
                     textelement(PmtTpInf)
@@ -84,12 +84,12 @@ xmlport 50003 "SEPA CT pain.001.001.03 BOC Mu"
                             }
                         }
                     }
-                    fieldelement(ReqdExctnDt; PaymentExportDataGroup."Transfer Date")
+                    fieldelement(ReqdExctnDt; paymentexportdatagroup."Transfer Date")
                     {
                     }
                     textelement(Dbtr)
                     {
-                        fieldelement(Nm; CompanyInformation.Name)
+                        fieldelement(Nm; companyinformation.Name)
                         {
                         }
                         textelement(CtctDtls)
@@ -100,7 +100,7 @@ xmlport 50003 "SEPA CT pain.001.001.03 BOC Mu"
                                 MaxOccurs = Once;
                                 XmlName = 'PhneNb';
                             }
-                            fieldelement(EmailAdr; CompanyInformation."E-Mail")
+                            fieldelement(EmailAdr; companyinformation."E-Mail")
                             {
                             }
                         }
@@ -110,7 +110,7 @@ xmlport 50003 "SEPA CT pain.001.001.03 BOC Mu"
                         textelement(dbtracctid)
                         {
                             XmlName = 'Id';
-                            fieldelement(IBAN; PaymentExportDataGroup."Sender Bank Account No.")
+                            fieldelement(IBAN; paymentexportdatagroup."Sender Bank Account No.")
                             {
                                 MaxOccurs = Once;
                                 MinOccurs = Once;
@@ -122,7 +122,7 @@ xmlport 50003 "SEPA CT pain.001.001.03 BOC Mu"
                         textelement(dbtragtfininstnid)
                         {
                             XmlName = 'FinInstnId';
-                            fieldelement(BIC; PaymentExportDataGroup."Sender Bank BIC")
+                            fieldelement(BIC; paymentexportdatagroup."Sender Bank BIC")
                             {
                                 MaxOccurs = Once;
                                 MinOccurs = Once;
@@ -135,13 +135,13 @@ xmlport 50003 "SEPA CT pain.001.001.03 BOC Mu"
                     }
                     tableelement(paymentexportdata; "Payment Export Data")
                     {
-                        LinkFields = "Sender Bank BIC" = FIELD("Sender Bank BIC"), "SEPA Instruction Priority Text" = FIELD("SEPA Instruction Priority Text"), "Transfer Date" = FIELD("Transfer Date"), "SEPA Batch Booking" = FIELD("SEPA Batch Booking"), "SEPA Charge Bearer Text" = FIELD("SEPA Charge Bearer Text"), "Payment Information ID" = FIELD("Payment Information ID");
-                        LinkTable = PaymentExportDataGroup;
+                        LinkFields = "Sender Bank BIC" = field("Sender Bank BIC"), "SEPA Instruction Priority Text" = field("SEPA Instruction Priority Text"), "Transfer Date" = field("Transfer Date"), "SEPA Batch Booking" = field("SEPA Batch Booking"), "SEPA Charge Bearer Text" = field("SEPA Charge Bearer Text"), "Payment Information ID" = field("Payment Information ID");
+                        LinkTable = paymentexportdatagroup;
                         XmlName = 'CdtTrfTxInf';
                         UseTemporary = true;
                         textelement(PmtId)
                         {
-                            fieldelement(EndToEndId; PaymentExportData."End-to-End ID")
+                            fieldelement(EndToEndId; paymentexportdata."End-to-End ID")
                             {
                             }
                         }
@@ -151,7 +151,7 @@ xmlport 50003 "SEPA CT pain.001.001.03 BOC Mu"
                             XmlName = 'PmtTpInf';
                             textelement(LclInstrm)
                             {
-                                fieldelement(Prtry; PaymentExportDataGroup."Transfer Date")
+                                fieldelement(Prtry; paymentexportdatagroup."Transfer Date")
                                 {
 
 
@@ -164,54 +164,54 @@ xmlport 50003 "SEPA CT pain.001.001.03 BOC Mu"
                                 myInt: Integer;
                             begin
                                 //IF PaymentExportDataGroup."Recipient Transfer Date" = 0D THEN BEGIN
-                                currXMLport.SKIP;
+                                currXMLport.Skip;
                                 //END;
                             end;
                         }
                         textelement(Amt)
                         {
-                            fieldelement(InstdAmt; PaymentExportData.Amount)
+                            fieldelement(InstdAmt; paymentexportdata.Amount)
                             {
-                                fieldattribute(Ccy; PaymentExportData."Currency Code")
+                                fieldattribute(Ccy; paymentexportdata."Currency Code")
                                 {
                                 }
                             }
                         }
                         textelement(Cdtr)
                         {
-                            fieldelement(Nm; PaymentExportData."Recipient Name")
+                            fieldelement(Nm; paymentexportdata."Recipient Name")
                             {
                             }
                             textelement(cdtrpstladr)
                             {
                                 XmlName = 'PstlAdr';
-                                fieldelement(Ctry; PaymentExportData."Recipient Country/Region Code")
+                                fieldelement(Ctry; paymentexportdata."Recipient Country/Region Code")
                                 {
 
                                     trigger OnBeforePassField();
                                     begin
-                                        if PaymentExportData."Recipient Country/Region Code" = '' then
-                                            currXMLport.SKIP;
+                                        if paymentexportdata."Recipient Country/Region Code" = '' then
+                                            currXMLport.Skip;
                                     end;
                                 }
-                                fieldelement(AdrLine; PaymentExportData."Recipient Address")
+                                fieldelement(AdrLine; paymentexportdata."Recipient Address")
                                 {
 
                                     trigger OnBeforePassField();
                                     begin
-                                        if PaymentExportData."Recipient Address" = '' then
-                                            currXMLport.SKIP;
+                                        if paymentexportdata."Recipient Address" = '' then
+                                            currXMLport.Skip;
                                     end;
                                 }
 
                                 trigger OnBeforePassVariable();
                                 begin
-                                    if (PaymentExportData."Recipient Address" = '') and
-                                       (PaymentExportData."Recipient Post Code" = '') and
-                                       (PaymentExportData."Recipient City" = '') and
-                                       (PaymentExportData."Recipient Country/Region Code" = '')
+                                    if (paymentexportdata."Recipient Address" = '') and
+                                       (paymentexportdata."Recipient Post Code" = '') and
+                                       (paymentexportdata."Recipient City" = '') and
+                                       (paymentexportdata."Recipient Country/Region Code" = '')
                                     then
-                                        currXMLport.SKIP;
+                                        currXMLport.Skip;
                                 end;
                             }
                         }
@@ -220,9 +220,9 @@ xmlport 50003 "SEPA CT pain.001.001.03 BOC Mu"
                             textelement(cdtracctid)
                             {
                                 XmlName = 'Id';
-                                fieldelement(IBAN; PaymentExportData."Recipient Bank Acc. No.")
+                                fieldelement(IBAN; paymentexportdata."Recipient Bank Acc. No.")
                                 {
-                                    FieldValidate = yes;
+                                    FieldValidate = Yes;
                                     MaxOccurs = Once;
                                     MinOccurs = Once;
                                 }
@@ -243,22 +243,22 @@ xmlport 50003 "SEPA CT pain.001.001.03 BOC Mu"
 
                                 trigger OnBeforePassVariable();
                                 begin
-                                    if RemittanceText2 = '' then
-                                        currXMLport.SKIP;
+                                    if remittancetext2 = '' then
+                                        currXMLport.Skip;
                                 end;
                             }
 
                             trigger OnBeforePassVariable();
                             begin
-                                RemittanceText1 := '';
-                                RemittanceText2 := '';
-                                TempPaymentExportRemittanceText.SETRANGE("Pmt. Export Data Entry No.", PaymentExportData."Entry No.");
-                                if not TempPaymentExportRemittanceText.FINDSET then
-                                    currXMLport.SKIP;
-                                RemittanceText1 := COPYSTR(UPPERCASE(CompanyInformation.Name) + '-' + TempPaymentExportRemittanceText.Text, 1, 140); //TAL0.4 TempPaymentExportRemittanceText.Text;
-                                if TempPaymentExportRemittanceText.NEXT = 0 then
+                                remittancetext1 := '';
+                                remittancetext2 := '';
+                                TempPaymentExportRemittanceText.SetRange("Pmt. Export Data Entry No.", paymentexportdata."Entry No.");
+                                if not TempPaymentExportRemittanceText.FindSet then
+                                    currXMLport.Skip;
+                                remittancetext1 := CopyStr(UpperCase(companyinformation.Name) + '-' + TempPaymentExportRemittanceText.Text, 1, 140); //TAL0.4 TempPaymentExportRemittanceText.Text;
+                                if TempPaymentExportRemittanceText.Next = 0 then
                                     exit;
-                                RemittanceText2 := COPYSTR(UPPERCASE(CompanyInformation.Name) + '-' + TempPaymentExportRemittanceText.Text, 1, 140); //TAL0.4 TempPaymentExportRemittanceText.Text;
+                                remittancetext2 := CopyStr(UpperCase(companyinformation.Name) + '-' + TempPaymentExportRemittanceText.Text, 1, 140); //TAL0.4 TempPaymentExportRemittanceText.Text;
                             end;
                         }
                     }
@@ -266,12 +266,12 @@ xmlport 50003 "SEPA CT pain.001.001.03 BOC Mu"
 
                 trigger OnAfterGetRecord();
                 begin
-                    if not PaymentExportData.GetPreserveNonLatinCharacters then
-                        PaymentExportData.CompanyInformationConvertToLatin(CompanyInformation);
+                    if not paymentexportdata.GetPreserveNonLatinCharacters then
+                        paymentexportdata.CompanyInformationConvertToLatin(companyinformation);
 
-                    vG_CompanyPhoneNo := CompanyInformation."Phone No.";
-                    if STRPOS('+357', vG_CompanyPhoneNo) = 0 then begin
-                        vG_CompanyPhoneNo := '+357-' + DELCHR(vG_CompanyPhoneNo, '=', ' ');
+                    vg_companyphoneno := companyinformation."Phone No.";
+                    if StrPos('+357', vg_companyphoneno) = 0 then begin
+                        vg_companyphoneno := '+357-' + DelChr(vg_companyphoneno, '=', ' ');
                     end;
                 end;
             }
@@ -304,30 +304,30 @@ xmlport 50003 "SEPA CT pain.001.001.03 BOC Mu"
         SEPACTFillExportBuffer: Codeunit "SEPA CT-Fill Export Buffer";
         PaymentGroupNo: Integer;
     begin
-        SEPACTFillExportBuffer.FillExportBuffer("Gen. Journal Line", PaymentExportData);
-        PaymentExportData.GetRemittanceTexts(TempPaymentExportRemittanceText);
+        SEPACTFillExportBuffer.FillExportBuffer("Gen. Journal Line", paymentexportdata);
+        paymentexportdata.GetRemittanceTexts(TempPaymentExportRemittanceText);
 
 
 
-        ServiceLevel := 'SEPA';
+        servicelevel := 'SEPA';
         //ServiceLevel2:='SEPA';
-        CategoryPurpose := 'SUPP';
-        ChrgBrTExt := 'SHAR';
+        categorypurpose := 'SUPP';
+        chrgbrtext := 'SHAR';
         //CompanyCode:=PaymentExportData."Bank Transfer Company Code";
         //CompanyCode2:=PaymentExportData."Bank Transfer Company Code";
 
-        NoOfTransfers := FORMAT(PaymentExportData.COUNT);
-        MessageID := PaymentExportData."Message ID";
-        CreatedDateTime := FORMAT(CURRENTDATETIME, 19, 9);
-        PaymentExportData.CALCSUMS(Amount);
-        ControlSum := FORMAT(PaymentExportData.Amount, 0, 9);
+        nooftransfers := Format(paymentexportdata.Count);
+        messageid := paymentexportdata."Message ID";
+        createddatetime := Format(CurrentDateTime, 19, 9);
+        paymentexportdata.CalcSums(Amount);
+        controlsum := Format(paymentexportdata.Amount, 0, 9);
 
-        PaymentExportData.SETCURRENTKEY(
+        paymentexportdata.SetCurrentKey(
           "Sender Bank BIC", "SEPA Instruction Priority Text", "Transfer Date",
           "SEPA Batch Booking", "SEPA Charge Bearer Text");
 
-        if not PaymentExportData.FINDSET then
-            ERROR(NoDataToExportErr);
+        if not paymentexportdata.FindSet then
+            Error(NoDataToExportErr);
 
         InitPmtGroup;
         repeat
@@ -335,9 +335,9 @@ xmlport 50003 "SEPA CT pain.001.001.03 BOC Mu"
                 InsertPmtGroup(PaymentGroupNo);
                 InitPmtGroup;
             end;
-            PaymentExportDataGroup."Line No." += 1;
-            PaymentExportDataGroup.Amount += PaymentExportData.Amount;
-        until PaymentExportData.NEXT = 0;
+            paymentexportdatagroup."Line No." += 1;
+            paymentexportdatagroup.Amount += paymentexportdata.Amount;
+        until paymentexportdata.Next = 0;
         //InsertPmtGroup(PaymentGroupNo); //NOD0.2
     end;
 
@@ -361,20 +361,20 @@ xmlport 50003 "SEPA CT pain.001.001.03 BOC Mu"
 
     local procedure InitPmtGroup();
     begin
-        PaymentExportDataGroup := PaymentExportData;
-        PaymentExportDataGroup."Line No." := 0; // used for counting transactions within group
-        PaymentExportDataGroup.Amount := 0; // used for summarizing transactions within group
+        paymentexportdatagroup := paymentexportdata;
+        paymentexportdatagroup."Line No." := 0; // used for counting transactions within group
+        paymentexportdatagroup.Amount := 0; // used for summarizing transactions within group
     end;
 
     local procedure InsertPmtGroup(var PaymentGroupNo: Integer);
     begin
         PaymentGroupNo += 1;
-        PaymentExportDataGroup."Entry No." := PaymentGroupNo;
-        PaymentExportDataGroup."Payment Information ID" :=
-          COPYSTR(
-            STRSUBSTNO('%1/%2', PaymentExportData."Message ID", PaymentGroupNo),
-            1, MAXSTRLEN(PaymentExportDataGroup."Payment Information ID"));
-        PaymentExportDataGroup.INSERT;
+        paymentexportdatagroup."Entry No." := PaymentGroupNo;
+        paymentexportdatagroup."Payment Information ID" :=
+          CopyStr(
+            StrSubstNo('%1/%2', paymentexportdata."Message ID", PaymentGroupNo),
+            1, MaxStrLen(paymentexportdatagroup."Payment Information ID"));
+        paymentexportdatagroup.Insert;
     end;
 }
 

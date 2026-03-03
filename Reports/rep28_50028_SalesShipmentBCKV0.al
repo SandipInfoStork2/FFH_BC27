@@ -9,12 +9,13 @@ report 50028 "Sales - Shipment - BCK - V.0"
 
     Caption = 'Sales - Shipment';
     PreviewMode = PrintLayout;
+    ApplicationArea = All;
 
     dataset
     {
         dataitem("Sales Shipment Header"; "Sales Shipment Header")
         {
-            DataItemTableView = SORTING("No.");
+            DataItemTableView = sorting("No.");
             RequestFilterFields = "No.", "Sell-to Customer No.", "No. Printed";
             RequestFilterHeading = 'Posted Sales Shipment';
             column(No_SalesShptHeader; "No.")
@@ -22,10 +23,10 @@ report 50028 "Sales - Shipment - BCK - V.0"
             }
             dataitem(CopyLoop; "Integer")
             {
-                DataItemTableView = SORTING(Number);
+                DataItemTableView = sorting(Number);
                 dataitem(PageLoop; "Integer")
                 {
-                    DataItemTableView = SORTING(Number) WHERE(Number = CONST(1));
+                    DataItemTableView = sorting(Number) where(Number = const(1));
                     column(CompanyInfo2Picture; CompanyInfo2.Picture)
                     {
                     }
@@ -35,7 +36,7 @@ report 50028 "Sales - Shipment - BCK - V.0"
                     column(CompanyInfo3Picture; CompanyInfo3.Picture)
                     {
                     }
-                    column(SalesShptCopyText; STRSUBSTNO(Text002, CopyText))
+                    column(SalesShptCopyText; StrSubstNo(Text002, CopyText))
                     {
                     }
                     column(ShipToAddr1; ShipToAddr[1])
@@ -95,7 +96,7 @@ report 50028 "Sales - Shipment - BCK - V.0"
                     column(SelltoCustNo_SalesShptHeader; "Sales Shipment Header"."Sell-to Customer No.")
                     {
                     }
-                    column(DocDate_SalesShptHeader; FORMAT("Sales Shipment Header"."Document Date", 0, 4))
+                    column(DocDate_SalesShptHeader; Format("Sales Shipment Header"."Document Date", 0, 4))
                     {
                     }
                     column(SalesPersonText; SalesPersonText)
@@ -122,7 +123,7 @@ report 50028 "Sales - Shipment - BCK - V.0"
                     column(CompanyAddr6; CompanyAddr[6])
                     {
                     }
-                    column(ShptDate_SalesShptHeader; FORMAT("Sales Shipment Header"."Shipment Date"))
+                    column(ShptDate_SalesShptHeader; Format("Sales Shipment Header"."Shipment Date"))
                     {
                     }
                     column(OutputNo; OutputNo)
@@ -161,7 +162,7 @@ report 50028 "Sales - Shipment - BCK - V.0"
                     column(DocumentDateCaption; DocumentDateCaptionLbl)
                     {
                     }
-                    column(SelltoCustNo_SalesShptHeaderCaption; "Sales Shipment Header".FIELDCAPTION("Sell-to Customer No."))
+                    column(SelltoCustNo_SalesShptHeaderCaption; "Sales Shipment Header".FieldCaption("Sell-to Customer No."))
                     {
                     }
                     column(CompanyInfoSwift; CompanyInfo."SWIFT Code")
@@ -183,7 +184,7 @@ report 50028 "Sales - Shipment - BCK - V.0"
                     dataitem(DimensionLoop1; "Integer")
                     {
                         DataItemLinkReference = "Sales Shipment Header";
-                        DataItemTableView = SORTING(Number) WHERE(Number = FILTER(1 ..));
+                        DataItemTableView = sorting(Number) where(Number = filter(1 ..));
                         column(DimText; DimText)
                         {
                         }
@@ -194,42 +195,42 @@ report 50028 "Sales - Shipment - BCK - V.0"
                         trigger OnAfterGetRecord();
                         begin
                             if Number = 1 then begin
-                                if not DimSetEntry1.FINDSET then
-                                    CurrReport.BREAK;
+                                if not DimSetEntry1.FindSet then
+                                    CurrReport.Break;
                             end else
                                 if not Continue then
-                                    CurrReport.BREAK;
+                                    CurrReport.Break;
 
-                            CLEAR(DimText);
+                            Clear(DimText);
                             Continue := false;
                             repeat
                                 OldDimText := DimText;
                                 if DimText = '' then
-                                    DimText := STRSUBSTNO('%1 - %2', DimSetEntry1."Dimension Code", DimSetEntry1."Dimension Value Code")
+                                    DimText := StrSubstNo('%1 - %2', DimSetEntry1."Dimension Code", DimSetEntry1."Dimension Value Code")
                                 else
                                     DimText :=
-                                      STRSUBSTNO(
+                                      StrSubstNo(
                                         '%1; %2 - %3', DimText,
                                         DimSetEntry1."Dimension Code", DimSetEntry1."Dimension Value Code");
-                                if STRLEN(DimText) > MAXSTRLEN(OldDimText) then begin
+                                if StrLen(DimText) > MaxStrLen(OldDimText) then begin
                                     DimText := OldDimText;
                                     Continue := true;
                                     exit;
                                 end;
-                            until DimSetEntry1.NEXT = 0;
+                            until DimSetEntry1.Next = 0;
                         end;
 
                         trigger OnPreDataItem();
                         begin
                             if not ShowInternalInfo then
-                                CurrReport.BREAK;
+                                CurrReport.Break;
                         end;
                     }
                     dataitem("Sales Shipment Line"; "Sales Shipment Line")
                     {
-                        DataItemLink = "Document No." = FIELD("No.");
+                        DataItemLink = "Document No." = field("No.");
                         DataItemLinkReference = "Sales Shipment Header";
-                        DataItemTableView = SORTING("Document No.", "Line No.");
+                        DataItemTableView = sorting("Document No.", "Line No.");
                         column(Description_SalesShptLine; Description)
                         {
                         }
@@ -239,7 +240,7 @@ report 50028 "Sales - Shipment - BCK - V.0"
                         column(ShowCorrectionLines; ShowCorrectionLines)
                         {
                         }
-                        column(Type_SalesShptLine; FORMAT(Type, 0, 2))
+                        column(Type_SalesShptLine; Format(Type, 0, 2))
                         {
                         }
                         column(AsmHeaderExists; AsmHeaderExists)
@@ -263,16 +264,16 @@ report 50028 "Sales - Shipment - BCK - V.0"
                         column(LineNo_SalesShptLine; "Line No.")
                         {
                         }
-                        column(Description_SalesShptLineCaption; FIELDCAPTION(Description))
+                        column(Description_SalesShptLineCaption; FieldCaption(Description))
                         {
                         }
-                        column(Qty_SalesShptLineCaption; FIELDCAPTION(Quantity))
+                        column(Qty_SalesShptLineCaption; FieldCaption(Quantity))
                         {
                         }
-                        column(UOM_SalesShptLineCaption; FIELDCAPTION("Unit of Measure"))
+                        column(UOM_SalesShptLineCaption; FieldCaption("Unit of Measure"))
                         {
                         }
-                        column(No_SalesShptLineCaption; FIELDCAPTION("No."))
+                        column(No_SalesShptLineCaption; FieldCaption("No."))
                         {
                         }
                         column(SalesInvLineQtyBase; "Quantity (Base)")
@@ -284,7 +285,7 @@ report 50028 "Sales - Shipment - BCK - V.0"
                         }
                         dataitem(DimensionLoop2; "Integer")
                         {
-                            DataItemTableView = SORTING(Number) WHERE(Number = FILTER(1 ..));
+                            DataItemTableView = sorting(Number) where(Number = filter(1 ..));
                             column(DimText1; DimText)
                             {
                             }
@@ -295,40 +296,40 @@ report 50028 "Sales - Shipment - BCK - V.0"
                             trigger OnAfterGetRecord();
                             begin
                                 if Number = 1 then begin
-                                    if not DimSetEntry2.FINDSET then
-                                        CurrReport.BREAK;
+                                    if not DimSetEntry2.FindSet then
+                                        CurrReport.Break;
                                 end else
                                     if not Continue then
-                                        CurrReport.BREAK;
+                                        CurrReport.Break;
 
-                                CLEAR(DimText);
+                                Clear(DimText);
                                 Continue := false;
                                 repeat
                                     OldDimText := DimText;
                                     if DimText = '' then
-                                        DimText := STRSUBSTNO('%1 - %2', DimSetEntry2."Dimension Code", DimSetEntry2."Dimension Value Code")
+                                        DimText := StrSubstNo('%1 - %2', DimSetEntry2."Dimension Code", DimSetEntry2."Dimension Value Code")
                                     else
                                         DimText :=
-                                          STRSUBSTNO(
+                                          StrSubstNo(
                                             '%1; %2 - %3', DimText,
                                             DimSetEntry2."Dimension Code", DimSetEntry2."Dimension Value Code");
-                                    if STRLEN(DimText) > MAXSTRLEN(OldDimText) then begin
+                                    if StrLen(DimText) > MaxStrLen(OldDimText) then begin
                                         DimText := OldDimText;
                                         Continue := true;
                                         exit;
                                     end;
-                                until DimSetEntry2.NEXT = 0;
+                                until DimSetEntry2.Next = 0;
                             end;
 
                             trigger OnPreDataItem();
                             begin
                                 if not ShowInternalInfo then
-                                    CurrReport.BREAK;
+                                    CurrReport.Break;
                             end;
                         }
                         dataitem(DisplayAsmInfo; "Integer")
                         {
-                            DataItemTableView = SORTING(Number);
+                            DataItemTableView = sorting(Number);
                             column(PostedAsmLineItemNo; BlanksForIndent + PostedAsmLine."No.")
                             {
                             }
@@ -347,20 +348,20 @@ report 50028 "Sales - Shipment - BCK - V.0"
                             trigger OnAfterGetRecord();
                             begin
                                 if Number = 1 then
-                                    PostedAsmLine.FINDSET
+                                    PostedAsmLine.FindSet
                                 else
-                                    PostedAsmLine.NEXT;
+                                    PostedAsmLine.Next;
                             end;
 
                             trigger OnPreDataItem();
                             begin
                                 if not DisplayAssemblyInformation then
-                                    CurrReport.BREAK;
+                                    CurrReport.Break;
                                 if not AsmHeaderExists then
-                                    CurrReport.BREAK;
+                                    CurrReport.Break;
 
-                                PostedAsmLine.SETRANGE("Document No.", PostedAsmHeader."No.");
-                                SETRANGE(Number, 1, PostedAsmLine.COUNT);
+                                PostedAsmLine.SetRange("Document No.", PostedAsmHeader."No.");
+                                SetRange(Number, 1, PostedAsmLine.Count);
                             end;
                         }
 
@@ -368,9 +369,9 @@ report 50028 "Sales - Shipment - BCK - V.0"
                         begin
                             LinNo := "Line No.";
                             if not ShowCorrectionLines and Correction then
-                                CurrReport.SKIP;
+                                CurrReport.Skip;
 
-                            DimSetEntry2.SETRANGE("Dimension Set ID", "Dimension Set ID");
+                            DimSetEntry2.SetRange("Dimension Set ID", "Dimension Set ID");
                             if DisplayAssemblyInformation then
                                 AsmHeaderExists := AsmToShipmentExists(PostedAsmHeader);
                         end;
@@ -389,7 +390,7 @@ report 50028 "Sales - Shipment - BCK - V.0"
                                 ItemTrackingDocMgt.SetRetrieveAsmItemTracking(true);
                                 TrackingSpecCount :=
                                   ItemTrackingDocMgt.RetrieveDocumentItemTracking(TrackingSpecBuffer,
-                                    "Sales Shipment Header"."No.", DATABASE::"Sales Shipment Header", 0);
+                                    "Sales Shipment Header"."No.", Database::"Sales Shipment Header", 0);
                                 ItemTrackingDocMgt.SetRetrieveAsmItemTracking(false);
                                 //-VC
                             end;
@@ -398,21 +399,21 @@ report 50028 "Sales - Shipment - BCK - V.0"
 
                         trigger OnPreDataItem();
                         begin
-                            MoreLines := FIND('+');
+                            MoreLines := Find('+');
                             while MoreLines and (Description = '') and ("No." = '') and (Quantity = 0) do
-                                MoreLines := NEXT(-1) <> 0;
+                                MoreLines := Next(-1) <> 0;
                             if not MoreLines then
-                                CurrReport.BREAK;
-                            SETRANGE("Line No.", 0, "Line No.");
+                                CurrReport.Break;
+                            SetRange("Line No.", 0, "Line No.");
                         end;
                     }
                     dataitem(Total; "Integer")
                     {
-                        DataItemTableView = SORTING(Number) WHERE(Number = CONST(1));
+                        DataItemTableView = sorting(Number) where(Number = const(1));
                     }
                     dataitem(Total2; "Integer")
                     {
-                        DataItemTableView = SORTING(Number) WHERE(Number = CONST(1));
+                        DataItemTableView = sorting(Number) where(Number = const(1));
                         column(BilltoCustNo_SalesShptHeader; "Sales Shipment Header"."Bill-to Customer No.")
                         {
                         }
@@ -443,19 +444,19 @@ report 50028 "Sales - Shipment - BCK - V.0"
                         column(BilltoAddressCaption; BilltoAddressCaptionLbl)
                         {
                         }
-                        column(BilltoCustNo_SalesShptHeaderCaption; "Sales Shipment Header".FIELDCAPTION("Bill-to Customer No."))
+                        column(BilltoCustNo_SalesShptHeaderCaption; "Sales Shipment Header".FieldCaption("Bill-to Customer No."))
                         {
                         }
 
                         trigger OnPreDataItem();
                         begin
                             if not ShowCustAddr then
-                                CurrReport.BREAK;
+                                CurrReport.Break;
                         end;
                     }
                     dataitem(ItemTrackingLine; "Integer")
                     {
-                        DataItemTableView = SORTING(Number);
+                        DataItemTableView = sorting(Number);
                         column(TrackingSpecBufferNo; TrackingSpecBuffer."Item No.")
                         {
                         }
@@ -494,7 +495,7 @@ report 50028 "Sales - Shipment - BCK - V.0"
                         }
                         dataitem(TotalItemTracking; "Integer")
                         {
-                            DataItemTableView = SORTING(Number) WHERE(Number = CONST(1));
+                            DataItemTableView = sorting(Number) where(Number = const(1));
                             column(Quantity1; TotalQty)
                             {
                             }
@@ -503,9 +504,9 @@ report 50028 "Sales - Shipment - BCK - V.0"
                         trigger OnAfterGetRecord();
                         begin
                             if Number = 1 then
-                                TrackingSpecBuffer.FINDSET
+                                TrackingSpecBuffer.FindSet
                             else
-                                TrackingSpecBuffer.NEXT;
+                                TrackingSpecBuffer.Next;
 
                             ShowTotal := false;
                             if ItemTrackingAppendix.IsStartNewGroup(TrackingSpecBuffer) then
@@ -526,10 +527,10 @@ report 50028 "Sales - Shipment - BCK - V.0"
                         trigger OnPreDataItem();
                         begin
                             if TrackingSpecCount = 0 then
-                                CurrReport.BREAK;
-                            CurrReport.NEWPAGE;
-                            SETRANGE(Number, 1, TrackingSpecCount);
-                            TrackingSpecBuffer.SETCURRENTKEY("Source ID", "Source Type", "Source Subtype", "Source Batch Name",
+                                CurrReport.Break;
+                            CurrReport.NewPage;
+                            SetRange(Number, 1, TrackingSpecCount);
+                            TrackingSpecBuffer.SetCurrentKey("Source ID", "Source Type", "Source Subtype", "Source Batch Name",
                               "Source Prod. Order Line", "Source Ref. No.");
                         end;
                     }
@@ -551,64 +552,64 @@ report 50028 "Sales - Shipment - BCK - V.0"
                         CopyText := Text001;
                         OutputNo += 1;
                     end;
-                    CurrReport.PAGENO := 1;
+                    CurrReport.PageNo := 1;
                     TotalQty := 0;           // Item Tracking
                 end;
 
                 trigger OnPostDataItem();
                 begin
-                    if not CurrReport.PREVIEW then
-                        ShptCountPrinted.RUN("Sales Shipment Header");
+                    if not CurrReport.Preview then
+                        ShptCountPrinted.Run("Sales Shipment Header");
                 end;
 
                 trigger OnPreDataItem();
                 begin
-                    NoOfLoops := 1 + ABS(NoOfCopies);
+                    NoOfLoops := 1 + Abs(NoOfCopies);
                     CopyText := '';
-                    SETRANGE(Number, 1, NoOfLoops);
+                    SetRange(Number, 1, NoOfLoops);
                     OutputNo := 1;
                 end;
             }
 
             trigger OnAfterGetRecord();
             begin
-                CurrReport.LANGUAGE := LanguageMgt.GetLanguageIdOrDefault("Language Code");
+                CurrReport.Language := LanguageMgt.GetLanguageIdOrDefault("Language Code");
 
-                if RespCenter.GET("Responsibility Center") then begin
+                if RespCenter.Get("Responsibility Center") then begin
                     FormatAddr.RespCenter(CompanyAddr, RespCenter);
                     CompanyInfo."Phone No." := RespCenter."Phone No.";
                     CompanyInfo."Fax No." := RespCenter."Fax No.";
                 end else
                     FormatAddr.Company(CompanyAddr, CompanyInfo);
 
-                DimSetEntry1.SETRANGE("Dimension Set ID", "Dimension Set ID");
+                DimSetEntry1.SetRange("Dimension Set ID", "Dimension Set ID");
 
                 if "Salesperson Code" = '' then begin
-                    SalesPurchPerson.INIT;
+                    SalesPurchPerson.Init;
                     SalesPersonText := '';
                 end else begin
-                    SalesPurchPerson.GET("Salesperson Code");
+                    SalesPurchPerson.Get("Salesperson Code");
                     SalesPersonText := Text000;
                 end;
                 if "Your Reference" = '' then
                     ReferenceText := ''
                 else
-                    ReferenceText := FIELDCAPTION("Your Reference");
+                    ReferenceText := FieldCaption("Your Reference");
                 FormatAddr.SalesShptShipTo(ShipToAddr, "Sales Shipment Header");
 
                 FormatAddr.SalesShptBillTo(CustAddr, ShipToAddr, "Sales Shipment Header");
                 ShowCustAddr := "Bill-to Customer No." <> "Sell-to Customer No.";
-                for i := 1 to ARRAYLEN(CustAddr) do
+                for i := 1 to ArrayLen(CustAddr) do
                     if CustAddr[i] <> ShipToAddr[i] then
                         ShowCustAddr := true;
 
                 if LogInteraction then
-                    if not CurrReport.PREVIEW then
+                    if not CurrReport.Preview then
                         SegManagement.LogDocument(
-                          5, "No.", 0, 0, DATABASE::Customer, "Sell-to Customer No.", "Salesperson Code",
+                          5, "No.", 0, 0, Database::Customer, "Sell-to Customer No.", "Salesperson Code",
                           "Campaign No.", "Posting Description", '');
 
-                Customer.GET("Bill-to Customer No.");
+                Customer.Get("Bill-to Customer No.");
                 if not Customer."Show GlobalGab COC No." then begin
                     CompanyInfo."GlobalGab COC No." := '';
                 end;
@@ -632,7 +633,7 @@ report 50028 "Sales - Shipment - BCK - V.0"
 
         layout
         {
-            area(content)
+            area(Content)
             {
                 group(Options)
                 {
@@ -641,36 +642,43 @@ report 50028 "Sales - Shipment - BCK - V.0"
                     {
                         ApplicationArea = All;
                         Caption = 'No. of Copies';
+                        ToolTip = 'Specifies the value of the No. of Copies field.';
                     }
                     field(ShowInternalInfo; ShowInternalInfo)
                     {
                         ApplicationArea = All;
                         Caption = 'Show Internal Information';
+                        ToolTip = 'Specifies the value of the Show Internal Information field.';
                     }
                     field(LogInteraction; LogInteraction)
                     {
                         ApplicationArea = All;
                         Caption = 'Log Interaction';
                         Enabled = LogInteractionEnable;
+                        ToolTip = 'Specifies the value of the Log Interaction field.';
                     }
                     field("Show Correction Lines"; ShowCorrectionLines)
                     {
                         ApplicationArea = All;
                         Caption = 'Show Correction Lines';
+                        ToolTip = 'Specifies the value of the Show Correction Lines field.';
                     }
                     field(ShowLotSN; ShowLotSN)
                     {
                         ApplicationArea = All;
                         Caption = 'Show Serial/Lot Number Appendix';
+                        ToolTip = 'Specifies the value of the Show Serial/Lot Number Appendix field.';
                     }
                     field(DisplayAsmInfo; DisplayAssemblyInformation)
                     {
                         ApplicationArea = All;
                         Caption = 'Show Assembly Components';
+                        ToolTip = 'Specifies the value of the Show Assembly Components field.';
                     }
                     field("Hide GlobalGAP COC"; vG_HideGlobalGapCOC)
                     {
                         ApplicationArea = All;
+                        ToolTip = 'Specifies the value of the vG_HideGlobalGapCOC field.';
                     }
                 }
             }
@@ -698,33 +706,33 @@ report 50028 "Sales - Shipment - BCK - V.0"
 
     trigger OnInitReport();
     begin
-        CompanyInfo.GET;
-        SalesSetup.GET;
+        CompanyInfo.Get;
+        SalesSetup.Get;
 
         case SalesSetup."Logo Position on Documents" of
             SalesSetup."Logo Position on Documents"::"No Logo":
                 ;
             SalesSetup."Logo Position on Documents"::Left:
                 begin
-                    CompanyInfo3.GET;
-                    CompanyInfo3.CALCFIELDS(Picture);
+                    CompanyInfo3.Get;
+                    CompanyInfo3.CalcFields(Picture);
                 end;
             SalesSetup."Logo Position on Documents"::Center:
                 begin
-                    CompanyInfo1.GET;
-                    CompanyInfo1.CALCFIELDS(Picture);
+                    CompanyInfo1.Get;
+                    CompanyInfo1.CalcFields(Picture);
                 end;
             SalesSetup."Logo Position on Documents"::Right:
                 begin
-                    CompanyInfo2.GET;
-                    CompanyInfo2.CALCFIELDS(Picture);
+                    CompanyInfo2.Get;
+                    CompanyInfo2.CalcFields(Picture);
                 end;
         end;
     end;
 
     trigger OnPreReport();
     begin
-        if not CurrReport.USEREQUESTPAGE then
+        if not CurrReport.UseRequestPage then
             InitLogInteraction;
         AsmHeaderExists := false;
     end;
@@ -824,14 +832,14 @@ report 50028 "Sales - Shipment - BCK - V.0"
     var
         UnitOfMeasure: Record "Unit of Measure";
     begin
-        if not UnitOfMeasure.GET(UOMCode) then
+        if not UnitOfMeasure.Get(UOMCode) then
             exit(UOMCode);
         exit(UnitOfMeasure.Description);
     end;
 
     procedure BlanksForIndent(): Text[10];
     begin
-        exit(PADSTR('', 2, ' '));
+        exit(PadStr('', 2, ' '));
     end;
 }
 

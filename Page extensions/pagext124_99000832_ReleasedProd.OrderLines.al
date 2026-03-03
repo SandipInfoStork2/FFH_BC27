@@ -46,10 +46,11 @@ pageextension 50224 ReleasedProdOrderLinesExt extends "Released Prod. Order Line
 
         addafter("Item No.")
         {
-            field("Shelf No."; "Shelf No.")
+            field("Shelf No."; Rec."Shelf No.")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 Visible = false;
+                ToolTip = 'Specifies the value of the Shelf No. field.';
             }
         }
 
@@ -72,6 +73,7 @@ pageextension 50224 ReleasedProdOrderLinesExt extends "Released Prod. Order Line
                 ApplicationArea = All;
                 Caption = 'Components';
                 Image = Components;
+                ToolTip = 'Executes the Components action.';
 
                 trigger OnAction();
                 begin
@@ -84,8 +86,9 @@ pageextension 50224 ReleasedProdOrderLinesExt extends "Released Prod. Order Line
                 Image = Item;
                 //The property 'PromotedCategory' can only be set if the property 'Promoted' is set to 'true'
                 //PromotedCategory = Process;
-                RunObject = Page "Item Card";
-                RunPageLink = "No." = FIELD("Item No.");
+                RunObject = page "Item Card";
+                RunPageLink = "No." = field("Item No.");
+                ToolTip = 'Executes the Item Card action.';
             }
         }
     }
@@ -94,11 +97,11 @@ pageextension 50224 ReleasedProdOrderLinesExt extends "Released Prod. Order Line
     var
         ProdOrderComp: Record "Prod. Order Component";
     begin
-        ProdOrderComp.SetRange(Status, Status);
-        ProdOrderComp.SetRange("Prod. Order No.", "Prod. Order No.");
-        ProdOrderComp.SetRange("Prod. Order Line No.", "Line No.");
+        ProdOrderComp.SetRange(Status, Rec.Status);
+        ProdOrderComp.SetRange("Prod. Order No.", Rec."Prod. Order No.");
+        ProdOrderComp.SetRange("Prod. Order Line No.", Rec."Line No.");
 
-        PAGE.Run(PAGE::"Prod. Order Components", ProdOrderComp);
+        Page.Run(Page::"Prod. Order Components", ProdOrderComp);
     end;
 
     //+1.0.0.228
@@ -106,7 +109,7 @@ pageextension 50224 ReleasedProdOrderLinesExt extends "Released Prod. Order Line
     var
         UserSetup: Record "User Setup";
     begin
-        UserSetup.GET(UserId);
+        UserSetup.Get(UserId);
         UnitCostEditable := UserSetup."Unit Cost Editable";
     end;
     //-1.0.0.228

@@ -11,7 +11,7 @@ tableextension 50166 ReturnReceiptLineExt extends "Return Receipt Line"
         // Add changes to table fields here
         field(50000; "Unit of Measure (Base)"; Code[10])
         {
-            CalcFormula = Lookup(Item."Base Unit of Measure" WHERE("No." = FIELD("No.")));
+            CalcFormula = lookup(Item."Base Unit of Measure" where("No." = field("No.")));
             FieldClass = FlowField;
         }
 
@@ -46,14 +46,14 @@ tableextension 50166 ReturnReceiptLineExt extends "Return Receipt Line"
             DataClassification = ToBeClassified;
 
             Caption = 'Product Class (Κατηγορία)';
-            TableRelation = "General Categories".Code WHERE("Table No." = CONST(27), Type = CONST(Category8));
+            TableRelation = "General Categories".Code where("Table No." = const(27), Type = const(Category8));
         }
 
         field(50072; "Category 9"; Code[20])
         {
             Caption = 'Potatoes District Region';
             DataClassification = ToBeClassified;
-            TableRelation = "General Categories".Code WHERE("Table No." = CONST(27), Type = CONST(Category9));
+            TableRelation = "General Categories".Code where("Table No." = const(27), Type = const(Category9));
         }
 
     }
@@ -66,10 +66,10 @@ tableextension 50166 ReturnReceiptLineExt extends "Return Receipt Line"
     end;
 
 
-    PROCEDURE ShowShortcutDimCode(VAR ShortcutDimCode: ARRAY[8] OF Code[20]);
-    BEGIN
+    procedure ShowShortcutDimCode(var ShortcutDimCode: array[8] of Code[20]);
+    begin
         DimMgt.GetShortcutDimensions("Dimension Set ID", ShortcutDimCode);
-    END;
+    end;
 
     var
         myInt: Integer;

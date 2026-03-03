@@ -36,13 +36,14 @@ pageextension 50137 PostedPurchCrMemoSubformExt extends "Posted Purch. Cr. Memo 
         {
             action(ItemTrackingEntries2)
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 Caption = 'Item &Tracking Entries';
                 Image = ItemTrackingLedger;
+                ToolTip = 'Executes the Item &Tracking Entries action.';
 
                 trigger OnAction();
                 begin
-                    ShowItemTrackingLines;
+                    Rec.ShowItemTrackingLines;
                 end;
             }
         }

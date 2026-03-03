@@ -9,41 +9,50 @@ pageextension 50210 FAPostingTypesOvervMatrixExt extends "FA Posting Types Overv
         // Add changes to page layout here
         addafter(Description)
         {
-            field("Depreciation Starting Date"; "Depreciation Starting Date")
+            field("Depreciation Starting Date"; Rec."Depreciation Starting Date")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the date on which depreciation of the fixed asset starts.';
             }
-            field("Depreciation Ending Date"; "Depreciation Ending Date")
+            field("Depreciation Ending Date"; Rec."Depreciation Ending Date")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the date on which depreciation of the fixed asset ends.';
             }
-            field("Depreciation Method"; "Depreciation Method")
+            field("Depreciation Method"; Rec."Depreciation Method")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies how depreciation is calculated for the depreciation book.';
             }
-            field("No. of Depreciation Years"; "No. of Depreciation Years")
+            field("No. of Depreciation Years"; Rec."No. of Depreciation Years")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the length of the depreciation period, expressed in years.';
             }
-            field("No. of Depreciation Months"; "No. of Depreciation Months")
+            field("No. of Depreciation Months"; Rec."No. of Depreciation Months")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the length of the depreciation period, expressed in months.';
             }
-            field("No. FA Acquisitions"; "No. FA Acquisitions")
+            field("No. FA Acquisitions"; Rec."No. FA Acquisitions")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the No. FA Acquisitions field.';
             }
-            field("No. FA Depreciations"; "No. FA Depreciations")
+            field("No. FA Depreciations"; Rec."No. FA Depreciations")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the No. FA Depreciations field.';
             }
-            field("No. FA Disposals"; "No. FA Disposals")
+            field("No. FA Disposals"; Rec."No. FA Disposals")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the No. FA Disposals field.';
             }
-            field("Straight-Line %"; "Straight-Line %")
+            field("Straight-Line %"; Rec."Straight-Line %")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the percentage to depreciate the fixed asset by the straight-line principle, but with a fixed yearly percentage.';
             }
         }
     }
@@ -51,15 +60,16 @@ pageextension 50210 FAPostingTypesOvervMatrixExt extends "FA Posting Types Overv
     actions
     {
         // Add changes to page actions here
-        addfirst(processing)
+        addfirst(Processing)
         {
             action("Count")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Executes the Count action.';
 
                 trigger OnAction();
                 begin
-                    MESSAGE('# Record: ' + FORMAT(COUNT));
+                    MESSAGE('# Record: ' + FORMAT(Rec.COUNT));
                 end;
             }
         }

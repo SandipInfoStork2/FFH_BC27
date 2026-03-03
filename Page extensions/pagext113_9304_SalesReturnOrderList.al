@@ -22,23 +22,27 @@ pageextension 50213 SalesReturnOrderListExt extends "Sales Return Order List"
         {
             Visible = true;
         }
-        addafter("Status")
+        addafter(Status)
         {
-            field("Lot No."; "Lot No.")
+            field("Lot No."; Rec."Lot No.")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Lot No. field.';
             }
-            field("Total Qty"; "Total Qty")
+            field("Total Qty"; Rec."Total Qty")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Total Qty field.';
             }
-            field("Total Qty Received"; "Total Qty Received")
+            field("Total Qty Received"; Rec."Total Qty Received")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Total Qty Received field.';
             }
-            field("Total Qty Invoiced"; "Total Qty Invoiced")
+            field("Total Qty Invoiced"; Rec."Total Qty Invoiced")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Total Qty Invoiced field.';
             }
         }
     }

@@ -7,16 +7,17 @@ page 50036 "S.Q. Lidl Negotiation Subform"
     MultipleNewLines = true;
     PageType = ListPart;
     SourceTable = "Sales Line";
-    SourceTableView = WHERE("Document Type" = FILTER(Quote));
+    SourceTableView = where("Document Type" = filter(Quote));
+    ApplicationArea = All;
 
     layout
     {
-        area(content)
+        area(Content)
         {
             repeater(Control1)
             {
                 ShowCaption = false;
-                field(Type; Type)
+                field(Type; Rec.Type)
                 {
                     ApplicationArea = Advanced;
                     ToolTip = 'Specifies the type of entity that will be posted for this sales line, such as Item, Resource, or G/L Account.';
@@ -35,8 +36,8 @@ page 50036 "S.Q. Lidl Negotiation Subform"
                     ApplicationArea = Basic, Suite;
                     Caption = 'Type';
                     Editable = CurrPageIsEditable;
-                    LookupPageID = "Option Lookup List";
-                    TableRelation = "Option Lookup Buffer"."Option Caption" WHERE("Lookup Type" = CONST(Sales));
+                    LookupPageId = "Option Lookup List";
+                    TableRelation = "Option Lookup Buffer"."Option Caption" where("Lookup Type" = const(Sales));
                     ToolTip = 'Specifies the type of transaction that will be posted with the document line. If you select Comment, then you can enter any text in the Description field, such as a message to a customer. ';
                     Visible = IsFoundation;
 
@@ -52,24 +53,25 @@ page 50036 "S.Q. Lidl Negotiation Subform"
                     end;
                 }
 
-                field("Shelf No."; "Shelf No.")
+                field("Shelf No."; Rec."Shelf No.")
                 {
-                    ApplicationArea = all;
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Shelf No. field.';
 
                     trigger OnValidate();
                     begin
-                        GetItemFromShelfNo();
+                        Rec.GetItemFromShelfNo();
                     end;
                 }
-                field("No."; "No.")
+                field("No."; Rec."No.")
                 {
                     ApplicationArea = Basic, Suite;
-                    ShowMandatory = NOT IsCommentLine;
+                    ShowMandatory = not IsCommentLine;
                     ToolTip = 'Specifies the number of a general ledger account, item, resource, additional cost, or fixed asset, depending on the contents of the Type field.';
 
                     trigger OnValidate()
                     begin
-                        ShowShortcutDimCode(ShortcutDimCode);
+                        Rec.ShowShortcutDimCode(ShortcutDimCode);
                         NoOnAfterValidate();
                         UpdateEditableOnRow();
                         UpdateTypeText();
@@ -88,11 +90,11 @@ page 50036 "S.Q. Lidl Negotiation Subform"
 
     actions
     {
-        area(processing)
+        area(Processing)
         {
             action(SelectMultiItems)
             {
-                AccessByPermission = TableData Item = R;
+                AccessByPermission = tabledata Item = R;
                 ApplicationArea = Basic, Suite;
                 Caption = 'Select items';
                 Ellipsis = true;
@@ -101,12 +103,12 @@ page 50036 "S.Q. Lidl Negotiation Subform"
 
                 trigger OnAction()
                 begin
-                    SelectMultipleItems;
+                    Rec.SelectMultipleItems;
                 end;
             }
             action(InsertExtTexts)
             {
-                AccessByPermission = TableData "Extended Text Header" = R;
+                AccessByPermission = tabledata "Extended Text Header" = R;
                 ApplicationArea = Suite;
                 Caption = 'Insert &Ext. Texts';
                 Image = Text;
@@ -119,16 +121,16 @@ page 50036 "S.Q. Lidl Negotiation Subform"
             }
             action(Dimensions)
             {
-                AccessByPermission = TableData Dimension = R;
+                AccessByPermission = tabledata Dimension = R;
                 ApplicationArea = Dimensions;
                 Caption = 'Dimensions';
                 Image = Dimensions;
-                ShortCutKey = 'Alt+D';
+                ShortcutKey = 'Alt+D';
                 ToolTip = 'View or edit dimensions, such as area, project, or department, that you can assign to sales and purchase documents to distribute costs and analyze transaction history.';
 
                 trigger OnAction()
                 begin
-                    ShowDimensions();
+                    Rec.ShowDimensions();
                 end;
             }
             group("&Line")
@@ -137,7 +139,7 @@ page 50036 "S.Q. Lidl Negotiation Subform"
                 Image = Line;
                 group("Item Availability by")
                 {
-                    Enabled = Type = Type::Item;
+                    Enabled = Rec.Type = Rec.Type::Item;
                     Caption = 'Item Availability by';
                     Image = ItemAvailability;
                     action("Event")
@@ -178,7 +180,7 @@ page 50036 "S.Q. Lidl Negotiation Subform"
                     }
                     action(Location)
                     {
-                        AccessByPermission = TableData Location = R;
+                        AccessByPermission = tabledata Location = R;
                         ApplicationArea = Location;
                         Caption = 'Location';
                         Image = Warehouse;
@@ -194,7 +196,7 @@ page 50036 "S.Q. Lidl Negotiation Subform"
                         ApplicationArea = ItemTracking;
                         Caption = 'Lot';
                         Image = LotInfo;
-                        RunObject = Page "Item Availability by Lot No.";
+                        RunObject = page "Item Availability by Lot No.";
                         RunPageLink = "No." = field("No."),
                             "Location Filter" = field("Location Code"),
                             "Variant Filter" = field("Variant Code");
@@ -202,7 +204,7 @@ page 50036 "S.Q. Lidl Negotiation Subform"
                     }
                     action("BOM Level")
                     {
-                        AccessByPermission = TableData "BOM Buffer" = R;
+                        AccessByPermission = tabledata "BOM Buffer" = R;
                         ApplicationArea = Assembly;
                         Caption = 'BOM Level';
                         Image = BOMLevel;
@@ -223,7 +225,7 @@ page 50036 "S.Q. Lidl Negotiation Subform"
 
                     trigger OnAction()
                     begin
-                        ShowItemSub;
+                        Rec.ShowItemSub;
                     end;
                 }
                 action("Co&mments")
@@ -235,15 +237,15 @@ page 50036 "S.Q. Lidl Negotiation Subform"
 
                     trigger OnAction()
                     begin
-                        ShowLineComments();
+                        Rec.ShowLineComments();
                     end;
                 }
                 action("Item Charge &Assignment")
                 {
-                    AccessByPermission = TableData "Item Charge" = R;
+                    AccessByPermission = tabledata "Item Charge" = R;
                     ApplicationArea = ItemCharges;
                     Caption = 'Item Charge &Assignment';
-                    Enabled = Type = Type::"Charge (Item)";
+                    Enabled = Rec.Type = Rec.Type::"Charge (Item)";
                     Image = ItemCosts;
                     ToolTip = 'Record additional direct costs, for example for freight. This action is available only for Charge (Item) line types.';
 
@@ -258,23 +260,23 @@ page 50036 "S.Q. Lidl Negotiation Subform"
                     ApplicationArea = ItemTracking;
                     Caption = 'Item &Tracking Lines';
                     Image = ItemTrackingLines;
-                    ShortCutKey = 'Shift+Ctrl+I';
-                    Enabled = Type = Type::Item;
+                    ShortcutKey = 'Shift+Ctrl+I';
+                    Enabled = Rec.Type = Rec.Type::Item;
                     ToolTip = 'View or edit serial and lot numbers for the selected item. This action is available only for lines that contain an item.';
 
                     trigger OnAction()
                     var
                         Item: Record Item;
                     begin
-                        Item.Get("No.");
+                        Item.Get(Rec."No.");
                         Item.TestField("Assembly Policy", Item."Assembly Policy"::"Assemble-to-Stock");
-                        TestField("Qty. to Asm. to Order (Base)", 0);
-                        OpenItemTrackingLines();
+                        Rec.TestField("Qty. to Asm. to Order (Base)", 0);
+                        Rec.OpenItemTrackingLines();
                     end;
                 }
                 action("Select Nonstoc&k Items")
                 {
-                    AccessByPermission = TableData "Nonstock Item" = R;
+                    AccessByPermission = tabledata "Nonstock Item" = R;
                     ApplicationArea = Basic, Suite;
                     Caption = 'Select Ca&talog Items';
                     Image = NonStockItem;
@@ -308,19 +310,19 @@ page 50036 "S.Q. Lidl Negotiation Subform"
                     Image = AssemblyBOM;
                     action("Assemble-to-Order Lines")
                     {
-                        AccessByPermission = TableData "BOM Component" = R;
+                        AccessByPermission = tabledata "BOM Component" = R;
                         ApplicationArea = Assembly;
                         Caption = 'Assemble-to-Order Lines';
                         ToolTip = 'View any linked assembly order lines if the documents represents an assemble-to-order sale.';
 
                         trigger OnAction()
                         begin
-                            ShowAsmToOrderLines();
+                            Rec.ShowAsmToOrderLines();
                         end;
                     }
                     action("Roll Up &Price")
                     {
-                        AccessByPermission = TableData "BOM Component" = R;
+                        AccessByPermission = tabledata "BOM Component" = R;
                         ApplicationArea = Assembly;
                         Caption = 'Roll Up &Price';
                         Ellipsis = true;
@@ -328,12 +330,12 @@ page 50036 "S.Q. Lidl Negotiation Subform"
 
                         trigger OnAction()
                         begin
-                            RollupAsmPrice;
+                            Rec.RollupAsmPrice;
                         end;
                     }
                     action("Roll Up &Cost")
                     {
-                        AccessByPermission = TableData "BOM Component" = R;
+                        AccessByPermission = tabledata "BOM Component" = R;
                         ApplicationArea = Assembly;
                         Caption = 'Roll Up &Cost';
                         Ellipsis = true;
@@ -341,7 +343,7 @@ page 50036 "S.Q. Lidl Negotiation Subform"
 
                         trigger OnAction()
                         begin
-                            RollUpAsmCost;
+                            Rec.RollUpAsmCost;
                         end;
                     }
                 }
@@ -353,7 +355,7 @@ page 50036 "S.Q. Lidl Negotiation Subform"
 #if not CLEAN19
                 action("Get &Price")
                 {
-                    AccessByPermission = TableData "Sales Price" = R;
+                    AccessByPermission = tabledata "Sales Price" = R;
                     ApplicationArea = Basic, Suite;
                     Caption = 'Get &Price';
                     Ellipsis = true;
@@ -366,12 +368,12 @@ page 50036 "S.Q. Lidl Negotiation Subform"
 
                     trigger OnAction()
                     begin
-                        PickPrice();
+                        Rec.PickPrice();
                     end;
                 }
                 action("Get Li&ne Discount")
                 {
-                    AccessByPermission = TableData "Sales Line Discount" = R;
+                    AccessByPermission = tabledata "Sales Line Discount" = R;
                     ApplicationArea = Basic, Suite;
                     Caption = 'Get Li&ne Discount';
                     Ellipsis = true;
@@ -384,13 +386,13 @@ page 50036 "S.Q. Lidl Negotiation Subform"
 
                     trigger OnAction()
                     begin
-                        PickDiscount();
+                        Rec.PickDiscount();
                     end;
                 }
 #endif
                 action(GetPrice)
                 {
-                    AccessByPermission = TableData "Sales Price Access" = R;
+                    AccessByPermission = tabledata "Sales Price Access" = R;
                     ApplicationArea = Basic, Suite;
                     Caption = 'Get &Price';
                     Ellipsis = true;
@@ -400,12 +402,12 @@ page 50036 "S.Q. Lidl Negotiation Subform"
 
                     trigger OnAction()
                     begin
-                        PickPrice();
+                        Rec.PickPrice();
                     end;
                 }
                 action(GetLineDiscount)
                 {
-                    AccessByPermission = TableData "Sales Discount Access" = R;
+                    AccessByPermission = tabledata "Sales Discount Access" = R;
                     ApplicationArea = Basic, Suite;
                     Caption = 'Get Li&ne Discount';
                     Ellipsis = true;
@@ -415,16 +417,16 @@ page 50036 "S.Q. Lidl Negotiation Subform"
 
                     trigger OnAction()
                     begin
-                        PickDiscount();
+                        Rec.PickDiscount();
                     end;
                 }
                 action("E&xplode BOM")
                 {
-                    AccessByPermission = TableData "BOM Component" = R;
+                    AccessByPermission = tabledata "BOM Component" = R;
                     ApplicationArea = Suite;
                     Caption = 'E&xplode BOM';
                     Image = ExplodeBOM;
-                    Enabled = Type = Type::Item;
+                    Enabled = Rec.Type = Rec.Type::Item;
                     ToolTip = 'Add a line for each component on the bill of materials for the selected item. For example, this is useful for selling the parent item as a kit. CAUTION: The line for the parent item will be deleted and only its description will display. To undo this action, delete the component lines and add a line for the parent item again. This action is available only for lines that contain an item.';
 
                     trigger OnAction()
@@ -445,17 +447,17 @@ page 50036 "S.Q. Lidl Negotiation Subform"
 
                     Visible = IsSaaSExcelAddinEnabled;
                     ToolTip = 'Send the data in the sub page to an Excel file for analysis or editing';
-                    AccessByPermission = System "Allow Action Export To Excel" = X;
+                    AccessByPermission = system "Allow Action Export To Excel" = X;
 
                     trigger OnAction()
                     var
                         EditinExcel: Codeunit "Edit in Excel";
                     begin
                         EditinExcel.EditPageInExcel(
-                            'Sales_QuoteSalesLines',
-                            CurrPage.ObjectId(false),
-                            StrSubstNo('Document_No eq ''%1''', Rec."Document No."),
-                            StrSubstNo(ExcelFileNameTxt, Rec."Document No."));
+                            'Sales_QuoteSalesLines', 50036);
+                        /* CurrPage.ObjectId(false),
+                        StrSubstNo('Document_No eq ''%1''', Rec."Document No."),
+                        StrSubstNo(ExcelFileNameTxt, Rec."Document No.")); 28FEB2026*/
                     end;
 
                 }
@@ -474,7 +476,7 @@ page 50036 "S.Q. Lidl Negotiation Subform"
 
     trigger OnAfterGetRecord()
     begin
-        ShowShortcutDimCode(ShortcutDimCode);
+        Rec.ShowShortcutDimCode(ShortcutDimCode);
         UpdateTypeText();
         SetItemChargeFieldsStyle();
     end;
@@ -483,7 +485,7 @@ page 50036 "S.Q. Lidl Negotiation Subform"
     var
         SalesLineReserve: Codeunit "Sales Line-Reserve";
     begin
-        if (Quantity <> 0) and ItemExists("No.") then begin
+        if (Rec.Quantity <> 0) and Rec.ItemExists(Rec."No.") then begin
             Commit();
             if not SalesLineReserve.DeleteLineConfirm(Rec) then
                 exit(false);
@@ -495,7 +497,7 @@ page 50036 "S.Q. Lidl Negotiation Subform"
     trigger OnFindRecord(Which: Text): Boolean
     begin
         DocumentTotals.SalesCheckAndClearTotals(Rec, xRec, TotalSalesLine, VATAmount, InvoiceDiscountAmount, InvoiceDiscountPct);
-        exit(Find(Which));
+        exit(Rec.Find(Which));
     end;
 
     trigger OnInit()
@@ -515,7 +517,7 @@ page 50036 "S.Q. Lidl Negotiation Subform"
 
     trigger OnNewRecord(BelowxRec: Boolean)
     begin
-        InitType;
+        Rec.InitType;
         OnNewRecordOnAfterInitType(Rec, xRec, BelowxRec);
         SetDefaultType();
 
@@ -585,7 +587,7 @@ page 50036 "S.Q. Lidl Negotiation Subform"
 
     procedure ApproveCalcInvDisc()
     begin
-        CODEUNIT.Run(CODEUNIT::"Sales-Disc. (Yes/No)", Rec);
+        Codeunit.Run(Codeunit::"Sales-Disc. (Yes/No)", Rec);
         DocumentTotals.SalesDocTotalsNotUpToDate();
     end;
 
@@ -596,7 +598,7 @@ page 50036 "S.Q. Lidl Negotiation Subform"
         if SuppressTotals then
             exit;
 
-        SalesHeader.Get("Document Type", "Document No.");
+        SalesHeader.Get(Rec."Document Type", Rec."Document No.");
         SalesCalcDiscByType.ApplyInvDiscBasedOnAmt(InvoiceDiscountAmount, SalesHeader);
         DocumentTotals.SalesDocTotalsNotUpToDate();
         CurrPage.Update(false);
@@ -612,7 +614,7 @@ page 50036 "S.Q. Lidl Negotiation Subform"
 
     local procedure ExplodeBOM()
     begin
-        CODEUNIT.Run(CODEUNIT::"Sales-Explode BOM", Rec);
+        Codeunit.Run(Codeunit::"Sales-Explode BOM", Rec);
         DocumentTotals.SalesDocTotalsNotUpToDate();
     end;
 
@@ -630,17 +632,17 @@ page 50036 "S.Q. Lidl Negotiation Subform"
 
     local procedure ShowItemSub()
     begin
-        ShowItemSub;
+        Rec.ShowItemSub;
     end;
 
     local procedure ShowNonstockItems()
     begin
-        ShowNonstock;
+        Rec.ShowNonstock;
     end;
 
     local procedure ItemChargeAssgnt()
     begin
-        ShowItemChargeAssgnt();
+        Rec.ShowItemChargeAssgnt();
     end;
 
     procedure UpdateForm(SetSaveRecord: Boolean)
@@ -651,7 +653,7 @@ page 50036 "S.Q. Lidl Negotiation Subform"
     procedure NoOnAfterValidate()
     begin
         InsertExtendedText(false);
-        if (Type = Type::"Charge (Item)") and ("No." <> xRec."No.") and
+        if (Rec.Type = Rec.Type::"Charge (Item)") and (Rec."No." <> xRec."No.") and
            (xRec."No." <> '')
         then
             CurrPage.SaveRecord();
@@ -673,9 +675,9 @@ page 50036 "S.Q. Lidl Negotiation Subform"
 
     protected procedure QuantityOnAfterValidate()
     begin
-        if Reserve = Reserve::Always then begin
+        if Rec.Reserve = Rec.Reserve::Always then begin
             CurrPage.SaveRecord();
-            AutoReserve();
+            Rec.AutoReserve();
         end;
         DeltaUpdateTotals();
 
@@ -684,24 +686,24 @@ page 50036 "S.Q. Lidl Negotiation Subform"
 
     protected procedure UnitofMeasureCodeOnAfterValidate()
     begin
-        if Reserve = Reserve::Always then begin
+        if Rec.Reserve = Rec.Reserve::Always then begin
             CurrPage.SaveRecord();
-            AutoReserve();
+            Rec.AutoReserve();
         end;
         DeltaUpdateTotals();
     end;
 
     local procedure SaveAndAutoAsmToOrder()
     begin
-        if (Type = Type::Item) and IsAsmToOrderRequired then begin
+        if (Rec.Type = Rec.Type::Item) and Rec.IsAsmToOrderRequired then begin
             CurrPage.SaveRecord();
-            AutoAsmToOrder;
+            Rec.AutoAsmToOrder;
         end;
     end;
 
     procedure UpdateEditableOnRow()
     begin
-        IsCommentLine := not HasTypeToFillMandatoryFields;
+        IsCommentLine := not Rec.HasTypeToFillMandatoryFields;
         IsBlankNumber := IsCommentLine;
         UnitofMeasureCodeIsChangeable := not IsCommentLine;
 
@@ -718,7 +720,7 @@ page 50036 "S.Q. Lidl Negotiation Subform"
         SalesHeader: Record "Sales Header";
     begin
         CurrPage.Update();
-        SalesHeader.Get("Document Type", "Document No.");
+        SalesHeader.Get(Rec."Document Type", Rec."Document No.");
         SalesCalcDiscByType.ApplyDefaultInvoiceDiscount(TotalSalesHeader."Invoice Discount Amount", SalesHeader);
     end;
 
@@ -750,8 +752,8 @@ page 50036 "S.Q. Lidl Negotiation Subform"
             exit;
 
         DocumentTotals.SalesDeltaUpdateTotals(Rec, xRec, TotalSalesLine, VATAmount, InvoiceDiscountAmount, InvoiceDiscountPct);
-        if "Line Amount" <> xRec."Line Amount" then
-            SendLineInvoiceDiscountResetNotification();
+        if Rec."Line Amount" <> xRec."Line Amount" then
+            Rec.SendLineInvoiceDiscountResetNotification();
     end;
 
     procedure ForceTotalsCalculation()
@@ -768,7 +770,7 @@ page 50036 "S.Q. Lidl Negotiation Subform"
 
         CurrPage.SaveRecord();
 
-        SalesHeader.Get("Document Type", "Document No.");
+        SalesHeader.Get(Rec."Document Type", Rec."Document No.");
         DocumentTotals.SalesRedistributeInvoiceDiscountAmounts(Rec, VATAmount, TotalSalesLine);
         CurrPage.Update(false);
     end;
@@ -780,13 +782,13 @@ page 50036 "S.Q. Lidl Negotiation Subform"
         OnBeforeUpdateTypeText(Rec);
 
         RecRef.GetTable(Rec);
-        TypeAsText := TempOptionLookupBuffer.FormatOption(RecRef.Field(FieldNo(Type)));
+        TypeAsText := TempOptionLookupBuffer.FormatOption(RecRef.Field(Rec.FieldNo(Type)));
     end;
 
     procedure SetItemChargeFieldsStyle()
     begin
         ItemChargeStyleExpression := '';
-        if AssignedItemCharge then
+        if Rec.AssignedItemCharge then
             ItemChargeStyleExpression := 'Unfavorable';
     end;
 
@@ -822,7 +824,7 @@ page 50036 "S.Q. Lidl Negotiation Subform"
     var
         AssembleToOrderLink: Record "Assemble-to-Order Link";
     begin
-        ValidateShortcutDimCode(DimIndex, ShortcutDimCode[DimIndex]);
+        Rec.ValidateShortcutDimCode(DimIndex, ShortcutDimCode[DimIndex]);
         AssembleToOrderLink.UpdateAsmDimFromSalesLine(Rec);
 
         OnAfterValidateShortcutDimCode(Rec, ShortcutDimCode, DimIndex);
@@ -838,10 +840,10 @@ page 50036 "S.Q. Lidl Negotiation Subform"
             exit;
 
         if xRec."Document No." = '' then
-            Type := GetDefaultLineType();
+            Rec.Type := Rec.GetDefaultLineType();
     end;
 
-    [IntegrationEvent(TRUE, false)]
+    [IntegrationEvent(true, false)]
     local procedure OnAfterNoOnAfterValidate(var SalesLine: Record "Sales Line"; xSalesLine: Record "Sales Line")
     begin
     end;

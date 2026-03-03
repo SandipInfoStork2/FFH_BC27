@@ -11,29 +11,34 @@ pageextension 50231 SalesLineDiscountsExt extends "Sales Line Discounts"
         // Add changes to page layout here
         addafter(Code)
         {
-            field("Item Description"; "Item Description")
+            field("Item Description"; Rec."Item Description")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Item Description field.';
             }
         }
 
         addafter("Ending Date")
         {
-            field("Item Category Code"; "Item Category Code")
+            field("Item Category Code"; Rec."Item Category Code")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Item Category Code field.';
             }
-            field("Global Dimension 2 Code"; "Global Dimension 2 Code")
+            field("Global Dimension 2 Code"; Rec."Global Dimension 2 Code")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Global Dimension 2 Code field.';
             }
-            field("Last Modified Date"; "Last Modified Date")
+            field("Last Modified Date"; Rec."Last Modified Date")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Last Modified Date field.';
             }
-            field("Last Modified By"; "Last Modified By")
+            field("Last Modified By"; Rec."Last Modified By")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Last Modified By field.';
             }
         }
 
@@ -51,7 +56,7 @@ pageextension 50231 SalesLineDiscountsExt extends "Sales Line Discounts"
     actions
     {
         // Add changes to page actions here
-        addfirst(navigation)
+        addfirst(Navigation)
         {
             action("Item Card")
             {
@@ -61,8 +66,9 @@ pageextension 50231 SalesLineDiscountsExt extends "Sales Line Discounts"
                 PromotedCategory = Process;
                 PromotedIsBig = true;
                 PromotedOnly = true;
-                RunObject = Page "Item Card";
-                RunPageLink = "No." = FIELD("Code");
+                RunObject = page "Item Card";
+                RunPageLink = "No." = field("Code");
+                ToolTip = 'Executes the Item Card action.';
             }
             action("Production BOM")
             {
@@ -81,9 +87,9 @@ pageextension 50231 SalesLineDiscountsExt extends "Sales Line Discounts"
                     rL_ProductionBOMHeader: Record "Production BOM Header";
                 begin
 
-                    rL_Item.GET("Code");
-                    rL_ProductionBOMHeader.GET(rL_Item."Production BOM No.");
-                    PAGE.RUN(PAGE::"Production BOM", rL_ProductionBOMHeader);
+                    rL_Item.GET(Rec."Code");
+                    rL_ProductionBOMHeader.Get(rL_Item."Production BOM No.");
+                    Page.Run(Page::"Production BOM", rL_ProductionBOMHeader);
                 end;
             }
         }
@@ -93,8 +99,8 @@ pageextension 50231 SalesLineDiscountsExt extends "Sales Line Discounts"
     begin
 
 
-        CALCFIELDS("Item Category Code");
-        CALCFIELDS("Global Dimension 2 Code");
+        Rec.CALCFIELDS("Item Category Code");
+        Rec.CALCFIELDS("Global Dimension 2 Code");
     end;
 
     var

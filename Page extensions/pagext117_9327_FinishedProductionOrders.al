@@ -13,31 +13,37 @@ pageextension 50217 FinishedProductionOrdersExt extends "Finished Production Ord
         // Add changes to page layout here
         addafter("Bin Code")
         {
-            field("No. Carton Lines"; "No. Carton Lines")
+            field("No. Carton Lines"; Rec."No. Carton Lines")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the No. Carton Lines field.';
             }
-            field("Νο. Prod. Order Line"; "Νο. Prod. Order Line")
+            field("Νο. Prod. Order Line"; Rec."Νο. Prod. Order Line")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Νο. Prod. Order Line field.';
             }
-            field("Creation Date"; "Creation Date")
+            field("Creation Date"; Rec."Creation Date")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the date on which you created the production order.';
             }
-            field("Created By"; "Created By")
+            field("Created By"; Rec."Created By")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Created By field.';
             }
-            field("Client Computer Name"; "Client Computer Name")
+            field("Client Computer Name"; Rec."Client Computer Name")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Client Computer Name field.';
             }
 
             //+1.0.0.229
-            field("Packing Agent"; "Packing Agent")
+            field("Packing Agent"; Rec."Packing Agent")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Packing Agent field.';
             }
             //-1.0.0.229
         }

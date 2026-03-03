@@ -9,10 +9,11 @@ pageextension 50205 ProductionPlannerActivitiesExt extends "Production Planner A
         // Add changes to page layout here
         addbefore("Simulated Prod. Orders")
         {
-            field("Zero Component Lines"; "Zero Component Lines")
+            field("Zero Component Lines"; Rec."Zero Component Lines")
             {
-                DrillDownPageID = "Prod. Order Components";
-                ApplicationArea = all;
+                DrillDownPageId = "Prod. Order Components";
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Zero Component Lines field.';
             }
         }
     }
@@ -26,21 +27,21 @@ pageextension 50205 ProductionPlannerActivitiesExt extends "Production Planner A
     begin
 
         //+TAL0.1
-        rG_MNSetup.GET;
-        if FORMAT(rG_MNSetup."Zero Date Component Formula") <> '' then begin
+        rG_MNSetup.Get;
+        if Format(rG_MNSetup."Zero Date Component Formula") <> '' then begin
             vG_ZeroDateComponentFormula := rG_MNSetup."Zero Date Component Formula";
         end else begin
-            EVALUATE(vG_ZeroDateComponentFormula, '-7D');
+            Evaluate(vG_ZeroDateComponentFormula, '-7D');
         end;
 
-        vG_ZeroDateFilter := CALCDATE(vG_ZeroDateComponentFormula, WORKDATE);
-        SETRANGE("Zero Date Filter", vG_ZeroDateFilter, WORKDATE);
+        vG_ZeroDateFilter := CalcDate(vG_ZeroDateComponentFormula, WorkDate);
+        Rec.SETRANGE("Zero Date Filter", vG_ZeroDateFilter, WorkDate);
         //-TAL0.1
     end;
 
 
     var
-        vG_ZeroDateFilter : Date;
-        rG_MNSetup : Record "Manufacturing Setup";
-        vG_ZeroDateComponentFormula : DateFormula;
+        vG_ZeroDateFilter: Date;
+        rG_MNSetup: Record "Manufacturing Setup";
+        vG_ZeroDateComponentFormula: DateFormula;
 }

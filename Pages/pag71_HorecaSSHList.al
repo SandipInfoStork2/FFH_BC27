@@ -4,13 +4,14 @@ page 50071 "Horeca SSH List"
 
     //ApplicationArea = Basic, Suite, Assembly;
     Caption = 'Posted Sales Shipments';
-    CardPageID = "Horeca SSH";
+    CardPageId = "Horeca SSH";
     DataCaptionFields = "Sell-to Customer No.";
     Editable = false;
     PageType = List;
     QueryCategory = 'Horeca Posted Sales Shipments';
     RefreshOnActivate = true;
     SourceTable = "Sales Shipment Header";
+    ApplicationArea = All;
     //UsageCategory = Lists;
 
     layout
@@ -23,26 +24,31 @@ page 50071 "Horeca SSH List"
                 field("No."; Rec."No.")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the number of the record.';
                 }
 
                 field("Ship-to Code"; Rec."Ship-to Code")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the code for the customer''s additional shipment address.';
                 }
 
                 field("Ship-to Name"; Rec."Ship-to Name")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the name of the customer that you delivered the items to.';
                 }
 
                 field("Ship-to City"; Rec."Ship-to City")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the city of the customer on the sales document.';
                 }
 
-                field("Posting Date"; "Posting Date")
+                field("Posting Date"; Rec."Posting Date")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the posting date for the entry.';
                 }
 
 
@@ -50,6 +56,7 @@ page 50071 "Horeca SSH List"
                 field("Requested Delivery Date"; Rec."Requested Delivery Date")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the date that the customer has asked for the order to be delivered.';
                 }
 
 
@@ -58,6 +65,7 @@ page 50071 "Horeca SSH List"
                     ApplicationArea = All;
                     Caption = 'On Schedule';
                     Editable = false;
+                    ToolTip = 'Specifies the value of the On Schedule field.';
                 }
 
                 /*
@@ -75,20 +83,23 @@ page 50071 "Horeca SSH List"
                 }
                 */
 
-                field(SystemCreatedAt; SystemCreatedAt)
+                field(SystemCreatedAt; Rec.SystemCreatedAt)
                 {
                     ApplicationArea = All;
                     Editable = false;
+                    ToolTip = 'Specifies the value of the SystemCreatedAt field.';
                 }
 
 
                 field("Sell-to Customer No."; Rec."Sell-to Customer No.")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Sell-to Customer No. field.';
                 }
                 field("Sell-to Customer Name"; Rec."Sell-to Customer Name")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the name of customer at the sell-to address.';
                 }
 
                 field(UniqueItemsToShip; vG_OrderUniqueItems)
@@ -96,6 +107,7 @@ page 50071 "Horeca SSH List"
                     ApplicationArea = All;
                     Caption = 'Total SKU';
                     Editable = false;
+                    ToolTip = 'Specifies the value of the Total SKU field.';
                 }
 
 
@@ -123,7 +135,7 @@ page 50071 "Horeca SSH List"
 
             }
         }
-        area(Factboxes)
+        area(FactBoxes)
         {
 
         }
@@ -149,7 +161,7 @@ page 50071 "Horeca SSH List"
         }
         */
 
-        area(processing)
+        area(Processing)
         {
             action("&Print")
             {
@@ -173,7 +185,7 @@ page 50071 "Horeca SSH List"
                     CurrPage.SetSelectionFilter(SalesShptHeader);
                     //SalesShptHeader.PrintRecords(true);
 
-                    clear(rptSalesShipment);
+                    Clear(rptSalesShipment);
                     rptSalesShipment.SetTableView(SalesShptHeader);
                     rptSalesShipment.UseRequestPage(false);
                     rptSalesShipment.Run();
@@ -192,7 +204,7 @@ page 50071 "Horeca SSH List"
     var
         cuGeneralMgt: Codeunit "General Mgt.";
     begin
-        OnSchedule := cuGeneralMgt.GetScheduleDays("Sell-to Customer No.", "Ship-to Code");
+        OnSchedule := cuGeneralMgt.GetScheduleDays(Rec."Sell-to Customer No.", Rec."Ship-to Code");
 
 
         GetNetWeight(vG_NetWeight, vG_GrossWeight, vG_OrderUniqueItems);
@@ -228,12 +240,12 @@ page 50071 "Horeca SSH List"
         oldItemNo := '';
 
         //SalesLine.SETRANGE("Document Type","Document Type");
-        SalesLine.RESET;
-        SalesLine.SETCURRENTKEY("Document No.", "No.");
+        SalesLine.Reset;
+        SalesLine.SetCurrentKey("Document No.", "No.");
         SalesLine.SetFilter("Document No.", Rec."No.");
-        SalesLine.SETRANGE(Type, SalesLine.Type::Item);
+        SalesLine.SetRange(Type, SalesLine.Type::Item);
         SalesLine.SetFilter(Quantity, '>%1', 0);
-        if SalesLine.FINDSET then
+        if SalesLine.FindSet then
             repeat
                 pNetWeight += SalesLine."Net Weight" * SalesLine.Quantity;
                 pGrossWeight += SalesLine."Gross Weight" * SalesLine.Quantity;
@@ -243,7 +255,7 @@ page 50071 "Horeca SSH List"
                 end;
 
                 oldItemNo := SalesLine."No.";
-            until SalesLine.NEXT = 0;
+            until SalesLine.Next = 0;
     end;
 
     procedure SetGLOBALStoreCode(pGLOBALStoreCode: Code[10])

@@ -5,22 +5,26 @@ pageextension 50208 MyItemsExt extends "My Items"
         // Add changes to page layout here
         addafter(Inventory)
         {
-            field("Inventory Aradipou - Main"; "Inventory Aradipou - Main")
+            field("Inventory Aradipou - Main"; Rec."Inventory Aradipou - Main")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 Caption = 'Inventory Aradipou - Main';
+                ToolTip = 'Specifies the value of the Inventory Aradipou - Main field.';
             }
-            field("Inventory Fresh Cut"; "Inventory Fresh Cut")
+            field("Inventory Fresh Cut"; Rec."Inventory Fresh Cut")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Inventory Fresh Cut field.';
             }
-            field("Inventory Kitchen"; "Inventory Kitchen")
+            field("Inventory Kitchen"; Rec."Inventory Kitchen")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Inventory Kitchen field.';
             }
-            field("Inventory Potatoes"; "Inventory Potatoes")
+            field("Inventory Potatoes"; Rec."Inventory Potatoes")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Inventory Potatoes field.';
             }
 
         }

@@ -10,12 +10,13 @@ report 50045 "Order Confirmation HORECA"
     CaptionML = ELL = 'Order Confirmation HORECA',
                 ENU = 'Order Confirmation HORECA';
     PreviewMode = PrintLayout;
+    ApplicationArea = All;
 
     dataset
     {
         dataitem("Sales Header"; "Sales Header")
         {
-            DataItemTableView = SORTING("Document Type", "No.") WHERE("Document Type" = CONST(Order));
+            DataItemTableView = sorting("Document Type", "No.") where("Document Type" = const(Order));
             RequestFilterFields = "No.", "Sell-to Customer No.", "No. Printed";
             //ReqFilterHeading = 'Sales Order';
             column(DocType_SalesHeader; "Document Type")
@@ -68,10 +69,10 @@ report 50045 "Order Confirmation HORECA"
             }
             dataitem(CopyLoop; "Integer")
             {
-                DataItemTableView = SORTING(Number);
+                DataItemTableView = sorting(Number);
                 dataitem(PageLoop; "Integer")
                 {
-                    DataItemTableView = SORTING(Number) WHERE(Number = CONST(1));
+                    DataItemTableView = sorting(Number) where(Number = const(1));
                     column(CompanyInfo2Picture; CompanyInfo2.Picture)
                     {
                     }
@@ -81,7 +82,7 @@ report 50045 "Order Confirmation HORECA"
                     column(CompanyInfo1Picture; CompanyInfo1.Picture)
                     {
                     }
-                    column(OrderConfirmCopyCaption; STRSUBSTNO(Text004, CopyText))
+                    column(OrderConfirmCopyCaption; StrSubstNo(Text004, CopyText))
                     {
                     }
                     column(CustAddr1; CustAddr[1])
@@ -139,7 +140,7 @@ report 50045 "Order Confirmation HORECA"
                     column(BilltoCustNo_SalesHeader; "Sales Header"."Bill-to Customer No.")
                     {
                     }
-                    column(DocDate_SalesHeader; FORMAT("Sales Header"."Document Date"))
+                    column(DocDate_SalesHeader; Format("Sales Header"."Document Date"))
                     {
                     }
                     column(VATNoText; VATNoText)
@@ -148,7 +149,7 @@ report 50045 "Order Confirmation HORECA"
                     column(VATRegNo_SalesHeader; "Sales Header"."VAT Registration No.")
                     {
                     }
-                    column(ShptDate_SalesHeader; FORMAT("Sales Header"."Shipment Date"))
+                    column(ShptDate_SalesHeader; Format("Sales Header"."Shipment Date"))
                     {
                     }
                     column(SalesPersonText; SalesPersonText)
@@ -178,7 +179,7 @@ report 50045 "Order Confirmation HORECA"
                     column(PricesInclVAT_SalesHeader; "Sales Header"."Prices Including VAT")
                     {
                     }
-                    column(PageCaption; STRSUBSTNO(Text005, ''))
+                    column(PageCaption; StrSubstNo(Text005, ''))
                     {
                     }
                     column(OutputNo; OutputNo)
@@ -190,7 +191,7 @@ report 50045 "Order Confirmation HORECA"
                     column(ShptMethodDesc; ShipmentMethod.Description)
                     {
                     }
-                    column(PricesInclVATYesNo_SalesHeader; FORMAT("Sales Header"."Prices Including VAT"))
+                    column(PricesInclVATYesNo_SalesHeader; Format("Sales Header"."Prices Including VAT"))
                     {
                     }
                     column(VATRegNoCaption; VATRegNoCaptionLbl)
@@ -217,10 +218,10 @@ report 50045 "Order Confirmation HORECA"
                     column(EmailCaption; EmailCaptionLbl)
                     {
                     }
-                    column(BilltoCustNo_SalesHeaderCaption; "Sales Header".FIELDCAPTION("Bill-to Customer No."))
+                    column(BilltoCustNo_SalesHeaderCaption; "Sales Header".FieldCaption("Bill-to Customer No."))
                     {
                     }
-                    column(PricesInclVAT_SalesHeaderCaption; "Sales Header".FIELDCAPTION("Prices Including VAT"))
+                    column(PricesInclVAT_SalesHeaderCaption; "Sales Header".FieldCaption("Prices Including VAT"))
                     {
                     }
 
@@ -234,7 +235,7 @@ report 50045 "Order Confirmation HORECA"
                     dataitem(DimensionLoop1; "Integer")
                     {
                         DataItemLinkReference = "Sales Header";
-                        DataItemTableView = SORTING(Number) WHERE(Number = FILTER(1 ..));
+                        DataItemTableView = sorting(Number) where(Number = filter(1 ..));
                         column(DimText; DimText)
                         {
                         }
@@ -248,51 +249,51 @@ report 50045 "Order Confirmation HORECA"
                         trigger OnAfterGetRecord();
                         begin
                             if Number = 1 then begin
-                                if not DimSetEntry1.FIND('-') then
-                                    CurrReport.BREAK;
+                                if not DimSetEntry1.Find('-') then
+                                    CurrReport.Break;
                             end else
                                 if not Continue then
-                                    CurrReport.BREAK;
+                                    CurrReport.Break;
 
-                            CLEAR(DimText);
+                            Clear(DimText);
                             Continue := false;
                             repeat
                                 OldDimText := DimText;
                                 if DimText = '' then
-                                    DimText := STRSUBSTNO('%1 %2', DimSetEntry1."Dimension Code", DimSetEntry1."Dimension Value Code")
+                                    DimText := StrSubstNo('%1 %2', DimSetEntry1."Dimension Code", DimSetEntry1."Dimension Value Code")
                                 else
                                     DimText :=
-                                      STRSUBSTNO(
+                                      StrSubstNo(
                                         '%1, %2 %3', DimText,
                                         DimSetEntry1."Dimension Code", DimSetEntry1."Dimension Value Code");
-                                if STRLEN(DimText) > MAXSTRLEN(OldDimText) then begin
+                                if StrLen(DimText) > MaxStrLen(OldDimText) then begin
                                     DimText := OldDimText;
                                     Continue := true;
                                     exit;
                                 end;
-                            until DimSetEntry1.NEXT = 0;
+                            until DimSetEntry1.Next = 0;
                         end;
 
                         trigger OnPreDataItem();
                         begin
                             if not ShowInternalInfo then
-                                CurrReport.BREAK;
+                                CurrReport.Break;
                         end;
                     }
                     dataitem("Sales Line"; "Sales Line")
                     {
-                        DataItemLink = "Document Type" = FIELD("Document Type"), "Document No." = FIELD("No.");
+                        DataItemLink = "Document Type" = field("Document Type"), "Document No." = field("No.");
                         DataItemLinkReference = "Sales Header";
-                        DataItemTableView = SORTING("Document Type", "Document No.", "Line No.");
+                        DataItemTableView = sorting("Document Type", "Document No.", "Line No.");
 
                         trigger OnPreDataItem();
                         begin
-                            CurrReport.BREAK;
+                            CurrReport.Break;
                         end;
                     }
                     dataitem(RoundLoop; "Integer")
                     {
-                        DataItemTableView = SORTING(Number);
+                        DataItemTableView = sorting(Number);
                         column(SalesLineAmt; SalesLine."Line Amount")
                         {
                             AutoFormatExpression = "Sales Header"."Currency Code";
@@ -369,13 +370,13 @@ report 50045 "Order Confirmation HORECA"
                         column(VATIdentifier_SalesLine; "Sales Line"."VAT Identifier")
                         {
                         }
-                        column(Type_SalesLine; FORMAT("Sales Line".Type))
+                        column(Type_SalesLine; Format("Sales Line".Type))
                         {
                         }
                         column(No_SalesLine; "Sales Line"."Line No.")
                         {
                         }
-                        column(AllowInvDiscountYesNo_SalesLine; FORMAT("Sales Line"."Allow Invoice Disc."))
+                        column(AllowInvDiscountYesNo_SalesLine; Format("Sales Line"."Allow Invoice Disc."))
                         {
                         }
                         column(AsmInfoExistsForLine; AsmInfoExistsForLine)
@@ -438,19 +439,19 @@ report 50045 "Order Confirmation HORECA"
                         column(PaymentDiscountVATCaption; PaymentDiscountVATCaptionLbl)
                         {
                         }
-                        column(Desc_SalesLineCaption; "Sales Line".FIELDCAPTION(Description))
+                        column(Desc_SalesLineCaption; "Sales Line".FieldCaption(Description))
                         {
                         }
-                        column(No2_SalesLineCaption; "Sales Line".FIELDCAPTION("No."))
+                        column(No2_SalesLineCaption; "Sales Line".FieldCaption("No."))
                         {
                         }
-                        column(Qty_SalesLineCaption; "Sales Line".FIELDCAPTION(Quantity))
+                        column(Qty_SalesLineCaption; "Sales Line".FieldCaption(Quantity))
                         {
                         }
-                        column(UOM_SalesLineCaption; "Sales Line".FIELDCAPTION("Unit of Measure"))
+                        column(UOM_SalesLineCaption; "Sales Line".FieldCaption("Unit of Measure"))
                         {
                         }
-                        column(VATIdentifier_SalesLineCaption; "Sales Line".FIELDCAPTION("VAT Identifier"))
+                        column(VATIdentifier_SalesLineCaption; "Sales Line".FieldCaption("VAT Identifier"))
                         {
                         }
                         column(SalesLine_Vat_Perc; SalesLine."VAT %")
@@ -471,7 +472,7 @@ report 50045 "Order Confirmation HORECA"
                         }
                         dataitem(DimensionLoop2; "Integer")
                         {
-                            DataItemTableView = SORTING(Number) WHERE(Number = FILTER(1 ..));
+                            DataItemTableView = sorting(Number) where(Number = filter(1 ..));
                             column(DimText2; DimText)
                             {
                             }
@@ -482,42 +483,42 @@ report 50045 "Order Confirmation HORECA"
                             trigger OnAfterGetRecord();
                             begin
                                 if Number = 1 then begin
-                                    if not DimSetEntry2.FINDSET then
-                                        CurrReport.BREAK;
+                                    if not DimSetEntry2.FindSet then
+                                        CurrReport.Break;
                                 end else
                                     if not Continue then
-                                        CurrReport.BREAK;
+                                        CurrReport.Break;
 
-                                CLEAR(DimText);
+                                Clear(DimText);
                                 Continue := false;
                                 repeat
                                     OldDimText := DimText;
                                     if DimText = '' then
-                                        DimText := STRSUBSTNO('%1 %2', DimSetEntry2."Dimension Code", DimSetEntry2."Dimension Value Code")
+                                        DimText := StrSubstNo('%1 %2', DimSetEntry2."Dimension Code", DimSetEntry2."Dimension Value Code")
                                     else
                                         DimText :=
-                                          STRSUBSTNO(
+                                          StrSubstNo(
                                             '%1, %2 %3', DimText,
                                             DimSetEntry2."Dimension Code", DimSetEntry2."Dimension Value Code");
-                                    if STRLEN(DimText) > MAXSTRLEN(OldDimText) then begin
+                                    if StrLen(DimText) > MaxStrLen(OldDimText) then begin
                                         DimText := OldDimText;
                                         Continue := true;
                                         exit;
                                     end;
-                                until DimSetEntry2.NEXT = 0;
+                                until DimSetEntry2.Next = 0;
                             end;
 
                             trigger OnPreDataItem();
                             begin
                                 if not ShowInternalInfo then
-                                    CurrReport.BREAK;
+                                    CurrReport.Break;
 
-                                DimSetEntry2.SETRANGE("Dimension Set ID", "Sales Line"."Dimension Set ID");
+                                DimSetEntry2.SetRange("Dimension Set ID", "Sales Line"."Dimension Set ID");
                             end;
                         }
                         dataitem(AsmLoop; "Integer")
                         {
-                            DataItemTableView = SORTING(Number);
+                            DataItemTableView = sorting(Number);
                             column(AsmLineType; AsmLine.Type)
                             {
                             }
@@ -537,29 +538,29 @@ report 50045 "Order Confirmation HORECA"
                             trigger OnAfterGetRecord();
                             begin
                                 if Number = 1 then
-                                    AsmLine.FINDSET
+                                    AsmLine.FindSet
                                 else
-                                    AsmLine.NEXT;
+                                    AsmLine.Next;
                             end;
 
                             trigger OnPreDataItem();
                             begin
                                 if not DisplayAssemblyInformation then
-                                    CurrReport.BREAK;
+                                    CurrReport.Break;
                                 if not AsmInfoExistsForLine then
-                                    CurrReport.BREAK;
-                                AsmLine.SETRANGE("Document Type", AsmHeader."Document Type");
-                                AsmLine.SETRANGE("Document No.", AsmHeader."No.");
-                                SETRANGE(Number, 1, AsmLine.COUNT);
+                                    CurrReport.Break;
+                                AsmLine.SetRange("Document Type", AsmHeader."Document Type");
+                                AsmLine.SetRange("Document No.", AsmHeader."No.");
+                                SetRange(Number, 1, AsmLine.Count);
                             end;
                         }
 
                         trigger OnAfterGetRecord();
                         begin
                             if Number = 1 then
-                                SalesLine.FIND('-')
+                                SalesLine.Find('-')
                             else
-                                SalesLine.NEXT;
+                                SalesLine.Next;
                             "Sales Line" := SalesLine;
                             if DisplayAssemblyInformation then
                                 AsmInfoExistsForLine := SalesLine.AsmToOrderExists(AsmHeader);
@@ -589,46 +590,46 @@ report 50045 "Order Confirmation HORECA"
                             NNCTotalExclVAT2 := VATBaseAmount;
 
                             //+TAL0.1
-                            CLEAR(vG_ShortcutDimCode); //TAL0.2
-                            CLEAR(rG_DimensionValue); //TAL0.2
+                            Clear(vG_ShortcutDimCode); //TAL0.2
+                            Clear(rG_DimensionValue); //TAL0.2
                             if "Sales Line".Type = "Sales Line".Type::Item then begin  //TAL0.2
 
                                 DimMgt.GetShortcutDimensions("Sales Line"."Dimension Set ID", vG_ShortcutDimCode);
 
-                                rG_DimensionValue.RESET;
-                                rG_DimensionValue.SETRANGE("Dimension Code", GLSetup."Shortcut Dimension 5 Code");
-                                rG_DimensionValue.SETFILTER(Code, vG_ShortcutDimCode[5]);
-                                if rG_DimensionValue.FINDSET then begin
+                                rG_DimensionValue.Reset;
+                                rG_DimensionValue.SetRange("Dimension Code", GLSetup."Shortcut Dimension 5 Code");
+                                rG_DimensionValue.SetFilter(Code, vG_ShortcutDimCode[5]);
+                                if rG_DimensionValue.FindSet then begin
 
                                 end;
                             end;
-                            "Sales Line".CALCFIELDS("Unit of Measure (Base)");
+                            "Sales Line".CalcFields("Unit of Measure (Base)");
                             //-TAL0.1
                         end;
 
                         trigger OnPostDataItem();
                         begin
-                            SalesLine.DELETEALL;
+                            SalesLine.DeleteAll;
                         end;
 
                         trigger OnPreDataItem();
                         begin
-                            MoreLines := SalesLine.FIND('+');
+                            MoreLines := SalesLine.Find('+');
                             while MoreLines and (SalesLine.Description = '') and (SalesLine."Description 2" = '') and
                                   (SalesLine."No." = '') and (SalesLine.Quantity = 0) and
                                   (SalesLine.Amount = 0)
                             do
-                                MoreLines := SalesLine.NEXT(-1) <> 0;
+                                MoreLines := SalesLine.Next(-1) <> 0;
                             if not MoreLines then
-                                CurrReport.BREAK;
-                            SalesLine.SETRANGE("Line No.", 0, SalesLine."Line No.");
-                            SETRANGE(Number, 1, SalesLine.COUNT);
-                            CurrReport.CREATETOTALS(SalesLine."Line Amount", SalesLine."Inv. Discount Amount");
+                                CurrReport.Break;
+                            SalesLine.SetRange("Line No.", 0, SalesLine."Line No.");
+                            SetRange(Number, 1, SalesLine.Count);
+                            CurrReport.CreateTotals(SalesLine."Line Amount", SalesLine."Inv. Discount Amount");
                         end;
                     }
                     dataitem(VATCounter; "Integer")
                     {
-                        DataItemTableView = SORTING(Number);
+                        DataItemTableView = sorting(Number);
                         column(VATAmountLineVATBase; VATAmountLine."VAT Base")
                         {
                             AutoFormatExpression = "Sales Header"."Currency Code";
@@ -676,16 +677,16 @@ report 50045 "Order Confirmation HORECA"
                         trigger OnPreDataItem();
                         begin
                             if VATAmount = 0 then
-                                CurrReport.BREAK;
-                            SETRANGE(Number, 1, VATAmountLine.COUNT);
-                            CurrReport.CREATETOTALS(
+                                CurrReport.Break;
+                            SetRange(Number, 1, VATAmountLine.Count);
+                            CurrReport.CreateTotals(
                               VATAmountLine."Line Amount", VATAmountLine."Inv. Disc. Base Amount",
                               VATAmountLine."Invoice Discount Amount", VATAmountLine."VAT Base", VATAmountLine."VAT Amount");
                         end;
                     }
                     dataitem(VATCounterLCY; "Integer")
                     {
-                        DataItemTableView = SORTING(Number);
+                        DataItemTableView = sorting(Number);
                         column(VALExchRate; VALExchRate)
                         {
                         }
@@ -712,10 +713,10 @@ report 50045 "Order Confirmation HORECA"
                         begin
                             VATAmountLine.GetLine(Number);
 
-                            VALVATBaseLCY := ROUND(CurrExchRate.ExchangeAmtFCYToLCY(
+                            VALVATBaseLCY := Round(CurrExchRate.ExchangeAmtFCYToLCY(
                                   "Sales Header"."Posting Date", "Sales Header"."Currency Code",
                                   VATAmountLine."VAT Base", "Sales Header"."Currency Factor"));
-                            VALVATAmountLCY := ROUND(CurrExchRate.ExchangeAmtFCYToLCY(
+                            VALVATAmountLCY := Round(CurrExchRate.ExchangeAmtFCYToLCY(
                                   "Sales Header"."Posting Date", "Sales Header"."Currency Code",
                                   VATAmountLine."VAT Amount", "Sales Header"."Currency Factor"));
                         end;
@@ -726,23 +727,23 @@ report 50045 "Order Confirmation HORECA"
                                ("Sales Header"."Currency Code" = '') or
                                (VATAmountLine.GetTotalVATAmount = 0)
                             then
-                                CurrReport.BREAK;
+                                CurrReport.Break;
 
-                            SETRANGE(Number, 1, VATAmountLine.COUNT);
-                            CurrReport.CREATETOTALS(VALVATBaseLCY, VALVATAmountLCY);
+                            SetRange(Number, 1, VATAmountLine.Count);
+                            CurrReport.CreateTotals(VALVATBaseLCY, VALVATAmountLCY);
 
                             if GLSetup."LCY Code" = '' then
                                 VALSpecLCYHeader := Text007 + Text008
                             else
-                                VALSpecLCYHeader := Text007 + FORMAT(GLSetup."LCY Code");
+                                VALSpecLCYHeader := Text007 + Format(GLSetup."LCY Code");
 
                             CurrExchRate.FindCurrency("Sales Header"."Posting Date", "Sales Header"."Currency Code", 1);
-                            VALExchRate := STRSUBSTNO(Text009, CurrExchRate."Relational Exch. Rate Amount", CurrExchRate."Exchange Rate Amount");
+                            VALExchRate := StrSubstNo(Text009, CurrExchRate."Relational Exch. Rate Amount", CurrExchRate."Exchange Rate Amount");
                         end;
                     }
                     dataitem(Total2; "Integer")
                     {
-                        DataItemTableView = SORTING(Number) WHERE(Number = CONST(1));
+                        DataItemTableView = sorting(Number) where(Number = const(1));
                         column(SelltoCustNo_SalesHeader; "Sales Header"."Sell-to Customer No.")
                         {
                         }
@@ -773,19 +774,19 @@ report 50045 "Order Confirmation HORECA"
                         column(ShiptoAddrCaption; ShiptoAddrCaptionLbl)
                         {
                         }
-                        column(SelltoCustNo_SalesHeaderCaption; "Sales Header".FIELDCAPTION("Sell-to Customer No."))
+                        column(SelltoCustNo_SalesHeaderCaption; "Sales Header".FieldCaption("Sell-to Customer No."))
                         {
                         }
 
                         trigger OnPreDataItem();
                         begin
                             if not ShowShippingAddr then
-                                CurrReport.BREAK;
+                                CurrReport.Break;
                         end;
                     }
                     dataitem(PrepmtLoop; "Integer")
                     {
-                        DataItemTableView = SORTING(Number) WHERE(Number = FILTER(1 ..));
+                        DataItemTableView = sorting(Number) where(Number = filter(1 ..));
                         column(PrepmtLineAmount; PrepmtLineAmount)
                         {
                             AutoFormatExpression = "Sales Header"."Currency Code";
@@ -848,7 +849,7 @@ report 50045 "Order Confirmation HORECA"
                         }
                         dataitem(PrepmtDimLoop; "Integer")
                         {
-                            DataItemTableView = SORTING(Number) WHERE(Number = FILTER(1 ..));
+                            DataItemTableView = sorting(Number) where(Number = filter(1 ..));
                             column(DimText3; DimText)
                             {
                             }
@@ -856,41 +857,41 @@ report 50045 "Order Confirmation HORECA"
                             trigger OnAfterGetRecord();
                             begin
                                 if Number = 1 then begin
-                                    if not TempPrepmtDimSetEntry.FIND('-') then
-                                        CurrReport.BREAK;
+                                    if not TempPrepmtDimSetEntry.Find('-') then
+                                        CurrReport.Break;
                                 end else
                                     if not Continue then
-                                        CurrReport.BREAK;
+                                        CurrReport.Break;
 
-                                CLEAR(DimText);
+                                Clear(DimText);
                                 Continue := false;
                                 repeat
                                     OldDimText := DimText;
                                     if DimText = '' then
                                         DimText :=
-                                          STRSUBSTNO('%1 %2', TempPrepmtDimSetEntry."Dimension Code", TempPrepmtDimSetEntry."Dimension Value Code")
+                                          StrSubstNo('%1 %2', TempPrepmtDimSetEntry."Dimension Code", TempPrepmtDimSetEntry."Dimension Value Code")
                                     else
                                         DimText :=
-                                          STRSUBSTNO(
+                                          StrSubstNo(
                                             '%1, %2 %3', DimText,
                                             TempPrepmtDimSetEntry."Dimension Code", TempPrepmtDimSetEntry."Dimension Value Code");
-                                    if STRLEN(DimText) > MAXSTRLEN(OldDimText) then begin
+                                    if StrLen(DimText) > MaxStrLen(OldDimText) then begin
                                         DimText := OldDimText;
                                         Continue := true;
                                         exit;
                                     end;
-                                until TempPrepmtDimSetEntry.NEXT = 0;
+                                until TempPrepmtDimSetEntry.Next = 0;
                             end;
                         }
 
                         trigger OnAfterGetRecord();
                         begin
                             if Number = 1 then begin
-                                if not PrepmtInvBuf.FIND('-') then
-                                    CurrReport.BREAK;
+                                if not PrepmtInvBuf.Find('-') then
+                                    CurrReport.Break;
                             end else
-                                if PrepmtInvBuf.NEXT = 0 then
-                                    CurrReport.BREAK;
+                                if PrepmtInvBuf.Next = 0 then
+                                    CurrReport.Break;
 
                             if ShowInternalInfo then
                                 DimMgt.GetDimensionSet(TempPrepmtDimSetEntry, PrepmtInvBuf."Dimension Set ID");
@@ -903,7 +904,7 @@ report 50045 "Order Confirmation HORECA"
 
                         trigger OnPreDataItem();
                         begin
-                            CurrReport.CREATETOTALS(
+                            CurrReport.CreateTotals(
                               PrepmtInvBuf.Amount, PrepmtInvBuf."Amount Incl. VAT",
                               PrepmtVATAmountLine."Line Amount", PrepmtVATAmountLine."VAT Base",
                               PrepmtVATAmountLine."VAT Amount",
@@ -912,7 +913,7 @@ report 50045 "Order Confirmation HORECA"
                     }
                     dataitem(PrepmtVATCounter; "Integer")
                     {
-                        DataItemTableView = SORTING(Number);
+                        DataItemTableView = sorting(Number);
                         column(PrepmtVATAmtLineVATAmt; PrepmtVATAmountLine."VAT Amount")
                         {
                             AutoFormatExpression = "Sales Header"."Currency Code";
@@ -949,12 +950,12 @@ report 50045 "Order Confirmation HORECA"
 
                         trigger OnPreDataItem();
                         begin
-                            SETRANGE(Number, 1, PrepmtVATAmountLine.COUNT);
+                            SetRange(Number, 1, PrepmtVATAmountLine.Count);
                         end;
                     }
                     dataitem(PrepmtTotal; "Integer")
                     {
-                        DataItemTableView = SORTING(Number) WHERE(Number = CONST(1));
+                        DataItemTableView = sorting(Number) where(Number = const(1));
                         column(PrepmtPmtTermsDesc; PrepmtPaymentTerms.Description)
                         {
                         }
@@ -964,8 +965,8 @@ report 50045 "Order Confirmation HORECA"
 
                         trigger OnPreDataItem();
                         begin
-                            if not PrepmtInvBuf.FIND('-') then
-                                CurrReport.BREAK;
+                            if not PrepmtInvBuf.Find('-') then
+                                CurrReport.Break;
                         end;
                     }
                 }
@@ -977,12 +978,12 @@ report 50045 "Order Confirmation HORECA"
                     TempSalesLine: Record "Sales Line" temporary;
                     TempSalesLineDisc: Record "Sales Line" temporary;
                 begin
-                    CLEAR(SalesLine);
-                    CLEAR(SalesPost);
-                    CLEAR(TempSalesLineDisc);
-                    VATAmountLine.DELETEALL;
-                    SalesLine.DELETEALL;
-                    TempSalesLineDisc.DELETEALL;
+                    Clear(SalesLine);
+                    Clear(SalesPost);
+                    Clear(TempSalesLineDisc);
+                    VATAmountLine.DeleteAll;
+                    SalesLine.DeleteAll;
+                    TempSalesLineDisc.DeleteAll;
                     SalesPost.GetSalesLines("Sales Header", SalesLine, 0);
                     SalesLine.CalcVATAmountLines(0, "Sales Header", SalesLine, VATAmountLine);
                     SalesLine.UpdateVATOnLines(0, "Sales Header", SalesLine, VATAmountLine);
@@ -996,19 +997,19 @@ report 50045 "Order Confirmation HORECA"
                       VATAmountLine.GetTotalVATDiscount("Sales Header"."Currency Code", "Sales Header"."Prices Including VAT");
                     TotalAmountInclVAT := VATAmountLine.GetTotalAmountInclVAT;
 
-                    PrepmtInvBuf.DELETEALL;
+                    PrepmtInvBuf.DeleteAll;
                     SalesPostPrepmt.GetSalesLines("Sales Header", 0, PrepmtSalesLine);
 
-                    if not PrepmtSalesLine.ISEMPTY then begin
+                    if not PrepmtSalesLine.IsEmpty then begin
                         SalesPostPrepmt.GetSalesLinesToDeduct("Sales Header", TempSalesLine);
-                        if not TempSalesLine.ISEMPTY then
+                        if not TempSalesLine.IsEmpty then
                             SalesPostPrepmt.CalcVATAmountLines("Sales Header", TempSalesLine, PrepmtVATAmountLineDeduct, 1);
                     end;
                     SalesPostPrepmt.CalcVATAmountLines("Sales Header", PrepmtSalesLine, PrepmtVATAmountLine, 0);
-                    if PrepmtVATAmountLine.FINDSET then
+                    if PrepmtVATAmountLine.FindSet then
                         repeat
                             PrepmtVATAmountLineDeduct := PrepmtVATAmountLine;
-                            if PrepmtVATAmountLineDeduct.FIND then begin
+                            if PrepmtVATAmountLineDeduct.Find then begin
                                 PrepmtVATAmountLine."VAT Base" := PrepmtVATAmountLine."VAT Base" - PrepmtVATAmountLineDeduct."VAT Base";
                                 PrepmtVATAmountLine."VAT Amount" := PrepmtVATAmountLine."VAT Amount" - PrepmtVATAmountLineDeduct."VAT Amount";
                                 PrepmtVATAmountLine."Amount Including VAT" := PrepmtVATAmountLine."Amount Including VAT" -
@@ -1020,9 +1021,9 @@ report 50045 "Order Confirmation HORECA"
                                   PrepmtVATAmountLineDeduct."Invoice Discount Amount";
                                 PrepmtVATAmountLine."Calculated VAT Amount" := PrepmtVATAmountLine."Calculated VAT Amount" -
                                   PrepmtVATAmountLineDeduct."Calculated VAT Amount";
-                                PrepmtVATAmountLine.MODIFY;
+                                PrepmtVATAmountLine.Modify;
                             end;
-                        until PrepmtVATAmountLine.NEXT = 0;
+                        until PrepmtVATAmountLine.Next = 0;
 
                     SalesPostPrepmt.UpdateVATOnLines("Sales Header", PrepmtSalesLine, PrepmtVATAmountLine, 0);
                     SalesPostPrepmt.BuildInvLineBuffer("Sales Header", PrepmtSalesLine, 0, PrepmtInvBuf);
@@ -1034,7 +1035,7 @@ report 50045 "Order Confirmation HORECA"
                         CopyText := Text003;
                         OutputNo += 1;
                     end;
-                    CurrReport.PAGENO := 1;
+                    CurrReport.PageNo := 1;
 
                     NNCTotalLCY := 0;
                     NNCTotalExclVAT := 0;
@@ -1051,87 +1052,87 @@ report 50045 "Order Confirmation HORECA"
                 trigger OnPostDataItem();
                 begin
                     if Print then
-                        SalesCountPrinted.RUN("Sales Header");
+                        SalesCountPrinted.Run("Sales Header");
                 end;
 
                 trigger OnPreDataItem();
                 begin
-                    NoOfLoops := ABS(NoOfCopies) + 1;
+                    NoOfLoops := Abs(NoOfCopies) + 1;
                     CopyText := '';
-                    SETRANGE(Number, 1, NoOfLoops);
+                    SetRange(Number, 1, NoOfLoops);
                     OutputNo := 1;
                 end;
             }
 
             trigger OnAfterGetRecord();
             begin
-                CompanyInfo.GET;
-                CurrReport.LANGUAGE := LanguageMgt.GetLanguageIdOrDefault("Language Code");
+                CompanyInfo.Get;
+                CurrReport.Language := LanguageMgt.GetLanguageIdOrDefault("Language Code");
 
-                if RespCenter.GET("Responsibility Center") then begin
+                if RespCenter.Get("Responsibility Center") then begin
                     FormatAddr.RespCenter(CompanyAddr, RespCenter);
                     CompanyInfo."Phone No." := RespCenter."Phone No.";
                     CompanyInfo."Fax No." := RespCenter."Fax No.";
                 end else
                     FormatAddr.Company(CompanyAddr, CompanyInfo);
 
-                DimSetEntry1.SETRANGE("Dimension Set ID", "Dimension Set ID");
+                DimSetEntry1.SetRange("Dimension Set ID", "Dimension Set ID");
 
                 if "Salesperson Code" = '' then begin
-                    CLEAR(SalesPurchPerson);
+                    Clear(SalesPurchPerson);
                     SalesPersonText := '';
                 end else begin
-                    SalesPurchPerson.GET("Salesperson Code");
+                    SalesPurchPerson.Get("Salesperson Code");
                     SalesPersonText := Text000;
                 end;
                 if "Your Reference" = '' then
                     ReferenceText := ''
                 else
-                    ReferenceText := FIELDCAPTION("Your Reference");
+                    ReferenceText := FieldCaption("Your Reference");
                 if "VAT Registration No." = '' then
                     VATNoText := ''
                 else
-                    VATNoText := FIELDCAPTION("VAT Registration No.");
+                    VATNoText := FieldCaption("VAT Registration No.");
                 if "Currency Code" = '' then begin
-                    GLSetup.TESTFIELD("LCY Code");
-                    TotalText := STRSUBSTNO(Text001, GLSetup."LCY Code");
-                    TotalInclVATText := STRSUBSTNO(Text002, GLSetup."LCY Code");
-                    TotalExclVATText := STRSUBSTNO(Text006, GLSetup."LCY Code");
+                    GLSetup.TestField("LCY Code");
+                    TotalText := StrSubstNo(Text001, GLSetup."LCY Code");
+                    TotalInclVATText := StrSubstNo(Text002, GLSetup."LCY Code");
+                    TotalExclVATText := StrSubstNo(Text006, GLSetup."LCY Code");
                 end else begin
-                    TotalText := STRSUBSTNO(Text001, "Currency Code");
-                    TotalInclVATText := STRSUBSTNO(Text002, "Currency Code");
-                    TotalExclVATText := STRSUBSTNO(Text006, "Currency Code");
+                    TotalText := StrSubstNo(Text001, "Currency Code");
+                    TotalInclVATText := StrSubstNo(Text002, "Currency Code");
+                    TotalExclVATText := StrSubstNo(Text006, "Currency Code");
                 end;
                 FormatAddr.SalesHeaderBillTo(CustAddr, "Sales Header");
 
                 if "Payment Terms Code" = '' then
-                    PaymentTerms.INIT
+                    PaymentTerms.Init
                 else begin
-                    PaymentTerms.GET("Payment Terms Code");
+                    PaymentTerms.Get("Payment Terms Code");
                     PaymentTerms.TranslateDescription(PaymentTerms, "Language Code");
                 end;
                 if "Prepmt. Payment Terms Code" = '' then
-                    PrepmtPaymentTerms.INIT
+                    PrepmtPaymentTerms.Init
                 else begin
-                    PrepmtPaymentTerms.GET("Prepmt. Payment Terms Code");
+                    PrepmtPaymentTerms.Get("Prepmt. Payment Terms Code");
                     PrepmtPaymentTerms.TranslateDescription(PrepmtPaymentTerms, "Language Code");
                 end;
                 if "Prepmt. Payment Terms Code" = '' then
-                    PrepmtPaymentTerms.INIT
+                    PrepmtPaymentTerms.Init
                 else begin
-                    PrepmtPaymentTerms.GET("Prepmt. Payment Terms Code");
+                    PrepmtPaymentTerms.Get("Prepmt. Payment Terms Code");
                     PrepmtPaymentTerms.TranslateDescription(PrepmtPaymentTerms, "Language Code");
                 end;
                 if "Shipment Method Code" = '' then
-                    ShipmentMethod.INIT
+                    ShipmentMethod.Init
                 else begin
-                    ShipmentMethod.GET("Shipment Method Code");
+                    ShipmentMethod.Get("Shipment Method Code");
                     ShipmentMethod.TranslateDescription(ShipmentMethod, "Language Code");
                 end;
 
                 FormatAddr.SalesHeaderShipTo(ShipToAddr, CustAddr, "Sales Header");
                 ShowShippingAddr := "Sell-to Customer No." <> "Bill-to Customer No.";
-                for i := 1 to ARRAYLEN(ShipToAddr) do
+                for i := 1 to ArrayLen(ShipToAddr) do
                     if ShipToAddr[i] <> CustAddr[i] then
                         ShowShippingAddr := true;
 
@@ -1140,21 +1141,21 @@ report 50045 "Order Confirmation HORECA"
                         ArchiveManagement.StoreSalesDocument("Sales Header", LogInteraction);
 
                     if LogInteraction then begin
-                        CALCFIELDS("No. of Archived Versions");
+                        CalcFields("No. of Archived Versions");
                         if "Bill-to Contact No." <> '' then
                             SegManagement.LogDocument(
                               3, "No.", "Doc. No. Occurrence",
-                              "No. of Archived Versions", DATABASE::Contact, "Bill-to Contact No."
+                              "No. of Archived Versions", Database::Contact, "Bill-to Contact No."
                               , "Salesperson Code", "Campaign No.", "Posting Description", "Opportunity No.")
                         else
                             SegManagement.LogDocument(
                               3, "No.", "Doc. No. Occurrence",
-                              "No. of Archived Versions", DATABASE::Customer, "Bill-to Customer No.",
+                              "No. of Archived Versions", Database::Customer, "Bill-to Customer No.",
                               "Salesperson Code", "Campaign No.", "Posting Description", "Opportunity No.");
                     end;
                 end;
 
-                rG_Customer.get("Bill-to Customer No.");
+                rG_Customer.Get("Bill-to Customer No.");
                 if not rG_Customer."Show GlobalGab COC No." then begin
                     CompanyInfo."GlobalGab COC No." := '';
                 end;
@@ -1162,7 +1163,7 @@ report 50045 "Order Confirmation HORECA"
 
             trigger OnPreDataItem();
             begin
-                Print := Print or not CurrReport.PREVIEW;
+                Print := Print or not CurrReport.Preview;
                 AsmInfoExistsForLine := false;
 
                 //+TAL0.9
@@ -1182,7 +1183,7 @@ report 50045 "Order Confirmation HORECA"
 
         layout
         {
-            area(content)
+            area(Content)
             {
                 group(Options)
                 {
@@ -1190,14 +1191,20 @@ report 50045 "Order Confirmation HORECA"
                     field(NoOfCopies; NoOfCopies)
                     {
                         Caption = 'No. of Copies';
+                        ToolTip = 'Specifies the value of the No. of Copies field.';
+                        ApplicationArea = All;
                     }
                     field(ShowInternalInfo; ShowInternalInfo)
                     {
                         Caption = 'Show Internal Information';
+                        ToolTip = 'Specifies the value of the Show Internal Information field.';
+                        ApplicationArea = All;
                     }
                     field(ArchiveDocument; ArchiveDocument)
                     {
                         Caption = 'Archive Document';
+                        ToolTip = 'Specifies the value of the Archive Document field.';
+                        ApplicationArea = All;
 
                         trigger OnValidate();
                         begin
@@ -1209,6 +1216,8 @@ report 50045 "Order Confirmation HORECA"
                     {
                         Caption = 'Log Interaction';
                         Enabled = LogInteractionEnable;
+                        ToolTip = 'Specifies the value of the Log Interaction field.';
+                        ApplicationArea = All;
 
                         trigger OnValidate();
                         begin
@@ -1219,11 +1228,14 @@ report 50045 "Order Confirmation HORECA"
                     field(ShowAssemblyComponents; DisplayAssemblyInformation)
                     {
                         Caption = 'Show Assembly Components';
+                        ToolTip = 'Specifies the value of the Show Assembly Components field.';
+                        ApplicationArea = All;
                     }
 
                     field("Hide GlobalGAP COC"; vG_HideGlobalGapCOC)
                     {
-                        ApplicationArea = all;
+                        ApplicationArea = All;
+                        ToolTip = 'Specifies the value of the vG_HideGlobalGapCOC field.';
                     }
                 }
             }
@@ -1254,27 +1266,27 @@ report 50045 "Order Confirmation HORECA"
 
     trigger OnInitReport();
     begin
-        GLSetup.GET;
+        GLSetup.Get;
 
-        SalesSetup.GET;
+        SalesSetup.Get;
 
         case SalesSetup."Logo Position on Documents" of
             SalesSetup."Logo Position on Documents"::"No Logo":
                 ;
             SalesSetup."Logo Position on Documents"::Left:
                 begin
-                    CompanyInfo3.GET;
-                    CompanyInfo3.CALCFIELDS(Picture);
+                    CompanyInfo3.Get;
+                    CompanyInfo3.CalcFields(Picture);
                 end;
             SalesSetup."Logo Position on Documents"::Center:
                 begin
-                    CompanyInfo1.GET;
-                    CompanyInfo1.CALCFIELDS(Picture);
+                    CompanyInfo1.Get;
+                    CompanyInfo1.CalcFields(Picture);
                 end;
             SalesSetup."Logo Position on Documents"::Right:
                 begin
-                    CompanyInfo2.GET;
-                    CompanyInfo2.CALCFIELDS(Picture);
+                    CompanyInfo2.Get;
+                    CompanyInfo2.CalcFields(Picture);
                 end;
         end;
     end;
@@ -1425,14 +1437,14 @@ report 50045 "Order Confirmation HORECA"
     var
         UnitOfMeasure: Record "Unit of Measure";
     begin
-        if not UnitOfMeasure.GET(UOMCode) then
+        if not UnitOfMeasure.Get(UOMCode) then
             exit(UOMCode);
         exit(UnitOfMeasure.Description);
     end;
 
     procedure BlanksForIndent(): Text[10];
     begin
-        exit(PADSTR('', 2, ' '));
+        exit(PadStr('', 2, ' '));
     end;
 }
 

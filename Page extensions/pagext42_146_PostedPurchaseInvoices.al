@@ -23,6 +23,7 @@ pageextension 50142 PostedPurchaseInvoicesExt extends "Posted Purchase Invoices"
             {
                 ApplicationArea = All;
                 Width = 13;
+                ToolTip = 'Specifies the date the purchase header was posted.';
             }
         }
         modify("No. Printed")

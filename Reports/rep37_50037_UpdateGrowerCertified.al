@@ -1,72 +1,73 @@
 report 50037 "Update Grower Certified"
 {
     ProcessingOnly = true;
+    ApplicationArea = All;
 
     dataset
     {
-        dataitem(Vendor;Vendor)
+        dataitem(Vendor; Vendor)
         {
             RequestFilterFields = "GGN Expiry Date";
 
             trigger OnAfterGetRecord();
             begin
-                if GUIALLOWED then begin
-                  WindowLineCount+=1;
-                  Window.UPDATE(1,FORMAT(WindowLineCount)+'/'+FORMAT(WindowTotalCount));
+                if GuiAllowed then begin
+                    WindowLineCount += 1;
+                    Window.Update(1, Format(WindowLineCount) + '/' + Format(WindowTotalCount));
                 end;
 
 
-                Vendor.VALIDATE("GGN Expiry Date");
-                Vendor.MODIFY;
+                Vendor.Validate("GGN Expiry Date");
+                Vendor.Modify;
             end;
 
             trigger OnPostDataItem();
             begin
-                if GUIALLOWED then begin
-                  Window.CLOSE();
+                if GuiAllowed then begin
+                    Window.Close();
                 end;
             end;
 
             trigger OnPreDataItem();
             begin
-                if GUIALLOWED then begin
-                  Window.OPEN('Record Processing #1###############');
-                  WindowTotalCount:=COUNT;
-                  WindowLineCount:=0;
+                if GuiAllowed then begin
+                    Window.Open('Record Processing #1###############');
+                    WindowTotalCount := Count;
+                    WindowLineCount := 0;
                 end;
             end;
         }
-        dataitem(Grower;Grower)
+        dataitem(Grower; Grower)
         {
             RequestFilterFields = "GGN Expiry Date";
 
             trigger OnAfterGetRecord();
             begin
-                if GUIALLOWED then begin
-                  WindowLineCount+=1;
-                  Window.UPDATE(1,FORMAT(WindowLineCount)+'/'+FORMAT(WindowTotalCount));
+                if GuiAllowed then begin
+                    WindowLineCount += 1;
+                    Window.Update(1, Format(WindowLineCount) + '/' + Format(WindowTotalCount));
                 end;
 
 
-                Grower.VALIDATE("GGN Expiry Date");
-                Grower.MODIFY;
+                Grower.Validate("GGN Expiry Date");
+                Grower.Modify;
             end;
 
             trigger OnPostDataItem();
             begin
 
-                if GUIALLOWED then begin
-                  Window.CLOSE();
-                  MESSAGE('Process Completed');
+                if GuiAllowed then begin
+                    Window.Close();
+                    Message('Process Completed');
                 end;
             end;
 
             trigger OnPreDataItem();
             begin
-                if GUIALLOWED then begin
-                   Window.OPEN('Record Processing #1###############');
-                    WindowTotalCount:=COUNT;
-                    WindowLineCount:=0;
+                if GuiAllowed then begin
+                    Window.Open('Record Processing #1###############');
+                    WindowTotalCount := Count;
+                    WindowLineCount := 0;
                 end;
             end;
         }
@@ -78,7 +79,7 @@ report 50037 "Update Grower Certified"
 
         layout
         {
-            area(content)
+            area(Content)
             {
             }
         }
@@ -93,8 +94,8 @@ report 50037 "Update Grower Certified"
     }
 
     var
-        Window : Dialog;
-        WindowTotalCount : Integer;
-        WindowLineCount : Integer;
+        Window: Dialog;
+        WindowTotalCount: Integer;
+        WindowLineCount: Integer;
 }
 

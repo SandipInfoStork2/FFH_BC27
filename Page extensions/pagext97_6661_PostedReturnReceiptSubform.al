@@ -17,6 +17,7 @@ pageextension 50197 PostedReturnReceiptSubformExt extends "Posted Return Receipt
             {
                 ApplicationArea = All;
                 Editable = false;
+                ToolTip = 'Specifies the value of the Shelf No. field.';
             }
         }
 
@@ -30,100 +31,113 @@ pageextension 50197 PostedReturnReceiptSubformExt extends "Posted Return Receipt
             {
                 ApplicationArea = All;
                 Editable = false;
+                ToolTip = 'Specifies the value of the Packing Group Description field.';
             }
         }
 
         addafter("Shortcut Dimension 2 Code")
         {
-            field("Quantity (Base)"; "Quantity (Base)")
+            field("Quantity (Base)"; Rec."Quantity (Base)")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Quantity (Base) field.';
             }
-            field("Unit of Measure (Base)"; "Unit of Measure (Base)")
+            field("Unit of Measure (Base)"; Rec."Unit of Measure (Base)")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Unit of Measure (Base) field.';
             }
             field("ShortcutDimCode[3]"; ShortcutDimCode[3])
             {
                 ApplicationArea = All;
                 CaptionClass = '1,2,3';
                 Editable = false;
-                TableRelation = "Dimension Value".Code WHERE("Global Dimension No." = CONST(3),
-                                                                  "Dimension Value Type" = CONST(Standard),
-                                                                  Blocked = CONST(false));
+                TableRelation = "Dimension Value".Code where("Global Dimension No." = const(3),
+                                                                  "Dimension Value Type" = const(Standard),
+                                                                  Blocked = const(false));
                 Visible = DimVisible3;
+                ToolTip = 'Specifies the value of the ShortcutDimCode[3] field.';
             }
             field("ShortcutDimCode[4]"; ShortcutDimCode[4])
             {
                 ApplicationArea = All;
                 CaptionClass = '1,2,4';
                 Editable = false;
-                TableRelation = "Dimension Value".Code WHERE("Global Dimension No." = CONST(4),
-                                                                  "Dimension Value Type" = CONST(Standard),
-                                                                  Blocked = CONST(false));
+                TableRelation = "Dimension Value".Code where("Global Dimension No." = const(4),
+                                                                  "Dimension Value Type" = const(Standard),
+                                                                  Blocked = const(false));
                 Visible = DimVisible4;
+                ToolTip = 'Specifies the value of the ShortcutDimCode[4] field.';
             }
             field("ShortcutDimCode[5]"; ShortcutDimCode[5])
             {
                 ApplicationArea = All;
                 CaptionClass = '1,2,5';
                 Editable = false;
-                TableRelation = "Dimension Value".Code WHERE("Global Dimension No." = CONST(5),
-                                                                  "Dimension Value Type" = CONST(Standard),
-                                                                  Blocked = CONST(false));
+                TableRelation = "Dimension Value".Code where("Global Dimension No." = const(5),
+                                                                  "Dimension Value Type" = const(Standard),
+                                                                  Blocked = const(false));
                 Visible = DimVisible5;
+                ToolTip = 'Specifies the value of the ShortcutDimCode[5] field.';
             }
             field("ShortcutDimCode[6]"; ShortcutDimCode[6])
             {
                 ApplicationArea = All;
                 CaptionClass = '1,2,6';
                 Editable = false;
-                TableRelation = "Dimension Value".Code WHERE("Global Dimension No." = CONST(6),
-                                                                  "Dimension Value Type" = CONST(Standard),
-                                                                  Blocked = CONST(false));
+                TableRelation = "Dimension Value".Code where("Global Dimension No." = const(6),
+                                                                  "Dimension Value Type" = const(Standard),
+                                                                  Blocked = const(false));
                 Visible = DimVisible6;
+                ToolTip = 'Specifies the value of the ShortcutDimCode[6] field.';
             }
             field("ShortcutDimCode[7]"; ShortcutDimCode[7])
             {
                 ApplicationArea = All;
                 CaptionClass = '1,2,7';
                 Editable = false;
-                TableRelation = "Dimension Value".Code WHERE("Global Dimension No." = CONST(7),
-                                                                  "Dimension Value Type" = CONST(Standard),
-                                                                  Blocked = CONST(false));
+                TableRelation = "Dimension Value".Code where("Global Dimension No." = const(7),
+                                                                  "Dimension Value Type" = const(Standard),
+                                                                  Blocked = const(false));
                 Visible = DimVisible7;
+                ToolTip = 'Specifies the value of the ShortcutDimCode[7] field.';
             }
             field("ShortcutDimCode[8]"; ShortcutDimCode[8])
             {
                 ApplicationArea = All;
                 CaptionClass = '1,2,8';
                 Editable = false;
-                TableRelation = "Dimension Value".Code WHERE("Global Dimension No." = CONST(8),
-                                                                  "Dimension Value Type" = CONST(Standard),
-                                                                  Blocked = CONST(false));
+                TableRelation = "Dimension Value".Code where("Global Dimension No." = const(8),
+                                                                  "Dimension Value Type" = const(Standard),
+                                                                  Blocked = const(false));
                 Visible = DimVisible8;
+                ToolTip = 'Specifies the value of the ShortcutDimCode[8] field.';
             }
             field("Req. Country"; Rec."Req. Country")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 Visible = true;
+                ToolTip = 'Specifies the value of the Req. Country field.';
             }
 
             field("Country/Region of Origin Code"; Rec."Country/Region of Origin Code")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 Visible = true;
+                ToolTip = 'Specifies the value of the Country/Region of Origin Code field.';
             }
 
 
 
-            field("Product Class"; "Product Class")
+            field("Product Class"; Rec."Product Class")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Product Class (Κατηγορία) field.';
             }
-            field("Category 9"; "Category 9")
+            field("Category 9"; Rec."Category 9")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Potatoes District Region field.';
             }
 
         }
@@ -153,10 +167,11 @@ pageextension 50197 PostedReturnReceiptSubformExt extends "Posted Return Receipt
                 ApplicationArea = All;
                 Caption = 'Item &Tracking Entries';
                 Image = ItemTrackingLedger;
+                ToolTip = 'Executes the Item &Tracking Entries action.';
 
                 trigger OnAction();
                 begin
-                    ShowItemTrackingLines;
+                    Rec.ShowItemTrackingLines;
                 end;
             }
         }
@@ -170,16 +185,16 @@ pageextension 50197 PostedReturnReceiptSubformExt extends "Posted Return Receipt
     trigger OnAfterGetRecord();
     begin
         //+TAL0.1
-        CLEAR(rG_Item);
-        if Type = Type::Item then begin
-            rG_Item.GET("No.");
-            rG_Item.CALCFIELDS("Packing Group Description");
+        Clear(rG_Item);
+        if Rec.Type = Rec.Type::Item then begin
+            rG_Item.GET(Rec."No.");
+            rG_Item.CalcFields("Packing Group Description");
             //"Packing Group Description":=Item."Packing Group Description";
             //"Shelf No.":=Item."Shelf No.";
         end;
         //-TAL0.1
 
-        ShowShortcutDimCode(ShortcutDimCode); //TAL0.3
+        Rec.ShowShortcutDimCode(ShortcutDimCode); //TAL0.3
     end;
 
     local procedure SetDimensionsVisibility();
@@ -198,7 +213,7 @@ pageextension 50197 PostedReturnReceiptSubformExt extends "Posted Return Receipt
         DimMgt.UseShortcutDims(
           DimVisible1, DimVisible2, DimVisible3, DimVisible4, DimVisible5, DimVisible6, DimVisible7, DimVisible8);
 
-        CLEAR(DimMgt);
+        Clear(DimMgt);
     end;
 
     var

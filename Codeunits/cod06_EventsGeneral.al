@@ -7,7 +7,7 @@ codeunit 50006 EventsGeneral
 
     end;
 
-    [EventSubscriber(ObjectType::Table, database::"Return Receipt Line", 'OnAfterInitFromSalesLine', '', false, false)]
+    [EventSubscriber(ObjectType::Table, Database::"Return Receipt Line", 'OnAfterInitFromSalesLine', '', false, false)]
     local procedure OnAfterInitFromSalesLineRRH(ReturnRcptHeader: Record "Return Receipt Header"; SalesLine: Record "Sales Line"; var ReturnRcptLine: Record "Return Receipt Line")
     begin
         ReturnRcptLine."Net Weight" := SalesLine."Net Weight";
@@ -20,19 +20,19 @@ codeunit 50006 EventsGeneral
     end;
 
 
-    [EventSubscriber(ObjectType::Table, database::"Prod. Order Component", 'OnValidateItemNoOnAfterUpdateUOMFromItem', '', false, false)]
+    [EventSubscriber(ObjectType::Table, Database::"Prod. Order Component", 'OnValidateItemNoOnAfterUpdateUOMFromItem', '', false, false)]
     local procedure OnValidateItemNoOnAfterUpdateUOMFromItem(var ProdOrderComponent: Record "Prod. Order Component"; xProdOrderComponent: Record "Prod. Order Component"; Item: Record Item)
     begin
         ProdOrderComponent."Item Category Code" := Item."Item Category Code"; //TAL0.1
     end;
 
-    [EventSubscriber(ObjectType::Table, database::"Requisition Line", 'OnUpdateDescriptionFromItem', '', false, false)]
+    [EventSubscriber(ObjectType::Table, Database::"Requisition Line", 'OnUpdateDescriptionFromItem', '', false, false)]
     local procedure OnUpdateDescriptionFromItem(var RequisitionLine: Record "Requisition Line"; Item: Record Item)
     begin
         RequisitionLine."Extended Description" := Item."Extended Description";
     end;
 
-    [EventSubscriber(ObjectType::Table, database::"Requisition Line", 'OnBeforeValidateReplenishmentSystem', '', false, false)]
+    [EventSubscriber(ObjectType::Table, Database::"Requisition Line", 'OnBeforeValidateReplenishmentSystem', '', false, false)]
     local procedure OnBeforeValidateReplenishmentSystem(var RequisitionLine: Record "Requisition Line"; StockkeepingUnit: Record "Stockkeeping Unit"; var IsHandled: Boolean)
     begin
         IsHandled := true;
@@ -40,7 +40,7 @@ codeunit 50006 EventsGeneral
     end;
 
     //+1.0.0.46 
-    [EventSubscriber(ObjectType::Table, database::"Requisition Line", 'OnAfterCopyFromItem', '', false, false)]
+    [EventSubscriber(ObjectType::Table, Database::"Requisition Line", 'OnAfterCopyFromItem', '', false, false)]
     local procedure OnAfterCopyFromItem_Req_line(var RequisitionLine: Record "Requisition Line"; Item: Record Item)
     begin
         RequisitionLine.UpdateDescription();
@@ -48,21 +48,21 @@ codeunit 50006 EventsGeneral
     //-1.0.0.46 
 
 
-    [EventSubscriber(ObjectType::Table, database::"Purch. Cr. Memo Line", 'OnAfterInitFromPurchLine', '', false, false)]
+    [EventSubscriber(ObjectType::Table, Database::"Purch. Cr. Memo Line", 'OnAfterInitFromPurchLine', '', false, false)]
     local procedure OnAfterInitFromPurchLineCR(PurchCrMemoHdr: Record "Purch. Cr. Memo Hdr."; PurchLine: Record "Purchase Line"; var PurchCrMemoLine: Record "Purch. Cr. Memo Line")
     begin
         PurchCrMemoLine."Net Weight" := PurchLine."Net Weight";
         PurchCrMemoLine."Total Net Weight" := PurchCrMemoLine."Quantity (Base)" * PurchCrMemoLine."Net Weight";
     end;
 
-    [EventSubscriber(ObjectType::Table, database::"Purch. Inv. Line", 'OnAfterInitFromPurchLine', '', false, false)]
+    [EventSubscriber(ObjectType::Table, Database::"Purch. Inv. Line", 'OnAfterInitFromPurchLine', '', false, false)]
     local procedure OnAfterInitFromPurchLineIn(PurchInvHeader: Record "Purch. Inv. Header"; PurchLine: Record "Purchase Line"; var PurchInvLine: Record "Purch. Inv. Line")
     begin
         PurchInvLine."Net Weight" := PurchLine."Net Weight";
         PurchInvLine."Total Net Weight" := PurchInvLine."Quantity (Base)" * PurchInvLine."Net Weight";
     end;
 
-    [EventSubscriber(ObjectType::Table, database::"Purch. Rcpt. Line", 'OnAfterInitFromPurchLine', '', false, false)]
+    [EventSubscriber(ObjectType::Table, Database::"Purch. Rcpt. Line", 'OnAfterInitFromPurchLine', '', false, false)]
     local procedure OnAfterInitFromPurchLine(PurchRcptHeader: Record "Purch. Rcpt. Header"; PurchLine: Record "Purchase Line"; var PurchRcptLine: Record "Purch. Rcpt. Line")
     begin
 
@@ -70,7 +70,7 @@ codeunit 50006 EventsGeneral
         PurchRcptLine."Total Net Weight" := PurchRcptLine."Quantity (Base)" * PurchRcptLine."Net Weight";
     end;
 
-    [EventSubscriber(ObjectType::Table, database::"Sales Cr.Memo Line", 'OnAfterInitFromSalesLine', '', false, false)]
+    [EventSubscriber(ObjectType::Table, Database::"Sales Cr.Memo Line", 'OnAfterInitFromSalesLine', '', false, false)]
     local procedure OnAfterInitFromSalesLineSCML(var SalesCrMemoLine: Record "Sales Cr.Memo Line"; SalesCrMemoHeader: Record "Sales Cr.Memo Header"; SalesLine: Record "Sales Line")
     begin
         SalesCrMemoLine."Net Weight" := SalesLine."Net Weight";
@@ -79,17 +79,17 @@ codeunit 50006 EventsGeneral
         //SalesCrMemoLine."Country/Region of Origin Code" := SalesLine."Country/Region of Origin Code";
     end;
 
-    [EventSubscriber(ObjectType::Table, database::"Sales Line", 'OnAfterCopyFromItem', '', false, false)]
+    [EventSubscriber(ObjectType::Table, Database::"Sales Line", 'OnAfterCopyFromItem', '', false, false)]
     local procedure OnAfterCopyFromItem(var SalesLine: Record "Sales Line"; Item: Record Item; CurrentFieldNo: Integer)
     var
         SRSetup: Record "Sales & Receivables Setup";
     begin
-        SRSetup.GET();
+        SRSetup.Get();
 
         //+TAL0.3
-        Item.CALCFIELDS("Packing Group Description");
+        Item.CalcFields("Packing Group Description");
         SalesLine."Packing Group Description" := Item."Packing Group Description";
-        SalesLine.validate("Shelf No.", Item."Shelf No.");
+        SalesLine.Validate("Shelf No.", Item."Shelf No.");
         SalesLine."Country/Region of Origin Code" := Item."Country/Region of Origin Code";
         SalesLine."Package Qty" := Item."Package Qty";
         SalesLine."Unit of Measure (Base)" := Item."Base Unit of Measure";
@@ -113,7 +113,7 @@ codeunit 50006 EventsGeneral
 
     end;
 
-    [EventSubscriber(ObjectType::Table, database::"Sales Shipment Line", 'OnAfterInitFromSalesLine', '', false, false)]
+    [EventSubscriber(ObjectType::Table, Database::"Sales Shipment Line", 'OnAfterInitFromSalesLine', '', false, false)]
     local procedure OnAfterInitFromSalesLine_SSL(SalesShptHeader: Record "Sales Shipment Header"; SalesLine: Record "Sales Line"; var SalesShptLine: Record "Sales Shipment Line")
     begin
         SalesShptLine."Net Weight" := SalesLine."Net Weight";
@@ -121,7 +121,7 @@ codeunit 50006 EventsGeneral
         //SalesShptLine."Req. Country" := SalesLine."Country/Region of Origin Code";
     end;
 
-    [EventSubscriber(ObjectType::Table, database::"Sales Invoice Line", 'OnAfterInitFromSalesLine', '', false, false)]
+    [EventSubscriber(ObjectType::Table, Database::"Sales Invoice Line", 'OnAfterInitFromSalesLine', '', false, false)]
     local procedure OnAfterInitFromSalesLine_SIL(var SalesInvLine: Record "Sales Invoice Line"; SalesInvHeader: Record "Sales Invoice Header"; SalesLine: Record "Sales Line")
     begin
         SalesInvLine."Net Weight" := SalesLine."Net Weight";
@@ -130,7 +130,7 @@ codeunit 50006 EventsGeneral
 
     end;
 
-    [EventSubscriber(ObjectType::Table, database::"Transfer Shipment Header", 'OnAfterCopyFromTransferHeader', '', false, false)]
+    [EventSubscriber(ObjectType::Table, Database::"Transfer Shipment Header", 'OnAfterCopyFromTransferHeader', '', false, false)]
     local procedure OnAfterCopyFromTransferHeader_TSH(var TransferShipmentHeader: Record "Transfer Shipment Header"; TransferHeader: Record "Transfer Header")
     begin
         //TAL 0.1 ANP
@@ -139,7 +139,7 @@ codeunit 50006 EventsGeneral
         //TAL 0.1 ANP
     end;
 
-    [EventSubscriber(ObjectType::Table, database::"Transfer Receipt Header", 'OnAfterCopyFromTransferHeader', '', false, false)]
+    [EventSubscriber(ObjectType::Table, Database::"Transfer Receipt Header", 'OnAfterCopyFromTransferHeader', '', false, false)]
     local procedure OnAfterCopyFromTransferHeader_TRH(var TransferReceiptHeader: Record "Transfer Receipt Header"; TransferHeader: Record "Transfer Header")
     begin
         //TAL 0.1 ANP 
@@ -213,65 +213,65 @@ codeunit 50006 EventsGeneral
     end;
 
     //BillToName logic comments in 2017
-    [EventSubscriber(ObjectType::Table, database::"Sales Header", 'OnBeforeValidateBillToName', '', false, false)]
+    [EventSubscriber(ObjectType::Table, Database::"Sales Header", 'OnBeforeValidateBillToName', '', false, false)]
     local procedure OnBeforeValidateBillToName(var SalesHeader: Record "Sales Header"; var Customer: Record Customer; var IsHandled: Boolean)
     begin
         IsHandled := true;
     end;
 
-    [EventSubscriber(ObjectType::Table, database::"Gen. Journal Line", 'OnAfterAccountNoOnValidateGetVendorAccount', '', false, false)]
+    [EventSubscriber(ObjectType::Table, Database::"Gen. Journal Line", 'OnAfterAccountNoOnValidateGetVendorAccount', '', false, false)]
     local procedure OnAfterAccountNoOnValidateGetVendorAccount(var GenJournalLine: Record "Gen. Journal Line"; var Vendor: Record Vendor; CallingFieldNo: Integer)
     begin
         GenJournalLine."Payee Name (GL Cheque)" := Vendor.Name; //TAL0.1
     end;
 
 
-    [EventSubscriber(ObjectType::Table, database::"Item Journal Line", 'OnAfterCopyItemJnlLineFromSalesHeader', '', false, false)]
+    [EventSubscriber(ObjectType::Table, Database::"Item Journal Line", 'OnAfterCopyItemJnlLineFromSalesHeader', '', false, false)]
     local procedure OnAfterCopyItemJnlLineFromSalesHeader(var ItemJnlLine: Record "Item Journal Line"; SalesHeader: Record "Sales Header")
     begin
         ItemJnlLine."Document Lot No." := SalesHeader."Lot No."; //TAL0.3
     end;
 
-    [EventSubscriber(ObjectType::Table, database::"Item Journal Line", 'OnAfterCopyItemJnlLineFromSalesLine', '', false, false)]
+    [EventSubscriber(ObjectType::Table, Database::"Item Journal Line", 'OnAfterCopyItemJnlLineFromSalesLine', '', false, false)]
     local procedure OnAfterCopyItemJnlLineFromSalesLine(var ItemJnlLine: Record "Item Journal Line"; SalesLine: Record "Sales Line")
     begin
         ItemJnlLine."Shelf No." := SalesLine."Shelf No."; //TAL0.3
     end;
 
     //+1.0.0.229
-    [EventSubscriber(ObjectType::Table, database::"Item Journal Line", 'OnAfterCopyFromProdOrderLine', '', false, false)]
+    [EventSubscriber(ObjectType::Table, Database::"Item Journal Line", 'OnAfterCopyFromProdOrderLine', '', false, false)]
     local procedure OnAfterCopyFromProdOrderLine(var ItemJournalLine: Record "Item Journal Line"; ProdOrderLine: Record "Prod. Order Line")
     var
         ProductionOrder: Record "Production Order";
 
     begin
-        ProductionOrder.reset;
+        ProductionOrder.Reset;
         ProductionOrder.SetRange(Status, ProdOrderLine.Status);
         ProductionOrder.SetFilter("No.", ProdOrderLine."Prod. Order No.");
-        IF ProductionOrder.FindSet() THEN BEGIN
+        if ProductionOrder.FindSet() then begin
             ItemJournalLine."Packing Agent" := ProductionOrder."Packing Agent";
-        END;
+        end;
 
     end;
     //-1.0.0.229
 
     //+1.0.0.229
-    [EventSubscriber(ObjectType::Table, database::"Item Journal Line", 'OnAfterCopyFromProdOrderComp', '', false, false)]
+    [EventSubscriber(ObjectType::Table, Database::"Item Journal Line", 'OnAfterCopyFromProdOrderComp', '', false, false)]
     local procedure OnAfterCopyFromProdOrderComp(var ItemJournalLine: Record "Item Journal Line"; ProdOrderComponent: Record "Prod. Order Component")
     var
         ProductionOrder: Record "Production Order";
     begin
 
-        ProductionOrder.reset;
+        ProductionOrder.Reset;
         ProductionOrder.SetRange(Status, ProdOrderComponent.Status);
         ProductionOrder.SetFilter("No.", ProdOrderComponent."Prod. Order No.");
-        IF ProductionOrder.FindSet() THEN BEGIN
+        if ProductionOrder.FindSet() then begin
             ItemJournalLine."Packing Agent" := ProductionOrder."Packing Agent";
-        END;
+        end;
     end;
     //-1.0.0.229
 
-    [EventSubscriber(ObjectType::page, page::"Customer Report Selections", 'OnValidateUsage2OnCaseElse', '', false, false)]
+    [EventSubscriber(ObjectType::Page, Page::"Customer Report Selections", 'OnValidateUsage2OnCaseElse', '', false, false)]
     local procedure OnValidateUsage2OnCaseElse(var CustomReportSelection: Record "Custom Report Selection"; ReportUsage: Option)
     begin
         if Format(ReportUsage) = 'S.Ret.Rcpt' then begin
@@ -301,7 +301,7 @@ codeunit 50006 EventsGeneral
         end;
     end; */
 
-    [EventSubscriber(ObjectType::page, page::"Customer Report Selections", 'OnAfterOnMapTableUsageValueToPageValue', '', false, false)]
+    [EventSubscriber(ObjectType::Page, Page::"Customer Report Selections", 'OnAfterOnMapTableUsageValueToPageValue', '', false, false)]
     local procedure OnMapTableUsageValueToPageValueOnCaseElse(CustomReportSelection: Record "Custom Report Selection"; var Usage2: Enum "Custom Report Selection Sales")
     var
     //Usage2: Option Quote,"Confirmation Order",Invoice,"Credit Memo","Customer Statement","Job Quote",Reminder,Shipment,"S.Ret.Rcpt.","Payment Receipt";
@@ -318,7 +318,7 @@ codeunit 50006 EventsGeneral
     end;
 
     //TAL 1.0.0.319 >>
-    [EventSubscriber(ObjectType::page, page::"Vendor Report Selections", 'OnValidateUsage2OnCaseElse', '', false, false)]
+    [EventSubscriber(ObjectType::Page, Page::"Vendor Report Selections", 'OnValidateUsage2OnCaseElse', '', false, false)]
     local procedure OnValidateUsage2OnCaseElseVend(var CustomReportSelection: Record "Custom Report Selection"; ReportUsage: Enum "Report Selection Usage Vendor")
     begin
         if Format(ReportUsage) = 'Vendor Receipt' then begin
@@ -326,7 +326,7 @@ codeunit 50006 EventsGeneral
         end;
     end;
 
-    [EventSubscriber(ObjectType::page, page::"Vendor Report Selections", 'OnMapTableUsageValueToPageValueOnCaseElse', '', false, false)]
+    [EventSubscriber(ObjectType::Page, Page::"Vendor Report Selections", 'OnMapTableUsageValueToPageValueOnCaseElse', '', false, false)]
     local procedure OnMapTableUsageValueToPageValueOnCaseElseVend(CustomReportSelection: Record "Custom Report Selection"; var ReportUsage: Enum "Report Selection Usage Vendor"; Rec: Record "Custom Report Selection")
     begin
         case CustomReportSelection.Usage of
@@ -361,16 +361,16 @@ codeunit 50006 EventsGeneral
         //-TAL0.2
 
         //+TAL0.3
-        rL_LotNoInformation.RESET;
-        rL_LotNoInformation.SETFILTER("Item No.", NewItemLedgEntry."Item No.");
-        rL_LotNoInformation.SETFILTER("Lot No.", NewItemLedgEntry."Lot No.");
-        if rL_LotNoInformation.FINDSET then begin
+        rL_LotNoInformation.Reset;
+        rL_LotNoInformation.SetFilter("Item No.", NewItemLedgEntry."Item No.");
+        rL_LotNoInformation.SetFilter("Lot No.", NewItemLedgEntry."Lot No.");
+        if rL_LotNoInformation.FindSet then begin
             NewItemLedgEntry."Lot Grower No." := rL_LotNoInformation."Grower No.";
         end;
         //-TAL0.3
 
         //+TAL0.2
-        rL_Item.GET(ItemJournalLine."Item No.");
+        rL_Item.Get(ItemJournalLine."Item No.");
         NewItemLedgEntry."Net Weight" := rL_Item."Net Weight";
         NewItemLedgEntry."Total Net Weight" := NewItemLedgEntry."Net Weight" * NewItemLedgEntry.Quantity;
         //-TAL0.2
@@ -422,14 +422,14 @@ codeunit 50006 EventsGeneral
     //** Job Queue
     //**
     //******************************************************************
-    procedure StartJobQueue(VAR pJobQueueEntry: Record "Job Queue Entry")
+    procedure StartJobQueue(var pJobQueueEntry: Record "Job Queue Entry")
     var
         cu_JobQueueDispatcher: Codeunit "Job Queue Dispatcher";
     begin
-        CLEAR(cu_JobQueueDispatcher);
+        Clear(cu_JobQueueDispatcher);
         cu_JobQueueDispatcher.Run(pJobQueueEntry);
         //cu_JobQueueDispatcher.HandleRequest();
-        MESSAGE(FORMAT(pJobQueueEntry.Status));
+        Message(Format(pJobQueueEntry.Status));
     end;
 
     /*
@@ -517,58 +517,51 @@ codeunit 50006 EventsGeneral
     //*******************************
 
     //+1498
-    [EventSubscriber(ObjectType::table, Database::"Payment Export Data", 'OnAfterSetVendorAsRecipient', '', false, false)]
+    [EventSubscriber(ObjectType::Table, Database::"Payment Export Data", 'OnAfterSetVendorAsRecipient', '', false, false)]
     local procedure OnAfterSetVendorAsRecipient(var PaymentExportData: Record "Payment Export Data"; var Vendor: Record Vendor; var VendorBankAccount: Record "Vendor Bank Account");
     var
-        CRLF: Array[2] of Char;
+        CRLF: array[2] of Char;
         vL_SpecialChars: Text;
     begin
         CRLF[1] := 13;
         CRLF[2] := 10;
         vL_SpecialChars := '\/:*?"<>|''';
         //+1502
-        with PaymentExportData do begin
+        PaymentExportData."Recipient Address" := DelChr(PaymentExportData."Recipient Address", '=', CRLF[1]);
+        PaymentExportData."Recipient Address" := DelChr(PaymentExportData."Recipient Address", '=', CRLF[2]);
+        PaymentExportData."Recipient Address" := DelChr(PaymentExportData."Recipient Address", '=', vL_SpecialChars);
+        PaymentExportData."Recipient Address" := ConvertStr(PaymentExportData."Recipient Address", ''' ', '  ');
 
+        PaymentExportData."Recipient Address 2" := DelChr(PaymentExportData."Recipient Address 2", '=', CRLF[1]);
+        PaymentExportData."Recipient Address 2" := DelChr(PaymentExportData."Recipient Address 2", '=', CRLF[2]);
+        PaymentExportData."Recipient Address 2" := DelChr(PaymentExportData."Recipient Address 2", '=', vL_SpecialChars);
+        PaymentExportData."Recipient Address 2" := ConvertStr(PaymentExportData."Recipient Address 2", ''' ', '  ');
 
-            "Recipient Address" := DELCHR("Recipient Address", '=', CRLF[1]);
-            "Recipient Address" := DELCHR("Recipient Address", '=', CRLF[2]);
-            "Recipient Address" := DELCHR("Recipient Address", '=', vL_SpecialChars);
-            "Recipient Address" := CONVERTSTR("Recipient Address", ''' ', '  ');
-
-            "Recipient Address 2" := DELCHR("Recipient Address 2", '=', CRLF[1]);
-            "Recipient Address 2" := DELCHR("Recipient Address 2", '=', CRLF[2]);
-            "Recipient Address 2" := DELCHR("Recipient Address 2", '=', vL_SpecialChars);
-            "Recipient Address 2" := CONVERTSTR("Recipient Address 2", ''' ', '  ');
-
-            "Recipient Name" := DELCHR("Recipient Name", '=', CRLF[1]);
-            "Recipient Name" := DELCHR("Recipient Name", '=', CRLF[2]);
-            "Recipient Name" := DELCHR("Recipient Name", '=', vL_SpecialChars);
-            "Recipient Name" := CONVERTSTR("Recipient Name", ''' ', '  ');
+        PaymentExportData."Recipient Name" := DelChr(PaymentExportData."Recipient Name", '=', CRLF[1]);
+        PaymentExportData."Recipient Name" := DelChr(PaymentExportData."Recipient Name", '=', CRLF[2]);
+        PaymentExportData."Recipient Name" := DelChr(PaymentExportData."Recipient Name", '=', vL_SpecialChars);
+        PaymentExportData."Recipient Name" := ConvertStr(PaymentExportData."Recipient Name", ''' ', '  ');
 
 
 
 
-            //"Recipient Address" := CONVERTSTR("Recipient Address", vL_SpecialChars, '          ');
-            //"Recipient Address 2" := CONVERTSTR("Recipient Address 2", vL_SpecialChars, '          ');
-            //"Recipient Name" := CONVERTSTR("Recipient Name", vL_SpecialChars, '          ');
+        //"Recipient Address" := CONVERTSTR("Recipient Address", vL_SpecialChars, '          ');
+        //"Recipient Address 2" := CONVERTSTR("Recipient Address 2", vL_SpecialChars, '          ');
+        //"Recipient Name" := CONVERTSTR("Recipient Name", vL_SpecialChars, '          ');
 
-            "Recipient Address" := CopyStr("Recipient Address", 1, 35);
-            "Recipient Address 2" := CopyStr("Recipient Address 2", 1, 35);
-            "Recipient Name" := CopyStr("Recipient Name", 1, 35);
-            "Applies-to Ext. Doc. No." := '';
-
-            //message(format(StrLen("Recipient Address")));
-
-
-        end;
+        PaymentExportData."Recipient Address" := CopyStr(PaymentExportData."Recipient Address", 1, 35);
+        PaymentExportData."Recipient Address 2" := CopyStr(PaymentExportData."Recipient Address 2", 1, 35);
+        PaymentExportData."Recipient Name" := CopyStr(PaymentExportData."Recipient Name", 1, 35);
+        PaymentExportData."Applies-to Ext. Doc. No." := '';
+        //message(format(StrLen("Recipient Address")));
         //+1502
     end;
 
 
-    [EventSubscriber(ObjectType::table, Database::"Payment Export Data", 'OnAfterSetCustomerAsRecipient', '', false, false)]
+    [EventSubscriber(ObjectType::Table, Database::"Payment Export Data", 'OnAfterSetCustomerAsRecipient', '', false, false)]
     local procedure OnAfterSetCustomerAsRecipient(var PaymentExportData: Record "Payment Export Data"; var Customer: Record Customer; var CustomerBankAccount: Record "Customer Bank Account");
     var
-        CRLF: Array[2] of Char;
+        CRLF: array[2] of Char;
         vL_SpecialChars: Text;
     begin
         //+1502
@@ -576,33 +569,30 @@ codeunit 50006 EventsGeneral
         CRLF[2] := 10;
         vL_SpecialChars := '\/:*?"<>|''';
 
-        with PaymentExportData do begin
-            "Recipient Address" := DELCHR("Recipient Address", '=', CRLF[1]);
-            "Recipient Address" := DELCHR("Recipient Address", '=', CRLF[2]);
-            "Recipient Address" := DELCHR("Recipient Address", '=', vL_SpecialChars);
-            "Recipient Address" := CONVERTSTR("Recipient Address", ''' ', '  ');
+        PaymentExportData."Recipient Address" := DelChr(PaymentExportData."Recipient Address", '=', CRLF[1]);
+        PaymentExportData."Recipient Address" := DelChr(PaymentExportData."Recipient Address", '=', CRLF[2]);
+        PaymentExportData."Recipient Address" := DelChr(PaymentExportData."Recipient Address", '=', vL_SpecialChars);
+        PaymentExportData."Recipient Address" := ConvertStr(PaymentExportData."Recipient Address", ''' ', '  ');
 
-            "Recipient Address 2" := DELCHR("Recipient Address 2", '=', CRLF[1]);
-            "Recipient Address 2" := DELCHR("Recipient Address 2", '=', CRLF[2]);
-            "Recipient Address 2" := DELCHR("Recipient Address 2", '=', vL_SpecialChars);
-            "Recipient Address 2" := CONVERTSTR("Recipient Address 2", ''' ', '  ');
+        PaymentExportData."Recipient Address 2" := DelChr(PaymentExportData."Recipient Address 2", '=', CRLF[1]);
+        PaymentExportData."Recipient Address 2" := DelChr(PaymentExportData."Recipient Address 2", '=', CRLF[2]);
+        PaymentExportData."Recipient Address 2" := DelChr(PaymentExportData."Recipient Address 2", '=', vL_SpecialChars);
+        PaymentExportData."Recipient Address 2" := ConvertStr(PaymentExportData."Recipient Address 2", ''' ', '  ');
 
-            "Recipient Name" := DELCHR("Recipient Name", '=', CRLF[1]);
-            "Recipient Name" := DELCHR("Recipient Name", '=', CRLF[2]);
-            "Recipient Name" := DELCHR("Recipient Name", '=', vL_SpecialChars);
-            "Recipient Name" := CONVERTSTR("Recipient Name", ''' ', '  ');
+        PaymentExportData."Recipient Name" := DelChr(PaymentExportData."Recipient Name", '=', CRLF[1]);
+        PaymentExportData."Recipient Name" := DelChr(PaymentExportData."Recipient Name", '=', CRLF[2]);
+        PaymentExportData."Recipient Name" := DelChr(PaymentExportData."Recipient Name", '=', vL_SpecialChars);
+        PaymentExportData."Recipient Name" := ConvertStr(PaymentExportData."Recipient Name", ''' ', '  ');
 
 
-            //"Recipient Address" := CONVERTSTR("Recipient Address", vL_SpecialChars, '          ');
-            //"Recipient Address 2" := CONVERTSTR("Recipient Address 2", vL_SpecialChars, '          ');
-            //"Recipient Name" := CONVERTSTR("Recipient Name", vL_SpecialChars, '          ');
+        //"Recipient Address" := CONVERTSTR("Recipient Address", vL_SpecialChars, '          ');
+        //"Recipient Address 2" := CONVERTSTR("Recipient Address 2", vL_SpecialChars, '          ');
+        //"Recipient Name" := CONVERTSTR("Recipient Name", vL_SpecialChars, '          ');
 
-            "Recipient Address" := CopyStr("Recipient Address", 1, 35);
-            "Recipient Address 2" := CopyStr("Recipient Address 2", 1, 35);
-            "Recipient Name" := CopyStr("Recipient Name", 1, 35);
-            "Applies-to Ext. Doc. No." := '';
-
-        end;
+        PaymentExportData."Recipient Address" := CopyStr(PaymentExportData."Recipient Address", 1, 35);
+        PaymentExportData."Recipient Address 2" := CopyStr(PaymentExportData."Recipient Address 2", 1, 35);
+        PaymentExportData."Recipient Name" := CopyStr(PaymentExportData."Recipient Name", 1, 35);
+        PaymentExportData."Applies-to Ext. Doc. No." := '';
         //-1502
     end;
 
@@ -625,11 +615,11 @@ codeunit 50006 EventsGeneral
     begin
         Message(Text000, ProdOrder.Status, ProdOrder.TableCaption, ProdOrder."No.", ToProdOrder.Status, ToProdOrder.TableCaption, ToProdOrder."No.");
 
-        ProdOrder.RESET;
-        ProdOrder.SETRANGE(Status, ToProdOrder.Status); //TAL0.2
-        ProdOrder.SETFILTER("No.", ToProdOrder."No."); //TAL0.2
-        if ProdOrder.FINDSET then begin
-            REPORT.RUN(REPORT::"Prod. Order Comp. and Routing", true, true, ProdOrder);
+        ProdOrder.Reset;
+        ProdOrder.SetRange(Status, ToProdOrder.Status); //TAL0.2
+        ProdOrder.SetFilter("No.", ToProdOrder."No."); //TAL0.2
+        if ProdOrder.FindSet then begin
+            Report.Run(Report::"Prod. Order Comp. and Routing", true, true, ProdOrder);
         end;
 
         IsHandled := true;
@@ -726,15 +716,15 @@ codeunit 50006 EventsGeneral
         end;
 
         if (IsFromPostedDoc) and (PostedDocNo <> '') then begin
-            if rL_SalesInvoiceHeader.GET(PostedDocNo) then begin
-                rL_Customer.get(rL_SalesInvoiceHeader."Bill-to Customer No.");
+            if rL_SalesInvoiceHeader.Get(PostedDocNo) then begin
+                rL_Customer.Get(rL_SalesInvoiceHeader."Bill-to Customer No.");
                 if (TempEmailItem."Send CC" = '') and (rL_Customer."E-Mail CC" <> '') then begin
                     TempEmailItem."Send CC" := rL_Customer."E-Mail CC";
                 end;
             end;
 
-            if rL_SalesCrMemoHeader.GET(PostedDocNo) then begin
-                rL_Customer.get(rL_SalesCrMemoHeader."Bill-to Customer No.");
+            if rL_SalesCrMemoHeader.Get(PostedDocNo) then begin
+                rL_Customer.Get(rL_SalesCrMemoHeader."Bill-to Customer No.");
                 if (TempEmailItem."Send CC" = '') and (rL_Customer."E-Mail CC" <> '') then begin
                     TempEmailItem."Send CC" := rL_Customer."E-Mail CC";
                 end;
@@ -795,7 +785,7 @@ codeunit 50006 EventsGeneral
         Report.Run(ItemJournalTemplate."Posting Report ID", false, false, ItemRegister);
 
         if ItemJournalTemplate."Posting Report ID 2" <> 0 then begin
-            ItemJournalTemplate.calcfields("Posting Report Caption 2");
+            ItemJournalTemplate.CalcFields("Posting Report Caption 2");
 
             if Confirm(StrSubstNo(vL_Text50000, ItemJournalTemplate."Posting Report Caption 2"), true) then begin
                 Report.Run(ItemJournalTemplate."Posting Report ID 2", false, false, ItemRegister);
@@ -806,26 +796,22 @@ codeunit 50006 EventsGeneral
         IsHandled := true;
     end;
 
-    [EventSubscriber(ObjectType::page, page::"Posted Sales Inv. - Update", 'OnAfterRecordChanged', '', false, false)]
+    [EventSubscriber(ObjectType::Page, Page::"Posted Sales Inv. - Update", 'OnAfterRecordChanged', '', false, false)]
     local procedure OnAfterRecordChanged(var SalesInvoiceHeader: Record "Sales Invoice Header"; xSalesInvoiceHeader: Record "Sales Invoice Header"; var IsChanged: Boolean)
     begin
-        with SalesInvoiceHeader do begin
-            IsChanged := ("Payment Method Code" <> xSalesInvoiceHeader."Payment Method Code") or
-        ("Payment Reference" <> xSalesInvoiceHeader."Payment Reference") or
-        ("Sell-to E-Mail" <> xSalesInvoiceHeader."Sell-to E-Mail") or
-        ("Customer Reference No." <> xSalesInvoiceHeader."Customer Reference No.") or
-        ("Reason Code" <> xSalesInvoiceHeader."Reason Code");
-        end;
+        IsChanged := (SalesInvoiceHeader."Payment Method Code" <> xSalesInvoiceHeader."Payment Method Code") or
+(SalesInvoiceHeader."Payment Reference" <> xSalesInvoiceHeader."Payment Reference") or
+(SalesInvoiceHeader."Sell-to E-Mail" <> xSalesInvoiceHeader."Sell-to E-Mail") or
+(SalesInvoiceHeader."Customer Reference No." <> xSalesInvoiceHeader."Customer Reference No.") or
+(SalesInvoiceHeader."Reason Code" <> xSalesInvoiceHeader."Reason Code");
     end;
 
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Sales Inv. Header - Edit", 'OnOnRunOnBeforeTestFieldNo', '', false, false)]
     local procedure OnOnRunOnBeforeTestFieldNo(var SalesInvoiceHeader: Record "Sales Invoice Header"; SalesInvoiceHeaderRec: Record "Sales Invoice Header")
     begin
-        with SalesInvoiceHeader do begin
-            "Sell-to E-Mail" := SalesInvoiceHeaderRec."Sell-to E-Mail";
-            "Customer Reference No." := SalesInvoiceHeaderRec."Customer Reference No.";
-            "Reason Code" := SalesInvoiceHeaderRec."Reason Code";
-        end;
+        SalesInvoiceHeader."Sell-to E-Mail" := SalesInvoiceHeaderRec."Sell-to E-Mail";
+        SalesInvoiceHeader."Customer Reference No." := SalesInvoiceHeaderRec."Customer Reference No.";
+        SalesInvoiceHeader."Reason Code" := SalesInvoiceHeaderRec."Reason Code";
     end;
 
     [EventSubscriber(ObjectType::Table, Database::"Sales Line", 'OnAfterAssignItemValues', '', false, false)]
@@ -886,7 +872,7 @@ codeunit 50006 EventsGeneral
         InvSetup: Record "Inventory Setup";
 
     begin
-        InvSetup.GET();
+        InvSetup.Get();
         if InvSetup."Allow Change Tracking Code" then begin
             TrackingChanged := false;
         end;
@@ -899,7 +885,7 @@ codeunit 50006 EventsGeneral
     var
         InvSetup: Record "Inventory Setup";
     begin
-        InvSetup.GET();
+        InvSetup.Get();
         if InvSetup."Allow Change Tracking Code" then begin
             TrackingChanged := false;
         end;
@@ -918,18 +904,18 @@ codeunit 50006 EventsGeneral
         //transfer
 
         //+1.0.0.176  
-        ToSalesLine.validate("Qty Box Date 1", FromSalesLine."Qty Box Date 1");
-        ToSalesLine.validate("Qty Box Date 2", FromSalesLine."Qty Box Date 2");
-        ToSalesLine.validate("Qty Box Date 3", FromSalesLine."Qty Box Date 3");
-        ToSalesLine.validate("Qty Box Date 4", FromSalesLine."Qty Box Date 4");
-        ToSalesLine.validate("Qty Box Date 5", FromSalesLine."Qty Box Date 5");
-        ToSalesLine.validate("Qty Box Date 6", FromSalesLine."Qty Box Date 6");
-        ToSalesLine.validate("Qty Box Date 7", FromSalesLine."Qty Box Date 7");
-        ToSalesLine.validate("Qty Box Date 8", FromSalesLine."Qty Box Date 8");
+        ToSalesLine.Validate("Qty Box Date 1", FromSalesLine."Qty Box Date 1");
+        ToSalesLine.Validate("Qty Box Date 2", FromSalesLine."Qty Box Date 2");
+        ToSalesLine.Validate("Qty Box Date 3", FromSalesLine."Qty Box Date 3");
+        ToSalesLine.Validate("Qty Box Date 4", FromSalesLine."Qty Box Date 4");
+        ToSalesLine.Validate("Qty Box Date 5", FromSalesLine."Qty Box Date 5");
+        ToSalesLine.Validate("Qty Box Date 6", FromSalesLine."Qty Box Date 6");
+        ToSalesLine.Validate("Qty Box Date 7", FromSalesLine."Qty Box Date 7");
+        ToSalesLine.Validate("Qty Box Date 8", FromSalesLine."Qty Box Date 8");
         //-1.0.0.176  
 
         if ToSalesHeader."Document Type" = ToSalesHeader."Document Type"::Quote then begin
-            SRSetup.GET;
+            SRSetup.Get;
             GLSetup.Get;
             if (ToSalesHeader."Sell-to Customer No." = SRSetup."Lidl Customer No.") and (SRSetup."Lidl Customer No." <> '') then begin
                 if (FromSalesLine."No." = '') and (FromSalesLine.Description <> '') then begin
@@ -955,7 +941,7 @@ codeunit 50006 EventsGeneral
                     ToSalesLine."Calibration Min." := FromSalesLine."Calibration Min.";
                     ToSalesLine."Calibration Max." := FromSalesLine."Calibration Max.";
                     ToSalesLine."Calibration UOM" := FromSalesLine."Calibration UOM";
-                    ToSalesLine."Variety" := FromSalesLine."Variety";
+                    ToSalesLine.Variety := FromSalesLine.Variety;
                     ToSalesLine."Additional Information" := FromSalesLine."Additional Information";
                     ToSalesLine."Pressure Min." := FromSalesLine."Pressure Min.";
                     ToSalesLine."Pressure Max." := FromSalesLine."Pressure Max.";
@@ -987,7 +973,7 @@ codeunit 50006 EventsGeneral
     end;
     //-1.0.0.110
 
-    [EventSubscriber(ObjectType::codeunit, Codeunit::"Item Reference Management", 'OnAfterValidateSalesReferenceNo', '', false, false)]
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Item Reference Management", 'OnAfterValidateSalesReferenceNo', '', false, false)]
     local procedure OnAfterValidateSalesReferenceNo(var SalesLine: Record "Sales Line"; ItemReference: Record "Item Reference"; ReturnedItemReference: Record "Item Reference")
     var
         rL_ItemReference: Record "Item Reference";
@@ -996,7 +982,7 @@ codeunit 50006 EventsGeneral
             //when its a valid REference No.
 
             //+1.0.0.165 
-            rL_ItemReference.RESET;
+            rL_ItemReference.Reset;
             rL_ItemReference.SetRange("Reference Type", rL_ItemReference."Reference Type"::Customer);
             rL_ItemReference.SetFilter("Reference Type No.", SalesLine."Bill-to Customer No.");
             rL_ItemReference.SetFilter("Reference No.", SalesLine."Item Reference No.");
@@ -1014,7 +1000,7 @@ codeunit 50006 EventsGeneral
     end;
 
 
-    [EventSubscriber(ObjectType::codeunit, Codeunit::"Item Reference Management", 'OnAfterSalesItemReferenceFound', '', false, false)]
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Item Reference Management", 'OnAfterSalesItemReferenceFound', '', false, false)]
     local procedure OnAfterSalesItemReferenceFound(var SalesLine: Record "Sales Line"; ItemReference: Record "Item Reference")
     begin
         if SalesLine."Document Type" = SalesLine."Document Type"::Quote then begin
@@ -1026,7 +1012,7 @@ codeunit 50006 EventsGeneral
     end;
 
     //+1.0.0.114    
-    [EventSubscriber(ObjectType::codeunit, Codeunit::"Prod. Order Status Management", 'OnCheckMissingOutput', '', false, false)]
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Prod. Order Status Management", 'OnCheckMissingOutput', '', false, false)]
     local procedure OnCheckMissingOutput(var ProductionOrder: Record "Production Order"; var ProdOrderLine: Record "Prod. Order Line"; var ProdOrderRoutingLine: Record "Prod. Order Routing Line"; var ShowWarning: Boolean)
     var
         rL_MNUSetup: Record "Manufacturing Setup";
@@ -1034,7 +1020,7 @@ codeunit 50006 EventsGeneral
     begin
 
         if ShowWarning then begin
-            rL_MNUSetup.GET;
+            rL_MNUSetup.Get;
             if rL_MNUSetup."Mandatory Output Posting" then begin
                 Error(StrSubstNo(Text004, ProductionOrder.TableCaption, ProductionOrder."No."));
             end;
@@ -1043,14 +1029,14 @@ codeunit 50006 EventsGeneral
     //-1.0.0.114
 
     //+1.0.0.295
-    [EventSubscriber(ObjectType::codeunit, Codeunit::"Prod. Order Status Management", 'OnCheckMissingConsumption', '', false, false)]
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Prod. Order Status Management", 'OnCheckMissingConsumption', '', false, false)]
     local procedure OnCheckMissingConsumption(var ProductionOrder: Record "Production Order"; var ProdOrderLine: Record "Prod. Order Line"; var ProdOrderRoutingLine: Record "Prod. Order Routing Line"; var ShowWarning: Boolean)
     var
         rL_MNUSetup: Record "Manufacturing Setup";
         Text004: Label '%1 %2 has not been finished. Please post the Production Journal.';
     begin
         if ShowWarning then begin
-            rL_MNUSetup.GET;
+            rL_MNUSetup.Get;
             if rL_MNUSetup."Mandatory Output Posting" then begin
                 Error(StrSubstNo(Text004, ProductionOrder.TableCaption, ProductionOrder."No."));
             end;
@@ -1059,13 +1045,13 @@ codeunit 50006 EventsGeneral
     //-1.0.0.295
 
 
-    [EventSubscriber(ObjectType::table, Database::"Sales Line", 'OnBeforeShowNonStock', '', false, false)]
+    [EventSubscriber(ObjectType::Table, Database::"Sales Line", 'OnBeforeShowNonStock', '', false, false)]
     local procedure OnBeforeShowNonStock(var SalesLine: Record "Sales Line"; var NonstockItem: Record "Nonstock Item"; var IsHandled: Boolean)
     var
         GLSetup: Record "General Ledger Setup";
     begin
         if SalesLine."Document Type" = SalesLine."Document Type"::Quote then begin
-            if PAGE.RunModal(PAGE::"Catalog Item List", NonstockItem) = ACTION::LookupOK then begin
+            if Page.RunModal(Page::"Catalog Item List", NonstockItem) = Action::LookupOK then begin
 
                 GLSetup.Get;
                 SalesLine.Description := NonstockItem.Description;
@@ -1078,7 +1064,7 @@ codeunit 50006 EventsGeneral
                 SalesLine."Calibration Min." := NonstockItem."Calibration Min.";
                 SalesLine."Calibration Max." := NonstockItem."Calibration Max.";
                 SalesLine."Calibration UOM" := NonstockItem."Calibration UOM";
-                SalesLine."Variety" := NonstockItem."Variety";
+                SalesLine.Variety := NonstockItem.Variety;
                 SalesLine."Additional Information" := NonstockItem."Additional Information";
                 SalesLine."Pressure Min." := NonstockItem."Pressure Min.";
                 SalesLine."Pressure Max." := NonstockItem."Pressure Max.";
@@ -1108,7 +1094,7 @@ codeunit 50006 EventsGeneral
         end;
     end;
 
-    [EventSubscriber(ObjectType::table, Database::"Sales Line", 'OnBeforeCheckShipmentDateBeforeWorkDate', '', false, false)]
+    [EventSubscriber(ObjectType::Table, Database::"Sales Line", 'OnBeforeCheckShipmentDateBeforeWorkDate', '', false, false)]
     local procedure OnBeforeCheckShipmentDateBeforeWorkDate(var SalesLine: Record "Sales Line"; xSalesLine: Record "Sales Line"; var HasBeenShown: Boolean; var IsHandled: Boolean)
     begin
         if SalesLine."Document Type" = SalesLine."Document Type"::Quote then begin
@@ -1119,14 +1105,14 @@ codeunit 50006 EventsGeneral
     //+1.0.0.165 
     //codeunit 5720 "Item Reference Management"
     //allow invalid item reference no. to be typed.
-    [EventSubscriber(ObjectType::codeunit, codeunit::"Item Reference Management", 'OnBeforeReferenceLookupSalesItem', '', false, false)]
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Item Reference Management", 'OnBeforeReferenceLookupSalesItem', '', false, false)]
     local procedure OnBeforeReferenceLookupSalesItem(var SalesLine: Record "Sales Line"; var ItemReference: Record "Item Reference"; ShowDialog: Boolean; var IsHandled: Boolean)
     var
         rL_ItemReference: Record "Item Reference";
     begin
         if SalesLine."Document Type" = SalesLine."Document Type"::Quote then begin
             if SalesLine."Item Reference No." <> '' then begin
-                rL_ItemReference.RESET;
+                rL_ItemReference.Reset;
                 rL_ItemReference.SetRange("Reference Type", rL_ItemReference."Reference Type"::Customer);
                 rL_ItemReference.SetFilter("Reference Type No.", SalesLine."Bill-to Customer No.");
                 rL_ItemReference.SetFilter("Reference No.", SalesLine."Item Reference No.");
@@ -1143,7 +1129,7 @@ codeunit 50006 EventsGeneral
     end;
 
     //table 37 "Sales Line"
-    [EventSubscriber(ObjectType::table, Database::"Sales Line", 'OnBeforeUpdateUnitPriceProcedure', '', false, false)]
+    [EventSubscriber(ObjectType::Table, Database::"Sales Line", 'OnBeforeUpdateUnitPriceProcedure', '', false, false)]
     local procedure OnBeforeUpdateUnitPriceProcedure(var SalesLine: Record "Sales Line"; CalledByFieldNo: Integer; var IsHandled: Boolean)
     begin
         if SalesLine."Document Type" = SalesLine."Document Type"::Quote then begin
@@ -1154,7 +1140,7 @@ codeunit 50006 EventsGeneral
     end;
     //-1.0.0.165 
 
-    [EventSubscriber(ObjectType::table, Database::"Sales Shipment Line", 'OnAfterInitFromSalesLine', '', false, false)]
+    [EventSubscriber(ObjectType::Table, Database::"Sales Shipment Line", 'OnAfterInitFromSalesLine', '', false, false)]
     local procedure OnAfterInitFromSalesLine(SalesShptHeader: Record "Sales Shipment Header"; SalesLine: Record "Sales Line"; var SalesShptLine: Record "Sales Shipment Line")
     var
         SalesShptLineSearch: Record "Sales Shipment Line";
@@ -1168,7 +1154,7 @@ codeunit 50006 EventsGeneral
         //+1.0.0.174 
         if SalesShptLine."Qty. Requested" <> 0 then begin
             if SalesShptLine."Order No." <> '' then begin
-                SalesShptLineSearch.RESET;
+                SalesShptLineSearch.Reset;
                 SalesShptLineSearch.SetFilter("Order No.", SalesShptLine."Order No.");
                 SalesShptLineSearch.SetRange("Order Line No.", SalesShptLine."Order Line No.");
                 SalesShptLineSearch.SetRange("Posting Date", SalesShptLine."Posting Date");
@@ -1183,7 +1169,7 @@ codeunit 50006 EventsGeneral
 
         if SalesShptLine."Qty. Confirmed" <> 0 then begin
             if SalesShptLine."Order No." <> '' then begin
-                SalesShptLineSearch.RESET;
+                SalesShptLineSearch.Reset;
                 SalesShptLineSearch.SetFilter("Order No.", SalesShptLine."Order No.");
                 SalesShptLineSearch.SetRange("Order Line No.", SalesShptLine."Order Line No.");
                 SalesShptLineSearch.SetRange("Posting Date", SalesShptLine."Posting Date");
@@ -1201,7 +1187,7 @@ codeunit 50006 EventsGeneral
 
     //+1.0.0.178
     //report 790 "Calculate Inventory"
-    [EventSubscriber(ObjectType::report, report::"Calculate Inventory", 'OnItemLedgerEntryOnAfterPreDataItem', '', false, false)]
+    [EventSubscriber(ObjectType::Report, Report::"Calculate Inventory", 'OnItemLedgerEntryOnAfterPreDataItem', '', false, false)]
     local procedure OnItemLedgerEntryOnAfterPreDataItem(var ItemLedgerEntry: Record "Item Ledger Entry"; var Item: Record Item)
     begin
         //Message(Item.GetFilter("Date Filter"));
@@ -1214,7 +1200,7 @@ codeunit 50006 EventsGeneral
 
     //+1.0.0.212
     //codeunit 99000845 "Reservation Management"
-    [EventSubscriber(ObjectType::codeunit, codeunit::"Reservation Management", 'OnBeforeDeleteItemTrackingConfirm', '', false, false)]
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Reservation Management", 'OnBeforeDeleteItemTrackingConfirm', '', false, false)]
     local procedure OnBeforeDeleteItemTrackingConfirm(var CalcReservEntry2: Record "Reservation Entry"; var IsHandled: Boolean; var Result: Boolean)
     begin
         IsHandled := true;
@@ -1224,13 +1210,13 @@ codeunit 50006 EventsGeneral
     //-1.0.0.212
 
     //+1.0.0.226
-    [EventSubscriber(ObjectType::codeunit, codeunit::"Calculate Prod. Order", 'OnAfterTransferBOMComponent', '', false, false)]
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Calculate Prod. Order", 'OnAfterTransferBOMComponent', '', false, false)]
     local procedure OnAfterTransferBOMComponent(var ProdOrderLine: Record "Prod. Order Line"; var ProductionBOMLine: Record "Production BOM Line"; var ProdOrderComponent: Record "Prod. Order Component"; LineQtyPerUOM: Decimal; ItemQtyPerUOM: Decimal)
     begin
         ProdOrderComponent."Quantity per BUOM" := ProdOrderComponent."Quantity per";
     end;
 
-    [EventSubscriber(ObjectType::codeunit, codeunit::"Calculate Prod. Order", 'OnBeforeProdOrderCompModify', '', false, false)]
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Calculate Prod. Order", 'OnBeforeProdOrderCompModify', '', false, false)]
     local procedure OnBeforeProdOrderCompModify(var ProdOrderComp: Record "Prod. Order Component"; var ProdBOMLine: Record "Production BOM Line"; LineQtyPerUOM: Decimal; ItemQtyPerUOM: Decimal)
     begin
         ProdOrderComp."Quantity per BUOM" := ProdOrderComp."Quantity per";
@@ -1238,18 +1224,18 @@ codeunit 50006 EventsGeneral
     //-1.0.0.226
 
     //+1.0.0.229
-    [EventSubscriber(ObjectType::codeunit, codeunit::"Production Journal Mgt", 'OnBeforeInsertConsumptionJnlLine', '', false, false)]
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Production Journal Mgt", 'OnBeforeInsertConsumptionJnlLine', '', false, false)]
     local procedure OnBeforeInsertConsumptionJnlLine(var ItemJournalLine: Record "Item Journal Line"; ProdOrderComp: Record "Prod. Order Component"; ProdOrderLine: Record "Prod. Order Line"; Level: Integer)
     var
         ProductionOrder: Record "Production Order";
     begin
 
-        ProductionOrder.reset;
+        ProductionOrder.Reset;
         ProductionOrder.SetRange(Status, ProdOrderComp.Status);
         ProductionOrder.SetFilter("No.", ProdOrderComp."Prod. Order No.");
-        IF ProductionOrder.FindSet() THEN BEGIN
+        if ProductionOrder.FindSet() then begin
             ItemJournalLine."Packing Agent" := ProductionOrder."Packing Agent";
-        END;
+        end;
 
     end;
     //-1.0.0.229
@@ -1272,12 +1258,12 @@ codeunit 50006 EventsGeneral
     //-1.0.0.232
 
     //+1.0.0.237
-    [EventSubscriber(ObjectType::codeunit, codeunit::"Prod. Order Status Management", 'OnBeforeMatrOrCapConsumpExists', '', false, false)]
-    local procedure OnBeforeMatrOrCapConsumpExists(ProdOrderLine: Record "Prod. Order Line"; Var EntriesExist: Boolean; var IsHandled: Boolean)
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Prod. Order Status Management", 'OnBeforeMatrOrCapConsumpExists', '', false, false)]
+    local procedure OnBeforeMatrOrCapConsumpExists(ProdOrderLine: Record "Prod. Order Line"; var EntriesExist: Boolean; var IsHandled: Boolean)
     var
         MFSetup: Record "Manufacturing Setup";
     begin
-        MFSetup.GET();
+        MFSetup.Get();
         if MFSetup."skip MatrOrCapConsumpExists" then begin
             IsHandled := true;
             EntriesExist := false;
@@ -1287,7 +1273,7 @@ codeunit 50006 EventsGeneral
     //-1.0.0.237
 
 
-    [EventSubscriber(ObjectType::page, page::"Posted Sales Shipment - Update", 'OnAfterRecordChanged', '', false, false)]
+    [EventSubscriber(ObjectType::Page, Page::"Posted Sales Shipment - Update", 'OnAfterRecordChanged', '', false, false)]
     local procedure OnAfterRecordChanged_Ship(var SalesShipmentHeader: Record "Sales Shipment Header"; xSalesShipmentHeader: Record "Sales Shipment Header"; var IsChanged: Boolean)
     begin
 
@@ -1325,14 +1311,14 @@ codeunit 50006 EventsGeneral
     end;
     */
 
-    [EventSubscriber(ObjectType::codeunit, codeunit::"Item Tracking Doc. Management", 'OnAfterAddTempRecordToSet', '', false, false)]
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Item Tracking Doc. Management", 'OnAfterAddTempRecordToSet', '', false, false)]
     local procedure OnAfterAddTempRecordToSet(var TempItemLedgerEntry: Record "Item Ledger Entry" temporary; var TempItemLedgerEntry2: Record "Item Ledger Entry" temporary; SignFactor: Integer)
     var
         ILE: Record "Item Ledger Entry";
     begin
         //+1.0.0.244
         if TempItemLedgerEntry."Expiration Date" = 0D then begin
-            if ILE.GET(TempItemLedgerEntry."Entry No.") then begin
+            if ILE.Get(TempItemLedgerEntry."Entry No.") then begin
                 if ILE."Expiration Date" <> 0D then begin
                     TempItemLedgerEntry."Expiration Date" := ILE."Expiration Date";
                     TempItemLedgerEntry.Modify();
@@ -1342,20 +1328,20 @@ codeunit 50006 EventsGeneral
         //-1.0.0.244
     end;
 
-    [EventSubscriber(ObjectType::Table, Database::"Item", 'OnBeforeTestNoItemLedgEntiesExist', '', false, false)]
+    [EventSubscriber(ObjectType::Table, Database::Item, 'OnBeforeTestNoItemLedgEntiesExist', '', false, false)]
     local procedure OnBeforeTestNoItemLedgEntiesExist(Item: Record Item; CurrentFieldName: Text[100]; var IsHandled: Boolean)
     var
         InvSetup: Record "Inventory Setup";
 
     begin
-        InvSetup.GET;
+        InvSetup.Get;
         if InvSetup."Allow Item Trac. Code Change" then begin
             IsHandled := true;
         end;
 
     end;
 
-    [EventSubscriber(ObjectType::codeunit, codeunit::"Sales-Post", 'OnRunOnBeforeCheckAndUpdate', '', false, false)]
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Sales-Post", 'OnRunOnBeforeCheckAndUpdate', '', false, false)]
     local procedure OnRunOnBeforeCheckAndUpdate(var SalesHeader: Record "Sales Header")
     var
         SLines: Record "Sales Line";
@@ -1363,45 +1349,45 @@ codeunit 50006 EventsGeneral
         Text50001: Label 'Quantity is zero. Do you want to continue?\n%1 - %2 ';
     begin
 
-        SLines.RESET;
-        SLines.SETRANGE("Document Type", SalesHeader."Document Type");
-        SLines.SETRANGE("Document No.", SalesHeader."No.");
-        IF SLines.FINDFIRST THEN BEGIN
-            REPEAT
-                IF (SLines.Type = SLines.Type::Item) OR (SLines.Type = SLines.Type::"G/L Account") THEN BEGIN
-                    IF SLines.Quantity <> 0 THEN BEGIN
+        SLines.Reset;
+        SLines.SetRange("Document Type", SalesHeader."Document Type");
+        SLines.SetRange("Document No.", SalesHeader."No.");
+        if SLines.FindFirst then begin
+            repeat
+                if (SLines.Type = SLines.Type::Item) or (SLines.Type = SLines.Type::"G/L Account") then begin
+                    if SLines.Quantity <> 0 then begin
                         //SLines.TESTFIELD("Unit Price");
                         if SLines."Unit Price" = 0 then begin
                             if not Confirm(Text50000, false, SLines."No.", SLines.Description) then begin
                                 Error('');
                             end;
                         end;
-                    END;
+                    end;
 
-                    IF SLines."Unit Price" <> 0 THEN BEGIN
+                    if SLines."Unit Price" <> 0 then begin
                         //SLines.TESTFIELD(Quantity);
                         if SLines.Quantity = 0 then begin
                             if not Confirm(Text50001, false, SLines."No.", SLines.Description) then begin
                                 Error('');
                             end;
                         end;
-                    END;
-                END;
-            UNTIL SLines.NEXT = 0;
-        END;
+                    end;
+                end;
+            until SLines.Next = 0;
+        end;
     end;
 
     //+1.0.0.289
-    [EventSubscriber(ObjectType::codeunit, codeunit::"Inventory Adjustment", 'OnInvtToAdjustExistOnBeforeCopyItemToItem', '', false, false)]
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Inventory Adjustment", 'OnInvtToAdjustExistOnBeforeCopyItemToItem', '', false, false)]
     local procedure OnInvtToAdjustExistOnBeforeCopyItemToItem(var Item: Record Item)
     begin
-        Item.SETRANGE("TAL Exclude Item from Adjustme", FALSE); //TAL0.3
+        Item.SetRange("TAL Exclude Item from Adjustme", false); //TAL0.3
     end;
     //-1.0.0.289
 
 
 
-    [EventSubscriber(ObjectType::codeunit, codeunit::"Sales-Post", 'OnAfterCheckMandatoryFields', '', false, false)]
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Sales-Post", 'OnAfterCheckMandatoryFields', '', false, false)]
     local procedure OnAfterCheckMandatoryFields(var SalesHeader: Record "Sales Header"; CommitIsSuppressed: Boolean)
     var
         Customer: Record Customer;
@@ -1411,21 +1397,21 @@ codeunit 50006 EventsGeneral
     begin
 
         //if (SalesHeader."Document Type" = SalesHeader."Document Type"::Order) or (SalesHeader."Document Type" = SalesHeader."Document Type"::Invoice) then begin
-        if Customer.GET(SalesHeader."Sell-to Customer No.") then begin
+        if Customer.Get(SalesHeader."Sell-to Customer No.") then begin
             if Customer."Mandatory CY Fields" then begin
-                SalesLine.RESET;
+                SalesLine.Reset;
                 SalesLine.SetRange("Document Type", SalesHeader."Document Type");
                 SalesLine.SetFilter("Document No.", SalesHeader."No.");
                 SalesLine.SetRange(Type, SalesLine.Type::Item);
                 SalesLine.SetFilter(Quantity, '<>%1', 0);
                 if SalesLine.FindSet() then begin
 
-                    SRSetup.GET();
+                    SRSetup.Get();
                     SRSetup.TestField("Potatoes Item Category Code");
                     SRSetup.TestField("Fresh Inventory Posting Group");
                     repeat
 
-                        if Item.GET(SalesLine."No.") then begin
+                        if Item.Get(SalesLine."No.") then begin
                             if Item."Inventory Posting Group" = SRSetup."Fresh Inventory Posting Group" then begin
 
                                 //SalesLine.TestField("Req. Country");

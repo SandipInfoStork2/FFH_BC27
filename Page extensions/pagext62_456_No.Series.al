@@ -14,6 +14,7 @@ pageextension 50162 NoSeriesExt extends "No. Series"
             field("Item Tracking"; Rec."Item Tracking")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Item Tracking field.';
             }
         }
     }
