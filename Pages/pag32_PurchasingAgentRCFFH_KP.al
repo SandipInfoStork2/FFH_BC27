@@ -67,7 +67,7 @@ page 50032 "Purchasing Agent RC FFH KP"
                 Visible = false;
             }
 
-            part(Control13; "Power BI Report Spinner Part")
+            part(Control13; "Power BI Embedded Report Part") //"Power BI Report Spinner Part" page replaced by "Power BI Embedded Report Part" 28FEB2026
             {
                 ApplicationArea = Basic, Suite;
             }

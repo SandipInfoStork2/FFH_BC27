@@ -114,16 +114,16 @@ report 50054 "Sales - Quote Lidl"
             column(CompanyVATRegistrationNo_Lbl; CompanyInfo.GetVATRegistrationNumberLbl())
             {
             }
-            column(CompanyLegalOffice; CompanyInfo.GetLegalOffice())
+            column(CompanyLegalOffice; '') //CompanyInfo.GetLegalOffice() not used and return Blank in BC25
             {
             }
-            column(CompanyLegalOffice_Lbl; CompanyInfo.GetLegalOfficeLbl())
+            column(CompanyLegalOffice_Lbl; '') //CompanyInfo.GetLegalOfficeLbl() not used and return Blank in BC25
             {
             }
-            column(CompanyCustomGiro; CompanyInfo.GetCustomGiro())
+            column(CompanyCustomGiro; '') //CompanyInfo.GetCustomGiro() not used and return Blank in BC25
             {
             }
-            column(CompanyCustomGiro_Lbl; CompanyInfo.GetCustomGiroLbl())
+            column(CompanyCustomGiro_Lbl; '') //CompanyInfo.GetCustomGiroLbl() not used and return Blank in BC25
             {
             }
             column(CompanyLegalStatement; GetLegalStatement())

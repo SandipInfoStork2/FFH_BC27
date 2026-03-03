@@ -521,7 +521,7 @@ report 50072 "Suggest Vendor Payments FFH"
         SelectedDim: Record "Selected Dimension";
         VendorLedgEntryTemp: Record "Vendor Ledger Entry" temporary;
         TempErrorMessage: Record "Error Message" temporary;
-        NoSeriesMgt: Codeunit NoSeriesManagement;
+        NoSeriesMgt: Codeunit "No. Series";//NoSeriesManagement;
         DimMgt: Codeunit DimensionManagement;
         DimBufMgt: Codeunit "Dimension Buffer Management";
         Window: Dialog;
@@ -567,6 +567,7 @@ report 50072 "Suggest Vendor Payments FFH"
         ServiceFieldsVisibiity: Boolean;
 
         DateType: Option "Posting Date","Due Date";
+        NoserBatch_GCU: codeunit "No. Series - Batch";
 
     procedure SetGenJnlLine(NewGenJnlLine: Record "Gen. Journal Line")
     begin
@@ -796,7 +797,8 @@ report 50072 "Suggest Vendor Payments FFH"
                                     TempPaymentBuffer.Modify();
                                 end else begin
                                     TempPaymentBuffer."Document No." := NextDocNo;
-                                    GenJnlLine.IncrementDocumentNo(GenJnlBatch, NextDocNo);
+                                    //GenJnlLine.IncrementDocumentNo(GenJnlBatch, NextDocNo); //28FEB2026
+                                    NoserBatch_GCU.SimulateGetNextNo(GenJnlBatch."No. Series", Today, NextDocNo);
                                     TempPaymentBuffer.Amount := PayableVendLedgEntry.Amount;
                                     Window2.Update(1, VendLedgEntry."Vendor No.");
                                     TempPaymentBuffer.Insert();
@@ -863,7 +865,8 @@ report 50072 "Suggest Vendor Payments FFH"
                         "Document Type" := "Document Type"::Refund;
 
                     "Document No." := NextDocNo;
-                    IncrementDocumentNo(GenJnlBatch, NextDocNo);
+                    //IncrementDocumentNo(GenJnlBatch, NextDocNo); //28FEB2026
+                    NoserBatch_GCU.SimulateGetNextNo(GenJnlBatch."No. Series", Today, NextDocNo);
                 end else
                     if (TempPaymentBuffer."Vendor No." = OldTempPaymentBuffer."Vendor No.") and
                        (TempPaymentBuffer."Currency Code" = OldTempPaymentBuffer."Currency Code")
@@ -871,7 +874,8 @@ report 50072 "Suggest Vendor Payments FFH"
                         "Document No." := OldTempPaymentBuffer."Document No."
                     else begin
                         "Document No." := NextDocNo;
-                        IncrementDocumentNo(GenJnlBatch, NextDocNo);
+                        //IncrementDocumentNo(GenJnlBatch, NextDocNo); //28FEB2026
+                        NoserBatch_GCU.SimulateGetNextNo(GenJnlBatch."No. Series", Today, NextDocNo);
                         OldTempPaymentBuffer := TempPaymentBuffer;
                         OldTempPaymentBuffer."Document No." := "Document No.";
                     end;

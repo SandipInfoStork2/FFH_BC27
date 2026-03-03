@@ -111,12 +111,12 @@ tableextension 50106 ItemLedgerEntryExt extends "Item Ledger Entry"
             DecimalPlaces = 0 : 0;
             Editable = false;
         }
-        field(50056; "Item Description"; Text[100])
+        /* field(50056; "Item Description"; Text[100])
         {
             CalcFormula = Lookup(Item.Description WHERE("No." = FIELD("Item No.")));
             Editable = false;
             FieldClass = FlowField;
-        }
+        } */
         field(50057; "Gen. Prod. Posting Group"; Code[20])
         {
             CalcFormula = Lookup(Item."Gen. Prod. Posting Group" WHERE("No." = FIELD("Item No.")));

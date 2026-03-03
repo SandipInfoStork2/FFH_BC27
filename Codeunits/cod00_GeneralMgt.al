@@ -3014,7 +3014,7 @@ codeunit 50000 "General Mgt."
         vL_OldGrowerNo: Code[20];
         vL_NextDocNo: Code[20];
         PurchSetup: Record "Purchases & Payables Setup";
-        NoSeriesMgt: Codeunit NoSeriesManagement;
+        NoSeriesMgt: Codeunit "No. Series";
         vL_TmpNoSeries: Code[20];
     begin
         //+TAL0.13
@@ -3034,7 +3034,7 @@ codeunit 50000 "General Mgt."
                     //IF  rL_ILE."Receipt Doc. No." = '' THEN BEGIN
                     vL_NextDocNo := '';
                     PurchSetup.GET;
-                    NoSeriesMgt.InitSeries(PurchSetup."Grower Receipt Nos.", vL_TmpNoSeries, 0D, vL_NextDocNo, vL_TmpNoSeries);
+                    NoSeriesMgt.AreRelated(PurchSetup."Grower Receipt Nos.", vL_TmpNoSeries);// InitSeries(PurchSetup."Grower Receipt Nos.", vL_TmpNoSeries, 0D, vL_NextDocNo, vL_TmpNoSeries); 28FEB2026
                     //END;
                 end;
 
@@ -6106,7 +6106,7 @@ codeunit 50000 "General Mgt."
         rL_ReservationEntry: Record "Reservation Entry";
         rL_Grower: Record Grower;
         rL_LotNoInformation: Record "Lot No. Information";
-        NoSeriesMgt: Codeunit NoSeriesManagement;
+        NoSeriesMgt: Codeunit "No. Series";
         vL_ProducerCategory: Code[20];
         pGrowerList: Page "Grower List";
         Text50000L: Label '%1 Items with Tracking Lines have been processed.';

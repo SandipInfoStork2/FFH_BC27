@@ -637,7 +637,7 @@ report 50018 "Analysis Report-Landscape"
 
                             trigger OnLookup(var Text: Text): Boolean;
                             begin
-                                AnalysisReportManagement.LookupSourceNo("Analysis Line", SourceTypeFilter, SourceNoFilter);
+                                AnalysisReportManagement.DoLookupSourceNo("Analysis Line", SourceTypeFilter, SourceNoFilter);
                             end;
                         }
                     }
@@ -782,8 +782,10 @@ report 50018 "Analysis Report-Landscape"
         AnalysisLineTemplateNameHidden: Code[10];
         AnalysisColumnTemplName: Code[10];
         AnalysisColumnTemplNameHidden: Code[10];
-        SourceTypeFilter: Option " ",Customer,Vendor,Item;
-        SourceTypeFilterHidden: Option " ",Customer,Vendor,Item;
+        /* SourceTypeFilter: Option " ",Customer,Vendor,Item;
+        SourceTypeFilterHidden: Option " ",Customer,Vendor,Item; */
+        SourceTypeFilter: Enum "Analysis Source Type";
+        SourceTypeFilterHidden: Enum "Analysis Source Type";
         SourceNoFilter: Text;
         SourceNoFilterHidden: Text;
         EndDate: Date;

@@ -647,10 +647,10 @@ page 50035 "S.Q. Lidl Costing Subform"
                         EditinExcel: Codeunit "Edit in Excel";
                     begin
                         EditinExcel.EditPageInExcel(
-                            'Sales_QuoteSalesLines',
-                            CurrPage.ObjectId(false),
-                            StrSubstNo('Document_No eq ''%1''', Rec."Document No."),
-                            StrSubstNo(ExcelFileNameTxt, Rec."Document No."));
+                            'Sales_QuoteSalesLines', 50035);
+                        /* CurrPage.ObjectId(false),
+                        StrSubstNo('Document_No eq ''%1''', Rec."Document No."),
+                        StrSubstNo(ExcelFileNameTxt, Rec."Document No.")); 28FEB2026*/
                     end;
 
                 }

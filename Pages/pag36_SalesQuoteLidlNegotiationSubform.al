@@ -452,10 +452,10 @@ page 50036 "S.Q. Lidl Negotiation Subform"
                         EditinExcel: Codeunit "Edit in Excel";
                     begin
                         EditinExcel.EditPageInExcel(
-                            'Sales_QuoteSalesLines',
-                            CurrPage.ObjectId(false),
-                            StrSubstNo('Document_No eq ''%1''', Rec."Document No."),
-                            StrSubstNo(ExcelFileNameTxt, Rec."Document No."));
+                            'Sales_QuoteSalesLines', 50036);
+                        /* CurrPage.ObjectId(false),
+                        StrSubstNo('Document_No eq ''%1''', Rec."Document No."),
+                        StrSubstNo(ExcelFileNameTxt, Rec."Document No.")); 28FEB2026*/
                     end;
 
                 }

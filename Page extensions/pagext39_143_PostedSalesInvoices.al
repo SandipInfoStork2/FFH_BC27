@@ -18,7 +18,7 @@ pageextension 50139 PostedSalesInvoicesExt extends "Posted Sales Invoices"
         {
             Visible = true;
         }
-        addafter("<Document Exchange Status>")
+        addafter("Document Exchange Status")
         {
 
             field("Batch No."; "Batch No.")
@@ -60,7 +60,7 @@ pageextension 50139 PostedSalesInvoicesExt extends "Posted Sales Invoices"
         }
 
         //TAL 1.0.0.71 >>
-        moveafter("No.";"Posting Date")
+        moveafter("No."; "Posting Date")
         //TAL 1.0.0.71 <<
     }
 

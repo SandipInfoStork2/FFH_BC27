@@ -3,7 +3,9 @@ TAL0.1 2020/03/04 VC add Description 2
 
 */
 
-tableextension 50155 ItemCrossReferenceExt extends "Item Cross Reference"
+// Item Cross Reference moved to Item Reference and same page available
+
+/* tableextension 50155 ItemCrossReferenceExt extends "Item Cross Reference"
 {
     fields
     {
@@ -44,4 +46,4 @@ tableextension 50155 ItemCrossReferenceExt extends "Item Cross Reference"
 
     var
         myInt: Integer;
-}
+} */

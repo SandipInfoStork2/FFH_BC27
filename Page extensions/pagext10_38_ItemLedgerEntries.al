@@ -25,13 +25,13 @@ pageextension 50110 ItemLedgerEntriesExt extends "Item Ledger Entries"
 
         addafter("Item No.")
         {
-            field("Item Description"; "Item Description")
+            /* field("Item Description"; "Item Description")
             {
                 ApplicationArea = all;
                 Editable = false;
                 ToolTip = 'Specifies the variant code for the items.';
                 Visible = false;
-            }
+            } */
             field("Gen. Prod. Posting Group"; "Gen. Prod. Posting Group")
             {
                 ApplicationArea = all;

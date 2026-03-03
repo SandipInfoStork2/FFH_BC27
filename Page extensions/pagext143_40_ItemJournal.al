@@ -46,7 +46,7 @@ pageextension 50243 ItemJournalExt extends "Item Journal"
                     ReservationEntry: Record "Reservation Entry";
 
                     DocNo: Code[20];
-                    NoSeriesMgt: Codeunit NoSeriesManagement;
+                    NoSeriesMgt: Codeunit "No. Series";
                     ItemJournalBatch: Record "Item Journal Batch";
                 begin
                     ItemJournalBatch.GET(Rec."Journal Template Name", rec."Journal Batch Name");
